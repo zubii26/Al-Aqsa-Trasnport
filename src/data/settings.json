@@ -1,0 +1,28 @@
+{
+  "general": {
+    "siteName": "Al Aqsa Umrah Transport",
+    "description": "Premium Umrah Taxi Service & Car Rental in Saudi Arabia",
+    "footerText": "© 2024 Al Aqsa Transport. All rights reserved.",
+    "logo": ""
+  },
+  "contact": {
+    "email": "meharzubair703@gmail.com",
+    "phone": "+92 3260600676",
+    "address": "Makkah, Saudi Arabia",
+    "whatsapp": "+92 3235013679",
+    "social": {
+      "facebook": "https://www.facebook.com/profile.php?id=61584316056518",
+      "twitter": "",
+      "instagram": "https://www.instagram.com/al_aqsa_umrah_transport?igsh=MXZtNTAyNmw0ZmsxYg=="
+    }
+  },
+  "seo": {
+    "defaultTitle": "Al Aqsa Umrah Transport",
+    "defaultDescription": "Reliable Umrah taxi service in Makkah and Madinah.",
+    "keywords": "umrah taxi, makkah transport, jeddah airport transfer"
+  },
+  "appearance": {
+    "darkMode": false,
+    "primaryColor": "#D4AF37"
+  }
+}

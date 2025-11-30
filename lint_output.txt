@@ -1,0 +1,125 @@
+﻿
+> transport@0.1.0 lint
+> eslint
+
+
+C:\Users\zubii\Desktop\transport\src\app\about\page.tsx
+  46:0  error  Parsing error: ',' expected
+
+C:\Users\zubii\Desktop\transport\src\app\booking\page.tsx
+  24:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zubii\Desktop\transport\src\app\page.tsx
+  3:8  warning  'Image' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\services\page.tsx
+  57:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zubii\Desktop\transport\src\components\CompanyStory.tsx
+  20:101  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  25:33   error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  25:40   error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  25:119  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\zubii\Desktop\transport\src\components\TrustSection.tsx
+  13:25  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:66  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  15:76  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\zubii\Desktop\transport\src\components\about\CoreValues.tsx
+  20:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zubii\Desktop\transport\src\components\about\ImpactStats.tsx
+  16:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zubii\Desktop\transport\src\components\about\ImpactStats.tsx:16:13
+  14 |     useEffect(() => {
+  15 |         if (isIntersecting && !hasAnimated) {
+> 16 |             setHasAnimated(true);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  17 |             let startTime: number | null = null;
+  18 |             const step = (timestamp: number) => {
+  19 |                 if (!startTime) startTime = timestamp;  react-hooks/set-state-in-effect
+  30:30  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-explicit-any
+
+C:\Users\zubii\Desktop\transport\src\components\about\Leadership.tsx
+   5:10  warning  'Quote' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  45:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zubii\Desktop\transport\src\components\about\MissionVision.tsx
+  13:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zubii\Desktop\transport\src\components\about\PilgrimVoices.tsx
+  19:57  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  34:56  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  34:98  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\zubii\Desktop\transport\src\components\about\TrustSection.tsx
+  15:25  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  15:50  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\zubii\Desktop\transport\src\components\fleet\ComparisonTable.tsx
+  5:10  warning  'Check' is defined but never used  @typescript-eslint/no-unused-vars
+  5:17  warning  'X' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\fleet\FleetShowcase.tsx
+  46:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zubii\Desktop\transport\src\components\home\FleetCarousel.tsx
+   4:28  warning  'Wifi' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   4:34  warning  'Wind' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  70:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zubii\Desktop\transport\src\components\home\Testimonials.tsx
+  50:33  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  50:52  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\zubii\Desktop\transport\src\context\LanguageContext.tsx
+  34:13  error  Error: Cannot access variable before it is declared
+
+`setLanguage` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\zubii\Desktop\transport\src\context\LanguageContext.tsx:34:13
+  32 |         const savedLang = localStorage.getItem('language') as Language;
+  33 |         if (savedLang && ['en', 'ar', 'ur'].includes(savedLang)) {
+> 34 |             setLanguage(savedLang);
+     |             ^^^^^^^^^^^ `setLanguage` accessed before it is declared
+  35 |         }
+  36 |     }, []);
+  37 |
+
+C:\Users\zubii\Desktop\transport\src\context\LanguageContext.tsx:38:5
+  36 |     }, []);
+  37 |
+> 38 |     const setLanguage = (lang: Language) => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 39 |         setLanguageState(lang);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 40 |         const dir = lang === 'en' ? 'ltr' : 'rtl';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |         setDirection(dir);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |         localStorage.setItem('language', lang);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 43 |         document.documentElement.dir = dir;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |         document.documentElement.lang = lang;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 45 |     };
+     | ^^^^^^^ `setLanguage` is declared here
+  46 |
+  47 |     const t = (path: string, defaultValue?: string) => {
+  48 |         const keys = path.split('.');  react-hooks/immutability
+  49:22  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+C:\Users\zubii\Desktop\transport\src\hooks\useIntersectionObserver.ts
+  18:47  warning  The ref value 'elementRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'elementRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+Γ£û 33 problems (22 errors, 11 warnings)
+

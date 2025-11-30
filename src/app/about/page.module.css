@@ -1,0 +1,285 @@
+.header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark, color-mix(in srgb, var(--primary) 80%, black)) 100%);
+    color: white;
+    padding: clamp(3rem, 8vw, 6rem) 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    position: relative;
+    display: inline-block;
+}
+
+.title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4rem;
+    height: 0.25rem;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    border-radius: 2px;
+}
+
+.subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    opacity: 0.9;
+    max-width: min(600px, 90%);
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.section {
+    padding: clamp(3rem, 6vw, 5rem) 1rem;
+    position: relative;
+}
+
+.section:nth-child(even) {
+    background: linear-gradient(to bottom, var(--background) 0%, var(--muted) 50%, var(--background) 100%);
+}
+
+.content {
+    max-width: min(800px, 90%);
+    margin: 0 auto;
+    line-height: 1.7;
+    color: var(--foreground);
+}
+
+.content h2 {
+    color: var(--primary);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin: 3rem 0 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    position: relative;
+    display: inline-block;
+}
+
+.content h2::before {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 3rem;
+    height: 0.1875rem;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    border-radius: 2px;
+}
+
+.content p {
+    margin-bottom: 1.75rem;
+    font-size: 1.125rem;
+    color: var(--foreground-muted, color-mix(in srgb, var(--foreground) 80%, transparent));
+}
+
+.content p:last-child {
+    margin-bottom: 0;
+}
+
+.missionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.missionCard {
+    background: linear-gradient(145deg, var(--card) 0%, color-mix(in srgb, var(--card) 95%, white) 100%);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: var(--radius-lg, 1rem);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 2px 4px -1px rgba(0, 0, 0, 0.03),
+        0 0 0 1px var(--border);
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.missionCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.25rem;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.missionCard:hover {
+    transform: translateY(-0.5rem);
+    box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.08),
+        0 10px 10px -5px rgba(0, 0, 0, 0.02),
+        0 0 0 1px var(--primary);
+}
+
+.missionCard:hover::before {
+    transform: scaleX(1);
+}
+
+.missionCard:focus-within {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.missionTitle {
+    color: var(--secondary);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.missionTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 2rem;
+    height: 0.125rem;
+    background: var(--secondary);
+    opacity: 0.3;
+    border-radius: 2px;
+}
+
+/* Animation classes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-animation>* {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-animation>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.stagger-animation>*:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.stagger-animation>*:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .missionCard {
+        transition: none;
+    }
+
+    .animate-in,
+    .stagger-animation>* {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .missionCard {
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.2),
+            0 2px 4px -1px rgba(0, 0, 0, 0.1),
+            0 0 0 1px var(--border);
+    }
+
+    .missionCard:hover {
+        box-shadow:
+            0 20px 25px -5px rgba(0, 0, 0, 0.3),
+            0 10px 10px -5px rgba(0, 0, 0, 0.1),
+            0 0 0 1px var(--primary);
+    }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+    .missionCard {
+        border: 2px solid var(--border);
+    }
+
+    .missionCard:hover {
+        border: 2px solid var(--primary);
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .missionGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .missionCard {
+        padding: 1.5rem;
+    }
+
+    .content h2::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Print styles */
+@media print {
+    .header {
+        background: none;
+        color: black;
+        padding: 2rem 0;
+    }
+
+    .missionCard {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+    }
+
+    .missionCard:hover {
+        transform: none;
+    }
+}

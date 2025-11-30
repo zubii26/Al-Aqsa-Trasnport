@@ -1,0 +1,126 @@
+.featuredSection {
+    margin-bottom: 6rem;
+}
+
+.featuredCard {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    background: #ffffff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    text-decoration: none;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.featuredCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.15);
+}
+
+.featuredImage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.featuredImage img {
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.featuredCard:hover .featuredImage img {
+    transform: scale(1.05);
+}
+
+.featuredContent {
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    position: relative;
+}
+
+.featuredLabel {
+    display: inline-block;
+    background: #0f172a;
+    color: #D4AF37;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    align-self: flex-start;
+}
+
+.category {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.featuredTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.featuredExcerpt {
+    font-size: 1.25rem;
+    color: #475569;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+.readMore {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    transition: gap 0.3s ease;
+}
+
+.featuredCard:hover .readMore {
+    gap: 0.8rem;
+    color: #D4AF37;
+}
+
+@media (max-width: 1024px) {
+    .featuredCard {
+        grid-template-columns: 1fr;
+    }
+
+    .featuredImage {
+        aspect-ratio: 16/9;
+        min-height: auto;
+    }
+
+    .featuredContent {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .featuredContent {
+        padding: 2rem;
+    }
+
+    .featuredTitle {
+        font-size: 2.25rem;
+    }
+}

@@ -1,0 +1,214 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "services": "Services",
+        "fleet": "Fleet",
+        "contact": "Contact",
+        "blog": "Blog",
+        "bookNow": "Book Now",
+        "switchLang": "Switch Language"
+    },
+    "common": {
+        "scrollDown": "Scroll Down"
+    },
+    "footer": {
+        "tagline": "Your Journey of Faith, Our Trusted Transport.",
+        "quickLinks": "Quick Links",
+        "connect": "Connect With Us",
+        "subscribe": "Subscribe to our Newsletter",
+        "enterEmail": "Enter your email",
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions",
+        "rights": "Al Aqsa Umrah Transport. All rights reserved."
+    },
+    "fleet": {
+        "hero": {
+            "title": "Our Modern Fleet",
+            "subtitle": "Comfort & Safety for Every Pilgrim. Choose from our range of buses, vans, and VIP cars.",
+            "cta": "Reserve Your Ride"
+        },
+        "showcase": {
+            "title": "Our Premium Fleet",
+            "subtitle": "Choose from our wide range of luxury vehicles",
+            "bookNow": "Book Now",
+            "features": "Key Features",
+            "passengers": "Passengers",
+            "luggage": "Luggage"
+        },
+        "vehicles": {
+            "camry": {
+                "name": "Toyota Camry",
+                "model": "Toyota Camry 2024",
+                "features": [
+                    "Air Conditioning",
+                    "Comfortable Seating",
+                    "USB Charging"
+                ]
+            },
+            "starex": {
+                "name": "Hyundai Starex",
+                "model": "Hyundai Starex",
+                "features": [
+                    "Spacious Interior",
+                    "AC Vents for Rear",
+                    "Sliding Doors"
+                ]
+            },
+            "staria": {
+                "name": "Hyundai Staria",
+                "model": "Hyundai Staria",
+                "features": [
+                    "Modern Design",
+                    "Panoramic Windows",
+                    "Premium Comfort"
+                ]
+            },
+            "gmc": {
+                "name": "GMC Yukon",
+                "model": "GMC Yukon / Chevrolet Tahoe",
+                "features": [
+                    "Leather Seats",
+                    "Spacious Interior",
+                    "Premium Sound",
+                    "WiFi"
+                ]
+            },
+            "hiace": {
+                "name": "Toyota Hiace",
+                "model": "Toyota HiAce",
+                "features": [
+                    "High Roof",
+                    "Ample Legroom",
+                    "Perfect for Families"
+                ]
+            },
+            "coaster": {
+                "name": "Toyota Coaster",
+                "model": "Toyota Coaster",
+                "features": [
+                    "Microphone",
+                    "Curtains",
+                    "Reclining Seats"
+                ]
+            }
+        },
+        "comparison": {
+            "title": "Compare Our Premium Fleet",
+            "type": "Vehicle Type",
+            "capacity": "Capacity",
+            "comfort": "Comfort",
+            "price": "Price Range"
+        },
+        "highlights": {
+            "safety": "Safety First",
+            "safetyDesc": "Licensed drivers and insured vehicles.",
+            "comfort": "Premium Comfort",
+            "comfortDesc": "Luxury interiors for a relaxing journey.",
+            "reliability": "Reliability",
+            "reliabilityDesc": "Always on time, every time.",
+            "hospitality": "Hospitality",
+            "hospitalityDesc": "Serving pilgrims with sincerity."
+        },
+        "booking": {
+            "title": "Ready to Book?",
+            "subtitle": "Secure your transport today.",
+            "cta": "Confirm Booking"
+        }
+    },
+    "about": {
+        "hero": {
+            "title": "Serving Pilgrims with Sincerity and Excellence",
+            "subtitle": "Your journey of faith deserves comfort, safety, and care."
+        },
+        "welcome": {
+            "title": "Welcome to Al Aqsa Umrah Transport",
+            "subtitle": "Your trusted partner in pilgrim travel across Saudi Arabia.",
+            "intro": "We specialize in providing **safe, comfortable, and affordable Umrah transport services** for pilgrims traveling to Makkah, Madinah, and beyond.",
+            "mission": "Serving the Guests of Allah with comfort and care is our mission.",
+            "description": "Our fleet of modern buses and vans ensures **stress‑free travel from Jeddah airport to Makkah and Madinah**, with professional drivers dedicated to hospitality and punctuality. Whether you are traveling solo, with family, or in large groups, Al Aqsa Umrah Transport offers **customized packages** to meet your needs.",
+            "whyChooseUs": {
+                "title": "Why Choose Us?",
+                "items": [
+                    "**Reliable pilgrim transport** across Saudi Arabia",
+                    "**Specialized routes for Umrah pilgrims** (Makkah, Madinah, Jeddah)",
+                    "**Comfortable seating and air‑conditioned vehicles**",
+                    "**Affordable packages with transparent pricing**",
+                    "**Spiritual commitment to serving the Guests of Allah**"
+                ]
+            },
+            "quranQuote": "“And proclaim to the people the Hajj; they will come to you on foot and on every lean camel; they will come from every distant pass.” – Qur’an (22:27)",
+            "conclusion": "At Al Aqsa Umrah Transport, we believe that every journey to the holy cities should be filled with peace, comfort, and trust. That’s why we are committed to being the **leading Umrah transport company in Saudi Arabia**."
+        },
+        "story": {
+            "title": "Our Sacred Journey",
+            "tagline": "From vision to service, guided by faith and dedication.",
+            "timeline": {
+                "2015": {
+                    "title": "The Beginning",
+                    "desc": "Founded with a sincere intention to serve the guests of Allah."
+                },
+                "2018": {
+                    "title": "Growing Trust",
+                    "desc": "Expanded our fleet to meet the growing needs of pilgrims."
+                },
+                "2020": {
+                    "title": "Resilience & Care",
+                    "desc": "Maintained highest safety standards during challenging times."
+                },
+                "2024": {
+                    "title": "Excellence in Motion",
+                    "desc": "Recognized for premium hospitality and reliable transport."
+                }
+            }
+        },
+        "missionVision": {
+            "mission": "Our Mission",
+            "missionDesc": "To provide safe, reliable, and spiritually aligned transport for every pilgrim.",
+            "vision": "Our Vision",
+            "visionDesc": "To be the most trusted Umrah transport provider in Saudi Arabia."
+        },
+        "values": {
+            "title": "Our Core Values",
+            "subtitle": "The principles that guide every journey we serve.",
+            "safety": "Safety",
+            "safetyDesc": "Rigorous maintenance and trained professionals for your peace of mind.",
+            "reliability": "Reliability",
+            "reliabilityDesc": "Punctual service honoring the value of your time and ibadah.",
+            "hospitality": "Hospitality",
+            "hospitalityDesc": "Welcoming every pilgrim with warmth, respect, and care.",
+            "spiritual": "Spiritual Care",
+            "spiritualDesc": "Understanding the sanctity of your journey and serving with ehsan."
+        },
+        "trust": {
+            "quote": "وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ",
+            "source": "Surah Al-Ma'idah [5:2]"
+        },
+        "cta": {
+            "title": "Ready to Start Your Journey?",
+            "subtitle": "Ready to experience the difference? Join thousands of satisfied customers.",
+            "bookNow": "Book Now",
+            "exploreFleet": "Explore Our Fleet",
+            "trustedBy": "Trusted By"
+        },
+        "team": {
+            "title": "Our Professional Team",
+            "subtitle": "Dedicated experts committed to ensuring your journey is safe, comfortable, and spiritually fulfilling.",
+            "driver": "Expert Chauffeur",
+            "support": "Guest Relations"
+        },
+        "testimonials": {
+            "title": "Voices of the Faithful",
+            "subtitle": "Hear from those who have entrusted us with their sacred journey.",
+            "1": {
+                "text": "The journey was spiritual and seamless. The drivers were respectful and punctual."
+            },
+            "2": {
+                "text": "I felt safe and cared for throughout my Umrah. Highly recommended for families."
+            },
+            "3": {
+                "text": "Excellent service! The cars were clean and comfortable. A truly premium experience."
+            }
+        }
+    }
+}

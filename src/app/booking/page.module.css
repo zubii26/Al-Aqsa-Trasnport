@@ -1,0 +1,1004 @@
+.hero {
+    padding: 8rem 0 6rem;
+    min-height: 100vh;
+    background: radial-gradient(circle at top center, #f8fafc 0%, #e2e8f0 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.heroContent {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Left Column */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.heroTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.heroSubtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Wizard Container */
+.wizard {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Progress Steps */
+.progressContainer {
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.activeStep {
+    opacity: 1;
+}
+
+.stepNumber {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 2px solid #cbd5e1;
+}
+
+.activeStep .stepNumber {
+    background: #D4AF37;
+    color: #ffffff;
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+}
+
+.step span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.activeStep span {
+    color: #0f172a;
+}
+
+.stepLine {
+    flex-grow: 1;
+    height: 2px;
+    background: #e2e8f0;
+    margin: 0 1rem;
+    margin-bottom: 1.5rem;
+    /* Align with circle center */
+}
+
+/* Step Content */
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.stepContainer {
+    animation: fadeIn 0.5s ease;
+}
+
+.stepTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Route Selection */
+.dropdownContainer {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.customSelect {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.selectTrigger {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.selectTrigger:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.selectTriggerOpen {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.selectedValue {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.selectMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.selectOption {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.selectOption:last-child {
+    border-bottom: none;
+}
+
+.selectOption:hover {
+    background: #f8fafc;
+}
+
+.selectedOption {
+    background: #f0f9ff;
+}
+
+.optionIcon {
+    width: 36px;
+    height: 36px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.selectedOption .optionIcon {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.optionContent {
+    flex-grow: 1;
+}
+
+.optionName {
+    display: block;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.2rem;
+}
+
+.optionMeta {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.routeInfoCard {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.infoRow:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.infoLabel {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.infoValue {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* Vehicle Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.optionCard {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.optionCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+}
+
+.selectedCard {
+    border-color: #D4AF37;
+    background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+}
+
+.selectedCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #D4AF37;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.cardIcon {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.selectedCard .cardIcon {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+}
+
+.priceValue {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1.1rem;
+}
+
+.cardContent h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #0f172a;
+}
+
+.cardSubtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.vehicleFeatures {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.featureItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Form Styles */
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input {
+    padding: 0.875rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    outline: none;
+    background: #ffffff;
+}
+
+.input:focus {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* Summary Step */
+.summaryCard {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+}
+
+.summarySection {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.summarySection h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.summaryRow span {
+    color: #64748b;
+}
+
+.summaryRow strong {
+    color: #0f172a;
+}
+
+.summaryTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+}
+
+.summaryTotal span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.summaryTotalAmount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #D4AF37;
+}
+
+/* Success Message */
+.successMessage {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.successIcon {
+    width: 100px;
+    height: 100px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+}
+
+.successMessage h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+.successMessage p {
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.bookingRef {
+    background: #f1f5f9;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 2rem;
+}
+
+.bookingRef span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+}
+
+.bookingRef strong {
+    font-size: 1.5rem;
+    color: #0f172a;
+    letter-spacing: 0.1em;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.backBtn {
+    padding: 0.875rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #64748b;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.backBtn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.nextBtn {
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.nextBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.nextBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: 6rem;
+}
+
+.sidebarContent {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebarTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sidebarItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.sidebarLabel {
+    color: #64748b;
+}
+
+.sidebarValue {
+    font-weight: 600;
+    color: #0f172a;
+    text-align: right;
+}
+
+.sidebarTotal {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalAmount {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #D4AF37;
+}
+
+.sidebarNote {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.trustIndicators {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.trustItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+    .heroContent {
+        grid-template-columns: 1fr;
+    }
+
+    .leftColumn {
+        text-align: center;
+    }
+
+    .wizard {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero {
+        padding: 6rem 0 4rem;
+    }
+
+    .wizard {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .heroTitle {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+
+    .stepTitle {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .col-span-2 {
+        grid-column: span 1;
+    }
+
+    .steps {
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .stepNumber {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .step span {
+        display: none;
+    }
+
+    .optionCard {
+        padding: 1rem;
+    }
+
+    .cardIcon {
+        padding: 0.5rem;
+    }
+
+    .cardIcon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .backBtn {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .nextBtn {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
+    }
+}
+
+/* Dark Mode Overrides */
+:global(.dark) .hero {
+    background: radial-gradient(circle at top center, #0f172a 0%, #020617 100%);
+}
+
+:global(.dark) .hero::before {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+}
+
+:global(.dark) .heroTitle {
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+:global(.dark) .heroSubtitle {
+    color: #94a3b8;
+}
+
+:global(.dark) .wizard {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+:global(.dark) .stepNumber {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+:global(.dark) .activeStep .stepNumber {
+    background: #D4AF37;
+    border-color: #D4AF37;
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+}
+
+:global(.dark) .stepLine {
+    background: #334155;
+}
+
+:global(.dark) .step span {
+    color: #94a3b8;
+}
+
+:global(.dark) .activeStep span {
+    color: #f8fafc;
+}
+
+:global(.dark) .stepTitle {
+    color: #f8fafc;
+}
+
+:global(.dark) .selectTrigger,
+:global(.dark) .selectMenu,
+:global(.dark) .optionCard,
+:global(.dark) .input,
+:global(.dark) .sidebarContent {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f8fafc;
+}
+
+:global(.dark) .selectTrigger:hover,
+:global(.dark) .optionCard:hover {
+    border-color: #475569;
+}
+
+:global(.dark) .selectOption:hover {
+    background: #334155;
+}
+
+:global(.dark) .selectedOption {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+:global(.dark) .selectedOption .optionIcon {
+    background: rgba(212, 175, 55, 0.2);
+    color: #D4AF37;
+}
+
+:global(.dark) .optionIcon,
+:global(.dark) .cardIcon {
+    background: #0f172a;
+    color: #94a3b8;
+}
+
+:global(.dark) .selectedValue,
+:global(.dark) .optionName,
+:global(.dark) .infoValue,
+:global(.dark) .priceValue,
+:global(.dark) .cardContent h3,
+:global(.dark) .sidebarValue,
+:global(.dark) .sidebarTitle,
+:global(.dark) .summarySection h3,
+:global(.dark) .summaryRow strong,
+:global(.dark) .bookingRef strong,
+:global(.dark) .successMessage h2 {
+    color: #f8fafc;
+}
+
+:global(.dark) .optionMeta,
+:global(.dark) .infoLabel,
+:global(.dark) .cardSubtitle,
+:global(.dark) .featureItem,
+:global(.dark) .label,
+:global(.dark) .sidebarLabel,
+:global(.dark) .summaryRow span,
+:global(.dark) .bookingRef span,
+:global(.dark) .successMessage p {
+    color: #94a3b8;
+}
+
+:global(.dark) .routeInfoCard,
+:global(.dark) .summaryCard,
+:global(.dark) .bookingRef {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+:global(.dark) .infoRow,
+:global(.dark) .selectOption,
+:global(.dark) .summarySection,
+:global(.dark) .sidebarTitle {
+    border-color: #334155;
+}
+
+:global(.dark) .selectedCard {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, #1e293b 100%);
+    border-color: #D4AF37;
+}
+
+:global(.dark) .selectedCard .cardIcon {
+    background: rgba(212, 175, 55, 0.2);
+    color: #D4AF37;
+}
+
+:global(.dark) .input::placeholder {
+    color: #64748b;
+}
+
+:global(.dark) .input:focus {
+    border-color: #D4AF37;
+    background: #1e293b;
+}
+
+:global(.dark) .sidebarNote {
+    background: #0f172a;
+    color: #94a3b8;
+}
+
+:global(.dark) .sidebarTotal {
+    border-color: #334155;
+}
+
+:global(.dark) .backBtn {
+    color: #94a3b8;
+}
+
+:global(.dark) .backBtn:hover {
+    background: #334155;
+    color: #f8fafc;
+}
+
+:global(.dark) .actions {
+    border-color: #334155;
+}
+
+:global(.dark) .successIcon {
+    background: rgba(22, 163, 74, 0.2);
+    color: #4ade80;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none !important;
+    }
+}
+
+/* Error Styles */
+.input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.errorMessage {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Input Wrapper for Date/Time */
+.inputWrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.inputIcon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.inputWrapper:hover .inputIcon,
+.input:focus+.inputIcon {
+    color: #D4AF37;
+}
+
+/* Hide default calendar icon */
+.input::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    z-index: 1;
+}

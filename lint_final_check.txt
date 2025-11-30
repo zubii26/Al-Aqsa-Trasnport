@@ -1,0 +1,68 @@
+
+> transport@0.1.0 lint
+> eslint
+
+
+C:\Users\zubii\Desktop\transport\src\app\about\page.tsx
+  5:10  warning  'useLanguage' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\admin\bookings\page.tsx
+  6:8  warning  'adminStyles' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\admin\fleet\page.tsx
+  5:49  warning  'Car' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\api\fleet\[id]\route.ts
+  13:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  26:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\api\fleet\route.ts
+  14:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\blog\[slug]\page.tsx
+    4:44  warning  'BookOpen' is defined but never used  @typescript-eslint/no-unused-vars
+  220:57  warning  'index' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\booking\page.tsx
+  5:10   warning  'Plane' is defined but never used        @typescript-eslint/no-unused-vars
+  5:17   warning  'Map' is defined but never used          @typescript-eslint/no-unused-vars
+  5:22   warning  'Car' is defined but never used          @typescript-eslint/no-unused-vars
+  5:151  warning  'Wifi' is defined but never used         @typescript-eslint/no-unused-vars
+  5:157  warning  'Wind' is defined but never used         @typescript-eslint/no-unused-vars
+  8:44   warning  'Route' is defined but never used        @typescript-eslint/no-unused-vars
+  8:51   warning  'Vehicle' is defined but never used      @typescript-eslint/no-unused-vars
+  9:10   warning  'saveBooking' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\app\services\page.tsx
+  4:8  warning  'Image' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\about\Leadership.tsx
+  5:10  warning  'Quote' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\common\Preloader.tsx
+  5:8  warning  'styles' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\contact\ContactForm.tsx
+  32:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\fleet\ComparisonTable.tsx
+  5:10  warning  'Check' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\home\AIChatBox.tsx
+   22:13  warning  't' is assigned a value but never used                                                                                                         @typescript-eslint/no-unused-vars
+   96:13  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/set-state-in-effect')
+   99:8   warning  React Hook useEffect has a missing dependency: 'initializeGreeting'. Either include it or remove the dependency array                          react-hooks/exhaustive-deps
+  114:8   warning  React Hook useEffect has missing dependencies: 'initializeGreeting' and 'messages.length'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\zubii\Desktop\transport\src\components\home\InstantPriceCalculator.tsx
+  15:12  warning  'isAnimating' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\home\LatestArticles.tsx
+  4:29  warning  'BookOpen' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zubii\Desktop\transport\src\components\home\QuickBookingForm.tsx
+  2:20  warning  'MapPin' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 28 problems (0 errors, 28 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

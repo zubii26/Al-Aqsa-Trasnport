@@ -1,0 +1,216 @@
+.carouselSection {
+    padding: 6rem 0;
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    position: relative;
+    overflow: hidden;
+}
+
+.carouselSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.sectionHeader {
+    margin-bottom: 4rem;
+}
+
+.decorativeIcon {
+    color: #D4AF37;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    font-family: var(--font-serif, serif);
+    /* Use a serif font if available */
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.carouselContainer {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.cardWrapper {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.hadithCard {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 4rem;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+}
+
+/* Islamic Geometric Pattern Background */
+.hadithCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(#D4AF37 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.03;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hadithCard::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 16px;
+    pointer-events: none;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 1;
+}
+
+.quoteIcon {
+    color: #D4AF37;
+    opacity: 0.2;
+    margin-bottom: 1.5rem;
+}
+
+.hadithText {
+    font-size: 1.75rem;
+    line-height: 1.6;
+    color: #1e293b;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    font-family: 'Times New Roman', serif;
+    /* Fallback to a classic serif */
+    font-style: italic;
+}
+
+.hadithSource {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.sourceName {
+    color: #D4AF37;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.narrator {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.controlButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.controlButton:hover {
+    background: #D4AF37;
+    color: #ffffff;
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.2);
+}
+
+.indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #D4AF37;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .hadithCard {
+        padding: 2rem;
+    }
+
+    .hadithText {
+        font-size: 1.25rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}

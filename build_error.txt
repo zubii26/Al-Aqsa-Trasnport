@@ -1,0 +1,25 @@
+
+> transport@0.1.0 build
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.4 (Turbopack)
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Compiled successfully in 11.4s
+   Running TypeScript ...
+Failed to compile.
+
+./src/context/LanguageContext.tsx:23:5
+Type error: Property '"common"' is missing in type '{ nav: { home: string; about: string; services: string; fleet: string; contact: string; blog: string; bookNow: string; switchLang: string; }; hero: { title: string; subtitle: string; bookRide: string; viewServices: string; }; footer: { ...; }; fleet: { ...; }; about: { ...; }; }' but required in type '{ nav: { home: string; about: string; services: string; fleet: string; contact: string; blog: string; bookNow: string; switchLang: string; }; common: { scrollDown: string; }; footer: { tagline: string; quickLinks: string; ... 5 more ...; rights: string; }; fleet: { ...; }; about: { ...; }; }'.
+
+[0m [90m 21 |[39m [36mconst[39m translations[33m:[39m [33mRecord[39m[33m<[39m[33mLanguage[39m[33m,[39m [33mTranslations[39m[33m>[39m [33m=[39m {
+ [90m 22 |[39m     en[33m,[39m
+[31m[1m>[22m[39m[90m 23 |[39m     ar[33m,[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 24 |[39m     ur[33m,[39m
+ [90m 25 |[39m }[33m;[39m
+ [90m 26 |[39m[0m
+Next.js build worker exited with code: 1 and signal: null

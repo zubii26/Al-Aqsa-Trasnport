@@ -1,0 +1,159 @@
+.tipsSection {
+    padding: 10rem 0;
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background element */
+.tipsSection::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.tipsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tipCard {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tipCard:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Gold accent line on top */
+.tipCard::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #D4AF37;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.tipCard:hover::after {
+    transform: scaleX(1);
+}
+
+.tipImageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+}
+
+.tipImageWrapper img {
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tipCard:hover .tipImageWrapper img {
+    transform: scale(1.1);
+}
+
+.tipIcon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    color: #64748b;
+    transition: all 0.4s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.tipCard:hover .tipIcon {
+    background: #0f172a;
+    color: #D4AF37;
+    border-color: #0f172a;
+    transform: rotate(3deg);
+}
+
+.tipTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.tipCard:hover .tipTitle {
+    color: #D4AF37;
+}
+
+.tipText {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    font-weight: 300;
+    flex-grow: 1;
+}
+
+/* Number indicator for steps/tips */
+.tipNumber {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 4rem;
+    font-weight: 900;
+    color: #f1f5f9;
+    line-height: 1;
+    z-index: 0;
+    transition: color 0.4s ease;
+    font-family: var(--font-inter);
+    /* Ensure sans-serif */
+}
+
+.tipCard:hover .tipNumber {
+    color: rgba(212, 175, 55, 0.1);
+}
+
+.contentWrapper {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .tipsSection {
+        padding: 6rem 0;
+    }
+
+    .tipsGrid {
+        grid-template-columns: 1fr;
+    }
+}

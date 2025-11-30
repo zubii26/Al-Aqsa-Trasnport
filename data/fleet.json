@@ -1,0 +1,93 @@
+[
+  {
+    "id": "camry",
+    "name": "Toyota Camry",
+    "image": "/images/fleet/camry.png",
+    "passengers": 4,
+    "luggage": 2,
+    "features": [
+      "Comfort",
+      "AC",
+      "USB"
+    ],
+    "price": "From SAR 200"
+  },
+  {
+    "id": "coaster",
+    "name": "Toyota Coaster",
+    "image": "/images/fleet/coaster.png",
+    "passengers": 22,
+    "luggage": 15,
+    "features": [
+      "Large Group",
+      "AC",
+      "Mic"
+    ],
+    "price": "From SAR 400"
+  },
+  {
+    "id": "gmc",
+    "name": "GMC Yukon",
+    "image": "/images/fleet/gmc.png",
+    "passengers": 7,
+    "luggage": 5,
+    "features": [
+      "Luxury",
+      "Leather",
+      "WiFi"
+    ],
+    "price": "From SAR 350"
+  },
+  {
+    "id": "hiace",
+    "name": "Toyota Hiace",
+    "image": "/images/fleet/hiace.png",
+    "passengers": 13,
+    "luggage": 10,
+    "features": [
+      "Spacious",
+      "AC",
+      "Reliable"
+    ],
+    "price": "From SAR 250"
+  },
+  {
+    "id": "staria",
+    "name": "Hyundai Staria",
+    "image": "/images/fleet/staria.png",
+    "passengers": 7,
+    "luggage": 4,
+    "features": [
+      "Modern",
+      "Comfort",
+      "Tech"
+    ],
+    "price": "From SAR 300"
+  },
+  {
+    "id": "starex",
+    "name": "Hyundai Starex",
+    "image": "/images/fleet/starex.png",
+    "passengers": 7,
+    "luggage": 4,
+    "features": [
+      "Spacious",
+      "AC",
+      "Sliding Doors"
+    ],
+    "price": "From SAR 250"
+  },
+  {
+    "name": "Grandy",
+    "image": "/images/fleet/camry.png",
+    "passengers": 4,
+    "luggage": 2,
+    "features": [
+      "Comfort",
+      "AC",
+      "USB"
+    ],
+    "price": "From SAR 200",
+    "id": "lezrmvjhs"
+  }
+]

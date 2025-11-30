@@ -1,0 +1,18 @@
+[
+  {
+    "id": "6cb26c2c-630a-4c46-a336-9743fafb0fd5",
+    "action": "UPDATE_SETTINGS",
+    "details": "Site settings updated",
+    "timestamp": "2025-11-29T16:06:46.981Z",
+    "ip": "::1",
+    "user": "Admin"
+  },
+  {
+    "id": "3d6ef3d8-8805-40d9-8100-f0c292be7d71",
+    "action": "UPDATE_SETTINGS",
+    "details": "Site settings updated",
+    "timestamp": "2025-11-29T13:13:20.229Z",
+    "ip": "::1",
+    "user": "Admin"
+  }
+]
