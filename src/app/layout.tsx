@@ -93,7 +93,12 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     icons: {
       icon: '/favicon.png',
+      shortcut: '/favicon.png',
       apple: '/logo.png',
+      other: {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/logo.png',
+      },
     },
     verification: {
       google: '0JYg8N3CPUFhzseUIrbhKiLIShx1ltrIF0XoXVsO7-I',
