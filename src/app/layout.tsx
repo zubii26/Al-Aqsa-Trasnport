@@ -40,13 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
   return {
-    metadataBase: new URL('https://alaqsa-transport.com'),
+    metadataBase: new URL('https://alaqsaumrahtransport.com'),
     title: {
       default: settings.seo.defaultTitle,
       template: `%s | ${settings.general.siteName}`
     },
     alternates: {
-      canonical: 'https://alaqsa-transport.com',
+      canonical: 'https://alaqsaumrahtransport.com',
     },
     description: settings.seo.defaultDescription,
     keywords: settings.seo.keywords.split(',').map(k => k.trim()),
@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: settings.seo.defaultTitle,
       description: settings.seo.defaultDescription,
-      url: "https://alaqsa-transport.com",
+      url: "https://alaqsaumrahtransport.com",
       siteName: settings.general.siteName,
       images: [
         {

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { blogService } from '@/services/blogService';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://alaqsa-transport.com';
+    const baseUrl = 'https://alaqsaumrahtransport.com';
 
     const staticRoutes: MetadataRoute.Sitemap = [
         {
