@@ -95,6 +95,9 @@ export async function generateMetadata(): Promise<Metadata> {
       icon: '/favicon.png',
       apple: '/logo.png',
     },
+    verification: {
+      google: '0JYg8N3CPUFhzseUIrbhKiLIShx1ltrIF0XoXVsO7-I',
+    },
   };
 }
 
