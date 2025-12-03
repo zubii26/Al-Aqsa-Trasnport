@@ -62,6 +62,12 @@ export default function GalleryPage() {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        // Check file size (max 4MB for Vercel Serverless)
+        if (file.size > 4 * 1024 * 1024) {
+            showToast('Image size must be less than 4MB', 'error');
+            return;
+        }
+
         setUploading(true);
         const formData = new FormData();
         formData.append('file', file);
