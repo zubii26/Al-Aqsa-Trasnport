@@ -58,10 +58,10 @@ export async function POST(request: NextRequest) {
             success: true
         });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error('Upload error details:', error);
         return NextResponse.json(
-            { error: `Upload failed: ${error.message || JSON.stringify(error)}` },
+            { error: `Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}` },
             { status: 500 }
         );
     }
