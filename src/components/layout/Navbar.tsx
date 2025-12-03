@@ -24,6 +24,18 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Prevent body scroll when menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMenuOpen]);
+
     const links = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About Us' },
@@ -129,13 +141,15 @@ export default function Navbar() {
                         <ThemeToggle />
                     </div>
 
-                    <Link
+                    <GlassButton
                         href="/booking"
-                        className="btn btn-secondary w-full text-center justify-center"
+                        variant="primary"
+                        size="lg"
+                        className="w-full justify-center shadow-lg"
                         onClick={() => setIsMenuOpen(false)}
                     >
                         Book Now
-                    </Link>
+                    </GlassButton>
                 </div>
             </div>
         </nav>

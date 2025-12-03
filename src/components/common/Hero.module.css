@@ -40,12 +40,21 @@
     left: 0;
     right: 0;
     bottom: 0;
+    /* Light Mode Overlay (Default) - Deep Navy Professional */
+    background: linear-gradient(to right,
+            rgba(10, 31, 68, 0.9) 0%,
+            rgba(10, 31, 68, 0.75) 50%,
+            rgba(10, 31, 68, 0.6) 100%);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+}
+
+:global(.dark) .overlay {
+    /* Dark Mode Overlay */
     background: linear-gradient(to right,
             rgba(10, 25, 47, 0.85) 0%,
             rgba(10, 25, 47, 0.7) 50%,
             rgba(10, 25, 47, 0.6) 100%);
-    /* Keep overlay dark for contrast with text */
-    z-index: 1;
 }
 
 .badge {
@@ -55,13 +64,18 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(251, 191, 36, 0.3);
     border-radius: 9999px;
-    color: #fbbf24;
+    color: #d97706;
+    /* Darker amber for light mode */
     font-weight: 600;
     font-size: 0.85rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 2rem;
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+}
+
+:global(.dark) .badge {
+    color: #fbbf24;
 }
 
 .content {
@@ -84,14 +98,25 @@
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
+
+    /* Light Mode Title - White on Navy */
+    color: #ffffff;
+    background: linear-gradient(to right, #ffffff 30%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+:global(.dark) .title {
+    /* Dark Mode Title */
     color: white;
-    /* Always white on hero image */
     background: linear-gradient(to right, #ffffff 30%, #fbbf24 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -102,8 +127,16 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+
+    /* Light Mode Subtitle - Light on Navy */
     color: rgba(255, 255, 255, 0.9);
-    /* Always light on hero */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 400;
+}
+
+:global(.dark) .subtitle {
+    /* Dark Mode Subtitle */
+    color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-weight: 400;
 }
@@ -116,8 +149,10 @@
 }
 
 .primaryBtn {
-    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-    color: #0f172a;
+    background: linear-gradient(135deg, #D4AF37 0%, #B49126 100%);
+    /* Rich Golden */
+    color: #0A1F44;
+    /* Deep Navy Text */
     padding: 1.1rem 2.8rem;
     border-radius: 9999px;
     font-weight: 700;
@@ -127,7 +162,7 @@
     gap: 0.5rem;
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 4px 14px 0 rgba(251, 191, 36, 0.4);
+    box-shadow: 0 4px 14px 0 rgba(212, 175, 55, 0.4);
 }
 
 .primaryBtn:hover {
@@ -137,7 +172,8 @@
 }
 
 .secondaryBtn {
-    background: rgba(255, 255, 255, 0.05);
+    /* Light Mode Secondary Button */
+    background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
     padding: 1.1rem 2.8rem;
     border-radius: 9999px;
@@ -147,12 +183,24 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(4px);
+}
+
+:global(.dark) .secondaryBtn {
+    /* Dark Mode Secondary Button */
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .secondaryBtn:hover {
     transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #94a3b8;
+}
+
+:global(.dark) .secondaryBtn:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: #ffffff;
 }

@@ -95,7 +95,7 @@ const Hero: React.FC<HeroProps> = ({
 
                     <motion.div className={styles.buttons} variants={itemVariants}>
                         {ctaText && ctaLink && (
-                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2 text-white">
+                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2">
                                 {ctaText}
                                 <ArrowRight size={20} />
                             </GlassButton>
