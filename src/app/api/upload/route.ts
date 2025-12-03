@@ -9,10 +9,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Debug: Check env vars
-    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
-        console.error('Missing Cloudinary Env Vars');
+    const missingVars = [];
+    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) missingVars.push('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME');
+    if (!process.env.CLOUDINARY_API_KEY) missingVars.push('CLOUDINARY_API_KEY');
+    if (!process.env.CLOUDINARY_API_SECRET) missingVars.push('CLOUDINARY_API_SECRET');
+
+    if (missingVars.length > 0) {
+        console.error('Missing Cloudinary Env Vars:', missingVars);
         return NextResponse.json(
-            { error: 'Server Configuration Error: Missing Cloudinary Keys' },
+            { error: `Server Configuration Error: Missing keys: ${missingVars.join(', ')}` },
             { status: 500 }
         );
     }
