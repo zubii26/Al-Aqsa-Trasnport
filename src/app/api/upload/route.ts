@@ -9,18 +9,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Debug: Check env vars
-    const missingVars = [];
-    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) missingVars.push('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME');
-    if (!process.env.CLOUDINARY_API_KEY) missingVars.push('CLOUDINARY_API_KEY');
-    if (!process.env.CLOUDINARY_API_SECRET) missingVars.push('CLOUDINARY_API_SECRET');
-
-    if (missingVars.length > 0) {
-        console.error('Missing Cloudinary Env Vars:', missingVars);
-        return NextResponse.json(
-            { error: `Server Configuration Error: Missing keys: ${missingVars.join(', ')}` },
-            { status: 500 }
-        );
-    }
+    // Debug: Check env vars (Bypassed for hardcoded test)
+    // const missingVars = [];
+    // if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) missingVars.push('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME');
+    // ... check removed ...
 
     try {
         const formData = await request.formData();
