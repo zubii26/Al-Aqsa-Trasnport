@@ -61,7 +61,7 @@ export async function POST(request: Request) {
 
         // Invalidate cache
         revalidatePath('/admin/settings');
-        revalidateTag('settings');
+        // revalidateTag('settings');
 
         // Audit Log
         try {

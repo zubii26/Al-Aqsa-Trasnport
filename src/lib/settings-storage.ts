@@ -42,68 +42,64 @@ const DEFAULT_SETTINGS: Settings = {
     },
 };
 
-export const getSettings = unstable_cache(
-    async (): Promise<Settings> => {
-        try {
-            await dbConnect();
-            const settingsDocs = await SettingsModel.find({}).lean();
+export const getSettings = async (): Promise<Settings> => {
+    try {
+        await dbConnect();
+        const settingsDocs = await SettingsModel.find({}).lean();
 
-            // Convert array of {key, value} to object map
-            const settingsMap = settingsDocs.reduce((acc, curr) => {
-                acc[curr.key] = curr.value;
-                return acc;
-            }, {} as Record<string, string>);
+        // Convert array of {key, value} to object map
+        const settingsMap = settingsDocs.reduce((acc, curr) => {
+            acc[curr.key] = curr.value;
+            return acc;
+        }, {} as Record<string, string>);
 
-            // Map flat keys to nested structure
-            const mergedSettings: Settings = {
-                general: {
-                    siteName: settingsMap['site_name'] || DEFAULT_SETTINGS.general.siteName,
-                    description: settingsMap['site_description'] || DEFAULT_SETTINGS.general.description,
-                    footerText: settingsMap['footer_text'] || DEFAULT_SETTINGS.general.footerText,
-                    logo: settingsMap['logo'] || DEFAULT_SETTINGS.general.logo,
-                    googleAnalyticsId: settingsMap['google_analytics_id'] || DEFAULT_SETTINGS.general.googleAnalyticsId,
+        // Map flat keys to nested structure
+        const mergedSettings: Settings = {
+            general: {
+                siteName: settingsMap['site_name'] || DEFAULT_SETTINGS.general.siteName,
+                description: settingsMap['site_description'] || DEFAULT_SETTINGS.general.description,
+                footerText: settingsMap['footer_text'] || DEFAULT_SETTINGS.general.footerText,
+                logo: settingsMap['logo'] || DEFAULT_SETTINGS.general.logo,
+                googleAnalyticsId: settingsMap['google_analytics_id'] || DEFAULT_SETTINGS.general.googleAnalyticsId,
+            },
+            contact: {
+                email: settingsMap['contact_email'] || DEFAULT_SETTINGS.contact.email,
+                phone: settingsMap['contact_phone'] || DEFAULT_SETTINGS.contact.phone,
+                phone2: settingsMap['contact_phone_2'] || DEFAULT_SETTINGS.contact.phone2,
+                address: settingsMap['address'] || DEFAULT_SETTINGS.contact.address,
+                social: {
+                    facebook: settingsMap['social_facebook'] || DEFAULT_SETTINGS.contact.social.facebook,
+                    twitter: settingsMap['social_twitter'] || DEFAULT_SETTINGS.contact.social.twitter,
+                    instagram: settingsMap['social_instagram'] || DEFAULT_SETTINGS.contact.social.instagram,
+                    tiktok: settingsMap['social_tiktok'] || DEFAULT_SETTINGS.contact.social.tiktok,
+                    linkedin: settingsMap['social_linkedin'] || DEFAULT_SETTINGS.contact.social.linkedin,
                 },
-                contact: {
-                    email: settingsMap['contact_email'] || DEFAULT_SETTINGS.contact.email,
-                    phone: settingsMap['contact_phone'] || DEFAULT_SETTINGS.contact.phone,
-                    phone2: settingsMap['contact_phone_2'] || DEFAULT_SETTINGS.contact.phone2,
-                    address: settingsMap['address'] || DEFAULT_SETTINGS.contact.address,
-                    social: {
-                        facebook: settingsMap['social_facebook'] || DEFAULT_SETTINGS.contact.social.facebook,
-                        twitter: settingsMap['social_twitter'] || DEFAULT_SETTINGS.contact.social.twitter,
-                        instagram: settingsMap['social_instagram'] || DEFAULT_SETTINGS.contact.social.instagram,
-                        tiktok: settingsMap['social_tiktok'] || DEFAULT_SETTINGS.contact.social.tiktok,
-                        linkedin: settingsMap['social_linkedin'] || DEFAULT_SETTINGS.contact.social.linkedin,
-                    },
-                },
-                seo: {
-                    defaultTitle: settingsMap['seo_title'] || DEFAULT_SETTINGS.seo.defaultTitle,
-                    defaultDescription: settingsMap['seo_description'] || DEFAULT_SETTINGS.seo.defaultDescription,
-                    keywords: settingsMap['seo_keywords'] || DEFAULT_SETTINGS.seo.keywords,
-                },
-                appearance: {
-                    darkMode: settingsMap['appearance_dark_mode'] === 'true' || DEFAULT_SETTINGS.appearance.darkMode,
-                    primaryColor: settingsMap['appearance_primary_color'] || DEFAULT_SETTINGS.appearance.primaryColor,
-                },
-                discount: {
-                    enabled: settingsMap['discount_enabled'] === 'true',
-                    type: (settingsMap['discount_type'] as 'percentage' | 'fixed') || DEFAULT_SETTINGS.discount?.type || 'percentage',
-                    value: Number(settingsMap['discount_value']) || DEFAULT_SETTINGS.discount?.value || 0,
-                    startDate: settingsMap['discount_start_date'] || '',
-                    endDate: settingsMap['discount_end_date'] || '',
-                },
-            };
+            },
+            seo: {
+                defaultTitle: settingsMap['seo_title'] || DEFAULT_SETTINGS.seo.defaultTitle,
+                defaultDescription: settingsMap['seo_description'] || DEFAULT_SETTINGS.seo.defaultDescription,
+                keywords: settingsMap['seo_keywords'] || DEFAULT_SETTINGS.seo.keywords,
+            },
+            appearance: {
+                darkMode: settingsMap['appearance_dark_mode'] === 'true' || DEFAULT_SETTINGS.appearance.darkMode,
+                primaryColor: settingsMap['appearance_primary_color'] || DEFAULT_SETTINGS.appearance.primaryColor,
+            },
+            discount: {
+                enabled: settingsMap['discount_enabled'] === 'true',
+                type: (settingsMap['discount_type'] as 'percentage' | 'fixed') || DEFAULT_SETTINGS.discount?.type || 'percentage',
+                value: Number(settingsMap['discount_value']) || DEFAULT_SETTINGS.discount?.value || 0,
+                startDate: settingsMap['discount_start_date'] || '',
+                endDate: settingsMap['discount_end_date'] || '',
+            },
+        };
 
-            console.log('[Settings] Retrieved discount settings:', mergedSettings.discount);
-            return mergedSettings;
-        } catch (error) {
-            console.error('Failed to fetch settings:', error);
-            return DEFAULT_SETTINGS;
-        }
-    },
-    ['settings'],
-    { revalidate: 1, tags: ['settings'] } // Reduced revalidate time for debugging
-);
+        console.log('[Settings] Retrieved discount settings:', mergedSettings.discount);
+        return mergedSettings;
+    } catch (error) {
+        console.error('Failed to fetch settings:', error);
+        return DEFAULT_SETTINGS;
+    }
+};
 
 export async function saveSettings(newSettings: Settings): Promise<void> {
     await dbConnect();
@@ -150,5 +146,5 @@ export async function saveSettings(newSettings: Settings): Promise<void> {
         )
     ));
 
-    revalidateTag('settings');
+    // revalidateTag('settings');
 }

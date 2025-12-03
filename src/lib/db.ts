@@ -64,25 +64,21 @@ export async function deleteBooking(id: string): Promise<boolean> {
 
 // --- Fleet/Vehicle Functions ---
 
-export const getFleet = unstable_cache(
-    async (): Promise<IVehicle[]> => {
-        await dbConnect();
-        const vehicles = await Vehicle.find({ isActive: true }).lean();
-        return vehicles.map(v => ({
-            ...v,
-            _id: v._id.toString(),
-            id: v._id.toString()
-        })) as unknown as IVehicle[];
-    },
-    ['fleet'],
-    { revalidate: 3600, tags: ['fleet'] }
-);
+export const getFleet = async (): Promise<IVehicle[]> => {
+    await dbConnect();
+    const vehicles = await Vehicle.find({ isActive: true }).lean();
+    return vehicles.map(v => ({
+        ...v,
+        _id: v._id.toString(),
+        id: v._id.toString()
+    })) as unknown as IVehicle[];
+};
 
 export async function addVehicle(vehicleData: Partial<IVehicle>): Promise<IVehicle> {
     await dbConnect();
     const newVehicle = await Vehicle.create(vehicleData);
     const obj = newVehicle.toObject();
-    revalidateTag('fleet');
+    // revalidateTag('fleet');
     return {
         ...obj,
         _id: obj._id.toString(),
@@ -98,7 +94,7 @@ export async function updateVehicle(id: string, updates: Partial<IVehicle>): Pro
         { new: true }
     ).lean();
     if (!updatedVehicle) return null;
-    revalidateTag('fleet');
+    // revalidateTag('fleet');
     return {
         ...updatedVehicle,
         _id: updatedVehicle._id.toString(),
@@ -109,6 +105,6 @@ export async function updateVehicle(id: string, updates: Partial<IVehicle>): Pro
 export async function deleteVehicle(id: string): Promise<boolean> {
     await dbConnect();
     const result = await Vehicle.findByIdAndDelete(id);
-    if (result) revalidateTag('fleet');
+    if (result) { /* revalidateTag('fleet') */ }
     return !!result;
 }
