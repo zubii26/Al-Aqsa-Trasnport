@@ -81,7 +81,7 @@ export default function GalleryPage() {
             }
         } catch (error) {
             console.error('Upload failed:', error);
-            showToast('Failed to upload image', 'error');
+            showToast(error instanceof Error ? error.message : 'Failed to upload image', 'error');
         } finally {
             setUploading(false);
         }
