@@ -30,7 +30,7 @@ export const Toast = ({ message, type, isVisible, onClose }: ToastProps) => {
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                    className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl border backdrop-blur-md ${type === 'success'
+                    className={`fixed bottom-6 right-6 z-[10000] flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl border backdrop-blur-md ${type === 'success'
                         ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
                         : 'bg-red-500/10 border-red-500/20 text-red-600 dark:text-red-400'
                         }`}
