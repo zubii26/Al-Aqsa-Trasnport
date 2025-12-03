@@ -92,13 +92,28 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: '/favicon.png',
+      icon: [
+        { url: '/favicon.png', sizes: '32x32' },
+        { url: '/favicon.ico' },
+      ],
       shortcut: '/favicon.png',
-      apple: '/logo.png',
-      other: {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/logo.png',
-      },
+      apple: '/apple-touch-icon.png',
+      other: [
+        {
+          rel: 'apple-touch-icon-precomposed',
+          url: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'icon',
+          url: '/android-chrome-192x192.png',
+          sizes: '192x192',
+        },
+        {
+          rel: 'icon',
+          url: '/android-chrome-512x512.png',
+          sizes: '512x512',
+        },
+      ],
     },
     verification: {
       google: '0JYg8N3CPUFhzseUIrbhKiLIShx1ltrIF0XoXVsO7-I',
