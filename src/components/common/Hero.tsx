@@ -95,14 +95,14 @@ const Hero: React.FC<HeroProps> = ({
 
                     <motion.div className={styles.buttons} variants={itemVariants}>
                         {ctaText && ctaLink && (
-                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2">
+                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2 text-white">
                                 {ctaText}
                                 <ArrowRight size={20} />
                             </GlassButton>
                         )}
 
                         {secondaryCtaText && secondaryCtaLink && (
-                            <GlassButton href={secondaryCtaLink} variant="outline" size="lg">
+                            <GlassButton href={secondaryCtaLink} variant="outline" size="lg" className="text-white">
                                 {secondaryCtaText}
                             </GlassButton>
                         )}
