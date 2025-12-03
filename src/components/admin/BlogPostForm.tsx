@@ -421,11 +421,11 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                                 if (data.success) {
                                                     setFormData(prev => ({ ...prev, image: data.url }));
                                                 } else {
-                                                    alert('Upload failed: ' + data.error);
+                                                    alert('Error: ' + data.error);
                                                 }
                                             } catch (error) {
                                                 console.error('Upload failed:', error);
-                                                alert('Upload failed');
+                                                alert('Upload failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
                                             }
                                         }}
                                         className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all text-sm"
