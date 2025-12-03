@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
-
+import cloudinary from '@/lib/cloudinary';
 import { validateRequest } from '@/lib/server-auth';
 
 export async function POST(request: NextRequest) {
@@ -21,19 +19,29 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const buffer = Buffer.from(await file.arrayBuffer());
-        // Simple unique filename generation without external dependencies
-        const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}${path.extname(file.name)}`;
+        // Convert file to buffer
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-        // Ensure uploads directory exists
-        const uploadDir = path.join(process.cwd(), 'public/uploads');
-        await mkdir(uploadDir, { recursive: true });
+        // Upload to Cloudinary using a stream
+        const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                {
+                    folder: 'transport_uploads', // Optional: organize uploads in a folder
+                    resource_type: 'auto',
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            ).end(buffer);
+        });
 
-        const filepath = path.join(uploadDir, filename);
-        await writeFile(filepath, buffer);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const secureUrl = (result as any).secure_url;
 
         return NextResponse.json({
-            url: `/uploads/${filename}`,
+            url: secureUrl,
             success: true
         });
 
