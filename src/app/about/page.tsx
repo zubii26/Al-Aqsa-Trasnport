@@ -1,66 +1,40 @@
-'use client';
-
 import React from 'react';
-import dynamic from 'next/dynamic';
-import { useLanguage } from '@/context/LanguageContext';
 import Hero from '@/components/common/Hero';
+import WelcomeSection from '@/components/about/WelcomeSection';
+import CompanyStory from '@/components/about/CompanyStory';
+import MissionVision from '@/components/about/MissionVision';
+import CoreValues from '@/components/about/CoreValues';
+import TrustSection from '@/components/about/TrustSection';
+import SEOContent from '@/components/about/SEOContent';
+import ImpactStats from '@/components/about/ImpactStats';
+import PilgrimVoices from '@/components/about/PilgrimVoices';
+import { getSectionContent, getSectionImage } from '@/lib/content-service';
 
-// Skeleton components for loading states
-const SectionSkeleton = () => (
-    <div className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-8 animate-pulse"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="h-48 bg-gray-200 rounded animate-pulse"></div>
-                <div className="h-48 bg-gray-200 rounded animate-pulse"></div>
-            </div>
-        </div>
-    </div>
-);
 
-// Dynamically import components with loading states
-const WelcomeSection = dynamic(() => import('@/components/about/WelcomeSection'), {
-    loading: () => <SectionSkeleton />
-});
 
-const CompanyStory = dynamic(() => import('@/components/about/CompanyStory'), {
-    loading: () => <SectionSkeleton />
-});
+export async function generateMetadata() {
+    return {
+        title: "About Al Aqsa Transport | Trusted Umrah Taxi Service",
+        description: "Learn about Al Aqsa Transport, the leading Umrah taxi service in Saudi Arabia. Dedicated to serving pilgrims with safety, comfort, and respect.",
+        alternates: {
+            canonical: 'https://alaqsa-transport.com/about',
+        },
+    };
+}
 
-const MissionVision = dynamic(() => import('@/components/about/MissionVision'), {
-    loading: () => <SectionSkeleton />
-});
-
-const CoreValues = dynamic(() => import('@/components/about/CoreValues'), {
-    loading: () => <SectionSkeleton />
-});
-
-const TrustSection = dynamic(() => import('@/components/about/TrustSection'), {
-    loading: () => <SectionSkeleton />
-});
-
-const Leadership = dynamic(() => import('@/components/about/Leadership'), {
-    loading: () => <SectionSkeleton />
-});
-
-const ImpactStats = dynamic(() => import('@/components/about/ImpactStats'), {
-    loading: () => <SectionSkeleton />
-});
-
-const PilgrimVoices = dynamic(() => import('@/components/about/PilgrimVoices'), {
-    loading: () => <SectionSkeleton />
-});
-
-export default function AboutPage() {
-    const { t } = useLanguage();
+export default async function AboutPage() {
+    const section = await getSectionContent('about-hero');
+    const title = section?.title || "About Al Aqsa Transport";
+    const subtitle = section?.subtitle || "Serving the Guests of Allah with Excellence";
+    const bgImage = getSectionImage(section, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
 
     return (
-        <main className="min-h-screen bg-gray-50">
+        <main className="min-h-screen">
             <div className="contents">
                 <Hero
-                    title={t('about.hero.title')}
-                    subtitle={t('about.hero.subtitle')}
-                    bgImage="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
+                    title={title}
+                    subtitle={subtitle}
+                    bgImage={bgImage}
                 />
                 <WelcomeSection />
                 <ImpactStats />
@@ -69,7 +43,7 @@ export default function AboutPage() {
                 <CoreValues />
                 <TrustSection />
                 <PilgrimVoices />
-                <Leadership />
+                <SEOContent />
             </div>
         </main>
     );

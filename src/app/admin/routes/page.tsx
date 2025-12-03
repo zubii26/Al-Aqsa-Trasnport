@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Plus, Trash2, Search, Clock, Navigation, Edit, X } from 'lucide-react';
 import styles from '../admin.module.css';
@@ -40,27 +40,33 @@ export default function RoutesPage() {
         category: 'Intercity'
     });
 
-    useEffect(() => {
-        fetchRoutes();
-    }, []);
-
-    const showToast = (message: string, type: 'success' | 'error') => {
+    const showToast = useCallback((message: string, type: 'success' | 'error') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
-    };
+    }, []);
 
-    const fetchRoutes = async () => {
+    const fetchRoutes = useCallback(async () => {
         try {
             const res = await fetch('/api/admin/routes');
             const data = await res.json();
-            setRoutes(data);
+            if (Array.isArray(data)) {
+                setRoutes(data);
+            } else {
+                setRoutes([]);
+                console.error('API returned non-array:', data);
+            }
         } catch (error) {
             console.error('Failed to fetch routes:', error);
             showToast('Failed to load routes', 'error');
+            setRoutes([]);
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchRoutes();
+    }, [fetchRoutes]);
 
     const handleEdit = (route: Route) => {
         setEditingId(route.id);

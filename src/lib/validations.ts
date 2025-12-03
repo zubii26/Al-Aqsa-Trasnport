@@ -10,6 +10,12 @@ export const BookingSchema = z.object({
     time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
     vehicle: z.string().min(1, 'Vehicle selection is required'),
     passengers: z.number().int().min(1, 'At least 1 passenger is required').max(50, 'Max 50 passengers'),
+    originalPrice: z.number().optional(),
+    discountApplied: z.number().optional(),
+    finalPrice: z.number().optional(),
+    discountType: z.enum(['percentage', 'fixed']).optional(),
+    routeId: z.string().optional(),
+    vehicleId: z.string().optional(),
 });
 
 export const VehicleSchema = z.object({
@@ -57,12 +63,13 @@ export const SettingsSchema = z.object({
         description: z.string(),
         footerText: z.string(),
         logo: z.string().optional(),
+        googleAnalyticsId: z.string().optional(),
     }),
     contact: z.object({
         email: z.string().email('Invalid email'),
         phone: z.string(),
+        phone2: z.string().optional(),
         address: z.string(),
-        whatsapp: z.string(),
         social: z.object({
             facebook: z.string().optional(),
             twitter: z.string().optional(),
@@ -80,6 +87,13 @@ export const SettingsSchema = z.object({
         darkMode: z.boolean(),
         primaryColor: z.string(),
     }),
+    discount: z.object({
+        enabled: z.boolean(),
+        type: z.enum(['percentage', 'fixed']),
+        value: z.number().min(0),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+    }).optional(),
 });
 
 export type Booking = z.infer<typeof BookingSchema>;

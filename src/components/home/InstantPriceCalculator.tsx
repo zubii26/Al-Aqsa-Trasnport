@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './InstantPriceCalculator.module.css';
-import { MapPin, Car, ArrowRight, CheckCircle, Info, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { usePricing } from '@/context/PricingContext';
 import FadeIn from '@/components/common/FadeIn';
@@ -15,7 +15,7 @@ export default function InstantPriceCalculator() {
 
     const [selectedRoute, setSelectedRoute] = useState('');
     const [selectedVehicle, setSelectedVehicle] = useState('');
-    const [price, setPrice] = useState<number | null>(null);
+    const [priceDetails, setPriceDetails] = useState<{ price: number; originalPrice: number; discountApplied: number; discountType?: 'percentage' | 'fixed' } | null>(null);
 
     // Set defaults once data is loaded
     useEffect(() => {
@@ -23,18 +23,16 @@ export default function InstantPriceCalculator() {
             if (!selectedRoute) setSelectedRoute(routes[0].id);
             if (!selectedVehicle) setSelectedVehicle(vehicles[0].id);
         }
-    }, [isLoading, routes, vehicles]);
+    }, [isLoading, routes, vehicles, selectedRoute, selectedVehicle]);
 
     useEffect(() => {
         if (selectedRoute && selectedVehicle) {
-            const calculatedPrice = calculatePrice(selectedRoute, selectedVehicle);
-            setPrice(calculatedPrice);
+            const details = calculatePrice(selectedRoute, selectedVehicle);
+            setPriceDetails(details);
         }
     }, [selectedRoute, selectedVehicle, calculatePrice]);
 
-    const handleRouteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedRoute(e.target.value);
-    };
+
 
     const currentRoute = routes.find(r => r.id === selectedRoute);
     const currentVehicle = vehicles.find(v => v.id === selectedVehicle);
@@ -92,15 +90,29 @@ export default function InstantPriceCalculator() {
                                 <div className={styles.priceContainer}>
                                     <AnimatePresence mode="wait">
                                         <motion.div
-                                            key={price}
+                                            key={priceDetails?.price}
                                             initial={{ opacity: 0, y: 20, scale: 0.9 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: -20, scale: 0.9 }}
                                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                            className={styles.priceValue}
+                                            className="flex flex-col items-center"
                                         >
-                                            <span className={styles.currencySymbol}>SAR</span>
-                                            {price ? price.toLocaleString() : 0}
+                                            {priceDetails && priceDetails.discountApplied > 0 && (
+                                                <span className="text-slate-400 line-through text-lg mb-1">
+                                                    SAR {priceDetails.originalPrice.toLocaleString()}
+                                                </span>
+                                            )}
+                                            <div className={styles.priceValue}>
+                                                <span className={styles.currencySymbol}>SAR</span>
+                                                {priceDetails ? priceDetails.price.toLocaleString() : 0}
+                                            </div>
+                                            {priceDetails && priceDetails.discountApplied > 0 && (
+                                                <span className="text-green-500 text-sm font-bold mt-1 bg-green-500/10 px-2 py-0.5 rounded-full">
+                                                    {priceDetails.discountType === 'percentage'
+                                                        ? `${Math.round((priceDetails.discountApplied / priceDetails.originalPrice) * 100)}% OFF`
+                                                        : `${priceDetails.discountApplied} SAR OFF`}
+                                                </span>
+                                            )}
                                         </motion.div>
                                     </AnimatePresence>
                                     <div className={styles.priceLabel}>All Inclusive Price</div>

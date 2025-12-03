@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Car, Calendar, Activity, Users, Clock, TrendingUp, ArrowUpRight, Plus, Search, Filter } from 'lucide-react';
+import { Car, Calendar, Activity, TrendingUp, ArrowUpRight, Plus } from 'lucide-react';
 import styles from './admin.module.css';
 import Link from 'next/link';
 
@@ -55,7 +55,7 @@ export default function DashboardClient({
     totalBookings,
     activeFleet,
     totalFleet,
-    pendingBookings,
+
     confirmedBookings,
     routesCount,
     totalRevenue,
@@ -63,15 +63,7 @@ export default function DashboardClient({
     recentLogs
 }: DashboardProps) {
 
-    const getStatusBadge = (status: string) => {
-        const styles = {
-            confirmed: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
-            pending: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-            cancelled: 'bg-red-500/10 text-red-400 border border-red-500/20',
-            default: 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
-        };
-        return styles[status as keyof typeof styles] || styles.default;
-    };
+
 
     return (
         <div className="p-6 space-y-8">

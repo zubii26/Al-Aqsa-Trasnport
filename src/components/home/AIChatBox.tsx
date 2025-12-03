@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, Trash2, ExternalLink, Bot } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { X, Send, Sparkles, Trash2, ExternalLink, Bot } from 'lucide-react';
 import styles from './AIChatBox.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -21,7 +20,6 @@ interface Message {
 import { useMenu } from '@/context/MenuContext';
 
 export default function AIChatBox() {
-    const { t, language } = useLanguage();
     const { isMenuOpen } = useMenu();
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
@@ -33,42 +31,22 @@ export default function AIChatBox() {
     // ... existing code ...
 
     // Quick Replies Data
-    const quickReplies = {
-        en: ['Check Prices', 'Book a Ride', 'Contact Support', 'Vehicle Types'],
-        ar: ['تحقق من الأسعار', 'احجز رحلة', 'اتصل بالدعم', 'أنواع المركبات'],
-        ur: ['قیمتیں چیک کریں', 'سواری بک کریں', 'سپورٹ سے رابطہ کریں', 'گاڑیوں کی اقسام']
-    };
+    const quickReplies = ['Check Prices', 'Book a Ride', 'Contact Support', 'Vehicle Types'];
 
-    const initializeGreeting = () => {
+    const initializeGreeting = useCallback(() => {
         let greetingText = '';
 
         const greetings = {
-            en: {
-                default: 'Hello! 👋 I am your Al Aqsa AI assistant. How can I help you with your Umrah transport today?',
-                booking: 'Welcome to our booking page! 📅 Do you need any help filling out the form or choosing a vehicle?',
-                fleet: 'Browsing our fleet? 🚗 Let me know if you want to know more about our Sedans, SUVs, or Buses.',
-                services: 'We offer VIP services and Ziyarat tours. 🕌 How can I assist you with our services?'
-            },
-            ar: {
-                default: 'مرحباً! 👋 أنا مساعد الأقصى الذكي. كيف يمكنني مساعدتك في تنقلات العمرة اليوم؟',
-                booking: 'مرحباً بك في صفحة الحجز! 📅 هل تحتاج إلى مساعدة في ملء النموذج أو اختيار مركبة؟',
-                fleet: 'تتصفح أسطولنا؟ 🚗 أخبرني إذا كنت تريد معرفة المزيد عن سيارات السيدان أو الدفع الرباعي أو الحافلات.',
-                services: 'نقدم خدمات VIP وجولات زيارة. 🕌 كيف يمكنني مساعدتك في خدماتنا؟'
-            },
-            ur: {
-                default: 'السلام علیکم! 👋 میں آپ کا الاقصی AI اسسٹنٹ ہوں۔ آج میں عمرہ ٹرانسپورٹ کے حوالے سے آپ کی کیا مدد کر سکتا ہوں؟',
-                booking: 'ہمارے بکنگ پیج پر خوش آمدید! 📅 کیا آپ کو فارم پُر کرنے یا گاڑی کا انتخاب کرنے میں کوئی مدد درکار ہے؟',
-                fleet: 'ہمارا بیڑا دیکھ رہے ہیں؟ 🚗 اگر آپ ہماری سیڈان، ایس یو وی، یا بسوں کے بارے میں مزید جاننا چاہتے ہیں تو مجھے بتائیں۔',
-                services: 'ہم VIP خدمات اور زیارت کے دورے پیش کرتے ہیں۔ 🕌 میں ہماری خدمات کے حوالے سے آپ کی کیا مدد کر سکتا ہوں؟'
-            }
+            default: 'Hello! 👋 I am your Al Aqsa AI assistant. How can I help you with your Umrah transport today?',
+            booking: 'Welcome to our booking page! 📅 Do you need any help filling out the form or choosing a vehicle?',
+            fleet: 'Browsing our fleet? 🚗 Let me know if you want to know more about our Sedans, SUVs, or Buses.',
+            services: 'We offer VIP services and Ziyarat tours. 🕌 How can I assist you with our services?'
         };
 
-        const currentLangGreetings = greetings[language as keyof typeof greetings] || greetings.en;
-
-        if (pathname === '/booking') greetingText = currentLangGreetings.booking;
-        else if (pathname === '/fleet') greetingText = currentLangGreetings.fleet;
-        else if (pathname === '/services') greetingText = currentLangGreetings.services;
-        else greetingText = currentLangGreetings.default;
+        if (pathname === '/booking') greetingText = greetings.booking;
+        else if (pathname === '/fleet') greetingText = greetings.fleet;
+        else if (pathname === '/services') greetingText = greetings.services;
+        else greetingText = greetings.default;
 
         setMessages([
             {
@@ -78,7 +56,7 @@ export default function AIChatBox() {
                 timestamp: new Date(),
             },
         ]);
-    };
+    }, [pathname]);
 
     // Load messages from localStorage on mount
     useEffect(() => {
@@ -91,17 +69,17 @@ export default function AIChatBox() {
                     ...msg,
                     timestamp: new Date(msg.timestamp)
                 }));
-                // eslint-disable-next-line react-hooks/set-state-in-effect
+
                 setMessages(hydrated);
             } catch (e) {
                 console.error('Failed to parse chat history', e);
             }
         } else {
             // Initial greeting if no history
-            // eslint-disable-next-line react-hooks/set-state-in-effect
+
             initializeGreeting();
         }
-    }, []);
+    }, [initializeGreeting]);
 
     // Save messages to localStorage whenever they change
     useEffect(() => {
@@ -109,14 +87,6 @@ export default function AIChatBox() {
             localStorage.setItem('chatHistory', JSON.stringify(messages));
         }
     }, [messages]);
-
-    // Re-initialize greeting if language changes and chat is empty
-    useEffect(() => {
-        if (messages.length === 0) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            initializeGreeting();
-        }
-    }, [language, pathname]); // Re-run if language or path changes (only if empty)
 
     const clearChat = () => {
         localStorage.removeItem('chatHistory');
@@ -131,83 +101,37 @@ export default function AIChatBox() {
         scrollToBottom();
     }, [messages, isOpen]);
 
-    const generateResponse = (input: string, lang: string): { text: string, action?: { label: string, url: string } } => {
+    const generateResponse = (input: string): { text: string, action?: { label: string, url: string } } => {
         const lowerInput = input.toLowerCase();
 
         const responses = {
-            en: {
-                price: {
-                    text: "Our prices are very competitive! Use the Instant Price Calculator on our homepage to get an exact quote for your journey.",
-                    action: { label: "Open Calculator", url: "/" }
-                },
-                book: {
-                    text: "Booking is easy! You can use the 'Book Now' button at the top, or simply fill out the Quick Booking form on the homepage.",
-                    action: { label: "Book Now", url: "/booking" }
-                },
-                contact: {
-                    text: "You can reach us 24/7 via WhatsApp at +92 326 060 0676 or email us at meharzubair703@gmail.com.",
-                    action: { label: "WhatsApp Us", url: "https://wa.me/923260600676" }
-                },
-                vehicle: {
-                    text: "We offer a wide range of vehicles including comfortable Sedans (Camry, Sonata), spacious SUVs (GMC, H1), and luxury Buses for groups.",
-                    action: { label: "View Fleet", url: "/fleet" }
-                },
-                default: {
-                    text: "I'm here to help! You can ask me about prices, booking, our vehicles, or contact information."
-                }
+            price: {
+                text: "Our prices are very competitive! Use the Instant Price Calculator on our homepage to get an exact quote for your journey.",
+                action: { label: "Open Calculator", url: "/" }
             },
-            ar: {
-                price: {
-                    text: "أسعارنا تنافسية للغاية! استخدم حاسبة الأسعار الفورية على صفحتنا الرئيسية للحصول على عرض سعر دقيق لرحلتك.",
-                    action: { label: "افتح الحاسبة", url: "/" }
-                },
-                book: {
-                    text: "الحجز سهل! يمكنك استخدام زر 'احجز الآن' في الأعلى، أو ببساطة ملء نموذج الحجز السريع على الصفحة الرئيسية.",
-                    action: { label: "احجز الآن", url: "/booking" }
-                },
-                contact: {
-                    text: "يمكنك التواصل معنا على مدار الساعة طوال أيام الأسبوع عبر واتساب على الرقم +92 326 060 0676 أو مراسلتنا عبر البريد الإلكتروني meharzubair703@gmail.com.",
-                    action: { label: "تواصل عبر واتساب", url: "https://wa.me/923260600676" }
-                },
-                vehicle: {
-                    text: "نقدم مجموعة واسعة من المركبات بما في ذلك سيارات السيدان المريحة (كامري، سوناتا)، وسيارات الدفع الرباعي الواسعة (جي إم سي، إتش 1)، والحافلات الفاخرة للمجموعات.",
-                    action: { label: "عرض الأسطول", url: "/fleet" }
-                },
-                default: {
-                    text: "أنا هنا للمساعدة! يمكنك سؤالي عن الأسعار، الحجز، مركباتنا، أو معلومات الاتصال."
-                }
+            book: {
+                text: "Booking is easy! You can use the 'Book Now' button at the top, or simply fill out the Quick Booking form on the homepage.",
+                action: { label: "Book Now", url: "/booking" }
             },
-            ur: {
-                price: {
-                    text: "ہماری قیمتیں بہت مسابقتی ہیں! اپنے سفر کے لیے درست تخمینہ حاصل کرنے کے لیے ہمارے ہوم پیج پر فوری قیمت کیلکولیٹر استعمال کریں۔",
-                    action: { label: "کیلکولیٹر کھولیں", url: "/" }
-                },
-                book: {
-                    text: "بکنگ آسان ہے! آپ اوپر موجود 'ابھی بک کریں' کا بٹن استعمال کر سکتے ہیں، یا بس ہوم پیج پر فوری بکنگ فارم پُر کریں۔",
-                    action: { label: "ابھی بک کریں", url: "/booking" }
-                },
-                contact: {
-                    text: "آپ ہم سے 24/7 واٹس ایپ +92 326 060 0676 پر رابطہ کر سکتے ہیں یا ہمیں meharzubair703@gmail.com پر ای میل کر سکتے ہیں۔",
-                    action: { label: "واٹس ایپ کریں", url: "https://wa.me/923260600676" }
-                },
-                vehicle: {
-                    text: "ہم گاڑیوں کی ایک وسیع رینج پیش کرتے ہیں جس میں آرام دہ سیڈان (کیمری، سوناٹا)، کشادہ ایس یو وی (جی ایم سی، ایچ 1)، اور گروپس کے لیے لگژری بسیں شامل ہیں۔",
-                    action: { label: "گاڑیاں دیکھیں", url: "/fleet" }
-                },
-                default: {
-                    text: "میں مدد کے لیے حاضر ہوں! آپ مجھ سے قیمتوں، بکنگ، ہماری گاڑیوں، یا رابطہ کی معلومات کے بارے میں پوچھ سکتے ہیں۔"
-                }
+            contact: {
+                text: "You can reach us 24/7 via WhatsApp at +92 326 060 0676 or email us at meharzubair703@gmail.com.",
+                action: { label: "WhatsApp Us", url: "https://wa.me/923260600676" }
+            },
+            vehicle: {
+                text: "We offer a wide range of vehicles including comfortable Sedans (Camry, Sonata), spacious SUVs (GMC, H1), and luxury Buses for groups.",
+                action: { label: "View Fleet", url: "/fleet" }
+            },
+            default: {
+                text: "I'm here to help! You can ask me about prices, booking, our vehicles, or contact information."
             }
         };
 
-        const langResponses = responses[lang as keyof typeof responses] || responses.en;
+        if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('rate')) return responses.price;
+        if (lowerInput.includes('book') || lowerInput.includes('reserve')) return responses.book;
+        if (lowerInput.includes('contact') || lowerInput.includes('phone') || lowerInput.includes('email')) return responses.contact;
+        if (lowerInput.includes('vehicle') || lowerInput.includes('car') || lowerInput.includes('bus')) return responses.vehicle;
 
-        if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('rate') || lowerInput.includes('سعر') || lowerInput.includes('قیمت')) return langResponses.price;
-        if (lowerInput.includes('book') || lowerInput.includes('reserve') || lowerInput.includes('حجز') || lowerInput.includes('بکنگ')) return langResponses.book;
-        if (lowerInput.includes('contact') || lowerInput.includes('phone') || lowerInput.includes('email') || lowerInput.includes('اتصل') || lowerInput.includes('رابطہ')) return langResponses.contact;
-        if (lowerInput.includes('vehicle') || lowerInput.includes('car') || lowerInput.includes('bus') || lowerInput.includes('مركبة') || lowerInput.includes('گاڑی')) return langResponses.vehicle;
-
-        return langResponses.default;
+        return responses.default;
     };
 
     const handleSend = async (text: string = inputValue) => {
@@ -226,7 +150,7 @@ export default function AIChatBox() {
 
         // Simulate AI response
         setTimeout(() => {
-            const response = generateResponse(text, language);
+            const response = generateResponse(text);
 
             const aiMessage: Message = {
                 id: (new Date().getTime() + 1).toString(),
@@ -321,7 +245,7 @@ export default function AIChatBox() {
 
                 {/* Quick Replies */}
                 <div className={styles.quickReplies}>
-                    {(quickReplies[language as keyof typeof quickReplies] || quickReplies.en).map((reply, index) => (
+                    {quickReplies.map((reply, index) => (
                         <button
                             key={index}
                             className={styles.quickReplyChip}
@@ -338,9 +262,8 @@ export default function AIChatBox() {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        placeholder={language === 'ar' ? 'اكتب رسالة...' : language === 'ur' ? 'ایک پیغام لکھیں...' : 'Type a message...'}
+                        placeholder="Type a message..."
                         className={styles.input}
-                        dir={language === 'ar' || language === 'ur' ? 'rtl' : 'ltr'}
                     />
                     <button
                         onClick={() => handleSend()}

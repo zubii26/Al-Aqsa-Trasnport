@@ -2,7 +2,7 @@
     padding: 8rem 0;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+    background: radial-gradient(circle at center, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
 }
 
 /* Decorative background elements */
@@ -13,7 +13,8 @@
     right: -10%;
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--secondary)) 0%, transparent 70%);
+    opacity: 0.05;
     border-radius: 50%;
     filter: blur(100px);
     pointer-events: none;
@@ -27,23 +28,20 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
     margin-bottom: 1.5rem;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     font-weight: 800;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: -0.02em;
+    font-family: var(--font-playfair), serif;
 }
 
 .subtitle {
     font-size: 1.25rem;
     max-width: 700px;
     margin: 0 auto;
-    color: #64748b;
-    line-height: 1.6;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
 }
 
 .carouselContainer {
@@ -68,33 +66,32 @@
     overflow: hidden;
     scroll-snap-align: center;
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow:
-        0 20px 40px -5px rgba(0, 0, 0, 0.05),
-        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    box-shadow: var(--glass-shadow);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .card:hover {
     transform: translateY(-10px);
     box-shadow:
         0 30px 60px -10px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(212, 175, 55, 0.3) inset;
-    border-color: rgba(212, 175, 55, 0.2);
+        0 0 0 1px hsl(var(--secondary)) inset;
+    border-color: hsl(var(--secondary));
 }
 
 .imageWrapper {
     position: relative;
     width: 100%;
-    height: 280px;
+    height: 300px;
     overflow: hidden;
-    background: radial-gradient(circle at center, #f1f5f9 0%, #e2e8f0 100%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    background: radial-gradient(circle at center, hsl(var(--muted)) 0%, hsl(var(--card)) 100%);
+    border-bottom: 1px solid hsl(var(--border));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,7 +101,7 @@
     object-fit: contain !important;
     padding: 2rem;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
 }
 
 .card:hover .vehicleImage {
@@ -112,11 +109,15 @@
 }
 
 .content {
-    padding: 2rem;
+    padding: 2.5rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
+}
+
+:global(.dark) .content {
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.8));
 }
 
 .cardHeader {
@@ -128,22 +129,23 @@
 }
 
 .vehicleName {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     margin: 0;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.2;
+    font-family: var(--font-playfair), serif;
 }
 
 .priceTag {
-    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-    color: #ffffff;
-    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--foreground)) 100%);
+    color: hsl(var(--primary-foreground));
+    padding: 0.6rem 1.2rem;
     border-radius: 9999px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
 }
 
@@ -152,7 +154,7 @@
     gap: 2rem;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #cbd5e1;
+    border-bottom: 1px dashed hsl(var(--border));
 }
 
 .specItem {
@@ -160,12 +162,12 @@
     align-items: center;
     gap: 0.6rem;
     font-weight: 600;
-    color: #64748b;
-    font-size: 0.95rem;
+    color: hsl(var(--muted-foreground));
+    font-size: 1rem;
 }
 
 .specItem svg {
-    color: #D4AF37;
+    color: hsl(var(--secondary));
     /* Gold accent */
 }
 
@@ -180,36 +182,36 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.85rem;
-    color: #475569;
-    background: #f8fafc;
-    padding: 0.35rem 0.85rem;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--muted));
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    border: 1px solid hsl(var(--border));
     font-weight: 500;
 }
 
 .featureItem svg {
-    color: #10b981;
+    color: hsl(var(--accent));
     /* Green check */
 }
 
 .bookBtn {
     width: 100%;
-    padding: 1.1rem;
+    padding: 1.2rem;
     border-radius: 16px;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-size: 0.95rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
     margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, #B4941F 100%);
+    color: hsl(var(--secondary-foreground));
     box-shadow: 0 8px 20px -5px rgba(212, 175, 55, 0.4);
     position: relative;
     overflow: hidden;

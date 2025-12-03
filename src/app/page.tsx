@@ -1,90 +1,61 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Shield, Clock, Heart } from 'lucide-react';
 import styles from './page.module.css';
-import FleetCarousel from '@/components/home/FleetCarousel';
-import ReviewsSection from '@/components/reviews/ReviewsSection';
-import CustomerGallery from '@/components/home/CustomerGallery';
 import FadeIn from '@/components/common/FadeIn';
-import QuickBookingForm from '@/components/home/QuickBookingForm';
 import InstantPriceCalculator from '@/components/home/InstantPriceCalculator';
-import LatestArticles from '@/components/home/LatestArticles';
 import Hero from '@/components/common/Hero';
-import { getFleet } from '@/lib/db';
+import BookingFormWrapper from '@/components/home/BookingFormWrapper';
+import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import Features from '@/components/home/Features';
 
+import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
+
+// Lazy load heavy components
+const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'));
+const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
+const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
+
+export async function generateMetadata() {
+  return {
+    title: "Umrah Taxi Service & Car Rental | Makkah to Madinah Transport",
+    description: "Book reliable Umrah taxi service in Saudi Arabia. Premium GMC Yukon, Toyota Hiace, and bus rentals for Makkah to Madinah taxi, Jeddah airport transfers, and Ziarah tours.",
+    alternates: {
+      canonical: 'https://alaqsa-transport.com',
+    },
+  };
+}
 
 export default async function Home() {
-  const vehicles = await getFleet();
-  const carouselVehicles = vehicles.slice(0, 6);
+  const heroSection = await getSectionContent('home-hero');
+  const heroTitle = heroSection?.title || "Premium Umrah Taxi Service & Car Rental in Saudi Arabia";
+  const heroSubtitle = heroSection?.subtitle || "Your trusted partner for Makkah Madinah Taxi Service and reliable Airport to Haram Taxi transfers. Experience comfort and care.";
+  const heroImage = getSectionImage(heroSection, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
+  const ctaText = getCustomField(heroSection, 'cta_text') || "Book your Umrah transport today";
+  const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
 
   return (
     <main>
       {/* Hero Section */}
-      {/* Hero Section */}
       <Hero
-        title="Premium Umrah Taxi Service & Car Rental in Saudi Arabia"
-        subtitle="Your trusted partner for Makkah Madinah Taxi Service and reliable Airport to Haram Taxi transfers. Experience comfort and care."
-        bgImage="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
-        ctaText="Book your Umrah transport today"
-        ctaLink="/booking"
-        secondaryCtaText="View Services"
-        secondaryCtaLink="/services"
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        bgImage={heroImage}
         layout="two-column"
+        ctaText={ctaText}
+        ctaLink={ctaLink}
       >
-        <div className="max-w-md mx-auto w-full bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-2xl">
-          <QuickBookingForm />
-        </div>
+        <BookingFormWrapper />
       </Hero>
 
       {/* Instant Price Calculator Section */}
       <InstantPriceCalculator />
 
       {/* Features Section */}
-      <section className={styles.section}>
-        <div className="container">
-          <FadeIn>
-            <h2 className={styles.sectionTitle}>Why Choose Al Aqsa Transport?</h2>
-          </FadeIn>
-          <div className={styles.features}>
-            <FadeIn delay={0.1}>
-              <div className={styles.featureCard}>
-                <div className={styles.iconWrapper}>
-                  <Shield size={32} />
-                </div>
-                <h3 className={styles.featureTitle}>Safe & Reliable</h3>
-                <p className={styles.featureText}>
-                  Licensed drivers and well-maintained vehicles ensuring your safety. The most reliable Umrah transport for your peace of mind.
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <div className={styles.featureCard}>
-                <div className={styles.iconWrapper}>
-                  <Clock size={32} />
-                </div>
-                <h3 className={styles.featureTitle}>24/7 Umrah Taxi Service</h3>
-                <p className={styles.featureText}>
-                  We value your time. Our 24/7 service tracks your flight to ensure timely pickups for your Jeddah Airport to Makkah transfer.
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <div className={styles.featureCard}>
-                <div className={styles.iconWrapper}>
-                  <Heart size={32} />
-                </div>
-                <h3 className={styles.featureTitle}>Family Umrah Taxi</h3>
-                <p className={styles.featureText}>
-                  Spacious vehicles for the whole family. Dedicated to serving the guests of Allah with the utmost respect, care, and hospitality.
-                </p>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+      <Features />
 
       {/* Fleet Section */}
       <FadeIn>
-        <FleetCarousel vehicles={carouselVehicles} />
+        <FleetCarouselWrapper />
       </FadeIn>
 
       {/* Gallery Section */}

@@ -1,15 +1,10 @@
 .footer {
-    background-color: #ffffff;
-    color: #0f172a;
+    background-color: hsl(var(--card));
+    color: hsl(var(--foreground));
     padding: 5rem 0 2rem;
     position: relative;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-:global(.dark) .footer {
-    background-color: #0a192f;
-    color: #ffffff;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -10px 40px -10px rgba(0, 0, 0, 0.05);
 }
 
 .container {
@@ -25,38 +20,36 @@
     margin-bottom: 4rem;
 }
 
-:global(.dark) .tagline {
-    color: #94a3b8;
+.tagline {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+    margin-top: 1rem;
 }
 
 .contactInfo {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    margin-top: 2rem;
 }
 
 .contactItem {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: #475569;
+    color: hsl(var(--muted-foreground));
     text-decoration: none;
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
-:global(.dark) .contactItem {
-    color: #cbd5e1;
-}
-
 .contactItem:hover {
-    color: #d4af37;
+    color: hsl(var(--secondary));
     transform: translateX(5px);
 }
 
 .icon {
-    color: #d4af37;
-    /* Gold Icon */
+    color: hsl(var(--secondary));
     min-width: 20px;
 }
 
@@ -64,12 +57,12 @@
 .heading {
     font-family: var(--font-playfair), serif;
     font-size: 1.5rem;
-    color: #d4af37;
-    /* Gold Heading */
+    color: hsl(var(--foreground));
     margin-bottom: 1.5rem;
     position: relative;
     padding-bottom: 0.75rem;
     display: inline-block;
+    font-weight: 700;
 }
 
 .heading::after {
@@ -79,8 +72,13 @@
     left: 0;
     width: 40px;
     height: 3px;
-    background: #d4af37;
+    background: hsl(var(--secondary));
     border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.column:hover .heading::after {
+    width: 60px;
 }
 
 /* Links */
@@ -93,23 +91,20 @@
 }
 
 .links a {
-    color: #475569;
+    color: hsl(var(--muted-foreground));
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 1rem;
-}
-
-:global(.dark) .links a {
-    color: #cbd5e1;
+    display: inline-block;
 }
 
 .links a:hover {
-    color: #d4af37;
-    padding-left: 5px;
+    color: hsl(var(--secondary));
+    transform: translateX(5px);
 }
 
 .bookLink {
-    color: #d4af37 !important;
+    color: hsl(var(--secondary)) !important;
     font-weight: 600;
 }
 
@@ -124,38 +119,29 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
-    transition: all 0.3s ease;
-}
-
-:global(.dark) .socialIcon {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #94a3b8;
+    color: hsl(var(--muted-foreground));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .socialIcon:hover {
-    background: #d4af37;
-    color: #ffffff;
-    border-color: #d4af37;
-    transform: translateY(-3px);
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border-color: hsl(var(--secondary));
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
 /* Newsletter */
 .newsletter h4 {
-    color: #0f172a;
+    color: hsl(var(--foreground));
     margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 600;
-}
-
-:global(.dark) .newsletter h4 {
-    color: #ffffff;
 }
 
 .newsletterForm {
@@ -166,45 +152,46 @@
 
 .input {
     width: 100%;
-    background: #f1f5f9;
-    border: none;
+    background: hsl(var(--muted));
+    border: 1px solid transparent;
     padding: 1rem 1.5rem;
     padding-right: 3.5rem;
-    border-radius: 8px;
-    color: #0f172a;
+    border-radius: 12px;
+    color: hsl(var(--foreground));
     outline: none;
-    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
-:global(.dark) .input {
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
+.input:focus {
+    background: hsl(var(--background));
+    border-color: hsl(var(--secondary));
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
 }
 
 .submitBtn {
     position: absolute;
-    right: 5px;
-    top: 5px;
-    bottom: 5px;
-    width: 40px;
-    background: #d4af37;
-    color: #ffffff;
+    right: 8px;
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .submitBtn:hover {
-    background: #b5952f;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 /* Bottom Bar */
 .bottom {
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid hsl(var(--border));
     padding-top: 2rem;
     display: flex;
     justify-content: space-between;
@@ -213,39 +200,36 @@
     gap: 1.5rem;
 }
 
-:global(.dark) .bottom {
-    border-top-color: rgba(255, 255, 255, 0.1);
-}
-
 .copyright {
-    color: #64748b;
+    color: hsl(var(--muted-foreground));
     font-size: 0.9rem;
 }
 
 .legalLinks {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .legalLinks a {
-    color: #64748b;
+    color: hsl(var(--muted-foreground));
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s;
+    position: relative;
 }
 
 .legalLinks a:hover {
-    color: #d4af37;
+    color: hsl(var(--secondary));
 }
 
 .separator {
-    color: #cbd5e1;
+    color: hsl(var(--border));
 }
 
 /* Language Container */
 .langContainer {
-    background: #f1f5f9;
+    background: hsl(var(--muted));
     padding: 0.5rem 1rem;
     border-radius: 50px;
     display: flex;
@@ -253,14 +237,10 @@
     gap: 0.5rem;
 }
 
-:global(.dark) .langContainer {
-    background: rgba(255, 255, 255, 0.05);
-}
-
 .langBtn {
     background: none;
     border: none;
-    color: #64748b;
+    color: hsl(var(--muted-foreground));
     cursor: pointer;
     font-size: 0.85rem;
     font-weight: 500;
@@ -270,12 +250,12 @@
 
 .langBtn:hover,
 .activeLang {
-    color: #d4af37 !important;
+    color: hsl(var(--secondary)) !important;
     font-weight: 700;
 }
 
 .langSep {
-    color: #cbd5e1;
+    color: hsl(var(--border));
     font-size: 0.8rem;
 }
 

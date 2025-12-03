@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ReviewsCarousel from './ReviewsCarousel';
-import { Star, MessageSquarePlus } from 'lucide-react';
+import { Star, MessageSquarePlus, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Review {
@@ -23,7 +23,12 @@ export default function ReviewsSection() {
             try {
                 const res = await fetch('/api/reviews');
                 const data = await res.json();
-                setReviews(data);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const formattedData = data.map((review: any) => ({
+                    ...review,
+                    id: review._id || review.id
+                }));
+                setReviews(formattedData);
             } catch (error) {
                 console.error('Failed to load reviews:', error);
             } finally {
@@ -87,26 +92,21 @@ export default function ReviewsSection() {
     };
 
     return (
-        <section className="py-32 relative overflow-hidden bg-slate-950">
-            {/* Premium Background Elements */}
-            <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-[0.03] mix-blend-overlay" />
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950 pointer-events-none" />
-
-            {/* Ambient Glows */}
-            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10 animate-pulse-slow" />
-            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] -z-10 animate-pulse-slow delay-1000" />
+        <section className="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+            {/* Subtle Background */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-200/20 via-slate-50 to-slate-50 dark:from-slate-900/20 dark:via-slate-950 dark:to-slate-950" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-20">
+                <div className="text-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 shadow-lg shadow-amber-900/5 group hover:bg-white/10 transition-all duration-300"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6"
                     >
-                        <Star size={18} className="fill-amber-400 text-amber-400 group-hover:scale-110 transition-transform" />
-                        <span className="text-base font-medium text-slate-200">
-                            <span className="font-bold text-white">{averageRating}/5</span> Average Rating
+                        <Star size={14} className="fill-amber-400 text-amber-400" />
+                        <span className="text-sm font-medium text-amber-700 dark:text-amber-200">
+                            <span className="font-bold text-amber-600 dark:text-amber-400">{averageRating}/5</span> Average Rating
                         </span>
                     </motion.div>
 
@@ -115,9 +115,9 @@ export default function ReviewsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight leading-tight"
+                        className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight"
                     >
-                        Trusted by <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 animate-gradient">Thousands</span>
+                        Trusted by <span className="text-amber-500 dark:text-amber-400">Thousands</span>
                     </motion.h2>
 
                     <motion.p
@@ -125,38 +125,39 @@ export default function ReviewsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-light mb-12"
+                        className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light mb-12"
                     >
-                        See what our pilgrims say about their spiritual journey with Al Aqsa Transport.
-                        We take pride in providing safe, comfortable, and reliable service.
+                        Join the community of pilgrims who trust Al Aqsa Transport for their spiritual journey.
                     </motion.p>
 
-                    {/* Rating Summary & Actions */}
+                    {/* Simplified Rating Summary */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="flex flex-col md:flex-row items-center justify-center gap-8 mb-16"
+                        className="flex flex-col md:flex-row items-center justify-center gap-12 mb-16"
                     >
-                        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 flex items-center gap-8 min-w-[300px] hover:border-amber-500/30 transition-colors duration-300 shadow-2xl shadow-black/20">
+                        <div className="flex items-center gap-8">
                             <div className="text-center">
-                                <div className="text-5xl font-bold text-white mb-1">{averageRating}</div>
-                                <div className="flex gap-1 justify-center mb-2">
+                                <div className="text-6xl font-bold text-slate-900 dark:text-white tracking-tighter">{averageRating}</div>
+                                <div className="flex gap-1 justify-center mt-2">
                                     {[...Array(5)].map((_, i) => (
-                                        <Star key={i} size={14} className={`${i < Math.round(Number(averageRating)) ? 'fill-amber-400 text-amber-400' : 'text-slate-700'}`} />
+                                        <Star key={i} size={16} className={`${i < Math.round(Number(averageRating)) ? 'fill-amber-400 text-amber-400' : 'text-slate-300 dark:text-slate-800'}`} />
                                     ))}
                                 </div>
-                                <div className="text-xs text-slate-400">{totalReviews} Reviews</div>
+                                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">{totalReviews} Verified Reviews</div>
                             </div>
-                            <div className="h-16 w-px bg-white/10" />
-                            <div className="flex-1 space-y-1">
+
+                            <div className="h-16 w-px bg-slate-200 dark:bg-slate-800" />
+
+                            <div className="space-y-1.5">
                                 {[5, 4, 3, 2, 1].map((star) => (
-                                    <div key={star} className="flex items-center gap-2 text-xs">
-                                        <span className="text-slate-400 w-3">{star}</span>
-                                        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden w-24">
+                                    <div key={star} className="flex items-center gap-3 text-xs">
+                                        <span className="text-slate-600 dark:text-slate-400 w-3 font-medium">{star}</span>
+                                        <div className="w-32 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                                             <div
-                                                className="h-full bg-amber-400 rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)]"
+                                                className="h-full bg-amber-500 rounded-full"
                                                 style={{ width: `${totalReviews > 0 ? (ratingCounts[star as keyof typeof ratingCounts] / totalReviews) * 100 : 0}%` }}
                                             />
                                         </div>
@@ -169,11 +170,10 @@ export default function ReviewsSection() {
                             href="https://search.google.com/local/writereview?placeid=ChIJ..." // TODO: Add actual Place ID
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 px-8 py-5 rounded-full font-bold transition-all duration-300 hover:scale-105 shadow-lg shadow-amber-500/20 group relative overflow-hidden"
+                            className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 px-6 py-3 rounded-full font-semibold transition-colors"
                         >
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                            <MessageSquarePlus size={20} className="group-hover:rotate-12 transition-transform relative z-10" />
-                            <span className="relative z-10">Write a Review</span>
+                            <MessageSquarePlus size={18} />
+                            <span>Write a Review</span>
                         </a>
                     </motion.div>
                 </div>
@@ -185,16 +185,16 @@ export default function ReviewsSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
-                    className="text-center mt-16"
+                    className="text-center mt-12"
                 >
                     <a
                         href="https://search.google.com/local/reviews?placeid=ChIJ..." // TODO: Add actual Place ID
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 text-white bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 group"
+                        className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
                     >
-                        <span className="font-medium">Read all reviews on Google</span>
-                        <Star size={18} className="text-amber-400 group-hover:rotate-12 transition-transform" />
+                        <span>Read all reviews on Google</span>
+                        <ChevronRight size={14} />
                     </a>
                 </motion.div>
             </div>

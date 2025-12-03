@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Plus, Trash2, Shield, User as UserIcon, Loader2, AlertCircle } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { Plus, Trash2, Shield, User as UserIcon, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
 import { Toast } from '@/components/ui/Toast';
@@ -10,7 +10,7 @@ interface User {
     id: string;
     name: string;
     email: string;
-    role: 'ADMIN' | 'MANAGER';
+    role: 'admin' | 'manager';
     createdAt: string;
 }
 
@@ -18,7 +18,7 @@ export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'MANAGER' });
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'manager' });
     const [submitting, setSubmitting] = useState(false);
 
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -36,15 +36,11 @@ export default function UsersPage() {
         type: 'success' | 'error';
     }>({ isVisible: false, message: '', type: 'success' });
 
-    useEffect(() => {
-        fetchUsers();
+    const showToast = useCallback((message: string, type: 'success' | 'error') => {
+        setToast({ isVisible: true, message, type });
     }, []);
 
-    const showToast = (message: string, type: 'success' | 'error') => {
-        setToast({ isVisible: true, message, type });
-    };
-
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         try {
             const res = await fetch('/api/admin/users');
             if (res.ok) {
@@ -57,7 +53,11 @@ export default function UsersPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
 
     const handleEdit = (user: User) => {
         setFormData({ name: user.name, email: user.email, password: '', role: user.role });
@@ -66,7 +66,7 @@ export default function UsersPage() {
     };
 
     const openCreateModal = () => {
-        setFormData({ name: '', email: '', password: '', role: 'MANAGER' });
+        setFormData({ name: '', email: '', password: '', role: 'manager' });
         setEditingId(null);
         setIsModalOpen(true);
     };
@@ -87,7 +87,7 @@ export default function UsersPage() {
 
             if (res.ok) {
                 setIsModalOpen(false);
-                setFormData({ name: '', email: '', password: '', role: 'MANAGER' });
+                setFormData({ name: '', email: '', password: '', role: 'manager' });
                 setEditingId(null);
                 fetchUsers();
                 showToast(editingId ? 'User updated successfully' : 'User created successfully', 'success');
@@ -159,8 +159,8 @@ export default function UsersPage() {
                                 className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow"
                             >
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className={`p-3 rounded-full ${user.role === 'ADMIN' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}>
-                                        {user.role === 'ADMIN' ? <Shield size={24} /> : <UserIcon size={24} />}
+                                    <div className={`p-3 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                                        {user.role === 'admin' ? <Shield size={24} /> : <UserIcon size={24} />}
                                     </div>
                                     <div className="flex gap-2">
                                         <button
@@ -180,7 +180,7 @@ export default function UsersPage() {
                                 <h3 className="font-bold text-lg text-slate-800 dark:text-white mb-1">{user.name}</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{user.email}</p>
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                                    <span className={`text-xs font-bold px-2 py-1 rounded-full ${user.role === 'ADMIN' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'}`}>
+                                    <span className={`text-xs font-bold px-2 py-1 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'}`}>
                                         {user.role}
                                     </span>
                                     <span className="text-xs text-slate-400">
@@ -251,8 +251,8 @@ export default function UsersPage() {
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                     className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
                                 >
-                                    <option value="MANAGER">Manager</option>
-                                    <option value="ADMIN">Boss Admin</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="admin">Boss Admin</option>
                                 </select>
                             </div>
                             <div className="flex gap-3 mt-6">

@@ -1,6 +1,6 @@
 .section {
-    padding: 6rem 0;
-    background: #f8f9fa;
+    padding: 8rem 0;
+    background: hsl(var(--muted));
     position: relative;
     overflow: hidden;
 }
@@ -17,22 +17,24 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 3rem;
     position: relative;
     z-index: 1;
 }
 
 .card {
-    background: white;
-    border-radius: 24px;
-    padding: 3rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 32px;
+    padding: 4rem 2.5rem;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--glass-shadow);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--glass-border);
     opacity: 0;
     transform: translateY(30px);
 }
@@ -44,7 +46,8 @@
 
 .card:hover {
     transform: translateY(-15px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    border-color: hsl(var(--secondary));
 }
 
 .card::before {
@@ -54,7 +57,7 @@
     left: 0;
     width: 100%;
     height: 6px;
-    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.4s ease;
@@ -65,39 +68,40 @@
 }
 
 .iconWrapper {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 2rem;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--card)) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1e3a8a;
-    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.1);
+    color: hsl(var(--primary));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.4s ease;
     position: relative;
 }
 
 .card:hover .iconWrapper {
     transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
     color: white;
     box-shadow: 0 15px 30px rgba(30, 58, 138, 0.2);
 }
 
 .card h2 {
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: 800;
-    color: #1e3a8a;
+    color: hsl(var(--primary));
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
+    font-family: var(--font-playfair), serif;
 }
 
 .card p {
-    color: #4b5563;
+    color: hsl(var(--muted-foreground));
     line-height: 1.8;
-    font-size: 1.125rem;
+    font-size: 1.15rem;
 }
 
 @media (max-width: 768px) {
@@ -107,6 +111,6 @@
     }
 
     .card {
-        padding: 2rem 1.5rem;
+        padding: 3rem 2rem;
     }
 }

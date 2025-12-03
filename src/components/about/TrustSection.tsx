@@ -1,10 +1,8 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
 import styles from './TrustSection.module.css';
 
 export default function TrustSection() {
-    const { t } = useLanguage();
 
     return (
         <section className={styles.section}>
@@ -12,9 +10,9 @@ export default function TrustSection() {
                 <div className={styles.card}>
                     <div className={styles.glow}></div>
                     <blockquote className={styles.quote}>
-                        &quot;{t('about.trust.quote')}&quot;
+                        &quot;Trust is the foundation of our service. We are honored to be the choice of thousands of pilgrims.&quot;
                     </blockquote>
-                    <cite className={styles.source}>- {t('about.trust.source')}</cite>
+                    <cite className={styles.source}>- CEO, Al Aqsa Umrah Transport</cite>
                 </div>
             </div>
         </section>

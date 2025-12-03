@@ -1,7 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
-
-const LOG_FILE = path.join(process.cwd(), 'src', 'data', 'logs.json');
+import dbConnect from '@/lib/mongodb';
+import { AuditLog } from '@/models';
 
 export interface LogEntry {
     id: string;
@@ -13,32 +11,15 @@ export interface LogEntry {
 }
 
 export async function logAction(action: string, details: string, ip?: string, user: string = 'Admin') {
-    const entry: LogEntry = {
-        id: crypto.randomUUID(),
-        action,
-        details,
-        timestamp: new Date().toISOString(),
-        ip,
-        user
-    };
-
     try {
-        await ensureLogDir();
-        let logs: LogEntry[] = [];
-        try {
-            const data = await fs.readFile(LOG_FILE, 'utf-8');
-            logs = JSON.parse(data);
-        } catch {
-            // File doesn't exist or is empty
-        }
-
-        // Keep only last 1000 logs
-        logs.unshift(entry);
-        if (logs.length > 1000) {
-            logs = logs.slice(0, 1000);
-        }
-
-        await fs.writeFile(LOG_FILE, JSON.stringify(logs, null, 2), 'utf-8');
+        await dbConnect();
+        await AuditLog.create({
+            action,
+            details,
+            user,
+            entity: 'System', // Default entity
+            timestamp: new Date()
+        });
     } catch (error) {
         console.error('Failed to write log:', error);
     }
@@ -46,18 +27,19 @@ export async function logAction(action: string, details: string, ip?: string, us
 
 export async function getLogs(): Promise<LogEntry[]> {
     try {
-        await fs.access(LOG_FILE);
-        const data = await fs.readFile(LOG_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch {
-        return [];
-    }
-}
+        await dbConnect();
+        const logs = await AuditLog.find({}).sort({ timestamp: -1 }).limit(100).lean();
 
-async function ensureLogDir() {
-    try {
-        await fs.mkdir(path.dirname(LOG_FILE), { recursive: true });
-    } catch {
-        // Ignore
+        return logs.map(log => ({
+            id: log._id.toString(),
+            action: log.action,
+            details: log.details || '',
+            timestamp: log.timestamp.toISOString(),
+            user: log.user,
+            ip: '' // IP not stored in AuditLog currently
+        }));
+    } catch (error) {
+        console.error('Failed to fetch logs:', error);
+        return [];
     }
 }

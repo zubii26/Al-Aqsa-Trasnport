@@ -7,37 +7,18 @@ interface PageHeaderProps {
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => {
     return (
-        <div style={{
-            background: "linear-gradient(rgba(6, 78, 59, 0.9), rgba(6, 78, 59, 0.8)), url('https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=1920&auto=format&fit=crop')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            color: 'white',
-            padding: '6rem 0',
-            minHeight: '400px',
-            display: 'flex',
-            alignItems: 'center',
-            textAlign: 'center'
-        }}>
+        <div
+            className="relative bg-cover bg-center text-white py-24 min-h-[400px] flex items-center text-center"
+            style={{
+                backgroundImage: "linear-gradient(rgba(6, 78, 59, 0.9), rgba(6, 78, 59, 0.8)), url('https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=1920&auto=format&fit=crop')"
+            }}
+        >
             <div className="container">
-                <h1 style={{
-                    fontSize: '3.5rem',
-                    fontWeight: 700,
-                    marginBottom: '1rem',
-                    lineHeight: 1.1,
-                    background: 'linear-gradient(to right, #fbbf24, #f59e0b)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                }}>
+                <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
                     {title}
                 </h1>
                 {subtitle && (
-                    <p style={{
-                        fontSize: '1.25rem',
-                        opacity: 0.9,
-                        maxWidth: '600px',
-                        margin: '0 auto'
-                    }}>
+                    <p className="text-xl opacity-90 max-w-2xl mx-auto">
                         {subtitle}
                     </p>
                 )}

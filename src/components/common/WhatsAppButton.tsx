@@ -4,16 +4,21 @@ import React from 'react';
 import styles from './WhatsAppButton.module.css';
 
 import { useMenu } from '@/context/MenuContext';
+import { useSettings } from '@/context/SettingsContext';
 
 const WhatsAppButton = () => {
     const { isMenuOpen } = useMenu();
+    const { settings } = useSettings();
 
     if (isMenuOpen) return null;
+
+    const phoneNumber = settings?.contact.phone || '+966500000000';
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\D/g, '')}`;
 
     return (
         <div className={styles.container}>
             <a
-                href="https://wa.me/923260600676"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.button}

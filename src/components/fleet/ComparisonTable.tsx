@@ -1,11 +1,9 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
 import styles from './ComparisonTable.module.css';
-import { Check } from 'lucide-react';
+
 
 export default function ComparisonTable() {
-    const { t } = useLanguage();
 
     const data = [
         { name: 'Toyota Camry', type: 'camry', capacity: '4', comfort: 'High', price: 'From SAR 200' },
@@ -19,15 +17,15 @@ export default function ComparisonTable() {
     return (
         <section className={styles.section}>
             <div className="container">
-                <h2 className="section-title text-center mb-8">{t('fleet.comparison.title')}</h2>
+                <h2 className={styles.sectionTitle}>Compare Our Vehicles</h2>
                 <div className={`${styles.tableWrapper} glass-panel`}>
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>{t('fleet.comparison.type')}</th>
-                                <th>{t('fleet.comparison.capacity')}</th>
-                                <th>{t('fleet.comparison.comfort')}</th>
-                                <th>{t('fleet.comparison.price')}</th>
+                                <th>Vehicle Type</th>
+                                <th>Capacity</th>
+                                <th>Comfort Level</th>
+                                <th>Starting Price</th>
                             </tr>
                         </thead>
                         <tbody>

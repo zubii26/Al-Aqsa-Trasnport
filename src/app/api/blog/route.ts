@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { blogService } from '@/services/blogService';
 import { validateRequest } from '@/lib/server-auth';
 
 export async function GET() {
     try {
-        const posts = await prisma.blogPost.findMany({
-            orderBy: { date: 'desc' }
-        });
+        const posts = await blogService.getPosts();
+        // Sort by date desc
+        posts.sort((a, b) => b.date.getTime() - a.date.getTime());
         return NextResponse.json(posts);
     } catch (error) {
         console.error('Failed to fetch blog posts:', error);
@@ -15,8 +15,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const isAuth = await validateRequest();
-    if (!isAuth) {
+    const user = await validateRequest();
+    if (!user || (user.role !== 'admin' && !user.role.toLowerCase().includes('manager'))) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -27,21 +27,19 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        const post = await prisma.blogPost.create({
-            data: {
-                id: body.id, // Slug
-                title: body.title,
-                excerpt: body.excerpt,
-                content: body.content,
-                category: body.category,
-                date: new Date(), // Set current date
-                readTime: body.readTime || '5 min read',
-                image: body.image,
-                alt: body.alt || body.title,
-                author: body.author,
-                tags: body.tags || [],
-                isPublished: body.isPublished !== undefined ? body.isPublished : true,
-            }
+        const post = await blogService.createPost({
+            slug: body.id, // Slug
+            title: body.title,
+            excerpt: body.excerpt,
+            content: body.content,
+            category: body.category,
+            date: new Date(), // Set current date
+            readTime: body.readTime || '5 min read',
+            image: body.image,
+            alt: body.alt || body.title,
+            author: body.author,
+            tags: body.tags || [],
+            isPublished: body.isPublished !== undefined ? body.isPublished : true,
         });
 
         return NextResponse.json(post);

@@ -1,6 +1,6 @@
 .respectSection {
     padding: 10rem 0;
-    background: linear-gradient(to bottom, #f8fafc, #ffffff);
+    background: hsl(var(--background));
     position: relative;
     overflow: hidden;
 }
@@ -12,7 +12,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px);
     background-size: 40px 40px;
     opacity: 0.1;
     z-index: 0;
@@ -33,7 +33,7 @@
 }
 
 .verseIcon {
-    color: #D4AF37;
+    color: hsl(var(--secondary));
     margin-bottom: 1.5rem;
     opacity: 0.8;
 }
@@ -42,7 +42,7 @@
     font-family: 'Amiri', serif;
     font-size: 1.8rem;
     line-height: 1.8;
-    color: #1e293b;
+    color: hsl(var(--foreground));
     margin: 0;
     position: relative;
 }
@@ -51,7 +51,7 @@
     display: block;
     font-size: 1rem;
     font-family: var(--font-inter);
-    color: #94a3b8;
+    color: hsl(var(--muted-foreground));
     margin-top: 1rem;
     font-style: normal;
     font-weight: 500;
@@ -62,7 +62,7 @@
 .respectTitle {
     font-size: 3rem;
     font-weight: 800;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     margin-bottom: 2rem;
     letter-spacing: -0.02em;
 }
@@ -70,7 +70,7 @@
 .respectIntro {
     font-size: 1.25rem;
     line-height: 1.8;
-    color: #475569;
+    color: hsl(var(--muted-foreground));
     font-weight: 300;
 }
 
@@ -84,25 +84,25 @@
 }
 
 .commitmentCard {
-    background: #ffffff;
+    background: hsl(var(--card));
     padding: 3rem 2rem;
     border-radius: 24px;
     text-align: center;
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
     transition: all 0.4s ease;
-    border: 1px solid #f1f5f9;
+    border: 1px solid hsl(var(--border));
 }
 
 .commitmentCard:hover {
     transform: translateY(-10px);
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
-    border-color: #e2e8f0;
+    border-color: hsl(var(--border));
 }
 
 .commitmentIconWrapper {
     width: 80px;
     height: 80px;
-    background: #f8fafc;
+    background: hsl(var(--muted));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -112,22 +112,22 @@
 }
 
 .commitmentCard:hover .commitmentIconWrapper {
-    background: #0f172a;
-    color: #D4AF37;
+    background: hsl(var(--primary));
+    color: hsl(var(--secondary));
 }
 
 .commitmentIcon {
-    color: #64748b;
+    color: hsl(var(--muted-foreground));
     transition: color 0.4s ease;
 }
 
 .commitmentCard:hover .commitmentIcon {
-    color: #D4AF37;
+    color: hsl(var(--secondary));
 }
 
 .commitmentText {
     font-size: 1.1rem;
-    color: #334155;
+    color: hsl(var(--foreground));
     line-height: 1.6;
     font-weight: 500;
 }
@@ -138,7 +138,7 @@
     margin: 0 auto;
     font-size: 1.4rem;
     line-height: 1.8;
-    color: #1e293b;
+    color: hsl(var(--foreground));
     font-weight: 300;
     font-style: italic;
     position: relative;

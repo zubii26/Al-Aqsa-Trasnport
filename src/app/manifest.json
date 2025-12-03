@@ -1,0 +1,21 @@
+{
+    "name": "Al Aqsa Umrah Transport",
+    "short_name": "Al Aqsa Transport",
+    "description": "Reliable and comfortable Umrah transport services in Saudi Arabia. Book your Makkah to Madinah taxi today.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#D4AF37",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}

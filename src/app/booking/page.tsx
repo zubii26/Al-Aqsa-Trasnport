@@ -2,10 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from './page.module.css';
-import { Plane, Map, Car, CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Wifi, Wind } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import FadeIn from '@/components/common/FadeIn';
-import { saveBooking } from '@/lib/storage';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 
@@ -44,8 +43,8 @@ export default function BookingPage() {
 
     useEffect(() => {
         if (bookingData.routeId && bookingData.vehicleId) {
-            const price = calculatePrice(bookingData.routeId, bookingData.vehicleId);
-            setTotalPrice(price);
+            const priceDetails = calculatePrice(bookingData.routeId, bookingData.vehicleId);
+            setTotalPrice(priceDetails.price);
         }
     }, [bookingData.routeId, bookingData.vehicleId, calculatePrice]);
 
@@ -63,7 +62,7 @@ export default function BookingPage() {
         };
     }, []);
 
-    const updateData = (field: string, value: any) => {
+    const updateData = (field: string, value: string | Date | null) => {
         setBookingData(prev => ({ ...prev, [field]: value }));
         // Clear error when user types
         if (errors[field]) {
@@ -256,7 +255,7 @@ export default function BookingPage() {
             <div className={styles.grid}>
                 {vehicles.map((vehicle) => {
                     const Icon = vehicle.icon;
-                    const price = calculatePrice(bookingData.routeId, vehicle.id);
+                    const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
                     return (
                         <div
                             key={vehicle.id}
@@ -268,7 +267,18 @@ export default function BookingPage() {
                                     <Icon size={32} />
                                 </div>
                                 <div className={styles.cardPrice}>
-                                    <span className={styles.priceValue}>{price} SAR</span>
+                                    {priceDetails.discountApplied > 0 ? (
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-xs text-slate-400 line-through decoration-red-500/50">
+                                                {priceDetails.originalPrice} SAR
+                                            </span>
+                                            <span className={`${styles.priceValue} text-red-600`}>
+                                                {priceDetails.price} SAR
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <span className={styles.priceValue}>{priceDetails.price} SAR</span>
+                                    )}
                                 </div>
                             </div>
 
@@ -441,8 +451,29 @@ export default function BookingPage() {
                     </div>
 
                     <div className={styles.summaryTotal}>
-                        <span>Total Price</span>
-                        <span className={styles.summaryTotalAmount}>{totalPrice} SAR</span>
+                        {(() => {
+                            const priceDetails = calculatePrice(bookingData.routeId, bookingData.vehicleId);
+                            return (
+                                <>
+                                    {priceDetails.discountApplied > 0 && (
+                                        <div className="flex justify-between w-full text-sm font-normal mb-2">
+                                            <span className="text-slate-500">Original Price</span>
+                                            <span className="text-slate-500 line-through">{priceDetails.originalPrice} SAR</span>
+                                        </div>
+                                    )}
+                                    {priceDetails.discountApplied > 0 && (
+                                        <div className="flex justify-between w-full text-sm font-normal mb-2">
+                                            <span className="text-green-600">Discount</span>
+                                            <span className="text-green-600">-{priceDetails.discountApplied} SAR</span>
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between w-full items-center mt-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+                                        <span>Total Price</span>
+                                        <span className={styles.summaryTotalAmount}>{totalPrice} SAR</span>
+                                    </div>
+                                </>
+                            );
+                        })()}
                     </div>
                 </div>
             </motion.div>
@@ -505,8 +536,33 @@ export default function BookingPage() {
                     </div>
 
                     <div className={styles.sidebarTotal}>
-                        <span>Total Price</span>
-                        <span className={styles.totalAmount}>{totalPrice} SAR</span>
+                        {(() => {
+                            const priceDetails = calculatePrice(bookingData.routeId || '', bookingData.vehicleId || '');
+                            if (priceDetails.discountApplied > 0) {
+                                return (
+                                    <div className="w-full">
+                                        <div className="flex justify-between text-sm text-slate-400 mb-1">
+                                            <span>Original</span>
+                                            <span className="line-through">{priceDetails.originalPrice} SAR</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm text-green-500 mb-2">
+                                            <span>Discount</span>
+                                            <span>-{priceDetails.discountApplied} SAR</span>
+                                        </div>
+                                        <div className="flex justify-between items-center pt-2 border-t border-slate-700">
+                                            <span>Total</span>
+                                            <span className={styles.totalAmount}>{totalPrice} SAR</span>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            return (
+                                <>
+                                    <span>Total Price</span>
+                                    <span className={styles.totalAmount}>{totalPrice} SAR</span>
+                                </>
+                            );
+                        })()}
                     </div>
 
                     <div className={styles.sidebarNote}>

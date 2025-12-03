@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, memo, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { Save, Search, RotateCcw } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
@@ -89,16 +88,12 @@ export default function PricingPage() {
         onConfirm: () => void;
     }>({ isOpen: false, title: '', message: '', onConfirm: () => { } });
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const showToast = (message: string, type: 'success' | 'error') => {
+    const showToast = useCallback((message: string, type: 'success' | 'error') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
-    };
+    }, []);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const [routesRes, vehiclesRes, pricesRes] = await Promise.all([
                 fetch('/api/admin/routes'),
@@ -110,8 +105,13 @@ export default function PricingPage() {
             const vehiclesData = await vehiclesRes.json();
             const pricesData = await pricesRes.json();
 
-            setRoutes(routesData);
-            setVehicles(vehiclesData);
+            if (Array.isArray(routesData)) {
+                setRoutes(routesData);
+            } else {
+                setRoutes([]);
+            }
+
+            setVehicles(Array.isArray(vehiclesData) ? vehiclesData : []);
 
             const priceMap: Record<string, number> = {};
             pricesData.forEach((p: RoutePrice) => {
@@ -124,7 +124,11 @@ export default function PricingPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const handleCellSave = useCallback((routeId: string, vehicleId: string, newValue: number) => {
         const key = `${routeId}-${vehicleId}`;
@@ -269,7 +273,7 @@ export default function PricingPage() {
                     </table>
                     {filteredRoutes.length === 0 && (
                         <div className="p-12 text-center text-muted-foreground">
-                            No routes found matching "{searchTerm}"
+                            No routes found matching &quot;{searchTerm}&quot;
                         </div>
                     )}
                 </div>

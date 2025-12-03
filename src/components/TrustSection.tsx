@@ -3,7 +3,7 @@ import React from 'react';
 export default function TrustSection() {
     return (
         <section className="py-20 px-4 bg-gradient-to-r from-blue-900 to-blue-800 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
+            <div className="absolute inset-0 opacity-5"></div>
             <div className="max-w-4xl mx-auto text-center relative z-10">
                 <div className="mb-8">
                     <p className="text-3xl md:text-5xl font-arabic mb-6 leading-relaxed text-amber-400 drop-shadow-lg">

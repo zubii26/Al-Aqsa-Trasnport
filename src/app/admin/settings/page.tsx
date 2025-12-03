@@ -1,12 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, Globe, Phone, Mail, MapPin, Facebook, Instagram, Twitter, Linkedin, MessageCircle, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon } from 'lucide-react';
+import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast, ToastType } from '@/components/ui/Toast';
 
-type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts';
+import DiscountManagement from '@/components/admin/settings/DiscountManagement';
+import { Settings } from '@/lib/validations';
+
+type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount';
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('general');
@@ -33,26 +36,61 @@ export default function SettingsPage() {
         seo_title: '',
         seo_description: '',
         seo_keywords: '',
+
         scripts_header: '',
         scripts_footer: '',
+        google_analytics_id: '',
+
+        discount: {
+            enabled: false,
+            type: 'percentage',
+            value: 0,
+            startDate: '',
+            endDate: '',
+        }
     });
 
-    useEffect(() => {
-        fetchSettings();
+    const [passwordForm, setPasswordForm] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [passwordLoading, setPasswordLoading] = useState(false);
+
+    const showToast = useCallback((message: string, type: ToastType) => {
+        setToast({ message, type, isVisible: true });
     }, []);
 
-    const fetchSettings = async () => {
+    const fetchSettings = useCallback(async () => {
         try {
             const res = await fetch('/api/admin/settings');
             const data = await res.json();
-            setSettings(prev => ({ ...prev, ...data }));
+
+            // Reconstruct discount object from flat keys
+            const discountSettings = {
+                enabled: data.discount_enabled === 'true',
+                type: data.discount_type || 'percentage',
+                value: Number(data.discount_value) || 0,
+                startDate: data.discount_start_date || '',
+                endDate: data.discount_end_date || '',
+            };
+
+            setSettings(prev => ({
+                ...prev,
+                ...data,
+                discount: discountSettings
+            }));
         } catch (error) {
             console.error('Failed to fetch settings:', error);
             showToast('Failed to load settings', 'error');
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchSettings();
+    }, [fetchSettings]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,14 +114,84 @@ export default function SettingsPage() {
         }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleSectionSave = async (section: keyof Settings, data: any) => {
+        setSaving(true);
+        try {
+            setSettings(prev => ({ ...prev, [section]: data }));
+
+            const updatedSettings = { ...settings, [section]: data };
+
+            const res = await fetch('/api/admin/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedSettings),
+            });
+
+            if (res.ok) {
+                showToast('Settings saved successfully!', 'success');
+            } else {
+                showToast('Failed to save settings', 'error');
+            }
+        } catch (error) {
+            console.error('Failed to save settings:', error);
+            showToast('Error saving settings', 'error');
+        } finally {
+            setSaving(false);
+        }
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setSettings(prev => ({ ...prev, [name]: value }));
     };
 
-    const showToast = (message: string, type: ToastType) => {
-        setToast({ message, type, isVisible: true });
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setPasswordForm(prev => ({ ...prev, [name]: value }));
     };
+
+    const handlePasswordSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+            showToast('New passwords do not match', 'error');
+            return;
+        }
+
+        if (passwordForm.newPassword.length < 6) {
+            showToast('Password must be at least 6 characters', 'error');
+            return;
+        }
+
+        setPasswordLoading(true);
+        try {
+            const res = await fetch('/api/admin/change-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    currentPassword: passwordForm.currentPassword,
+                    newPassword: passwordForm.newPassword
+                }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                showToast('Password changed successfully', 'success');
+                setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+            } else {
+                showToast(data.error || 'Failed to change password', 'error');
+            }
+        } catch (error) {
+            console.error('Failed to change password:', error);
+            showToast('An error occurred', 'error');
+        } finally {
+            setPasswordLoading(false);
+        }
+    };
+
+
 
     const tabs = [
         { id: 'general', label: 'General', icon: Layout, description: 'Site identity and basics' },
@@ -91,6 +199,8 @@ export default function SettingsPage() {
         { id: 'social', label: 'Social Media', icon: Globe, description: 'Social network links' },
         { id: 'seo', label: 'SEO', icon: Search, description: 'Search engine optimization' },
         { id: 'scripts', label: 'Scripts', icon: Code, description: 'Custom tracking scripts' },
+        { id: 'discount', label: 'Discounts', icon: Percent, description: 'Promotions & offers' },
+        { id: 'security', label: 'Security', icon: ShieldCheck, description: 'Password & access' },
     ];
 
     if (loading) return (
@@ -302,7 +412,7 @@ export default function SettingsPage() {
                                                     <input
                                                         type="text"
                                                         name={social.name}
-                                                        value={settings[social.name as keyof typeof settings]}
+                                                        value={settings[social.name as keyof typeof settings] as string}
                                                         onChange={handleChange}
                                                         className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
                                                         placeholder={`https://${social.label.toLowerCase().split(' ')[0]}.com/...`}
@@ -383,6 +493,22 @@ export default function SettingsPage() {
                                     </div>
                                     <div className="space-y-6">
                                         <div className="space-y-2">
+                                            <label className="text-sm font-semibold text-slate-700 ml-1">Google Analytics Measurement ID</label>
+                                            <div className="relative">
+                                                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                                <input
+                                                    type="text"
+                                                    name="google_analytics_id"
+                                                    value={settings.google_analytics_id}
+                                                    onChange={handleChange}
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    placeholder="G-XXXXXXXXXX"
+                                                />
+                                            </div>
+                                            <p className="text-xs text-muted-foreground ml-1">Enter your GA4 Measurement ID (starts with G-)</p>
+                                        </div>
+
+                                        <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 ml-1">Header Scripts</label>
                                             <div className="relative">
                                                 <div className="absolute left-3 top-4 text-muted-foreground font-mono text-xs">&lt;/&gt;</div>
@@ -410,6 +536,82 @@ export default function SettingsPage() {
                                             </div>
                                             <p className="text-xs text-muted-foreground ml-1">Scripts injected before the closing &lt;/body&gt; tag</p>
                                         </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'discount' && (
+                                <DiscountManagement
+                                    settings={settings as unknown as Settings}
+                                    onSave={handleSectionSave}
+                                    isSaving={saving}
+                                />
+                            )}
+
+                            {activeTab === 'security' && (
+                                <div className="space-y-8">
+                                    <div>
+                                        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                                            <ShieldCheck className="text-amber-500" size={28} />
+                                            Security Settings
+                                        </h2>
+                                        <p className="text-muted-foreground">Manage your account security and password.</p>
+                                    </div>
+
+                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                                            <Lock size={20} className="text-slate-500" />
+                                            Change Password
+                                        </h3>
+                                        <form onSubmit={handlePasswordSubmit} className="space-y-4 max-w-md">
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Current Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="currentPassword"
+                                                    value={passwordForm.currentPassword}
+                                                    onChange={handlePasswordChange}
+                                                    required
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    placeholder="Enter current password"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">New Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="newPassword"
+                                                    value={passwordForm.newPassword}
+                                                    onChange={handlePasswordChange}
+                                                    required
+                                                    minLength={6}
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    placeholder="Enter new password"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Confirm New Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="confirmPassword"
+                                                    value={passwordForm.confirmPassword}
+                                                    onChange={handlePasswordChange}
+                                                    required
+                                                    minLength={6}
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    placeholder="Confirm new password"
+                                                />
+                                            </div>
+                                            <div className="pt-2">
+                                                <button
+                                                    type="submit"
+                                                    disabled={passwordLoading}
+                                                    className="px-6 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                                                >
+                                                    {passwordLoading ? 'Updating...' : 'Update Password'}
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             )}

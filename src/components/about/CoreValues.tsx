@@ -1,20 +1,18 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 import styles from './CoreValues.module.css';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { Shield, Clock, HeartHandshake, Moon } from 'lucide-react';
 
 export default function CoreValues() {
-    const { t } = useLanguage();
     const [ref, isIntersecting] = useIntersectionObserver({ threshold: 0.1 });
 
     const values = [
-        { id: 'safety', icon: Shield },
-        { id: 'reliability', icon: Clock },
-        { id: 'hospitality', icon: HeartHandshake },
-        { id: 'spiritual', icon: Moon },
+        { id: 'safety', icon: Shield, title: 'Safety First', desc: 'We prioritize the safety of our passengers above all else, with well-maintained vehicles and trained drivers.' },
+        { id: 'reliability', icon: Clock, title: 'Reliability', desc: 'Punctuality is our promise. We ensure you reach your destination on time, every time.' },
+        { id: 'hospitality', icon: HeartHandshake, title: 'Hospitality', desc: 'We treat every pilgrim as a guest of Allah, serving with kindness, respect, and patience.' },
+        { id: 'spiritual', icon: Moon, title: 'Spiritual Focus', desc: 'We understand the sacred nature of your journey and strive to maintain a peaceful and respectful environment.' },
     ];
 
     return (
@@ -22,10 +20,10 @@ export default function CoreValues() {
             <div className="container">
                 <div className={styles.header}>
                     <h2 className={`${styles.title} ${isIntersecting ? 'animate-fade-in-up' : 'opacity-0'}`}>
-                        {t('about.values.title')}
+                        Our Core Values
                     </h2>
                     <p className={`${styles.subtitle} ${isIntersecting ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ transitionDelay: '0.1s' }}>
-                        {t('about.values.subtitle')}
+                        The principles that guide our service to the Guests of Allah.
                     </p>
                 </div>
                 <div className={styles.grid}>
@@ -38,8 +36,8 @@ export default function CoreValues() {
                             <div className={styles.iconWrapper}>
                                 <value.icon size={32} />
                             </div>
-                            <h3>{t(`about.values.${value.id}`)}</h3>
-                            <p>{t(`about.values.${value.id}Desc`)}</p>
+                            <h3>{value.title}</h3>
+                            <p>{value.desc}</p>
                         </div>
                     ))}
                 </div>

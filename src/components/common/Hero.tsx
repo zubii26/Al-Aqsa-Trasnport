@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useRef } from 'react';
-import Link from 'next/link';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import styles from './Hero.module.css';
+import GlassButton from '@/components/ui/GlassButton';
 
 interface HeroProps {
     title: string;
@@ -45,21 +45,21 @@ const Hero: React.FC<HeroProps> = ({
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.1
+                staggerChildren: 0.15,
+                delayChildren: 0.2
             }
         }
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
+        hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
         visible: {
             opacity: 1,
             y: 0,
             filter: 'blur(0px)',
             transition: {
-                duration: 0.8,
-                ease: [0.25, 0.1, 0.25, 1.0]
+                duration: 1,
+                ease: [0.22, 1, 0.36, 1]
             }
         }
     };
@@ -95,16 +95,16 @@ const Hero: React.FC<HeroProps> = ({
 
                     <motion.div className={styles.buttons} variants={itemVariants}>
                         {ctaText && ctaLink && (
-                            <Link href={ctaLink} className={styles.primaryBtn}>
+                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2 text-white">
                                 {ctaText}
                                 <ArrowRight size={20} />
-                            </Link>
+                            </GlassButton>
                         )}
 
                         {secondaryCtaText && secondaryCtaLink && (
-                            <Link href={secondaryCtaLink} className={styles.secondaryBtn}>
+                            <GlassButton href={secondaryCtaLink} variant="outline" size="lg">
                                 {secondaryCtaText}
-                            </Link>
+                            </GlassButton>
                         )}
                     </motion.div>
                 </motion.div>

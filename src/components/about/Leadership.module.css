@@ -1,6 +1,6 @@
 .section {
     padding: 8rem 0;
-    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+    background: hsl(var(--background));
     position: relative;
     overflow: hidden;
 }
@@ -12,8 +12,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at top right, rgba(218, 165, 32, 0.03), transparent 60%),
-        radial-gradient(circle at bottom left, rgba(218, 165, 32, 0.03), transparent 60%);
+    background: radial-gradient(circle at top right, hsl(var(--secondary) / 0.03), transparent 60%),
+        radial-gradient(circle at bottom left, hsl(var(--secondary) / 0.03), transparent 60%);
     pointer-events: none;
 }
 
@@ -27,12 +27,12 @@
 .title {
     font-size: 3.5rem;
     font-weight: 800;
-    color: #1a1a1a;
+    color: hsl(var(--foreground));
     margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
     position: relative;
     display: inline-block;
-    background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+    background: linear-gradient(45deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -48,14 +48,14 @@
     display: block;
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #daa520, #fwd700);
+    background: linear-gradient(90deg, hsl(var(--secondary)), #fwd700);
     margin: 1rem auto 0;
     border-radius: 2px;
 }
 
 .subtitle {
     font-size: 1.25rem;
-    color: #666;
+    color: hsl(var(--muted-foreground));
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
@@ -73,10 +73,10 @@
 }
 
 .card {
-    background: white;
+    background: hsl(var(--card));
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    border: 1px solid hsl(var(--border));
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
     position: relative;
@@ -85,14 +85,14 @@
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-    border-color: rgba(218, 165, 32, 0.3);
+    border-color: hsl(var(--secondary) / 0.3);
 }
 
 .imageWrapper {
     height: 400px;
     overflow: hidden;
     position: relative;
-    background: #f0f0f0;
+    background: hsl(var(--muted));
 }
 
 .imageWrapper::after {
@@ -126,7 +126,7 @@
     padding: 2.5rem 2rem;
     text-align: center;
     position: relative;
-    background: white;
+    background: hsl(var(--card));
 }
 
 .content::before {
@@ -137,7 +137,7 @@
     transform: translateX(-50%);
     width: 40px;
     height: 2px;
-    background: #daa520;
+    background: hsl(var(--secondary));
     opacity: 0;
     transition: all 0.4s ease;
 }
@@ -150,13 +150,13 @@
 .name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: hsl(var(--foreground));
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
 }
 
 .role {
-    color: #daa520;
+    color: hsl(var(--secondary));
     font-weight: 600;
     font-size: 0.85rem;
     text-transform: uppercase;

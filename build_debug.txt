@@ -1,0 +1,21 @@
+
+> transport@0.1.0 build
+> next build
+
+   ▲ Next.js 15.0.3
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/contact/page.tsx
+13:23  Error: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/home/CustomerGallery.tsx
+10:7  Error: 'memories' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/building-your-application/configuring/eslint#disabling-rules

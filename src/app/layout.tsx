@@ -1,53 +1,52 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Amiri, Noto_Nastaliq_Urdu, Playfair_Display, Open_Sans } from "next/font/google";
+// Force reload - Backend verified
+import { Inter, Playfair_Display, Open_Sans } from "next/font/google";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "@/styles/datepicker.css";
 import "./globals.css";
-import { LanguageProvider } from "@/context/LanguageContext";
+import "./globals.css";
 import { getSettings } from "@/lib/settings-storage";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-geist-sans", // Keeping variable name to avoid changing css
   subsets: ["latin"],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
+const interMono = Inter({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  display: 'swap',
 });
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
   subsets: ["latin"],
   weight: ["400", "600"],
+  display: 'swap',
 });
 
-const amiri = Amiri({
-  variable: "--font-amiri",
-  subsets: ["arabic"],
-  weight: ["400", "700"],
-});
 
-const notoNastaliq = Noto_Nastaliq_Urdu({
-  variable: "--font-noto-nastaliq",
-  subsets: ["arabic"],
-  weight: "400",
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
   return {
+    metadataBase: new URL('https://alaqsa-transport.com'),
     title: {
       default: settings.seo.defaultTitle,
       template: `%s | ${settings.general.siteName}`
+    },
+    alternates: {
+      canonical: 'https://alaqsa-transport.com',
     },
     description: settings.seo.defaultDescription,
     keywords: settings.seo.keywords.split(',').map(k => k.trim()),
@@ -102,76 +101,91 @@ export async function generateMetadata(): Promise<Metadata> {
 import TopBar from "@/components/layout/TopBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import WhatsAppButton from "@/components/common/WhatsAppButton";
-import ScrollToTop from "@/components/common/ScrollToTop";
-import AIChatBox from "@/components/home/AIChatBox";
+import GlobalClientComponents from "@/components/common/GlobalClientComponents";
 import { MenuProvider } from "@/context/MenuContext";
 
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 import Preloader from "@/components/common/Preloader";
 import AdminSessionGuard from "@/components/admin/AdminSessionGuard";
-import CookieConsent from "@/components/privacy/CookieConsent";
+
 import { PricingProvider } from '@/context/PricingContext';
 import { SettingsProvider } from '@/context/SettingsContext';
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
-export default function RootLayout({
+import NextTopLoader from 'nextjs-toploader';
+
+import AnnouncementBanner from "@/components/ui/AnnouncementBanner";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSettings();
+  console.log('[RootLayout] Discount Settings:', settings.discount);
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${amiri.variable} ${notoNastaliq.variable} ${playfair.variable} ${openSans.variable}`}>
-        <LanguageProvider>
-          <MenuProvider>
-            <SettingsProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <PricingProvider>
-                  <Preloader />
-                  <ClientLayoutWrapper>
-                    <TopBar />
-                    <Navbar />
-                  </ClientLayoutWrapper>
-                  <main style={{ minHeight: 'calc(100vh - 80px - 300px)' }}>
-                    {children}
-                  </main>
-                  <ClientLayoutWrapper>
-                    <Footer />
-                    <WhatsAppButton />
-                    <ScrollToTop />
-                    <AIChatBox />
-                    <CookieConsent />
-                  </ClientLayoutWrapper>
-                  <AdminSessionGuard />
-                </PricingProvider>
-              </ThemeProvider>
-            </SettingsProvider>
-          </MenuProvider>
-        </LanguageProvider>
+
+      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable}`}>
+        {settings.general.googleAnalyticsId && (
+          <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
+        )}
+        <MenuProvider>
+          <SettingsProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <PricingProvider>
+                <Preloader />
+                <NextTopLoader
+                  color="#D4AF37"
+                  initialPosition={0.08}
+                  crawlSpeed={200}
+                  height={3}
+                  crawl={true}
+                  showSpinner={false}
+                  easing="ease"
+                  speed={200}
+                  shadow="0 0 10px #D4AF37,0 0 5px #D4AF37"
+                />
+                <ClientLayoutWrapper>
+                  <AnnouncementBanner discount={settings.discount || { enabled: false, type: 'percentage', value: 0 }} />
+                  <TopBar />
+                  <Navbar />
+                </ClientLayoutWrapper>
+                <main style={{ minHeight: 'calc(100vh - 80px - 300px)' }}>
+                  {children}
+                </main>
+                <ClientLayoutWrapper>
+                  <Footer />
+                  <GlobalClientComponents />
+                </ClientLayoutWrapper>
+                <AdminSessionGuard />
+              </PricingProvider>
+            </ThemeProvider>
+          </SettingsProvider>
+        </MenuProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "TravelAgency",
-              "name": "Al Aqsa Umrah Transport", // This should ideally be dynamic too, but requires async component or passing props
+              "name": settings.general.siteName,
+              "description": settings.general.description,
               "image": "https://alaqsa-transport.com/logo.png",
               "@id": "https://alaqsa-transport.com",
               "url": "https://alaqsa-transport.com",
-              "telephone": "+966500000000",
+              "telephone": settings.contact.phone,
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Al Aziziyah",
+                "streetAddress": settings.contact.address,
                 "addressLocality": "Makkah",
                 "addressCountry": "SA"
               },

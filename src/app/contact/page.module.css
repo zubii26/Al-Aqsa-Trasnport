@@ -5,7 +5,7 @@
     background-position: center;
     background-attachment: fixed;
     color: white;
-    padding: 8rem 0 6rem;
+    padding: 10rem 0 8rem;
     min-height: 60vh;
     display: flex;
     align-items: center;
@@ -20,16 +20,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right, rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.4));
+    background: linear-gradient(to right, rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.6));
     z-index: 1;
 }
 
 :global(.dark) .hero::before {
-    background: linear-gradient(to right, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.7));
+    background: linear-gradient(to right, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.8));
 }
 
 .heroContent {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@
     text-align: center;
     position: relative;
     z-index: 2;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 }
 
 .heroText {
@@ -46,35 +46,36 @@
     gap: 2rem;
     padding: 2rem 0;
     align-items: center;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(3rem, 6vw, 5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 0;
     color: white;
-    background: linear-gradient(to right, #fbbf24, #f59e0b);
+    background: linear-gradient(to right, #ffffff 30%, #fbbf24 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-family: var(--font-playfair), serif;
 }
 
 .tagline {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
     opacity: 0.95;
     margin-bottom: 0;
-    line-height: 1.6;
-    max-width: 600px;
+    line-height: 1.8;
+    max-width: 700px;
     color: rgba(255, 255, 255, 0.9);
-    text-shadow: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-weight: 400;
 }
 
 /* Contact Section Styles */
 .section {
-    padding: 2rem 0 6rem;
+    padding: 4rem 0 8rem;
 }
 
 .grid {
@@ -85,196 +86,178 @@
 }
 
 .formCard {
-    background: white;
-    padding: 3rem;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 3.5rem;
+    border-radius: 32px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
 }
 
 .formTitle {
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     margin-bottom: 1rem;
+    font-family: var(--font-playfair), serif;
 }
 
 .formSubtitle {
-    color: #64748b;
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    font-size: 1.1rem;
 }
 
 .formGroup {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-weight: 600;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     font-size: 0.95rem;
+    letter-spacing: 0.02em;
 }
 
 .input,
 .textarea {
     width: 100%;
-    padding: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    padding: 1.2rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 16px;
     font-family: inherit;
     font-size: 1rem;
-    transition: all 0.2s ease;
-    background: #f8fafc;
+    transition: all 0.3s ease;
+    background: hsl(var(--muted));
+    color: hsl(var(--foreground));
 }
 
 .input:focus,
 .textarea:focus {
     outline: none;
-    border-color: #D4AF37;
-    background: white;
+    border-color: hsl(var(--secondary));
+    background: var(--background);
     box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
 }
 
 .textarea {
-    min-height: 150px;
+    min-height: 180px;
     resize: vertical;
 }
 
 .infoCard {
-    background: #f8fafc;
-    padding: 2.5rem;
-    border-radius: 24px;
-    border: 1px solid #e2e8f0;
+    background: hsl(var(--muted));
+    padding: 3rem;
+    border-radius: 32px;
+    border: 1px solid hsl(var(--border));
     position: sticky;
-    top: 2rem;
+    top: 6rem;
 }
 
 .infoTitle {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 2rem;
-    color: #0f172a;
+    margin-bottom: 2.5rem;
+    color: hsl(var(--foreground));
+    font-family: var(--font-playfair), serif;
 }
 
 .infoList {
     list-style: none;
     padding: 0;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .infoItem {
     display: flex;
     align-items: flex-start;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .infoIcon {
-    color: #D4AF37;
+    color: hsl(var(--secondary));
     margin-top: 0.25rem;
     flex-shrink: 0;
 }
 
 .infoLabel {
     font-weight: 700;
-    color: #0f172a;
+    color: hsl(var(--foreground));
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
 }
 
 .infoText {
-    color: #64748b;
+    color: hsl(var(--muted-foreground));
     line-height: 1.6;
     margin: 0;
+    font-size: 1.05rem;
 }
 
 .mapPlaceholder {
     width: 100%;
     height: 250px;
-    background-color: #e2e8f0;
-    border-radius: 16px;
+    background-color: hsl(var(--card));
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
-    margin-top: 2rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 2.5rem;
     font-weight: 500;
-    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2394a3b8' fill-opacity='0.2'%3E%3Cpath d='M0 0h20L0 20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2394a3b8' fill-opacity='0.1'%3E%3Cpath d='M0 0h20L0 20z'/%3E%3C/g%3E%3C/svg%3E");
+    border: 1px solid hsl(var(--border));
 }
 
 /* FAQ Section */
 .faqSection {
-    padding: 4rem 0;
-    background: #f8fafc;
-    margin-top: 4rem;
+    padding: 6rem 0;
+    background: hsl(var(--muted));
+    margin-top: 6rem;
 }
 
 .faqGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 4rem;
 }
 
 .faqItem {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2.5rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+    transform: translateY(-5px);
+    border-color: hsl(var(--secondary));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .faqQuestion {
     font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem;
+    color: hsl(var(--foreground));
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-family: var(--font-playfair), serif;
 }
 
 .faqAnswer {
-    color: #64748b;
-    line-height: 1.6;
-}
-
-/* Dark Mode */
-:global(.dark) .formCard,
-:global(.dark) .faqItem {
-    background: #1e293b;
-    border-color: #334155;
-}
-
-:global(.dark) .infoCard,
-:global(.dark) .faqSection {
-    background: #0f172a;
-    border-color: #334155;
-}
-
-:global(.dark) .formTitle,
-:global(.dark) .infoTitle,
-:global(.dark) .label,
-:global(.dark) .infoLabel,
-:global(.dark) .faqQuestion {
-    color: #f8fafc;
-}
-
-:global(.dark) .formSubtitle,
-:global(.dark) .infoText,
-:global(.dark) .faqAnswer {
-    color: #94a3b8;
-}
-
-:global(.dark) .input,
-:global(.dark) .textarea {
-    background: #0f172a;
-    border-color: #334155;
-    color: white;
-}
-
-:global(.dark) .input:focus,
-:global(.dark) .textarea:focus {
-    background: #1e293b;
-    border-color: #D4AF37;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+    font-size: 1.05rem;
 }
 
 @media (max-width: 1024px) {
@@ -285,5 +268,15 @@
 
     .infoCard {
         position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .formCard {
+        padding: 2rem;
+    }
+
+    .infoCard {
+        padding: 2rem;
     }
 }

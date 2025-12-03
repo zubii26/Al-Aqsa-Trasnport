@@ -1,12 +1,28 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { routeService } from '@/services/routeService';
+import { auditLogService } from '@/services/auditLogService';
 import { requireRole } from '@/lib/server-auth';
 
 export async function GET() {
+    const user = await requireRole(['ADMIN', 'MANAGER']);
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     try {
-        const prices = await prisma.routePrice.findMany();
+        // In Firestore, prices are embedded in routes.
+        // We need to extract them to match the expected API response format if the frontend expects a flat list of prices.
+        // Or we can just return the routes and let the frontend handle it, but to minimize frontend changes, let's flatten.
+        const routes = await routeService.getRoutes();
+        const prices = routes.flatMap(route =>
+            (route.prices || []).map((p: { vehicleId: string; price: number }) => ({
+                id: `${route.id}_${p.vehicleId}`, // Synthetic ID
+                routeId: route.id,
+                vehicleId: p.vehicleId,
+                price: p.price
+            }))
+        );
         return NextResponse.json(prices);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to fetch prices' }, { status: 500 });
     }
 }
@@ -21,34 +37,23 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { routeId, vehicleId, price } = body;
 
-        const routePrice = await prisma.routePrice.upsert({
-            where: {
-                routeId_vehicleId: {
-                    routeId,
-                    vehicleId
-                }
-            },
-            update: { price: parseFloat(price) },
-            create: {
-                routeId,
-                vehicleId,
-                price: parseFloat(price)
-            }
-        });
+        const updatedPrice = await routeService.updateRoutePrice(routeId, vehicleId, parseFloat(price));
+
+        if (!updatedPrice) {
+            return NextResponse.json({ error: 'Route not found' }, { status: 404 });
+        }
 
         // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'UPDATE',
-                entity: 'RoutePrice',
-                entityId: routePrice.id,
-                details: `Updated price for Route ${routeId} / Vehicle ${vehicleId} to ${price}`,
-                user: 'Admin',
-            }
+        await auditLogService.log({
+            action: 'UPDATE',
+            entity: 'RoutePrice',
+            entityId: `${routeId}_${vehicleId}`,
+            details: `Updated price for Route ${routeId} / Vehicle ${vehicleId} to ${price}`,
+            user: user.name || 'Admin', // Use actual user name
         });
 
-        return NextResponse.json(routePrice);
-    } catch (error) {
+        return NextResponse.json(updatedPrice);
+    } catch {
         return NextResponse.json({ error: 'Failed to update price' }, { status: 500 });
     }
 }

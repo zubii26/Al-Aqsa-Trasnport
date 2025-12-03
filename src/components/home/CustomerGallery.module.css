@@ -1,102 +1,196 @@
 .section {
     padding: 6rem 0;
-    background: var(--background);
-    position: relative;
+    background-color: hsl(var(--background));
     overflow: hidden;
+    position: relative;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 4rem;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    padding: 0 1rem;
 }
 
 .title {
     font-size: 2.5rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
     margin-bottom: 1rem;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-heading);
 }
 
 .subtitle {
-    font-size: 1.25rem;
-    opacity: 0.8;
-    max-width: 600px;
-    margin: 0 auto;
-    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
 }
 
+/* Scrollable Container */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
     gap: 1.5rem;
-    padding: 0 1rem;
+    overflow-x: auto;
+    padding: 1rem 1rem 3rem;
+    /* Extra bottom padding for shadows */
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.grid::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+/* Wrapper for FadeIn component to handle flex layout */
+.cardWrapper {
+    flex: 0 0 300px;
+    /* Fixed width for mobile */
+    scroll-snap-align: center;
+}
+
+@media (min-width: 640px) {
+    .cardWrapper {
+        flex: 0 0 400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .cardWrapper {
+        flex: 0 0 600px;
+        /* Wider for 16:9 */
+    }
 }
 
 .card {
     position: relative;
-    border-radius: var(--radius);
+    width: 100%;
+    aspect-ratio: 3/4;
+    /* Portrait on mobile */
+    border-radius: 1.5rem;
     overflow: hidden;
-    aspect-ratio: 4/3;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 1024px) {
+    .card {
+        aspect-ratio: 16/9;
+        /* Cinematic on desktop */
+    }
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 10;
 }
 
 .image {
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover .image {
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .overlay {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3rem 1.5rem 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+    color: white;
+    transform: translateY(0);
+    /* Always visible but subtle */
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
-}
-
-.card:hover .overlay {
-    opacity: 1;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
 }
 
 .caption {
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transform: translateY(20px);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: translateY(5px);
     transition: transform 0.3s ease;
 }
 
 .card:hover .caption {
     transform: translateY(0);
+    color: hsl(var(--secondary));
+    /* Amber-400 highlight */
 }
 
 .location {
-    color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    margin-top: 0.25rem;
-    transform: translateY(20px);
-    transition: transform 0.3s ease 0.1s;
+    gap: 0.35rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
 .card:hover .location {
-    transform: translateY(0);
+    opacity: 1;
+    color: white;
+}
+
+/* Navigation Buttons */
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    color: hsl(var(--foreground));
+}
+
+.navButton:hover {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.navButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+}
+
+.prevButton {
+    left: 2rem;
+}
+
+.nextButton {
+    right: 2rem;
+}
+
+@media (max-width: 768px) {
+    .navButton {
+        display: none;
+        /* Hide on mobile, use swipe */
+    }
 }

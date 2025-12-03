@@ -10,7 +10,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
             return NextResponse.json({ error: 'Vehicle not found' }, { status: 404 });
         }
         return NextResponse.json(vehicle);
-    } catch (_error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to update vehicle' }, { status: 500 });
     }
 }
@@ -23,7 +23,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
             return NextResponse.json({ error: 'Vehicle not found' }, { status: 404 });
         }
         return NextResponse.json({ success: true });
-    } catch (_error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to delete vehicle' }, { status: 500 });
     }
 }

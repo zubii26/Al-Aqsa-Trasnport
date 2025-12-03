@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './FAQSection.module.css';
 import FadeIn from '@/components/common/FadeIn';
+import GlassCard from '@/components/ui/GlassCard';
 
 const faqs = [
     {
@@ -39,20 +40,18 @@ export default function FAQSection() {
                 </FadeIn>
                 <div className={styles.container}>
                     {faqs.map((faq, index) => (
-                        <FadeIn key={index} delay={index * 0.1}>
-                            <div className={`${styles.item} ${activeAccordion === index ? styles.active : ''}`}>
-                                <button
-                                    className={styles.question}
-                                    onClick={() => toggleAccordion(index)}
-                                >
-                                    {faq.question}
-                                    <ChevronDown className={styles.icon} size={20} />
-                                </button>
-                                <div className={styles.answer}>
-                                    <p style={{ paddingTop: '1rem' }}>{faq.answer}</p>
-                                </div>
+                        <GlassCard key={index} delay={index * 0.1} className={`p-0 overflow-hidden ${activeAccordion === index ? styles.active : ''}`}>
+                            <button
+                                className={styles.question}
+                                onClick={() => toggleAccordion(index)}
+                            >
+                                {faq.question}
+                                <ChevronDown className={styles.icon} size={20} />
+                            </button>
+                            <div className={styles.answer}>
+                                <p style={{ paddingTop: '1rem' }}>{faq.answer}</p>
                             </div>
-                        </FadeIn>
+                        </GlassCard>
                     ))}
                 </div>
             </div>

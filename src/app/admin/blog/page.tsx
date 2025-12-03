@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Search, FileText } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
@@ -28,18 +28,16 @@ export default function BlogAdminPage() {
         onConfirm: () => void;
     }>({ isOpen: false, title: '', message: '', onConfirm: () => { } });
 
-    const router = useRouter();
 
-    useEffect(() => {
-        fetchPosts();
-    }, []);
 
-    const showToast = (message: string, type: 'success' | 'error') => {
+
+
+    const showToast = React.useCallback((message: string, type: 'success' | 'error') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
-    };
+    }, []);
 
-    const fetchPosts = async () => {
+    const fetchPosts = React.useCallback(async () => {
         try {
             const res = await fetch('/api/blog');
             const data = await res.json();
@@ -50,7 +48,11 @@ export default function BlogAdminPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, [fetchPosts]);
 
     const handleDelete = (id: string) => {
         setConfirmDialog({

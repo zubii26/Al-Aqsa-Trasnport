@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
-import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, Home, MessageSquare, FileText, Users } from 'lucide-react';
+import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
 
@@ -12,7 +12,7 @@ interface User {
     id: string;
     name: string;
     email: string;
-    role: 'ADMIN' | 'MANAGER';
+    role: 'admin' | 'manager' | 'operational_manager';
 }
 
 export default function AdminLayout({
@@ -72,18 +72,30 @@ export default function AdminLayout({
     };
 
     const allLinks = [
-        { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'MANAGER'] },
-        { href: '/admin/bookings', label: 'Bookings', icon: Calendar, roles: ['ADMIN', 'MANAGER'] },
-        { href: '/admin/routes', label: 'Routes', icon: MapPin, roles: ['ADMIN', 'MANAGER'] }, // Manager can view
-        { href: '/admin/fleet', label: 'Fleet', icon: Car, roles: ['ADMIN', 'MANAGER'] }, // Manager can view
-        { href: '/admin/pricing', label: 'Pricing', icon: DollarSign, roles: ['ADMIN'] },
-        { href: '/admin/reviews', label: 'Reviews', icon: MessageSquare, roles: ['ADMIN', 'MANAGER'] },
-        { href: '/admin/blog', label: 'Blog', icon: FileText, roles: ['ADMIN', 'MANAGER'] },
-        { href: '/admin/users', label: 'Users', icon: Users, roles: ['ADMIN'] },
-        { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['ADMIN'] },
+        { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/bookings', label: 'Bookings', icon: Calendar, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/routes', label: 'Routes', icon: MapPin, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/fleet', label: 'Fleet', icon: Car, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/pricing', label: 'Pricing', icon: DollarSign, roles: ['admin'] },
+        { href: '/admin/reviews', label: 'Reviews', icon: MessageSquare, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/blog', label: 'Blog', icon: FileText, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/content', label: 'Content', icon: PenTool, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin'] },
+        { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
     ];
 
-    const visibleLinks = allLinks.filter(link => link.roles.includes(user.role));
+    const userRole = user.role.toLowerCase();
+    const visibleLinks = allLinks.filter(link => link.roles.includes(userRole));
+
+    const getRoleDisplay = (role: string) => {
+        switch (role) {
+            case 'admin': return 'Boss Admin';
+            case 'manager': return 'Manager';
+            case 'operational_manager': return 'Operational Manager';
+            default: return role;
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -121,7 +133,7 @@ export default function AdminLayout({
                     </div>
                     <div className={styles.userInfo}>
                         <div className={styles.userName}>{user.name}</div>
-                        <div className={styles.userRole}>{user.role === 'ADMIN' ? 'Boss Admin' : 'Manager'}</div>
+                        <div className={styles.userRole}>{getRoleDisplay(user.role)}</div>
                     </div>
                     <AdminThemeToggle />
                     <button

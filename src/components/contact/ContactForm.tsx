@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from '@/app/contact/page.module.css';
+import GlassButton from '@/components/ui/GlassButton';
 
 export default function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -41,7 +42,7 @@ export default function ContactForm() {
             } else {
                 setStatus('error');
             }
-        } catch (error) {
+        } catch {
             setStatus('error');
         }
     }
@@ -69,9 +70,9 @@ export default function ContactForm() {
                 <label className={styles.label} htmlFor="message">Message</label>
                 <textarea id="message" name="message" className={styles.textarea} placeholder="How can we help you?" required></textarea>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={status === 'submitting'}>
+            <GlassButton type="submit" variant="primary" size="lg" className="w-full" disabled={status === 'submitting'}>
                 {status === 'submitting' ? 'Sending...' : 'Send Message'}
-            </button>
+            </GlassButton>
             {status === 'success' && <p className="text-green-600 mt-2">Message sent successfully!</p>}
             {status === 'error' && <p className="text-red-600 mt-2">Failed to send message. Please try again.</p>}
         </form>

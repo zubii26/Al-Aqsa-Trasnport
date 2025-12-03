@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import dbConnect from '@/lib/mongodb';
+import { User } from '@/models';
 import { requireRole } from '@/lib/server-auth';
 
 export async function GET() {
@@ -9,18 +10,11 @@ export async function GET() {
     }
 
     try {
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                role: true,
-                createdAt: true,
-            },
-            orderBy: { createdAt: 'desc' }
-        });
-        return NextResponse.json(users);
-    } catch (error) {
+        await dbConnect();
+        const users = await User.find({}).sort({ createdAt: -1 }).lean();
+        const formattedUsers = users.map(u => ({ ...u, id: u._id.toString() }));
+        return NextResponse.json(formattedUsers);
+    } catch {
         return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
     }
 }
@@ -32,31 +26,29 @@ export async function POST(request: Request) {
     }
 
     try {
-        const body = await request.json();
+        const body: { name: string; email: string; password?: string; role: string } = await request.json();
         const { name, email, password, role } = body;
 
-        const newUser = await prisma.user.create({
-            data: {
-                name,
-                email,
-                password, // In production, hash this!
-                role
-            }
+        await dbConnect();
+
+        // Check if email exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
+        }
+
+        const newUser = await User.create({
+            name,
+            email,
+            password,
+            role: role.toLowerCase() // Ensure role is lowercase
         });
 
-        // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'CREATE',
-                entity: 'User',
-                entityId: newUser.id,
-                details: `Created user: ${name} (${role})`,
-                user: user.name,
-            }
-        });
+        console.log(`Created user: ${name} (${role})`);
 
-        return NextResponse.json(newUser);
+        return NextResponse.json({ ...newUser.toObject(), id: newUser._id.toString() });
     } catch (error) {
+        console.error('Create user error:', error);
         return NextResponse.json({ error: 'Failed to create user' }, { status: 500 });
     }
 }
@@ -68,36 +60,31 @@ export async function PUT(request: Request) {
     }
 
     try {
-        const body = await request.json();
+        const body: { id: string; name: string; email: string; password?: string; role: string } = await request.json();
         const { id, name, email, password, role } = body;
 
         if (!id) {
             return NextResponse.json({ error: 'User ID required' }, { status: 400 });
         }
 
-        const data: any = { name, email, role };
+        await dbConnect();
+
+        const updateData: Record<string, string> = { name, email, role: role.toLowerCase() };
         if (password && password.trim() !== '') {
-            data.password = password; // In production, hash this!
+            updateData.password = password;
         }
 
-        const updatedUser = await prisma.user.update({
-            where: { id },
-            data
-        });
+        const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true }).lean();
 
-        // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'UPDATE',
-                entity: 'User',
-                entityId: updatedUser.id,
-                details: `Updated user: ${name} (${role})`,
-                user: user.name,
-            }
-        });
+        if (!updatedUser) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
 
-        return NextResponse.json(updatedUser);
+        console.log(`Updated user: ${name} (${role})`);
+
+        return NextResponse.json({ ...updatedUser, id: updatedUser._id.toString() });
     } catch (error) {
+        console.error('Update user error:', error);
         return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
     }
 }
@@ -116,27 +103,18 @@ export async function DELETE(request: Request) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 });
         }
 
-        if (id === user.id) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (id === (user as any).id) {
             return NextResponse.json({ error: 'Cannot delete yourself' }, { status: 400 });
         }
 
-        await prisma.user.delete({
-            where: { id }
-        });
+        await dbConnect();
+        await User.findByIdAndDelete(id);
 
-        // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'DELETE',
-                entity: 'User',
-                entityId: id,
-                details: `Deleted user ID: ${id}`,
-                user: user.name,
-            }
-        });
+        console.log(`Deleted user ID: ${id}`);
 
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 });
     }
 }

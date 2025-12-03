@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
-import { blogPosts } from '@/lib/blogData';
+import { blogService } from '@/services/blogService';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://alaqsa-transport.com'; // Replace with actual domain
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const baseUrl = 'https://alaqsa-transport.com';
 
     const staticRoutes: MetadataRoute.Sitemap = [
         {
@@ -49,8 +49,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
     ];
 
-    const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-        url: `${baseUrl}/blog/${post.id}`,
+    // Fetch blog posts dynamically
+    const posts = await blogService.getPosts();
+    const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+        url: `${baseUrl}/blog/${post.id}`, // post.id is mapped to slug in service
         lastModified: new Date(post.date),
         changeFrequency: 'monthly',
         priority: 0.6,

@@ -1,12 +1,12 @@
 .topBar {
-    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
-    /* Premium Blue Gradient */
+    background: linear-gradient(90deg, #0f172a 0%, #1e3a8a 100%);
+    /* Deep Slate to Royal Blue */
     color: #ffffff;
-    padding: 0.35rem 0;
-    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
     margin-bottom: 0 !important;
     display: block;
-    border-bottom: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .container {
@@ -21,14 +21,14 @@
 .contactInfo {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .contactItem {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    color: rgba(255, 255, 255, 0.9);
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
@@ -40,46 +40,45 @@
 .contactItem:not(:last-child)::after {
     content: '';
     position: absolute;
-    right: -0.85rem;
+    right: -1rem;
     top: 50%;
     transform: translateY(-50%);
-    height: 12px;
+    height: 14px;
     width: 1px;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .contactItem:hover {
-    color: #d4af37;
-    /* Gold hover */
+    color: #fbbf24;
+    /* Amber-400 */
     transform: translateY(-1px);
 }
 
 .socialLinks {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.75rem;
 }
 
 .socialIcon {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.9);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .socialIcon:hover {
-    background: linear-gradient(135deg, #d4af37, #fcd34d);
-    /* Gold Gradient */
-    border-color: #d4af37;
-    color: #ffffff;
-    transform: translateY(-3px) rotate(8deg);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    background: #fbbf24;
+    border-color: #fbbf24;
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
 }
 
 @media (max-width: 768px) {

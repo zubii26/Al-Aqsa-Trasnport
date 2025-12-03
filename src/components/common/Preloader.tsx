@@ -2,17 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import LoadingScreen from './LoadingScreen';
-import styles from './Preloader.module.css';
+
 
 export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // Check if preloader has already been shown in this session
+        const hasShown = sessionStorage.getItem('preloader_shown');
+        if (hasShown) {
+            setIsLoading(false);
+            return;
+        }
+
         const handleLoad = () => {
-            const timer = setTimeout(() => {
+            setTimeout(() => {
                 setIsLoading(false);
+                sessionStorage.setItem('preloader_shown', 'true');
                 window.dispatchEvent(new Event('preloader-complete'));
-            }, 500); // Small buffer to ensure smooth transition
+            }, 500); // Reduced duration for better user experience
         };
 
         if (document.readyState === 'complete') {

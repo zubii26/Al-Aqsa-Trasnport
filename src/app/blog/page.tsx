@@ -1,64 +1,44 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import HadithCarousel from '@/components/blog/HadithCarousel';
 import Hero from '@/components/common/Hero';
 import FeaturedPost from '@/components/blog/FeaturedPost';
-import ArticleGrid from '@/components/blog/ArticleGrid';
+import BlogFeed from '@/components/blog/BlogFeed';
 import RespectSection from '@/components/blog/RespectSection';
 import TravelTips from '@/components/blog/TravelTips';
 import FAQSection from '@/components/blog/FAQSection';
-import { Loader2 } from 'lucide-react';
+import { blogService } from '@/services/blogService';
+import { Metadata } from 'next';
 
-interface BlogPost {
-    id: string;
-    title: string;
-    excerpt: string;
-    content: string;
-    category: string;
-    date: string;
-    readTime: string;
-    image: string;
-    alt: string;
-    author: string;
-    tags: string[];
-}
+export const metadata: Metadata = {
+    title: 'Umrah Travel Blog | Tips, Guides & Spiritual Insights',
+    description: 'Read our latest articles on Umrah travel tips, spiritual guides, and transport advice for a blessed journey to Makkah and Madinah.',
+    alternates: {
+        canonical: 'https://alaqsa-transport.com/blog',
+    },
+};
 
 const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Experience', 'Value', 'Spiritual', 'News', 'FAQ'];
 
-export default function BlogPage() {
-    const [activeCategory, setActiveCategory] = useState('All');
-    const [posts, setPosts] = useState<BlogPost[]>([]);
-    const [loading, setLoading] = useState(true);
+export default async function BlogPage() {
+    const dbPosts = await blogService.getPosts();
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const res = await fetch('/api/blog');
-                if (res.ok) {
-                    const data = await res.json();
-                    setPosts(data);
-                }
-            } catch (error) {
-                console.error('Failed to fetch posts:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // Map to match component interface (convert Date to string)
+    const posts = dbPosts.map(post => ({
+        ...post,
+        id: post.slug, // Ensure ID is slug
+        date: new Date(post.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        }),
+        // Ensure other fields match if needed
+    }));
 
-        fetchPosts();
-    }, []);
+    // Sort by date desc (using the original date object from dbPosts for sorting if needed, or just trust the service sort)
+    // Service already sorts by date desc.
 
-    // Featured Post (First one)
     const featuredPost = posts[0];
 
-    // Filter posts (excluding featured post from grid if showing all, or just filtering by category)
-    const filteredPosts = posts.filter(post => {
-        if (activeCategory === 'All') {
-            return post.id !== featuredPost?.id; // Don't show featured post in grid when on 'All'
-        }
-        return post.category === activeCategory;
-    });
 
     return (
         <main>
@@ -69,27 +49,16 @@ export default function BlogPage() {
             />
 
             {/* Articles Section */}
-            <div className="bg-slate-50 pb-20 pt-20 min-h-[600px]">
+            <div className="bg-background pb-20 pt-20 min-h-[600px]">
                 <div className="container">
-                    {loading ? (
-                        <div className="flex justify-center items-center h-64">
-                            <Loader2 size={40} className="animate-spin text-amber-500" />
-                        </div>
-                    ) : (
-                        <>
-                            {/* Featured Article (Only show on 'All' or if it matches category) */}
-                            {featuredPost && (activeCategory === 'All' || featuredPost.category === activeCategory) && (
-                                <FeaturedPost post={featuredPost} />
-                            )}
-
-                            <ArticleGrid
-                                posts={filteredPosts}
-                                categories={CATEGORIES}
-                                activeCategory={activeCategory}
-                                onCategoryChange={setActiveCategory}
-                            />
-                        </>
+                    {featuredPost && (
+                        <FeaturedPost post={featuredPost} />
                     )}
+
+                    <BlogFeed
+                        posts={posts}
+                        categories={CATEGORIES}
+                    />
                 </div>
             </div>
 

@@ -1,15 +1,22 @@
-import React from 'react';
-import Image from 'next/image';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { Bus, MapPin, Users, Headphones, ArrowRight, Calendar, CheckCircle, Car } from 'lucide-react';
 import styles from './page.module.css';
-import FleetCarousel from '@/components/home/FleetCarousel';
+import FleetSectionLoader from '@/components/services/FleetSectionLoader';
 import FadeIn from '@/components/common/FadeIn';
 import Hero from '@/components/common/Hero';
 import FAQSection from '@/components/services/FAQSection';
-import { getFleet } from '@/lib/db';
+import GlassCard from '@/components/ui/GlassCard';
 
-
+export async function generateMetadata() {
+    return {
+        title: "Umrah Transport Services | Jeddah Airport Taxi & Ziarah Tours",
+        description: "Comprehensive Umrah transport services: Jeddah airport to Makkah taxi, Makkah to Madinah transfers, VIP pilgrim transport, and guided Ziarah tours.",
+        alternates: {
+            canonical: 'https://alaqsa-transport.com/services',
+        },
+    };
+}
 
 const processSteps = [
     {
@@ -29,10 +36,7 @@ const processSteps = [
     }
 ];
 
-export default async function ServicesPage() {
-    const vehicles = await getFleet();
-    const carouselVehicles = vehicles.slice(0, 6);
-
+export default function ServicesPage() {
     const services = [
         {
             title: 'Pilgrim Transport Makkah and Madinah',
@@ -63,8 +67,6 @@ export default async function ServicesPage() {
     return (
         <main className={styles.main}>
             {/* Hero Section */}
-            {/* Hero Section */}
-            {/* Hero Section */}
             <Hero
                 title="Dedicated Service for the Guests of Allah"
                 subtitle="Reliable Jeddah airport to Makkah transport and group packages for your spiritual journey."
@@ -83,18 +85,16 @@ export default async function ServicesPage() {
                     </FadeIn>
                     <div className={styles.grid}>
                         {services.map((service, index) => (
-                            <FadeIn key={index} delay={index * 0.1}>
-                                <div className={`${styles.card} glass-card`}>
-                                    <div className={styles.iconWrapper}>
-                                        {service.icon}
-                                    </div>
-                                    <h3 className={styles.cardTitle}>{service.title}</h3>
-                                    <p className={styles.cardDesc}>{service.description}</p>
-                                    <Link href={service.link} className="text-primary font-semibold flex items-center gap-2 hover:gap-3 transition-all">
-                                        Learn More <ArrowRight size={18} />
-                                    </Link>
+                            <GlassCard key={index} delay={index * 0.1} className="flex flex-col h-full">
+                                <div className={styles.iconWrapper}>
+                                    {service.icon}
                                 </div>
-                            </FadeIn>
+                                <h3 className={styles.cardTitle}>{service.title}</h3>
+                                <p className={styles.cardDesc}>{service.description}</p>
+                                <Link href={service.link} className="text-primary font-semibold flex items-center gap-2 hover:gap-3 transition-all mt-auto">
+                                    Learn More <ArrowRight size={18} />
+                                </Link>
+                            </GlassCard>
                         ))}
                     </div>
                 </div>
@@ -125,7 +125,9 @@ export default async function ServicesPage() {
             {/* Fleet Showcase */}
             <section className={styles.fleetSection}>
                 <FadeIn>
-                    <FleetCarousel vehicles={carouselVehicles} />
+                    <Suspense fallback={<div className="h-[600px] w-full bg-gray-100 animate-pulse rounded-xl" />}>
+                        <FleetSectionLoader />
+                    </Suspense>
                 </FadeIn>
             </section>
 
@@ -146,6 +148,44 @@ export default async function ServicesPage() {
                     </FadeIn>
                 </div>
             </section>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Service",
+                        "serviceType": "Umrah Transport",
+                        "provider": {
+                            "@type": "TravelAgency",
+                            "name": "Al Aqsa Transport"
+                        },
+                        "areaServed": {
+                            "@type": "Place",
+                            "name": "Saudi Arabia"
+                        },
+                        "hasOfferCatalog": {
+                            "@type": "OfferCatalog",
+                            "name": "Transport Services",
+                            "itemListElement": [
+                                {
+                                    "@type": "Offer",
+                                    "itemOffered": {
+                                        "@type": "Service",
+                                        "name": "Pilgrim Transport Makkah and Madinah"
+                                    }
+                                },
+                                {
+                                    "@type": "Offer",
+                                    "itemOffered": {
+                                        "@type": "Service",
+                                        "name": "Jeddah Airport to Makkah Transport"
+                                    }
+                                }
+                            ]
+                        }
+                    })
+                }}
+            />
         </main>
     );
 }

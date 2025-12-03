@@ -43,6 +43,7 @@ interface BookingData {
     date: string;
     time: string;
     passengers: number;
+    price?: string;
 }
 
 export const getBookingConfirmationTemplate = (booking: BookingData) => `
@@ -59,6 +60,7 @@ export const getBookingConfirmationTemplate = (booking: BookingData) => `
             <p><strong>Dropoff:</strong> ${booking.dropoff}</p>
             <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
             <p><strong>Passengers:</strong> ${booking.passengers}</p>
+            ${booking.price ? `<p><strong>Price:</strong> ${booking.price}</p>` : ''}
         </div>
 
         <p>We will contact you shortly to confirm your ride.</p>

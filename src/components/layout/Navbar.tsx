@@ -5,15 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
-import { useLanguage } from '@/context/LanguageContext';
 import { useMenu } from '@/context/MenuContext';
+import GlassButton from '@/components/ui/GlassButton';
 
 export default function Navbar() {
     const pathname = usePathname();
     const { isMenuOpen, setIsMenuOpen, toggleMenu } = useMenu();
-    const { language, setLanguage, t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -25,18 +24,13 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const toggleLang = () => {
-        const nextLang = language === 'en' ? 'ar' : language === 'ar' ? 'ur' : 'en';
-        setLanguage(nextLang);
-    };
-
     const links = [
-        { href: '/', label: t('nav.home') },
-        { href: '/about', label: t('nav.about') },
-        { href: '/services', label: t('nav.services') },
-        { href: '/fleet', label: t('nav.fleet') },
-        { href: '/blog', label: t('nav.blog') || 'Blog' },
-        { href: '/contact', label: t('nav.contact') },
+        { href: '/', label: 'Home' },
+        { href: '/about', label: 'About Us' },
+        { href: '/services', label: 'Services' },
+        { href: '/fleet', label: 'Fleet' },
+        { href: '/blog', label: 'Blog' },
+        { href: '/contact', label: 'Contact' },
     ];
 
     return (
@@ -46,8 +40,8 @@ export default function Navbar() {
                     <Image
                         src="/logo.png"
                         alt="Al Aqsa Transport"
-                        width={60}
-                        height={60}
+                        width={52}
+                        height={52}
                         className={styles.logoImage}
                         priority
                     />
@@ -72,13 +66,9 @@ export default function Navbar() {
 
                 <div className={styles.actions}>
                     <ThemeToggle />
-                    <button onClick={toggleLang} className={styles.langToggle}>
-                        <Globe size={18} />
-                        <span className={styles.langText}>{language}</span>
-                    </button>
-                    <Link href="/booking" className={styles.bookBtn}>
-                        {t('nav.bookNow')}
-                    </Link>
+                    <GlassButton href="/booking" variant="secondary" size="md">
+                        Book Now
+                    </GlassButton>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -136,10 +126,6 @@ export default function Navbar() {
 
                 <div className={styles.mobileFooter}>
                     <div className={styles.mobileActions}>
-                        <button onClick={toggleLang} className={styles.mobileLangToggle}>
-                            <Globe size={18} />
-                            <span className="uppercase">{language}</span>
-                        </button>
                         <ThemeToggle />
                     </div>
 
@@ -148,7 +134,7 @@ export default function Navbar() {
                         className="btn btn-secondary w-full text-center justify-center"
                         onClick={() => setIsMenuOpen(false)}
                     >
-                        {t('nav.bookNow')}
+                        Book Now
                     </Link>
                 </div>
             </div>

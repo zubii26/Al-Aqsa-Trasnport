@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { routeService } from '@/services/routeService';
+import { auditLogService } from '@/services/auditLogService';
 import { requireRole } from '@/lib/server-auth';
 
 export async function GET() {
@@ -9,17 +10,22 @@ export async function GET() {
     }
 
     try {
-        const routes = await prisma.route.findMany({
-            orderBy: { createdAt: 'desc' }
+        const routes = await routeService.getRoutes();
+        // Sort by createdAt desc
+        routes.sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            return dateB - dateA;
         });
         return NextResponse.json(routes);
     } catch (error) {
+        console.error('Error fetching routes:', error);
         return NextResponse.json({ error: 'Failed to fetch routes' }, { status: 500 });
     }
 }
 
 export async function POST(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403 });
     }
@@ -28,35 +34,32 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { origin, destination, distance, duration, category } = body;
 
-        const route = await prisma.route.create({
-            data: {
-                origin,
-                destination,
-                distance,
-                duration,
-                category
-            }
+        const route = await routeService.createRoute({
+            origin,
+            destination,
+            distance,
+            duration,
+            category,
+            isActive: true, // Default to active
         });
 
         // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'CREATE',
-                entity: 'Route',
-                entityId: route.id,
-                details: `Created route: ${origin} to ${destination}`,
-                user: 'Admin',
-            }
+        await auditLogService.log({
+            action: 'CREATE',
+            entity: 'Route',
+            entityId: route.id,
+            details: `Created route: ${origin} to ${destination}`,
+            user: user.name || 'Admin',
         });
 
         return NextResponse.json(route);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to create route' }, { status: 500 });
     }
 }
 
 export async function PUT(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403 });
     }
@@ -69,36 +72,35 @@ export async function PUT(request: Request) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 });
         }
 
-        const route = await prisma.route.update({
-            where: { id },
-            data: {
-                origin,
-                destination,
-                distance,
-                duration,
-                category
-            }
+        const route = await routeService.updateRoute(id, {
+            origin,
+            destination,
+            distance,
+            duration,
+            category
         });
 
+        if (!route) {
+            return NextResponse.json({ error: 'Route not found' }, { status: 404 });
+        }
+
         // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'UPDATE',
-                entity: 'Route',
-                entityId: route.id,
-                details: `Updated route: ${origin} to ${destination}`,
-                user: 'Admin',
-            }
+        await auditLogService.log({
+            action: 'UPDATE',
+            entity: 'Route',
+            entityId: route.id,
+            details: `Updated route: ${origin} to ${destination}`,
+            user: user.name || 'Admin',
         });
 
         return NextResponse.json(route);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to update route' }, { status: 500 });
     }
 }
 
 export async function DELETE(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403 });
     }
@@ -111,23 +113,19 @@ export async function DELETE(request: Request) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 });
         }
 
-        await prisma.route.delete({
-            where: { id }
-        });
+        await routeService.deleteRoute(id);
 
         // Audit Log
-        await prisma.auditLog.create({
-            data: {
-                action: 'DELETE',
-                entity: 'Route',
-                entityId: id,
-                details: `Deleted route ID: ${id}`,
-                user: 'Admin',
-            }
+        await auditLogService.log({
+            action: 'DELETE',
+            entity: 'Route',
+            entityId: id,
+            details: `Deleted route ID: ${id}`,
+            user: user.name || 'Admin',
         });
 
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to delete route' }, { status: 500 });
     }
 }

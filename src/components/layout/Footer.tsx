@@ -4,20 +4,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
 import { Mail, MapPin, Phone, Facebook, Instagram, Twitter, Linkedin, Send } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
 import { useSettings } from '@/context/SettingsContext';
+import GlassButton from '@/components/ui/GlassButton';
 
 export default function Footer() {
-    const { t, language, setLanguage } = useLanguage();
     const { settings } = useSettings();
 
     if (!settings) return null;
 
     const { contact, general } = settings;
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+
 
     return (
         <footer className={styles.footer}>
@@ -54,6 +51,12 @@ export default function Footer() {
                                     <span>{contact.phone}</span>
                                 </a>
                             )}
+                            {contact.phone2 && (
+                                <a href={`tel:${contact.phone2}`} className={styles.contactItem}>
+                                    <Phone size={18} className={styles.icon} />
+                                    <span>{contact.phone2}</span>
+                                </a>
+                            )}
                             {contact.email && (
                                 <a href={`mailto:${contact.email}`} className={styles.contactItem}>
                                     <Mail size={18} className={styles.icon} />
@@ -65,21 +68,27 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div className={styles.column}>
-                        <h3 className={styles.heading}>{t('footer.quickLinks')}</h3>
+                        <h3 className={styles.heading}>Quick Links</h3>
                         <ul className={styles.links}>
-                            <li><Link href="/">{t('nav.home')}</Link></li>
-                            <li><Link href="/about">{t('nav.about')}</Link></li>
-                            <li><Link href="/services">{t('nav.services')}</Link></li>
-                            <li><Link href="/fleet">{t('nav.fleet')}</Link></li>
-                            <li><Link href="/blog">{t('nav.blog') || 'Blog'}</Link></li>
-                            <li><Link href="/contact">{t('nav.contact')}</Link></li>
-                            <li><Link href="/booking" className={styles.bookLink}>{t('nav.bookNow')}</Link></li>
+                            <li><Link href="/">Home</Link></li>
+                            <li><Link href="/about">About Us</Link></li>
+                            <li><Link href="/services">Services</Link></li>
+                            <li><Link href="/fleet">Fleet</Link></li>
+                            <li><Link href="/blog">Blog</Link></li>
+                            <li><Link href="/contact">Contact</Link></li>
+                            <li>
+                                <div className="mt-4">
+                                    <GlassButton href="/booking" className={styles.bookBtn} size="sm">
+                                        Book Now
+                                    </GlassButton>
+                                </div>
+                            </li>
                         </ul>
                     </div>
 
                     {/* Socials & Newsletter */}
                     <div className={styles.column}>
-                        <h3 className={styles.heading}>{t('footer.connect')}</h3>
+                        <h3 className={styles.heading}>Connect With Us</h3>
                         <div className={styles.socials}>
                             {contact.social.facebook && <a href={contact.social.facebook} target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="Facebook"><Facebook size={20} /></a>}
                             {contact.social.instagram && <a href={contact.social.instagram} target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="Instagram"><Instagram size={20} /></a>}
@@ -106,9 +115,9 @@ export default function Footer() {
                         </div>
 
                         <div className={styles.newsletter}>
-                            <h4>{t('footer.subscribe')}</h4>
+                            <h4>Subscribe to our Newsletter</h4>
                             <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
-                                <input type="email" placeholder={t('footer.enterEmail')} className={styles.input} />
+                                <input type="email" placeholder="Enter your email" className={styles.input} />
                                 <button type="submit" className={styles.submitBtn}>
                                     <Send size={18} />
                                 </button>
@@ -126,14 +135,6 @@ export default function Footer() {
                         <Link href="/privacy">Privacy Policy</Link>
                         <span className={styles.separator}>|</span>
                         <Link href="/terms">Terms & Conditions</Link>
-                    </div>
-
-                    <div className={styles.langContainer}>
-                        <button onClick={() => setLanguage('en')} className={`${styles.langBtn} ${language === 'en' ? styles.activeLang : ''}`}>English</button>
-                        <span className={styles.langSep}>/</span>
-                        <button onClick={() => setLanguage('ar')} className={`${styles.langBtn} ${language === 'ar' ? styles.activeLang : ''}`}>العربية</button>
-                        <span className={styles.langSep}>/</span>
-                        <button onClick={() => setLanguage('ur')} className={`${styles.langBtn} ${language === 'ur' ? styles.activeLang : ''}`}>اردو</button>
                     </div>
                 </div>
             </div>

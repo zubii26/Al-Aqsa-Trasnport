@@ -1,24 +1,22 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
 import styles from './Leadership.module.css';
-import { Quote, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Linkedin, Twitter, Mail } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Leadership() {
-    const { t } = useLanguage();
 
     const team = [
         {
             id: 1,
-            name: t('about.team.driver'),
+            name: "Abdul Rahman",
             role: "Senior Chauffeur",
             image: "/images/team/team-1.jpg",
             socials: { linkedin: "#", twitter: "#", email: "#" }
         },
         {
             id: 2,
-            name: t('about.team.support'),
+            name: "Fatima Al-Zahra",
             role: "Customer Care Lead",
             image: "/images/team/team-2.jpg",
             socials: { linkedin: "#", twitter: "#", email: "#" }
@@ -36,9 +34,9 @@ export default function Leadership() {
         <section className={styles.section}>
             <div className="container">
                 <div className={styles.header}>
-                    <h2 className={styles.title}>{t('about.team.title')}</h2>
+                    <h2 className={styles.title}>Meet Our Team</h2>
                     <p className={styles.subtitle}>
-                        {t('about.team.subtitle')}
+                        Dedicated professionals committed to making your journey smooth and memorable.
                     </p>
                 </div>
 

@@ -1,14 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Clock, BookOpen } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import styles from './LatestArticles.module.css';
-import { blogPosts } from '@/lib/blogData';
+import { blogService } from '@/services/blogService';
 import FadeIn from '@/components/common/FadeIn';
 
-export default function LatestArticles() {
-    // Get the first 3 articles
-    const latestPosts = blogPosts.slice(0, 3);
+export default async function LatestArticles() {
+    // Get the first 3 articles from DB
+    const posts = await blogService.getPosts();
+    const latestPosts = posts.slice(0, 3);
+
+    // If no posts, don't render the section
+    if (latestPosts.length === 0) {
+        return null;
+    }
 
     return (
         <section className={styles.section}>
@@ -19,11 +25,11 @@ export default function LatestArticles() {
                 <div className={styles.grid}>
                     {latestPosts.map((post, index) => (
                         <FadeIn key={post.id} delay={index * 0.1}>
-                            <Link href={`/blog/${post.id}`} className={styles.card}>
+                            <Link href={`/blog/${post.slug}`} className={styles.card}>
                                 <div className={styles.imageWrapper}>
                                     <Image
                                         src={post.image}
-                                        alt={post.alt}
+                                        alt={post.alt || post.title}
                                         fill
                                         className="object-cover"
                                     />

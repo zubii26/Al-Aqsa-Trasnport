@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { Cookie, ShieldCheck, X } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import styles from './CookieConsent.module.css';
 
 export default function CookieConsent() {

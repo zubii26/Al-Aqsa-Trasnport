@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useLanguage } from '@/context/LanguageContext';
 import styles from './AboutHero.module.css';
 
 export default function AboutHero() {
-    const { t } = useLanguage();
     const [offset, setOffset] = useState(0);
 
     useEffect(() => {
@@ -34,14 +32,14 @@ export default function AboutHero() {
             </div>
             <div className={styles.overlay}></div>
             <div className={styles.content}>
-                <h1 className={`${styles.title} animate-fade-in-up`}>{t('about.hero.title')}</h1>
-                <p className={`${styles.subtitle} animate-fade-in-up delay-200`}>{t('about.hero.subtitle')}</p>
+                <h1 className={`${styles.title} animate-fade-in-up`}>Serving Pilgrims with Sincerity and Excellence</h1>
+                <p className={`${styles.subtitle} animate-fade-in-up delay-200`}>Your journey of faith deserves comfort, safety, and care.</p>
             </div>
             <div className={styles.scrollIndicator}>
                 <div className={styles.mouse}>
                     <div className={styles.wheel}></div>
                 </div>
-                <span className={styles.scrollText}>{t('common.scrollDown') || 'Scroll Down'}</span>
+                <span className={styles.scrollText}>Scroll Down</span>
             </div>
         </section>
     );

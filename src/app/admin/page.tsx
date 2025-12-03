@@ -1,15 +1,14 @@
 import { getBookings, getFleet } from '@/lib/db';
 import { getLogs } from '@/lib/logger';
-import { PrismaClient } from '@prisma/client';
+import { routeService } from '@/services/routeService';
 import DashboardClient from './DashboardClient';
-
-const prisma = new PrismaClient();
 
 export default async function AdminDashboard() {
     const bookings = await getBookings();
     const fleet = await getFleet();
     const logs = await getLogs();
-    const routesCount = await prisma.route.count();
+    const routes = await routeService.getRoutes();
+    const routesCount = routes.length;
 
     const totalBookings = bookings.length;
     const activeFleet = fleet.filter(v => v.isActive).length;
@@ -18,6 +17,7 @@ export default async function AdminDashboard() {
     const confirmedBookings = bookings.filter((b) => b.status === 'confirmed').length;
     const totalRevenue = bookings
         .filter(b => b.status === 'confirmed')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .reduce((acc, curr) => acc + (parseFloat((curr as any).price || '0') || 0), 0);
 
     return (
@@ -29,7 +29,8 @@ export default async function AdminDashboard() {
             confirmedBookings={confirmedBookings}
             routesCount={routesCount}
             totalRevenue={totalRevenue}
-            recentBookings={bookings.slice(0, 5)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            recentBookings={bookings.slice(0, 5) as any}
             recentLogs={logs.slice(0, 5).map(log => ({ ...log, timestamp: new Date(log.timestamp), user: log.user || 'System' }))}
         />
     );

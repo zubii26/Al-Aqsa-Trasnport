@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import styles from './ImpactStats.module.css';
 import { Users, MapPin, Star, Calendar } from 'lucide-react';
+import GlassCard from '@/components/ui/GlassCard';
 
 const Counter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
     const [count, setCount] = useState(0);
@@ -31,13 +31,12 @@ const Counter = ({ end, duration = 2000 }: { end: number; duration?: number }) =
 };
 
 export default function ImpactStats() {
-    const { t } = useLanguage();
 
     const stats = [
-        { id: 'pilgrims', icon: Users, value: 10000 },
-        { id: 'trips', icon: MapPin, value: 500 },
-        { id: 'reviews', icon: Star, value: 5 }, // Special handling for 5.0
-        { id: 'years', icon: Calendar, value: 10 },
+        { id: 'pilgrims', icon: Users, value: 10000, label: 'Happy Pilgrims' },
+        { id: 'trips', icon: MapPin, value: 500, label: 'Trips Completed' },
+        { id: 'reviews', icon: Star, value: 5, label: '5-Star Reviews' }, // Special handling for 5.0
+        { id: 'years', icon: Calendar, value: 10, label: 'Years of Service' },
     ];
 
     return (
@@ -45,15 +44,15 @@ export default function ImpactStats() {
             <div className="container">
                 <div className={styles.grid}>
                     {stats.map((stat) => (
-                        <div key={stat.id} className={styles.card}>
+                        <GlassCard key={stat.id} delay={0.2} className="flex flex-col items-center justify-center text-center p-8">
                             <div className={styles.iconWrapper}>
                                 <stat.icon size={32} />
                             </div>
                             <div className={styles.number}>
                                 {stat.id === 'reviews' ? '5.0' : <Counter end={stat.value} />}
                             </div>
-                            <div className={styles.label}>{t(`about.stats.${stat.id}`)}</div>
-                        </div>
+                            <div className={styles.label}>{stat.label}</div>
+                        </GlassCard>
                     ))}
                 </div>
             </div>

@@ -10,8 +10,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const isAuth = await validateRequest();
-    if (!isAuth) {
+    const user = await validateRequest();
+    if (!user || (user.role !== 'admin' && !user.role.toLowerCase().includes('manager'))) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     try {
@@ -26,11 +26,11 @@ export async function POST(request: Request) {
             );
         }
 
-        const vehicle = await addVehicle({ ...validation.data, hourlyRate: null, category: validation.data.category || 'Standard', isActive: validation.data.isActive ?? true });
+        const vehicle = await addVehicle({ ...validation.data, hourlyRate: undefined, category: validation.data.category || 'Standard', isActive: validation.data.isActive ?? true });
         await logAction('ADD_VEHICLE', `Added vehicle: ${vehicle.name}`, request.headers.get('x-forwarded-for') || 'unknown');
 
         return NextResponse.json(vehicle);
-    } catch (_error) {
+    } catch {
         return NextResponse.json({ error: 'Failed to add vehicle' }, { status: 500 });
     }
 }

@@ -210,5 +210,17 @@
                 "text": "Excellent service! The cars were clean and comfortable. A truly premium experience."
             }
         }
+    },
+    "gallery": {
+        "title": "Pilgrim Memories",
+        "subtitle": "Cherished moments from our happy customers during their spiritual journey.",
+        "captions": {
+            "makkah": "Peaceful moments in Makkah",
+            "madinah": "Family arrival at Madinah",
+            "journey": "Comfortable journey",
+            "ziyarat": "Group Ziyarat tour",
+            "haram": "Sunset at the Haram",
+            "departure": "Ready for departure"
+        }
     }
 }

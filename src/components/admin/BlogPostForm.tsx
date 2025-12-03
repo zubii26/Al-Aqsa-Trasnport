@@ -1,11 +1,18 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Save, ArrowLeft, Loader2, Image as ImageIcon, Eye, Edit2, Bold, Italic, Heading2, Heading3, List, Quote, X, CheckCircle, AlertCircle } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Image as ImageIcon, Eye, Edit2, CheckCircle, AlertCircle, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+// Dynamic import for ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+import 'react-quill-new/dist/quill.snow.css';
 
 interface BlogPostFormProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     initialData?: any;
     isEditing?: boolean;
 }
@@ -17,7 +24,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
     const [loading, setLoading] = useState(false);
     const [previewMode, setPreviewMode] = useState(false);
     const [tagInput, setTagInput] = useState('');
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [activeTab, setActiveTab] = useState<'content' | 'seo' | 'settings'>('content');
 
     const [formData, setFormData] = useState({
         title: '',
@@ -29,6 +36,9 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
         author: '',
         tags: [] as string[],
         isPublished: true,
+        metaTitle: '',
+        metaDescription: '',
+        alt: '',
     });
 
     useEffect(() => {
@@ -37,6 +47,9 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                 ...initialData,
                 tags: initialData.tags || [],
                 isPublished: initialData.isPublished !== undefined ? initialData.isPublished : true,
+                metaTitle: initialData.metaTitle || '',
+                metaDescription: initialData.metaDescription || '',
+                alt: initialData.alt || '',
             });
         }
     }, [initialData]);
@@ -55,28 +68,6 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
             title,
             id: !isEditing ? generateSlug(title) : prev.id
         }));
-    };
-
-    const insertFormat = (tag: string, endTag: string = '') => {
-        if (!textareaRef.current) return;
-
-        const start = textareaRef.current.selectionStart;
-        const end = textareaRef.current.selectionEnd;
-        const text = formData.content;
-        const before = text.substring(0, start);
-        const selection = text.substring(start, end);
-        const after = text.substring(end);
-
-        const newContent = `${before}${tag}${selection}${endTag}${after}`;
-        setFormData({ ...formData, content: newContent });
-
-        // Restore focus and selection
-        setTimeout(() => {
-            if (textareaRef.current) {
-                textareaRef.current.focus();
-                textareaRef.current.setSelectionRange(start + tag.length, end + tag.length);
-            }
-        }, 0);
     };
 
     const handleAddTag = (e: React.KeyboardEvent) => {
@@ -130,6 +121,23 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
         }
     };
 
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
+        ],
+    };
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ];
+
     return (
         <form onSubmit={handleSubmit} className="max-w-6xl mx-auto p-6">
             {/* Header */}
@@ -173,78 +181,138 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                 </div>
             </div>
 
+            {/* Tabs */}
+            <div className="flex gap-4 mb-6 border-b border-slate-200 dark:border-slate-700">
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('content')}
+                    className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'content' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                >
+                    Content
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('seo')}
+                    className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'seo' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                >
+                    SEO
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('settings')}
+                    className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'settings' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                >
+                    Settings
+                </button>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Main Content */}
+                {/* Main Content Area */}
                 <div className="lg:col-span-2 space-y-6">
-                    {/* Title & Slug */}
-                    <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
-                        <div>
-                            <input
-                                type="text"
-                                required
-                                value={formData.title}
-                                onChange={handleTitleChange}
-                                className="w-full text-3xl font-bold bg-transparent border-none focus:ring-0 placeholder-slate-300 dark:placeholder-slate-600 dark:text-white p-0"
-                                placeholder="Enter post title..."
-                            />
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-slate-500 font-mono bg-slate-50 dark:bg-slate-900/50 p-2 rounded">
-                            <span className="text-slate-400">/blog/</span>
-                            <input
-                                type="text"
-                                required
-                                value={formData.id}
-                                onChange={(e) => setFormData({ ...formData, id: e.target.value })}
-                                className="bg-transparent border-none focus:ring-0 w-full p-0 text-slate-600 dark:text-slate-300"
-                            />
-                        </div>
-                    </div>
 
-                    {/* Content Editor */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden min-h-[500px] flex flex-col">
-                        {!previewMode ? (
-                            <>
-                                {/* Toolbar */}
-                                <div className="flex items-center gap-1 p-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                                    <button type="button" onClick={() => insertFormat('<b>', '</b>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Bold"><Bold size={18} /></button>
-                                    <button type="button" onClick={() => insertFormat('<i>', '</i>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Italic"><Italic size={18} /></button>
-                                    <div className="w-px h-6 bg-slate-300 dark:bg-slate-600 mx-1" />
-                                    <button type="button" onClick={() => insertFormat('<h2>', '</h2>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Heading 2"><Heading2 size={18} /></button>
-                                    <button type="button" onClick={() => insertFormat('<h3>', '</h3>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Heading 3"><Heading3 size={18} /></button>
-                                    <div className="w-px h-6 bg-slate-300 dark:bg-slate-600 mx-1" />
-                                    <button type="button" onClick={() => insertFormat('<blockquote>', '</blockquote>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Quote"><Quote size={18} /></button>
-                                    <button type="button" onClick={() => insertFormat('<ul>\n  <li>', '</li>\n</ul>')} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="List"><List size={18} /></button>
+                    {activeTab === 'content' && (
+                        <>
+                            {/* Title & Slug */}
+                            <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                                <div>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.title}
+                                        onChange={handleTitleChange}
+                                        className="w-full text-3xl font-bold bg-transparent border-none focus:ring-0 placeholder-slate-300 dark:placeholder-slate-600 dark:text-white p-0"
+                                        placeholder="Enter post title..."
+                                    />
                                 </div>
-                                <textarea
-                                    ref={textareaRef}
-                                    required
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="flex-1 w-full p-6 bg-transparent border-none focus:ring-0 resize-none font-mono text-sm leading-relaxed dark:text-slate-200"
-                                    placeholder="Write your story..."
-                                />
-                            </>
-                        ) : (
-                            <div className="prose dark:prose-invert max-w-none p-8">
-                                <div dangerouslySetInnerHTML={{ __html: formData.content }} />
+                                <div className="flex items-center gap-2 text-sm text-slate-500 font-mono bg-slate-50 dark:bg-slate-900/50 p-2 rounded">
+                                    <span className="text-slate-400">/blog/</span>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.id}
+                                        onChange={(e) => setFormData({ ...formData, id: e.target.value })}
+                                        className="bg-transparent border-none focus:ring-0 w-full p-0 text-slate-600 dark:text-slate-300"
+                                    />
+                                </div>
                             </div>
-                        )}
-                    </div>
 
-                    {/* Excerpt */}
-                    <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                            Excerpt
-                        </label>
-                        <textarea
-                            required
-                            rows={3}
-                            value={formData.excerpt}
-                            onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
-                            placeholder="Short summary for cards and SEO..."
-                        />
-                    </div>
+                            {/* Content Editor */}
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden min-h-[500px] flex flex-col">
+                                {!previewMode ? (
+                                    <div className="h-[500px]">
+                                        <ReactQuill
+                                            theme="snow"
+                                            value={formData.content}
+                                            onChange={(content) => setFormData({ ...formData, content })}
+                                            modules={modules}
+                                            formats={formats}
+                                            className="h-[450px]"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="prose dark:prose-invert max-w-none p-8">
+                                        <div dangerouslySetInnerHTML={{ __html: formData.content }} />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Excerpt */}
+                            <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Excerpt
+                                </label>
+                                <textarea
+                                    required
+                                    rows={3}
+                                    value={formData.excerpt}
+                                    onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                    placeholder="Short summary for cards and SEO..."
+                                />
+                            </div>
+                        </>
+                    )}
+
+                    {activeTab === 'seo' && (
+                        <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                            <h3 className="font-semibold text-slate-800 dark:text-white">Search Engine Optimization</h3>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Meta Title
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.metaTitle}
+                                    onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                    placeholder="Title tag for search engines"
+                                />
+                                <p className="text-xs text-slate-500 mt-1">Recommended length: 50-60 characters</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Meta Description
+                                </label>
+                                <textarea
+                                    rows={3}
+                                    value={formData.metaDescription}
+                                    onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                    placeholder="Description for search results"
+                                />
+                                <p className="text-xs text-slate-500 mt-1">Recommended length: 150-160 characters</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'settings' && (
+                        <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                            <h3 className="font-semibold text-slate-800 dark:text-white">Post Settings</h3>
+                            <p className="text-slate-500">Additional configuration options can go here.</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Sidebar */}
@@ -331,22 +399,56 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                         <h3 className="font-semibold text-slate-800 dark:text-white mb-4">Featured Image</h3>
 
                         <div className="space-y-4">
+                            <div className="flex gap-2">
+                                <div className="relative flex-1">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={async (e) => {
+                                            const file = e.target.files?.[0];
+                                            if (!file) return;
+
+                                            const formData = new FormData();
+                                            formData.append('file', file);
+
+                                            try {
+                                                const res = await fetch('/api/upload', {
+                                                    method: 'POST',
+                                                    body: formData
+                                                });
+                                                const data = await res.json();
+
+                                                if (data.success) {
+                                                    setFormData(prev => ({ ...prev, image: data.url }));
+                                                } else {
+                                                    alert('Upload failed: ' + data.error);
+                                                }
+                                            } catch (error) {
+                                                console.error('Upload failed:', error);
+                                                alert('Upload failed');
+                                            }
+                                        }}
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all text-sm"
+                                    />
+                                </div>
+                            </div>
+
                             <input
                                 type="text"
-                                required
                                 value={formData.image}
                                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                                 className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
-                                placeholder="Image URL..."
+                                placeholder="Or enter image URL manually..."
                             />
 
                             {formData.image ? (
                                 <div className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group">
-                                    <img
+                                    <Image
                                         src={formData.image}
                                         alt="Preview"
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => (e.currentTarget.style.display = 'none')}
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
                                     />
                                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs">
                                         Preview
@@ -358,6 +460,19 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                     <span className="text-sm">No image selected</span>
                                 </div>
                             )}
+                        </div>
+
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                Image Alt Text
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.alt}
+                                onChange={(e) => setFormData({ ...formData, alt: e.target.value })}
+                                className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                                placeholder="Describe the image for SEO..."
+                            />
                         </div>
                     </div>
                 </div>

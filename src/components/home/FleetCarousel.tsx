@@ -4,9 +4,9 @@ import React from 'react';
 import Image from 'next/image';
 import { Users, Briefcase, Check, ArrowRight } from 'lucide-react';
 import styles from './FleetCarousel.module.css';
-import Link from 'next/link';
+import GlassButton from '@/components/ui/GlassButton';
 
-interface Vehicle {
+export interface Vehicle {
     id: string;
     name: string;
     image: string;
@@ -70,9 +70,11 @@ export default function FleetCarousel({ vehicles }: FleetCarouselProps) {
                                     ))}
                                 </div>
 
-                                <Link href="/booking" className={`${styles.bookBtn} btn-primary`}>
-                                    Book Now <ArrowRight size={16} />
-                                </Link>
+                                <div className="mt-auto">
+                                    <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2">
+                                        Book Now <ArrowRight size={16} />
+                                    </GlassButton>
+                                </div>
                             </div>
                         </div>
                     ))}

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import styles from './page.module.css';
+
 import adminStyles from '../admin.module.css';
-import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X } from 'lucide-react';
+import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2 } from 'lucide-react';
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 
@@ -71,6 +71,29 @@ export default function BookingsPage() {
         }
     };
 
+    const handleDelete = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this booking? This action cannot be undone.')) {
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/bookings/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                setBookings(bookings.filter(b => b.id !== id));
+                showToast('Booking deleted successfully', 'success');
+            } else {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to delete');
+            }
+        } catch (error) {
+            console.error('Failed to delete booking:', error);
+            showToast(error instanceof Error ? error.message : 'Failed to delete booking', 'error');
+        }
+    };
+
     const getStatusBadge = (status: string) => {
         switch (status) {
             case 'confirmed': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
@@ -111,6 +134,20 @@ export default function BookingsPage() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
 
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+                    {['All', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
+                        <button
+                            key={status}
+                            onClick={() => setFilter(status)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${filter === status
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                                }`}
+                        >
+                            {status}
+                        </button>
+                    ))}
                 </div>
             </div>
 
@@ -215,6 +252,15 @@ export default function BookingsPage() {
                                                             title="Mark as Completed"
                                                         >
                                                             <CheckCircle2 size={14} /> Complete
+                                                        </button>
+                                                    )}
+                                                    {(booking.status === 'completed' || booking.status === 'cancelled') && (
+                                                        <button
+                                                            onClick={() => handleDelete(booking.id)}
+                                                            className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
+                                                            title="Delete Booking"
+                                                        >
+                                                            <Trash2 size={18} />
                                                         </button>
                                                     )}
                                                 </div>

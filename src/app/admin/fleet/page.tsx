@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, Plus, Trash2, Users, Briefcase, Check, X, Edit, Search } from 'lucide-react';
+import Image from 'next/image';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
@@ -49,16 +50,14 @@ export default function FleetPage() {
     });
     const [featureInput, setFeatureInput] = useState('');
 
-    useEffect(() => {
-        fetchVehicles();
-    }, []);
 
-    const showToast = (message: string, type: 'success' | 'error') => {
+
+    const showToast = React.useCallback((message: string, type: 'success' | 'error') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
-    };
+    }, []);
 
-    const fetchVehicles = async () => {
+    const fetchVehicles = React.useCallback(async () => {
         try {
             const res = await fetch('/api/admin/fleet');
             const data = await res.json();
@@ -69,7 +68,11 @@ export default function FleetPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchVehicles();
+    }, [fetchVehicles]);
 
     const handleEdit = (vehicle: Vehicle) => {
         setEditingId(vehicle.id);
@@ -250,10 +253,12 @@ export default function FleetPage() {
                                     className={`${styles.glassCard} group hover:border-amber-500/50 transition-colors`}
                                 >
                                     <div className="relative h-52 mb-4 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-                                        <img
+                                        <Image
                                             src={vehicle.image || '/placeholder-car.png'}
                                             alt={vehicle.name}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                         <div className="absolute top-3 right-3 flex gap-2">
                                             <span className={`px-2.5 py-1 rounded-full text-xs font-bold shadow-sm backdrop-blur-md ${vehicle.isActive
@@ -377,18 +382,60 @@ export default function FleetPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Image URL</label>
-                                    <div className="flex gap-2">
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Vehicle Image</label>
+                                    <div className="space-y-3">
+                                        <div className="flex gap-2">
+                                            <div className="relative flex-1">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={async (e) => {
+                                                        const file = e.target.files?.[0];
+                                                        if (!file) return;
+
+                                                        // Create a loading toast or state if needed
+                                                        const formData = new FormData();
+                                                        formData.append('file', file);
+
+                                                        try {
+                                                            const res = await fetch('/api/upload', {
+                                                                method: 'POST',
+                                                                body: formData
+                                                            });
+                                                            const data = await res.json();
+
+                                                            if (data.success) {
+                                                                setFormData(prev => ({ ...prev, image: data.url }));
+                                                                showToast('Image uploaded successfully', 'success');
+                                                            } else {
+                                                                throw new Error(data.error);
+                                                            }
+                                                        } catch (error) {
+                                                            console.error('Upload failed:', error);
+                                                            showToast('Failed to upload image', 'error');
+                                                        }
+                                                    }}
+                                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* URL Input Fallback */}
                                         <input
-                                            required
-                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
                                             value={formData.image}
                                             onChange={e => setFormData({ ...formData, image: e.target.value })}
-                                            placeholder="https://..."
+                                            placeholder="Or enter image URL manually..."
                                         />
+
                                         {formData.image && (
-                                            <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0">
-                                                <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                                            <div className="relative w-full h-48 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
+                                                <Image
+                                                    src={formData.image}
+                                                    alt="Preview"
+                                                    fill
+                                                    className="object-contain"
+                                                />
                                             </div>
                                         )}
                                     </div>

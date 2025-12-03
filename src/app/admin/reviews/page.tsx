@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Star, Search, Filter, CheckCircle, XCircle, MessageSquare, MoreHorizontal, Calendar, User, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
-import styles from '../admin.module.css';
+import { useState, useEffect, useCallback } from 'react';
+import { Star, Search, CheckCircle, XCircle, Calendar, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { Toast } from '@/components/ui/Toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface Review {
     id: string;
-    author: string;
+    name: string;
     rating: number;
     comment: string;
     date: string;
@@ -33,23 +33,21 @@ export default function ReviewsAdminPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
 
-    useEffect(() => {
-        fetchReviews();
-    }, []);
-
-    const showToast = (message: string, type: 'success' | 'error') => {
+    const showToast = useCallback((message: string, type: 'success' | 'error') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
-    };
+    }, []);
 
-    const fetchReviews = async () => {
+    const fetchReviews = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch('/api/reviews');
             const data = await res.json();
             // Normalize data if status is missing (migration fallback)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const normalizedData = data.map((r: any) => ({
                 ...r,
+                id: r._id || r.id,
                 status: r.status || (r.isVisible ? 'approved' : 'pending')
             }));
             setReviews(normalizedData);
@@ -59,7 +57,11 @@ export default function ReviewsAdminPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchReviews();
+    }, [fetchReviews]);
 
     const updateStatus = async (id: string, newStatus: string) => {
         try {
@@ -71,6 +73,7 @@ export default function ReviewsAdminPage() {
 
             if (res.ok) {
                 setReviews(reviews.map(r =>
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     r.id === id ? { ...r, status: newStatus as any, isVisible: newStatus === 'approved' } : r
                 ));
                 showToast(`Review marked as ${newStatus}`, 'success');
@@ -85,7 +88,7 @@ export default function ReviewsAdminPage() {
 
     // Filter Logic
     const filteredReviews = reviews.filter(review => {
-        const matchesSearch = review.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        const matchesSearch = review.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             review.comment?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = filterStatus === 'all' || review.status === filterStatus;
         const matchesRating = filterRating === 'all' || review.rating === filterRating;
@@ -243,14 +246,21 @@ function ReviewCard({ review, onUpdateStatus }: { review: Review; onUpdateStatus
                             ${review.avatar ? 'bg-transparent' : 'bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 text-slate-600 dark:text-slate-300'}
                         `}>
                             {review.avatar ? (
-                                <img src={review.avatar} alt={review.author} className="w-full h-full rounded-full object-cover ring-2 ring-white dark:ring-slate-700" />
+                                <Image
+                                    src={review.avatar}
+                                    alt={review.name}
+                                    width={48}
+                                    height={48}
+                                    className="rounded-full object-cover ring-2 ring-white dark:ring-slate-700"
+                                    unoptimized
+                                />
                             ) : (
-                                review.author.charAt(0)
+                                review.name?.charAt(0) || '?'
                             )}
                         </div>
                         <div>
                             <h3 className="font-bold text-slate-800 dark:text-slate-100 line-clamp-1 text-base tracking-tight">
-                                {review.author}
+                                {review.name}
                             </h3>
                             <div className="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mt-0.5">
                                 <Calendar size={12} className="opacity-70" />

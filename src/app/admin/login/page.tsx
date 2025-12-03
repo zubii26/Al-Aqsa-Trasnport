@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, Loader2, AlertCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export default function LoginPage() {
@@ -45,7 +44,7 @@ export default function LoginPage() {
             } else {
                 setError(data.error || 'Login failed');
             }
-        } catch (err) {
+        } catch {
             setError('Something went wrong. Please try again.');
         } finally {
             setLoading(false);

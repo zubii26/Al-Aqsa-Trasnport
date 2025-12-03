@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import adminStyles from '../admin.module.css';
-import { Shield, Clock, User, Activity, RefreshCw, Search, Filter, Download } from 'lucide-react';
+import { Shield, Clock, RefreshCw, Search, Filter, Download } from 'lucide-react';
 import { LogEntry } from '@/lib/logger';
 import { motion } from 'framer-motion';
 
@@ -131,6 +131,9 @@ export default function LogsPage() {
                                             transition={{ delay: index * 0.05 }}
                                             className="hover:bg-muted/30 transition-colors group"
                                         >
+                                            <td className="pl-6 py-4 font-medium">
+                                                {log.action}
+                                            </td>
                                             <td className="py-4">
                                                 <div className="text-sm text-foreground/80">{log.details}</div>
                                                 {log.ip && (

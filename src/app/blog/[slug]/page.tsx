@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, Calendar, Clock, User, BookOpen } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
-import { blogPosts } from '@/lib/blogData';
+import { blogService } from '@/services/blogService';
 import FadeIn from '@/components/common/FadeIn';
+import GlassCard from '@/components/ui/GlassCard';
 
 interface BlogPostPageProps {
     params: Promise<{
@@ -15,7 +16,8 @@ interface BlogPostPageProps {
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-    return blogPosts.map((post) => ({
+    const posts = await blogService.getPosts();
+    return posts.map((post) => ({
         slug: post.id,
     }));
 }
@@ -23,7 +25,7 @@ export async function generateStaticParams() {
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
     const { slug } = await params;
-    const post = blogPosts.find((p) => p.id === slug);
+    const post = await blogService.getPostBySlug(slug);
 
     if (!post) {
         return {
@@ -32,14 +34,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
 
     return {
-        title: post.title,
-        description: post.excerpt,
+        title: post.metaTitle || post.title,
+        description: post.metaDescription || post.excerpt,
         keywords: post.tags,
         openGraph: {
-            title: post.title,
-            description: post.excerpt,
+            title: post.metaTitle || post.title,
+            description: post.metaDescription || post.excerpt,
             type: 'article',
-            publishedTime: post.date,
+            publishedTime: post.date.toString(),
             authors: [post.author],
             images: [
                 {
@@ -50,8 +52,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         },
         twitter: {
             card: 'summary_large_image',
-            title: post.title,
-            description: post.excerpt,
+            title: post.metaTitle || post.title,
+            description: post.metaDescription || post.excerpt,
             images: [post.image],
         },
     };
@@ -59,7 +61,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { slug } = await params;
-    const post = blogPosts.find((p) => p.id === slug);
+    const post = await blogService.getPostBySlug(slug);
 
     if (!post) {
         notFound();
@@ -89,7 +91,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     };
 
     // Find related posts (exclude current post, limit to 3)
-    const relatedPosts = blogPosts
+    const allPosts = await blogService.getPosts();
+    const relatedPosts = allPosts
         .filter((p) => p.id !== slug)
         .slice(0, 3);
 
@@ -124,7 +127,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <div className={styles.heroMeta}>
                             <div className={styles.metaItem}>
                                 <Calendar size={18} />
-                                {post.date}
+                                {new Date(post.date).toLocaleDateString()}
                             </div>
                             <div className={styles.metaDivider}>•</div>
                             <div className={styles.metaItem}>
@@ -155,7 +158,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                         <FadeIn delay={0.3}>
                             <div className={styles.tags}>
-                                {post.tags.map((tag) => (
+                                {post.tags.map((tag: string) => (
                                     <span key={tag} className={styles.tag}>
                                         #{tag}
                                     </span>
@@ -181,34 +184,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </div>
 
                     <aside className={styles.sidebar}>
-                        <FadeIn delay={0.5} direction="left">
-                            <div className={`${styles.sidebarWidget} ${styles.ctaWidget}`}>
-                                <h3 className={styles.ctaTitle}>Plan Your Umrah Journey</h3>
-                                <p className={styles.ctaText}>
-                                    Book reliable and comfortable transport for your spiritual journey today.
-                                </p>
-                                <Link href="/booking" className={styles.ctaButton}>
-                                    Book Your Ride
-                                </Link>
-                            </div>
-                        </FadeIn>
+                        <GlassCard delay={0.5} className={`${styles.sidebarWidget} ${styles.ctaWidget} p-8`}>
+                            <h3 className={styles.ctaTitle}>Plan Your Umrah Journey</h3>
+                            <p className={styles.ctaText}>
+                                Book reliable and comfortable transport for your spiritual journey today.
+                            </p>
+                            <Link href="/booking" className={styles.ctaButton}>
+                                Book Your Ride
+                            </Link>
+                        </GlassCard>
 
-                        <FadeIn delay={0.6} direction="left">
-                            <div className={styles.sidebarWidget}>
-                                <h3 className={styles.widgetTitle}>Share this Article</h3>
-                                <div className={styles.shareLinks}>
-                                    <button className={styles.shareLink} aria-label="Share on Facebook">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                                    </button>
-                                    <button className={styles.shareLink} aria-label="Share on Twitter">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                                    </button>
-                                    <button className={styles.shareLink} aria-label="Share on LinkedIn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                                    </button>
-                                </div>
+                        <GlassCard delay={0.6} className={`${styles.sidebarWidget} p-8`}>
+                            <h3 className={styles.widgetTitle}>Share this Article</h3>
+                            <div className={styles.shareLinks}>
+                                <button className={styles.shareLink} aria-label="Share on Facebook">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </button>
+                                <button className={styles.shareLink} aria-label="Share on Twitter">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                                </button>
+                                <button className={styles.shareLink} aria-label="Share on LinkedIn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </button>
                             </div>
-                        </FadeIn>
+                        </GlassCard>
                     </aside>
                 </div>
 
@@ -218,20 +217,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <h2 className={styles.relatedTitle}>You Might Also Like</h2>
                         <div className={styles.relatedGrid}>
                             {relatedPosts.map((related, index) => (
-                                <Link href={`/blog/${related.id}`} key={related.id} className={styles.relatedCard}>
-                                    <div className={styles.relatedImageWrapper}>
-                                        {/* Placeholder for image */}
-                                        <div
-                                            className={styles.relatedImage}
-                                            style={{ backgroundImage: `url(${related.image})` }}
-                                        />
-                                    </div>
-                                    <div className={styles.relatedContent}>
-                                        <span className={styles.relatedCategory}>{related.category}</span>
-                                        <h3 className={styles.relatedCardTitle}>{related.title}</h3>
-                                        <span className={styles.readMore}>Read Article <ArrowLeft size={16} className="rotate-180" /></span>
-                                    </div>
-                                </Link>
+                                <GlassCard key={related.id} delay={0.7 + (index * 0.1)} className="p-0 overflow-hidden group h-full">
+                                    <Link href={`/blog/${related.id}`} className="flex flex-col h-full">
+                                        <div className={styles.relatedImageWrapper}>
+                                            {/* Placeholder for image */}
+                                            <div
+                                                className={styles.relatedImage}
+                                                style={{ backgroundImage: `url(${related.image})` }}
+                                            />
+                                        </div>
+                                        <div className={styles.relatedContent}>
+                                            <span className={styles.relatedCategory}>{related.category}</span>
+                                            <h3 className={styles.relatedCardTitle}>{related.title}</h3>
+                                            <span className={styles.readMore}>Read Article <ArrowLeft size={16} className="rotate-180" /></span>
+                                        </div>
+                                    </Link>
+                                </GlassCard>
                             ))}
                         </div>
                     </FadeIn>
