@@ -228,17 +228,6 @@
     /* Dark text on gold button */
     border: none;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    margin-top: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-/* Shimmer Effect */
-.submitBtn::after {
-    content: '';
     position: absolute;
     top: 0;
     left: -100%;
