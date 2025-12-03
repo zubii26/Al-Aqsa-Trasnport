@@ -8,6 +8,15 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Debug: Check env vars
+    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+        console.error('Missing Cloudinary Env Vars');
+        return NextResponse.json(
+            { error: 'Server Configuration Error: Missing Cloudinary Keys' },
+            { status: 500 }
+        );
+    }
+
     try {
         const formData = await request.formData();
         const file = formData.get('file') as File;
@@ -25,16 +34,20 @@ export async function POST(request: NextRequest) {
 
         // Upload to Cloudinary using a stream
         const result = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream(
+            const uploadStream = cloudinary.uploader.upload_stream(
                 {
-                    folder: 'transport_uploads', // Optional: organize uploads in a folder
+                    folder: 'transport_uploads',
                     resource_type: 'auto',
                 },
                 (error, result) => {
-                    if (error) reject(error);
+                    if (error) {
+                        console.error('Cloudinary Upload Error:', error);
+                        reject(error);
+                    }
                     else resolve(result);
                 }
-            ).end(buffer);
+            );
+            uploadStream.end(buffer);
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,10 +58,10 @@ export async function POST(request: NextRequest) {
             success: true
         });
 
-    } catch (error) {
-        console.error('Upload error:', error);
+    } catch (error: any) {
+        console.error('Upload error details:', error);
         return NextResponse.json(
-            { error: 'Upload failed' },
+            { error: `Upload failed: ${error.message || JSON.stringify(error)}` },
             { status: 500 }
         );
     }
