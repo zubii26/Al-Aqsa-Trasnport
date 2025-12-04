@@ -57,7 +57,7 @@ export default function Navbar() {
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative w-16 h-16 transition-transform duration-300 group-hover:scale-105">
                         <Image
                             src="/logo.png"
                             alt="Al Aqsa Transport"
@@ -117,7 +117,7 @@ export default function Navbar() {
                 }`}>
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
                     <Link href="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
-                        <div className="relative w-10 h-10">
+                        <div className="relative w-12 h-12">
                             <Image
                                 src="/logo.png"
                                 alt="Al Aqsa Transport"
