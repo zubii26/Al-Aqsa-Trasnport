@@ -92,7 +92,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                 </div>
 
                                 <div className="mt-auto">
-                                    <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2">
+                                    <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2 !bg-secondary !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                                         Book Now <ArrowRight size={16} />
                                     </GlassButton>
                                 </div>

@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     width: 100%;
     margin-top: 0.5rem;
 }
@@ -175,4 +176,208 @@
 
 :global(.dark) .specs {
     color: #94a3b8;
+}
+
+/* Dropdown Styles (Copied from RouteSelector for consistency) */
+.trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.trigger:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.trigger.open {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.triggerContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.triggerIconWrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.trigger:hover .triggerIconWrapper {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.trigger.open .triggerIconWrapper {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+}
+
+.vehicleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.value {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.chevron {
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    overflow: hidden;
+    padding: 0.5rem;
+}
+
+.list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0 0.25rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    background: transparent;
+    border: none;
+    width: 100%;
+}
+
+.option:hover {
+    background: #f8fafc;
+}
+
+.option.selectedOption {
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.optionIcon {
+    color: #94a3b8;
+}
+
+.option.selectedOption .optionIcon {
+    color: #D4AF37;
+}
+
+.optionContent {
+    flex: 1;
+}
+
+.optionName {
+    display: block;
+    font-weight: 500;
+    color: #0f172a;
+    font-size: 0.95rem;
+    margin-bottom: 0.1rem;
+}
+
+.optionMeta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.selectedIndicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D4AF37;
+}
+
+/* Dark Mode Overrides for Dropdown */
+:global(.dark) .trigger {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+:global(.dark) .trigger:hover {
+    border-color: #475569;
+}
+
+:global(.dark) .triggerIconWrapper {
+    background: #0f172a;
+    color: #94a3b8;
+}
+
+:global(.dark) .value {
+    color: #f8fafc;
+}
+
+:global(.dark) .dropdown {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+:global(.dark) .option:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .optionName {
+    color: #f8fafc;
+}
+
+:global(.dark) .optionMeta {
+    color: #94a3b8;
+}
+
+:global(.dark) .option.selectedOption {
+    background: rgba(212, 175, 55, 0.15);
+}
+
+:global(.dark) .option.selectedOption .optionIcon {
+    color: #D4AF37;
 }

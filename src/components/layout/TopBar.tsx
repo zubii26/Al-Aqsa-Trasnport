@@ -21,7 +21,7 @@ const TopBar = async () => {
     return (
         <>
             {/* AnnouncementBanner is rendered in layout.tsx */}
-            <div className="bg-primary text-primary-foreground/90 border-b border-white/10">
+            <div className="hidden md:block bg-primary text-primary-foreground/90 border-b border-white/10">
                 <div className="container mx-auto px-4 h-10 flex justify-between items-center text-xs tracking-wide font-medium">
                     <div className="flex items-center gap-6">
                         {contact.email && (

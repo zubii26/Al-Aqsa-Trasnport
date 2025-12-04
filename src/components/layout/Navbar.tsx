@@ -56,8 +56,8 @@ export default function Navbar() {
     return (
         <nav
             className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50 py-2'
-                : 'bg-background/20 backdrop-blur-sm py-4'
+                ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-sm border-b border-black/5 dark:border-white/10 py-3'
+                : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-5'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
@@ -73,7 +73,7 @@ export default function Navbar() {
                     </div>
                     <div className="flex flex-col">
                         <span className="text-xl font-bold font-playfair text-secondary leading-none tracking-wide">Al Aqsa</span>
-                        <span className={`text-xs font-medium tracking-[0.2em] uppercase ${scrolled ? 'text-foreground' : 'text-foreground/90'}`}>Transport</span>
+                        <span className={`text-xs font-medium tracking-[0.2em] uppercase ${scrolled ? 'text-foreground' : 'text-foreground dark:text-white/90'}`}>Transport</span>
                     </div>
                 </Link>
 
@@ -83,7 +83,7 @@ export default function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-1 group ${pathname === link.href ? 'text-secondary' : 'text-foreground/80'
+                            className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-1 group ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
                                 }`}
                         >
                             {link.label}
@@ -95,14 +95,14 @@ export default function Navbar() {
 
                 <div className="hidden lg:flex items-center gap-4">
                     <ThemeToggle />
-                    <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg hover:shadow-secondary/20">
+                    <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                         Book Now
                     </GlassButton>
                 </div>
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="lg:hidden p-2 text-foreground hover:text-secondary transition-colors relative z-50"
+                    className={`lg:hidden p-2 transition-colors relative z-50 ${scrolled ? 'text-foreground hover:text-secondary' : 'text-foreground dark:text-white hover:text-secondary'}`}
                     onClick={toggleMenu}
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isMenuOpen}
@@ -170,7 +170,7 @@ export default function Navbar() {
                         href="/booking"
                         variant="secondary"
                         size="lg"
-                        className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-secondary-foreground hover:!bg-secondary/90"
+                        className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
                         onClick={() => setIsMenuOpen(false)}
                     >
                         Book Now

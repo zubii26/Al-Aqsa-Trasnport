@@ -369,22 +369,63 @@
     }
 
     .calculatorContainer {
-        padding: 1.5rem;
-        gap: 2rem;
+        padding: 1.25rem;
+        gap: 1.5rem;
         background: var(--glass-bg);
+        border-radius: 24px;
     }
 
     .resultDisplay {
-        padding: 1.5rem;
+        padding: 1.25rem;
+        border-radius: 20px;
+    }
+
+    .resultHeader {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .estimatedLabel {
+        font-size: 0.75rem;
+    }
+
+    .guaranteeBadge {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .priceContainer {
+        margin: 1rem 0 1.5rem;
     }
 
     .priceValue {
-        font-size: 3.5rem;
+        font-size: 3rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .currencySymbol {
+        font-size: 1.25rem;
+        margin-top: 0.5rem;
+    }
+
+    .priceBreakdown {
+        margin-top: 0.5rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
     }
 
     .tripDetails {
         padding: 1rem;
         gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .detailLabel {
+        font-size: 0.7rem;
+    }
+
+    .detailValue {
+        font-size: 1rem;
     }
 
     .mobileStickyBar {

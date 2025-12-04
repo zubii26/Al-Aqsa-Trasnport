@@ -6,9 +6,7 @@
     justify-content: center;
     color: hsl(var(--foreground));
     overflow: hidden;
-    margin-top: -80px;
-    /* Counteract navbar height if transparent */
-    padding-top: 80px;
+    width: 100%;
 }
 
 .bgImage {
