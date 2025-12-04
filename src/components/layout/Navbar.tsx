@@ -39,6 +39,11 @@ export default function Navbar() {
         };
     }, [isMenuOpen]);
 
+    // Auto-close menu on route change
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname, setIsMenuOpen]);
+
     const links = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About Us' },
@@ -97,11 +102,12 @@ export default function Navbar() {
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="lg:hidden p-2 text-foreground hover:text-secondary transition-colors"
+                    className="lg:hidden p-2 text-foreground hover:text-secondary transition-colors relative z-50"
                     onClick={toggleMenu}
-                    aria-label="Toggle menu"
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isMenuOpen}
                 >
-                    <Menu size={28} />
+                    {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </div>
 
@@ -110,13 +116,19 @@ export default function Navbar() {
                 className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setIsMenuOpen(false)}
+                aria-hidden="true"
             />
 
             {/* Mobile Sidebar Drawer */}
-            <div className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-background shadow-2xl z-50 transform transition-transform duration-300 lg:hidden border-l border-border ${isMenuOpen ? 'translate-x-0 visible' : 'translate-x-full invisible pointer-events-none'
-                }`}>
+            <div
+                className={`fixed top-0 right-0 h-[100dvh] w-[85%] max-w-sm bg-background shadow-2xl z-40 transform transition-transform duration-300 lg:hidden border-l border-border flex flex-col ${isMenuOpen ? 'translate-x-0 visible' : 'translate-x-full invisible pointer-events-none'
+                    }`}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile navigation"
+            >
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
-                    <Link href="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/" className="flex items-center gap-3">
                         <div className="relative w-12 h-12">
                             <Image
                                 src="/logo.png"
@@ -127,42 +139,38 @@ export default function Navbar() {
                         </div>
                         <span className="font-playfair font-bold text-lg text-secondary dark:text-white">Al Aqsa</span>
                     </Link>
-                    <button
-                        className="p-2 text-foreground/60 hover:text-destructive transition-colors"
-                        onClick={() => setIsMenuOpen(false)}
-                        aria-label="Close menu"
-                    >
-                        <X size={24} />
-                    </button>
+                    {/* Close button is handled by the main toggle button which is fixed z-50 */}
                 </div>
 
-                <div className="flex flex-col p-6 gap-2">
+                <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-2">
                     {links.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`p-3 rounded-lg text-lg font-medium transition-all duration-200 ${pathname === link.href
+                            className={`p-4 rounded-xl text-lg font-medium transition-all duration-200 flex items-center justify-between group ${pathname === link.href
                                 ? 'bg-secondary/10 text-secondary'
                                 : 'text-foreground/80 hover:bg-muted hover:text-foreground'
                                 }`}
-                            onClick={() => setIsMenuOpen(false)}
                         >
                             {link.label}
+                            {pathname === link.href && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                            )}
                         </Link>
                     ))}
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border/50 bg-background/50">
-                    <div className="flex items-center justify-between mb-6">
-                        <span className="text-sm text-muted-foreground">Appearance</span>
+                <div className="p-6 border-t border-border/50 bg-muted/30 mt-auto">
+                    <div className="flex items-center justify-between mb-6 bg-background/50 p-4 rounded-xl border border-border/50">
+                        <span className="text-sm font-medium text-foreground/80">Appearance</span>
                         <ThemeToggle />
                     </div>
 
                     <GlassButton
                         href="/booking"
-                        variant="primary"
+                        variant="secondary"
                         size="lg"
-                        className="w-full justify-center shadow-lg font-bold"
+                        className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-secondary-foreground hover:!bg-secondary/90"
                         onClick={() => setIsMenuOpen(false)}
                     >
                         Book Now
