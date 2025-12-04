@@ -38,6 +38,46 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.button {
+    position: fixed;
+    bottom: 7rem;
+    right: 2rem;
+    left: auto;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(30, 58, 138, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 998;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.button.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    background: rgba(30, 58, 138, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 :global(.dark) .button {
     background: rgba(15, 23, 42, 0.6);
     border-color: rgba(255, 215, 0, 0.2);
@@ -45,9 +85,9 @@
 
 @media (max-width: 480px) {
     .button {
-        bottom: 5.5rem;
-        right: 1rem;
-        width: 40px;
-        height: 40px;
+        bottom: 6.5rem;
+        right: 1.5rem;
+        width: 42px;
+        height: 42px;
     }
 }

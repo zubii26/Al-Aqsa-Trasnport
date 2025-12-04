@@ -207,6 +207,13 @@ export default function AIChatBox() {
                         </button>
                         <button
                             onClick={() => setIsOpen(false)}
+                            className={styles.minimizeButton}
+                            aria-label="Minimize chat"
+                        >
+                            <div className="w-4 h-0.5 bg-current rounded-full" />
+                        </button>
+                        <button
+                            onClick={() => setIsOpen(false)}
                             className={styles.closeButton}
                             aria-label="Close chat"
                         >

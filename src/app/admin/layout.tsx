@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
@@ -102,12 +103,20 @@ export default function AdminLayout({
         <div className={styles.container}>
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>
-                    <div className="relative w-40 h-12">
-                        <img
-                            src="/logo-full.png"
-                            alt="Al Aqsa Admin"
-                            className="object-contain w-full h-full"
-                        />
+                    <div className="flex flex-col items-start gap-1 py-2">
+                        <div className="relative w-[150px] h-[150px]">
+                            <Image
+                                src="/logo.png"
+                                alt="Al Aqsa Admin"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+                        <div className="flex flex-col items-start text-left ml-2">
+                            <span className="text-2xl font-bold text-secondary">Al Aqsa</span>
+                            <span className="text-sm font-bold text-[var(--admin-fg)] tracking-[0.15em] uppercase">Transport</span>
+                        </div>
                     </div>
                 </div>
 

@@ -62,14 +62,20 @@ export default function Navbar() {
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-48 h-16 transition-transform duration-300 group-hover:scale-105">
-                        <Image
-                            src="/logo-full.png"
-                            alt="Al Aqsa Transport"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
+                    <div className="relative flex items-center">
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[80px] h-[80px] lg:w-[100px] lg:h-[100px] transition-transform duration-300 group-hover:scale-105">
+                            <Image
+                                src="/logo.png"
+                                alt="Al Aqsa Transport"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+                        <div className="flex flex-col items-start space-y-1 lg:-space-y-0.5 ml-[90px] lg:ml-[120px]">
+                            <span className="text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
+                            <span className="text-sm lg:text-base font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none">Transport</span>
+                        </div>
                     </div>
                 </Link>
 
@@ -125,13 +131,17 @@ export default function Navbar() {
             >
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
                     <Link href="/" className="flex items-center gap-3">
-                        <div className="relative w-40 h-12">
+                        <div className="relative w-[80px] h-[80px]">
                             <Image
-                                src="/logo-full.png"
+                                src="/logo.png"
                                 alt="Al Aqsa Transport"
                                 fill
                                 className="object-contain"
                             />
+                        </div>
+                        <div className="flex flex-col items-start space-y-1">
+                            <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
+                            <span className="text-sm font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none">Transport</span>
                         </div>
                     </Link>
                     {/* Close button is handled by the main toggle button which is fixed z-50 */}
