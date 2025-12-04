@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Users, Briefcase, Check, ArrowRight } from 'lucide-react';
+import { Users, Briefcase, Check, ArrowRight, Tag } from 'lucide-react';
 import styles from './FleetCarousel.module.css';
 import GlassButton from '@/components/ui/GlassButton';
 
@@ -18,10 +18,23 @@ export interface Vehicle {
 
 interface FleetCarouselProps {
     vehicles: Vehicle[];
+    discount?: {
+        enabled: boolean;
+        type: 'percentage' | 'fixed';
+        value: number;
+        startDate?: string;
+        endDate?: string;
+    };
 }
 
-export default function FleetCarousel({ vehicles }: FleetCarouselProps) {
+export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps) {
     if (vehicles.length === 0) return null;
+
+    // Check if discount is active
+    const now = new Date();
+    const isDiscountActive = discount?.enabled &&
+        (!discount.startDate || new Date(discount.startDate) <= now) &&
+        (!discount.endDate || new Date(discount.endDate) > now);
 
     return (
         <section className={styles.section}>
@@ -43,6 +56,14 @@ export default function FleetCarousel({ vehicles }: FleetCarouselProps) {
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     priority={index < 2}
                                 />
+                                {isDiscountActive && (
+                                    <div className={styles.discountBadge}>
+                                        <Tag size={14} className="fill-current" />
+                                        <span>
+                                            {discount?.type === 'percentage' ? `${discount.value}% OFF` : `${discount?.value} SAR OFF`}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <div className={styles.content}>
                                 <div className={styles.cardHeader}>

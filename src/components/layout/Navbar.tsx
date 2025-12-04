@@ -55,7 +55,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+            className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
                 ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-border/50 py-2'
                 : 'bg-background/20 backdrop-blur-sm py-4'
                 } ${isMenuOpen ? 'bg-background' : ''}`}

@@ -14,9 +14,9 @@ const TopBar = async () => {
         (!discount.startDate || new Date(discount.startDate) <= now) &&
         (!discount.endDate || new Date(discount.endDate) > now);
 
-    if (isDiscountActive) {
-        return null;
-    }
+    // if (isDiscountActive) {
+    //     return null;
+    // }
 
     return (
         <>

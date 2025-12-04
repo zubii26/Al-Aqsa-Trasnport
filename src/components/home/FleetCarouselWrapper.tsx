@@ -3,8 +3,11 @@ import FleetCarousel from './FleetCarousel';
 import { vehicleService } from '@/services/vehicleService';
 import { Vehicle as FleetVehicle } from './FleetCarousel';
 
+import { getSettings } from '@/lib/settings-storage';
+
 async function FleetCarouselFetcher() {
     const vehicles = await vehicleService.getVehicles();
+    const settings = await getSettings();
 
     // Map to FleetCarousel format
     const carouselVehicles: FleetVehicle[] = vehicles
@@ -20,7 +23,7 @@ async function FleetCarouselFetcher() {
             price: v.price
         }));
 
-    return <FleetCarousel vehicles={carouselVehicles} />;
+    return <FleetCarousel vehicles={carouselVehicles} discount={settings.discount} />;
 }
 
 export default function FleetCarouselWrapper() {
