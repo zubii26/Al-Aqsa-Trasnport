@@ -17,7 +17,7 @@ const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'))
 
 export async function generateMetadata() {
   return {
-    title: "Umrah Taxi Service & Car Rental | Makkah to Madinah Transport",
+    title: "Al Aqsa Umrah | Umrah Taxi Service & Car Rental",
     description: "Book reliable Umrah taxi service in Saudi Arabia. Premium GMC Yukon, Toyota Hiace, and bus rentals for Makkah to Madinah taxi, Jeddah airport transfers, and Ziarah tours.",
     alternates: {
       canonical: 'https://alaqsa-transport.com',

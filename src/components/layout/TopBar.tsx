@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Facebook, Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
-import styles from './TopBar.module.css';
+
 import { getSettings } from '@/lib/settings-storage';
 
 
@@ -21,43 +21,56 @@ const TopBar = async () => {
     return (
         <>
             {/* AnnouncementBanner is rendered in layout.tsx */}
-            <div className={styles.topBar}>
-                <div className={styles.container}>
-                    <div className={styles.contactInfo}>
+            <div className="bg-primary text-primary-foreground/90 border-b border-white/10">
+                <div className="container mx-auto px-4 h-10 flex justify-between items-center text-xs tracking-wide font-medium">
+                    <div className="flex items-center gap-6">
                         {contact.email && (
-                            <a href={`mailto:${contact.email}`} className={styles.contactItem}>
-                                <Mail size={16} />
+                            <a href={`mailto:${contact.email}`} className="flex items-center gap-2 hover:text-secondary transition-colors duration-300">
+                                <Mail size={14} className="text-secondary" />
                                 <span>{contact.email}</span>
                             </a>
                         )}
                         {contact.phone && (
-                            <a href={`tel:${contact.phone}`} className={styles.contactItem}>
-                                <Phone size={16} />
+                            <a href={`tel:${contact.phone}`} className="flex items-center gap-2 hover:text-secondary transition-colors duration-300">
+                                <Phone size={14} className="text-secondary" />
                                 <span>{contact.phone}</span>
                             </a>
                         )}
                         {contact.phone2 && (
-                            <a href={`tel:${contact.phone2}`} className={styles.contactItem}>
-                                <Phone size={16} />
+                            <a href={`tel:${contact.phone2}`} className="flex items-center gap-2 hover:text-secondary transition-colors duration-300">
+                                <Phone size={14} className="text-secondary" />
                                 <span>{contact.phone2}</span>
                             </a>
                         )}
-
                     </div>
 
-                    <div className={styles.socialLinks}>
-                        {contact.social.facebook && <a href={contact.social.facebook} target="_blank" rel="noreferrer" className={styles.socialIcon}><Facebook size={16} /></a>}
-                        {contact.social.instagram && <a href={contact.social.instagram} target="_blank" rel="noreferrer" className={styles.socialIcon}><Instagram size={16} /></a>}
-                        {contact.social.twitter && <a href={contact.social.twitter} target="_blank" rel="noreferrer" className={styles.socialIcon}><Twitter size={16} /></a>}
-                        {contact.social.linkedin && <a href={contact.social.linkedin} target="_blank" rel="noreferrer" className={styles.socialIcon}><Linkedin size={16} /></a>}
-
-                        {/* TikTok Icon */}
+                    <div className="flex items-center gap-4">
+                        {contact.social.facebook && (
+                            <a href={contact.social.facebook} target="_blank" rel="noreferrer" className="hover:text-secondary hover:scale-110 transition-all duration-300">
+                                <Facebook size={14} />
+                            </a>
+                        )}
+                        {contact.social.instagram && (
+                            <a href={contact.social.instagram} target="_blank" rel="noreferrer" className="hover:text-secondary hover:scale-110 transition-all duration-300">
+                                <Instagram size={14} />
+                            </a>
+                        )}
+                        {contact.social.twitter && (
+                            <a href={contact.social.twitter} target="_blank" rel="noreferrer" className="hover:text-secondary hover:scale-110 transition-all duration-300">
+                                <Twitter size={14} />
+                            </a>
+                        )}
+                        {contact.social.linkedin && (
+                            <a href={contact.social.linkedin} target="_blank" rel="noreferrer" className="hover:text-secondary hover:scale-110 transition-all duration-300">
+                                <Linkedin size={14} />
+                            </a>
+                        )}
                         {contact.social.tiktok && (
-                            <a href={contact.social.tiktok} target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="TikTok">
+                            <a href={contact.social.tiktok} target="_blank" rel="noreferrer" className="hover:text-secondary hover:scale-110 transition-all duration-300" aria-label="TikTok">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
+                                    width="14"
+                                    height="14"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"

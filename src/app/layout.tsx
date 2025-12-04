@@ -201,9 +201,9 @@ export default async function RootLayout({
               "@type": "TravelAgency",
               "name": settings.general.siteName,
               "description": settings.general.description,
-              "image": "https://alaqsa-transport.com/logo.png",
-              "@id": "https://alaqsa-transport.com",
-              "url": "https://alaqsa-transport.com",
+              "image": "https://alaqsaumrahtransport.com/logo.png",
+              "@id": "https://alaqsaumrahtransport.com",
+              "url": "https://alaqsaumrahtransport.com",
               "telephone": settings.contact.phone,
               "priceRange": "$$",
               "address": {

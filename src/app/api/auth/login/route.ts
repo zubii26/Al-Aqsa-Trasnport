@@ -5,6 +5,15 @@ import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
     try {
+        // Rate Limiting
+        const ip = request.headers.get('x-forwarded-for') || 'unknown';
+        const { rateLimit } = await import('@/lib/rate-limit');
+        const limiter = rateLimit(ip, { interval: 60 * 1000, limit: 5 }); // 5 attempts per minute
+
+        if (!limiter.success) {
+            return NextResponse.json({ success: false, error: 'Too many login attempts. Please try again later.' }, { status: 429 });
+        }
+
         const body: { username?: string; password?: string } = await request.json();
         const { username, password } = body;
 
@@ -41,7 +50,16 @@ export async function POST(request: Request) {
         }
 
         if (!user || !isValid) {
+            // Log failed attempt (optional: implement AuditLog here)
+            console.warn(`Failed login attempt for ${username} from ${ip}`);
             return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
+        }
+
+        // Role Verification
+        const allowedRoles = ['admin', 'manager', 'operational_manager'];
+        if (!allowedRoles.includes(user.role)) {
+            console.warn(`Unauthorized role login attempt for ${username} (${user.role}) from ${ip}`);
+            return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 403 });
         }
 
         // Generate JWT
