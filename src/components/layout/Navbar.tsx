@@ -125,7 +125,7 @@ export default function Navbar() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="font-playfair font-bold text-lg text-secondary">Al Aqsa</span>
+                        <span className="font-playfair font-bold text-lg text-secondary dark:text-white">Al Aqsa</span>
                     </Link>
                     <button
                         className="p-2 text-foreground/60 hover:text-destructive transition-colors"
