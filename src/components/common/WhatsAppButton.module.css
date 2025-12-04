@@ -1,7 +1,8 @@
 .container {
     position: fixed;
     bottom: 2rem;
-    right: 2rem;
+    left: 2rem;
+    right: auto;
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -32,14 +33,15 @@
 }
 
 .icon {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     fill: white;
 }
 
 .tooltip {
     position: absolute;
-    right: 70px;
+    left: 70px;
+    right: auto;
     background: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 0.5rem 1rem;
@@ -70,9 +72,35 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+    .button {
+        width: 56px;
+        height: 56px;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
     .container {
-        bottom: 1.5rem;
-        right: 1.5rem;
+        bottom: 1rem;
+        left: 1rem;
+    }
+
+    .button {
+        width: 48px;
+        height: 48px;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .tooltip {
+        display: none;
     }
 }

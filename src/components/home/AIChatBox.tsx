@@ -26,9 +26,16 @@ export default function AIChatBox() {
     const [inputValue, setInputValue] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    // ... existing code ...
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => {
+                inputRef.current?.focus();
+            }, 100);
+        }
+    }, [isOpen]);
 
     // Quick Replies Data
     const quickReplies = ['Check Prices', 'Book a Ride', 'Contact Support', 'Vehicle Types'];
@@ -220,7 +227,12 @@ export default function AIChatBox() {
                             >
                                 {msg.text}
                                 {msg.action && (
-                                    <Link href={msg.action.url} className={styles.messageAction} target={msg.action.url.startsWith('http') ? '_blank' : undefined}>
+                                    <Link
+                                        href={msg.action.url}
+                                        className={styles.messageAction}
+                                        target={msg.action.url.startsWith('http') ? '_blank' : undefined}
+                                        onClick={() => setIsOpen(false)}
+                                    >
                                         {msg.action.label}
                                         <ExternalLink size={12} />
                                     </Link>
@@ -258,6 +270,7 @@ export default function AIChatBox() {
 
                 <div className={styles.inputArea}>
                     <input
+                        ref={inputRef}
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}

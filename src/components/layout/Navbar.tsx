@@ -62,18 +62,14 @@ export default function Navbar() {
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative w-16 h-16 transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative w-48 h-16 transition-transform duration-300 group-hover:scale-105">
                         <Image
-                            src="/logo.png"
+                            src="/logo-full.png"
                             alt="Al Aqsa Transport"
                             fill
                             className="object-contain"
                             priority
                         />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-xl font-bold font-playfair text-secondary leading-none tracking-wide">Al Aqsa</span>
-                        <span className={`text-xs font-medium tracking-[0.2em] uppercase ${scrolled ? 'text-foreground' : 'text-foreground dark:text-white/90'}`}>Transport</span>
                     </div>
                 </Link>
 
@@ -129,15 +125,14 @@ export default function Navbar() {
             >
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
                     <Link href="/" className="flex items-center gap-3">
-                        <div className="relative w-12 h-12">
+                        <div className="relative w-40 h-12">
                             <Image
-                                src="/logo.png"
+                                src="/logo-full.png"
                                 alt="Al Aqsa Transport"
                                 fill
                                 className="object-contain"
                             />
                         </div>
-                        <span className="font-playfair font-bold text-lg text-secondary dark:text-white">Al Aqsa</span>
                     </Link>
                     {/* Close button is handled by the main toggle button which is fixed z-50 */}
                 </div>

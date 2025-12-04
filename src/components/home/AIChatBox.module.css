@@ -1,6 +1,6 @@
 .container {
     position: fixed;
-    bottom: 7rem;
+    bottom: 2rem;
     right: 2rem;
     z-index: 1001;
     display: flex;
@@ -9,8 +9,8 @@
 }
 
 .toggleButton {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: linear-gradient(135deg, #0f172a, #334155);
     color: #fbbf24;
@@ -362,109 +362,6 @@
         transform: rotate(0deg);
     }
 
-}
-
-.quickReplyChip {
-    background: rgba(15, 23, 42, 0.05);
-    border: 1px solid #0f172a;
-    color: #0f172a;
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.quickReplyChip:hover {
-    background: #0f172a;
-    color: white;
-}
-
-:global(.dark) .quickReplyChip {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.9);
-}
-
-:global(.dark) .quickReplyChip:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: white;
-    color: white;
-}
-
-.inputArea {
-    padding: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 0.75rem;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    align-items: center;
-}
-
-:global(.dark) .inputArea {
-    border-color: rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.input {
-    flex: 1;
-    padding: 0.875rem 1.25rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 25px;
-    outline: none;
-    font-size: 0.95rem;
-    background: white;
-    color: var(--foreground);
-    transition: all 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-:global(.dark) .input {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.input:focus {
-    border-color: #0f172a;
-    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
-}
-
-.sendButton {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0f172a, #334155);
-    color: #fbbf24;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-}
-
-.sendButton:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.3);
-}
-
-.sendButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    background: #ccc;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
     to {
         transform: rotate(360deg);
     }
@@ -482,7 +379,28 @@
     }
 }
 
+@media (max-width: 1024px) {
+    .toggleButton {
+        width: 56px;
+        height: 56px;
+    }
+}
+
 @media (max-width: 480px) {
+    .container {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .toggleButton {
+        width: 48px;
+        height: 48px;
+    }
+
+    .toggleButton::after {
+        display: none;
+    }
+
     .chatWindow {
         position: fixed;
         bottom: 0;

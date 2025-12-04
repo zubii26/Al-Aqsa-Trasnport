@@ -102,8 +102,13 @@ export default function AdminLayout({
         <div className={styles.container}>
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>
-                    <div className={styles.logoIcon}>A</div>
-                    <span className={styles.logoText}>Al Aqsa Admin</span>
+                    <div className="relative w-40 h-12">
+                        <img
+                            src="/logo-full.png"
+                            alt="Al Aqsa Admin"
+                            className="object-contain w-full h-full"
+                        />
+                    </div>
                 </div>
 
                 <nav className={styles.nav}>
