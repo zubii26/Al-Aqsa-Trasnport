@@ -58,6 +58,19 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Enforce Home Page Entry for Public Routes
+    // If the request is for a public page (not admin, not api) and not the home page
+    if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/') && pathname !== '/') {
+        const referer = request.headers.get('referer');
+        const host = request.headers.get('host');
+
+        // If there is no referer (direct entry) or the referer is from a different domain
+        if (!referer || (host && !referer.includes(host))) {
+            const homeUrl = new URL('/', request.url);
+            return NextResponse.redirect(homeUrl);
+        }
+    }
+
     return NextResponse.next();
 }
 

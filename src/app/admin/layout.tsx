@@ -7,6 +7,7 @@ import styles from './admin.module.css';
 import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
+import AdminAutoLock from '@/components/admin/AdminAutoLock';
 
 interface User {
     id: string;
@@ -148,6 +149,7 @@ export default function AdminLayout({
             <main className={styles.main}>
                 {children}
             </main>
+            <AdminAutoLock />
         </div>
     );
 }
