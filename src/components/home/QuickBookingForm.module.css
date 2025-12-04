@@ -1,7 +1,7 @@
 .container {
     padding: 2rem;
     border-radius: 24px;
-    margin-top: 6rem;
+    margin-top: 2rem;
     /* Increased to prevent navbar overlap */
     max-width: 700px;
     /* Compact width */
