@@ -22,7 +22,7 @@ export default function FadeIn({ children, delay = 0, className = '', direction 
     };
 
     return (
-        <div ref={ref} className={className}>
+        <div ref={ref} className={`${className} overflow-hidden`}>
             <motion.div
                 initial={{ opacity: 0, ...directionOffset[direction] }}
                 animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...directionOffset[direction] }}

@@ -5,7 +5,6 @@ import { Inter, Playfair_Display, Open_Sans } from "next/font/google";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/styles/datepicker.css";
 import "./globals.css";
-import "./globals.css";
 import { getSettings } from "@/lib/settings-storage";
 
 const inter = Inter({
@@ -35,6 +34,13 @@ const openSans = Open_Sans({
 });
 
 
+
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
