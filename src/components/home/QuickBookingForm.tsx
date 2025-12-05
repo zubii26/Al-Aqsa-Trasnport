@@ -91,6 +91,7 @@ const QuickBookingForm = ({
 
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -138,6 +139,12 @@ const QuickBookingForm = ({
             return;
         }
 
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsSubmitting(true);
+
         const selectedRoute = routes.find(r => r.id === formData.routeId);
         const selectedVehicle = vehicles.find(v => v.id === formData.vehicleId);
 
@@ -171,6 +178,8 @@ const QuickBookingForm = ({
         } catch (error) {
             console.error('Booking error:', error);
             alert('Failed to submit booking. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -398,10 +407,20 @@ const QuickBookingForm = ({
 
                         <button
                             type="submit"
-                            className={styles.submitBtn}
+                            className={`${styles.submitBtn} ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                            disabled={isSubmitting}
                         >
-                            <span>Book Now</span>
-                            <ArrowRight size={20} />
+                            {isSubmitting ? (
+                                <span className="flex items-center gap-2">
+                                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    Processing...
+                                </span>
+                            ) : (
+                                <>
+                                    <span>Book Now</span>
+                                    <ArrowRight size={20} />
+                                </>
+                            )}
                         </button>
 
                     </motion.form>

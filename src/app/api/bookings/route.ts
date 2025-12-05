@@ -86,23 +86,28 @@ export async function POST(request: Request) {
         const booking = await addBooking({ ...bookingData, ...priceDetails, userId: null } as any);
 
         // Send confirmation email to customer
-        if (booking && booking.email) {
-            await sendEmail({
-                to: booking.email,
-                subject: 'Booking Confirmation - Al Aqsa Transport',
-                html: getBookingConfirmationTemplate({
-                    name: booking.name,
-                    status: booking.status,
-                    id: booking._id.toString(),
-                    vehicle: booking.vehicle,
-                    pickup: booking.pickup,
-                    dropoff: booking.dropoff,
-                    date: booking.date,
-                    time: booking.time,
-                    passengers: booking.passengers,
-                    price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
-                }),
-            });
+        // Send confirmation email to customer
+        try {
+            if (booking && booking.email) {
+                await sendEmail({
+                    to: booking.email,
+                    subject: 'Booking Confirmation - Al Aqsa Transport',
+                    html: getBookingConfirmationTemplate({
+                        name: booking.name,
+                        status: booking.status,
+                        id: booking._id.toString(),
+                        vehicle: booking.vehicle,
+                        pickup: booking.pickup,
+                        dropoff: booking.dropoff,
+                        date: booking.date,
+                        time: booking.time,
+                        passengers: booking.passengers,
+                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
+                    }),
+                });
+            }
+        } catch (error) {
+            console.error('Error sending customer confirmation email:', error);
         }
 
         // Send notification email to admin
