@@ -87,3 +87,27 @@ export const getContactFeedbackTemplate = (data: ContactData) => `
         <p>Best Regards,<br/>The Al Aqsa Transport Team</p>
     </div>
 `;
+
+export const getAdminBookingNotificationTemplate = (booking: BookingData) => `
+    <div style="font-family: Arial, sans-serif; color: #333;">
+        <h1 style="color: #d4af37;">New Booking Received</h1>
+        <p><strong>Booking Reference:</strong> ${booking.id}</p>
+        <p><strong>Submission Time:</strong> ${new Date().toLocaleString()}</p>
+        
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">Customer Details</h3>
+            <p><strong>Name:</strong> ${booking.name}</p>
+            <p><strong>Status:</strong> ${booking.status}</p>
+            
+            <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 20px;">Service Details</h3>
+            <p><strong>Vehicle:</strong> ${booking.vehicle}</p>
+            <p><strong>Pickup:</strong> ${booking.pickup}</p>
+            <p><strong>Dropoff:</strong> ${booking.dropoff}</p>
+            <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
+            <p><strong>Passengers:</strong> ${booking.passengers}</p>
+            ${booking.price ? `<p><strong>Price:</strong> ${booking.price}</p>` : ''}
+        </div>
+
+        <p style="font-size: 12px; color: #666;">This is an automated notification from the Al Aqsa Transport booking system.</p>
+    </div>
+`;

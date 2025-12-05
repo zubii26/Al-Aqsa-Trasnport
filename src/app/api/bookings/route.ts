@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getBookings, addBooking } from '@/lib/db';
-import { sendEmail, getBookingConfirmationTemplate } from '@/lib/email';
+import { sendEmail, getBookingConfirmationTemplate, getAdminBookingNotificationTemplate } from '@/lib/email';
 import { BookingSchema } from '@/lib/validations';
 import { validateRequest } from '@/lib/server-auth';
 import { getSettings } from '@/lib/settings-storage';
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const booking = await addBooking({ ...bookingData, ...priceDetails, userId: null } as any);
 
-        // Send confirmation email
+        // Send confirmation email to customer
         if (booking && booking.email) {
             await sendEmail({
                 to: booking.email,
@@ -103,6 +103,32 @@ export async function POST(request: Request) {
                     price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
                 }),
             });
+        }
+
+        // Send notification email to admin
+        try {
+            const settings = await getSettings();
+            if (settings.contact && settings.contact.email) {
+                await sendEmail({
+                    to: settings.contact.email,
+                    subject: 'New Booking Received - Al Aqsa Transport',
+                    html: getAdminBookingNotificationTemplate({
+                        name: booking.name,
+                        status: booking.status,
+                        id: booking._id.toString(),
+                        vehicle: booking.vehicle,
+                        pickup: booking.pickup,
+                        dropoff: booking.dropoff,
+                        date: booking.date,
+                        time: booking.time,
+                        passengers: booking.passengers,
+                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
+                    }),
+                });
+                console.log('Admin notification email sent to:', settings.contact.email);
+            }
+        } catch (error) {
+            console.error('Error sending admin notification:', error);
         }
 
         return NextResponse.json(booking);
