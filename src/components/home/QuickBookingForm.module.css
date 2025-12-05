@@ -261,34 +261,6 @@
         transform: translateX(150%) skewX(-20deg);
     }
 
-    100% {
-        transform: translateX(150%) skewX(-20deg);
-    }
-}
-
-.submitBtn:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow:
-        0 20px 40px -10px rgba(212, 175, 55, 0.4),
-        0 0 0 2px rgba(255, 255, 255, 0.2) inset;
-    filter: brightness(110%);
-}
-
-.submitBtn:active {
-    transform: scale(0.98) translateY(0);
-}
-
-/* Skeleton Loading Styles */
-.skeletonWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    width: 100%;
-}
-
-.skeletonInput {
-    height: 50px;
-    border-radius: 12px;
     background: rgba(255, 255, 255, 0.05);
     position: relative;
     overflow: hidden;

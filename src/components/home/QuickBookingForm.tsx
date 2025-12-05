@@ -139,9 +139,7 @@ const QuickBookingForm = ({
             return;
         }
 
-        if (!validateForm()) {
-            return;
-        }
+
 
         setIsSubmitting(true);
 
@@ -407,7 +405,7 @@ const QuickBookingForm = ({
 
                         <button
                             type="submit"
-                            className={`${styles.submitBtn} ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                            className={styles.submitBtn}
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? (
