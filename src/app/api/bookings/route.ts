@@ -20,7 +20,6 @@ export async function GET() {
 export async function POST(request: Request) {
 
     try {
-        console.log('Received booking request');
         const body = await request.json();
 
         // Validate input
