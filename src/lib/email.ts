@@ -9,6 +9,11 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+// Debug logging for environment variables
+console.log('Email Transporter Configured');
+console.log('EMAIL_USER present:', !!process.env.EMAIL_USER);
+console.log('EMAIL_PASS present:', !!process.env.EMAIL_PASS);
+
 interface EmailOptions {
     to: string;
     subject: string;
