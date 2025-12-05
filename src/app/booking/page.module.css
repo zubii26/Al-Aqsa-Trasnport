@@ -49,10 +49,12 @@
 
 .heroContent {
     display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 3rem;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
     position: relative;
     z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 /* Left Column */
@@ -100,11 +102,13 @@
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 24px;
-    padding: 2.5rem;
+    padding: 2rem;
     box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.05),
         0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-    min-height: 600px;
+    min-height: auto;
+    max-width: 600px;
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -137,7 +141,7 @@
 
 /* Progress Steps */
 .progressContainer {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     padding: 0 1rem;
 }
 
@@ -224,7 +228,7 @@
     height: 2px;
     background: #e2e8f0;
     margin: 0 1rem;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
     position: relative;
     overflow: hidden;
 }
@@ -275,10 +279,10 @@
 }
 
 .stepTitle {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     text-align: center;
     letter-spacing: -0.02em;
 }
@@ -303,7 +307,7 @@
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -518,15 +522,15 @@
 /* Vehicle Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
 }
 
 .optionCard {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 20px;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 1.25rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -660,7 +664,7 @@
 .formGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .formGroup {
@@ -687,7 +691,7 @@
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 1rem 1.25rem;
+    padding: 0.875rem 1rem;
     color: #0f172a;
     font-size: 1rem;
     transition: all 0.3s ease;
