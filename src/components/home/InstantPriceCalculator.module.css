@@ -129,21 +129,26 @@
 .guaranteeBadge {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 1rem;
-    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--card)) 100%);
-    border: 1px solid hsl(var(--secondary));
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 99px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: hsl(var(--secondary));
-    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: hsl(45, 90%, 30%);
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1);
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .guaranteeBadge:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.6);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    color: hsl(45, 90%, 25%);
 }
 
 .priceContainer {

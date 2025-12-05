@@ -56,7 +56,7 @@ export default function Navbar() {
     return (
         <nav
             className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-sm border-b border-black/5 dark:border-white/10 py-3'
+                ? 'bg-white/70 dark:bg-black/70 backdrop-blur-2xl shadow-md border-b border-black/5 dark:border-white/10 py-3'
                 : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-5'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
