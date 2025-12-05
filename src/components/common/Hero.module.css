@@ -99,18 +99,18 @@
 
     /* Light Mode Title - White on Navy */
     color: #ffffff;
-    background: linear-gradient(to right, #ffffff 30%, #D4AF37 100%);
+    background: linear-gradient(to bottom, #ffffff 30%, #fcd34d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     letter-spacing: -0.02em;
 }
 
 :global(.dark) .title {
     /* Dark Mode Title */
     color: white;
-    background: linear-gradient(to right, #ffffff 30%, #fbbf24 100%);
+    background: linear-gradient(to bottom, #ffffff 30%, #fcd34d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

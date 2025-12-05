@@ -241,70 +241,159 @@ export default function BookingPage() {
         </motion.div>
     );
 
-    const renderStep2 = () => (
-        <motion.div
-            key="step2"
-            variants={stepVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-            className={styles.stepContainer}
-        >
-            <h2 className={styles.stepTitle}>Select Your Vehicle</h2>
-            <div className={styles.grid}>
-                {vehicles.map((vehicle) => {
-                    const Icon = vehicle.icon;
-                    const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
-                    return (
-                        <div
-                            key={vehicle.id}
-                            className={`${styles.optionCard} ${bookingData.vehicleId === vehicle.id ? styles.selectedCard : ''}`}
-                            onClick={() => updateData('vehicleId', vehicle.id)}
-                        >
-                            <div className={styles.cardHeader}>
-                                <div className={styles.cardIcon}>
-                                    <Icon size={32} />
-                                </div>
-                                <div className={styles.cardPrice}>
-                                    {priceDetails.discountApplied > 0 ? (
-                                        <div className="flex flex-col items-end">
-                                            <span className="text-xs text-slate-400 line-through decoration-red-500/50">
-                                                {priceDetails.originalPrice} SAR
-                                            </span>
-                                            <span className={`${styles.priceValue} text-red-600`}>
-                                                {priceDetails.price} SAR
-                                            </span>
-                                        </div>
-                                    ) : (
-                                        <span className={styles.priceValue}>{priceDetails.price} SAR</span>
-                                    )}
-                                </div>
+    const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
+
+    const renderStep2 = () => {
+        const selectedVehicle = getSelectedVehicle();
+
+        return (
+            <motion.div
+                key="step2"
+                variants={stepVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ duration: 0.3 }}
+                className={styles.stepContainer}
+            >
+                <h2 className={styles.stepTitle}>Select Your Vehicle</h2>
+
+                {/* Mobile Dropdown (Visible on small screens) */}
+                <div className="lg:hidden mb-8">
+                    <div className={styles.dropdownContainer}>
+                        <label className={styles.label}>
+                            <Briefcase size={18} /> Choose Vehicle
+                        </label>
+                        <div className={styles.customSelect}>
+                            <div
+                                className={`${styles.selectTrigger} ${isVehicleDropdownOpen ? styles.selectTriggerOpen : ''}`}
+                                onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
+                            >
+                                <span className={styles.selectedValue}>
+                                    {selectedVehicle ? selectedVehicle.name : 'Select Vehicle'}
+                                </span>
+                                <ChevronDown className={`${styles.selectArrow} ${isVehicleDropdownOpen ? styles.rotateArrow : ''}`} size={20} />
                             </div>
 
-                            <div className={styles.cardContent}>
-                                <h3>{vehicle.name}</h3>
-                                <p className={styles.cardSubtitle}>{vehicle.capacity}</p>
+                            {isVehicleDropdownOpen && (
+                                <div className={styles.selectMenu}>
+                                    {vehicles.map(vehicle => {
+                                        const Icon = vehicle.icon;
+                                        const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
+                                        return (
+                                            <div
+                                                key={vehicle.id}
+                                                className={`${styles.selectOption} ${bookingData.vehicleId === vehicle.id ? styles.selectedOption : ''}`}
+                                                onClick={() => {
+                                                    updateData('vehicleId', vehicle.id);
+                                                    setIsVehicleDropdownOpen(false);
+                                                }}
+                                            >
+                                                <div className={styles.optionIcon}>
+                                                    <Icon size={20} />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-center mb-1">
+                                                        <span className={styles.optionName}>{vehicle.name}</span>
+                                                        <span className="font-bold text-amber-500">{priceDetails.price} SAR</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                                                        <span>{vehicle.capacity}</span>
+                                                        <span>•</span>
+                                                        <span>{vehicle.luggage}</span>
+                                                    </div>
+                                                </div>
+                                                {bookingData.vehicleId === vehicle.id && <CheckCircle size={16} className="text-primary" />}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
 
-                                <div className={styles.vehicleFeatures}>
-                                    <div className={styles.featureItem}>
-                                        <Briefcase size={14} />
-                                        <span>{vehicle.luggage}</span>
+                        {/* Selected Vehicle Info Card for Mobile */}
+                        {selectedVehicle && (
+                            <div className={`${styles.routeInfoCard} mt-4`}>
+                                <div className="flex items-center gap-3 mb-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                    <div className="p-2 bg-white dark:bg-slate-700 rounded-full text-amber-500 shadow-sm">
+                                        {(() => {
+                                            const Icon = selectedVehicle.icon;
+                                            return <Icon size={24} />;
+                                        })()}
                                     </div>
-                                    {vehicle.features.slice(0, 2).map((feature, idx) => (
+                                    <div>
+                                        <h4 className="font-bold text-slate-900 dark:text-white">{selectedVehicle.name}</h4>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400">{selectedVehicle.capacity}</p>
+                                    </div>
+                                </div>
+                                <div className={styles.vehicleFeatures}>
+                                    {selectedVehicle.features.map((feature, idx) => (
                                         <div key={idx} className={styles.featureItem}>
-                                            <CheckCircle size={14} />
+                                            <CheckCircle size={12} />
                                             <span>{feature}</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </motion.div>
-    );
+                        )}
+                    </div>
+                </div>
+
+                {/* Desktop Grid (Hidden on mobile) */}
+                <div className={`${styles.grid} hidden lg:grid`}>
+                    {vehicles.map((vehicle) => {
+                        const Icon = vehicle.icon;
+                        const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
+                        return (
+                            <div
+                                key={vehicle.id}
+                                className={`${styles.optionCard} ${bookingData.vehicleId === vehicle.id ? styles.selectedCard : ''}`}
+                                onClick={() => updateData('vehicleId', vehicle.id)}
+                            >
+                                <div className={styles.cardHeader}>
+                                    <div className={styles.cardIcon}>
+                                        <Icon size={32} />
+                                    </div>
+                                    <div className={styles.cardPrice}>
+                                        {priceDetails.discountApplied > 0 ? (
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-xs text-slate-400 line-through decoration-red-500/50">
+                                                    {priceDetails.originalPrice} SAR
+                                                </span>
+                                                <span className={`${styles.priceValue} text-red-600`}>
+                                                    {priceDetails.price} SAR
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <span className={styles.priceValue}>{priceDetails.price} SAR</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className={styles.cardContent}>
+                                    <h3>{vehicle.name}</h3>
+                                    <p className={styles.cardSubtitle}>{vehicle.capacity}</p>
+
+                                    <div className={styles.vehicleFeatures}>
+                                        <div className={styles.featureItem}>
+                                            <Briefcase size={14} />
+                                            <span>{vehicle.luggage}</span>
+                                        </div>
+                                        {vehicle.features.slice(0, 2).map((feature, idx) => (
+                                            <div key={idx} className={styles.featureItem}>
+                                                <CheckCircle size={14} />
+                                                <span>{feature}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </motion.div>
+        );
+    };
 
     const renderStep3 = () => (
         <motion.div
@@ -588,10 +677,16 @@ export default function BookingPage() {
 
 
 
+
+
+    // ... (keep existing effects)
+
+
+
     return (
         <main>
             <section className={styles.hero}>
-                <div className="container">
+                <div className="container mx-auto px-4">
                     <div className={styles.heroContent}>
                         {/* Left Column: Hero Text & Sidebar */}
                         <div className={styles.leftColumn}>
@@ -609,7 +704,6 @@ export default function BookingPage() {
                             </div>
 
                             {/* Sidebar - Hidden on mobile, shown here on desktop */}
-                            {/* Only show sidebar if step < 4 (Hide on Review & Success steps) */}
                             {step < 4 && (
                                 <div className="hidden lg:block mt-8">
                                     <Sidebar />
@@ -685,11 +779,11 @@ export default function BookingPage() {
                                 </div>
                             </FadeIn>
                         </div>
-
-
                     </div>
                 </div>
             </section>
+
+
         </main>
     );
 }
