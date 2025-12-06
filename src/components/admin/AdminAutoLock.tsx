@@ -16,16 +16,11 @@ export default function AdminAutoLock() {
             }
         };
 
-        const handleBlur = () => {
-            setIsLocked(true);
-        };
-
         document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('blur', handleBlur);
+        // Removed window.blur listener to prevent locking on file dialogs
 
         return () => {
             document.removeEventListener('visibilitychange', handleVisibilityChange);
-            window.removeEventListener('blur', handleBlur);
         };
     }, []);
 
