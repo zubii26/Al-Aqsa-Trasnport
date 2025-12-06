@@ -6,6 +6,7 @@ import { Save, ArrowLeft, Loader2, Image as ImageIcon, Eye, Edit2, CheckCircle, 
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import PasswordConfirmModal from '@/components/admin/PasswordConfirmModal';
 
 // Dynamic import for ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
@@ -25,6 +26,9 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
     const [previewMode, setPreviewMode] = useState(false);
     const [tagInput, setTagInput] = useState('');
     const [activeTab, setActiveTab] = useState<'content' | 'seo' | 'settings'>('content');
+
+    // Security Modal State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -90,8 +94,16 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
         }));
     };
 
+    // Step 1: Trigger Modal
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsPasswordModalOpen(true);
+    };
+
+    // Step 2: Actually Save (Called after password verification)
+    const handleFinalSubmit = async () => {
+        // Modal closes automatically on success or we close it here
+        setIsPasswordModalOpen(false);
         setLoading(true);
 
         try {
@@ -519,6 +531,15 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                     </div>
                 </div>
             </div>
+
+            <PasswordConfirmModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onConfirm={handleFinalSubmit}
+                title={isEditing ? 'Confirm Update' : 'Confirm Publish'}
+                description="This action requires admin authorization. Please enter your password to proceed."
+                actionLabel={isEditing ? 'Update Post' : 'Publish Post'}
+            />
         </form>
     );
 }
