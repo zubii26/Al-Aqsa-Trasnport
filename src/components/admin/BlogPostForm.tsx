@@ -409,10 +409,9 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                             if (!file) return;
 
                                             try {
-                                                // 1. Get signature from server
-                                                const signRes = await fetch('/api/upload', {
-                                                    method: 'POST',
-                                                });
+                                                // Attempt 1: Client-Side Upload (Preferred for large files)
+                                                // 1. Get signature
+                                                const signRes = await fetch('/api/upload?type=signature', { method: 'POST' });
                                                 const signData = await signRes.json();
 
                                                 if (!signData.success) {
@@ -430,26 +429,45 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                                 const uploadUrl = `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`;
 
                                                 // DEBUG: Show exactly what is being sent
-                                                alert(`DEBUG INFO:\nURL: ${uploadUrl}\nAPI Key: ${signData.apiKey}\nCloud Name: ${signData.cloudName}\nFile Name: ${file.name}`);
+                                                // alert(`DEBUG INFO:\nURL: ${uploadUrl}\nAPI Key: ${signData.apiKey}\nCloud Name: ${signData.cloudName}\nFile Name: ${file.name}`);
 
-                                                const uploadRes = await fetch(
-                                                    uploadUrl,
-                                                    {
-                                                        method: 'POST',
-                                                        body: formData
+                                                try {
+                                                    const uploadRes = await fetch(uploadUrl, { method: 'POST', body: formData });
+                                                    if (!uploadRes.ok) throw new Error('Network response was not ok');
+                                                    const uploadData = await uploadRes.json();
+
+                                                    if (uploadData.secure_url) {
+                                                        setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
+                                                        return;
                                                     }
-                                                );
-
-                                                const uploadData = await uploadRes.json();
-
-                                                if (uploadData.secure_url) {
-                                                    setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
-                                                } else {
-                                                    throw new Error(uploadData.error?.message || 'Upload failed');
+                                                } catch (directError) {
+                                                    console.warn('Direct upload failed, switching to server fallback...', directError);
+                                                    throw new DirectUploadError();
                                                 }
-                                            } catch (error) {
-                                                console.error('Upload failed:', error);
-                                                alert('Upload failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
+
+                                            } catch (clientError) {
+                                                // Attempt 2: Server-Side Fallback (For small files <4.5MB)
+                                                try {
+                                                    const fallbackFormData = new FormData();
+                                                    fallbackFormData.append('file', file);
+
+                                                    const serverRes = await fetch('/api/upload', {
+                                                        method: 'POST',
+                                                        body: fallbackFormData
+                                                    });
+
+                                                    const serverData = await serverRes.json();
+
+                                                    if (serverData.success) {
+                                                        setFormData(prev => ({ ...prev, image: serverData.url }));
+                                                    } else {
+                                                        // If server also failed (e.g. payload too large), show specific error
+                                                        throw new Error(serverData.error || 'Upload failed');
+                                                    }
+                                                } catch (serverError) {
+                                                    console.error('Final upload failure:', serverError);
+                                                    alert('Upload failed: ' + (serverError instanceof Error ? serverError.message : 'Unknown error'));
+                                                }
                                             }
                                         }}
                                         className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all text-sm"
@@ -503,4 +521,11 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
             </div>
         </form>
     );
+}
+
+class DirectUploadError extends Error {
+    constructor(message?: string) {
+        super(message);
+        this.name = 'DirectUploadError';
+    }
 }
