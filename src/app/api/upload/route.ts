@@ -28,9 +28,11 @@ export async function POST(request: NextRequest) {
     try {
         const url = new URL(request.url);
         const type = url.searchParams.get('type');
+        const contentType = request.headers.get('content-type') || '';
 
         // Mode 1: Generate Signature (for Client-Side Upload)
-        if (type === 'signature') {
+        // Trigger if explicit param exists OR if content-type is not multipart (legacy/cached client support)
+        if (type === 'signature' || !contentType.includes('multipart/form-data')) {
             const timestamp = Math.round(new Date().getTime() / 1000);
             const folder = 'transport_uploads';
 

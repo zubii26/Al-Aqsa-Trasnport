@@ -393,20 +393,17 @@ export default function FleetPage() {
                                                         const file = e.target.files?.[0];
                                                         if (!file) return;
 
-                                                        // Create a loading toast or state if needed
-
                                                         try {
+                                                            // Attempt 1: Client-Side Upload
                                                             // 1. Get signature
-                                                            const signRes = await fetch('/api/upload', {
-                                                                method: 'POST',
-                                                            });
+                                                            const signRes = await fetch('/api/upload?type=signature', { method: 'POST' });
                                                             const signData = await signRes.json();
 
                                                             if (!signData.success) {
-                                                                throw new Error(signData.error || 'Failed to get signature');
+                                                                throw new Error(signData.error || 'Failed to get upload signature');
                                                             }
 
-                                                            // 2. Upload to Cloudinary
+                                                            // 2. Upload directly to Cloudinary
                                                             const formData = new FormData();
                                                             formData.append('file', file);
                                                             formData.append('api_key', signData.apiKey);
@@ -414,24 +411,46 @@ export default function FleetPage() {
                                                             formData.append('signature', signData.signature);
                                                             formData.append('folder', signData.folder);
 
-                                                            const uploadRes = await fetch(
-                                                                `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`,
-                                                                {
-                                                                    method: 'POST',
-                                                                    body: formData
-                                                                }
-                                                            );
-                                                            const uploadData = await uploadRes.json();
+                                                            const uploadUrl = `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`;
 
-                                                            if (uploadData.secure_url) {
-                                                                setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
-                                                                showToast('Image uploaded successfully', 'success');
-                                                            } else {
-                                                                throw new Error(uploadData.error?.message || 'Upload failed');
+                                                            try {
+                                                                const uploadRes = await fetch(uploadUrl, { method: 'POST', body: formData });
+                                                                if (!uploadRes.ok) throw new Error('Direct upload failed');
+                                                                const uploadData = await uploadRes.json();
+
+                                                                if (uploadData.secure_url) {
+                                                                    setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
+                                                                    showToast('Image uploaded successfully (Client)', 'success');
+                                                                    return;
+                                                                }
+                                                            } catch (directError) {
+                                                                console.warn('Direct upload failed, switching to server fallback...', directError);
+                                                                throw new Error('Direct upload failed');
                                                             }
-                                                        } catch (error) {
-                                                            console.error('Upload failed:', error);
-                                                            showToast('Failed to upload image: ' + (error instanceof Error ? error.message : 'Unknown error'), 'error');
+
+                                                        } catch (clientError) {
+                                                            // Attempt 2: Server-Side Fallback
+                                                            try {
+                                                                const fallbackFormData = new FormData();
+                                                                fallbackFormData.append('file', file);
+
+                                                                const serverRes = await fetch('/api/upload', {
+                                                                    method: 'POST',
+                                                                    body: fallbackFormData
+                                                                });
+
+                                                                const serverData = await serverRes.json();
+
+                                                                if (serverData.success) {
+                                                                    setFormData(prev => ({ ...prev, image: serverData.url }));
+                                                                    showToast('Image uploaded successfully (Server Fallback)', 'success');
+                                                                } else {
+                                                                    throw new Error(serverData.error || 'Upload failed');
+                                                                }
+                                                            } catch (serverError) {
+                                                                console.error('Final upload failure:', serverError);
+                                                                showToast(serverError instanceof Error ? serverError.message : 'Failed to upload image', 'error');
+                                                            }
                                                         }
                                                     }}
                                                     className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all"
