@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image as ImageIcon, Plus, Trash2, Upload, X, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
+
+const PasswordConfirmModal = dynamic(() => import('@/components/admin/PasswordConfirmModal'), { ssr: false });
+
 
 interface GalleryItem {
     _id: string;
@@ -22,6 +26,9 @@ export default function GalleryPage() {
     const [showModal, setShowModal] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    // Security Modal State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         image: '',
@@ -129,6 +136,11 @@ export default function GalleryPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSubmit = async () => {
+        setIsPasswordModalOpen(false);
         try {
             const res = await fetch('/api/gallery', {
                 method: 'POST',
@@ -334,6 +346,15 @@ export default function GalleryPage() {
                 onConfirm={confirmDialog.onConfirm}
                 onCancel={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
                 isDestructive
+            />
+
+            <PasswordConfirmModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onConfirm={handleFinalSubmit}
+                title="Confirm Photo Upload"
+                description="Please enter your admin password to save this photo."
+                actionLabel="Save & Publish"
             />
         </div>
     );

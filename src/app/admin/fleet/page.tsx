@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, Plus, Trash2, Users, Briefcase, Check, X, Edit, Search } from 'lucide-react';
 import Image from 'next/image';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
+
+const PasswordConfirmModal = dynamic(() => import('@/components/admin/PasswordConfirmModal'), { ssr: false });
 
 interface Vehicle {
     id: string;
@@ -29,6 +32,9 @@ export default function FleetPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('All');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    // Security Modal State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
     const [confirmDialog, setConfirmDialog] = useState<{
         isOpen: boolean;
@@ -92,6 +98,11 @@ export default function FleetPage() {
 
     const handleSaveVehicle = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSave = async () => {
+        setIsPasswordModalOpen(false);
         try {
             const url = '/api/admin/fleet';
             const method = editingId ? 'PUT' : 'POST';
@@ -603,6 +614,15 @@ export default function FleetPage() {
                 onCancel={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
                 isDestructive
             />
-        </div >
+
+            <PasswordConfirmModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onConfirm={handleFinalSave}
+                title={editingId ? 'Confirm Update' : 'Confirm New Vehicle'}
+                description="Please enter your admin password to save changes to the fleet."
+                actionLabel={editingId ? 'Update Vehicle' : 'Add Vehicle'}
+            />
+        </div>
     );
 }
