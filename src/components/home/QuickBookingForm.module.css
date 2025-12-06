@@ -183,6 +183,33 @@
     transform: translateY(-1px);
 }
 
+/* Error Styles */
+.errorMessage {
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 1px #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
 .input:hover:not(:focus) {
     border-color: rgba(255, 255, 255, 0.2);
     background: rgba(0, 0, 0, 0.3);

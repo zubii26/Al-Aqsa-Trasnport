@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 
 import { usePricing } from '@/context/PricingContext';
+import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
 
 export default function BookingPage() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
@@ -427,18 +428,11 @@ export default function BookingPage() {
                     <label className={styles.label}>
                         <Clock size={18} /> Pickup Time
                     </label>
-                    <DatePicker
-                        selected={bookingData.time}
+                    <ClockTimePicker
+                        date={bookingData.time}
                         onChange={(date) => updateData('time', date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={30}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
                         placeholderText="Select Time"
                         className={`${styles.input} ${errors.time ? 'border-red-500' : ''}`}
-                        portalId="datepicker-portal"
-                        popperClassName="time-grid-popper"
                     />
                     {errors.time && <span className="text-red-500 text-sm mt-1">{errors.time}</span>}
                 </div>
@@ -446,7 +440,7 @@ export default function BookingPage() {
 
             <h2 className={`${styles.stepTitle} mt-8`}>Contact Information</h2>
             <div className={styles.formGrid}>
-                <div className={styles.formGroup}>
+                <div className={`${styles.formGroup} col-span-2 lg:col-span-1`}>
                     <label className={styles.label}>
                         <User size={18} /> Full Name
                     </label>
@@ -459,7 +453,7 @@ export default function BookingPage() {
                     />
                     {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
                 </div>
-                <div className={styles.formGroup}>
+                <div className={`${styles.formGroup} col-span-2 lg:col-span-1`}>
                     <label className={styles.label}>
                         <Mail size={18} /> Email Address
                     </label>

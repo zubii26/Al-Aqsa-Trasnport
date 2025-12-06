@@ -1,10 +1,14 @@
 'use client';
 
 import { useState, useEffect, memo, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { Save, Search, RotateCcw } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
+
+const PasswordConfirmModal = dynamic(() => import('@/components/admin/PasswordConfirmModal'), { ssr: false });
+
 
 interface Route {
     id: string;
@@ -81,6 +85,10 @@ export default function PricingPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [modified, setModified] = useState<Record<string, boolean>>({});
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    // Security Modal State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+
     const [confirmDialog, setConfirmDialog] = useState<{
         isOpen: boolean;
         title: string;
@@ -156,6 +164,11 @@ export default function PricingPage() {
     };
 
     const handleSaveAll = async () => {
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSaveAll = async () => {
+        setIsPasswordModalOpen(false);
         setSaving(true);
         try {
             const promises = Object.entries(prices).map(([key, price]) => {
@@ -287,6 +300,15 @@ export default function PricingPage() {
                 onCancel={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
                 isDestructive={true}
             />
-        </div >
+
+            <PasswordConfirmModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onConfirm={handleFinalSaveAll}
+                title="Confirm Pricing Changes"
+                description="Please enter your admin password to update these prices."
+                actionLabel="Save Prices"
+            />
+        </div>
     );
 }

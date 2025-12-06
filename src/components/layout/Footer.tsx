@@ -25,13 +25,17 @@ export default function Footer() {
                         <div className={styles.brand}>
                             <Link href="/" className={styles.logoLink}>
                                 <Image
-                                    src="/logo-full.png"
+                                    src="/logo.png"
                                     alt={general.siteName}
-                                    width={180}
-                                    height={60}
+                                    width={90}
+                                    height={90}
                                     className={styles.logoImage}
                                     style={{ objectFit: 'contain' }}
                                 />
+                                <div className={styles.logoText}>
+                                    <span className={styles.brandName}>Al Aqsa</span>
+                                    <span className={styles.brandType}>Transport</span>
+                                </div>
                             </Link>
                             <p className={styles.tagline}>{general.description}</p>
                         </div>

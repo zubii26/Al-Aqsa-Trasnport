@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast, ToastType } from '@/components/ui/Toast';
+import dynamic from 'next/dynamic';
+
+const PasswordConfirmModal = dynamic(() => import('@/components/admin/PasswordConfirmModal'), { ssr: false });
 
 import DiscountManagement from '@/components/admin/settings/DiscountManagement';
 import { Settings } from '@/lib/validations';
@@ -20,6 +23,13 @@ export default function SettingsPage() {
         type: 'success',
         isVisible: false
     });
+
+    // Security Modal State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    type PendingSaveType = 'GLOBAL' | 'SECTION' | null;
+    const [pendingAction, setPendingAction] = useState<PendingSaveType>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [pendingSectionData, setPendingSectionData] = useState<{ section: keyof Settings; data: any } | null>(null);
 
     const [settings, setSettings] = useState({
         site_name: '',
@@ -94,6 +104,11 @@ export default function SettingsPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setPendingAction('GLOBAL');
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSubmit = async () => {
         setSaving(true);
         try {
             const res = await fetch('/api/admin/settings', {
@@ -116,6 +131,15 @@ export default function SettingsPage() {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleSectionSave = async (section: keyof Settings, data: any) => {
+        setPendingAction('SECTION');
+        setPendingSectionData({ section, data });
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSectionSave = async () => {
+        if (!pendingSectionData) return;
+        const { section, data } = pendingSectionData;
+
         setSaving(true);
         try {
             setSettings(prev => ({ ...prev, [section]: data }));
@@ -138,6 +162,16 @@ export default function SettingsPage() {
             showToast('Error saving settings', 'error');
         } finally {
             setSaving(false);
+            setPendingSectionData(null);
+        }
+    };
+
+    const handleConfirmPassword = () => {
+        setIsPasswordModalOpen(false);
+        if (pendingAction === 'GLOBAL') {
+            handleFinalSubmit();
+        } else if (pendingAction === 'SECTION') {
+            handleFinalSectionSave();
         }
     };
 
@@ -619,6 +653,15 @@ export default function SettingsPage() {
                     </AnimatePresence>
                 </div>
             </div>
+
+            <PasswordConfirmModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+                onConfirm={handleConfirmPassword}
+                title="Confirm Changes"
+                description="Please enter your admin password to save these settings."
+                actionLabel="Save Changes"
+            />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus } from 'lucide-react';
+import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 
@@ -76,6 +76,7 @@ const QuickBookingForm = ({
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
+        email: '',
         date: null as Date | null,
         time: null as Date | null,
         routeId: '',
@@ -115,6 +116,14 @@ const QuickBookingForm = ({
         const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Name is required';
 
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Please enter a valid email address';
+        }
+
         // Strict Phone Validation: Must start with + and include country code
         const phoneRegex = /^\+[0-9\s-]{10,}$/;
         if (!formData.phone.trim()) {
@@ -139,8 +148,6 @@ const QuickBookingForm = ({
             return;
         }
 
-
-
         setIsSubmitting(true);
 
         const selectedRoute = routes.find(r => r.id === formData.routeId);
@@ -153,10 +160,10 @@ const QuickBookingForm = ({
                 body: JSON.stringify({
                     name: formData.name,
                     phone: formData.phone,
+                    email: formData.email,
                     date: formData.date?.toISOString().split('T')[0],
                     pickup: selectedRoute ? selectedRoute.name.split(' → ')[0] : 'Custom',
                     dropoff: selectedRoute ? selectedRoute.name.split(' → ')[1] || selectedRoute.name : 'Custom',
-                    email: 'quick-booking@example.com',
                     time: formData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
                     vehicle: selectedVehicle ? selectedVehicle.name : 'Any',
                     passengers: selectedVehicle ? parseInt(selectedVehicle.capacity) : 1,
@@ -168,7 +175,7 @@ const QuickBookingForm = ({
 
             if (res.ok) {
                 setIsSubmitted(true);
-                setFormData({ name: '', phone: '', date: null, time: null, routeId: '', vehicleId: '' });
+                setFormData({ name: '', phone: '', email: '', date: null, time: null, routeId: '', vehicleId: '' });
                 setErrors({});
             } else {
                 throw new Error('Booking failed');
@@ -258,6 +265,22 @@ const QuickBookingForm = ({
                                 />
                             </div>
                             {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
+                        </div>
+
+                        <div className={`${styles.inputGroup} ${styles.fullWidthMobile}`}>
+                            <label className={styles.label}><Mail size={14} /> Email Address</label>
+                            <div className={styles.inputWrapper}>
+                                <Mail size={20} className={styles.icon} />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${errors.email ? styles.error : ''}`}
+                                />
+                            </div>
+                            {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
                         </div>
 
                         <div className={`${styles.inputGroup} ${styles.fullWidthMobile}`}>

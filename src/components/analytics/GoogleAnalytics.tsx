@@ -17,7 +17,7 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', '${gaId}');
+          gtag('config', ${JSON.stringify(gaId)});
         `}
             </Script>
         </>
