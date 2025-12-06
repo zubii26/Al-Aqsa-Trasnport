@@ -8,11 +8,15 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check env vars
+    // Sanitize env vars (remove potential whitespace from copy-paste)
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim();
+    const apiKey = process.env.CLOUDINARY_API_KEY?.trim();
+    const apiSecret = process.env.CLOUDINARY_API_SECRET?.trim();
+
     const missingVars = [];
-    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) missingVars.push('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME');
-    if (!process.env.CLOUDINARY_API_KEY) missingVars.push('CLOUDINARY_API_KEY');
-    if (!process.env.CLOUDINARY_API_SECRET) missingVars.push('CLOUDINARY_API_SECRET');
+    if (!cloudName) missingVars.push('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME');
+    if (!apiKey) missingVars.push('CLOUDINARY_API_KEY');
+    if (!apiSecret) missingVars.push('CLOUDINARY_API_SECRET');
 
     if (missingVars.length > 0) {
         return NextResponse.json(
@@ -29,14 +33,14 @@ export async function POST(request: NextRequest) {
         const signature = cloudinary.utils.api_sign_request({
             timestamp: timestamp,
             folder: folder,
-        }, process.env.CLOUDINARY_API_SECRET!);
+        }, apiSecret!);
 
         return NextResponse.json({
             signature,
             timestamp,
             folder,
-            cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-            apiKey: process.env.CLOUDINARY_API_KEY,
+            cloudName: cloudName,
+            apiKey: apiKey,
             success: true
         });
 
