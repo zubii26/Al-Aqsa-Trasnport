@@ -62,28 +62,41 @@ export default function GalleryPage() {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // Check file size (max 4MB for Vercel Serverless)
-        if (file.size > 4 * 1024 * 1024) {
-            showToast('Image size must be less than 4MB', 'error');
-            return;
-        }
-
         setUploading(true);
-        const formData = new FormData();
-        formData.append('file', file);
 
         try {
-            const res = await fetch('/api/upload', {
+            // 1. Get signature
+            const signRes = await fetch('/api/upload', {
                 method: 'POST',
-                body: formData
             });
-            const data = await res.json();
+            const signData = await signRes.json();
 
-            if (data.success) {
-                setFormData(prev => ({ ...prev, image: data.url }));
+            if (!signData.success) {
+                throw new Error(signData.error || 'Failed to get signature');
+            }
+
+            // 2. Upload to Cloudinary directly
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('api_key', signData.apiKey);
+            formData.append('timestamp', signData.timestamp.toString());
+            formData.append('signature', signData.signature);
+            formData.append('folder', signData.folder);
+
+            const uploadRes = await fetch(
+                `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`,
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+            const uploadData = await uploadRes.json();
+
+            if (uploadData.secure_url) {
+                setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
                 showToast('Image uploaded successfully', 'success');
             } else {
-                throw new Error(data.error);
+                throw new Error(uploadData.error?.message || 'Upload failed');
             }
         } catch (error) {
             console.error('Upload failed:', error);

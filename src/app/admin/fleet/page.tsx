@@ -394,25 +394,44 @@ export default function FleetPage() {
                                                         if (!file) return;
 
                                                         // Create a loading toast or state if needed
-                                                        const formData = new FormData();
-                                                        formData.append('file', file);
 
                                                         try {
-                                                            const res = await fetch('/api/upload', {
+                                                            // 1. Get signature
+                                                            const signRes = await fetch('/api/upload', {
                                                                 method: 'POST',
-                                                                body: formData
                                                             });
-                                                            const data = await res.json();
+                                                            const signData = await signRes.json();
 
-                                                            if (data.success) {
-                                                                setFormData(prev => ({ ...prev, image: data.url }));
+                                                            if (!signData.success) {
+                                                                throw new Error(signData.error || 'Failed to get signature');
+                                                            }
+
+                                                            // 2. Upload to Cloudinary
+                                                            const formData = new FormData();
+                                                            formData.append('file', file);
+                                                            formData.append('api_key', signData.apiKey);
+                                                            formData.append('timestamp', signData.timestamp.toString());
+                                                            formData.append('signature', signData.signature);
+                                                            formData.append('folder', signData.folder);
+
+                                                            const uploadRes = await fetch(
+                                                                `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`,
+                                                                {
+                                                                    method: 'POST',
+                                                                    body: formData
+                                                                }
+                                                            );
+                                                            const uploadData = await uploadRes.json();
+
+                                                            if (uploadData.secure_url) {
+                                                                setFormData(prev => ({ ...prev, image: uploadData.secure_url }));
                                                                 showToast('Image uploaded successfully', 'success');
                                                             } else {
-                                                                throw new Error(data.error);
+                                                                throw new Error(uploadData.error?.message || 'Upload failed');
                                                             }
                                                         } catch (error) {
                                                             console.error('Upload failed:', error);
-                                                            showToast('Failed to upload image', 'error');
+                                                            showToast('Failed to upload image: ' + (error instanceof Error ? error.message : 'Unknown error'), 'error');
                                                         }
                                                     }}
                                                     className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all"
