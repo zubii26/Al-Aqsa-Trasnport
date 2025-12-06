@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
+import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker'; // Add Import
 
 import styles from './QuickBookingForm.module.css';
 import { usePricing } from '@/context/PricingContext';
@@ -323,20 +324,12 @@ const QuickBookingForm = ({
                             <label className={styles.label}><Clock size={14} /> Pickup Time</label>
                             <div className={styles.inputWrapper}>
                                 <Clock size={20} className={styles.icon} />
-                                <DatePicker
-                                    selected={formData.time}
+                                <ClockTimePicker
+                                    date={formData.time}
                                     onChange={handleTimeChange}
-                                    showTimeSelect
-                                    showTimeSelectOnly
-                                    timeIntervals={30}
-                                    timeCaption="Select Time"
-                                    dateFormat="h:mm aa"
                                     placeholderText="Select Time"
                                     className={`${styles.input} ${errors.time ? styles.error : ''}`}
-                                    wrapperClassName={styles.datePickerWrapper}
-                                    popperPlacement="bottom-start"
-                                    popperClassName="time-grid-popper"
-                                    portalId="datepicker-portal"
+                                    align="right"
                                 />
                             </div>
                             {errors.time && <span className={styles.errorMessage}>{errors.time}</span>}
@@ -447,7 +440,7 @@ const QuickBookingForm = ({
                     </motion.form>
                 )}
             </AnimatePresence>
-        </motion.div>
+        </motion.div >
     );
 };
 

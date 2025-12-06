@@ -11,9 +11,16 @@ interface ClockTimePickerProps {
     onChange: (date: Date) => void;
     placeholderText?: string;
     className?: string;
+    align?: 'left' | 'right';
 }
 
-export default function ClockTimePicker({ date, onChange, placeholderText = "Select Time", className = "" }: ClockTimePickerProps) {
+export default function ClockTimePicker({
+    date,
+    onChange,
+    placeholderText = "Select Time",
+    className = "",
+    align = 'left'
+}: ClockTimePickerProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [view, setView] = useState<'hours' | 'minutes'>('hours');
 
@@ -95,7 +102,8 @@ export default function ClockTimePicker({ date, onChange, placeholderText = "Sel
             {/* Popup */}
             {isOpen && (
                 <div
-                    className="absolute top-full left-0 mt-2 z-50 w-[260px] p-3 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+                    className={`absolute top-full mt-2 z-50 w-[260px] p-3 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700 shadow-2xl animate-in fade-in zoom-in-95 duration-200
+                        ${align === 'right' ? 'right-0' : 'left-0'}`}
                 >
                     {/* Header: Time Display */}
                     <div className="flex items-center justify-center gap-1 mb-2">

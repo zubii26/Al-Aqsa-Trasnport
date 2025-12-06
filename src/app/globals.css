@@ -262,3 +262,55 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--secondary));
 }
+
+/* React Datepicker Customization - Compact Desktop */
+@media (min-width: 768px) {
+  .home-datepicker-popper .react-datepicker {
+    font-size: 0.85rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    font-family: var(--font-geist-sans), sans-serif !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__header {
+    background-color: rgba(15, 23, 42, 0.98) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-top: 6px !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__current-month {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+    color: #fbbf24 !important;
+    /* Gold */
+  }
+
+  .home-datepicker-popper .react-datepicker__day-name,
+  .home-datepicker-popper .react-datepicker__day,
+  .home-datepicker-popper .react-datepicker__time-name {
+    width: 1.7rem !important;
+    line-height: 1.7rem !important;
+    margin: 0.1rem !important;
+    color: white !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__day--selected,
+  .home-datepicker-popper .react-datepicker__day--keyboard-selected {
+    background-color: #fbbf24 !important;
+    /* Gold */
+    color: black !important;
+    font-weight: bold !important;
+    border-radius: 50% !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__day:hover {
+    background-color: rgba(251, 191, 36, 0.2) !important;
+    border-radius: 50% !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__navigation {
+    top: 8px !important;
+  }
+}
