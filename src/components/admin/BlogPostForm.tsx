@@ -427,8 +427,13 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                                 formData.append('signature', signData.signature);
                                                 formData.append('folder', signData.folder);
 
+                                                const uploadUrl = `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`;
+
+                                                // DEBUG: Show exactly what is being sent
+                                                alert(`DEBUG INFO:\nURL: ${uploadUrl}\nAPI Key: ${signData.apiKey}\nCloud Name: ${signData.cloudName}\nFile Name: ${file.name}`);
+
                                                 const uploadRes = await fetch(
-                                                    `https://api.cloudinary.com/v1_1/${signData.cloudName}/image/upload`,
+                                                    uploadUrl,
                                                     {
                                                         method: 'POST',
                                                         body: formData
