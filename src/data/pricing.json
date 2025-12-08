@@ -218,16 +218,16 @@
             "luggage": "2 Large Suitcases"
         },
         {
-            "id": "starex",
-            "name": "Hyundai Starex",
+            "id": "gmc",
+            "name": "GMC Yukon",
             "capacity": "7 Seater",
-            "multiplier": 1.2,
+            "multiplier": 1.5,
             "features": [
-                "Spacious Interior",
-                "AC Vents for Rear",
-                "Sliding Doors"
+                "Luxury Leather Seats",
+                "Premium Sound",
+                "Extra Legroom"
             ],
-            "luggage": "4 Large Suitcases"
+            "luggage": "5 Large Suitcases"
         },
         {
             "id": "staria",
@@ -242,16 +242,16 @@
             "luggage": "4 Large Suitcases"
         },
         {
-            "id": "gmc",
-            "name": "GMC Yukon",
+            "id": "starex",
+            "name": "Hyundai Starex",
             "capacity": "7 Seater",
-            "multiplier": 1.5,
+            "multiplier": 1.2,
             "features": [
-                "Luxury Leather Seats",
-                "Premium Sound",
-                "Extra Legroom"
+                "Spacious Interior",
+                "AC Vents for Rear",
+                "Sliding Doors"
             ],
-            "luggage": "5 Large Suitcases"
+            "luggage": "4 Large Suitcases"
         },
         {
             "id": "hiace",

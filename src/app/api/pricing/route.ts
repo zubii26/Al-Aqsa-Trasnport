@@ -53,6 +53,25 @@ export async function GET() {
             isActive: vehicle.isActive
         }));
 
+        // Enforce specific sort order
+        const sortOrder = ['camry', 'gmc', 'staria', 'starex', 'hiace', 'coaster'];
+        formattedVehicles.sort((a, b) => {
+            const indexA = sortOrder.indexOf(a.id.toLowerCase());
+            const indexB = sortOrder.indexOf(b.id.toLowerCase());
+
+            // If both are in the list, sort by index
+            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+
+            // If only A is in the list, it comes first
+            if (indexA !== -1) return -1;
+
+            // If only B is in the list, it comes first
+            if (indexB !== -1) return 1;
+
+            // If neither is in the list, keep original order (or sort alphabetically)
+            return 0;
+        });
+
         return NextResponse.json({
             routes: formattedRoutes,
             vehicles: formattedVehicles

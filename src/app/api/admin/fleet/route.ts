@@ -11,8 +11,26 @@ export async function GET() {
 
     try {
         const vehicles = await vehicleService.getVehicles();
-        // Sort by category asc
-        vehicles.sort((a, b) => a.category.localeCompare(b.category));
+
+        // Enforce specific sort order
+        const sortOrder = ['camry', 'gmc', 'staria', 'starex', 'hiace', 'coaster'];
+        vehicles.sort((a, b) => {
+            const indexA = sortOrder.indexOf(a.id.toLowerCase());
+            const indexB = sortOrder.indexOf(b.id.toLowerCase());
+
+            // If both are in the list, sort by index
+            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+
+            // If only A is in the list, it comes first
+            if (indexA !== -1) return -1;
+
+            // If only B is in the list, it comes first
+            if (indexB !== -1) return 1;
+
+            // If neither is in the list, keep original order (or sort alphabetically)
+            return a.category.localeCompare(b.category);
+        });
+
         return NextResponse.json(vehicles);
     } catch {
         return NextResponse.json({ error: 'Failed to fetch vehicles' }, { status: 500 });
