@@ -192,7 +192,7 @@ export default async function RootLayout({
                 </main>
                 <ClientLayoutWrapper>
                   <Footer />
-                  <GlobalClientComponents />
+                  <GlobalClientComponents contactSettings={settings.contact} />
                 </ClientLayoutWrapper>
                 <AdminSessionGuard />
               </PricingProvider>

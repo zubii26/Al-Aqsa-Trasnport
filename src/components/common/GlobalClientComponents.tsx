@@ -8,7 +8,14 @@ const ScrollToTop = dynamic(() => import('@/components/common/ScrollToTop'), { s
 const AIChatBox = dynamic(() => import('@/components/home/AIChatBox'), { ssr: false });
 const CookieConsent = dynamic(() => import('@/components/privacy/CookieConsent'), { ssr: false });
 
-export default function GlobalClientComponents() {
+interface GlobalClientComponentsProps {
+    contactSettings?: {
+        phone: string;
+        email: string;
+    };
+}
+
+export default function GlobalClientComponents({ contactSettings }: GlobalClientComponentsProps) {
     const pathname = usePathname();
     const isAdmin = pathname?.startsWith('/admin');
 
@@ -20,7 +27,10 @@ export default function GlobalClientComponents() {
         <>
             <WhatsAppButton />
             <ScrollToTop />
-            <AIChatBox />
+            <AIChatBox
+                contactPhone={contactSettings?.phone}
+                contactEmail={contactSettings?.email}
+            />
             <CookieConsent />
         </>
     );

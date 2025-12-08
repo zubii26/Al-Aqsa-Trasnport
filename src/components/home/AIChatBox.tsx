@@ -19,7 +19,12 @@ interface Message {
 
 import { useMenu } from '@/context/MenuContext';
 
-export default function AIChatBox() {
+interface AIChatBoxProps {
+    contactPhone?: string;
+    contactEmail?: string;
+}
+
+export default function AIChatBox({ contactPhone, contactEmail }: AIChatBoxProps) {
     const { isMenuOpen } = useMenu();
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
@@ -121,8 +126,11 @@ export default function AIChatBox() {
                 action: { label: "Book Now", url: "/booking" }
             },
             contact: {
-                text: "You can reach us 24/7 via WhatsApp at +92 326 060 0676 or email us at meharzubair703@gmail.com.",
-                action: { label: "WhatsApp Us", url: "https://wa.me/923260600676" }
+                text: `You can reach us 24/7 via WhatsApp at ${contactPhone || '+966 50 000 0000'} or email us at ${contactEmail || 'info@alaqsatransport.com'}.`,
+                action: {
+                    label: "WhatsApp Us",
+                    url: `https://wa.me/${(contactPhone || '+966 50 000 0000').replace(/\D/g, '')}`
+                }
             },
             vehicle: {
                 text: "We offer a wide range of vehicles including comfortable Sedans (Camry, Sonata), spacious SUVs (GMC, H1), and luxury Buses for groups.",

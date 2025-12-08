@@ -74,64 +74,64 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-amber-900 to-slate-900 border-b border-amber-500/30"
+                    className="relative overflow-hidden bg-slate-900/90 backdrop-blur-md border-b border-white/10 shadow-lg z-50"
                 >
-                    {/* Abstract Background Pattern */}
-                    <div className="absolute inset-0 opacity-20 pointer-events-none">
-                        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-30"></div>
-                        <div className="absolute -left-10 -top-10 w-40 h-40 bg-amber-500 rounded-full blur-[80px]" />
-                        <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500 rounded-full blur-[80px]" />
+                    {/* Glassy Glow Effects */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]" />
+                        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-amber-600/10 rounded-full blur-[80px]" />
                     </div>
 
                     <div className="container mx-auto px-4 py-3 relative z-10">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
 
                             {/* Offer Text */}
-                            <div className="flex items-center gap-3 text-center md:text-left">
-                                <div className="hidden md:flex bg-amber-500/20 p-2 rounded-full border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
-                                    <Percent size={20} className="text-amber-400" />
+                            <div className="flex items-center gap-4 text-center md:text-left">
+                                <div className="hidden md:flex bg-gradient-to-br from-amber-400 to-amber-600 p-2 rounded-xl shadow-lg shadow-amber-500/20 transform rotate-3">
+                                    <Percent size={20} className="text-slate-900" />
                                 </div>
-                                <div>
-                                    <div className="flex items-center justify-center md:justify-start gap-2 mb-0.5">
-                                        <Sparkles size={14} className="text-amber-300 animate-pulse" />
-                                        <span className="text-amber-300 text-xs font-bold tracking-wider uppercase">Limited Time Offer</span>
+                                <div className="flex flex-col">
+                                    <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30">
+                                            <Sparkles size={10} className="text-amber-300 animate-pulse" />
+                                            <span className="text-amber-300 text-[10px] font-bold tracking-widest uppercase leading-none pt-0.5">Limited Offer</span>
+                                        </div>
                                     </div>
-                                    <p className="text-white font-medium text-sm md:text-base">
-                                        Get <span className="text-amber-400 font-bold text-lg mx-1">
+                                    <p className="text-slate-200 font-medium text-sm md:text-base leading-tight">
+                                        Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 font-bold text-lg mx-1 drop-shadow-sm">
                                             {discount.type === 'percentage' ? `${discount.value}% OFF` : `${discount.value} SAR OFF`}
                                         </span>
-                                        on all premium rides!
+                                        on premium rides
                                     </p>
                                 </div>
                             </div>
 
                             {/* Countdown Timer */}
                             {timeLeft && (
-                                <div className="flex items-center gap-4 bg-black/20 px-4 py-2 rounded-lg border border-white/5 backdrop-blur-sm">
-                                    <div className="flex items-center gap-2 text-amber-200/80 text-xs font-medium uppercase tracking-wider mr-2">
-                                        <Clock size={14} />
-                                        <span>Ends In:</span>
+                                <div className="flex items-center gap-4 bg-white/5 px-5 py-2 rounded-2xl border border-white/10 shadow-inner">
+                                    <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider border-r border-white/10 pr-4 mr-1">
+                                        <Clock size={14} className="text-amber-500" />
+                                        <span>Ends In</span>
                                     </div>
                                     <div className="flex gap-3 text-center">
-                                        <div className="flex flex-col min-w-[30px]">
-                                            <span className="text-white font-bold text-lg leading-none">{timeLeft.days}</span>
-                                            <span className="text-[10px] text-slate-400 uppercase">Days</span>
-                                        </div>
-                                        <span className="text-amber-500/50 font-bold">:</span>
-                                        <div className="flex flex-col min-w-[30px]">
-                                            <span className="text-white font-bold text-lg leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
-                                            <span className="text-[10px] text-slate-400 uppercase">Hrs</span>
-                                        </div>
-                                        <span className="text-amber-500/50 font-bold">:</span>
-                                        <div className="flex flex-col min-w-[30px]">
-                                            <span className="text-white font-bold text-lg leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                                            <span className="text-[10px] text-slate-400 uppercase">Min</span>
-                                        </div>
-                                        <span className="text-amber-500/50 font-bold">:</span>
-                                        <div className="flex flex-col min-w-[30px]">
-                                            <span className="text-amber-400 font-bold text-lg leading-none">{String(timeLeft.seconds).padStart(2, '0')}</span>
-                                            <span className="text-[10px] text-slate-400 uppercase">Sec</span>
-                                        </div>
+                                        {[
+                                            { value: timeLeft.days, label: 'Days' },
+                                            { value: timeLeft.hours, label: 'Hrs' },
+                                            { value: timeLeft.minutes, label: 'Mins' },
+                                            { value: timeLeft.seconds, label: 'Secs' }
+                                        ].map((item, idx, arr) => (
+                                            <React.Fragment key={item.label}>
+                                                <div className="flex flex-col min-w-[32px]">
+                                                    <span className="text-white font-bold text-lg leading-none tabular-nums tracking-tight font-mono">
+                                                        {String(item.value).padStart(2, '0')}
+                                                    </span>
+                                                    <span className="text-[9px] text-slate-500 font-medium uppercase tracking-wider mt-0.5">{item.label}</span>
+                                                </div>
+                                                {idx < arr.length - 1 && (
+                                                    <span className="text-white/20 font-light text-lg relative -top-1">:</span>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
                                     </div>
                                 </div>
                             )}
@@ -139,10 +139,10 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
                             {/* Close Button */}
                             <button
                                 onClick={() => setIsVisible(false)}
-                                className="absolute right-2 top-2 md:relative md:right-auto md:top-auto p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                                className="absolute right-2 top-2 md:relative md:right-auto md:top-auto p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 group"
                                 aria-label="Close announcement"
                             >
-                                <X size={16} />
+                                <X size={16} className="group-hover:rotate-90 transition-transform duration-300" />
                             </button>
                         </div>
                     </div>

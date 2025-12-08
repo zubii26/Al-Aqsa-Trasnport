@@ -44,44 +44,46 @@ const TopBar = async () => {
                         )}
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        {contact.social.facebook && (
-                            <a href={contact.social.facebook} target="_blank" rel="noreferrer" className="hover:text-amber-400 hover:scale-110 transition-all duration-300">
-                                <Facebook size={14} />
-                            </a>
-                        )}
-                        {contact.social.instagram && (
-                            <a href={contact.social.instagram} target="_blank" rel="noreferrer" className="hover:text-amber-400 hover:scale-110 transition-all duration-300">
-                                <Instagram size={14} />
-                            </a>
-                        )}
-                        {contact.social.twitter && (
-                            <a href={contact.social.twitter} target="_blank" rel="noreferrer" className="hover:text-amber-400 hover:scale-110 transition-all duration-300">
-                                <Twitter size={14} />
-                            </a>
-                        )}
-                        {contact.social.linkedin && (
-                            <a href={contact.social.linkedin} target="_blank" rel="noreferrer" className="hover:text-amber-400 hover:scale-110 transition-all duration-300">
-                                <Linkedin size={14} />
-                            </a>
-                        )}
-                        {contact.social.tiktok && (
-                            <a href={contact.social.tiktok} target="_blank" rel="noreferrer" className="hover:text-amber-400 hover:scale-110 transition-all duration-300" aria-label="TikTok">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                    <div className="flex items-center gap-1">
+                        {[
+                            { icon: Facebook, href: contact.social.facebook, label: 'Facebook' },
+                            { icon: Instagram, href: contact.social.instagram, label: 'Instagram' },
+                            { icon: Twitter, href: contact.social.twitter, label: 'Twitter' },
+                            { icon: Linkedin, href: contact.social.linkedin, label: 'LinkedIn' },
+                            {
+                                icon: (props: any) => (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        {...props}
+                                    >
+                                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                                    </svg>
+                                ),
+                                href: contact.social.tiktok,
+                                label: 'TikTok'
+                            }
+                        ].map((social, index) => (
+                            social.href && (
+                                <a
+                                    key={index}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label={social.label}
+                                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 hover:text-amber-400 hover:scale-110 transition-all duration-300 group"
                                 >
-                                    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                                </svg>
-                            </a>
-                        )}
+                                    <social.icon size={15} className="group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
+                                </a>
+                            )
+                        ))}
                     </div>
                 </div>
             </div>
