@@ -35,6 +35,7 @@ export default function Footer() {
                                 <div className={styles.logoText}>
                                     <span className={styles.brandName}>Al Aqsa</span>
                                     <span className={styles.brandType}>Transport</span>
+                                    <span className={styles.brandNameArabic}>الأقصى لنقل المعتمرين</span>
                                 </div>
                             </Link>
                             <p className={styles.tagline}>{general.description}</p>

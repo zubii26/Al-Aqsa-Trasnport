@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // Force reload - Backend verified
-import { Inter, Playfair_Display, Open_Sans } from "next/font/google";
+import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "@/styles/datepicker.css";
@@ -33,6 +33,13 @@ const openSans = Open_Sans({
   display: 'swap',
 });
 
+const reemKufi = Reem_Kufi({
+  variable: "--font-reem-kufi",
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  display: 'swap',
+});
+
 
 
 
@@ -61,7 +68,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";
   // Combine settings keywords with optimized ones, removing duplicates
   const settingsKeywords = settings.seo.keywords ? settings.seo.keywords.split(',').map(k => k.trim()) : [];
-  const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords]));
+  const ARABIC_KEYWORDS = [
+    "نقل معتمرين",
+    "تاكسي مكة",
+    "تاكسي جدة",
+    "رحلات زيارة",
+    "شركة الأقصى للنقل",
+    "توصيل من مطار جدة الى مكة"
+  ];
+  const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords, ...ARABIC_KEYWORDS]));
 
   return {
     metadataBase: new URL('https://alaqsaumrahtransport.com'),
@@ -175,7 +190,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
 
-      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable}`}>
+      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable}`}>
         {settings.general.googleAnalyticsId && (
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}

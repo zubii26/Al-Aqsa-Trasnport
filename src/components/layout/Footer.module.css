@@ -48,6 +48,15 @@
     line-height: 1;
 }
 
+.brandNameArabic {
+    font-family: var(--font-reem-kufi), sans-serif;
+    font-size: 1rem;
+    color: hsl(var(--secondary));
+    margin-top: 0.25rem;
+    line-height: 1;
+    font-weight: 700;
+}
+
 .tagline {
     color: hsl(var(--muted-foreground));
     line-height: 1.6;

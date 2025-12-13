@@ -56,14 +56,14 @@ export default function Navbar() {
     return (
         <nav
             className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? 'bg-white/70 dark:bg-black/70 backdrop-blur-2xl shadow-md border-b border-black/5 dark:border-white/10 py-3'
-                : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-5'
+                ? 'bg-white/50 dark:bg-black/50 backdrop-blur-2xl shadow-md border-b border-black/5 dark:border-white/10 py-2'
+                : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-4 lg:py-5'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
                     <div className="relative flex items-center">
-                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[80px] h-[80px] lg:w-[100px] lg:h-[100px] transition-transform duration-300 group-hover:scale-105">
+                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${scrolled ? 'w-[60px] h-[60px] lg:w-[80px] lg:h-[80px]' : 'w-[80px] h-[80px] lg:w-[100px] lg:h-[100px]'} group-hover:scale-105`}>
                             <Image
                                 src="/logo.png"
                                 alt="Al Aqsa Transport"
@@ -72,9 +72,17 @@ export default function Navbar() {
                                 priority
                             />
                         </div>
-                        <div className="flex flex-col items-start space-y-1 lg:-space-y-0.5 ml-[90px] lg:ml-[120px]">
-                            <span className="text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
-                            <span className="text-sm lg:text-base font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none">Transport</span>
+                        <div className={`flex items-center gap-3 transition-all duration-300 ${scrolled ? 'ml-[70px] lg:ml-[90px]' : 'ml-[90px] lg:ml-[120px]'}`}>
+                            <div className="flex flex-col items-end">
+                                <span className="text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
+                                <span className="text-[0.65rem] lg:text-xs font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
+                            </div>
+                            <div className="w-px h-8 lg:h-10 bg-secondary/80"></div>
+                            <div className="flex flex-col items-start">
+                                <span className="font-[family-name:var(--font-reem-kufi)] text-lg lg:text-xl font-bold text-secondary leading-none">
+                                    النقل المعتمر الأقصى
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </Link>
@@ -139,9 +147,17 @@ export default function Navbar() {
                                 className="object-contain"
                             />
                         </div>
-                        <div className="flex flex-col items-start space-y-1">
-                            <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
-                            <span className="text-sm font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none">Transport</span>
+                        <div className="flex items-center gap-3">
+                            <div className="flex flex-col items-end">
+                                <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
+                                <span className="text-[0.65rem] font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
+                            </div>
+                            <div className="w-px h-8 bg-secondary/80"></div>
+                            <div className="flex flex-col items-start">
+                                <span className="font-[family-name:var(--font-reem-kufi)] text-lg font-bold text-secondary leading-none">
+                                    النقل المعتمر الأقصى
+                                </span>
+                            </div>
                         </div>
                     </Link>
                     {/* Close button is handled by the main toggle button which is fixed z-50 */}
