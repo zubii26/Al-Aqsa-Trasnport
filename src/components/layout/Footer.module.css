@@ -282,17 +282,25 @@
     font-weight: 700;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 4rem;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
 .langSep {
     color: hsl(var(--border));
     font-size: 0.8rem;
 }
 
 @media (max-width: 968px) {
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-
     .bottom {
         flex-direction: column;
         text-align: center;

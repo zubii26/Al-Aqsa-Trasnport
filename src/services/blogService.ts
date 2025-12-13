@@ -1,33 +1,63 @@
 import dbConnect from '@/lib/mongodb';
 import { BlogPost, type IBlogPost } from '@/models';
+import { staticBlogPosts } from '@/data/blog-posts';
 
 export const blogService = {
     async getPosts() {
         await dbConnect();
-        const posts = await BlogPost.find({}).sort({ date: -1 }).lean();
-        return posts.map(post => ({
-            ...post,
-            id: post.slug, // Use slug as ID for frontend compatibility if needed, or post._id.toString()
-            // The frontend seems to expect 'id' which might be slug or DB ID. 
-            // The previous implementation used doc.id which was the slug.
-            // So we should map slug to id.
-            date: post.date,
-            createdAt: post.createdAt,
-            updatedAt: post.updatedAt,
-        }));
-    },
+        const dbPosts = await BlogPost.find({}).sort({ date: -1 }).lean();
 
-    async getPostBySlug(slug: string) {
-        await dbConnect();
-        const post = await BlogPost.findOne({ slug }).lean();
-        if (!post) return null;
-        return {
+        // Map DB posts to standard format
+        const mappedDbPosts = dbPosts.map(post => ({
             ...post,
             id: post.slug,
             date: post.date,
             createdAt: post.createdAt,
             updatedAt: post.updatedAt,
-        };
+        }));
+
+        // Map static posts to match the interface
+        const dbSlugs = new Set(mappedDbPosts.map(p => p.slug));
+        const mappedStaticPosts = staticBlogPosts
+            .filter(post => !dbSlugs.has(post.slug))
+            .map(post => ({
+                ...post,
+                id: post.slug,
+                // Ensure dates are Date objects if they aren't already (though they are in the file)
+            }));
+
+        // Merge and sort by date descending
+        const allPosts = [...mappedDbPosts, ...mappedStaticPosts].sort((a, b) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+
+        return allPosts;
+    },
+
+    async getPostBySlug(slug: string) {
+        await dbConnect();
+        const post = await BlogPost.findOne({ slug }).lean();
+
+        if (post) {
+            return {
+                ...post,
+                id: post.slug,
+                date: post.date,
+                createdAt: post.createdAt,
+                updatedAt: post.updatedAt,
+            };
+        }
+
+        // Check static posts if not found in DB
+        const staticPost = staticBlogPosts.find(p => p.slug === slug);
+        if (staticPost) {
+            return {
+                ...staticPost,
+                id: staticPost.slug,
+            };
+        }
+
+        return null;
     },
 
     async createPost(data: Partial<IBlogPost>, user?: { name: string, id: string }) {

@@ -497,9 +497,126 @@
         grid-template-columns: 1fr;
     }
 
+    /* ... existing styles ... */
+
     .authorBio {
         flex-direction: column;
         text-align: center;
         padding: 2rem;
     }
+}
+
+/* Dark Mode Overrides */
+:global(.dark) .articleBody {
+    background: transparent;
+    /* Seamless blend */
+    color: #cbd5e1;
+    /* Slate 300 */
+}
+
+:global(.dark) .content {
+    color: #cbd5e1;
+}
+
+:global(.dark) .content h2,
+:global(.dark) .content h3 {
+    color: #f1f5f9;
+    /* Slate 100 */
+}
+
+:global(.dark) .content p,
+:global(.dark) .content li {
+    color: #cbd5e1;
+}
+
+:global(.dark) .content strong {
+    color: #f8fafc;
+}
+
+:global(.dark) .content blockquote {
+    background: #0f172a;
+    /* Slate 900 */
+    color: #e2e8f0;
+    border-left-color: #D4AF37;
+}
+
+:global(.dark) .content blockquote::before {
+    color: rgba(212, 175, 55, 0.2);
+}
+
+/* Drop Cap Dark Mode */
+:global(.dark) .content>p:first-of-type::first-letter {
+    color: #D4AF37;
+}
+
+:global(.dark) .tag {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+:global(.dark) .tag:hover {
+    background: #D4AF37;
+    color: #0f172a;
+}
+
+:global(.dark) .authorBio {
+    background: #0f172a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .authorName {
+    color: #f8fafc;
+}
+
+:global(.dark) .authorDescription {
+    color: #94a3b8;
+}
+
+:global(.dark) .sidebarWidget {
+    background: #0f172a;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark) .widgetTitle {
+    color: #f8fafc;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .shareLink {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+
+:global(.dark) .shareLink:hover {
+    background: #D4AF37;
+    color: #0f172a;
+    border-color: #D4AF37;
+}
+
+:global(.dark) .relatedTitle {
+    color: #f8fafc;
+}
+
+:global(.dark) .relatedCardTitle {
+    color: #f1f5f9;
+}
+
+:global(.dark) .relatedCard:hover .relatedCardTitle {
+    color: #D4AF37;
+}
+
+:global(.dark) .relatedSection {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .backLink {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+:global(.dark) .backLink:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
 }

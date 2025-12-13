@@ -10,10 +10,10 @@ import GlassCard from '@/components/ui/GlassCard';
 
 export async function generateMetadata() {
     return {
-        title: "Umrah Transport Services | Jeddah Airport Taxi & Ziarah Tours",
-        description: "Comprehensive Umrah transport services: Jeddah airport to Makkah taxi, Makkah to Madinah transfers, VIP pilgrim transport, and guided Ziarah tours.",
+        title: "Best Umrah Transport Services | Jeddah Airport to Makkah Taxi",
+        description: "Book the top-rated Umrah transport services in Saudi Arabia. We provide luxury GMC Yukon transfers, reliable Jeddah airport pickup, and comfortable Makkah to Madinah bus options.",
         alternates: {
-            canonical: 'https://alaqsa-transport.com/services',
+            canonical: 'https://alaqsaumrahtransport.com/services',
         },
     };
 }
@@ -39,27 +39,27 @@ const processSteps = [
 export default function ServicesPage() {
     const services = [
         {
-            title: 'Pilgrim Transport Makkah and Madinah',
-            description: 'Experience the highest level of comfort with our modern fleet of air-conditioned buses and GMC Yukons. Perfect for relaxing after your spiritual duties.',
+            title: 'Makkah to Madinah Transport',
+            description: 'Travel between Holy Cities in our luxury fleet. Choose from spacious GMC Yukons or comfortable Hyundai H1 vans for a relaxing 4-hour journey.',
             icon: <Bus size={32} />,
+            link: '/booking?service=transfer' // Fixed link query
+        },
+        {
+            title: 'Jeddah Airport to Makkah Taxi',
+            description: 'Reliable and punctual airport transfers. Our driver waits for you at King Abdulaziz International Airport (KAIA) for a seamless start to your Umrah.',
+            icon: <MapPin size={32} />,
+            link: '/booking?service=airport'
+        },
+        {
+            title: 'VIP Luxury Umrah Transport',
+            description: 'Experience premium comfort with our VIP service. Top-of-the-line vehicles (GMC Yukon XL) and private chauffeurs for maximum privacy and ease.',
+            icon: <Users size={32} />,
             link: '/booking?service=luxury'
         },
         {
-            title: 'Jeddah Airport to Makkah Transport',
-            description: 'Seamless transfers between Makkah, Madinah, and Jeddah airports. We track your arrival to ensure punctual pickup and smooth journey.',
-            icon: <MapPin size={32} />,
-            link: '/booking?service=transfer'
-        },
-        {
-            title: 'Group Umrah Transport Packages',
-            description: 'Tailored solutions for families and large groups. We provide spacious vehicles and coordinate logistics so you can focus on your worship.',
-            icon: <Users size={32} />,
-            link: '/booking?service=group'
-        },
-        {
-            title: '24/7 Support',
-            description: 'Our multilingual support team is always available to assist you. From booking inquiries to on-ground assistance, we are here for you.',
-            icon: <Headphones size={32} />,
+            title: 'Ziarah Tours & Daily Rentals',
+            description: 'Explore historical sites in Makkah and Madinah with our flexible hourly rental packages. Visit Jabal Al-Nour, Quba Mosque, and more.',
+            icon: <Headphones size={32} />, // Keeping Headphones for support/custom requests context or switch to MapPin? Sticking to existing structure
             link: '/contact'
         }
     ];

@@ -45,36 +45,54 @@ export const viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
+  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers to Makkah, luxury GMC Yukon for Makkah to Madinah taxi, and VIP Ziarah tours. Trusted by thousands of pilgrims.";
+  const OPTIMIZED_KEYWORDS = [
+    "top 10 umrah transport services in Saudi Arabia",
+    "umrah services in Saudi Arabia",
+    "best umrah transport in Saudi Arabia",
+    "luxury umrah transport",
+    "Makkah to Madinah transport",
+    "Jeddah airport to Makkah transport",
+    "VIP umrah transport services",
+    "Jeddah airport taxi",
+    "Makkah taxi service"
+  ];
+
+  const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";
+  // Combine settings keywords with optimized ones, removing duplicates
+  const settingsKeywords = settings.seo.keywords ? settings.seo.keywords.split(',').map(k => k.trim()) : [];
+  const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords]));
+
   return {
     metadataBase: new URL('https://alaqsaumrahtransport.com'),
     title: {
-      default: settings.seo.defaultTitle,
-      template: `%s | ${settings.general.siteName}`
+      default: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia | Jeddah to Makkah Taxi",
+      template: `%s | ${siteName}`
     },
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
-    description: settings.seo.defaultDescription,
-    keywords: settings.seo.keywords.split(',').map(k => k.trim()),
-    authors: [{ name: settings.general.siteName }],
-    creator: settings.general.siteName,
-    publisher: settings.general.siteName,
+    description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
+    keywords: allKeywords,
+    authors: [{ name: siteName }],
+    creator: siteName,
+    publisher: siteName,
     formatDetection: {
       email: false,
       address: false,
       telephone: false,
     },
     openGraph: {
-      title: settings.seo.defaultTitle,
-      description: settings.seo.defaultDescription,
+      title: settings.seo.defaultTitle || "Best Umrah Transport Services | Makkah to Madinah Taxi",
+      description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
       url: "https://alaqsaumrahtransport.com",
-      siteName: settings.general.siteName,
+      siteName: siteName,
       images: [
         {
           url: "/images/og-image.jpg",
           width: 1200,
           height: 630,
-          alt: `${settings.general.siteName} Fleet`,
+          alt: `${siteName} Luxury Fleet`,
         },
       ],
       locale: "en_US",
@@ -82,8 +100,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: settings.seo.defaultTitle,
-      description: settings.seo.defaultDescription,
+      title: settings.seo.defaultTitle || "Reliable Umrah Transport Services",
+      description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
       images: ["/images/twitter-image.jpg"],
     },
     robots: {

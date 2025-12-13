@@ -17,20 +17,21 @@ const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'))
 
 export async function generateMetadata() {
   return {
-    title: "Al Aqsa Umrah | Umrah Taxi Service & Car Rental",
-    description: "Book reliable Umrah taxi service in Saudi Arabia. Premium GMC Yukon, Toyota Hiace, and bus rentals for Makkah to Madinah taxi, Jeddah airport transfers, and Ziarah tours.",
+    title: "Top 10 Umrah Transport Services in Saudi Arabia | Makkah to Madinah Taxi",
+    description: "Experience the best Umrah transport in Saudi Arabia. We offer luxury GMC Yukons, Jeddah airport to Makkah transport, and VIP services. Book your safe & comfortable ride today.",
     alternates: {
-      canonical: 'https://alaqsa-transport.com',
+      canonical: 'https://alaqsaumrahtransport.com',
     },
   };
 }
 
 export default async function Home() {
   const heroSection = await getSectionContent('home-hero');
-  const heroTitle = heroSection?.title || "Premium Umrah Taxi Service & Car Rental in Saudi Arabia";
-  const heroSubtitle = heroSection?.subtitle || "Your trusted partner for Makkah Madinah Taxi Service and reliable Airport to Haram Taxi transfers. Experience comfort and care.";
+  // SEO Optimized Fallbacks
+  const heroTitle = heroSection?.title || "Top-Rated Umrah Transport Services in Saudi Arabia";
+  const heroSubtitle = heroSection?.subtitle || "Your trusted partner for luxury Makkah to Madinah transport and reliable Jeddah airport taxi transfers. Experience VIP comfort for your spiritual journey.";
   const heroImage = getSectionImage(heroSection, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
-  const ctaText = getCustomField(heroSection, 'cta_text') || "Book your Umrah transport today";
+  const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Royal Ride";
   const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
 
   return (

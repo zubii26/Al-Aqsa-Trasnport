@@ -135,5 +135,6 @@
 
     .grid {
         grid-template-columns: 1fr;
+        /* Mobile: 1 col */
     }
 }
