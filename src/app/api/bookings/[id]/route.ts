@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { updateBookingStatus, deleteBooking } from '@/lib/db';
+import { requireRole } from '@/lib/server-auth';
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    if (!await requireRole(['ADMIN', 'MANAGER', 'OPERATIONAL_MANAGER'])) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
     const { status } = await request.json();
     const updated = await updateBookingStatus(id, status);
@@ -10,6 +14,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    if (!await requireRole(['ADMIN', 'MANAGER'])) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
 
     // Check booking status first

@@ -52,6 +52,10 @@ export async function POST(request: Request) {
             user: user.name || 'Admin', // Use actual user name
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/booking');
+        revalidatePath('/admin/pricing');
+
         return NextResponse.json(updatedPrice);
     } catch {
         return NextResponse.json({ error: 'Failed to update price' }, { status: 500 });

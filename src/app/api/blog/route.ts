@@ -42,6 +42,10 @@ export async function POST(request: Request) {
             isPublished: body.isPublished !== undefined ? body.isPublished : true,
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/blog');
+        revalidatePath('/admin/blog');
+
         return NextResponse.json(post);
     } catch (error) {
         console.error('Failed to create blog post:', error);

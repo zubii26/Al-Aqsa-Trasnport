@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { settingsService } from '@/services/settingsService';
 import { auditLogService } from '@/services/auditLogService';
-import { validateRequest } from '@/lib/server-auth';
+import { requireRole } from '@/lib/server-auth';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function GET() {
-    if (!await validateRequest()) {
+    if (!await requireRole(['ADMIN', 'MANAGER'])) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     try {
@@ -24,8 +24,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    if (!await validateRequest()) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const user = await requireRole(['ADMIN']);
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403 });
     }
 
     try {
@@ -61,6 +62,7 @@ export async function POST(request: Request) {
 
         // Invalidate cache
         revalidatePath('/admin/settings');
+        revalidatePath('/', 'layout'); // Clears everything using layout (header/footer)
         // revalidateTag('settings');
 
         // Audit Log

@@ -2,8 +2,15 @@ import { getBookings, getFleet } from '@/lib/db';
 import { getLogs } from '@/lib/logger';
 import { routeService } from '@/services/routeService';
 import DashboardClient from './DashboardClient';
+import { requireRole } from '@/lib/server-auth';
+import { redirect } from 'next/navigation';
 
 export default async function AdminDashboard() {
+    const user = await requireRole(['ADMIN', 'MANAGER', 'OPERATIONAL_MANAGER']);
+    if (!user) {
+        redirect('/admin/login');
+    }
+
     const bookings = await getBookings();
     const fleet = await getFleet();
     const logs = await getLogs();

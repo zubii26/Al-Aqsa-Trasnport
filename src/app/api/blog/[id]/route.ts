@@ -45,6 +45,11 @@ export async function PUT(
             isPublished: body.isPublished,
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/blog');
+        revalidatePath(`/blog/${id}`);
+        revalidatePath('/admin/blog');
+
         return NextResponse.json(post);
     } catch {
         return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
@@ -63,6 +68,10 @@ export async function DELETE(
 
     try {
         await blogService.deletePost(id);
+
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/blog');
+        revalidatePath('/admin/blog');
 
         return NextResponse.json({ success: true });
     } catch {

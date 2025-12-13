@@ -68,6 +68,10 @@ export async function POST(request: Request) {
             user: user.name || 'Admin',
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/fleet');
+        revalidatePath('/admin/fleet');
+
         return NextResponse.json(vehicle);
     } catch {
         return NextResponse.json({ error: 'Failed to create vehicle' }, { status: 500 });
@@ -113,6 +117,10 @@ export async function PUT(request: Request) {
             user: user.name || 'Admin',
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/fleet');
+        revalidatePath('/admin/fleet');
+
         return NextResponse.json(vehicle);
     } catch {
         return NextResponse.json({ error: 'Failed to update vehicle' }, { status: 500 });
@@ -143,6 +151,10 @@ export async function DELETE(request: Request) {
             details: `Deleted vehicle ID: ${id}`,
             user: user.name || 'Admin',
         });
+
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/fleet');
+        revalidatePath('/admin/fleet');
 
         return NextResponse.json({ success: true });
     } catch {

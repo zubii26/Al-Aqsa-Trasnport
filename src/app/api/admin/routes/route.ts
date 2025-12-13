@@ -52,6 +52,10 @@ export async function POST(request: Request) {
             user: user.name || 'Admin',
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/booking');
+        revalidatePath('/admin/routes');
+
         return NextResponse.json(route);
     } catch {
         return NextResponse.json({ error: 'Failed to create route' }, { status: 500 });
@@ -93,6 +97,10 @@ export async function PUT(request: Request) {
             user: user.name || 'Admin',
         });
 
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/booking');
+        revalidatePath('/admin/routes');
+
         return NextResponse.json(route);
     } catch {
         return NextResponse.json({ error: 'Failed to update route' }, { status: 500 });
@@ -123,6 +131,10 @@ export async function DELETE(request: Request) {
             details: `Deleted route ID: ${id}`,
             user: user.name || 'Admin',
         });
+
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/booking');
+        revalidatePath('/admin/routes');
 
         return NextResponse.json({ success: true });
     } catch {
