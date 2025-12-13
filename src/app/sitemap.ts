@@ -21,13 +21,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Dynamic Blog Posts
-    const posts = await blogService.getPosts();
-    const blogRoutes = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: new Date(post.updatedAt || post.date),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-    }));
+    let blogRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const posts = await blogService.getPosts();
+        blogRoutes = posts.map((post) => ({
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: new Date(post.updatedAt || post.date),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.warn('Failed to fetch blog posts for sitemap:', error);
+        // Continue without blog routes to ensure build succeeds
+    }
 
     return [...routes, ...blogRoutes];
 }

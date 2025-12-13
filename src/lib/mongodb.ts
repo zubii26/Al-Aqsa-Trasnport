@@ -2,10 +2,12 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+
 if (!MONGODB_URI) {
-    throw new Error(
-        'Please define the MONGODB_URI environment variable inside .env.local'
-    );
+    // Warn only in development, or do nothing until connection is attempted
+    if (process.env.NODE_ENV === 'development') {
+        console.warn('MONGODB_URI is not defined in environment variables');
+    }
 }
 
 interface MongooseCache {

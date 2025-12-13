@@ -19,7 +19,7 @@ export async function GET() {
         const titles = posts.map(p => p.title);
 
         const duplicateTitles = titles.filter((item, index) => titles.indexOf(item) !== index);
-        const titleMap = {};
+        const titleMap: Record<string, string[]> = {};
         posts.forEach(p => {
             if (!titleMap[p.title]) titleMap[p.title] = [];
             titleMap[p.title].push(p.slug);
