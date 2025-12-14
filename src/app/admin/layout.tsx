@@ -103,19 +103,11 @@ export default function AdminLayout({
         <div className={styles.container}>
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>
-                    <div className="flex flex-col items-start gap-1 py-2">
-                        <div className="relative w-[150px] h-[150px]">
-                            <Image
-                                src="/logo.png"
-                                alt="Al Aqsa Admin"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
-                        </div>
-                        <div className="flex flex-col items-start text-left ml-2">
+                    <div className="flex flex-col items-start gap-1 py-4 px-2">
+                        <div className="flex flex-col items-start text-left">
                             <span className="text-2xl font-bold text-secondary">Al Aqsa</span>
                             <span className="text-sm font-bold text-[var(--admin-fg)] tracking-[0.15em] uppercase">Transport</span>
+                            <span className="text-lg font-bold text-secondary mt-1 font-[family-name:var(--font-reem-kufi)]">الأقصى لنقل المعتمرين</span>
                         </div>
                     </div>
                 </div>
