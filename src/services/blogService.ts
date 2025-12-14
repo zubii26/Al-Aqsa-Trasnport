@@ -85,11 +85,45 @@ export const blogService = {
 
     async updatePost(slug: string, data: Partial<IBlogPost>, user?: { name: string, id: string }) {
         await dbConnect();
-        const updatedPost = await BlogPost.findOneAndUpdate(
+
+        let updatedPost = await BlogPost.findOneAndUpdate(
             { slug },
             data,
             { new: true }
         ).lean();
+
+        // If not found in DB, check static posts and promote to DB
+        if (!updatedPost) {
+            const staticPost = staticBlogPosts.find(p => p.slug === slug);
+
+            if (staticPost) {
+                try {
+                    // Create a new document using static data + updates
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const { _id, ...staticContent } = staticPost; // Remove static ID
+
+                    const newPostData = {
+                        ...staticContent,
+                        ...data,
+                        // Ensure dates are valid Date objects
+                        date: data.date ? new Date(data.date) : new Date(staticContent.date),
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    };
+
+                    const newPost = await BlogPost.create(newPostData);
+                    updatedPost = newPost.toObject();
+                } catch (error) {
+                    console.error('[BlogService] Failed to promote static post to database:', error);
+                    // Check for duplicate key error (if slug collision happened somehow)
+                    if (error && typeof error === 'object' && 'code' in error && error.code === 11000) {
+                        throw new Error('Slug already exists');
+                    }
+                    throw error;
+                }
+            }
+        }
+
         if (!updatedPost) return null;
 
         if (user) {
@@ -97,7 +131,7 @@ export const blogService = {
             await auditLogService.log({
                 action: 'UPDATE',
                 entity: 'BlogPost',
-                entityId: slug,
+                entityId: updatedPost.slug,
                 details: `Updated blog post: ${updatedPost.title}`,
                 user: user.name
             });

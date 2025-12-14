@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { blogService } from '@/services/blogService';
 import { validateRequest } from '@/lib/server-auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const posts = await blogService.getPosts();
