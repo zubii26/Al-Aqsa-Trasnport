@@ -39,24 +39,27 @@
     --ring: 222 47% 11%;
 
     --radius: 0.75rem;
-    --max-width: 1280px;
-    --container-padding: 1rem;
+    --max-width: 1440px;
+    --container-padding: 2rem;
     /* Increased for mobile breathability */
 
-    /* Glassmorphism - Light (Updated per brief) */
-    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-    --glass-blur: 12px;
+    /* Glassmorphism - Light (Refined & Premium) */
+    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.45));
+    --glass-border: rgba(255, 255, 255, 0.55);
+    --glass-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 10px 15px -3px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+    --glass-blur: 16px;
 
     /* Gradients */
-    --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   }
 
   .dark {
     /* Core Palette - Deep & Elegant (Dark Mode) */
     --background: 222 47% 11%;
-    /* #020617 */
+    /* #020617 - Deep Navy */
     --foreground: 210 40% 98%;
 
     --card: 222 47% 11%;
@@ -70,7 +73,7 @@
     --primary-foreground: 222 47.4% 11.2%;
 
     --secondary: 45 93% 47%;
-    /* #fbbf24 */
+    /* #fbbf24 - Amber/Gold */
     --secondary-foreground: 222 47.4% 11.2%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -86,11 +89,14 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
 
-    /* Glassmorphism - Dark (Updated per brief) */
-    --glass-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.4));
+    /* Glassmorphism - Dark (Premium Depth) */
+    --glass-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.6));
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    --glass-blur: 12px;
+    --glass-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 10px 25px -3px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    --glass-blur: 16px;
 
     /* Gradients */
     --bg-gradient: linear-gradient(to bottom, #020617, #0f172a);
@@ -108,6 +114,13 @@
     background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: hsla(var(--secondary), 0.3);
+    color: inherit;
   }
 
   * {

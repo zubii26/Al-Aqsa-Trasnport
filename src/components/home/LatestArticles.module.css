@@ -138,3 +138,15 @@
         /* Mobile: 1 col */
     }
 }
+
+/* Wide Screen Optimization */
+@media (min-width: 1600px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+    }
+
+    .section {
+        padding: 8rem 0;
+    }
+}

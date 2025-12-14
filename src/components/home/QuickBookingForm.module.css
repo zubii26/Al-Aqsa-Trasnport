@@ -176,11 +176,15 @@
 
 .input:focus {
     border-color: #fbbf24;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(15, 23, 42, 0.6);
     box-shadow:
         0 0 0 1px #fbbf24,
-        0 0 20px rgba(251, 191, 36, 0.15);
-    transform: translateY(-1px);
+        0 0 30px rgba(251, 191, 36, 0.2);
+    transform: translateY(-2px);
+}
+
+.inputWrapper:focus-within .input {
+    background: rgba(15, 23, 42, 0.8);
 }
 
 /* Error Styles */
@@ -256,6 +260,21 @@
     position: relative;
     overflow: hidden;
     margin-top: 1rem;
+    z-index: 5;
+}
+
+.submitBtn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    mix-blend-mode: overlay;
+}
+
+.submitBtn:hover::after {
+    opacity: 1;
 }
 
 .skeletonShimmer {
@@ -461,4 +480,71 @@
     right: auto;
     width: 100%;
     margin-top: 1.5rem;
+}
+
+/* 2K & 4K Optimization */
+@media (min-width: 1600px) {
+    .container {
+        padding: 2.5rem;
+        max-width: 800px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .input {
+        height: 56px;
+        font-size: 1.05rem;
+    }
+
+    .label {
+        font-size: 0.8rem;
+    }
+
+    .submitBtn {
+        height: 64px;
+        font-size: 1.25rem;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        padding: 3.5rem;
+        max-width: 900px;
+        border-radius: 32px;
+    }
+
+    .form {
+        gap: 1.5rem;
+    }
+
+    .inputGroup {
+        gap: 0.6rem;
+    }
+
+    .title {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .input {
+        height: 64px;
+        font-size: 1.15rem;
+        border-radius: 16px;
+    }
+
+    .select {
+        background-position: right 1.5rem center;
+    }
+
+    .submitBtn {
+        height: 72px;
+        font-size: 1.4rem;
+        border-radius: 16px;
+    }
 }

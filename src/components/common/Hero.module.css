@@ -92,7 +92,7 @@
 
 .title {
     font-family: var(--font-playfair);
-    font-size: clamp(4rem, 8vw, 7rem);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
@@ -262,24 +262,20 @@
         justify-content: space-between;
         align-items: center;
         gap: 2rem;
-        /* Reduced gap */
         padding-bottom: 2rem;
     }
 
     .twoColumn .textContent {
         flex: 1 1 auto;
         max-width: 650px;
-        /* Increased max-width for text */
         min-width: 0;
-        padding-left: 3rem;
-        /* Added padding left */
+        padding-left: 2rem;
     }
 
     .twoColumn .subtitle {
         margin-left: 0;
         margin-right: 0;
         font-size: 1.25rem;
-        /* Slightly larger subtitle */
         max-width: 90%;
     }
 
@@ -292,13 +288,10 @@
         flex: 0 0 auto;
         display: flex;
         justify-content: flex-end;
-        width: 700px;
-        /* Widened to match screenshot */
+        width: 600px;
         max-width: 100%;
         perspective: 1000px;
-        /* For 3D effects if needed */
         padding-right: 2rem;
-        /* Added padding right */
     }
 
     .twoColumn .childrenWrapper {
@@ -308,21 +301,56 @@
     }
 }
 
-@media (min-width: 1024px) and (max-width: 1280px) {
+/* Large Laptop / Desktop */
+@media (min-width: 1366px) {
+    .twoColumn .textContent {
+        max-width: 700px;
+    }
+
+    .twoColumn .childrenContainer {
+        width: 650px;
+    }
+}
+
+/* Wide / Ultra-Wide Screens */
+@media (min-width: 1600px) {
     .twoColumn {
         gap: 4rem;
     }
 
-    .twoColumn .childrenContainer {
-        width: 600px;
+    .title {
+        font-size: 4rem;
     }
 
     .twoColumn .textContent {
-        max-width: 500px;
+        max-width: 800px;
+        padding-left: 0;
+    }
+
+    .twoColumn .childrenContainer {
+        width: 700px;
+        padding-right: 0;
+    }
+}
+
+/* 1920px Full HD & Beyond */
+@media (min-width: 1920px) {
+    .twoColumn {
+        max-width: 1800px;
+        /* Use more width on very large screens */
+        margin: 0 auto;
     }
 
     .title {
-        font-size: 3.5rem;
+        font-size: 4.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .twoColumn .textContent {
+        max-width: 900px;
     }
 }
 

@@ -80,7 +80,7 @@ export default function Footer() {
                             <li><Link href="/contact">Contact</Link></li>
                             <li>
                                 <div className="mt-4">
-                                    <GlassButton href="/booking" className={styles.bookBtn} size="sm">
+                                    <GlassButton href="/booking" className={styles.bookBtn} size="sm" variant="secondary">
                                         Book Now
                                     </GlassButton>
                                 </div>

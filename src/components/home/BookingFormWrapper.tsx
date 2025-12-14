@@ -42,7 +42,7 @@ async function BookingFormFetcher() {
 
 export default function BookingFormWrapper() {
     return (
-        <div className="hidden md:block w-full max-w-md">
+        <div className="hidden md:block w-full">
             <Suspense fallback={<div className="w-full h-[400px] bg-white/10 backdrop-blur-md rounded-2xl animate-pulse" />}>
                 <BookingFormFetcher />
             </Suspense>

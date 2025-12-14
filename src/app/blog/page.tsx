@@ -22,16 +22,23 @@ const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Experience', 'Value', 'Spiri
 export default async function BlogPage() {
     const dbPosts = await blogService.getPosts();
 
-    // Map to match component interface (convert Date to string)
-    const posts = dbPosts.map(post => ({
-        ...post,
-        id: post.slug, // Ensure ID is slug
+    // Map to match component interface (convert Date to string) and ensure serializable data
+    const posts = dbPosts.map((post: any) => ({
+        id: post.slug,
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.content,
+        category: post.category || 'General',
         date: new Date(post.date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
         }),
-        // Ensure other fields match if needed
+        readTime: post.readTime || '5 min read',
+        image: post.image,
+        alt: post.alt || post.title,
+        author: post.author || 'Al Aqsa Transport',
+        tags: post.tags || [],
     }));
 
     // Sort by date desc (using the original date object from dbPosts for sorting if needed, or just trust the service sort)
