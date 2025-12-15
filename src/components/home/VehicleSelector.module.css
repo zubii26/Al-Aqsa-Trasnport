@@ -39,14 +39,14 @@
 }
 
 /* Hover State - "Lift" Effect */
+/* Hover State - "Lift" Effect */
 .card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow:
-        0 15px 30px -5px rgba(0, 0, 0, 0.08),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: rgba(212, 175, 55, 0.3);
-    /* Gold hint on border */
-    background: linear-gradient(145deg, #ffffff, #f8fafc);
+        0 20px 40px -5px rgba(0, 0, 0, 0.1),
+        0 10px 20px -5px rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.6);
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
 }
 
 /* Selected State - "Gold Halo" */
@@ -85,12 +85,13 @@
     color: #64748b;
 }
 
-/* Selected Icon - Gold Plated */
+/* Selected Icon - Gold Plated with Navy Icon */
 .selected .iconWrapper {
     background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
+    color: #0F172A;
+    /* Contrast Navy Blue */
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .info {
