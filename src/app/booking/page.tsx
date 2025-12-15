@@ -38,6 +38,7 @@ export default function BookingPage() {
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false); // Moved up
     const [errors, setErrors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
     const wizardRef = useRef<HTMLDivElement>(null);
@@ -242,7 +243,7 @@ export default function BookingPage() {
         </motion.div>
     );
 
-    const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
+
 
     const renderStep2 = () => {
         const selectedVehicle = getSelectedVehicle();
