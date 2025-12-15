@@ -532,7 +532,8 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 1.25rem;
-    padding: 1.25rem;
+    padding: 1rem;
+    /* Reduced from 1.25rem */
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -589,7 +590,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    /* Reduced from 1.5rem */
 }
 
 .cardIcon {
@@ -642,7 +644,8 @@
     font-size: 1.25rem;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+    /* Reduced from 0.5rem */
     font-family: var(--font-playfair), serif;
     /* Premium Font */
 }
@@ -654,7 +657,8 @@
 .cardSubtitle {
     color: #64748b;
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    /* Reduced from 1rem */
 }
 
 :global(.dark) .cardSubtitle {
@@ -664,18 +668,21 @@
 .vehicleFeatures {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1rem;
+    gap: 0.5rem;
+    /* Reduced from 0.75rem */
+    margin-top: 0.75rem;
+    /* Reduced from 1rem */
 }
 
 .featureItem {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #64748b;
     background: #f1f5f9;
-    padding: 0.4rem 0.8rem;
+    padding: 0.3rem 0.6rem;
+    /* Reduced padding */
     border-radius: 100px;
 }
 
