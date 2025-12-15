@@ -7,7 +7,7 @@ import FadeIn from '@/components/common/FadeIn';
 
 export default function Features() {
     return (
-        <AnimatedSection className="py-24 relative overflow-hidden">
+        <AnimatedSection className="py-12 md:py-16 relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
                 <div className="absolute top-1/4 -left-64 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -16,8 +16,8 @@ export default function Features() {
 
             <div className="container">
                 <FadeIn>
-                    <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 font-playfair">
-                        Why Choose <span className="text-gradient-gold">Al Aqsa Transport?</span>
+                    <h2 className="text-4xl md:text-5xl font-bold text-center mb-10 font-playfair">
+                        Why Choose Al Aqsa for <span className="text-gradient-gold">Umrah Transport?</span>
                     </h2>
                 </FadeIn>
 
@@ -26,9 +26,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Shield size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Safe & Reliable</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Safe Umrah Transport</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Licensed drivers and well-maintained vehicles ensuring your safety. The most reliable Umrah transport for your peace of mind.
+                            Officially licensed drivers & well-maintained vehicles. The most trusted choice for safe Makkah to Madinah transport.
                         </p>
                     </GlassCard>
 
@@ -36,9 +36,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Clock size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">24/7 Umrah Taxi Service</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">24/7 Airport Transfers</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            We value your time. Our 24/7 service tracks your flight to ensure timely pickups for your Jeddah Airport to Makkah transfer.
+                            We track your flight to ensure timely pickups. Reliable Jeddah Airport to Makkah taxi service available around the clock.
                         </p>
                     </GlassCard>
 
@@ -46,9 +46,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Heart size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Family Umrah Taxi</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Luxury Family Vans</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Spacious vehicles for the whole family. Dedicated to serving the guests of Allah with the utmost respect, care, and hospitality.
+                            Spacious GMC Yukon & H1 Buses for families. VIP transport serving the guests of Allah with utmost comfort & respect.
                         </p>
                     </GlassCard>
                 </div>

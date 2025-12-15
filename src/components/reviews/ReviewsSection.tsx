@@ -42,9 +42,9 @@ export default function ReviewsSection() {
     // Skeleton Loader
     if (loading) {
         return (
-            <section className="py-32 relative overflow-hidden bg-slate-950">
+            <section className="py-16 relative overflow-hidden bg-slate-950">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-20 space-y-4">
+                    <div className="text-center mb-12 space-y-4">
                         <div className="h-8 w-48 bg-slate-800/50 rounded-full mx-auto animate-pulse" />
                         <div className="h-16 w-3/4 max-w-2xl bg-slate-800/50 rounded-2xl mx-auto animate-pulse" />
                         <div className="h-6 w-1/2 max-w-lg bg-slate-800/50 rounded-xl mx-auto animate-pulse" />
@@ -92,12 +92,12 @@ export default function ReviewsSection() {
     };
 
     return (
-        <section className="py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+        <section className="py-12 md:py-16 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
             {/* Subtle Background */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-200/20 via-slate-50 to-slate-50 dark:from-slate-900/20 dark:via-slate-950 dark:to-slate-950" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ export default function ReviewsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light mb-12"
+                        className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light mb-8"
                     >
                         Join the community of pilgrims who trust Al Aqsa Transport for their spiritual journey.
                     </motion.p>
@@ -136,7 +136,7 @@ export default function ReviewsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="flex flex-col md:flex-row items-center justify-center gap-12 mb-16"
+                        className="flex flex-col md:flex-row items-center justify-center gap-12 mb-10"
                     >
                         <div className="flex items-center gap-8">
                             <div className="text-center">

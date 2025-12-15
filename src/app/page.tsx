@@ -14,24 +14,46 @@ import { getSectionContent, getSectionImage, getCustomField } from '@/lib/conten
 const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'));
 const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
 const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
+const SEOContentSection = dynamic(() => import('@/components/home/SEOContentSection'));
 
 export async function generateMetadata() {
   return {
-    title: "Top 10 Umrah Transport Services in Saudi Arabia | Makkah to Madinah Taxi",
-    description: "Experience the best Umrah transport in Saudi Arabia. We offer luxury GMC Yukons, Jeddah airport to Makkah transport, and VIP services. Book your safe & comfortable ride today.",
+    title: "Best Umrah Transport Services Saudi Arabia | أفضل نقل معتمرين - Al Aqsa",
+    description: "Book reliable Umrah transport: VIP GMC Yukon, Jeddah Airport to Makkah taxi & Madinah transfers. Trusted, safe & comfortable. احجز سيارة عائلية للعمرة من مطار جدة لمكة",
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
+    keywords: [
+      "Umrah transport services", "Makkah to Madinah taxi", "Jeddah airport to Makkah", "VIP Umrah transport", "GMC Yukon Umrah",
+      "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة"
+    ],
+    openGraph: {
+      title: "Luxury Umrah Transport: Makkah to Madinah & Airport Taxi | Al Aqsa",
+      description: "Safe, reliable, and comfortable Umrah transport services. 24/7 Support. Book your VIP ride today. خدمة نقل المعتمرين VIP",
+    }
   };
 }
 
 export default async function Home() {
   const heroSection = await getSectionContent('home-hero');
   // SEO Optimized Fallbacks
-  const heroTitle = heroSection?.title || "Top-Rated Umrah Transport Services in Saudi Arabia";
-  const heroSubtitle = heroSection?.subtitle || "Your trusted partner for luxury Makkah to Madinah transport and reliable Jeddah airport taxi transfers. Experience VIP comfort for your spiritual journey.";
+  const heroTitle = heroSection?.title || "Premium Umrah Transport Services in Saudi Arabia";
+  // Styled Subtitle with Arabic
+  const heroSubtitleText = heroSection?.subtitle || "Reliable Jeddah Airport Transfers & Makkah-Madinah Taxi";
+  const heroSubtitleContent = (
+    <>
+      <span className="block mb-3 opacity-90">{heroSubtitleText}</span>
+      <span
+        className="block text-2xl md:text-3xl mt-2 text-amber-400 font-bold tracking-wide"
+        style={{ fontFamily: 'var(--font-reem-kufi)' }}
+      >
+        خدمة نقل المعتمرين VIP
+      </span>
+    </>
+  );
+
   const heroImage = getSectionImage(heroSection, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
-  const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Royal Ride";
+  const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Ride / احجز الآن";
   const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
 
   return (
@@ -39,7 +61,7 @@ export default async function Home() {
       {/* Hero Section */}
       <Hero
         title={heroTitle}
-        subtitle={heroSubtitle}
+        subtitle={heroSubtitleContent}
         bgImage={heroImage}
         layout="two-column"
         ctaText={ctaText}
@@ -65,6 +87,9 @@ export default async function Home() {
       {/* Testimonials Section */}
       {/* Reviews Section */}
       <ReviewsSection />
+
+      {/* SEO Content Section */}
+      <SEOContentSection />
 
       {/* Latest Articles Section */}
       <LatestArticles />

@@ -52,17 +52,15 @@ export const viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
-  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers to Makkah, luxury GMC Yukon for Makkah to Madinah taxi, and VIP Ziarah tours. Trusted by thousands of pilgrims.";
+  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers to Makkah, luxury GMC Yukon for Makkah to Madinah taxi, and VIP Ziarah tours. Trusted by thousands of pilgrims. خدمة نقل معتمرين متميزة";
   const OPTIMIZED_KEYWORDS = [
-    "top 10 umrah transport services in Saudi Arabia",
-    "umrah services in Saudi Arabia",
-    "best umrah transport in Saudi Arabia",
-    "luxury umrah transport",
-    "Makkah to Madinah transport",
+    "Umrah transport services",
+    "Makkah to Madinah taxi",
     "Jeddah airport to Makkah transport",
-    "VIP umrah transport services",
-    "Jeddah airport taxi",
-    "Makkah taxi service"
+    "VIP Umrah transport",
+    "GMC Yukon Umrah booking",
+    "Luxury Pilgrim Transport",
+    "Saudi Arabia Umrah taxi"
   ];
 
   const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";
@@ -71,10 +69,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const ARABIC_KEYWORDS = [
     "نقل معتمرين",
     "تاكسي مكة",
-    "تاكسي جدة",
-    "رحلات زيارة",
-    "شركة الأقصى للنقل",
-    "توصيل من مطار جدة الى مكة"
+    "توصيل من مطار جدة الى مكة",
+    "شركة نقل عمرة",
+    "سيارات جمس للعمرة",
+    "رحلات زيارة المدينة",
+    "مواصلات الحرمين"
   ];
   const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords, ...ARABIC_KEYWORDS]));
 
@@ -115,7 +114,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: settings.seo.defaultTitle || "Reliable Umrah Transport Services",
+      title: settings.seo.defaultTitle || "Reliable Umrah Transport | Al Aqsa",
       description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
       images: ["/images/twitter-image.jpg"],
     },

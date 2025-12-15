@@ -40,8 +40,10 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
         <section className={styles.section}>
             <div className="container">
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Our Premium Fleet</h2>
-                    <p className={styles.subtitle}>Experience comfort and luxury with our diverse range of vehicles</p>
+                    <h2 className={styles.title}>Our Premium Umrah Transport Fleet / أسطولنا الفاخر</h2>
+                    <p className={styles.subtitle}>
+                        Experience VIP comfort for Makkah & Madinah travel with our luxury GMC Yukons and buses.
+                    </p>
                 </div>
 
                 <div className={styles.carouselContainer}>

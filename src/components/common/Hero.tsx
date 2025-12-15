@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import styles from './Hero.module.css';
@@ -8,7 +10,7 @@ import GlassButton from '@/components/ui/GlassButton';
 
 interface HeroProps {
     title: string;
-    subtitle: string;
+    subtitle: string | React.ReactNode;
     bgImage: string;
     ctaText?: string;
     ctaLink?: string;
@@ -66,12 +68,20 @@ const Hero: React.FC<HeroProps> = ({
 
     return (
         <section ref={ref} className={styles.hero}>
-
-
             <motion.div
                 className={styles.bgImage}
-                style={{ backgroundImage: `url(${bgImage})`, y, opacity }}
-            />
+                style={{ y, opacity }}
+            >
+                <Image
+                    src={bgImage}
+                    alt="Umrah Transport Saudi Arabia Hero"
+                    fill
+                    priority
+                    quality={90}
+                    className="object-cover"
+                    sizes="100vw"
+                />
+            </motion.div>
             <div className={styles.overlay} />
             <div className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''}`}>
                 <motion.div
@@ -89,9 +99,9 @@ const Hero: React.FC<HeroProps> = ({
                         {title}
                     </motion.h1>
 
-                    <motion.p className={styles.subtitle} variants={itemVariants}>
+                    <motion.div className={styles.subtitle} variants={itemVariants}>
                         {subtitle}
-                    </motion.p>
+                    </motion.div>
 
                     <motion.div className={styles.buttons} variants={itemVariants}>
                         {ctaText && ctaLink && (

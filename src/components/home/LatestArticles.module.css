@@ -1,5 +1,5 @@
 .section {
-    padding: 6rem 0;
+    padding: 4rem 0;
     background-color: hsl(var(--background));
 }
 
@@ -147,6 +147,6 @@
     }
 
     .section {
-        padding: 8rem 0;
+        padding: 5rem 0;
     }
 }

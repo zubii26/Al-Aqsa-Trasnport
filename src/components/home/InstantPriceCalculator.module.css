@@ -1,5 +1,5 @@
 .section {
-    padding: 8rem 0;
+    padding: 4rem 0;
     background: radial-gradient(circle at top center, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
     position: relative;
     overflow: hidden;
