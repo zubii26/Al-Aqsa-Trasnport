@@ -6,141 +6,147 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 Columns for better space usage */
     gap: 1rem;
     padding: 0.5rem;
 }
 
+/* Premium Card Design */
 .card {
     position: relative;
     width: 100%;
-    background: var(--glass-bg);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1.25rem;
     padding: 1rem;
     display: flex;
     flex-direction: row;
-    /* Horizontal layout for compactness */
     align-items: center;
-    justify-content: flex-start;
     gap: 1rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: left;
     height: auto;
     overflow: hidden;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.02),
+        0 2px 4px -1px rgba(0, 0, 0, 0.02),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    /* Inner highlight */
 }
 
+/* Hover State - "Lift" Effect */
 .card:hover {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    /* Softer shadow */
-    transform: translateY(-2px);
-    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 30px -5px rgba(0, 0, 0, 0.08),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(212, 175, 55, 0.3);
+    /* Gold hint on border */
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
 }
 
-.iconWrapper {
-    padding: 0.75rem;
-    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
-    border-radius: 12px;
-    flex-shrink: 0;
-}
-
-.info {
-    width: auto;
-    flex: 1;
-}
-
-.name {
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem;
-}
-
-.specs {
-    justify-content: flex-start;
-    gap: 0.75rem;
-    font-size: 0.75rem;
+/* Selected State - "Gold Halo" */
+.selected {
+    background: linear-gradient(145deg, #ffffff, #fffbeb);
+    /* Warm tint */
+    border-color: #D4AF37;
+    box-shadow:
+        0 20px 40px -10px rgba(212, 175, 55, 0.15),
+        0 0 0 1px rgba(212, 175, 55, 0.2);
+    /* Double border effect */
 }
 
 .activeBorder {
+    position: absolute;
+    inset: 0;
+    border: 2px solid #D4AF37;
+    border-radius: 1.25rem;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.iconWrapper {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     border-radius: 1rem;
-    /* Match card radius */
-    border-width: 1.5px;
+    /* Squircle */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+    color: #64748b;
+}
+
+/* Selected Icon - Gold Plated */
+.selected .iconWrapper {
+    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    /* Prevents overflow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    font-family: var(--font-playfair), serif;
+    /* Premium Font */
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+
+.specs {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
 }
 
 .spec {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.3rem;
 }
 
+/* Check Mark Animation */
 .checkIcon {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.75rem;
+    right: 0.75rem;
     color: #D4AF37;
+    background: white;
+    border-radius: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 1024px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 640px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-        padding: 0.25rem;
-    }
-
-    .card {
-        padding: 0.75rem;
-        border-radius: 1rem;
-    }
-
-    .name {
-        font-size: 0.75rem;
-    }
-
-    .specs {
-        font-size: 0.7rem;
-        gap: 0.5rem;
-    }
-}
-
-/* Dark Mode */
-:global(.dark) .card {
-    background: var(--glass-bg);
-    border-color: var(--glass-border);
-}
-
-:global(.dark) .card:hover {
-    background: rgba(30, 41, 59, 0.9);
-    border-color: rgba(212, 175, 55, 0.3);
-}
-
-:global(.dark) .selected {
-    background: #1e293b;
-    border-color: #D4AF37;
-    box-shadow: 0 10px 30px -5px rgba(212, 175, 55, 0.15);
-}
-
-:global(.dark) .iconWrapper {
-    background: #0f172a;
-}
-
-:global(.dark) .name {
-    color: #f8fafc;
-}
-
-:global(.dark) .specs {
-    color: #94a3b8;
-}
-
-/* Dropdown Styles (Copied from RouteSelector for consistency) */
+/* Dropdown Styles (For Mobile) - Preserved & Polished */
 .trigger {
     width: 100%;
     display: flex;
@@ -182,7 +188,6 @@
     align-items: center;
     justify-content: center;
     color: #64748b;
-    transition: all 0.3s ease;
 }
 
 .trigger:hover .triggerIconWrapper {
@@ -198,13 +203,11 @@
 .vehicleInfo {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
 }
 
 .label {
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     color: #94a3b8;
     font-weight: 600;
 }
@@ -212,16 +215,6 @@
 .value {
     font-weight: 600;
     color: #0f172a;
-    font-size: 1rem;
-}
-
-.chevron {
-    color: #94a3b8;
-    transition: transform 0.3s ease;
-}
-
-.rotate {
-    transform: rotate(180deg);
 }
 
 .dropdown {
@@ -234,14 +227,12 @@
     border-radius: 16px;
     box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
     z-index: 50;
-    overflow: hidden;
     padding: 0.5rem;
 }
 
 .list {
     max-height: 300px;
     overflow-y: auto;
-    padding: 0 0.25rem;
 }
 
 .option {
@@ -251,11 +242,10 @@
     padding: 0.75rem;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    width: 100%;
     text-align: left;
     background: transparent;
     border: none;
-    width: 100%;
 }
 
 .option:hover {
@@ -298,6 +288,64 @@
     height: 6px;
     border-radius: 50%;
     background: #D4AF37;
+}
+
+
+/* Dark Mode Overrides */
+:global(.dark) .card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.6));
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .card:hover {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.8));
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+:global(.dark) .selected {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(212, 175, 55, 0.1));
+    border-color: #D4AF37;
+}
+
+:global(.dark) .iconWrapper {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .selected .iconWrapper {
+    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
+    color: #0f172a;
+}
+
+:global(.dark) .name {
+    color: #f8fafc;
+}
+
+:global(.dark) .specs {
+    color: #94a3b8;
+}
+
+:global(.dark) .checkIcon {
+    background: #0f172a;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+        /* Stack on mobile */
+    }
+
+    .card {
+        padding: 0.75rem;
+    }
 }
 
 /* Dark Mode Overrides for Dropdown */
