@@ -527,52 +527,62 @@
 }
 
 .optionCard {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1.25rem;
     padding: 1.25rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.02),
+        0 2px 4px -1px rgba(0, 0, 0, 0.02),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    /* Inner highlight */
 }
 
 :global(.dark) .optionCard {
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .optionCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
-    border-color: #cbd5e1;
+    transform: translateY(-4px);
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.1),
+        0 10px 20px -5px rgba(212, 175, 55, 0.1);
+    /* Gold glow shadow */
+    border-color: rgba(212, 175, 55, 0.6);
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
 }
 
 :global(.dark) .optionCard:hover {
-    background: rgba(30, 41, 59, 0.6);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.8));
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
 }
 
 .selectedCard {
+    background: linear-gradient(145deg, #ffffff, #fffbeb);
     border-color: #D4AF37;
-    background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
-    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+    box-shadow:
+        0 20px 40px -10px rgba(212, 175, 55, 0.2),
+        0 0 0 2px rgba(212, 175, 55, 0.3);
+    /* Distinct double border */
 }
 
 :global(.dark) .selectedCard {
-    background: linear-gradient(145deg, rgba(212, 175, 55, 0.1) 0%, rgba(30, 41, 59, 0.6) 100%);
-    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(212, 175, 55, 0.1));
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), 0 20px 40px -5px rgba(212, 175, 55, 0.15);
 }
 
 .selectedCard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #D4AF37, #FCD34D);
+    display: none;
+    /* Remove old top bar */
 }
 
 .cardHeader {
@@ -583,27 +593,39 @@
 }
 
 .cardIcon {
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 14px;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border-radius: 1rem;
+    /* Squircle */
     color: #64748b;
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 :global(.dark) .cardIcon {
     background: rgba(255, 255, 255, 0.05);
     color: #94a3b8;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .selectedCard .cardIcon {
-    background: rgba(212, 175, 55, 0.1);
-    color: #D4AF37;
+    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
+    color: #0F172A;
+    /* Contrast Navy Blue */
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 :global(.dark) .selectedCard .cardIcon {
-    background: #D4AF37;
-    color: #ffffff;
-    box-shadow: 0 4px 6px -1px rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, #D4AF37 0%, #B4941F 100%);
+    color: #0F172A;
+    /* Contrast Navy Blue in Dark Mode too */
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .priceValue {
@@ -621,6 +643,8 @@
     font-weight: 700;
     color: #0f172a;
     margin-bottom: 0.5rem;
+    font-family: var(--font-playfair), serif;
+    /* Premium Font */
 }
 
 :global(.dark) .cardContent h3 {
