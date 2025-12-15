@@ -97,9 +97,9 @@
 /* "Golden Ticket" Result Display */
 .resultDisplay {
     background: linear-gradient(145deg, #0f172a, #1e293b);
-    /* Deep Navy */
     border-radius: 1.5rem;
-    padding: 2rem;
+    padding: 1.75rem;
+    /* Reduced from 2rem */
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -110,7 +110,6 @@
     color: white;
 }
 
-/* Top Accent Line */
 .resultDisplay::before {
     content: '';
     position: absolute;
@@ -126,8 +125,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    /* Reduced from 2rem */
+    padding-bottom: 1rem;
+    /* Reduced from 1.5rem */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -143,7 +144,8 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.4rem 0.8rem;
+    padding: 0.35rem 0.75rem;
+    /* Slightly reduced */
     background: rgba(212, 175, 55, 0.15);
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 99px;
@@ -156,18 +158,20 @@
 
 .priceContainer {
     text-align: center;
-    margin: 1rem 0 2.5rem;
+    margin: 0.75rem 0 1.5rem;
+    /* Significantly reduced margins */
     position: relative;
     z-index: 1;
 }
 
 .priceValue {
-    font-size: 4.5rem;
+    font-size: 4rem;
+    /* Slightly smaller price font */
     font-weight: 700;
     color: #ffffff;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -177,9 +181,9 @@
 }
 
 .currencySymbol {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     color: #D4AF37;
 }
 
@@ -193,11 +197,11 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 99px;
 }
 
@@ -209,9 +213,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    /* Reduced from 2rem */
     background: rgba(255, 255, 255, 0.03);
-    padding: 1.25rem;
+    padding: 1rem;
+    /* Reduced from 1.25rem */
     border-radius: 1.25rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
