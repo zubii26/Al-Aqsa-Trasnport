@@ -74,6 +74,8 @@
     box-shadow: var(--glass-shadow);
     position: relative;
     z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .label {
