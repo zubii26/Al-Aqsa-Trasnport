@@ -83,7 +83,7 @@
     font-size: 1.05rem;
 }
 
-.item.active .answer {
+.active .answer {
     padding-bottom: 1.75rem;
     max-height: 500px;
 }
@@ -93,6 +93,6 @@
     color: hsl(var(--secondary));
 }
 
-.item.active .icon {
+.active .icon {
     transform: rotate(180deg);
 }
