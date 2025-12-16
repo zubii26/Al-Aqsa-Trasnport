@@ -31,7 +31,7 @@ export default function InteractiveMapSection({ routes }: InteractiveMapSectionP
             </div>
 
             {/* Desktop: Sidebar (Left) */}
-            <div className="hidden lg:block h-full z-20 shadow-xl shrink-0 relative">
+            <div className="hidden lg:block h-full z-20 shadow-xl shrink-0 relative w-80">
                 <RouteSidebar
                     routes={routes}
                     activeRouteId={activeRouteId}
@@ -40,10 +40,10 @@ export default function InteractiveMapSection({ routes }: InteractiveMapSectionP
                 />
             </div>
 
-            {/* Map Canvas Area (Flex Grow) */}
-            <div className="relative flex-1 w-full bg-slate-100 dark:bg-slate-950 overflow-hidden flex flex-col lg:block">
+            {/* Map Canvas Area (Center Flex Grow) */}
+            <div className="relative flex-1 w-full bg-slate-100 dark:bg-slate-950 overflow-hidden flex flex-col lg:block shadow-inner z-10">
 
-                {/* Map Container - Mobile: Fixed Height, Desktop: Full Height */}
+                {/* Map Container */}
                 <div className="h-[400px] lg:h-full w-full relative">
                     <StylizedMapCanvas
                         routes={routes}
@@ -51,17 +51,6 @@ export default function InteractiveMapSection({ routes }: InteractiveMapSectionP
                         hoveredRouteId={hoveredRouteId}
                         onSelectRoute={setActiveRouteId}
                     />
-
-                    {/* Desktop Floating Info Panel (Right/Center) */}
-                    <div className="hidden lg:block absolute top-6 right-6 z-20 w-80 pointer-events-none">
-                        <AnimatePresence mode='wait'>
-                            {activeRoute && (
-                                <div className="pointer-events-auto">
-                                    <FloatingRoutePanel route={activeRoute} />
-                                </div>
-                            )}
-                        </AnimatePresence>
-                    </div>
                 </div>
 
                 {/* Mobile: Static Details Card (Bottom) */}
@@ -73,8 +62,23 @@ export default function InteractiveMapSection({ routes }: InteractiveMapSectionP
                     </AnimatePresence>
                 </div>
 
-                {/* Mobile Only Overlay Gradient (Top of map) */}
+                {/* Mobile Only Overlay Gradient */}
                 <div className="lg:hidden absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-black/5 to-transparent pointer-events-none z-10" />
+            </div>
+
+            {/* Desktop: Details Panel (Right Sidebar) */}
+            <div className="hidden lg:flex w-96 shrink-0 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex-col relative z-20 shadow-xl">
+                <div className="p-6 flex-1 overflow-y-auto">
+                    <AnimatePresence mode='wait'>
+                        {activeRoute ? (
+                            <FloatingRoutePanel route={activeRoute} />
+                        ) : (
+                            <div className="h-full flex items-center justify-center text-slate-400 text-sm text-center px-4">
+                                Select a route to view details
+                            </div>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
         </section>
     );

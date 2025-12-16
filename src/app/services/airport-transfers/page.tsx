@@ -4,6 +4,8 @@ import FadeIn from '@/components/common/FadeIn';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
 import { Plane, Clock, ShieldCheck, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { routeService } from '@/services/routeService';
+import AirportInteractiveMap from '@/components/services/airport/AirportInteractiveMap';
 
 export const metadata = {
     title: "Jeddah Airport to Makkah Taxi | KAIA Transfers - Al Aqsa",
@@ -11,85 +13,57 @@ export const metadata = {
     keywords: ["Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi", "Jeddah to Makkah bus"]
 };
 
-export default function AirportTransfersPage() {
+export default async function AirportTransfersPage() {
+    // 1. Fetch Data
+    const allRoutes = await routeService.getActiveRoutes();
+
+    // 2. Filter for Airport Routes (Origin or Destination contains 'Airport' or 'Jeddah')
+    // Adjust logic to be precise on what constitutes an "Airport Transfer" in your system
+    const airportRoutes = allRoutes.filter(r =>
+        r.origin.toLowerCase().includes('airport') ||
+        r.destination.toLowerCase().includes('airport') ||
+        r.origin.toLowerCase().includes('jeddah') // Assuming most Jeddah routes are airport related or can be shown
+    );
+
     return (
-        <main>
+        <main className="bg-slate-50 dark:bg-slate-950">
             <Hero
                 title="VIP Jeddah Airport Transfers"
                 subtitle="Experience a seamless arrival with our premium chauffeur service. We track your flight and wait for you at KAIA, ensuring a stress-free journey to Makkah."
-                bgImage="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?q=80&w=2000&auto=format&fit=crop"
+                bgImage="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop" /* Updated to distinct Aviation/Travel image */
                 ctaText="Book Transfer Now"
                 ctaLink="/booking?service=airport"
             />
 
-            {/* Introduction & Benefits */}
-            <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-12 items-start">
-                        <FadeIn>
-                            <div className="prose dark:prose-invert max-w-none">
-                                <h2 className="text-3xl font-bold font-playfair mb-6 text-secondary">
-                                    Arrive in Comfort & Style
+            {/* Interactive Map Section */}
+            <section className="relative z-10 -mt-10 mb-12">
+                <div className="container px-0 sm:px-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-none sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <div className="p-6 sm:p-8 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-end gap-4 bg-white dark:bg-slate-900">
+                            <div>
+                                <span className="text-amber-500 font-bold tracking-wider uppercase text-xs mb-2 block">Real-time Connections</span>
+                                <h2 className="text-3xl font-bold font-playfair text-slate-900 dark:text-white">
+                                    Airport Connectivity Network
                                 </h2>
-                                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                                    Arriving for Umrah doesn't have to be stressful. Our premium <strong>Jeddah Airport to Makkah taxi service</strong> ensures that a professional driver is waiting for you the moment you land. We monitor flight arrivals to accommodate delays, ensuring you are never left waiting.
+                                <p className="text-muted-foreground mt-2 max-w-xl">
+                                    Visualize your journey from King Abdulaziz International Airport (KAIA).
+                                    Select your destination to see route details, estimated time, and instant pricing.
                                 </p>
-                                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                    Our fleet includes spacious <strong>GMC Yukons</strong> and <strong>Toyota Hiace</strong> customized for pilgrim comfort, with ample space for luggage. Whether you are a solo traveler or a large group, we provide a smooth, safe, and spiritually focused ride to the Holy City.
-                                </p>
-
-                                <h3 className="text-xl font-bold mb-4">Why Choose Al Aqsa?</h3>
-                                <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Plane className="text-amber-600 dark:text-amber-500" size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold mb-1">Flight Tracking</h4>
-                                            <p className="text-sm text-muted-foreground">We monitor your landing time.</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Clock className="text-amber-600 dark:text-amber-500" size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold mb-1">24/7 Availability</h4>
-                                            <p className="text-sm text-muted-foreground">Late night arrival? No problem.</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <ShieldCheck className="text-amber-600 dark:text-amber-500" size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold mb-1">Licensed Chauffeurs</h4>
-                                            <p className="text-sm text-muted-foreground">Experienced & English speaking.</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <MapPin className="text-amber-600 dark:text-amber-500" size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold mb-1">Door-to-Door</h4>
-                                            <p className="text-sm text-muted-foreground">Direct hotel drop-off in Makkah.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <Link href="/booking?service=airport" className="btn btn-primary">
-                                    Check Rates & Book
-                                </Link>
                             </div>
-                        </FadeIn>
-
-                        <div className="relative sticky top-24">
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl transform rotate-1 opacity-10 blur-xl" />
-                            <div className="relative">
-                                <BookingFormWrapper title="Book Airport Transfer" subtitle="Instant Confirmation" />
+                            <div className="flex items-center gap-4 text-xs font-medium text-slate-500">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                                    Live Flight Tracking
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                    24/7 Availability
+                                </div>
                             </div>
                         </div>
+
+                        {/* The Map Component */}
+                        <AirportInteractiveMap routes={airportRoutes} />
                     </div>
                 </div>
             </section>
