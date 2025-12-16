@@ -18,7 +18,7 @@ export default function IntercityTransferPage() {
             <Hero
                 title="Makkah to Madinah Transport"
                 subtitle="Travel between the Two Holy Mosques in complete comfort. A spiritual journey deserves a peaceful ride."
-                bgImage="https://images.unsplash.com/photo-1565552629477-594218ba8766?q=80&w=2000&auto=format&fit=crop"
+                bgImage="/images/intercity-hero.png"
                 ctaText="Book Your Ride"
                 ctaLink="/booking?service=transfer"
             />
@@ -85,8 +85,8 @@ export default function IntercityTransferPage() {
 
                         <div className="relative sticky top-24">
                             <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl transform rotate-1 opacity-10 blur-xl" />
-                            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-1">
-                                <BookingFormWrapper className="shadow-none border-0" title="Book Makkah-Madinah Taxi" subtitle="Best Rates Guaranteed" />
+                            <div className="relative">
+                                <BookingFormWrapper title="Book Makkah-Madinah Taxi" subtitle="Best Rates Guaranteed" />
                             </div>
                         </div>
                     </div>

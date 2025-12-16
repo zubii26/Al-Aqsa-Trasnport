@@ -86,8 +86,8 @@ export default function AirportTransfersPage() {
 
                         <div className="relative sticky top-24">
                             <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl transform rotate-1 opacity-10 blur-xl" />
-                            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-1">
-                                <BookingFormWrapper className="shadow-none border-0" title="Book Airport Transfer" subtitle="Instant Confirmation" />
+                            <div className="relative">
+                                <BookingFormWrapper title="Book Airport Transfer" subtitle="Instant Confirmation" />
                             </div>
                         </div>
                     </div>
