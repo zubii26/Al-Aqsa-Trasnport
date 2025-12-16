@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '@/components/common/Hero';
 import FadeIn from '@/components/common/FadeIn';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
+import RouteMap from '@/components/services/RouteMap';
 import { Bus, Map, Coffee, Star } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,14 +18,14 @@ export default function IntercityTransferPage() {
             <Hero
                 title="Makkah to Madinah Transport"
                 subtitle="Travel between the Two Holy Mosques in complete comfort. A spiritual journey deserves a peaceful ride."
-                bgImage="https://images.unsplash.com/photo-1564769662533-4f00a87b4056?q=80&w=2000&auto=format&fit=crop"
+                bgImage="https://images.unsplash.com/photo-1565552629477-594218ba8766?q=80&w=2000&auto=format&fit=crop"
                 ctaText="Book Your Ride"
                 ctaLink="/booking?service=transfer"
             />
 
-            <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+            <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
                 <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-12 items-start">
+                    <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
                         <FadeIn>
                             <div className="prose dark:prose-invert max-w-none">
                                 <h2 className="text-3xl font-bold font-playfair mb-6 text-secondary">
@@ -89,6 +90,36 @@ export default function IntercityTransferPage() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Route Map Section - Premium Graphics */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
+                <div className="container">
+                    <RouteMap />
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-16 bg-white dark:bg-slate-950">
+                <div className="container max-w-4xl">
+                    <FadeIn>
+                        <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Frequently Asked Questions</h2>
+                        <div className="space-y-6">
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+                                <h3 className="font-bold text-lg mb-2">How long is the drive from Makkah to Madinah?</h3>
+                                <p className="text-muted-foreground">The drive typically takes about 4.5 hours (450 km) via the Hijrah Highway. We can stop at rest areas upon request.</p>
+                            </div>
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+                                <h3 className="font-bold text-lg mb-2">Can we stop at Miqat?</h3>
+                                <p className="text-muted-foreground">Yes, absolutely. If you are travelling from Madinah to Makkah for Umrah, we will stop at Dhul Hulayfah (Abyar Ali) for you to enter Ihram.</p>
+                            </div>
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+                                <h3 className="font-bold text-lg mb-2">Is the fare fixed?</h3>
+                                <p className="text-muted-foreground">Yes, the price we quote is the final price for the vehicle. There are no hidden per-person charges.</p>
+                            </div>
+                        </div>
+                    </FadeIn>
                 </div>
             </section>
         </main>
