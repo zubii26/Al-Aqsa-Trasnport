@@ -2,121 +2,178 @@ import React from 'react';
 import Hero from '@/components/common/Hero';
 import FadeIn from '@/components/common/FadeIn';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
-import RouteMap from '@/components/services/RouteMap';
-import { Bus, Map, Coffee, Star } from 'lucide-react';
-import Link from 'next/link';
+import InteractiveMapSection from '@/components/services/intercity/InteractiveMapSection';
+import AnimatedMapBackground from '@/components/ui/AnimatedMapBackground';
+import { routeService } from '@/services/routeService';
+import { ShieldCheck, Star, UserCheck, Timer } from 'lucide-react';
+import { RouteWithPrices } from '@/services/routeService';
 
 export const metadata = {
-    title: "Makkah to Madinah Taxi | Private Intercity Transport - Al Aqsa",
-    description: "Comfortable Makkah to Madinah transfer service. Book private GMC Yukon or Hyundai H1 for your journey between the Two Holy Mosques. Scenic route, safe drivers.",
-    keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi"]
+    title: "Makkah to Madinah Taxi | VIP Map-Based Transport - Al Aqsa",
+    description: "Experience premium intercity travel with our interactive route explorer. Private GMC Yukon & H1 transfers between Holy Cities. Book professionally.",
+    keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"]
 };
 
-export default function IntercityTransferPage() {
+// Fallback data
+const MOCK_ROUTES = [
+    {
+        id: 'mock-1',
+        origin: 'Makkah Hotel',
+        destination: 'Madinah Hotel',
+        distance: '450 km',
+        duration: '4 hrs 30 min',
+        category: 'Intercity',
+        isActive: true,
+        prices: [{ vehicleId: 'v1', price: 450 }]
+    },
+    {
+        id: 'mock-2',
+        origin: 'Jeddah Airport',
+        destination: 'Madinah Hotel',
+        distance: '400 km',
+        duration: '4 hrs',
+        category: 'Intercity',
+        isActive: true,
+        prices: [{ vehicleId: 'v1', price: 400 }]
+    },
+    {
+        id: 'mock-3',
+        origin: 'Madinah Airport',
+        destination: 'Makkah Hotel',
+        distance: '460 km',
+        duration: '4 hrs 45 min',
+        category: 'Intercity',
+        isActive: true,
+        prices: [{ vehicleId: 'v1', price: 460 }]
+    },
+    {
+        id: 'mock-4',
+        origin: 'Jeddah City',
+        destination: 'Makkah Hotel',
+        distance: '85 km',
+        duration: '1 hr 15 min',
+        category: 'Intercity',
+        isActive: true,
+        prices: [{ vehicleId: 'v1', price: 200 }]
+    }
+];
+
+export const revalidate = 3600;
+
+export default async function IntercityTransferPage() {
+    let routes: RouteWithPrices[] = [];
+
+    try {
+        routes = await routeService.getActiveRoutes();
+    } catch (error) {
+        console.error("Failed to fetch routes:", error);
+    }
+
+    const effectiveRoutes = routes.length > 0 ? routes : (process.env.NODE_ENV === 'development' || routes.length === 0 ? MOCK_ROUTES : []) as unknown as RouteWithPrices[];
+
     return (
         <main>
             <Hero
-                title="Makkah to Madinah Transport"
-                subtitle="Travel between the Two Holy Mosques in complete comfort. A spiritual journey deserves a peaceful ride."
+                title="Premium Intercity Travel"
+                subtitle="Journey between the Holy Cities via our interactive premium network. Explore routes and book your VIP transfer instantly."
                 bgImage="/images/intercity-hero.png"
-                ctaText="Book Your Ride"
-                ctaLink="/booking?service=transfer"
+                ctaText="Start Exploring"
+                ctaLink="#interactive-map"
+                backgroundChildren={<AnimatedMapBackground />}
             />
 
-            <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
+            <section className="py-16 md:py-24 bg-white dark:bg-slate-950 relative overflow-hidden">
+                <div className="container relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
                         <FadeIn>
                             <div className="prose dark:prose-invert max-w-none">
-                                <h2 className="text-3xl font-bold font-playfair mb-6 text-secondary">
-                                    The Sacred Journey Between Cities
+                                <span className="text-amber-600 dark:text-amber-500 font-bold tracking-wider text-sm uppercase mb-2 block">The Sacred Route</span>
+                                <h2 className="text-3xl md:text-4xl font-bold font-playfair mb-6 text-slate-900 dark:text-white leading-tight">
+                                    Travel with Peace of Mind <br />
+                                    <span className="text-amber-500">Between The Two Harams</span>
                                 </h2>
-                                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                                    The journey from Makkah to Madinah (approx. 450km) is a significant part of your Umrah. We provide a **private taxi service** that turns this travel into a time of rest and reflection. Avoid the crowded buses and strict schedules; travel on your own terms.
+                                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                                    The journey between Makkah and Madinah is more than just travel; it is a transition between two sacred sanctuaries. We honor this journey by providing a service that prioritizes your rest and reverence.
                                 </p>
-                                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                    Our drivers are experienced on the Hijrah Road, ensuring a smooth drive with optional stops at **miqats** or rest areas if requested. Choose our **VIP GMC Yukon** for maximum legroom or a **Korean Van** for larger families.
+                                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                                    Forget the hassle of crowded buses. Our <strong>private intercity taxis</strong> allow you to travel on your own schedule, stop at Miqats (Dhul Hulayfah) for intention, and enjoy the scenic Hijrah route in the privacy of a premium vehicle.
                                 </p>
 
-                                <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Bus className="text-amber-600 dark:text-amber-500" size={24} />
+                                <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+                                    <div className="flex gap-4 items-start">
+                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                            <ShieldCheck size={24} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold mb-1">Modern Fleet</h4>
-                                            <p className="text-sm text-muted-foreground">2024 Models available.</p>
+                                            <h4 className="font-bold text-slate-900 dark:text-white mb-1">Safety First</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Professional drivers familiar with the Hijrah Highway.</p>
                                         </div>
                                     </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Coffee className="text-amber-600 dark:text-amber-500" size={24} />
+                                    <div className="flex gap-4 items-start">
+                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                            <Star size={24} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold mb-1">Flexibility</h4>
-                                            <p className="text-sm text-muted-foreground">Stop for prayer or rest anytime.</p>
+                                            <h4 className="font-bold text-slate-900 dark:text-white mb-1">VIP Fleet</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Late-model GMC Yukons and H1 Vans.</p>
                                         </div>
                                     </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Map className="text-amber-600 dark:text-amber-500" size={24} />
+                                    <div className="flex gap-4 items-start">
+                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                            <UserCheck size={24} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold mb-1">Scenic Route</h4>
-                                            <p className="text-sm text-muted-foreground">Safe journey via Hijrah Highway.</p>
+                                            <h4 className="font-bold text-slate-900 dark:text-white mb-1">Door-to-Door</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Hotel pickup and drop-off in Makkah/Madinah.</p>
                                         </div>
                                     </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                            <Star className="text-amber-600 dark:text-amber-500" size={24} />
+                                    <div className="flex gap-4 items-start">
+                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                            <Timer size={24} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold mb-1">VIP Options</h4>
-                                            <p className="text-sm text-muted-foreground">Privacy for families & ladies.</p>
+                                            <h4 className="font-bold text-slate-900 dark:text-white mb-1">On Your Time</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Depart when you are ready. No waiting.</p>
                                         </div>
                                     </div>
                                 </div>
-
-                                <Link href="/booking?service=transfer" className="btn btn-primary">
-                                    Book Intercity Taxi
-                                </Link>
                             </div>
                         </FadeIn>
 
-                        <div className="relative sticky top-24">
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl transform rotate-1 opacity-10 blur-xl" />
+                        <div className="relative sticky top-32">
+                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-blue-600/20 rounded-full blur-3xl transform scale-90 opacity-40 translate-y-10" />
                             <div className="relative">
-                                <BookingFormWrapper title="Book Makkah-Madinah Taxi" subtitle="Best Rates Guaranteed" />
+                                <BookingFormWrapper title="Book Your Transfer" subtitle="Best Rates & Immediate Confirmation" />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Route Map Section - Premium Graphics */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container">
-                    <RouteMap />
+            {/* Interactive Map Section - FULL WIDTH */}
+            <section id="interactive-map" className="py-0 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+                <div className="w-full">
+                    <InteractiveMapSection routes={effectiveRoutes} />
                 </div>
             </section>
 
             {/* FAQ Section */}
-            <section className="py-16 bg-white dark:bg-slate-950">
-                <div className="container max-w-4xl">
+            <section className="py-16 bg-slate-50 dark:bg-slate-950">
+                <div className="container max-w-3xl">
                     <FadeIn>
-                        <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Frequently Asked Questions</h2>
-                        <div className="space-y-6">
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
-                                <h3 className="font-bold text-lg mb-2">How long is the drive from Makkah to Madinah?</h3>
-                                <p className="text-muted-foreground">The drive typically takes about 4.5 hours (450 km) via the Hijrah Highway. We can stop at rest areas upon request.</p>
+                        <h2 className="text-3xl font-bold text-center mb-12 font-playfair text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+                        <div className="space-y-4">
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
+                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">How long is the journey?</h3>
+                                <p className="text-slate-600 dark:text-slate-400">Makkah to Madinah takes approximately 4.5 hours on the smooth Hijrah Highway. We adjust speed for your comfort and safety.</p>
                             </div>
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
-                                <h3 className="font-bold text-lg mb-2">Can we stop at Miqat?</h3>
-                                <p className="text-muted-foreground">Yes, absolutely. If you are travelling from Madinah to Makkah for Umrah, we will stop at Dhul Hulayfah (Abyar Ali) for you to enter Ihram.</p>
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
+                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Is the Miqat stop included?</h3>
+                                <p className="text-slate-600 dark:text-slate-400">Yes! If you are traveling from Madinah to Makkah, we will stop at Miqat Dhul Hulayfah (Abyar Ali) for 15-20 minutes for you to assume Ihram.</p>
                             </div>
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-6">
-                                <h3 className="font-bold text-lg mb-2">Is the fare fixed?</h3>
-                                <p className="text-muted-foreground">Yes, the price we quote is the final price for the vehicle. There are no hidden per-person charges.</p>
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
+                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Are there hidden fees?</h3>
+                                <p className="text-slate-600 dark:text-slate-400">No. The price quoted is per vehicle, all-inclusive of fuel, driver, and taxes. No per-person charges.</p>
                             </div>
                         </div>
                     </FadeIn>

@@ -20,6 +20,7 @@ interface HeroProps {
     children?: React.ReactNode;
     layout?: 'center' | 'two-column';
     badge?: string;
+    backgroundChildren?: React.ReactNode;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -32,7 +33,8 @@ const Hero: React.FC<HeroProps> = ({
     secondaryCtaLink,
     children,
     layout = 'center',
-    badge
+    badge,
+    backgroundChildren
 }) => {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
@@ -83,6 +85,14 @@ const Hero: React.FC<HeroProps> = ({
                 />
             </motion.div>
             <div className={styles.overlay} />
+
+            {/* Custom Background Elements (e.g. animated maps) - Rendered above overlay but below content */}
+            {backgroundChildren && (
+                <div className="absolute inset-0 z-[1] pointer-events-none">
+                    {backgroundChildren}
+                </div>
+            )}
+
             <div className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''}`}>
                 <motion.div
                     className={styles.textContent}
