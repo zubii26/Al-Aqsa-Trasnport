@@ -6,8 +6,8 @@ import { ROUTES as DEFAULT_ROUTES, VEHICLES as DEFAULT_VEHICLES } from '@/lib/pr
 export async function GET() {
     try {
         const [routes, vehicles] = await Promise.all([
-            routeService.getRoutes(),
-            vehicleService.getVehicles()
+            routeService.getActiveRoutes(),
+            vehicleService.getActiveVehicles()
         ]);
 
         // Fallback to default data if database is empty
@@ -19,8 +19,8 @@ export async function GET() {
             });
         }
 
-        const activeRoutes = routes.filter(r => r.isActive);
-        const activeVehicles = vehicles.filter(v => v.isActive);
+        const activeRoutes = routes;
+        const activeVehicles = vehicles;
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedRoutes = activeRoutes.map((route: any) => {

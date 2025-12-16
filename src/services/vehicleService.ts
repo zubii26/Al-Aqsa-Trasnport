@@ -9,6 +9,13 @@ export const vehicleService = {
         return vehicles.map(v => ({ ...v, id: v._id.toString() }));
     }, ['vehicles-list'], { revalidate: 3600, tags: ['vehicles'] }),
 
+    // Optimized method for public facing pages
+    getActiveVehicles: unstable_cache(async () => {
+        await dbConnect();
+        const vehicles = await Vehicle.find({ isActive: true }).lean();
+        return vehicles.map(v => ({ ...v, id: v._id.toString() }));
+    }, ['vehicles-active'], { revalidate: 3600, tags: ['vehicles'] }),
+
     async getVehicleById(id: string) {
         await dbConnect();
         const vehicle = await Vehicle.findById(id).lean();

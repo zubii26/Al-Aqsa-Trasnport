@@ -14,10 +14,15 @@ import { getSectionContent, getSectionImage } from '@/lib/content-service';
 
 export async function generateMetadata() {
     return {
-        title: "About Al Aqsa Transport | Trusted Umrah Taxi Service",
-        description: "Learn about Al Aqsa Transport, the leading Umrah taxi service in Saudi Arabia. Dedicated to serving pilgrims with safety, comfort, and respect.",
+        title: "About Al Aqsa | Premium Umrah Transport & VIP Pilgrim Services",
+        description: "Trusted Umrah transport in Saudi Arabia. We provide reliable Jeddah Airport transfers, Makkah-Madinah taxis, and VIP pilgrim services. Book your safe ride today.",
+        keywords: [
+            "About Al Aqsa Transport", "Umrah transport company Saudi Arabia",
+            "Pilgrim transport services", "VIP Umrah taxi", "Makkah to Madinah transport",
+            "Jeddah airport transfer", "Haram shuttle service", "Luxury Umrah fleet"
+        ],
         alternates: {
-            canonical: 'https://alaqsa-transport.com/about',
+            canonical: 'https://alaqsaumrahtransport.com/about',
         },
     };
 }
@@ -25,7 +30,7 @@ export async function generateMetadata() {
 export default async function AboutPage() {
     const section = await getSectionContent('about-hero');
     const title = section?.title || "About Al Aqsa Transport";
-    const subtitle = section?.subtitle || "Serving the Guests of Allah with Excellence";
+    const subtitle = section?.subtitle || "Serving Guests of Allah with VIP Transport & Reliable Airport Transfers";
     const bgImage = getSectionImage(section, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
 
     return (

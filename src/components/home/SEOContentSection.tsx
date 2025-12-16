@@ -17,16 +17,16 @@ export default function SEOContentSection() {
                         {/* Block 1: English - Core Service Offering */}
                         <div className="prose dark:prose-invert max-w-none text-center md:text-left space-y-6">
                             <h2 className="text-3xl md:text-4xl font-bold font-playfair mb-6 text-secondary">
-                                Excellence in Every Mile of Your Sacred Journey
+                                Premium Umrah Transport & VIP Pilgrim Services
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Welcome to <strong>Al Aqsa Umrah Transport</strong>, where we redefine the standard of pilgrimage travel. As a trusted provider of premium <strong>Umrah transport services</strong>, we are dedicated to serving the guests of Allah with unwavering commitment and grace. From your arrival at Jeddah Airport to your stay in Makkah and Madinah, we ensure your journey is efficient, comfortable, and spiritually uplifting.
+                                Welcome to <strong>Al Aqsa Umrah Transport</strong>, the most trusted name for <strong>luxury Umrah transport</strong> in Saudi Arabia. We are dedicated to serving the guests of Allah with a blend of spiritual respect, professional reliability, and genuine hospitality. Whether you are performing Umrah, Hajj, or simply visiting the Holy Cities, we ensure your journey is safe, comfortable, and perfectly punctual.
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Our fleet of <strong>VIP Umrah vehicles</strong> is designed to be your sanctuary on the road. Whether you choose our spacious GMC Yukons or luxury family buses for your <strong>Makkah to Madinah transport</strong>, you can expect immaculate cleanliness and superior comfort. Our professional drivers are not just chauffeurs; they are respectful guides who prioritize your safety and punctuality above all.
+                                Our comprehensive services include seamless <strong>Jeddah Airport transfers</strong>, <strong>Madinah Airport pickups</strong>, and reliable <strong>Makkah to Madinah taxi</strong> services. We specialize in <strong>intercity pilgrim travel</strong>, offering door-to-door convenience from your hotel in Makkah to your accommodation in Madinah, or directly to the Haram.
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Let us handle the logistics while you focus on your devotion. With transparent pricing and a reputation for reliability, Al Aqsa Transport acts as your faithful partner in the Holy Land. Experience the serenity of a truly organized pilgrimage. Book your <strong>VIP Umrah transport</strong> today and travel with the peace of mind you deserve.
+                                Travel in style with our <strong>VIP fleet</strong> comprising modern <strong>GMC Yukons</strong>, <strong>luxury vans</strong>, and business-class vehicles tailored for families and groups. Our chauffeur-driven services guarantee a stress-free experience, allowing you to focus entirely on your worship. Book your <strong>Haram shuttle</strong> or airport transfer today and experience the difference of traveling with a company that values your peace of mind above all.
                             </p>
                         </div>
 
@@ -59,7 +59,7 @@ export default function SEOContentSection() {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        Makkah Haram to Madinah Munawwarah
+                                        Makkah Hotel to Madinah Munawwarah
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
@@ -67,7 +67,7 @@ export default function SEOContentSection() {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        Makkah Ziarah (Historical Sites)
+                                        VIP Ziarah & Haram Shuttle Services
                                     </li>
                                 </ul>
                             </div>

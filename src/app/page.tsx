@@ -2,15 +2,15 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import styles from './page.module.css';
 import FadeIn from '@/components/common/FadeIn';
-import InstantPriceCalculator from '@/components/home/InstantPriceCalculator';
 import Hero from '@/components/common/Hero';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
-import Features from '@/components/home/Features';
 
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
 
 // Lazy load heavy components
+const InstantPriceCalculator = dynamic(() => import('@/components/home/InstantPriceCalculator'));
+const Features = dynamic(() => import('@/components/home/Features'));
+const FleetCarouselWrapper = dynamic(() => import('@/components/home/FleetCarouselWrapper'));
 const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'));
 const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
 const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
@@ -24,7 +24,8 @@ export async function generateMetadata() {
       canonical: 'https://alaqsaumrahtransport.com',
     },
     keywords: [
-      "Umrah transport services", "Makkah to Madinah taxi", "Jeddah airport to Makkah", "VIP Umrah transport", "GMC Yukon Umrah",
+      "Umrah transport services", "Makkah to Madinah taxi", "Jeddah airport to Makkah", "VIP Umrah transport",
+      "Madinah airport transfers", "Haram shuttle", "luxury Umrah vehicles", "pilgrim transportation", "Saudi Arabia pilgrimage transport",
       "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة"
     ],
     openGraph: {
@@ -37,9 +38,9 @@ export async function generateMetadata() {
 export default async function Home() {
   const heroSection = await getSectionContent('home-hero');
   // SEO Optimized Fallbacks
-  const heroTitle = heroSection?.title || "Premium Umrah Transport Services in Saudi Arabia";
+  const heroTitle = heroSection?.title || "Premium Umrah Transport & VIP Pilgrim Services in Saudi Arabia";
   // Styled Subtitle with Arabic
-  const heroSubtitleText = heroSection?.subtitle || "Reliable Jeddah Airport Transfers & Makkah-Madinah Taxi";
+  const heroSubtitleText = heroSection?.subtitle || "Reliable Jeddah & Madinah Airport Transfers, Luxury Makkah-Madinah Travel";
   const heroSubtitleContent = (
     <>
       <span className="block mb-3 opacity-90">{heroSubtitleText}</span>
@@ -99,9 +100,9 @@ export default async function Home() {
       <section className={styles.ctaSection}>
         <div className="container">
           <FadeIn>
-            <h2 className={styles.ctaTitle}>Ready to Begin Your Journey?</h2>
+            <h2 className={styles.ctaTitle}>Ready to Begin Your Blessed Journey?</h2>
             <p className={styles.ctaText}>
-              Book your transport now and let us take care of the logistics while you focus on your worship.
+              Book your VIP transport now and let us take care of the logistics while you focus on your worship.
             </p>
             <Link href="/booking" className="btn btn-secondary btn-lg">
               Book Now

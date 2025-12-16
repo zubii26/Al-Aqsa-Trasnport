@@ -1,15 +1,21 @@
 'use client';
 
+import Link from 'next/link';
 import styles from './WelcomeSection.module.css';
 import { CheckCircle2, Quote } from 'lucide-react';
 
 export default function WelcomeSection() {
 
     const parseMarkdown = (text: string) => {
-        const parts = text.split(/(\*\*.*?\*\*)/g);
+        const parts = text.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
         return parts.map((part, index) => {
             if (part.startsWith('**') && part.endsWith('**')) {
                 return <strong key={index}>{part.slice(2, -2)}</strong>;
+            }
+            // Simple regex for markdown links [text](url) - sufficient for our specific inputs
+            const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+            if (linkMatch) {
+                return <Link href={linkMatch[2]} key={index} className="text-secondary hover:underline">{linkMatch[1]}</Link>;
             }
             return part;
         });
@@ -33,7 +39,7 @@ export default function WelcomeSection() {
 
                 <div className={styles.content}>
                     <div className={styles.intro}>
-                        <p className={styles.lead}>{parseMarkdown("We specialize in providing **safe, comfortable, and affordable Umrah transport services** for pilgrims traveling to Makkah, Madinah, and beyond.")}</p>
+                        <p className={styles.lead}>{parseMarkdown("We specialize in providing **safe payment, comfortable, and affordable [Umrah transport services](/services)** for pilgrims traveling to Makkah, Madinah, and beyond.")}</p>
 
                         <div className={styles.missionBox}>
                             <span className={styles.sparkle}>✨</span>
@@ -41,7 +47,7 @@ export default function WelcomeSection() {
                             <span className={styles.sparkle}>✨</span>
                         </div>
 
-                        <p className={styles.description}>{parseMarkdown("Our fleet of modern buses and vans ensures **stress‑free travel from Jeddah airport to Makkah and Madinah**, with professional drivers dedicated to hospitality and punctuality. Whether you are traveling solo, with family, or in large groups, Al Aqsa Umrah Transport offers **customized packages** to meet your needs.")}</p>
+                        <p className={styles.description}>{parseMarkdown("Our fleet of [modern buses and vans](/fleet) ensures **stress‑free travel from Jeddah airport to Makkah and Madinah**, with professional drivers dedicated to hospitality and punctuality. Whether you are traveling solo, with family, or in large groups, Al Aqsa Umrah Transport offers **[customized packages](/booking)** to meet your needs.")}</p>
                     </div>
 
                     <div className={styles.grid}>

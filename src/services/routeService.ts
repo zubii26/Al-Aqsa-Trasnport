@@ -12,36 +12,117 @@ export const routeService = {
     getRoutes: unstable_cache(async () => {
         try {
             await dbConnect();
-            const routes = await Route.find({}).sort({ createdAt: -1 }).lean();
+            const routes = await Route.aggregate([
+                { $sort: { createdAt: -1 } },
+                {
+                    $addFields: {
+                        routeIdString: { $toString: "$_id" }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'routeprices',
+                        localField: 'routeIdString',
+                        foreignField: 'route',
+                        as: 'prices_data'
+                    }
+                },
+                {
+                    $project: {
+                        id: { $toString: "$_id" },
+                        _id: { $toString: "$_id" },
+                        origin: 1,
+                        destination: 1,
+                        distance: 1,
+                        duration: 1,
+                        category: 1,
+                        isActive: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        prices: {
+                            $map: {
+                                input: "$prices_data",
+                                as: "p",
+                                in: {
+                                    vehicleId: "$$p.vehicle",
+                                    price: "$$p.price"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]);
 
-            // Fetch all prices for all routes in one query
-            const routeIds = routes.map(r => r._id.toString());
-            const allPrices = await RoutePrice.find({ route: { $in: routeIds } }).lean();
-
-            // Group prices by route ID
-            const pricesByRoute = allPrices.reduce((acc, price) => {
-                const routeId = price.route.toString();
-                if (!acc[routeId]) acc[routeId] = [];
-                acc[routeId].push({ vehicleId: price.vehicle, price: price.price });
-                return acc;
-            }, {} as Record<string, { vehicleId: string; price: number }[]>);
-
-            return routes.map(route => {
-                const { _id, ...rest } = route;
-                return {
-                    ...rest,
-                    id: _id.toString(),
-                    _id: _id.toString(),
-                    createdAt: route.createdAt ? new Date(route.createdAt).toISOString() : null,
-                    updatedAt: route.updatedAt ? new Date(route.updatedAt).toISOString() : null,
-                    prices: pricesByRoute[_id.toString()] || []
-                };
-            }) as unknown as RouteWithPrices[];
+            return routes.map(route => ({
+                ...route,
+                createdAt: route.createdAt ? new Date(route.createdAt).toISOString() : null,
+                updatedAt: route.updatedAt ? new Date(route.updatedAt).toISOString() : null,
+            })) as unknown as RouteWithPrices[];
         } catch (error) {
             console.error('Error in routeService.getRoutes:', error);
             throw error;
         }
     }, ['routes-list'], { revalidate: 3600, tags: ['routes'] }),
+
+    // Optimized method for public facing pages - Aggregation pipeline
+    getActiveRoutes: unstable_cache(async () => {
+        try {
+            await dbConnect();
+            const routes = await Route.aggregate([
+                { $match: { isActive: true } },
+                { $sort: { createdAt: -1 } },
+                // Convert _id to string for matching in lookup if needed, but here we likely match ObjectId to String or ObjectId to ObjectId.
+                // Based on schema, RoutePrice.route is a String. So we need to convert Route._id (ObjectId) to string.
+                {
+                    $addFields: {
+                        routeIdString: { $toString: "$_id" }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'routeprices', // Collection name (lowercase plural of model name usually)
+                        localField: 'routeIdString',
+                        foreignField: 'route',
+                        as: 'prices_data'
+                    }
+                },
+                {
+                    $project: {
+                        id: { $toString: "$_id" },
+                        _id: { $toString: "$_id" }, // Keep for compatibility if needed or just use id
+                        origin: 1,
+                        destination: 1,
+                        distance: 1,
+                        duration: 1,
+                        category: 1,
+                        isActive: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        prices: {
+                            $map: {
+                                input: "$prices_data",
+                                as: "p",
+                                in: {
+                                    vehicleId: "$$p.vehicle",
+                                    price: "$$p.price"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]);
+
+            return routes.map(route => ({
+                ...route,
+                createdAt: route.createdAt ? new Date(route.createdAt).toISOString() : null,
+                updatedAt: route.updatedAt ? new Date(route.updatedAt).toISOString() : null,
+            })) as unknown as RouteWithPrices[];
+
+        } catch (error) {
+            console.error('Error in routeService.getActiveRoutes:', error);
+            throw error;
+        }
+    }, ['routes-active'], { revalidate: 3600, tags: ['routes'] }),
 
     async getRouteById(id: string) {
         await dbConnect();

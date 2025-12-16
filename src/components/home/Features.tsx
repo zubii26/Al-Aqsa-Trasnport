@@ -26,9 +26,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Shield size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Safe Umrah Transport</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Safe & Trusted Pilgrim Transport</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Officially licensed drivers & well-maintained vehicles. The most trusted choice for safe Makkah to Madinah transport.
+                            Officially licensed chauffeurs & well-maintained vehicles. The most trusted choice for safe Makkah to Madinah travel.
                         </p>
                     </GlassCard>
 
@@ -36,9 +36,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Clock size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">24/7 Airport Transfers</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Punctual Airport Transfers</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            We track your flight to ensure timely pickups. Reliable Jeddah Airport to Makkah taxi service available around the clock.
+                            We track your flight to ensure timely pickups. Reliable Jeddah & Madinah Airport service available 24/7.
                         </p>
                     </GlassCard>
 
@@ -46,9 +46,9 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Heart size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Luxury Family Vans</h3>
+                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">VIP Hospitality & Comfort</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Spacious GMC Yukon & H1 Buses for families. VIP transport serving the guests of Allah with utmost comfort & respect.
+                            Spacious GMC Yukons & luxury vans for families. We serve the guests of Allah with utmost respect and premium comfort.
                         </p>
                     </GlassCard>
                 </div>

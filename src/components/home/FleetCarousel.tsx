@@ -42,7 +42,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                 <div className={styles.header}>
                     <h2 className={styles.title}>Our Premium Umrah Transport Fleet / أسطولنا الفاخر</h2>
                     <p className={styles.subtitle}>
-                        Experience VIP comfort for Makkah & Madinah travel with our luxury GMC Yukons and buses.
+                        Experience VIP comfort for Makkah & Madinah travel with our luxury GMC Yukons and modern family vans.
                     </p>
                 </div>
 

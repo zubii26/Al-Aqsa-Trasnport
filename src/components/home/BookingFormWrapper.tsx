@@ -3,7 +3,13 @@ import QuickBookingForm from './QuickBookingForm';
 import { routeService } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
 
-async function BookingFormFetcher() {
+interface BookingFormWrapperProps {
+    className?: string;
+    title?: string;
+    subtitle?: string;
+}
+
+async function BookingFormFetcher({ className, title, subtitle }: BookingFormWrapperProps) {
     const [vehicles, routes] = await Promise.all([
         vehicleService.getVehicles(),
         routeService.getRoutes()
@@ -37,14 +43,20 @@ async function BookingFormFetcher() {
         isActive: v.isActive
     }));
 
-    return <QuickBookingForm initialRoutes={pricingRoutes} initialVehicles={pricingVehicles} />;
+    return <QuickBookingForm
+        initialRoutes={pricingRoutes}
+        initialVehicles={pricingVehicles}
+        title={title}
+        subtitle={subtitle}
+        className={className}
+    />;
 }
 
-export default function BookingFormWrapper() {
+export default function BookingFormWrapper(props: BookingFormWrapperProps) {
     return (
         <div className="hidden md:block w-full">
             <Suspense fallback={<div className="w-full h-[400px] bg-white/10 backdrop-blur-md rounded-2xl animate-pulse" />}>
-                <BookingFormFetcher />
+                <BookingFormFetcher {...props} />
             </Suspense>
         </div>
     );

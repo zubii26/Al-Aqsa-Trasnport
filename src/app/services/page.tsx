@@ -42,13 +42,13 @@ export default function ServicesPage() {
             title: 'Makkah to Madinah Transport',
             description: 'Travel between Holy Cities in our luxury fleet. Choose from spacious GMC Yukons or comfortable Hyundai H1 vans for a relaxing 4-hour journey.',
             icon: <Bus size={32} />,
-            link: '/booking?service=transfer' // Fixed link query
+            link: '/services/intercity-transfer'
         },
         {
             title: 'Jeddah Airport to Makkah Taxi',
             description: 'Reliable and punctual airport transfers. Our driver waits for you at King Abdulaziz International Airport (KAIA) for a seamless start to your Umrah.',
             icon: <MapPin size={32} />,
-            link: '/booking?service=airport'
+            link: '/services/airport-transfers'
         },
         {
             title: 'VIP Luxury Umrah Transport',
