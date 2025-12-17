@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './page.module.css';
-import { Mail, MapPin, Phone, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Phone, MessageCircle, Clock, ShieldCheck, Globe, Star } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import ContactForm from '@/components/contact/ContactForm';
 import Hero from '@/components/common/Hero';
@@ -8,125 +8,168 @@ import GlassCard from '@/components/ui/GlassCard';
 import { getSettings } from '@/lib/settings-storage';
 
 export async function generateMetadata() {
+    const title = "Contact Al Aqsa Umrah Transport | Book Taxi Makkah to Madinah | اتصل بنا";
+    const description = "Contact Al Aqsa Umrah Transport for reliable VIP taxi services in Saudi Arabia. Book Jeddah airport pickup, Makkah to Madinah transport, and Ziarah tours. 24/7 Support. تواصل مع أفضل شركة نقل معتمرين";
+
     return {
-        title: "Contact Us | Book Umrah Taxi & Airport Transfer",
-        description: "Contact Al Aqsa Transport for Umrah taxi bookings, Jeddah airport transfers, and inquiries. 24/7 support for pilgrims in Makkah and Madinah.",
+        title: title,
+        description: description,
+        keywords: [
+            // English Keywords
+            "Umrah transport contact", "book Umrah transport", "Jeddah airport pickup contact",
+            "Makkah to Madinah transport booking", "Umrah taxi service contact", "Saudi Arabia pilgrim transport support",
+            "Al Aqsa Transport Booking", "VIP Umrah Taxi",
+            // Arabic Keywords
+            "اتصال نقل العمرة", "حجز نقل العمرة", "تواصل استقبال مطار جدة", "حجز نقل مكة المدينة",
+            "رقم تاكسي العمرة", "دعم نقل المعتمرين في السعودية", "شركة نقل في مكة", "توصيل الحرمين"
+        ],
         alternates: {
-            canonical: 'https://alaqsa-transport.com/contact',
+            canonical: 'https://alaqsaumrahtransport.com/contact',
         },
+        openGraph: {
+            title: title,
+            description: description,
+            type: 'website',
+            locale: 'en_US', // Primary, but content supports bilingual context
+        }
     };
 }
 
 export default async function ContactPage() {
     const settings = await getSettings();
 
-    // Fallback values if settings are not loaded yet
+    // Fallback values
     const phone1 = settings?.contact.phone || '+966 50 000 0000';
     const email = settings?.contact.email || 'info@alaqsa-transport.com';
     const address = settings?.contact.address || 'Al Aziziyah, Makkah, Saudi Arabia';
     const whatsapp = phone1;
 
+    // Contact Cards Data
+    const contactCards = [
+        {
+            icon: Phone,
+            title: "Call Us 24/7 (اتصل بنا)",
+            value: phone1,
+            sub: "Support in English, Arabic, Urdu",
+            action: `tel:${phone1.replace(/\s/g, '')}`,
+            btnText: "Call Now"
+        },
+        {
+            icon: MessageCircle,
+            title: "WhatsApp Support (واتساب)",
+            value: "Instant replies for bookings",
+            sub: "Average response: < 5 mins",
+            action: `https://wa.me/${whatsapp.replace(/\D/g, '')}`,
+            btnText: "Chat on WhatsApp"
+        },
+        {
+            icon: Mail,
+            title: "Email Us (البريد الإلكتروني)",
+            value: email,
+            sub: "For quote requests & inquiries",
+            action: `mailto:${email}`,
+            btnText: "Send Email"
+        },
+        {
+            icon: MapPin,
+            title: "Visit Our Office (موقعنا)",
+            value: address,
+            sub: "Open Daily: 9 AM - 10 PM",
+            action: "#map",
+            btnText: "View Location"
+        }
+    ];
+
     return (
-        <div>
+        <div className="bg-slate-50 dark:bg-slate-950 pb-20">
             <Hero
-                title="Umrah Transport in Makkah and Madinah"
-                subtitle="Reliable pilgrim shuttle service Saudi Arabia. Reach out to our dedicated team for any assistance."
+                title="Get in Touch | تواصل معنا"
+                subtitle="Reliable Booking & 24/7 Support for Your Umrah Journey. Premium Transport Services from Makkah to Madinah."
                 bgImage="/images/contact-hero.jpg"
             />
 
-            <section className={styles.section}>
-                <div className="container">
-                    <div className={styles.grid}>
-                        {/* Contact Form */}
-                        <GlassCard className={styles.formCard} delay={0}>
-                            <h2 className={styles.formTitle}>Send us a Message</h2>
-                            <p className={styles.formSubtitle}>
-                                Have a question about our transport services? Fill out the form below and our team will get back to you within 24 hours.
-                            </p>
-                            <ContactForm />
-                        </GlassCard>
-
-                        {/* Contact Info */}
-                        <GlassCard className={styles.infoCard} delay={0.2}>
-                            <h2 className={styles.infoTitle}>Contact Information</h2>
-                            <ul className={styles.infoList}>
-                                <li className={styles.infoItem}>
-                                    <Phone className={styles.infoIcon} size={24} />
-                                    <div>
-                                        <span className={styles.infoLabel}>Phone & WhatsApp</span>
-                                        <p className={styles.infoText}>{phone1}</p>
-                                        {settings?.contact.phone2 && (
-                                            <p className={styles.infoText}>{settings.contact.phone2}</p>
-                                        )}
-                                        <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
-                                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                                            Available 24/7
-                                        </p>
-                                    </div>
-                                </li>
-                                <li className={styles.infoItem}>
-                                    <Mail className={styles.infoIcon} size={24} />
-                                    <div>
-                                        <span className={styles.infoLabel}>Email</span>
-                                        <p className={styles.infoText}>{email}</p>
-                                    </div>
-                                </li>
-                                <li className={styles.infoItem}>
-                                    <MapPin className={styles.infoIcon} size={24} />
-                                    <div>
-                                        <span className={styles.infoLabel}>Office Location</span>
-                                        <p className={styles.infoText}>{address}</p>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <a
-                                href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-primary w-full flex items-center justify-center gap-2 mb-4"
-                            >
-                                <MessageCircle size={20} />
-                                Chat on WhatsApp
-                            </a>
-
-                            <div className="text-center text-sm text-muted-foreground">
-                                Trusted by thousands of pilgrims for safe and reliable transport.
+            <div className="container mx-auto px-4 -mt-16 relative z-10">
+                {/* Intro Trust Strip */}
+                <FadeIn direction="up" delay={0.1}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                        {[
+                            { icon: Clock, text: "24/7 Service", sub: "خدمة على مدار الساعة" },
+                            { icon: ShieldCheck, text: "Licensed & Safe", sub: "مرخص ومؤمن" },
+                            { icon: Globe, text: "Multilingual", sub: "دعم متعدد اللغات" },
+                            { icon: Star, text: "Top Rated", sub: "أعلى تقييم" }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                                <item.icon className="w-8 h-8 mx-auto mb-2 text-amber-500" />
+                                <h3 className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">{item.text}</h3>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 font-arabic">{item.sub}</p>
                             </div>
+                        ))}
+                    </div>
+                </FadeIn>
 
-                            <div className={styles.mapPlaceholder}>
-                                <div className="text-center">
-                                    <MapPin size={32} className="mx-auto mb-2 opacity-50" />
-                                    <p>Interactive Map Coming Soon</p>
+                <div className="grid lg:grid-cols-12 gap-8 items-start">
+                    {/* Contact Info Column */}
+                    <div className="lg:col-span-5 space-y-6">
+                        <FadeIn direction="right" delay={0.2}>
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                                {contactCards.map((card, index) => (
+                                    <GlassCard key={index} className="p-6 hover:border-amber-400/50 transition-colors group">
+                                        <div className="flex items-start gap-4">
+                                            <div className="p-3 bg-amber-100 dark:bg-amber-900/20 rounded-lg text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform">
+                                                <card.icon size={24} />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1">{card.title}</h3>
+                                                <p className="font-medium text-slate-700 dark:text-slate-200 mb-1">{card.value}</p>
+                                                <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{card.sub}</p>
+                                                <a
+                                                    href={card.action}
+                                                    target={card.action.startsWith('http') ? "_blank" : "_self"}
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center text-sm font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400"
+                                                >
+                                                    {card.btnText} →
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </GlassCard>
+                                ))}
+                            </div>
+                        </FadeIn>
+
+                        {/* Map Placeholder */}
+                        <FadeIn direction="up" delay={0.4}>
+                            <GlassCard className="p-0 overflow-hidden min-h-[250px] relative flex items-center justify-center bg-slate-200 dark:bg-slate-800" id="map">
+                                {/* Use an actual iframe here if you have one, or keep placeholder */}
+                                <div className="text-center p-6">
+                                    <MapPin className="w-12 h-12 text-slate-400 mx-auto mb-2" />
+                                    <p className="text-slate-500 font-medium">Interactive Map Integration</p>
+                                    <p className="text-sm text-slate-400">Head Office: Makkah Al Mukarramah</p>
                                 </div>
-                            </div>
-                        </GlassCard>
+                            </GlassCard>
+                        </FadeIn>
                     </div>
-                </div>
-            </section>
 
-            {/* FAQ Section */}
-            <section className={styles.faqSection}>
-                <div className="container">
-                    <FadeIn direction="up">
-                        <h2 className="text-3xl font-bold text-center mb-8 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
-                    </FadeIn>
-                    <div className={styles.faqGrid}>
-                        <GlassCard delay={0.1} className={styles.faqItem}>
-                            <h3 className={styles.faqQuestion}>How do I book a ride?</h3>
-                            <p className={styles.faqAnswer}>You can book directly through our website using the &quot;Book Now&quot; button, or contact us via WhatsApp for instant booking assistance.</p>
-                        </GlassCard>
-                        <GlassCard delay={0.2} className={styles.faqItem}>
-                            <h3 className={styles.faqQuestion}>What payment methods do you accept?</h3>
-                            <p className={styles.faqAnswer}>We accept cash payments upon arrival. For advance bookings, please contact our support team for available options.</p>
-                        </GlassCard>
-                        <GlassCard delay={0.3} className={styles.faqItem}>
-                            <h3 className={styles.faqQuestion}>Are your drivers licensed?</h3>
-                            <p className={styles.faqAnswer}>Yes, all our drivers are fully licensed, experienced, and trained to ensure your safety and comfort during your journey.</p>
-                        </GlassCard>
+                    {/* Contact Form Column */}
+                    <div className="lg:col-span-7">
+                        <FadeIn direction="left" delay={0.3}>
+                            <GlassCard className="p-8 md:p-10 border-t-4 border-t-amber-500">
+                                <div className="mb-8">
+                                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-display">
+                                        Send Us a Message
+                                        <span className="block text-xl font-arabic font-normal text-slate-500 mt-1">أرسل لنا رسالة</span>
+                                    </h2>
+                                    <p className="text-slate-600 dark:text-slate-300">
+                                        Need a custom quote for your Umrah group? Have questions about our GMC Yukon fleet?
+                                        Fill out the form below and our team will get back to you within minutes.
+                                    </p>
+                                </div>
+                                <ContactForm />
+                            </GlassCard>
+                        </FadeIn>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     );
 }

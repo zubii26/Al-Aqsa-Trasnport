@@ -14,8 +14,9 @@ export default function GlassCard({
     children,
     className = '',
     delay = 0,
-    hoverEffect = true
-}: GlassCardProps) {
+    hoverEffect = true,
+    id
+}: GlassCardProps & { id?: string }) {
     const { ref, isInView } = useScrollAnimation();
 
     return (
@@ -36,6 +37,7 @@ export default function GlassCard({
                 }
             }}
             className={`glass-card p-6 ${hoverEffect ? 'hover:scale-[1.02]' : ''} ${className}`}
+            id={id}
         >
             {children}
         </motion.div>
