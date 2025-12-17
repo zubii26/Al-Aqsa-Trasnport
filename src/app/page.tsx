@@ -4,6 +4,7 @@ import styles from './page.module.css';
 import FadeIn from '@/components/common/FadeIn';
 import Hero from '@/components/common/Hero';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
+import { ArrowRight } from 'lucide-react';
 
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
 
@@ -98,14 +99,14 @@ export default async function Home() {
 
       {/* CTA Section */}
       <section className={styles.ctaSection}>
-        <div className="container">
+        <div className="container relative z-10">
           <FadeIn>
             <h2 className={styles.ctaTitle}>Ready to Begin Your Blessed Journey?</h2>
             <p className={styles.ctaText}>
               Book your VIP transport now and let us take care of the logistics while you focus on your worship.
             </p>
-            <Link href="/booking" className="btn btn-secondary btn-lg">
-              Book Now
+            <Link href="/booking" className={styles.ctaButton}>
+              Book Your Ride Now <ArrowRight size={20} />
             </Link>
           </FadeIn>
         </div>

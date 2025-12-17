@@ -89,7 +89,7 @@
 .ctaSection {
   background: linear-gradient(135deg, hsl(var(--primary)) 0%, #1e293b 100%);
   text-align: center;
-  padding: 6rem 0;
+  padding: 3rem 0;
   color: white;
   position: relative;
   overflow: hidden;
@@ -122,4 +122,26 @@
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  padding: 1.2rem 3rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+}
+
+.ctaButton:hover {
+  background: white;
+  color: hsl(var(--primary));
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
 }
