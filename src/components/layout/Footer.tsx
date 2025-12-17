@@ -79,7 +79,7 @@ export default function Footer() {
                             <li><Link href="/services/intercity-transfer">Intercity Transfer</Link></li>
                             <li><Link href="/fleet">Fleet</Link></li>
                             <li><Link href="/blog">Blog</Link></li>
-                            <li><Link href="/contact">Contact</Link></li>
+                            <li><Link href="/contact">Contact us</Link></li>
                             <li>
                                 <div className="mt-4">
                                     <GlassButton href="/booking" className={styles.bookBtn} size="sm" variant="secondary">
