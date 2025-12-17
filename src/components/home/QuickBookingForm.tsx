@@ -315,6 +315,7 @@ const QuickBookingForm = ({
                                     popperPlacement="bottom-start"
                                     popperClassName={variant === 'default' ? 'home-datepicker-popper' : ''}
                                     portalId="datepicker-portal"
+                                    onFocus={(e) => e.target.blur()}
                                 />
                             </div>
                             {errors.date && <span className={styles.errorMessage}>{errors.date}</span>}
