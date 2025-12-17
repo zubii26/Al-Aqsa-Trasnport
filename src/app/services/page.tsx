@@ -7,11 +7,13 @@ import FadeIn from '@/components/common/FadeIn';
 import Hero from '@/components/common/Hero';
 import FAQSection from '@/components/services/FAQSection';
 import GlassCard from '@/components/ui/GlassCard';
+import TrustAmenities from '@/components/services/TrustAmenities';
+import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 export async function generateMetadata() {
     return {
-        title: "Best Umrah Transport Services | Jeddah Airport to Makkah Taxi",
-        description: "Book the top-rated Umrah transport services in Saudi Arabia. We provide luxury GMC Yukon transfers, reliable Jeddah airport pickup, and comfortable Makkah to Madinah bus options.",
+        title: "Best Umrah Transport Services | Private Makkah to Madinah Taxi & Bus",
+        description: "Book trusted Umrah transport services in Saudi Arabia. We offer private GMC Yukon pickups from Jeddah airport, luxury buses for groups, and reliable Makkah to Madinah taxi services. 24/7 Support.",
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/services',
         },
@@ -68,8 +70,8 @@ export default function ServicesPage() {
         <main className={styles.main}>
             {/* Hero Section */}
             <Hero
-                title="Dedicated Service for the Guests of Allah"
-                subtitle="Reliable Jeddah airport to Makkah transport and group packages for your spiritual journey."
+                title="Dedicated Umrah Transport Services for the Guests of Allah"
+                subtitle="Reliable Jeddah airport to Makkah transport, private cars, and group packages for your spiritual journey."
                 bgImage="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop"
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
@@ -77,15 +79,18 @@ export default function ServicesPage() {
                 secondaryCtaLink="/contact"
             />
 
+            {/* Trust Amenities Section - NEW */}
+            <TrustAmenities />
+
             {/* Services Section */}
             <section className={styles.servicesSection}>
                 <div className="container">
                     <FadeIn>
-                        <h2 className={styles.sectionTitle}>Our Professional Services</h2>
+                        <h2 className={styles.sectionTitle}>Our Premium Umrah Transport Services</h2>
                     </FadeIn>
                     <div className={styles.grid}>
                         {services.map((service, index) => (
-                            <GlassCard key={index} delay={index * 0.1} className="flex flex-col h-full">
+                            <GlassCard key={index} delay={index * 0.1} className={`flex flex-col h-full ${styles.serviceCard}`}>
                                 <div className={styles.iconWrapper}>
                                     {service.icon}
                                 </div>
@@ -130,6 +135,9 @@ export default function ServicesPage() {
                     </Suspense>
                 </FadeIn>
             </section>
+
+            {/* Reviews Section - NEW */}
+            <ReviewsSection />
 
             {/* FAQ Section */}
             <FAQSection />

@@ -139,15 +139,15 @@
 }
 
 .iconWrapper {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: linear-gradient(135deg, hsl(var(--secondary)) 0%, #d97706 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: hsl(var(--secondary-foreground));
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
     transition: transform 0.3s ease;
 }
@@ -157,8 +157,8 @@
 }
 
 .cardTitle {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
     color: hsl(var(--foreground));
     font-family: var(--font-playfair), serif;
     font-weight: 600;
@@ -166,10 +166,14 @@
 
 .cardDesc {
     color: hsl(var(--muted-foreground));
-    line-height: 1.7;
-    margin-bottom: 2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
     flex-grow: 1;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
+}
+
+.serviceCard {
+    padding: 1.5rem !important;
 }
 
 /* Fleet Section */
@@ -181,7 +185,7 @@
 
 /* CTA Section */
 .ctaSection {
-    padding: 10rem 0;
+    padding: 5rem 0;
     background: linear-gradient(135deg, hsl(var(--primary)) 0%, #1e3a8a 100%);
     color: white;
     text-align: center;
