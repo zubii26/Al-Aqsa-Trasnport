@@ -9,9 +9,12 @@ import { ShieldCheck, Star, UserCheck, Timer } from 'lucide-react';
 import { RouteWithPrices } from '@/services/routeService';
 
 export const metadata = {
-    title: "Makkah to Madinah Taxi | VIP Map-Based Transport - Al Aqsa",
-    description: "Experience premium intercity travel with our interactive route explorer. Private GMC Yukon & H1 transfers between Holy Cities. Book professionally.",
-    keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"]
+    title: "Makkah to Madinah Taxi & Intercity Transport | Al Aqsa",
+    description: "Comfortable Makkah to Madinah transport. Reliable intercity taxi transfers between Jeddah, Makkah & Madinah. Enjoy a seamless, spiritual travel experience.",
+    keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"],
+    alternates: {
+        canonical: 'https://alaqsaumrahtransport.com/services/intercity-transfer',
+    },
 };
 
 // Fallback data

@@ -109,7 +109,7 @@ export default function ContactForm() {
                 type="submit"
                 variant="primary"
                 size="lg"
-                className="w-full relative overflow-hidden group"
+                className="w-full relative overflow-hidden group !bg-amber-500 hover:!bg-amber-600 text-white"
                 disabled={status === 'submitting'}
             >
                 <div className="relative z-10 flex items-center justify-center gap-2">

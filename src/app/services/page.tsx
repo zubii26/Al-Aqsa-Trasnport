@@ -12,8 +12,8 @@ import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 export async function generateMetadata() {
     return {
-        title: "Best Umrah Transport Services | Private Makkah to Madinah Taxi & Bus",
-        description: "Book trusted Umrah transport services in Saudi Arabia. We offer private GMC Yukon pickups from Jeddah airport, luxury buses for groups, and reliable Makkah to Madinah taxi services. 24/7 Support.",
+        title: "Professional Umrah Transport Services | VIP & Bus",
+        description: "Explore our Umrah transport services: Jeddah to Makkah taxi, Madinah transfers, intercity travel & Ziyarat tours. Premium packages for every pilgrim.",
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/services',
         },

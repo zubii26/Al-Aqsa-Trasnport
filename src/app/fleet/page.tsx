@@ -12,10 +12,10 @@ import { getSectionContent, getSectionImage, getCustomField } from '@/lib/conten
 
 export async function generateMetadata() {
     return {
-        title: "Premium Umrah Fleet | GMC Yukon, Hiace & Luxury Bus Rental",
-        description: "Explore our premium fleet for Umrah transport. Rent 2024 GMC Yukon, Toyota Hiace, Hyundai Staria, or luxury buses for comfortable Makkah to Madinah travel.",
+        title: "Luxury Umrah Fleet | GMC Yukon, H1 & Coaster Buses",
+        description: "Browse our premium fleet: Luxury GMC Yukons, H1 vans, and spacious buses. Clean, well-maintained vehicles ensuring comfort and safety for your Umrah journey.",
         alternates: {
-            canonical: 'https://alaqsa-transport.com/fleet',
+            canonical: 'https://alaqsaumrahtransport.com/fleet',
         },
     };
 }

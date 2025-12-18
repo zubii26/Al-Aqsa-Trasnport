@@ -8,19 +8,22 @@ import AirportInteractiveMap from '@/components/services/airport/AirportInteract
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Best Jeddah Airport to Makkah Taxis | KAIA Transfers - Al Aqsa",
-    description: "Book reliable, diverse fleet airport transfers from Jeddah Airport (KAIA) to Makkah. Real-time flight tracking, VIP meet & greet, and 24/7 service for Umrah pilgrims.",
+    title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
+    description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
     keywords: ["Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi", "VIP Umrah Transport", "Jeddah Airport Shuttle", "Makkah Private Taxi"],
+    alternates: {
+        canonical: 'https://alaqsaumrahtransport.com/services/airport-transfers',
+    },
     openGraph: {
-        title: "VIP Jeddah Airport Transfers to Makkah | Al Aqsa Transport",
-        description: "Experience premium airport transfers with Al Aqsa. From KAIA to Makkah, enjoy flight tracking, professional chauffeurs, and luxury vehicles.",
+        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
+        description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
         images: ["/images/fleet/gmc.png"],
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Jeddah Airport Transfer Services - Al Aqsa",
-        description: "Reliable and comfortable transfers from Jeddah Airport to Makkah. Book your ride now.",
+        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
+        description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
         images: ["/images/fleet/gmc.png"],
     }
 };

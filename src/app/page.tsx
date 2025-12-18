@@ -8,6 +8,8 @@ import { ArrowRight } from 'lucide-react';
 
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
 
+import AnimatedBackground from '@/components/ui/AnimatedBackground';
+
 // Lazy load heavy components
 const InstantPriceCalculator = dynamic(() => import('@/components/home/InstantPriceCalculator'));
 const Features = dynamic(() => import('@/components/home/Features'));
@@ -16,11 +18,12 @@ const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection
 const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
 const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
 const SEOContentSection = dynamic(() => import('@/components/home/SEOContentSection'));
+const TransportServices = dynamic(() => import('@/components/home/TransportServices'));
 
 export async function generateMetadata() {
   return {
-    title: "Best Umrah Transport Services Saudi Arabia | أفضل نقل معتمرين - Al Aqsa",
-    description: "Book reliable Umrah transport: VIP GMC Yukon, Jeddah Airport to Makkah taxi & Madinah transfers. Trusted, safe & comfortable. احجز سيارة عائلية للعمرة من مطار جدة لمكة",
+    title: "Premium Umrah Transport Services Saudi Arabia | Al Aqsa",
+    description: "Book luxury Umrah transport in Saudi. Trusted Jeddah airport transfers, Makkah to Madinah taxi & VIP Ziyarat. Safe, comfortable & spiritual journeys.",
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
@@ -30,8 +33,8 @@ export async function generateMetadata() {
       "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة"
     ],
     openGraph: {
-      title: "Luxury Umrah Transport: Makkah to Madinah & Airport Taxi | Al Aqsa",
-      description: "Safe, reliable, and comfortable Umrah transport services. 24/7 Support. Book your VIP ride today. خدمة نقل المعتمرين VIP",
+      title: "Premium Umrah Transport Services Saudi Arabia | Al Aqsa",
+      description: "Book luxury Umrah transport in Saudi. Trusted Jeddah airport transfers, Makkah to Madinah taxi & VIP Ziyarat. Safe, comfortable & spiritual journeys.",
     }
   };
 }
@@ -59,7 +62,7 @@ export default async function Home() {
   const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* Hero Section */}
       <Hero
         title={heroTitle}
@@ -68,9 +71,13 @@ export default async function Home() {
         layout="two-column"
         ctaText={ctaText}
         ctaLink={ctaLink}
+        backgroundChildren={<AnimatedBackground />}
       >
         <BookingFormWrapper />
       </Hero>
+
+      {/* Transport Services Section - NEW */}
+      <TransportServices />
 
       {/* Instant Price Calculator Section */}
       <InstantPriceCalculator />

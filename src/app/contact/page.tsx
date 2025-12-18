@@ -8,8 +8,8 @@ import GlassCard from '@/components/ui/GlassCard';
 import { getSettings } from '@/lib/settings-storage';
 
 export async function generateMetadata() {
-    const title = "Contact Al Aqsa Umrah Transport | Book Taxi Makkah to Madinah | اتصل بنا";
-    const description = "Contact Al Aqsa Umrah Transport for reliable VIP taxi services in Saudi Arabia. Book Jeddah airport pickup, Makkah to Madinah transport, and Ziarah tours. 24/7 Support. تواصل مع أفضل شركة نقل معتمرين";
+    const title = "Contact Al Aqsa Umrah Transport | Book Your Ride Today";
+    const description = "Contact Al Aqsa Umrah Transport for bookings. 24/7 support via WhatsApp & phone. Let us serve the transport needs of your spiritual journey.";
 
     return {
         title: title,

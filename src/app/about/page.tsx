@@ -14,8 +14,8 @@ import { getSectionContent, getSectionImage } from '@/lib/content-service';
 
 export async function generateMetadata() {
     return {
-        title: "About Al Aqsa | Premium Umrah Transport & VIP Pilgrim Services",
-        description: "Trusted Umrah transport in Saudi Arabia. We provide reliable Jeddah Airport transfers, Makkah-Madinah taxis, and VIP pilgrim services. Book your safe ride today.",
+        title: "About Al Aqsa Umrah Transport | Trusted Pilgrim Service",
+        description: "Discover Al Aqsa Umrah Transport. Trusted partner for premium pilgrim mobility in Saudi Arabia. Professional drivers & luxury fleet for your peace of mind.",
         keywords: [
             "About Al Aqsa Transport", "Umrah transport company Saudi Arabia",
             "Pilgrim transport services", "VIP Umrah taxi", "Makkah to Madinah transport",
