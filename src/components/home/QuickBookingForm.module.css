@@ -8,14 +8,14 @@
     width: 100%;
     position: relative;
     z-index: 10;
-    /* Premium Dark Glass Effect */
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(251, 191, 36, 0.2);
+    /* Ultra Premium Glass Effect */
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(251, 191, 36, 0.1) inset;
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,9 +25,11 @@
 }
 
 .container:hover {
+    background: rgba(15, 23, 42, 0.75);
     box-shadow:
         0 35px 70px -15px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(251, 191, 36, 0.3) inset;
+        0 0 0 1px rgba(251, 191, 36, 0.2) inset;
+    border-color: rgba(251, 191, 36, 0.3);
 }
 
 /* Gradient Border Effect - Gold/Amber */
@@ -38,20 +40,20 @@
     border-radius: 24px;
     padding: 1.5px;
     background: linear-gradient(135deg,
-            rgba(251, 191, 36, 0.1) 0%,
-            rgba(251, 191, 36, 0.5) 50%,
-            rgba(245, 158, 11, 0.5) 100%);
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(251, 191, 36, 0.3) 50%,
+            rgba(255, 255, 255, 0.1) 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.6;
     transition: opacity 0.4s ease;
 }
 
 .container:hover::before {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .header {
@@ -107,7 +109,7 @@
 .label {
     font-size: 0.7rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: #e2e8f0;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     margin-left: 0.25rem;
@@ -133,7 +135,7 @@
     left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     z-index: 1;
@@ -151,10 +153,12 @@
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 3rem;
     /* Compact padding */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     font-size: 0.95rem;
-    background: rgba(0, 0, 0, 0.2);
+    /* Glass Input */
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
     color: white;
     outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -162,7 +166,7 @@
     height: 50px;
     /* Reduced height */
     cursor: pointer;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .input::placeholder {
