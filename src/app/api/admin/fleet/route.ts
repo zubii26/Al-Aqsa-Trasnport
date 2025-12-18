@@ -13,23 +13,19 @@ export async function GET() {
         const vehicles = await vehicleService.getVehicles();
 
         // Enforce specific sort order
-        const sortOrder = ['camry', 'gmc', 'staria', 'starex', 'hiace', 'coaster'];
-        vehicles.sort((a, b) => {
-            const indexA = sortOrder.indexOf(a.id.toLowerCase());
-            const indexB = sortOrder.indexOf(b.id.toLowerCase());
+        // Enforce specific sort order with robust matching
+        const getSortIndex = (v: any) => {
+            const str = `${v.id} ${v.name}`.toLowerCase();
+            if (str.includes('camry')) return 0;
+            if (str.includes('gmc') || str.includes('yukon')) return 1;
+            if (str.includes('staria')) return 2;
+            if (str.includes('starex')) return 3;
+            if (str.includes('hiace')) return 4;
+            if (str.includes('coaster')) return 5;
+            return 999; // Others go to the end
+        };
 
-            // If both are in the list, sort by index
-            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-
-            // If only A is in the list, it comes first
-            if (indexA !== -1) return -1;
-
-            // If only B is in the list, it comes first
-            if (indexB !== -1) return 1;
-
-            // If neither is in the list, keep original order (or sort alphabetically)
-            return a.category.localeCompare(b.category);
-        });
+        vehicles.sort((a, b) => getSortIndex(a) - getSortIndex(b));
 
         return NextResponse.json(vehicles);
     } catch {

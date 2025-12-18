@@ -2,18 +2,34 @@ import dbConnect from '@/lib/mongodb';
 import { unstable_cache } from 'next/cache';
 import { Vehicle, IVehicle } from '@/models';
 
+// Helper for robust sorting
+const getSortIndex = (v: any) => {
+    const str = `${v._id} ${v.name}`.toLowerCase();
+    if (str.includes('camry')) return 0;
+    if (str.includes('gmc') || str.includes('yukon')) return 1;
+    if (str.includes('staria')) return 2;
+    if (str.includes('starex')) return 3;
+    if (str.includes('hiace')) return 4;
+    if (str.includes('coaster')) return 5;
+    return 999;
+};
+
 export const vehicleService = {
     getVehicles: unstable_cache(async () => {
         await dbConnect();
         const vehicles = await Vehicle.find({}).lean();
-        return vehicles.map(v => ({ ...v, id: v._id.toString() }));
+        const mapped = vehicles.map(v => ({ ...v, id: v._id.toString() }));
+        // @ts-ignore
+        return mapped.sort((a, b) => getSortIndex(a) - getSortIndex(b));
     }, ['vehicles-list'], { revalidate: 3600, tags: ['vehicles'] }),
 
     // Optimized method for public facing pages
     getActiveVehicles: unstable_cache(async () => {
         await dbConnect();
         const vehicles = await Vehicle.find({ isActive: true }).lean();
-        return vehicles.map(v => ({ ...v, id: v._id.toString() }));
+        const mapped = vehicles.map(v => ({ ...v, id: v._id.toString() }));
+        // @ts-ignore
+        return mapped.sort((a, b) => getSortIndex(a) - getSortIndex(b));
     }, ['vehicles-active'], { revalidate: 3600, tags: ['vehicles'] }),
 
     async getVehicleById(id: string) {

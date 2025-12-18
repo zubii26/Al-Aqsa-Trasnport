@@ -64,8 +64,22 @@ export function PricingProvider({ children }: { children: React.ReactNode }) {
                 const data = await res.json();
                 const vehiclesWithIcons = attachIcons(data.vehicles);
 
+                // Enforce specific sort order logic (Client-side safety)
+                const getSortIndex = (v: any) => {
+                    const str = `${v.id} ${v.name}`.toLowerCase();
+                    if (str.includes('camry')) return 0;
+                    if (str.includes('gmc') || str.includes('yukon')) return 1;
+                    if (str.includes('staria')) return 2;
+                    if (str.includes('starex')) return 3;
+                    if (str.includes('hiace')) return 4;
+                    if (str.includes('coaster')) return 5;
+                    return 999;
+                };
+
+                const sortedVehicles = vehiclesWithIcons.sort((a, b) => getSortIndex(a) - getSortIndex(b));
+
                 setRoutes(data.routes);
-                setVehicles(vehiclesWithIcons);
+                setVehicles(sortedVehicles);
             }
         } catch (error) {
             console.error('Failed to fetch pricing:', error);

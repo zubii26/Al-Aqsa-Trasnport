@@ -1,9 +1,9 @@
 import React from 'react';
-import { getFleet } from '@/lib/db';
+import { vehicleService } from '@/services/vehicleService';
 import FleetCarousel, { Vehicle as FleetVehicle } from '@/components/home/FleetCarousel';
 
 export default async function FleetSectionLoader() {
-    const vehicles = await getFleet();
+    const vehicles = await vehicleService.getActiveVehicles();
     const carouselVehicles: FleetVehicle[] = vehicles.slice(0, 6).map(v => ({
         id: v.id || '',
         name: v.name,
