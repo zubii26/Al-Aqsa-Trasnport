@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { useMenu } from '@/context/MenuContext';
 import GlassButton from '@/components/ui/GlassButton';
@@ -47,7 +47,15 @@ export default function Navbar() {
     const links = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About Us' },
-        { href: '/services', label: 'Services' },
+        {
+            href: '/services',
+            label: 'Services',
+            children: [
+                { href: '/services/airport-transfers', label: 'Airport Transfer' },
+                { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
+                { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
+            ]
+        },
         { href: '/fleet', label: 'Fleet' },
         { href: '/blog', label: 'Blog' },
         { href: '/contact', label: 'Contact us' },
@@ -90,16 +98,35 @@ export default function Navbar() {
                 {/* Desktop Nav */}
                 <div className="hidden lg:flex items-center gap-8">
                     {links.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-1 group ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
-                                }`}
-                        >
-                            {link.label}
-                            <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                                }`} />
-                        </Link>
+                        <div key={link.href} className="relative group">
+                            <Link
+                                href={link.href}
+                                className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
+                                    }`}
+                            >
+                                {link.label}
+                                {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                    }`} />
+                            </Link>
+
+                            {/* Dropdown Menu */}
+                            {link.children && (
+                                <div className="absolute top-full left-0 w-56 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-black/5 dark:border-white/10 overflow-hidden p-2">
+                                        {link.children.map((child) => (
+                                            <Link
+                                                key={child.href}
+                                                href={child.href}
+                                                className="block px-4 py-3 text-sm font-medium text-foreground/80 hover:text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                                            >
+                                                {child.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
 
@@ -165,19 +192,42 @@ export default function Navbar() {
 
                 <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-2">
                     {links.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={`p-4 rounded-xl text-lg font-medium transition-all duration-200 flex items-center justify-between group ${pathname === link.href
-                                ? 'bg-secondary/10 text-secondary'
-                                : 'text-foreground/80 hover:bg-muted hover:text-foreground'
-                                }`}
-                        >
-                            {link.label}
-                            {pathname === link.href && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                        <div key={link.href} className="flex flex-col">
+                            <Link
+                                href={link.href}
+                                className={`p-4 rounded-xl text-lg font-medium transition-all duration-200 flex items-center justify-between group ${pathname === link.href
+                                    ? 'bg-secondary/10 text-secondary'
+                                    : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                                    }`}
+                                onClick={() => !link.children && setIsMenuOpen(false)}
+                            >
+                                <span className="flex items-center gap-2">
+                                    {link.label}
+                                </span>
+                                {pathname === link.href && !link.children && (
+                                    <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                                )}
+                            </Link>
+
+                            {/* Mobile Submenu - Always indent for simplicity */}
+                            {link.children && (
+                                <div className="pl-4 flex flex-col gap-1 mt-1 border-l-2 border-secondary/10 ml-4">
+                                    {link.children.map((child) => (
+                                        <Link
+                                            key={child.href}
+                                            href={child.href}
+                                            className={`p-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center justify-between ${pathname === child.href
+                                                ? 'text-secondary bg-secondary/5'
+                                                : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
+                                                }`}
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            {child.label}
+                                        </Link>
+                                    ))}
+                                </div>
                             )}
-                        </Link>
+                        </div>
                     ))}
                 </div>
 

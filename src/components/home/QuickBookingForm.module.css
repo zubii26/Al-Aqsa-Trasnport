@@ -374,23 +374,33 @@
 
 @media (max-width: 768px) {
     .container {
-        padding: 1.25rem;
-        margin-top: 0.5rem;
-        border-radius: 20px;
+        padding: 1.5rem 1rem;
+        margin-top: 1rem;
+        border-radius: 16px;
         /* Ensure it fits nicely on mobile */
-        background: rgba(15, 23, 42, 0.95);
+        background: rgba(15, 23, 42, 0.85);
+        /* Slightly more opaque for readability */
+        backdrop-filter: blur(20px);
+        width: 100%;
+        max-width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
     }
 
     .form {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
-        padding-bottom: 80px;
-        /* Space for sticky button */
+        gap: 1rem;
+        padding-bottom: 0;
     }
 
     .inputGroup {
@@ -404,10 +414,17 @@
         width: 100%;
     }
 
-    /* Sticky Book Now Button Removed */
+    .input {
+        height: 52px;
+        /* Comfortable touch target */
+        font-size: 1rem;
+    }
+
+    /* Sticky Book Now Button Removed - inline now */
     .submitBtn {
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
+        height: 54px;
     }
 }
 

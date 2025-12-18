@@ -44,7 +44,7 @@ const services = [
         description: 'Quick and reliable transfers between your hotel and the Holy Mosques. Enjoy premium comfort and cleanliness, perfectly suitable for families, groups, and elderly pilgrims seeking ease of movement.',
         icon: <Building2 size={32} />,
         image: '/images/services/hotel-transfer-real.jpg',
-        link: '/booking', // Updated link to likely booking flow
+        link: '/services/hotel-transfers', // Updated link to new dedicated page
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
     }
 ];

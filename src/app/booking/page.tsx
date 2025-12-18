@@ -389,42 +389,80 @@ export default function BookingPage() {
 
                         {isVehicleDropdownOpen && (
                             <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 max-h-[400px] overflow-y-auto custom-scrollbar"
+                                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                className="absolute top-full left-0 w-full mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-[100] max-h-[60vh] overflow-y-auto custom-scrollbar pb-4 ring-1 ring-black/5"
                             >
-                                {vehicles.map(vehicle => {
+                                {vehicles.map((vehicle, idx) => {
                                     const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
+                                    const isSelected = bookingData.vehicleId === vehicle.id;
                                     return (
-                                        <div
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: idx * 0.05 }}
                                             key={vehicle.id}
                                             className={`
-                                                p-3 flex items-center gap-4 cursor-pointer border-b border-slate-100 dark:border-slate-700/50 last:border-0
-                                                ${bookingData.vehicleId === vehicle.id ? 'bg-secondary/10 dark:bg-secondary/10' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'}
+                                                relative p-4 flex items-center gap-4 cursor-pointer border-b border-slate-100 dark:border-white/5 last:border-0 transition-all duration-200 group
+                                                ${isSelected
+                                                    ? 'bg-secondary/5 dark:bg-secondary/10'
+                                                    : 'hover:bg-slate-50 dark:hover:bg-white/5'}
                                             `}
                                             onClick={() => {
                                                 updateData('vehicleId', vehicle.id);
                                                 setIsVehicleDropdownOpen(false);
                                             }}
                                         >
+                                            {/* Selection Indicator Strip */}
+                                            {isSelected && (
+                                                <motion.div
+                                                    layoutId="activeStrip"
+                                                    className="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-r-full"
+                                                />
+                                            )}
+
                                             {/* List Item Image */}
-                                            <div className="w-16 h-12 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-700 shrink-0">
+                                            <div className="w-24 h-16 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-white/10 shadow-sm relative group-hover:shadow-md transition-shadow">
                                                 {vehicle.image ? (
-                                                    <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover" />
-                                                ) : <div />}
+                                                    <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
+                                                ) : <div className="w-full h-full flex items-center justify-center"><User size={24} className="text-slate-300" /></div>}
                                             </div>
 
-                                            <div className="flex-1">
-                                                <div className="flex justify-between items-center mb-0.5">
-                                                    <span className="font-bold text-slate-900 dark:text-white text-sm">{vehicle.name}</span>
-                                                    <span className="font-bold text-secondary dark:text-secondary text-sm">{priceDetails.price} SAR</span>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex justify-between items-start mb-1.5">
+                                                    <div>
+                                                        <span className={`block font-bold text-base truncated ${isSelected ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'}`}>
+                                                            {vehicle.name}
+                                                        </span>
+                                                        {isSelected && <span className="text-[10px] uppercase font-bold text-secondary tracking-wider">Selected</span>}
+                                                    </div>
+
+                                                    <div className="text-right shrink-0 ml-2">
+                                                        {priceDetails.discountApplied > 0 && (
+                                                            <span className="block text-[10px] text-slate-400 line-through decoration-red-500/50">
+                                                                {priceDetails.originalPrice}
+                                                            </span>
+                                                        )}
+                                                        <div className={`
+                                                            px-2 py-1 rounded-lg text-sm font-bold border
+                                                            ${isSelected
+                                                                ? 'bg-secondary text-white border-secondary shadow-sm'
+                                                                : 'bg-slate-50 dark:bg-white/5 text-secondary dark:text-secondary border-secondary/20'}
+                                                        `}>
+                                                            {priceDetails.price} <span className={`text-[10px] font-normal ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>SAR</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center gap-3 text-xs text-slate-500">
-                                                    <span className="flex items-center gap-1"><User size={10} /> {vehicle.capacity}</span>
+                                                <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                                    <span className="flex items-center gap-1.5 bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-md border border-slate-100 dark:border-white/5">
+                                                        <User size={12} className="text-slate-400" /> {vehicle.capacity}
+                                                    </span>
+                                                    <span className="flex items-center gap-1.5 bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-md border border-slate-100 dark:border-white/5">
+                                                        <Briefcase size={12} className="text-slate-400" /> {vehicle.luggage}
+                                                    </span>
                                                 </div>
                                             </div>
-                                            {bookingData.vehicleId === vehicle.id && <CheckCircle size={18} className="text-secondary" />}
-                                        </div>
+                                        </motion.div>
                                     );
                                 })}
                             </motion.div>
@@ -896,9 +934,9 @@ export default function BookingPage() {
     return (
         <main className="min-h-screen bg-slate-50 dark:bg-slate-950 overflow-x-hidden relative">
             {/* Hero Section */}
-            <section className="relative min-h-[50vh] flex flex-col items-center justify-center pt-20 lg:pt-16 pb-20 px-4 overflow-hidden">
+            <section className="relative min-h-[50vh] flex flex-col items-center justify-center pt-20 lg:pt-16 pb-20 px-0 md:px-4">
                 {/* Background Image with Ken Burns Effect */}
-                <div className="absolute inset-0 w-full h-full z-0">
+                <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
                     <img
                         src="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
                         alt="Background"
@@ -908,7 +946,7 @@ export default function BookingPage() {
                     <div className="absolute inset-0 bg-black/30" />
                 </div>
 
-                <div className="container mx-auto max-w-6xl relative z-10">
+                <div className="container px-0 md:px-4 mx-auto max-w-6xl relative z-10">
                     <div className="flex flex-col items-center gap-12">
 
                         {/* Top: Branding & Descriptions (Centered) */}
@@ -936,7 +974,7 @@ export default function BookingPage() {
 
                             {/* Trust Highlights - Horizontal Bar Centered */}
                             <FadeIn delay={0.3} direction="up">
-                                <div className="flex flex-wrap justify-center gap-3 lg:gap-6 pt-2">
+                                <div className="hidden md:flex flex-wrap justify-center gap-3 lg:gap-6 pt-2">
                                     {[
                                         { icon: ShieldCheck, title: "Official License", desc: "Ministry Certified" },
                                         { icon: Clock, title: "Punctual", desc: "Always on time" },
@@ -959,7 +997,7 @@ export default function BookingPage() {
                         {/* Bottom: Wizard (Centered & Full Width Container) */}
                         <div className="w-full max-w-5xl mx-auto relative z-20" ref={wizardRef}>
                             <FadeIn delay={0.4} direction="up">
-                                <div className="glass-card bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-[2.5rem] shadow-2xl shadow-indigo-500/10 overflow-hidden ring-1 ring-black/5 dark:ring-white/10">
+                                <div className="glass-card bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-none md:rounded-[2.5rem] shadow-2xl shadow-indigo-500/10 ring-1 ring-black/5 dark:ring-white/10">
 
                                     {/* Wizard Header / Progress */}
                                     {step < 5 && (
@@ -1003,7 +1041,7 @@ export default function BookingPage() {
                                         </div>
                                     )}
 
-                                    <div className="p-6 md:p-10 lg:p-12">
+                                    <div className="p-4 md:p-10 lg:p-12">
                                         <AnimatePresence mode="wait">
                                             {step === 1 && renderStep1()}
                                             {step === 2 && renderStep2()}
