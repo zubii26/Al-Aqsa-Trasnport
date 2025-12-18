@@ -15,13 +15,38 @@ interface PricingContextType {
 
 const PricingContext = createContext<PricingContextType | undefined>(undefined);
 
+const VEHICLE_IMAGES: Record<string, string> = {
+    'camry': '/images/fleet/camry.png',
+    'gmc': '/images/fleet/gmc.png',
+    'staria': '/images/fleet/staria.png',
+    'starex': '/images/fleet/starex.png',
+    'hiace': '/images/fleet/hiace.png',
+    'coaster': '/images/fleet/coaster.png',
+    'default': '/images/fleet/camry.png'
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const attachIcons = (vehiclesData: any[]): Vehicle[] => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return vehiclesData.map((v: any) => ({
-        ...v,
-        icon: v.id.includes('hiace') || v.id.includes('coaster') ? Bus : Car
-    }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return vehiclesData.map((v: any) => {
+        // Check both ID and Name to ensure we catch the correct type even if ID is numeric/UUID
+        const searchStr = `${v.id} ${v.name}`.toLowerCase();
+
+        let imageKey = 'default';
+        if (searchStr.includes('camry') || searchStr.includes('sedan')) imageKey = 'camry';
+        else if (searchStr.includes('gmc') || searchStr.includes('suv') || searchStr.includes('yukon')) imageKey = 'gmc';
+        else if (searchStr.includes('staria')) imageKey = 'staria';
+        else if (searchStr.includes('starex')) imageKey = 'starex';
+        else if (searchStr.includes('hiace') || searchStr.includes('van')) imageKey = 'hiace';
+        else if (searchStr.includes('coaster') || searchStr.includes('bus')) imageKey = 'coaster';
+
+        return {
+            ...v,
+            icon: v.id.includes('hiace') || v.id.includes('coaster') ? Bus : Car,
+            image: VEHICLE_IMAGES[imageKey]
+        };
+    });
 };
 
 

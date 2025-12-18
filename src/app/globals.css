@@ -200,12 +200,87 @@
 @layer utilities {
 
   /* Glassmorphism Utilities */
+  .bg-noise {
+    position: relative;
+  }
+
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+  }
+
   .glass {
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+  }
+
+  /* Premium Card with Spotlight/Glow potential */
+  .premium-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .dark .premium-card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
+  .premium-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+      0 20px 40px -10px rgba(0, 0, 0, 0.1),
+      0 0 20px rgba(212, 175, 55, 0.15);
+    /* Gold glow */
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .premium-input {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) inset;
+  }
+
+  .dark .premium-input {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) inset;
+  }
+
+  .premium-input:focus {
+    background: #fff;
+    border-color: #D4AF37;
+    box-shadow:
+      0 0 0 4px rgba(212, 175, 55, 0.1),
+      0 2px 4px rgba(0, 0, 0, 0.02) inset;
+  }
+
+  .dark .premium-input:focus {
+    background: rgba(30, 41, 59, 0.9);
   }
 
   .glass-card {
@@ -340,5 +415,55 @@
 
   .home-datepicker-popper .react-datepicker__navigation {
     top: 8px !important;
+  }
+}
+
+/* Mobile Date Picker Overrides */
+@media (max-width: 768px) {
+  .home-datepicker-popper .react-datepicker {
+    font-size: 0.8rem !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__month-container {
+    width: 100% !important;
+    float: none !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__header {
+    padding: 8px 0 !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__current-month {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__day-name,
+  .home-datepicker-popper .react-datepicker__day,
+  .home-datepicker-popper .react-datepicker__time-name {
+    width: 1.7rem !important;
+    line-height: 1.7rem !important;
+    margin: 0.1rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__time-container {
+    width: 100% !important;
+    float: none !important;
+    border-left: none !important;
+    border-top: 1px solid #e2e8f0 !important;
+  }
+
+  .dark .home-datepicker-popper .react-datepicker__time-container {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+    width: 100% !important;
   }
 }

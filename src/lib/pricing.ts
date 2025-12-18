@@ -22,6 +22,7 @@ export interface Vehicle {
     luggage: string;
     category?: 'Standard' | 'Premium' | 'VIP';
     isActive?: boolean;
+    image?: string;
 }
 
 export const VEHICLES: Vehicle[] = [];
