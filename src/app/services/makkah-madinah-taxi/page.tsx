@@ -45,7 +45,13 @@ const makkahMadinahFAQs = [
     }
 ];
 
-export default function MakkahMadinahTaxiPage() {
+import { getSettings } from '@/lib/settings-storage';
+
+export default async function MakkahMadinahTaxiPage() {
+    const settings = await getSettings();
+    const phoneNumber = settings.contact.phone;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}`;
+
     const content = {
         title: "VIP Makkah to Madinah Taxi Services",
         subtitle: "Experience a spiritual journey with absolute comfort. 4-5 hours travel time in luxury GMC Yukon or Hyundai Staria.",
@@ -59,7 +65,7 @@ export default function MakkahMadinahTaxiPage() {
                 subtitle={content.subtitle}
                 bgImage={content.heroImage}
                 ctaText="Book Now via WhatsApp"
-                ctaLink="https://wa.me/966592201990"
+                ctaLink={whatsappLink}
                 layout="center"
             />
 

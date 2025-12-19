@@ -45,7 +45,13 @@ const jeddahAirportFAQs = [
     }
 ];
 
-export default function JeddahAirportTransferPage() {
+import { getSettings } from '@/lib/settings-storage';
+
+export default async function JeddahAirportTransferPage() {
+    const settings = await getSettings();
+    const phoneNumber = settings.contact.phone;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}`;
+
     const content = {
         title: "Jeddah Airport to Makkah Transfers",
         subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service, and direct transfer to your Makkah hotel.",
@@ -59,7 +65,7 @@ export default function JeddahAirportTransferPage() {
                 subtitle={content.subtitle}
                 bgImage={content.heroImage}
                 ctaText="Book Arrival Transfer"
-                ctaLink="https://wa.me/966592201990"
+                ctaLink={whatsappLink}
                 layout="center"
             />
 
