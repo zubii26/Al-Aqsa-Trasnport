@@ -52,15 +52,18 @@ export const viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
-  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers to Makkah, luxury GMC Yukon for Makkah to Madinah taxi, and VIP Ziarah tours. Trusted by thousands of pilgrims. خدمة نقل معتمرين متميزة";
+  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers, VIP Makkah to Madinah taxi, and luxury GMC/Starex fleet. Trusted by thousands of pilgrims for safety and comfort.";
   const OPTIMIZED_KEYWORDS = [
     "Umrah transport services",
-    "Makkah to Madinah taxi",
-    "Jeddah airport to Makkah transport",
-    "VIP Umrah transport",
+    "Makkah to Madinah taxi fare",
+    "Jeddah airport to Makkah taxi",
+    "VIP Umrah transport Saudi Arabia",
     "GMC Yukon Umrah booking",
+    "Madinah airport to Masjid Nabawi",
     "Luxury Pilgrim Transport",
-    "Saudi Arabia Umrah taxi"
+    "Umrah taxi service",
+    "Haramain train alternative",
+    "Ziyarat transport Makkah"
   ];
 
   const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";
@@ -73,7 +76,8 @@ export async function generateMetadata(): Promise<Metadata> {
     "شركة نقل عمرة",
     "سيارات جمس للعمرة",
     "رحلات زيارة المدينة",
-    "مواصلات الحرمين"
+    "مواصلات الحرمين",
+    "حجز تاكسي جدة"
   ];
   const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords, ...ARABIC_KEYWORDS]));
 
@@ -207,12 +211,12 @@ export default async function RootLayout({
                   color="#D4AF37"
                   initialPosition={0.08}
                   crawlSpeed={200}
-                  height={3}
+                  height={4}
                   crawl={true}
                   showSpinner={false}
                   easing="ease"
                   speed={200}
-                  shadow="0 0 10px #D4AF37,0 0 5px #D4AF37"
+                  shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
                 />
                 <ClientLayoutWrapper>
                   <AnnouncementBanner discount={settings.discount || { enabled: false, type: 'percentage', value: 0 }} />
@@ -250,6 +254,17 @@ export default async function RootLayout({
                 "addressLocality": "Makkah",
                 "addressCountry": "SA"
               },
+              "areaServed": [
+                { "@type": "City", "name": "Makkah" },
+                { "@type": "City", "name": "Madinah" },
+                { "@type": "City", "name": "Jeddah" },
+                { "@type": "Country", "name": "Saudi Arabia" }
+              ],
+              "sameAs": [
+                "https://facebook.com/alaqsaumrahtransport",
+                "https://twitter.com/alaqsatransport",
+                "https://instagram.com/alaqsaumrahtransport"
+              ],
               "geo": {
                 "@type": "GeoCoordinates",
                 "latitude": 21.4225,
@@ -268,6 +283,22 @@ export default async function RootLayout({
                 ],
                 "opens": "00:00",
                 "closes": "23:59"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Umrah Transport Services",
+                "itemListElement": [
+                  {
+                    "@type": "Service",
+                    "name": "Jeddah Airport to Makkah Taxi",
+                    "description": "Private VIP transfer from Jeddah Airport to Makkah hotels."
+                  },
+                  {
+                    "@type": "Service",
+                    "name": "Makkah to Madinah Taxi",
+                    "description": "Comfortable GMC Yukon and Staria dispatch for Ziyarat and intercity travel."
+                  }
+                ]
               }
             })
           }}

@@ -15,7 +15,7 @@ export default function AmPmToggle({ value, onChange }: AmPmToggleProps) {
                 onClick={() => onChange('AM')}
                 className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200
                     ${value === 'AM'
-                        ? 'bg-white dark:bg-slate-700 text-amber-500 shadow-sm'
+                        ? 'bg-white dark:bg-slate-700 text-[#fbbf24] shadow-sm'
                         : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                     }`}
             >
@@ -26,7 +26,7 @@ export default function AmPmToggle({ value, onChange }: AmPmToggleProps) {
                 onClick={() => onChange('PM')}
                 className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200
                     ${value === 'PM'
-                        ? 'bg-white dark:bg-slate-700 text-amber-500 shadow-sm'
+                        ? 'bg-white dark:bg-slate-700 text-[#fbbf24] shadow-sm'
                         : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                     }`}
             >

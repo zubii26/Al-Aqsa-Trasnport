@@ -6,7 +6,17 @@ import styles from './FAQSection.module.css';
 import FadeIn from '@/components/common/FadeIn';
 import GlassCard from '@/components/ui/GlassCard';
 
-const faqs = [
+interface FAQItem {
+    question: string;
+    answer: string;
+}
+
+interface FAQSectionProps {
+    items?: FAQItem[];
+    title?: string;
+}
+
+const defaultFAQs: FAQItem[] = [
     {
         question: "How do I book a ride?",
         answer: "You can book directly through our website by selecting your service type, vehicle, and dates. Alternatively, you can contact our 24/7 support team via WhatsApp for assistance."
@@ -25,7 +35,7 @@ const faqs = [
     }
 ];
 
-export default function FAQSection() {
+export default function FAQSection({ items = defaultFAQs, title = "Frequently Asked Questions" }: FAQSectionProps) {
     const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
     const toggleAccordion = (index: number) => {
@@ -36,10 +46,10 @@ export default function FAQSection() {
         <section className={styles.section}>
             <div className="container">
                 <FadeIn>
-                    <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
+                    <h2 className={styles.sectionTitle}>{title}</h2>
                 </FadeIn>
                 <div className={styles.container}>
-                    {faqs.map((faq, index) => (
+                    {items.map((faq, index) => (
                         <GlassCard key={index} delay={index * 0.1} className={`p-0 overflow-hidden ${activeAccordion === index ? styles.active : ''}`}>
                             <button
                                 className={styles.question}

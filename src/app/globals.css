@@ -52,6 +52,14 @@
       0 0 0 1px rgba(255, 255, 255, 0.3) inset;
     --glass-blur: 16px;
 
+    /* Responsive Glass Settings - Mobile Optimization */
+    @media (max-width: 768px) {
+      --glass-blur: 8px;
+      /* Reduced blur for performance */
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      /* More opaque, less reliance on filter */
+    }
+
     /* Gradients */
     --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   }
@@ -97,6 +105,12 @@
       0 10px 25px -3px rgba(0, 0, 0, 0.4),
       0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     --glass-blur: 16px;
+
+    /* Responsive Glass Settings - Mobile Optimization (Dark Mode) */
+    @media (max-width: 768px) {
+      --glass-blur: 8px;
+      --glass-bg: rgba(15, 23, 42, 0.9);
+    }
 
     /* Gradients */
     --bg-gradient: linear-gradient(to bottom, #020617, #0f172a);
@@ -224,7 +238,10 @@
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+    will-change: transform, backdrop-filter;
+    /* Hint browser to optimize */
   }
+
 
   /* Premium Card with Spotlight/Glow potential */
   .premium-card {
@@ -416,6 +433,22 @@
   .home-datepicker-popper .react-datepicker__navigation {
     top: 8px !important;
   }
+
+  /* Time Picker Colors */
+  .home-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+    background-color: #fbbf24 !important;
+    color: #0f172a !important;
+    /* Deep Navy text for contrast */
+    font-weight: bold !important;
+  }
+
+  .home-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+    background-color: rgba(251, 191, 36, 0.2) !important;
+  }
+
+  .home-datepicker-popper .react-datepicker-time__header {
+    color: #fbbf24 !important;
+  }
 }
 
 /* Mobile Date Picker Overrides */
@@ -465,5 +498,15 @@
 
   .home-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
     width: 100% !important;
+  }
+
+  /* Mobile Time Picker Colors */
+  .home-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+    background-color: #fbbf24 !important;
+    color: #0f172a !important;
+  }
+
+  .home-datepicker-popper .react-datepicker-time__header {
+    color: #fbbf24 !important;
   }
 }

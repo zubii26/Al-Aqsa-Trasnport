@@ -44,6 +44,7 @@
             rgba(10, 31, 68, 0.75) 50%,
             rgba(10, 31, 68, 0.6) 100%);
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 1;
 }
 

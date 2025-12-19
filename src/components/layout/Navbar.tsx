@@ -54,6 +54,8 @@ export default function Navbar() {
                 { href: '/services/airport-transfers', label: 'Airport Transfer' },
                 { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
                 { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
+                { href: '/services/makkah-madinah-taxi', label: 'Makkah to Madinah Taxi' },
+                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport Transfer' },
             ]
         },
         { href: '/fleet', label: 'Fleet' },

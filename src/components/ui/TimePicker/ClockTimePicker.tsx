@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { formatTime, setTimeDate } from './time-utils';
+import { createPortal } from 'react-dom';
 import ClockFace from './ClockFace';
 import AmPmToggle from './AmPmToggle';
 import { Clock, ChevronDown } from 'lucide-react';
@@ -34,16 +35,9 @@ export default function ClockTimePicker({
         if (date) setSelectedDate(date);
     }, [date]);
 
-    // Close on click outside
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    // Close on click outside - REMOVED (Handled by Portal Overlay)
+    // The portal overlay covers the screen and handles outside clicks.
+    // The previous logic failed because portal content is physically outside containerRef.
 
     const handleHourChange = (val: number) => {
         const currentHours = selectedDate.getHours();
@@ -81,6 +75,48 @@ export default function ClockTimePicker({
     const displayMinutes = selectedDate.getMinutes();
     const displayAmPm = selectedDate.getHours() >= 12 ? 'PM' : 'AM';
 
+    // Portal ref
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // Helper for portal - render at root
+    const Portal = ({ children }: { children: React.ReactNode }) => {
+        if (!mounted || typeof document === 'undefined') return null;
+        return createPortal(children, document.body);
+    };
+
+    // Calculate position manually since it's a portal now
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+
+    useEffect(() => {
+        if (isOpen && containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            // Default to bottom-left alignment
+            let top = rect.bottom + window.scrollY + 8;
+            let left = rect.left + window.scrollX;
+
+            // Handle right alignment
+            if (align === 'right') {
+                left = rect.right + window.scrollX - 260; // 260 is width of popup
+            }
+
+            // Simple viewport check (if too close to bottom, flip up)
+            if (rect.bottom + 350 > window.innerHeight + window.scrollY) {
+                top = rect.top + window.scrollY - 360; // Flip up
+            }
+
+            // Mobile check - center if screen is small
+            if (window.innerWidth < 400) {
+                left = (window.innerWidth - 260) / 2 + window.scrollX;
+            }
+
+            setPosition({ top, left });
+        }
+    }, [isOpen, align]);
+
     return (
         <div className="relative" ref={containerRef}>
             {/* Trigger Input */}
@@ -99,69 +135,78 @@ export default function ClockTimePicker({
                 )}
             </div>
 
-            {/* Popup */}
+            {/* Popup via Portal */}
             {isOpen && (
-                <div
-                    className={`absolute top-full mt-2 z-50 w-[260px] p-3 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700 shadow-2xl animate-in fade-in zoom-in-95 duration-200
-                        ${align === 'right' ? 'right-0' : 'left-0'}`}
-                >
-                    {/* Header: Time Display */}
-                    <div className="flex items-center justify-center gap-1 mb-2">
-                        <button
-                            type="button"
-                            onClick={() => setView('hours')}
-                            className={`text-3xl font-bold transition-colors ${view === 'hours' ? 'text-amber-500' : 'text-slate-400 dark:text-slate-600'}`}
-                        >
-                            {displayHours}
-                        </button>
-                        <span className="text-3xl font-bold text-slate-300 dark:text-slate-700">:</span>
-                        <button
-                            type="button"
-                            onClick={() => setView('minutes')}
-                            className={`text-3xl font-bold transition-colors ${view === 'minutes' ? 'text-amber-500' : 'text-slate-400 dark:text-slate-600'}`}
-                        >
-                            {displayMinutes.toString().padStart(2, '0')}
-                        </button>
-                        <div className="ml-1 flex flex-col text-[10px] font-bold text-slate-400">
-                            <span>{displayAmPm}</span>
+                <Portal>
+                    {/* Overlay for clicking outside (needed for portal) */}
+                    <div
+                        className="fixed inset-0 z-[99999] bg-black/10 backdrop-blur-[1px]"
+                        onClick={() => setIsOpen(false)}
+                    />
+
+                    <div
+                        className="absolute z-[100000] w-[260px] p-3 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+                        style={{ top: position.top, left: position.left }}
+                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+                    >
+                        {/* Header: Time Display */}
+                        <div className="flex items-center justify-center gap-1 mb-2">
+                            <button
+                                type="button"
+                                onClick={() => setView('hours')}
+                                className={`text-3xl font-bold transition-colors ${view === 'hours' ? 'text-[#fbbf24]' : 'text-slate-400 dark:text-slate-600'}`}
+                            >
+                                {displayHours}
+                            </button>
+                            <span className="text-3xl font-bold text-slate-300 dark:text-slate-700">:</span>
+                            <button
+                                type="button"
+                                onClick={() => setView('minutes')}
+                                className={`text-3xl font-bold transition-colors ${view === 'minutes' ? 'text-[#fbbf24]' : 'text-slate-400 dark:text-slate-600'}`}
+                            >
+                                {displayMinutes.toString().padStart(2, '0')}
+                            </button>
+                            <div className="ml-1 flex flex-col text-[10px] font-bold text-slate-400">
+                                <span>{displayAmPm}</span>
+                            </div>
+                        </div>
+
+                        {/* Clock Face */}
+                        <div className="relative h-[220px]">
+                            {view === 'hours' ? (
+                                <div className="absolute inset-0 animate-in fade-in duration-300">
+                                    <ClockFace
+                                        type="hours"
+                                        value={displayHours}
+                                        onChange={handleHourChange}
+                                        onInteractEnd={() => setTimeout(() => setView('minutes'), 100)}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="absolute inset-0 animate-in fade-in duration-300">
+                                    <ClockFace
+                                        type="minutes"
+                                        value={displayMinutes}
+                                        onChange={handleMinuteChange}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer actions */}
+                        <div className="flex flex-col gap-2 mt-0">
+                            <AmPmToggle value={displayAmPm} onChange={handleAmPmChange} />
+
+                            <button
+                                type="button"
+                                onClick={handleConfirm}
+                                className="w-full py-2 bg-gradient-to-r from-[#fbbf24] to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-slate-900 rounded-lg font-semibold shadow-lg shadow-amber-500/20 transition-all text-sm"
+                            >
+                                Set Time
+                            </button>
                         </div>
                     </div>
-
-                    {/* Clock Face */}
-                    <div className="relative h-[220px]">
-                        {view === 'hours' ? (
-                            <div className="absolute inset-0 animate-in fade-in duration-300">
-                                <ClockFace
-                                    type="hours"
-                                    value={displayHours}
-                                    onChange={handleHourChange}
-                                    onInteractEnd={() => setTimeout(() => setView('minutes'), 300)}
-                                />
-                            </div>
-                        ) : (
-                            <div className="absolute inset-0 animate-in fade-in duration-300">
-                                <ClockFace
-                                    type="minutes"
-                                    value={displayMinutes}
-                                    onChange={handleMinuteChange}
-                                />
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Footer actions */}
-                    <div className="flex flex-col gap-2 mt-0">
-                        <AmPmToggle value={displayAmPm} onChange={handleAmPmChange} />
-
-                        <button
-                            type="button"
-                            onClick={handleConfirm}
-                            className="w-full py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg font-semibold shadow-lg shadow-amber-500/20 transition-all text-sm"
-                        >
-                            Set Time
-                        </button>
-                    </div>
-                </div>
+                </Portal>
             )}
         </div>
     );

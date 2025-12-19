@@ -20,13 +20,13 @@ export default function SEOContentSection() {
                                 Premium Umrah Transport & VIP Pilgrim Services
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Welcome to <strong>Al Aqsa Umrah Transport</strong>, the most trusted name for <strong>luxury Umrah transport</strong> in Saudi Arabia. We are dedicated to serving the guests of Allah with a blend of spiritual respect, professional reliability, and genuine hospitality. Whether you are performing Umrah, Hajj, or simply visiting the Holy Cities, we ensure your journey is safe, comfortable, and perfectly punctual.
+                                Welcome to <strong>Al Aqsa Umrah Transport</strong>, the most trusted name for <strong>luxury Umrah transport</strong> in Saudi Arabia. We are dedicated to serving the guests of Allah with a blend of spiritual respect, professional reliability, and genuine hospitality. Whether you are performing Umrah, Hajj, or simply visiting the Holy Cities, our <strong>English-speaking drivers</strong> ensure your journey is safe, comfortable, and perfectly punctual.
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Our comprehensive services include seamless <strong>Jeddah Airport transfers</strong>, <strong>Madinah Airport pickups</strong>, and reliable <strong>Makkah to Madinah taxi</strong> services. We specialize in <strong>intercity pilgrim travel</strong>, offering door-to-door convenience from your hotel in Makkah to your accommodation in Madinah, or directly to the Haram.
+                                Our comprehensive services include seamless <strong>Jeddah Airport transfers</strong>, <strong>Madinah Airport pickups</strong>, and reliable <strong>Makkah to Madinah taxi</strong> services. We specialize in intercity pilgrim travel, offering door-to-door convenience from your hotel in Makkah to your accommodation in Madinah, or directly to the Haram.
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Travel in style with our <strong>VIP fleet</strong> comprising modern <strong>GMC Yukons</strong>, <strong>luxury vans</strong>, and business-class vehicles tailored for families and groups. Our chauffeur-driven services guarantee a stress-free experience, allowing you to focus entirely on your worship. Book your <strong>Haram shuttle</strong> or airport transfer today and experience the difference of traveling with a company that values your peace of mind above all.
+                                Travel in style with our <strong>VIP fleet</strong> comprising modern <strong>GMC Yukons</strong>, <strong>luxury vans</strong> (H1/Staria), and business-class vehicles tailored for families, ladies, and groups. Our chauffeur-driven services guarantee a stress-free experience, allowing you to focus entirely on your worship. Book your <strong>Haram shuttle</strong> or airport transfer today and experience the difference of traveling with a company that values your peace of mind above all.
                             </p>
                         </div>
 

@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { motion, useScroll, useTransform, Variants } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import styles from './Hero.module.css';
 import GlassButton from '@/components/ui/GlassButton';
 
@@ -41,8 +41,13 @@ const Hero: React.FC<HeroProps> = ({
         target: ref,
         offset: ["start start", "end start"]
     });
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+    // Smooth spring physics for parallax
+    const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+    const yRange = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const y = useSpring(yRange, springConfig);
+    const opacityRange = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+    const opacity = useSpring(opacityRange, springConfig);
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -70,20 +75,25 @@ const Hero: React.FC<HeroProps> = ({
 
     return (
         <section ref={ref} className={styles.hero}>
+            {/* Parallax Wrapper - Controls Scroll Movement */}
             <motion.div
-                className={styles.bgImage}
+                className="absolute inset-0 z-0 will-change-transform"
                 style={{ y, opacity }}
             >
-                <Image
-                    src={bgImage}
-                    alt="Umrah Transport Saudi Arabia Hero"
-                    fill
-                    priority
-                    quality={90}
-                    className="object-cover"
-                    sizes="100vw"
-                />
+                {/* Ken Burns Wrapper - Controls Scale Animation */}
+                <div className={styles.bgImage}>
+                    <Image
+                        src={bgImage}
+                        alt="Umrah Transport Saudi Arabia Hero"
+                        fill
+                        priority
+                        quality={90}
+                        className="object-cover"
+                        sizes="100vw"
+                    />
+                </div>
             </motion.div>
+
             <div className={styles.overlay} />
 
             {/* Custom Background Elements (e.g. animated maps) - Rendered above overlay but below content */}

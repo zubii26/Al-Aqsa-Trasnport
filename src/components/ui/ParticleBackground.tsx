@@ -8,7 +8,10 @@ export default function ParticleBackground() {
     const [particles, setParticles] = useState<{ id: number; top: string; left: string; duration: number }[]>([]);
 
     useEffect(() => {
-        const newParticles = Array.from({ length: 20 }).map((_, i) => ({
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 8 : 20; // Significantly reduce particles on mobile
+
+        const newParticles = Array.from({ length: count }).map((_, i) => ({
             id: i,
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,

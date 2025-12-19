@@ -42,7 +42,7 @@ export async function generateMetadata() {
 export default async function Home() {
   const heroSection = await getSectionContent('home-hero');
   // SEO Optimized Fallbacks
-  const heroTitle = heroSection?.title || "Premium Umrah Transport & VIP Pilgrim Services in Saudi Arabia";
+  const heroTitle = heroSection?.title || "Premium Umrah Transport Services: Jeddah, Makkah & Madinah";
   // Styled Subtitle with Arabic
   const heroSubtitleText = heroSection?.subtitle || "Reliable Jeddah & Madinah Airport Transfers, Luxury Makkah-Madinah Travel";
   const heroSubtitleContent = (

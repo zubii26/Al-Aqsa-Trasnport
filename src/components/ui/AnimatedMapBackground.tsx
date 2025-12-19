@@ -5,15 +5,24 @@ import { motion } from 'framer-motion';
 
 export default function AnimatedMapBackground() {
     const [mounted, setMounted] = useState(false);
+    const [nodeCount, setNodeCount] = useState(15); // Default to desktop count
 
     useEffect(() => {
         setMounted(true);
+        const handleResize = () => {
+            // Reduce complexity on mobile
+            setNodeCount(window.innerWidth < 768 ? 8 : 15);
+        };
+
+        handleResize(); // Set initial value
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     if (!mounted) return null;
 
-    // Generate random nodes
-    const nodes = Array.from({ length: 15 }).map((_, i) => ({
+    // Generate random nodes based on current nodeCount
+    const nodes = Array.from({ length: nodeCount }).map((_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,

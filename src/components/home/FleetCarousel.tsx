@@ -46,61 +46,85 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                     </p>
                 </div>
 
-                <div className={styles.carouselContainer}>
-                    {vehicles.map((vehicle, index) => (
-                        <div key={vehicle.id} className={`${styles.card} glass-card`}>
-                            <div className={styles.imageWrapper}>
-                                <Image
-                                    src={vehicle.image}
-                                    alt={vehicle.name}
-                                    fill
-                                    className={styles.vehicleImage}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    priority={index < 2}
-                                />
-                                {isDiscountActive && (
-                                    <div className={styles.discountBadge}>
-                                        <Tag size={14} className="fill-current" />
-                                        <span>
-                                            {discount?.type === 'percentage' ? `${discount.value}% OFF` : `${discount?.value} SAR OFF`}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-                            <div className={styles.content}>
-                                <div className={styles.cardHeader}>
-                                    <h3 className={styles.vehicleName}>{vehicle.name}</h3>
-                                    <span className={styles.priceTag}>{vehicle.price}</span>
-                                </div>
+                <div className="relative">
+                    <button
+                        onClick={() => {
+                            const container = document.getElementById('fleet-carousel-container');
+                            if (container) container.scrollBy({ left: -350, behavior: 'smooth' });
+                        }}
+                        className={`${styles.navBtn} ${styles.prevBtn}`}
+                        aria-label="Scroll Left"
+                    >
+                        <ArrowRight className="rotate-180" size={24} />
+                    </button>
 
-                                <div className={styles.specs}>
-                                    <div className={styles.specItem}>
-                                        <Users size={18} className="text-primary" />
-                                        <span>{vehicle.passengers} Passengers</span>
-                                    </div>
-                                    <div className={styles.specItem}>
-                                        <Briefcase size={18} className="text-primary" />
-                                        <span>{vehicle.luggage} Bags</span>
-                                    </div>
-                                </div>
-
-                                <div className={styles.features}>
-                                    {vehicle.features.slice(0, 3).map((feature, i) => (
-                                        <div key={i} className={styles.featureItem}>
-                                            <Check size={14} className="text-accent" />
-                                            <span>{feature}</span>
+                    <div id="fleet-carousel-container" className={styles.carouselContainer}>
+                        {vehicles.map((vehicle, index) => (
+                            <div key={vehicle.id} className={`${styles.card} glass-card`}>
+                                <div className={styles.imageWrapper}>
+                                    <Image
+                                        src={vehicle.image}
+                                        alt={vehicle.name}
+                                        fill
+                                        className={styles.vehicleImage}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        priority={index < 2}
+                                    />
+                                    {isDiscountActive && (
+                                        <div className={styles.discountBadge}>
+                                            <Tag size={14} className="fill-current" />
+                                            <span>
+                                                {discount?.type === 'percentage' ? `${discount.value}% OFF` : `${discount?.value} SAR OFF`}
+                                            </span>
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
+                                <div className={styles.content}>
+                                    <div className={styles.cardHeader}>
+                                        <h3 className={styles.vehicleName}>{vehicle.name}</h3>
+                                        <span className={styles.priceTag}>{vehicle.price}</span>
+                                    </div>
 
-                                <div className="mt-auto">
-                                    <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2 !bg-secondary !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
-                                        Book Now <ArrowRight size={16} />
-                                    </GlassButton>
+                                    <div className={styles.specs}>
+                                        <div className={styles.specItem}>
+                                            <Users size={18} className="text-primary" />
+                                            <span>{vehicle.passengers} Passengers</span>
+                                        </div>
+                                        <div className={styles.specItem}>
+                                            <Briefcase size={18} className="text-primary" />
+                                            <span>{vehicle.luggage} Bags</span>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.features}>
+                                        {vehicle.features.slice(0, 3).map((feature, i) => (
+                                            <div key={i} className={styles.featureItem}>
+                                                <Check size={14} className="text-accent" />
+                                                <span>{feature}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="mt-auto">
+                                        <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2 !bg-secondary !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
+                                            Book Now <ArrowRight size={16} />
+                                        </GlassButton>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={() => {
+                            const container = document.getElementById('fleet-carousel-container');
+                            if (container) container.scrollBy({ left: 350, behavior: 'smooth' });
+                        }}
+                        className={`${styles.navBtn} ${styles.nextBtn}`}
+                        aria-label="Scroll Right"
+                    >
+                        <ArrowRight size={24} />
+                    </button>
                 </div>
             </div>
         </section>
