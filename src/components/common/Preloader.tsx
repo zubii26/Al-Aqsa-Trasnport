@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import LoadingScreen from './LoadingScreen';
-
+import styles from './Preloader.module.css';
+import AnimatedCar from './AnimatedCar';
 
 export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         // Check if preloader has already been shown in this session
@@ -15,12 +16,26 @@ export default function Preloader() {
             return;
         }
 
+        // Simulate loading progress - Smoother animation (30ms)
+        const interval = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    return 100;
+                }
+                // Smoother, consistent increments
+                const increment = Math.random() * 0.8 + 0.2;
+                return Math.min(prev + increment, 100);
+            });
+        }, 30);
+
         const handleLoad = () => {
+            setProgress(100);
             setTimeout(() => {
                 setIsLoading(false);
                 sessionStorage.setItem('preloader_shown', 'true');
                 window.dispatchEvent(new Event('preloader-complete'));
-            }, 500); // Reduced duration for better user experience
+            }, 800); // Wait for progress bar to complete visual fill
         };
 
         if (document.readyState === 'complete') {
@@ -29,10 +44,43 @@ export default function Preloader() {
             window.addEventListener('load', handleLoad);
         }
 
-        return () => window.removeEventListener('load', handleLoad);
+        return () => {
+            window.removeEventListener('load', handleLoad);
+            clearInterval(interval);
+        };
     }, []);
 
     if (!isLoading) return null;
 
-    return <LoadingScreen />;
+    return (
+        <div className={`${styles.preloader} ${!isLoading ? styles.hidden : ''}`}>
+            <div className={styles.content}>
+
+                <div className={styles.logoWrapper}>
+                    <div className={styles.ringOuter} />
+                    <div className={styles.ringInner} />
+                    <div className={styles.glow} />
+
+                    {/* Using basic img for reliability in preloader context, or Next Image */}
+                    <img
+                        src="/logo.png"
+                        alt="Al Aqsa Umrah Transport"
+                        className={styles.logoImage}
+                    />
+                </div>
+
+                <div className={styles.textWrapper}>
+                    <p className={styles.tagline}>Journey with comfort and trust...</p>
+
+                    <div className={styles.progressContainer}>
+                        <div
+                            className={styles.progressBar}
+                            style={{ width: `${Math.min(progress, 100)}%` }}
+                        />
+                    </div>
+                    {/* <p className={styles.percentage}>{Math.round(progress)}%</p> */}
+                </div>
+            </div>
+        </div>
+    );
 }
