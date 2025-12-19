@@ -54,7 +54,7 @@ async function BookingFormFetcher({ className, title, subtitle }: BookingFormWra
 
 export default function BookingFormWrapper(props: BookingFormWrapperProps) {
     return (
-        <div className="w-full relative z-10 px-4 md:px-0">
+        <div className="hidden md:block w-full relative z-10 px-4 md:px-0">
             <Suspense fallback={<div className="w-full h-[400px] bg-white/10 backdrop-blur-md rounded-2xl animate-pulse" />}>
                 <BookingFormFetcher {...props} />
             </Suspense>

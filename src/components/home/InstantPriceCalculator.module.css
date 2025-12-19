@@ -316,32 +316,71 @@
     }
 }
 
-@media (max-width: 640px) {
-    .section {
-        padding: 4rem 0 6rem 0;
-    }
-
-    .title {
-        font-size: 2rem;
-    }
-
+@media (max-width: 768px) {
     .calculatorContainer {
-        padding: 1.25rem;
-        gap: 2rem;
+        padding: 1rem;
+        gap: 1.5rem;
+        max-width: 100%;
+        width: 100%;
         border-radius: 1.5rem;
     }
 
     .resultDisplay {
+        width: 100%;
         padding: 1.5rem;
-        border-radius: 1.25rem;
+        margin: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .section {
+        padding: 2rem 0 4rem 0;
+    }
+
+    /* Force global container to have no padding so card touches edges */
+    .section :global(.container) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .calculatorContainer {
+        padding: 1rem 0.5rem;
+        /* Minimal horizontal padding inside card */
+        border-radius: 0;
+        /* Square off edges for full width look */
+        background: rgba(255, 255, 255, 0.95);
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        /* Simplify for mobile full-width */
+        margin: 0;
+        width: 100%;
+    }
+
+    :global(.dark) .calculatorContainer {
+        background: rgba(30, 41, 59, 0.95);
+    }
+
+    .resultDisplay {
+        padding: 1.25rem;
+        border-radius: 1rem;
+        width: 100%;
+        margin: 0;
     }
 
     .priceValue {
-        font-size: 3.5rem;
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
     }
 
     .mobileStickyBar {
-        display: block;
+        display: none;
     }
 }
 
