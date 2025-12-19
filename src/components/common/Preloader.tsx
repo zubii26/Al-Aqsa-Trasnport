@@ -67,8 +67,8 @@ export default function Preloader() {
                         <Image
                             src="/logo.png"
                             alt="Al Aqsa Umrah Transport"
-                            width={90}
-                            height={90}
+                            width={110}
+                            height={110}
                             priority
                             className="w-full h-full object-contain"
                         />
