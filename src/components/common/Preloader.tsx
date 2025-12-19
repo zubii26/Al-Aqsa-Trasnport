@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './Preloader.module.css';
+import Image from 'next/image';
 import AnimatedCar from './AnimatedCar';
 
 export default function Preloader() {
@@ -61,12 +62,17 @@ export default function Preloader() {
                     <div className={styles.ringInner} />
                     <div className={styles.glow} />
 
-                    {/* Using basic img for reliability in preloader context, or Next Image */}
-                    <img
-                        src="/logo.png"
-                        alt="Al Aqsa Umrah Transport"
-                        className={styles.logoImage}
-                    />
+                    {/* Using Next Image for priority loading */}
+                    <div className={styles.logoImage}>
+                        <Image
+                            src="/logo.png"
+                            alt="Al Aqsa Umrah Transport"
+                            width={90}
+                            height={90}
+                            priority
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
                 </div>
 
                 <div className={styles.textWrapper}>

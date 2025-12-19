@@ -48,9 +48,12 @@
     position: relative;
     z-index: 5;
     width: 90px;
-    height: auto;
+    height: 90px;
     animation: breath 3s ease-in-out infinite;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Distinctive Golden Ring - Outer */
