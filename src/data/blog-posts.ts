@@ -189,5 +189,128 @@ export const staticBlogPosts = [
         metaDescription: 'Why comfort and safety matter for your Umrah pilgrimage. Learn how the right transport choices can enhance your spiritual focus and ease.',
         createdAt: new Date('2025-11-20'),
         updatedAt: new Date('2025-11-20'),
+    },
+    {
+        _id: 'static-6',
+        slug: 'tips-for-umrah-with-elderly-parents',
+        title: 'Top 5 Tips for a Comfortable Umrah with Elderly Parents',
+        excerpt: 'Planning Umrah with seniors? Ensure a blessed and stress-free journey with our guide on wheelchair access, transport, and pacing.',
+        content: `
+            <h2>Honoring Our Elders in the Holy Cities</h2>
+            <p>Taking your parents for Umrah is a noble act of kindness. However, the physical demands of Tawaf, Sa'i, and travel between cities can be challenging for seniors. Here is how to ensure a comfortable journey.</p>
+
+            <h3>1. Prioritize Door-to-Door Transport</h3>
+            <p>Walking distances can add up. Unlike buses that drop off at designated stops often far from hotel entrances, a <strong>private Umrah taxi</strong> drops you right at the lobby. This saves precious energy for worship.</p>
+
+            <h3>2. Wheelchair Accessibility</h3>
+            <p>Ensure your transport provider can accommodate a wheelchair. Our <strong>GMC Yukon and Staria vans</strong> have ample trunk space for folding wheelchairs. Always request assistance if your parent needs help boarding.</p>
+
+            <h3>3. Choose Direct Routes</h3>
+            <p>Avoid multi-stop buses. The direct route from <strong>Jeddah Airport to Makkah</strong> takes about 60-75 minutes in a private car, compared to 2-3 hours on a shared bus waiting for other passengers.</p>
+
+            <h3>4. Schedule Rest Stops</h3>
+            <p>On the journey to Madinah (4.5 hours), ask your driver to stop at premium rest areas. Private drivers are flexible and happy to pause whenever your parents need a break, restroom, or prayer stop.</p>
+
+            <h3>5. Hydration and Climate Control</h3>
+            <p>The Saudi heat can be intense. Ensure your vehicle has powerful rear-cabin air conditioning. We always provide complimentary water bottles to keep our pilgrims hydrated.</p>
+        `,
+        category: 'Travel Tips',
+        date: new Date('2025-12-05'),
+        readTime: '5 min read',
+        image: '/images/blog/elderly-umrah-care-final.png',
+        alt: 'Senior pilgrim receiving assistance during Umrah',
+        author: 'Hassan Al-Amri',
+        tags: ['Elderly', 'Accessibility', 'Family Travel', 'Umrah Tips'],
+        isPublished: true,
+        metaTitle: 'Umrah with Elderly Parents | Transport & Comfort Tips',
+        metaDescription: 'Essential tips for performing Umrah with elderly parents. Learn about wheelchair accessible transport, direct transfers, and how to minimize walking.',
+        createdAt: new Date('2025-12-05'),
+        updatedAt: new Date('2025-12-05'),
+    },
+    {
+        _id: 'static-7',
+        slug: 'jeddah-airport-to-makkah-taxi-price-2025',
+        title: 'Jeddah Airport to Makkah: Pricing Guide 2025',
+        excerpt: 'Avoid hidden fees. A transparent guide to taxi fares, private transfer costs, and train tickets for the 2025 Umrah season.',
+        content: `
+            <h2>Understanding Transport Costs for Umrah 2025</h2>
+            <p>Budgeting is a key part of your Umrah planning. One of the most common questions we get is: <em>"How much is a taxi from Jeddah Airport to Makkah?"</em> Here is a breakdown to help you decide.</p>
+
+            <h3>1. Standard Airport Taxis (Curbside)</h3>
+            <p><strong>Estimated Price: SAR 200 - 300</strong></p>
+            <p>These are available outside the terminal. While convenient, prices can fluctuate based on negotiation or meter usage. Be aware of potential "surge" pricing during busy arrival times.</p>
+
+            <h3>2. Haramain High-Speed Train</h3>
+            <p><strong>Price: SAR 60 - 80 per person</strong></p>
+            <p>Very affordable for solo travelers. However, for a family of 4, the cost (SAR 240-320) plus the taxi cost from Makkah station to your hotel often equals or exceeds a private car transfer.</p>
+
+            <h3>3. Private VIP Transfers (Fixed Price)</h3>
+            <p><strong>Price: SAR 350 - 450 (Sedan/SUV)</strong></p>
+            <p>This is the "all-inclusive" option. The price is fixed regardless of traffic. It includes:</p>
+            <ul>
+                <li>Meet & Greet inside the terminal</li>
+                <li>Luggage assistance</li>
+                <li>Door-to-door service</li>
+                <li>No waiting in queues</li>
+            </ul>
+
+            <h3>The "Value" of Peace of Mind</h3>
+            <p>When arriving tired after a long flight, the value of seeing your name on a signboard and walking straight to a cool, waiting car is priceless. For families and groups, a <strong>private GMC Yukon</strong> is often the most economical and comfortable choice per person.</p>
+        `,
+        category: 'Guide',
+        date: new Date('2025-12-15'),
+        readTime: '4 min read',
+        image: '/images/blog/taxi-fare-guide.png',
+        alt: 'Taxi fare calculator and currency for Umrah transport',
+        author: 'Finance Team',
+        tags: ['Pricing', 'Budget', 'Jeddah Airport', 'Travel Guide'],
+        isPublished: true,
+        metaTitle: 'Jeddah Airport to Makkah Taxi Price 2025 | Fare Guide',
+        metaDescription: '2025 Pricing Guide for Umrah transport. Compare costs of Jeddah airport taxis, Haramain train, and private VIP transfers to Makkah.',
+        createdAt: new Date('2025-12-15'),
+        updatedAt: new Date('2025-12-15'),
+    },
+    {
+        _id: 'static-8',
+        slug: 'sanctity-of-madinan-and-durood-sharif',
+        title: 'The Sanctity of Madinah & The Virtues of Durood Shareef',
+        excerpt: 'Madinah Al Munawwarah is not just a city; it is the sanctuary of the Beloved Prophet (PBUH). Learn about the etiquette (Adab) of visiting and the immense blessings of reciting Durood.',
+        content: `
+            <h2>Entering the City of Light (Al-Madinah Al-Munawwarah)</h2>
+            <p>Visiting Madinah is a journey of the heart. It is the city that gave refuge to the Prophet Muhammad (Peace Be Upon Him) and where his blessed body rests. As you approach this sanctuary, renew your intention (Niyyah) solely for the love of Allah and His Messenger.</p>
+
+            <h3>The Etiquette (Adab) of Madinah</h3>
+            <p>Imam Malik (RA) would not ride a mount in Madinah out of respect for the soil that the Prophet (PBUH) walked upon. While we may use cars today, our hearts should carry that same reverence.</p>
+            <ul>
+                <li><strong>Lower Your Voice:</strong> Allah says in the Quran, "Do not raise your voices above the voice of the Prophet" (49:2). Maintain a state of calm and quietness.</li>
+                <li><strong>Walk with Humility:</strong> Avoid pushing or rushing, especially in the Rawdah.</li>
+                <li><strong>Sincere Salams:</strong> When standing before the Golden Gate, present your greetings with utmost respect, knowing he returns the greeting.</li>
+            </ul>
+
+            <h3>The Power of Durood Shareef (Salawat)</h3>
+            <p>Allah Himself sends blessings upon the Prophet, as do His angels (Surah Al-Ahzab, 33:56). Reciting Durood Shareef is a divine command and a key to acceptance of prayers.</p>
+
+            <blockquote>
+                "Whoever sends blessings upon me once, Allah will send blessings upon him tenfold."
+                <cite>— Prophet Muhammad (PBUH)</cite>
+            </blockquote>
+
+            <h3>Recommended Actions</h3>
+            <p>Make it a habit to recite <em>"Allahumma Salla Ala Sayyidina Muhammad"</em> constantly during your journey. The journey from Makkah to Madinah (approx. 4-5 hours) is the perfect time to complete thousands of Salawat. Let the miles fly by in remembrance.</p>
+
+            <p>May Allah grant us all the adab to visit His Beloved's city with a clean heart. Ameen.</p>
+        `,
+        category: 'Spiritual',
+        date: new Date('2025-12-20'),
+        readTime: '6 min read',
+        image: '/images/blog/masjid-nabawi-view.jpg',
+        alt: 'Beautiful view of Masjid Al Nabawi green dome',
+        author: 'Mufti Ismail Menk (Reference)',
+        tags: ['Madinah', 'Spiritual Journey', 'Durood', 'Adab'],
+        isPublished: true,
+        metaTitle: 'Virtues of Madinah & Reading Durood Shareef | Pilgrim Guide',
+        metaDescription: 'Learn about the respect and adab required when visiting Madinah Munawwarah and the immense value of reciting Durood Shareef during your Umrah journey.',
+        createdAt: new Date('2025-12-20'),
+        updatedAt: new Date('2025-12-20'),
     }
 ];
