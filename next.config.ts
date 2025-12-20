@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
 
   typescript: {
     // ignoreBuildErrors: false,
+    // Trigger Restart
   },
 
   images: {

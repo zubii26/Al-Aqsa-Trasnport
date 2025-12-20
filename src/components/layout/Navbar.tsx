@@ -46,7 +46,14 @@ export default function Navbar() {
 
     const links = [
         { href: '/', label: 'Home' },
-        { href: '/about', label: 'About Us' },
+        {
+            href: '/about',
+            label: 'About Us',
+            children: [
+                { href: '/about', label: 'Company Profile' },
+                { href: '/about/meet-our-drivers', label: 'Meet Our Drivers' },
+            ]
+        },
         {
             href: '/services',
             label: 'Services',

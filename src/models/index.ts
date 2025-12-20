@@ -100,6 +100,21 @@ export interface IGalleryItem extends Document {
 
 
 
+export interface IDriver extends Document {
+    name: string;
+    photo: string;
+    experience: string;
+    languages: string[];
+    certifications: string[];
+    rating: number;
+    trips: string;
+    quote: string;
+    badges: string[];
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface ISection extends Document {
     name: string; // Unique key
     page: string; // e.g., 'home', 'fleet', 'about'
@@ -278,6 +293,19 @@ export const Route: Model<IRoute> = mongoose.models.Route || mongoose.model<IRou
 export const RoutePrice: Model<IRoutePrice> = mongoose.models.RoutePrice || mongoose.model<IRoutePrice>('RoutePrice', RoutePriceSchema);
 export const GalleryItem: Model<IGalleryItem> = mongoose.models.GalleryItem || mongoose.model<IGalleryItem>('GalleryItem', GalleryItemSchema);
 
+const DriverSchema = new Schema<IDriver>({
+    name: { type: String, required: true },
+    photo: { type: String, required: true },
+    experience: { type: String, required: true },
+    languages: { type: [String], required: true },
+    certifications: { type: [String], default: [] },
+    rating: { type: Number, default: 5.0 },
+    trips: { type: String, default: '0' },
+    quote: { type: String },
+    badges: { type: [String], default: [] },
+    isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
 const SectionSchema = new Schema<ISection>({
     name: { type: String, required: true, unique: true },
     page: { type: String, required: true, index: true },
@@ -303,3 +331,4 @@ const SectionSchema = new Schema<ISection>({
 }, { timestamps: true });
 
 export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
