@@ -139,13 +139,16 @@ export default async function ContactPage() {
 
                         {/* Map Placeholder */}
                         <FadeIn direction="up" delay={0.4}>
-                            <GlassCard className="p-0 overflow-hidden min-h-[250px] relative flex items-center justify-center bg-slate-200 dark:bg-slate-800" id="map">
-                                {/* Use an actual iframe here if you have one, or keep placeholder */}
-                                <div className="text-center p-6">
-                                    <MapPin className="w-12 h-12 text-slate-400 mx-auto mb-2" />
-                                    <p className="text-slate-500 font-medium">Interactive Map Integration</p>
-                                    <p className="text-sm text-slate-400">Head Office: Makkah Al Mukarramah</p>
-                                </div>
+                            <GlassCard className="p-0 overflow-hidden min-h-[400px] relative flex items-center justify-center bg-slate-200 dark:bg-slate-800" id="map">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3713.526883410923!2d39.8126588!3d21.447833599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c21d9da1e4d599%3A0xb8a485c3949902cc!2sAl%20Aqsa%20Umrah%20Transport!5e0!3m2!1sen!2s"
+                                    width="100%"
+                                    height="100%"
+                                    loading="lazy"
+                                    className="w-full h-full min-h-[400px] border-0"
+                                    title="Al Aqsa Umrah Transport Map"
+                                    allowFullScreen
+                                />
                             </GlassCard>
                         </FadeIn>
                     </div>
@@ -170,6 +173,6 @@ export default async function ContactPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

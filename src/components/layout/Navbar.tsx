@@ -51,14 +51,24 @@ export default function Navbar() {
             href: '/services',
             label: 'Services',
             children: [
-                { href: '/services/airport-transfers', label: 'Airport Transfer' },
+                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport Transfer' },
+                { href: '/services/makkah-madinah-taxi', label: 'Makkah to Madinah Taxi' },
+                { href: '/services/madinah-airport-transfer', label: 'Madinah Airport Transfer' },
+                { href: '/services/ziyarat-tours', label: 'Ziyarat Tours' },
+                { href: '/services/airport-transfers', label: 'Airport Transfer (General)' },
                 { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
                 { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
-                { href: '/services/makkah-madinah-taxi', label: 'Makkah to Madinah Taxi' },
-                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport Transfer' },
             ]
         },
-        { href: '/fleet', label: 'Fleet' },
+        {
+            href: '/fleet',
+            label: 'Fleet',
+            children: [
+                { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
+                { href: '/fleet/hyundai-staria', label: 'Hyundai Staria' },
+                { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
+            ]
+        },
         { href: '/blog', label: 'Blog' },
         { href: '/contact', label: 'Contact us' },
     ];

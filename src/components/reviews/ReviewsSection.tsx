@@ -167,7 +167,7 @@ export default function ReviewsSection() {
                         </div>
 
                         <a
-                            href="https://search.google.com/local/writereview?placeid=ChIJ..." // TODO: Add actual Place ID
+                            href="https://www.google.com/search?q=Al+Aqsa+Umrah+Transport#lrd=0x15c21d9da1e4d599:0xb8a485c3949902cc,3"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 px-6 py-3 rounded-full font-semibold transition-colors"
@@ -188,7 +188,7 @@ export default function ReviewsSection() {
                     className="text-center mt-12"
                 >
                     <a
-                        href="https://search.google.com/local/reviews?placeid=ChIJ..." // TODO: Add actual Place ID
+                        href="https://www.google.com/maps?cid=13304906274217460428"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm flex items-center justify-center gap-2"

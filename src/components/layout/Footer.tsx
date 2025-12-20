@@ -42,7 +42,7 @@ export default function Footer() {
                         </div>
                         <div className={styles.contactInfo}>
                             {contact.address && (
-                                <a href={`https://maps.google.com/?q=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
+                                <a href="https://www.google.com/maps?cid=13304906274217460428" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
                                     <MapPin size={18} className={styles.icon} />
                                     <span>{contact.address}</span>
                                 </a>
@@ -75,12 +75,14 @@ export default function Footer() {
                             <li><Link href="/">Home</Link></li>
                             <li><Link href="/about">About Us</Link></li>
                             <li><Link href="/services">Services</Link></li>
-                            <li><Link href="/services/makkah-madinah-taxi">Makkah to Madinah Taxi</Link></li>
                             <li><Link href="/services/jeddah-airport-transfer">Jeddah Airport Transfer</Link></li>
+                            <li><Link href="/services/makkah-madinah-taxi">Makkah to Madinah Taxi</Link></li>
+                            <li><Link href="/services/madinah-airport-transfer">Madinah Airport Transfer</Link></li>
+                            <li><Link href="/services/ziyarat-tours">Ziyarat Tours</Link></li>
                             <li><Link href="/services/airport-transfers">Airport Transfers</Link></li>
                             <li><Link href="/services/intercity-transfer">Intercity Transfer</Link></li>
-                            <li><Link href="/services/hotel-transfers">Hotel Transfers</Link></li>
                             <li><Link href="/fleet">Fleet</Link></li>
+                            <li><Link href="/fleet/gmc-yukon-at4">Book GMC Yukon</Link></li>
                             <li><Link href="/blog">Blog</Link></li>
                             <li><Link href="/contact">Contact us</Link></li>
                             <li>
