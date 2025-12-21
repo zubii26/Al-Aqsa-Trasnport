@@ -53,7 +53,7 @@ export default function TeamTeaser({ drivers }: TeamTeaserProps) {
                     {/* Image Preview */}
                     <div className="lg:w-1/2 flex gap-4">
                         {previewDrivers.map((driver, idx) => (
-                            <div key={driver.id} className={`relative rounded-2xl overflow-hidden shadow-2xl ${idx === 1 ? 'mt-12' : ''}`}>
+                            <div key={driver._id || driver.id || idx} className={`relative rounded-2xl overflow-hidden shadow-2xl ${idx === 1 ? 'mt-12' : ''}`}>
                                 <div className="relative h-80 w-64">
                                     <Image src={driver.photo} alt={driver.name} fill className="object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />

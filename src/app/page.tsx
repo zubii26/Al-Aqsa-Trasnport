@@ -23,19 +23,20 @@ const TestimonialHighlight = dynamic(() => import('@/components/reviews/Testimon
 
 export async function generateMetadata() {
   return {
-    title: "Premium Umrah Transport Services Saudi Arabia | Al Aqsa",
-    description: "Book luxury Umrah transport in Saudi. Trusted Jeddah airport transfers, Makkah to Madinah taxi & VIP Ziyarat. Safe, comfortable & spiritual journeys.",
+    title: "Al Aqsa Umrah Transport | #1 Rated Makkah to Madinah Taxi & VIP Service",
+    description: "Your trusted Business Profile for Umrah transport. Book VIP Jeddah Airport transfers, GMC Yukon for Makkah-Madinah, and luxury buses. 24/7 Service, Verified Drivers.",
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
     keywords: [
-      "Umrah transport services", "Makkah to Madinah taxi", "Jeddah airport to Makkah", "VIP Umrah transport",
+      "Al Aqsa Umrah Transport", "Business Profile Umrah Taxi",
+      "Makkah to Madinah taxi", "Jeddah airport to Makkah", "VIP Umrah transport",
       "Madinah airport transfers", "Haram shuttle", "luxury Umrah vehicles", "pilgrim transportation", "Saudi Arabia pilgrimage transport",
       "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة"
     ],
     openGraph: {
-      title: "Premium Umrah Transport Services Saudi Arabia | Al Aqsa",
-      description: "Book luxury Umrah transport in Saudi. Trusted Jeddah airport transfers, Makkah to Madinah taxi & VIP Ziyarat. Safe, comfortable & spiritual journeys.",
+      title: "Al Aqsa Umrah Transport | Top Rated Pilgrim Service",
+      description: "Official Business Profile: Leading Umrah transport provider in Saudi Arabia. Safe, Reliable, and Luxury transfers between Holy Cities.",
     }
   };
 }

@@ -8,6 +8,8 @@ import FadeIn from '@/components/common/FadeIn';
 
 
 
+import { galleryItems } from '@/data/gallery';
+
 interface GalleryItem {
     _id: string;
     image: string;
@@ -17,8 +19,9 @@ interface GalleryItem {
 
 export default function CustomerGallery() {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [items, setItems] = useState<GalleryItem[]>([]);
-    const [loading, setLoading] = useState(true);
+    // Initialize with static data for instant load
+    const [items, setItems] = useState<GalleryItem[]>(galleryItems);
+    const [loading, setLoading] = useState(false); // No longer needed for blocking, but kept if we want a spinner overlay (optional)
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -29,9 +32,8 @@ export default function CustomerGallery() {
                     setItems(data);
                 }
             } catch (error) {
-                console.error('Failed to fetch gallery items:', error);
-            } finally {
-                setLoading(false);
+                console.error('Using fallback gallery due to fetch error:', error);
+                // No action needed, fallback already set
             }
         };
         fetchItems();

@@ -17,13 +17,29 @@ import { Driver } from '@/models';
 
 export async function generateMetadata() {
     return {
-        title: "About Al Aqsa Umrah Transport | Trusted Pilgrim Service",
-        description: "Discover Al Aqsa Umrah Transport. Trusted partner for premium pilgrim mobility in Saudi Arabia. Professional drivers & luxury fleet for your peace of mind.",
+        title: "About Al Aqsa Umrah Transport | Premier Makkah & Madinah Taxi Service",
+        description: "Al Aqsa Umrah Transport is the #1 choice for pilgrims in Saudi Arabia. We provide VIP Jeddah Airport transfers, reliable Makkah to Madinah taxi integration, and luxury GMC/Bus fleets. Experience safety, spiritual comfort, and punctuality.",
         keywords: [
-            "About Al Aqsa Transport", "Umrah transport company Saudi Arabia",
-            "Pilgrim transport services", "VIP Umrah taxi", "Makkah to Madinah transport",
-            "Jeddah airport transfer", "Haram shuttle service", "Luxury Umrah fleet"
+            "About Al Aqsa Transport", "Best Umrah transport company Saudi Arabia",
+            "Makkah to Madinah taxi price", "Jeddah airport to Makkah taxi service",
+            "VIP Umrah transfers", "Luxury GMC for Umrah", "Haramain transfer",
+            "Ziyarat Makkah Madinah", "Pilgrim transport services"
         ],
+        openGraph: {
+            title: "About Al Aqsa Umrah Transport | Leading Pilgrim Service",
+            description: "Trusted by thousands for safe and comfortable Umrah transport. From Jeddah Airport to Makkah hotels and Ziyarat tours, we travel with you.",
+            url: "https://alaqsaumrahtransport.com/about",
+            siteName: "Al Aqsa Umrah Transport",
+            images: [
+                {
+                    url: "/images/about-og.jpg", // Ensure this image exists or is generic
+                    width: 1200,
+                    height: 630,
+                    alt: "Al Aqsa Transport Fleet",
+                },
+            ],
+            type: "website",
+        },
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/about',
         },
@@ -48,8 +64,25 @@ export default async function AboutPage() {
 
     const serializedDrivers = JSON.parse(JSON.stringify(drivers));
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Al Aqsa Umrah Transport",
+        "description": "Information about Al Aqsa Umrah Transport, a leading provider of pilgrim transport services in Saudi Arabia.",
+        "url": "https://alaqsaumrahtransport.com/about",
+        "mainEntity": {
+            "@type": "TravelAgency",
+            "name": "Al Aqsa Umrah Transport",
+            "sameAs": "https://alaqsaumrahtransport.com"
+        }
+    };
+
     return (
         <main className="min-h-screen">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="contents">
                 <Hero
                     title={title}
