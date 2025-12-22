@@ -125,3 +125,25 @@ export const getAdminBookingNotificationTemplate = (booking: BookingData) => {
     </div>
 `;
 };
+
+interface ContactFeedbackData {
+    name: string;
+    message: string;
+}
+
+export const getContactFeedbackTemplate = ({ name, message }: ContactFeedbackData) => {
+    return `
+    <div style="font-family: Arial, sans-serif; color: #333;">
+        <h1 style="color: #d4af37;">Thank you for contacting us</h1>
+        <p>Dear ${name},</p>
+        <p>We have received your message and will get back to you as soon as possible.</p>
+        
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3>Your Message:</h3>
+            <p>${message}</p>
+        </div>
+
+        <p>Best Regards,<br/>Al Aqsa Transport Team</p>
+    </div>
+`;
+};
