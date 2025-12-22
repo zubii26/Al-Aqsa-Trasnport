@@ -37,16 +37,30 @@ interface BookingData {
     name: string;
     status: string;
     id: string;
-    vehicle: string;
+    vehicle: string; // Keep for fallback/summary
     pickup: string;
     dropoff: string;
     date: string;
     time: string;
     passengers: number;
+    vehicleCount?: number;
+    luggage?: number;
+    notes?: string;
     price?: string;
+    selectedVehicles?: { name: string; quantity: number }[]; // New field
+    country?: string;
+    flightNumber?: string;
+    arrivalDate?: string;
 }
 
-export const getBookingConfirmationTemplate = (booking: BookingData) => `
+export const getBookingConfirmationTemplate = (booking: BookingData) => {
+    const vehiclesHtml = booking.selectedVehicles && booking.selectedVehicles.length > 0
+        ? `<ul style="margin: 0; padding-left: 20px;">
+            ${booking.selectedVehicles.map(v => `<li>${v.quantity} x ${v.name}</li>`).join('')}
+           </ul>`
+        : booking.vehicle;
+
+    return `
     <div style="font-family: Arial, sans-serif; color: #333;">
         <h1 style="color: #d4af37;">Booking Confirmation</h1>
         <p>Dear ${booking.name},</p>
@@ -55,11 +69,16 @@ export const getBookingConfirmationTemplate = (booking: BookingData) => `
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <h3>Booking Details:</h3>
             <p><strong>Booking ID:</strong> ${booking.id}</p>
-            <p><strong>Vehicle:</strong> ${booking.vehicle}</p>
+            <div><strong>Vehicle(s):</strong> ${vehiclesHtml}</div>
             <p><strong>Pickup:</strong> ${booking.pickup}</p>
             <p><strong>Dropoff:</strong> ${booking.dropoff}</p>
             <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
+            ${booking.country ? `<p><strong>Country:</strong> ${booking.country}</p>` : ''}
+            ${booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : ''}
+            ${booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : ''}
             <p><strong>Passengers:</strong> ${booking.passengers}</p>
+            <p><strong>Luggage:</strong> ${booking.luggage || 0}</p>
+            ${booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
             ${booking.price ? `<p><strong>Price:</strong> ${booking.price}</p>` : ''}
         </div>
 
@@ -67,28 +86,17 @@ export const getBookingConfirmationTemplate = (booking: BookingData) => `
         <p>Safe Travels,<br/>The Al Aqsa Transport Team</p>
     </div>
 `;
+};
 
-interface ContactData {
-    name: string;
-    message: string;
-}
+// Admin Template (Similar updates)
+export const getAdminBookingNotificationTemplate = (booking: BookingData) => {
+    const vehiclesHtml = booking.selectedVehicles && booking.selectedVehicles.length > 0
+        ? `<ul style="margin: 0; padding-left: 20px;">
+            ${booking.selectedVehicles.map(v => `<li>${v.quantity} x ${v.name}</li>`).join('')}
+           </ul>`
+        : booking.vehicle;
 
-export const getContactFeedbackTemplate = (data: ContactData) => `
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <h1 style="color: #d4af37;">Message Received</h1>
-        <p>Dear ${data.name},</p>
-        <p>Thank you for contacting us. We have received your message and will get back to you as soon as possible.</p>
-        
-        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <h3>Your Message:</h3>
-            <p>${data.message}</p>
-        </div>
-
-        <p>Best Regards,<br/>The Al Aqsa Transport Team</p>
-    </div>
-`;
-
-export const getAdminBookingNotificationTemplate = (booking: BookingData) => `
+    return `
     <div style="font-family: Arial, sans-serif; color: #333;">
         <h1 style="color: #d4af37;">New Booking Received</h1>
         <p><strong>Booking Reference:</strong> ${booking.id}</p>
@@ -98,16 +106,22 @@ export const getAdminBookingNotificationTemplate = (booking: BookingData) => `
             <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">Customer Details</h3>
             <p><strong>Name:</strong> ${booking.name}</p>
             <p><strong>Status:</strong> ${booking.status}</p>
-            
+            ${booking.country ? `<p><strong>Country:</strong> ${booking.country}</p>` : ''}
+            ${booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : ''}
+            ${booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : ''}
+
             <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 20px;">Service Details</h3>
-            <p><strong>Vehicle:</strong> ${booking.vehicle}</p>
+            <div><strong>Vehicle(s):</strong> ${vehiclesHtml}</div>
             <p><strong>Pickup:</strong> ${booking.pickup}</p>
             <p><strong>Dropoff:</strong> ${booking.dropoff}</p>
             <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
             <p><strong>Passengers:</strong> ${booking.passengers}</p>
+            <p><strong>Luggage:</strong> ${booking.luggage || 0}</p>
+            ${booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
             ${booking.price ? `<p><strong>Price:</strong> ${booking.price}</p>` : ''}
         </div>
 
         <p style="font-size: 12px; color: #666;">This is an automated notification from the Al Aqsa Transport booking system.</p>
     </div>
 `;
+};

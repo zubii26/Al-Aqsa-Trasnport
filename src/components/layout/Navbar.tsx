@@ -73,7 +73,9 @@ export default function Navbar() {
             children: [
                 { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
                 { href: '/fleet/hyundai-staria', label: 'Hyundai Staria' },
+                { href: '/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
                 { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
+                { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
             ]
         },
         { href: '/blog', label: 'Blog' },

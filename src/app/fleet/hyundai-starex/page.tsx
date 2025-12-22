@@ -1,0 +1,177 @@
+
+import type { Metadata } from "next";
+import Hero from '@/components/common/Hero';
+import Link from 'next/link';
+import { ArrowRight, Shield, Star, Wifi, Briefcase, Users, LayoutGrid } from 'lucide-react';
+import FAQSection from '@/components/services/FAQSection';
+import { getSettings } from '@/lib/settings-storage';
+import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+
+export const metadata: Metadata = {
+    title: "Hyundai H1 / Starex Umrah Taxi | 7 Seater Family Van",
+    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van for Makkah to Madinah transfers, Jeddah Airport pickup, and Ziyarat. Affordable and comfortable.",
+    keywords: [
+        "Hyundai H1 Makkah Taxi",
+        "Hyundai Starex Umrah Transport",
+        "7 Seater Taxi Saudi Arabia",
+        "Family Van Makkah to Madinah",
+        "Cheap Family Taxi Jeddah",
+        "Private Van for Umrah",
+        "Hyundai H1 Rental Jeddah"
+    ],
+    alternates: {
+        canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex',
+    }
+};
+
+const starexFAQs = [
+    {
+        question: "How many passengers fits in Hyundai H1 Starex?",
+        answer: "The Hyundai H1 Starex is spacious and seats up to 7 passengers comfortably, making it an excellent choice for medium-sized families or groups."
+    },
+    {
+        question: "Is there enough space for luggage?",
+        answer: "Yes, the H1 has a generous cargo area that can easily accommodate 5-6 standard suitcases along with the passengers."
+    },
+    {
+        question: "Is this vehicle suitable for long distance travel in Saudi Arabia?",
+        answer: "Absolutely. The H1 is built for long journeys, offering good legroom, dual air conditioning, and a stable ride on highways between Jeddah, Makkah, and Madinah."
+    },
+];
+
+export default async function HyundaiStarexPage() {
+    const settings = await getSettings();
+    const phoneNumber = settings.contact.phone;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Hyundai%20H1%20Starex%20for%20Umrah`;
+
+    return (
+        <main className="overflow-x-hidden">
+            <Hero
+                title="Hyundai H1 Starex | Spacious Family Van"
+                subtitle="The reliable choice for family Umrah trips. Plenty of space for everyone and their luggage."
+                bgImage="/images/fleet/starex-hero.jpg"
+                ctaText="Book H1 via WhatsApp"
+                ctaLink={whatsappLink}
+                layout="center"
+            />
+
+            {/* Vehicle Highlights */}
+            <section className="py-16 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+                            {/* Placeholder image until user provides specific one */}
+                            <img
+                                src="/images/fleet/starex-feature.png"
+                                alt="Hyundai H1 Starex Van"
+                                className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute bottom-4 left-4 bg-teal-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                Family Favorite
+                            </div>
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                                Why Choose the Hyundai H1 Starex?
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+                                The Hyundai H1 (Starex) is the go-to vehicle for families performing Umrah. It combines practicality with comfort,
+                                offering a high roof, easy sliding doors, and ample room for everyone to stretch out during the journey.
+                            </p>
+
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
+                                        <Users className="text-amber-500" size={20} /> 7 Passengers
+                                    </div>
+                                    <p className="text-sm text-slate-500">Ideal for family groups</p>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
+                                        <Briefcase className="text-amber-500" size={20} /> 5-6 Suitcases
+                                    </div>
+                                    <p className="text-sm text-slate-500">Large luggage capacity</p>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
+                                        <LayoutGrid className="text-amber-500" size={20} /> Spacious
+                                    </div>
+                                    <p className="text-sm text-slate-500">Plenty of legroom & headroom</p>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
+                                        <Wifi className="text-amber-500" size={20} /> AC & Amenities
+                                    </div>
+                                    <p className="text-sm text-slate-500">Dual AC for rear passengers</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-10">
+                                <Link href="/booking" className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 px-8 py-3 rounded-full font-bold transition-all">
+                                    Book Hyundai H1 Now <ArrowRight size={20} />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Use Cases */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-950">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Perfect For Large Groups</h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                title: "Family Umrah",
+                                desc: "Keep the whole family together in one vehicle comfortably.",
+                                icon: Users
+                            },
+                            {
+                                title: "Airport Pickup",
+                                desc: "No need for multiple taxis. Fit everyone and their bags in one go.",
+                                icon: Briefcase
+                            },
+                            {
+                                title: "Group Ziyarat",
+                                desc: "Visit the holy sites of Makkah and Madinah as a group with ease.",
+                                icon: MapPin
+                            }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border-t-4 border-amber-500">
+                                <item.icon className="w-10 h-10 text-amber-500 mb-4" />
+                                <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">{item.title}</h3>
+                                <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <FleetCarouselWrapper />
+
+            <FAQSection items={starexFAQs} title="Hyundai H1 Starex - Frequently Asked Questions" />
+        </main>
+    );
+}
+
+// Helper for icon fix
+function MapPin(props: any) {
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+        </svg>
+    )
+}

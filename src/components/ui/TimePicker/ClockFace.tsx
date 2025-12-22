@@ -65,7 +65,7 @@ export default function ClockFace({ type, value, onChange, onInteractEnd }: Cloc
         : [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
     return (
-        <div className="relative w-52 h-52 mx-auto my-2 select-none touch-none">
+        <div className="relative w-40 h-40 mx-auto my-1 select-none touch-none">
             {/* Clock Face Background */}
             <div
                 ref={faceRef}

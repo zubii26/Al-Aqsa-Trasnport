@@ -17,7 +17,7 @@ async function FleetCarouselFetcher() {
             id: v.id,
             name: v.name,
             image: v.image,
-            passengers: v.passengers,
+            passengers: v.name.toLowerCase().includes('hiace') ? "10/11" : v.passengers,
             luggage: v.luggage,
             features: v.features,
             price: v.price

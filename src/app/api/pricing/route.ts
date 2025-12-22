@@ -45,7 +45,7 @@ export async function GET() {
         const formattedVehicles = activeVehicles.map((vehicle: any) => ({
             id: vehicle.id,
             name: vehicle.name,
-            capacity: `${vehicle.passengers} Seater`,
+            capacity: vehicle.capacity || `${vehicle.passengers} Seater`,
             multiplier: 1, // Not used
             features: vehicle.features,
             luggage: `${vehicle.luggage} Bags`,

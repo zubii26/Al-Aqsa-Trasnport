@@ -256,7 +256,7 @@
         {
             "id": "hiace",
             "name": "Toyota Hiace",
-            "capacity": "11 Seater",
+            "capacity": "10/11 Seater",
             "multiplier": 1.6,
             "features": [
                 "High Roof",

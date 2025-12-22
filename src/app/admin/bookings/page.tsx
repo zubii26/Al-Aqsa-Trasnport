@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import adminStyles from '../admin.module.css';
-import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2 } from 'lucide-react';
+import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase } from 'lucide-react';
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 
@@ -214,12 +214,42 @@ export default function BookingsPage() {
                                             </td>
                                             <td>
                                                 <div className="flex flex-col gap-1">
-                                                    <span className="font-medium">{booking.vehicle}</span>
-                                                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                        <Users size={12} /> {booking.passengers} Pax
-                                                    </span>
+                                                    {booking.selectedVehicles && booking.selectedVehicles.length > 0 ? (
+                                                        <div className="flex flex-col gap-1">
+                                                            {booking.selectedVehicles.map((sv, i) => (
+                                                                <span key={i} className="font-medium">
+                                                                    {sv.name || 'Vehicle'} <span className="text-xs text-muted-foreground">x{sv.quantity}</span>
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="font-medium">{booking.vehicle} <span className="text-xs text-muted-foreground">x{booking.vehicleCount || 1}</span></span>
+                                                    )}
+
+                                                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                                                        <span className="flex items-center gap-1">
+                                                            <Users size={12} /> {booking.passengers}
+                                                        </span>
+                                                        <span className="flex items-center gap-1">
+                                                            <Briefcase size={12} /> {booking.luggage || 0}
+                                                        </span>
+                                                    </div>
+                                                    {booking.notes && (
+                                                        <div className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded mt-1 break-words max-w-[200px]">
+                                                            {booking.notes}
+                                                        </div>
+                                                    )}
+                                                    {/* Display Country, Flight, Arrival if present */}
+                                                    {(booking.country || booking.flightNumber || booking.arrivalDate) && (
+                                                        <div className="mt-1 pt-1 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
+                                                            {booking.country && <div>Country: {booking.country}</div>}
+                                                            {booking.flightNumber && <div>Flight: {booking.flightNumber}</div>}
+                                                            {booking.arrivalDate && <div>Arrival: {booking.arrivalDate}</div>}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </td>
+
                                             <td>
                                                 <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusBadge(booking.status)}`}>
                                                     {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}

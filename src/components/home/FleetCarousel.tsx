@@ -10,7 +10,7 @@ export interface Vehicle {
     id: string;
     name: string;
     image: string;
-    passengers: number;
+    passengers: number | string;
     luggage: number;
     features: string[];
     price: string;

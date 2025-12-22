@@ -14,7 +14,7 @@ export const staticBlogPosts = [
             <p>For those seeking <strong>luxury Umrah transport</strong>, private SUVs like the GMC Yukon offer unmatched comfort. Ideal for families and small groups, these vehicles provide ample luggage space and air-conditioned reliability.</p>
             
             <h3>2. Toyota Hiace for Groups</h3>
-            <p>Traveling with extended family? The Toyota Hiace is a staple for <strong>Makkah to Madinah transport</strong>. It comfortably seats up to 12 passengers, ensuring your group stays together throughout the journey.</p>
+            <p>Traveling with extended family? The Toyota Hiace is a staple for <strong>Makkah to Madinah transport</strong>. It comfortably seats up to 10 passengers, ensuring your group stays together throughout the journey.</p>
             
             <h3>3. VIP Luxury Buses</h3>
             <p>For large tour groups, VIP buses equipped with Wi-Fi, restrooms, and reclining seats are the gold standard. They offer a balance of economy and premium comfort for long-distance travel in Saudi Arabia.</p>

@@ -7,12 +7,12 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 
 export const metadata: Metadata = {
-    title: "Toyota Hiace Price Umrah Taxi | 10-15 Seater Bus Makkah",
-    description: "Rent Toyota Hiace with driver for Umrah group transport. Best price 10-15 seater bus for Makkah, Madinah, and Jeddah airport transfers. Spacious and reliable.",
+    title: "Toyota Hiace Price Umrah Taxi | 10 Seater Bus Makkah",
+    description: "Rent Toyota Hiace with driver for Umrah group transport. Best price 10 seater bus for Makkah, Madinah, and Jeddah airport transfers. Spacious and reliable.",
     keywords: [
         "Toyota Hiace Umrah Taxi",
         "Hiace Bus Makkah",
-        "15 Seater Bus Rental Saudi Arabia",
+        "10 Seater Bus Rental Saudi Arabia",
         "Group Umrah Transport",
         "Cheap Bus for Umrah",
         "Coaster Bus Makkah",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 const hiaceFAQs = [
     {
         question: "How many bags can fit in a Toyota Hiace?",
-        answer: "If occupied by 10 passengers, the Hiace can fit about 10-12 medium suitcases. For full capacity (14 passengers), luggage space is limited, so we recommend a dedicated luggage vehicle or upgrading to a Coaster."
+        answer: "If occupied by 10 passengers, the Hiace can fit about 10-12 medium suitcases. For full capacity, luggage space is limited, so we recommend a dedicated luggage vehicle or upgrading to a Coaster."
     },
     {
         question: "Is the Hiace suitable for elderly pilgrims?",
@@ -102,7 +102,7 @@ export default async function ToyotaHiacePage() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="flex flex-col gap-2">
                                     <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                        <Users className="text-green-500" size={20} /> 10-14 Passengers
+                                        <Users className="text-green-500" size={20} /> 10 Passengers
                                     </div>
                                     <p className="text-sm text-slate-500">Ideal for 2-3 families</p>
                                 </div>

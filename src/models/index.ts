@@ -27,6 +27,9 @@ export interface IBooking extends Document {
     time: string;
     vehicle: string;
     passengers: number;
+    vehicleCount?: number;
+    luggage?: number;
+    notes?: string;
     status: string;
     userId?: string;
     price?: string;
@@ -35,7 +38,12 @@ export interface IBooking extends Document {
     finalPrice?: number;
     discountType?: 'percentage' | 'fixed';
     routeId?: string;
+
     vehicleId?: string;
+    selectedVehicles?: { vehicleId: string; quantity: number; name?: string }[];
+    country?: string;
+    flightNumber?: string;
+    arrivalDate?: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -165,6 +173,9 @@ const BookingSchema = new Schema<IBooking>({
     time: { type: String, required: true },
     vehicle: { type: String, required: true },
     passengers: { type: Number, required: true },
+    vehicleCount: { type: Number, default: 1 },
+    luggage: { type: Number, default: 0 },
+    notes: { type: String },
     status: { type: String, default: 'pending' },
     userId: { type: String },
     price: { type: String },
@@ -173,7 +184,16 @@ const BookingSchema = new Schema<IBooking>({
     finalPrice: { type: Number },
     discountType: { type: String, enum: ['percentage', 'fixed'] },
     routeId: { type: String },
+
     vehicleId: { type: String },
+    selectedVehicles: [{
+        vehicleId: { type: String },
+        quantity: { type: Number },
+        name: { type: String }
+    }],
+    country: { type: String },
+    flightNumber: { type: String },
+    arrivalDate: { type: String },
 }, { timestamps: true });
 
 const UserSchema = new Schema<IUser>({

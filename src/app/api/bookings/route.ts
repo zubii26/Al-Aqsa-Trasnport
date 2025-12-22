@@ -33,9 +33,19 @@ export async function POST(request: Request) {
 
         const bookingData = validation.data;
         let priceDetails = {};
+        const selectedVehiclesList = [];
 
-        // Calculate price if routeId and vehicleId are present
-        if (bookingData.routeId && bookingData.vehicleId) {
+        // Normalize vehicle selection
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let vehiclesToProcess: any[] = [];
+        if (bookingData.selectedVehicles && bookingData.selectedVehicles.length > 0) {
+            vehiclesToProcess = bookingData.selectedVehicles;
+        } else if (bookingData.vehicleId) {
+            vehiclesToProcess = [{ vehicleId: bookingData.vehicleId, quantity: bookingData.vehicleCount || 1 }];
+        }
+
+        // Calculate price and resolve vehicle names
+        if (bookingData.routeId && vehiclesToProcess.length > 0) {
             try {
                 const [routes, vehicles, settings] = await Promise.all([
                     routeService.getRoutes(),
@@ -44,48 +54,63 @@ export async function POST(request: Request) {
                 ]);
 
                 const route = (routes as RouteWithPrices[]).find(r => r.id === bookingData.routeId);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const vehicle = (vehicles as any[]).find(v => v.id === bookingData.vehicleId);
 
-                if (route && vehicle) {
-                    let basePrice = 0;
-                    // Check for custom price
-                    const priceEntry = route.prices?.find(p => p.vehicleId === bookingData.vehicleId);
+                let totalBasePrice = 0;
+                let vehicleNames: string[] = [];
 
-                    if (priceEntry) {
-                        basePrice = priceEntry.price;
-                    } else {
-                        // Fallback logic if needed, or 0
-                        // Assuming baseRate logic if applicable, but mostly using custom rates
-                        basePrice = 0;
-                    }
+                for (const sv of vehiclesToProcess) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const vehicle = (vehicles as any[]).find(v => v.id === sv.vehicleId);
+                    if (vehicle) {
+                        selectedVehiclesList.push({ name: vehicle.name, quantity: sv.quantity });
+                        vehicleNames.push(`${sv.quantity} x ${vehicle.name}`);
 
-                    if (basePrice > 0) {
-                        const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
-
-                        if (discountApplied > 0) {
-                            console.log(`[Booking] Discount applied: ${discountApplied} (${discountType}) for route ${bookingData.routeId} vehicle ${bookingData.vehicleId}`);
+                        if (route) {
+                            const priceEntry = route.prices?.find(p => p.vehicleId === sv.vehicleId);
+                            if (priceEntry) {
+                                totalBasePrice += (priceEntry.price * sv.quantity);
+                            }
                         }
-
-                        priceDetails = {
-                            originalPrice,
-                            discountApplied,
-                            finalPrice: price,
-                            discountType,
-                            price: String(price) // Store final price as string for compatibility
-                        };
                     }
                 }
+
+                if (totalBasePrice > 0) {
+                    const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(totalBasePrice, settings.discount);
+
+                    if (discountApplied > 0) {
+                        console.log(`[Booking] Discount applied: ${discountApplied} (${discountType})`);
+                    }
+
+                    priceDetails = {
+                        originalPrice,
+                        discountApplied,
+                        finalPrice: price,
+                        discountType,
+                        price: String(price) // Store final price as string for compatibility
+                    };
+                }
+
+                // Set the fallback/summary vehicle string
+                if (vehicleNames.length > 0) {
+                    bookingData.vehicle = vehicleNames.join(', ');
+                }
+
             } catch (err) {
                 console.error('Error calculating price:', err);
-                // Continue without price if calculation fails
             }
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const booking = await addBooking({ ...bookingData, ...priceDetails, userId: null } as any);
+        const booking = await addBooking({
+            ...bookingData,
+            ...priceDetails,
+            userId: null,
+            // Ensure we save the detailed selection if the DB supports it, 
+            // otherwise 'vehicle' string covers the basics. 
+            // We assume addBooking can handle extra fields or ignores them.
+            selectedVehicles: selectedVehiclesList
+        } as any);
 
-        // Send confirmation email to customer
         // Send confirmation email to customer
         try {
             if (booking && booking.email) {
@@ -102,7 +127,14 @@ export async function POST(request: Request) {
                         date: booking.date,
                         time: booking.time,
                         passengers: booking.passengers,
-                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
+                        vehicleCount: booking.vehicleCount,
+                        luggage: booking.luggage,
+                        notes: booking.notes,
+                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined,
+                        selectedVehicles: selectedVehiclesList,
+                        country: booking.country,
+                        flightNumber: booking.flightNumber,
+                        arrivalDate: booking.arrivalDate
                     }),
                 });
             }
@@ -127,7 +159,14 @@ export async function POST(request: Request) {
                         date: booking.date,
                         time: booking.time,
                         passengers: booking.passengers,
-                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined
+                        vehicleCount: booking.vehicleCount,
+                        luggage: booking.luggage,
+                        notes: booking.notes,
+                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined,
+                        selectedVehicles: selectedVehiclesList,
+                        country: booking.country,
+                        flightNumber: booking.flightNumber,
+                        arrivalDate: booking.arrivalDate
                     }),
                 });
                 console.log('Admin notification email sent to:', settings.contact.email);

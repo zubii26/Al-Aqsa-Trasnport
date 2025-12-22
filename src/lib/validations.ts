@@ -8,14 +8,25 @@ export const BookingSchema = z.object({
     dropoff: z.string().min(3, 'Dropoff location is required'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
     time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
-    vehicle: z.string().min(1, 'Vehicle selection is required'),
-    passengers: z.number().int().min(1, 'At least 1 passenger is required').max(50, 'Max 50 passengers'),
+    vehicle: z.string().optional(), // Made optional for backward compatibility
+    passengers: z.number().int().min(1, 'At least 1 passenger is required').max(50, 'Max 50 passengers').optional(), // Made optional as vehicle capacity determines this
+    vehicleCount: z.number().int().min(1, 'At least 1 vehicle is required').max(10, 'Max 10 vehicles').optional(),
+    luggage: z.number().int().min(0, 'Luggage cannot be negative').optional(),
+    notes: z.string().optional(),
     originalPrice: z.number().optional(),
     discountApplied: z.number().optional(),
     finalPrice: z.number().optional(),
     discountType: z.enum(['percentage', 'fixed']).optional(),
     routeId: z.string().optional(),
-    vehicleId: z.string().optional(),
+    vehicleId: z.string().optional(), // Kept for backward compatibility
+    selectedVehicles: z.array(z.object({
+        vehicleId: z.string(),
+        quantity: z.number().min(1),
+        name: z.string().optional()
+    })).optional(),
+    country: z.string().optional(),
+    flightNumber: z.string().optional(),
+    arrivalDate: z.string().optional(),
 });
 
 export const VehicleSchema = z.object({
