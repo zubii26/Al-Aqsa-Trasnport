@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
-import Features from '@/components/home/Features';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Shield, Star, Wifi, Briefcase, Users } from 'lucide-react';
+import { ArrowRight, Shield, Star, Briefcase, Users, Wifi, MapPin } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
+import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
     title: "GMC Yukon Umrah Taxi | VIP Makkah to Madinah Transport",
@@ -35,7 +36,7 @@ const gmcFAQs = [
     },
     {
         question: "What is the price for GMC Yukon from Jeddah Airport to Makkah?",
-        answer: "Our rates are competitive for VIP service. Please use the 'Book Now' button to get an instant quote or contact us via WhatsApp for the best seasonal offers."
+        answer: "Our rates are competitive for VIP service. Please use the booking grid to get an instant quote or contact us via WhatsApp for the best seasonal offers."
     },
 ];
 
@@ -44,15 +45,28 @@ export default async function GmcYukonPage() {
     const phoneNumber = settings.contact.phone;
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20GMC%20Yukon%20for%20Umrah`;
 
+    // GMC Yukon ID: 692db09834f15bc89b45a5f8
+    const gmcId = '692db09834f15bc89b45a5f8';
+    const gmcImage = '/images/fleet/gmc.png';
+
     return (
         <main className="overflow-x-hidden">
             <Hero
                 title="GMC Yukon 2025 | The Ultimate VIP Umrah Experience"
                 subtitle="Travel in unmatched luxury and comfort. The preferred choice for families and VIP pilgrims visiting Makkah and Madinah."
-                bgImage="/images/fleet/gmc-yukon-hero.png"
-                ctaText="Book GMC via WhatsApp"
+                bgImage={gmcImage}
+                badge="VIP Choice"
+                ctaText="Book via WhatsApp"
                 ctaLink={whatsappLink}
                 layout="center"
+            />
+
+            <FleetPricingGrid
+                vehicleId={gmcId}
+                vehicleImage={gmcImage}
+                vehicleType="gmc"
+                title="VIP GMC Yukon Transfer Rates"
+                subtitle="The pinnacle of comfort for your spiritual journey. Transparent VIP pricing for all routes."
             />
 
             {/* Vehicle Highlights */}
@@ -60,10 +74,10 @@ export default async function GmcYukonPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
-                            {/* Pro-generated GMC Yukon Image */}
-                            <img
+                            <FleetFeatureImage
                                 src="/images/fleet/gmc-yukon-feature.png"
-                                alt="GMC Yukon Denali XL Pearl White"
+                                alt="GMC Yukon Denali XL"
+                                fallbackSrc={gmcImage}
                                 className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
                             />
                             <div className="absolute bottom-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-bold">
@@ -107,7 +121,7 @@ export default async function GmcYukonPage() {
                             </div>
 
                             <div className="mt-10">
-                                <Link href="/booking" className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 px-8 py-3 rounded-full font-bold transition-all">
+                                <Link href="/booking" className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 px-8 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-amber-500/20">
                                     Book GMC Yukon Now <ArrowRight size={20} />
                                 </Link>
                             </div>
@@ -137,8 +151,8 @@ export default async function GmcYukonPage() {
                                 desc: "Visit historical sites in Makkah and Madinah with high elevation views and tinted privacy windows.",
                                 icon: MapPin
                             }
-                        ].map((item, idx) => ( // Removed MapPin import conflict by using lucid-react icon above
-                            <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border-t-4 border-amber-500">
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border-t-4 border-amber-500 transition-all hover:-translate-y-1">
                                 <item.icon className="w-10 h-10 text-amber-500 mb-4" />
                                 <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">{item.title}</h3>
                                 <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
@@ -150,32 +164,7 @@ export default async function GmcYukonPage() {
 
             <FleetCarouselWrapper />
 
-            <div className="space-y-4">
-                {/* Reusing existing components for consistency */}
-            </div>
-
             <FAQSection items={gmcFAQs} title="GMC Yukon Rental - Frequently Asked Questions" />
         </main>
     );
-}
-
-// Helper for icon fix
-function MapPin(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-            <circle cx="12" cy="10" r="3" />
-        </svg>
-    )
 }

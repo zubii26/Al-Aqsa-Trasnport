@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
@@ -41,24 +42,96 @@ export default function BookingPage() {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
     const wizardRef = useRef<HTMLDivElement>(null);
+    const searchParams = useSearchParams();
 
-    // Initialize defaults when data loads
+    // Initialize defaults when data loads and handle URL params for deep linking
     useEffect(() => {
         if (!isLoading && routes.length > 0 && vehicles.length > 0) {
-            setIsSearching(true);
-            const timer = setTimeout(() => {
-                setIsSearching(false);
-                setBookingData(prev => ({
-                    ...prev,
-                    routeId: prev.routeId || routes[0].id,
-                    selectedVehicles: prev.selectedVehicles.length > 0 ? prev.selectedVehicles : [{ vehicleId: vehicles[0].id, quantity: 1 }],
-                    pickup: routes[0].name.split(' to ')[0] || 'Makkah',
-                    dropoff: routes[0].name.split(' to ')[1] || 'Madinah'
-                }));
-            }, 1000);
-            return () => clearTimeout(timer);
+            const paramVehicle = searchParams.get('vehicle');
+            const paramStep = searchParams.get('step');
+            const paramNotes = searchParams.get('notes');
+            const paramRouteId = searchParams.get('routeId');
+            const paramQuantity = searchParams.get('quantity');
+
+            // Default values
+            let initialRouteId = routes[0].id;
+            // Parse quantity, default to 1 if invalid
+            const quantity = paramQuantity ? Math.max(1, parseInt(paramQuantity) || 1) : 1;
+            let initialVehicles: { vehicleId: string; quantity: number }[] = [];
+            let initialPickup = '';
+            let initialDropoff = '';
+            let initialNotes = '';
+
+            // Handle Route Pre-selection
+            if (paramRouteId && routes.find(r => r.id === paramRouteId)) {
+                initialRouteId = paramRouteId;
+                const selectedRoute = routes.find(r => r.id === paramRouteId);
+                if (selectedRoute) {
+                    initialPickup = selectedRoute.name.split(' to ')[0] || '';
+                    initialDropoff = selectedRoute.name.split(' to ')[1] || '';
+                }
+            } else if (paramNotes) {
+                // Formatting "Notes" to be route-like if we have notes but no ID
+                initialRouteId = 'custom';
+                // Try to parse "From to To" from notes if possible, or just default
+                if (paramNotes.toLowerCase().includes(' to ')) {
+                    const parts = paramNotes.split(' to ');
+                    initialPickup = parts[0];
+                    initialDropoff = parts[1];
+                }
+            }
+
+            if (paramNotes) {
+                initialNotes = paramNotes;
+            }
+
+            // Handle Vehicle Pre-selection
+            if (paramVehicle) {
+                const searchParam = paramVehicle.toLowerCase();
+                // Find vehicle by checking if ID matches param OR param includes ID OR name matches loosely
+                const foundVehicle = vehicles.find(v => {
+                    const id = v.id.toLowerCase();
+                    const name = v.name.toLowerCase();
+
+                    // Exact ID match 
+                    if (id === searchParam) return true;
+
+                    // ID contains param (e.g. 'gmc' matches 'gmc-yukon' if that was passed)
+                    if (searchParam.includes(id)) return true;
+
+                    // Name contains param (e.g. "GMC Yukon" matches "gmc")
+                    if (name.includes(searchParam.replace(/-/g, ' '))) return true;
+
+                    return false;
+                });
+
+                if (foundVehicle) {
+                    initialVehicles = [{ vehicleId: foundVehicle.id, quantity: quantity }];
+                }
+            }
+
+            setBookingData(prev => ({
+                ...prev,
+                routeId: initialRouteId,
+                selectedVehicles: initialVehicles,
+                pickup: initialPickup,
+                dropoff: initialDropoff,
+                notes: initialNotes
+            }));
+
+            // Jump to Step if requested
+            if (paramStep) {
+                setStep(parseInt(paramStep));
+            } else {
+                // Default behavior (no params)
+                setIsSearching(true);
+                const timer = setTimeout(() => {
+                    setIsSearching(false);
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
         }
-    }, [isLoading, routes, vehicles]);
+    }, [isLoading, routes, vehicles, searchParams]);
 
     useEffect(() => {
         if (bookingData.routeId && bookingData.selectedVehicles.length > 0) {
@@ -363,12 +436,12 @@ export default function BookingPage() {
                                         updateData('routeId', '');
                                     }}
                                     options={[
-                                        { value: 'intercity', label: 'Intercity Transfer' },
-                                        { value: 'arrival', label: 'Airport Arrival (Pickup)' },
-                                        { value: 'departure', label: 'Airport Departure (Drop-off)' }
+                                        { value: 'intercity', label: 'Intercity Transfer', icon: '🚗' },
+                                        { value: 'arrival', label: 'Airport Arrival (Pickup)', icon: '🛬' },
+                                        { value: 'departure', label: 'Airport Departure (Drop-off)', icon: '🛫' }
                                     ]}
                                     placeholder="Select Service Type"
-                                    className="w-full premium-input rounded-xl px-4 py-3.5 text-slate-900 dark:text-white outline-none"
+                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
                                     icon={<Building2 size={20} />}
                                 />
                             </div>
@@ -917,34 +990,51 @@ export default function BookingPage() {
                 <p className="text-slate-500 text-sm mb-6">Please provide your details below</p>
 
                 <div className="grid md:grid-cols-2 gap-6">
+                    {/* Full Name */}
+                    <div className="relative group col-span-2">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Full Name *</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <User size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                            </div>
+                            <input
+                                type="text"
+                                className={`${inputClasses(!!errors.name)} pl-11`}
+                                value={bookingData.name}
+                                onChange={(e) => updateData('name', e.target.value)}
+                                placeholder="Your full name"
+                            />
+                        </div>
+                        {errors.name && <p className="text-red-500 text-xs mt-1 ml-1">{errors.name}</p>}
+                    </div>
+
                     {/* Country / Region */}
                     <div className="col-span-2 relative group">
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Country / Region *</label>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Globe size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
-                            </div>
-                            <select
-                                className={`${inputClasses(false)} pl-11`}
-                                value={bookingData.country}
-                                onChange={(e) => updateData('country', e.target.value)}
-                            >
-                                <option value="Saudi Arabia">Saudi Arabia</option>
-                                <option value="United Arab Emirates">United Arab Emirates</option>
-                                <option value="Kuwait">Kuwait</option>
-                                <option value="Bahrain">Bahrain</option>
-                                <option value="Oman">Oman</option>
-                                <option value="Qatar">Qatar</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="United States">United States</option>
-                                <option value="Pakistan">Pakistan</option>
-                                <option value="India">India</option>
-                                <option value="Malaysia">Malaysia</option>
-                                <option value="Indonesia">Indonesia</option>
-                                <option value="Turkey">Turkey</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
+                        <SearchableSelect
+                            name="country"
+                            value={bookingData.country}
+                            onChange={(e: any) => updateData('country', e.target.value)}
+                            options={[
+                                { value: "Saudi Arabia", label: "Saudi Arabia", icon: "🇸🇦" },
+                                { value: "United Arab Emirates", label: "United Arab Emirates", icon: "🇦🇪" },
+                                { value: "Kuwait", label: "Kuwait", icon: "🇰🇼" },
+                                { value: "Bahrain", label: "Bahrain", icon: "🇧🇭" },
+                                { value: "Oman", label: "Oman", icon: "🇴🇲" },
+                                { value: "Qatar", label: "Qatar", icon: "🇶🇦" },
+                                { value: "United Kingdom", label: "United Kingdom", icon: "🇬🇧" },
+                                { value: "United States", label: "United States", icon: "🇺🇸" },
+                                { value: "Pakistan", label: "Pakistan", icon: "🇵🇰" },
+                                { value: "India", label: "India", icon: "🇮🇳" },
+                                { value: "Malaysia", label: "Malaysia", icon: "🇲🇾" },
+                                { value: "Indonesia", label: "Indonesia", icon: "🇮🇩" },
+                                { value: "Turkey", label: "Turkey", icon: "🇹🇷" },
+                                { value: "Other", label: "Other", icon: "🌍" }
+                            ]}
+                            placeholder="Select Country"
+                            className={inputClasses(false)}
+                            icon={<Globe size={18} />}
+                        />
                     </div>
 
                     {/* Phone */}

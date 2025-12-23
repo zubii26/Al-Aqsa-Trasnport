@@ -1,12 +1,13 @@
 {
     "routes": [
         {
-            "id": "jed-mak",
+            "id": "692db09934f15bc89b45a5fd",
             "name": "Jeddah Airport → Makkah Hotel",
             "distance": "100 km",
             "time": "1 hr 30 min",
             "baseRate": 200,
             "customRates": {
+                "camry": 250,
                 "hiace": 350,
                 "gmc": 500,
                 "starex": 300,
@@ -15,12 +16,13 @@
             }
         },
         {
-            "id": "jed-mad",
+            "id": "692db09934f15bc89b45a600",
             "name": "Jeddah Airport → Madinah Hotel",
             "distance": "400 km",
             "time": "4 hrs",
             "baseRate": 400,
             "customRates": {
+                "camry": 450,
                 "hiace": 550,
                 "gmc": 1000,
                 "starex": 450,
@@ -29,12 +31,13 @@
             }
         },
         {
-            "id": "mak-mad",
+            "id": "692db09934f15bc89b45a5ff",
             "name": "Makkah Hotel → Madinah Hotel",
             "distance": "450 km",
             "time": "4 hrs 30 min",
             "baseRate": 400,
             "customRates": {
+                "camry": 500,
                 "hiace": 550,
                 "gmc": 900,
                 "starex": 450,
@@ -43,12 +46,13 @@
             }
         },
         {
-            "id": "mad-mak",
+            "id": "692db09934f15bc89b45a600",
             "name": "Madinah Hotel → Makkah Hotel",
             "distance": "450 km",
             "time": "4 hrs 30 min",
             "baseRate": 400,
             "customRates": {
+                "camry": 500,
                 "hiace": 550,
                 "gmc": 900,
                 "starex": 450,
@@ -57,12 +61,13 @@
             }
         },
         {
-            "id": "mak-jed",
+            "id": "692db09934f15bc89b45a601",
             "name": "Makkah Hotel → Jeddah Airport",
             "distance": "100 km",
             "time": "1 hr 30 min",
             "baseRate": 200,
             "customRates": {
+                "camry": 200,
                 "hiace": 350,
                 "gmc": 500,
                 "starex": 300,
@@ -71,12 +76,13 @@
             }
         },
         {
-            "id": "mad-airport",
+            "id": "6949b368a41f6410e88ed738",
             "name": "Madinah Airport ↔ Madinah Hotel",
             "distance": "20 km",
             "time": "25 min",
             "baseRate": 150,
             "customRates": {
+                "camry": 120,
                 "hiace": 250,
                 "gmc": 300,
                 "starex": 200,
@@ -91,6 +97,7 @@
             "time": "30 min",
             "baseRate": 120,
             "customRates": {
+                "camry": 150,
                 "hiace": 200,
                 "gmc": 250,
                 "starex": 180,
@@ -105,6 +112,7 @@
             "time": "25 min",
             "baseRate": 120,
             "customRates": {
+                "camry": 100,
                 "hiace": 200,
                 "gmc": 250,
                 "starex": 180,
@@ -119,6 +127,7 @@
             "time": "25 min",
             "baseRate": 120,
             "customRates": {
+                "camry": 100,
                 "hiace": 200,
                 "gmc": 250,
                 "starex": 180,
@@ -127,12 +136,13 @@
             }
         },
         {
-            "id": "ziarat-mak",
+            "id": "6949b368a41f6410e88ed732",
             "name": "Makkah Ziarat (Half Day)",
             "distance": "40 km",
             "time": "3-4 hrs",
             "baseRate": 200,
             "customRates": {
+                "camry": 250,
                 "hiace": 300,
                 "gmc": 400,
                 "starex": 250,
@@ -141,12 +151,13 @@
             }
         },
         {
-            "id": "ziarat-mad",
+            "id": "6949b367a41f6410e88ed72e",
             "name": "Madinah Ziarat (Half Day)",
             "distance": "40 km",
             "time": "3-4 hrs",
             "baseRate": 200,
             "customRates": {
+                "camry": 250,
                 "hiace": 250,
                 "gmc": 400,
                 "starex": 200,
@@ -155,12 +166,13 @@
             }
         },
         {
-            "id": "taif-tour",
+            "id": "692db09a34f15bc89b45a60b",
             "name": "Makkah to Taif (Return)",
             "distance": "180 km",
             "time": "8-10 hrs",
             "baseRate": 400,
             "customRates": {
+                "camry": 500,
                 "hiace": 550,
                 "gmc": 800,
                 "starex": 450,
@@ -169,12 +181,13 @@
             }
         },
         {
-            "id": "jed-taif",
+            "id": "692db09a34f15bc89b45a60c",
             "name": "Jeddah to Taif (Return)",
             "distance": "350 km",
             "time": "10-12 hrs",
             "baseRate": 500,
             "customRates": {
+                "camry": 700,
                 "hiace": 700,
                 "gmc": 1000,
                 "starex": 600,
@@ -187,15 +200,24 @@
             "name": "Badar Ziarat (Full Day)",
             "distance": "300 km",
             "time": "6-8 hrs",
-            "baseRate": 700
+            "baseRate": 700,
+            "customRates": {
+                "camry": 600,
+                "hiace": 800,
+                "gmc": 1200,
+                "starex": 800,
+                "staria": 800,
+                "coaster": 1500
+            }
         },
         {
-            "id": "hourly",
+            "id": "692db09a34f15bc89b45a60e",
             "name": "Hourly Rental (Per Hour)",
             "distance": "-",
             "time": "1 Hour",
             "baseRate": 80,
             "customRates": {
+                "camry": 80,
                 "hiace": 120,
                 "gmc": 140,
                 "starex": 100,

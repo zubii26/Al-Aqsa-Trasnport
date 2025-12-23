@@ -5,6 +5,7 @@ import { Check, ChevronDown } from 'lucide-react';
 interface Option {
     value: string;
     label: string;
+    icon?: React.ReactNode;
 }
 
 interface SearchableSelectProps {
@@ -117,21 +118,24 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute z-50 w-full mt-2 max-h-60 overflow-y-auto 
+                        className="absolute top-full left-0 z-[100] w-full mt-2 max-h-60 overflow-y-auto 
                                    bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl 
                                    border border-slate-200 dark:border-slate-700 
-                                   rounded-xl shadow-xl scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
+                                   rounded-xl shadow-2xl scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
                     >
                         {displayedOptions.map((option) => (
                             <li
                                 key={option.value}
                                 onClick={() => handleOptionClick(option)}
-                                className="px-4 py-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10 
+                                className="px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10 
                                            text-slate-700 dark:text-slate-200 
                                            transition-colors duration-150 flex items-center justify-between
                                            text-sm"
                             >
-                                <span>{option.label}</span>
+                                <div className="flex items-center gap-3">
+                                    {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
+                                    <span className="font-medium">{option.label}</span>
+                                </div>
                                 {value === option.value && <Check size={14} className="text-secondary" />}
                             </li>
                         ))}
