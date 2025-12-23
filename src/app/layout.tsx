@@ -243,15 +243,18 @@ export default async function RootLayout({
               "@type": "TravelAgency",
               "name": settings.general.siteName,
               "description": settings.general.description,
-              "image": "https://alaqsaumrahtransport.com/logo.png",
+              "logo": "https://alaqsaumrahtransport.com/logo.png",
+              "image": "https://alaqsaumrahtransport.com/images/og-image.jpg",
               "@id": "https://alaqsaumrahtransport.com",
               "url": "https://alaqsaumrahtransport.com",
               "telephone": settings.contact.phone,
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": settings.contact.address,
+                "streetAddress": settings.contact.address || "Makkah AL Mukarramah",
                 "addressLocality": "Makkah",
+                "addressRegion": "Makkah Region",
+                "postalCode": "24231",
                 "addressCountry": "SA"
               },
               "areaServed": [
