@@ -6,8 +6,22 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2.5rem;
+    }
 }
 
 .card {
@@ -45,20 +59,33 @@
     object-fit: contain;
     transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-    padding: 1.5rem;
+    padding: 1rem;
 }
+
+@media (min-width: 768px) {
+    .vehicleImage {
+        padding: 1.5rem;
+    }
+}
+
 
 .card:hover .vehicleImage {
     transform: scale(1.1);
 }
 
 .content {
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     flex-grow: 1;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
+}
+
+@media (min-width: 768px) {
+    .content {
+        padding: 2rem;
+    }
 }
 
 .sectionTitle {
@@ -277,7 +304,5 @@
         font-size: 2.5rem;
     }
 
-    .grid {
-        grid-template-columns: 1fr;
-    }
+
 }

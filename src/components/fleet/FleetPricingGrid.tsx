@@ -116,9 +116,9 @@ export default function FleetPricingGrid({
                     </p>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-6">
-                    {routes.map((route, idx) => (
-                        <FadeIn key={route.id + idx} delay={idx * 0.05}>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+                    {routes.map((route, index) => (
+                        <FadeIn key={route.id} delay={index * 0.05} scale>
                             <PricingCard route={route} dbVehicleId={vehicleId} />
                         </FadeIn>
                     ))}
