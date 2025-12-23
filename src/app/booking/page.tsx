@@ -34,7 +34,7 @@ export default function BookingPage() {
     });
 
     // New Service Type State
-    const [serviceType, setServiceType] = useState<'intercity' | 'arrival' | 'departure'>('intercity');
+    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -352,12 +352,12 @@ export default function BookingPage() {
     ];
 
     const pickupLocations = allPickupLocations.filter(loc => {
-        if (serviceType === 'arrival') return loc.toLowerCase().includes('airport');
+        if (serviceType === 'Airport') return loc.toLowerCase().includes('airport');
         return true;
     });
 
     const dropoffLocations = allDropoffLocations.filter(loc => {
-        if (serviceType === 'departure') return loc.toLowerCase().includes('airport');
+        if (serviceType === 'Airport') return loc.toLowerCase().includes('airport');
         return true;
     });
 
@@ -433,9 +433,9 @@ export default function BookingPage() {
                                         updateData('routeId', '');
                                     }}
                                     options={[
-                                        { value: 'intercity', label: 'Intercity Transfer', icon: '🚗' },
-                                        { value: 'arrival', label: 'Airport Arrival (Pickup)', icon: '🛬' },
-                                        { value: 'departure', label: 'Airport Departure (Drop-off)', icon: '🛫' }
+                                        { value: 'Intercity', label: 'Intercity Transfer', icon: '🚗' },
+                                        { value: 'Airport', label: 'Airport Transfer', icon: '✈️' },
+                                        { value: 'Ziarat', label: 'Ziarat Tour', icon: '🕌' }
                                     ]}
                                     placeholder="Select Service Type"
                                     className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
