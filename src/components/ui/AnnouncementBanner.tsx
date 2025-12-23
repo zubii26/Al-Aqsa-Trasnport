@@ -56,6 +56,11 @@ const Confetti = () => {
 export default function AnnouncementBanner({ discount }: AnnouncementBannerProps) {
     const [isVisible, setIsVisible] = useState(true);
     const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     // Calculate time left (Logic unchanged)
     useEffect(() => {
@@ -84,7 +89,7 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
         return () => clearInterval(timer);
     }, [discount.endDate]);
 
-    if (!isVisible || !discount.enabled) return null;
+    if (!isMounted || !isVisible || !discount.enabled) return null;
 
     // Date checks (Logic unchanged)
     const now = new Date();
