@@ -7,6 +7,7 @@ export interface Route {
     time: string;
     baseRate: number;
     promotionalDiscount?: number; // Percentage discount
+    category?: string; // e.g. 'Airport', 'Ziarat', 'Intercity'
     customRates?: { [vehicleId: string]: number };
 }
 

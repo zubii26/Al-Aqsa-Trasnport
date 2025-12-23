@@ -324,21 +324,18 @@ export default function BookingPage() {
         setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
     };
 
-    // Filter routes based on Service Type
+    // Filter routes based on Service Type (Category)
     const filteredRoutes = routes.filter(r => {
-        const lowerName = r.name.toLowerCase();
-        const parts = lowerName.split(/ to | \u2192 | \u2194 /);
-        const origin = parts[0] || '';
-        const destination = parts.length > 1 ? parts[1] : '';
-        const isAirportRoute = lowerName.includes('airport');
+        // Strict category matching from DB
+        if (r.category) {
+            return r.category.toLowerCase() === serviceType.toLowerCase();
+        }
 
-        if (serviceType === 'arrival') {
-            return origin.includes('airport') || lowerName.startsWith('jeddah airport') || lowerName.startsWith('madinah airport');
-        }
-        if (serviceType === 'departure') {
-            return destination.includes('airport') || lowerName.includes('to jeddah airport') || lowerName.includes('to madinah airport');
-        }
-        return !isAirportRoute;
+        // Fallback
+        const lowerName = r.name.toLowerCase();
+        if (serviceType === 'Airport') return lowerName.includes('airport');
+        if (serviceType === 'Ziarat') return lowerName.includes('ziarat') || lowerName.includes('ziyarat');
+        return !lowerName.includes('airport') && !lowerName.includes('ziarat') && !lowerName.includes('ziyarat');
     });
 
     const allPickupLocations = [

@@ -75,7 +75,7 @@ const QuickBookingForm = ({
     const vehicles = initialVehicles ? attachIcons(initialVehicles) : contextVehicles;
     const isLoading = (initialRoutes && initialVehicles) ? false : contextLoading;
 
-    const [serviceType, setServiceType] = useState<'intercity' | 'arrival' | 'departure'>('intercity');
+    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
 
     const [formData, setFormData] = useState({
         name: '',
@@ -138,28 +138,18 @@ const QuickBookingForm = ({
     }, [formData.pickup, formData.dropoff, routes, errors.routeId]);
 
     // Enhanced Dropdown Data Preparation
-    // Filter routes based on Service Type
+    // Filter routes based on Service Type (Category)
     const filteredRoutes = routes.filter(r => {
+        // Strict category matching from DB
+        if (r.category) {
+            return r.category.toLowerCase() === serviceType.toLowerCase();
+        }
+
+        // Fallback for routes without category (shouldn't happen after migration)
         const lowerName = r.name.toLowerCase();
-        // Parse origin/destination from name since they aren't on the Route object
-        const parts = lowerName.split(/ to | \u2192 | \u2194 /); // " to ", " → ", " ↔ "
-        const origin = parts[0] || '';
-        const destination = parts.length > 1 ? parts[1] : '';
-
-        const isAirportRoute = lowerName.includes('airport');
-
-        if (serviceType === 'arrival') {
-            // Must be FROM Airport or explicitly named as an airport pickup
-            return origin.includes('airport') || lowerName.startsWith('jeddah airport') || lowerName.startsWith('madinah airport');
-        }
-        if (serviceType === 'departure') {
-            // Must be TO Airport
-            return destination.includes('airport') || lowerName.includes('to jeddah airport') || lowerName.includes('to madinah airport');
-        }
-
-        // Intercity: exclude routes that are clearly airport transfers
-        // Unless it's ambiguous, then show it. Safe default is to hide explicit airport routes.
-        return !isAirportRoute;
+        if (serviceType === 'Airport') return lowerName.includes('airport');
+        if (serviceType === 'Ziarat') return lowerName.includes('ziarat') || lowerName.includes('ziyarat');
+        return !lowerName.includes('airport') && !lowerName.includes('ziarat') && !lowerName.includes('ziyarat');
     });
 
     // Enhanced Dropdown Data Preparation
@@ -388,15 +378,9 @@ const QuickBookingForm = ({
         "Al Ula Tour"
     ];
 
-    const pickupLocations = allPickupLocations.filter(loc => {
-        if (serviceType === 'arrival') return loc.toLowerCase().includes('airport');
-        return true;
-    });
+    const pickupLocations = allPickupLocations; // Simplified for now, or filter by category if needed
 
-    const dropoffLocations = allDropoffLocations.filter(loc => {
-        if (serviceType === 'departure') return loc.toLowerCase().includes('airport');
-        return true;
-    });
+    const dropoffLocations = allDropoffLocations;
 
     return (
         <motion.div
@@ -463,9 +447,9 @@ const QuickBookingForm = ({
                         <div className="mb-3">
                             <div className={styles.segmentedControl}>
                                 {([
-                                    { id: 'intercity', label: 'Intercity Transfer' },
-                                    { id: 'arrival', label: 'Airport Arrival' },
-                                    { id: 'departure', label: 'Airport Departure' }
+                                    { id: 'Intercity', label: 'Intercity' },
+                                    { id: 'Airport', label: 'Airport' },
+                                    { id: 'Ziarat', label: 'Ziarat' }
                                 ]).map((type) => (
                                     <button
                                         key={type.id}
