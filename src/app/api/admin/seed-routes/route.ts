@@ -27,6 +27,7 @@ export async function GET() {
                 destination: 'Makkah Hotel',
                 distance: '100 km',
                 duration: '1 hr 30 min',
+                category: 'Airport Arrival',
                 prices: { [gmcId]: 550, [camryId]: 250 }
             },
             {
@@ -35,6 +36,7 @@ export async function GET() {
                 destination: 'Jeddah Airport',
                 distance: '100 km',
                 duration: '1 hr 30 min',
+                category: 'Airport Departure',
                 prices: { [gmcId]: 500, [camryId]: 200 }
             },
             {
@@ -43,7 +45,8 @@ export async function GET() {
                 destination: 'Ziarat (Half Day)',
                 distance: '40 km',
                 duration: '3-4 hrs',
-                prices: { [gmcId]: 600, [camryId]: 300 } // GMC: 600 (Ziarat + Wadiya Jin?), Camry: 300
+                category: 'Ziarat',
+                prices: { [gmcId]: 600, [camryId]: 300 }
             },
             {
                 key: 'mad-mak',
@@ -51,6 +54,7 @@ export async function GET() {
                 destination: 'Makkah Hotel',
                 distance: '450 km',
                 duration: '4 hrs 30 min',
+                category: 'Intercity',
                 prices: { [gmcId]: 1400, [camryId]: 500 }
             },
             {
@@ -59,7 +63,8 @@ export async function GET() {
                 destination: 'Madinah Hotel',
                 distance: '450 km',
                 duration: '4 hrs 30 min',
-                prices: { [gmcId]: 1400, [camryId]: 500 } // Assumed symmetric
+                category: 'Intercity',
+                prices: { [gmcId]: 1400, [camryId]: 500 }
             },
             {
                 key: 'hourly',
@@ -67,7 +72,8 @@ export async function GET() {
                 destination: 'Per Hour',
                 distance: '-',
                 duration: '1 hr',
-                prices: { [gmcId]: 150, [camryId]: 80 } // GMC guess 150, Camry 80
+                category: 'Intercity',
+                prices: { [gmcId]: 150, [camryId]: 80 }
             },
             {
                 key: 'mak-taif',
@@ -75,6 +81,7 @@ export async function GET() {
                 destination: 'Taif (Return)',
                 distance: '180 km',
                 duration: '8-10 hrs',
+                category: 'Intercity',
                 prices: { [gmcId]: 1300, [camryId]: 500 }
             },
             {
@@ -83,14 +90,16 @@ export async function GET() {
                 destination: 'Taif (Return)',
                 distance: '350 km',
                 duration: '10-12 hrs',
+                category: 'Intercity',
                 prices: { [gmcId]: 800, [camryId]: 700 }
             },
             {
                 key: 'mad-ziarat-taxi',
                 origin: 'Madinah',
-                destination: 'Ziyarat Taxi (Standard)', // Differentiate from Half Day if needed
+                destination: 'Ziyarat Taxi (Standard)',
                 distance: '40 km',
                 duration: '3 hrs',
+                category: 'Ziarat',
                 prices: { [gmcId]: 500, [camryId]: 250 }
             },
             {
@@ -99,6 +108,7 @@ export async function GET() {
                 destination: 'Ziyarat (Half Day)',
                 distance: '40 km',
                 duration: '3-4 hrs',
+                category: 'Ziarat',
                 prices: { [gmcId]: 600, [camryId]: 250 }
             },
             {
@@ -107,6 +117,7 @@ export async function GET() {
                 destination: 'Madinah Hotel',
                 distance: '20 km',
                 duration: '25 min',
+                category: 'Airport Arrival',
                 prices: { [gmcId]: 200, [camryId]: 120 }
             },
             {
@@ -115,7 +126,8 @@ export async function GET() {
                 destination: 'Madinah Airport',
                 distance: '20 km',
                 duration: '25 min',
-                prices: { [gmcId]: 200, [camryId]: 150 } // Pricing diff in img?
+                category: 'Airport Departure',
+                prices: { [gmcId]: 200, [camryId]: 150 }
             },
             {
                 key: 'jed-air-mad-hot',
@@ -123,7 +135,8 @@ export async function GET() {
                 destination: 'Madinah Hotel',
                 distance: '400 km',
                 duration: '4 hrs',
-                prices: { [gmcId]: 1350, [camryId]: 600 } // Camry guess 600
+                category: 'Airport Arrival',
+                prices: { [gmcId]: 1350, [camryId]: 600 }
             },
             {
                 key: 'jed-air-jed-hot',
@@ -131,7 +144,8 @@ export async function GET() {
                 destination: 'Jeddah Hotel',
                 distance: '40 km',
                 duration: '45 min',
-                prices: { [gmcId]: 250, [camryId]: 150 } // Camry guess 150
+                category: 'Airport Arrival',
+                prices: { [gmcId]: 250, [camryId]: 150 }
             },
             {
                 key: 'jed-hot-jed-air',
@@ -139,7 +153,8 @@ export async function GET() {
                 destination: 'Jeddah Airport',
                 distance: '40 km',
                 duration: '45 min',
-                prices: { [gmcId]: 250, [camryId]: 200 } // Camry see img 200
+                category: 'Airport Departure',
+                prices: { [gmcId]: 250, [camryId]: 200 }
             }
         ];
 
@@ -160,8 +175,15 @@ export async function GET() {
                     destination: r.destination,
                     distance: r.distance,
                     duration: r.duration,
-                    category: 'Intercity',
+                    category: r.category,
                 }) as any;
+            } else {
+                // Update category for existing routes
+                await routeService.updateRoute(route.id, {
+                    category: r.category,
+                    distance: r.distance,
+                    duration: r.duration
+                });
             }
 
             // Update Prices
@@ -174,7 +196,8 @@ export async function GET() {
                     key: r.key,
                     id: route.id,
                     origin: r.origin,
-                    destination: r.destination
+                    destination: r.destination,
+                    category: r.category
                 });
             }
         }

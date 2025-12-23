@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 
 import { usePricing } from '@/context/PricingContext';
+import { Route } from '@/lib/pricing';
 import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 
@@ -17,6 +18,12 @@ export default function BookingPage() {
     const [step, setStep] = useState(1);
     const [isSearching, setIsSearching] = useState(false);
     const [accordionOpen, setAccordionOpen] = useState<string>('journey');
+
+    // Core State
+    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
+    const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
+    const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+
     const [bookingData, setBookingData] = useState({
         routeId: '',
         selectedVehicles: [] as { vehicleId: string; quantity: number }[],
@@ -34,7 +41,7 @@ export default function BookingPage() {
     });
 
     // New Service Type State
-    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
+
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -311,6 +318,7 @@ export default function BookingPage() {
                 pickup: '',
                 dropoff: ''
             }));
+            setSelectedRoute(null); // Clear selected route for custom
         } else {
             const selectedRoute = routes.find(r => r.id === routeId);
             setBookingData(prev => ({
@@ -319,6 +327,7 @@ export default function BookingPage() {
                 pickup: selectedRoute?.name.split(' to ')[0] || '',
                 dropoff: selectedRoute?.name.split(' to ')[1] || ''
             }));
+            setSelectedRoute(selectedRoute || null); // Set selected route
         }
         setIsDropdownOpen(false);
         setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
@@ -328,6 +337,14 @@ export default function BookingPage() {
     const filteredRoutes = routes.filter(r => {
         // Strict category matching from DB
         if (r.category) {
+
+            // Special handling for Airport tab
+            if (serviceType === 'Airport') {
+                const isArrival = airportType === 'Arrival';
+                const targetCategory = isArrival ? 'Airport Arrival' : 'Airport Departure';
+                return r.category === targetCategory || r.category === 'Airport';
+            }
+
             return r.category.toLowerCase() === serviceType.toLowerCase();
         }
 
@@ -443,6 +460,54 @@ export default function BookingPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Sub-Category Dropdown for Airport */}
+                        {serviceType === 'Airport' && (
+                            <div className="mb-6">
+                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                    {airportType === 'Arrival' ? <PlaneLanding size={18} className="text-secondary" /> : <PlaneTakeoff size={18} className="text-secondary" />}
+                                    <span>Transfer Type</span>
+                                </label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setAirportType('Arrival');
+                                            setBookingData(prev => ({ ...prev, routeId: '' }));
+                                            setSelectedRoute(null);
+                                        }}
+                                        className={`
+                                            flex items-center justify-center gap-2 px-4 py-4 rounded-xl font-medium transition-all
+                                            ${airportType === 'Arrival'
+                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/20 scale-[1.02]'
+                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-secondary/50'
+                                            }
+                                        `}
+                                    >
+                                        <PlaneLanding size={20} />
+                                        <span>Arrival</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setAirportType('Departure');
+                                            setBookingData(prev => ({ ...prev, routeId: '' }));
+                                            setSelectedRoute(null);
+                                        }}
+                                        className={`
+                                            flex items-center justify-center gap-2 px-4 py-4 rounded-xl font-medium transition-all
+                                            ${airportType === 'Departure'
+                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/20 scale-[1.02]'
+                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-secondary/50'
+                                            }
+                                        `}
+                                    >
+                                        <PlaneTakeoff size={20} />
+                                        <span>Departure</span>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
                         <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                             <MapPin size={18} className="text-secondary" />

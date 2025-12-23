@@ -76,7 +76,7 @@ const QuickBookingForm = ({
     const isLoading = (initialRoutes && initialVehicles) ? false : contextLoading;
 
     const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
-
+    const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -140,12 +140,20 @@ const QuickBookingForm = ({
     // Enhanced Dropdown Data Preparation
     // Filter routes based on Service Type (Category)
     const filteredRoutes = routes.filter(r => {
-        // Strict category matching from DB
+        // Strict category matching from DB (Extended for Airport sub-categories)
         if (r.category) {
+
+            // Special handling for Airport tab to include 'Airport', 'Airport Arrival', 'Airport Departure'
+            if (serviceType === 'Airport') {
+                const isArrival = airportType === 'Arrival';
+                const targetCategory = isArrival ? 'Airport Arrival' : 'Airport Departure';
+                return r.category === targetCategory || r.category === 'Airport';
+            }
+
             return r.category.toLowerCase() === serviceType.toLowerCase();
         }
 
-        // Fallback for routes without category (shouldn't happen after migration)
+        // Fallback for old routes without category
         const lowerName = r.name.toLowerCase();
         if (serviceType === 'Airport') return lowerName.includes('airport');
         if (serviceType === 'Ziarat') return lowerName.includes('ziarat') || lowerName.includes('ziyarat');
@@ -280,6 +288,7 @@ const QuickBookingForm = ({
         return Object.keys(newErrors).length === 0;
     };
 
+    // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -289,10 +298,11 @@ const QuickBookingForm = ({
 
         setIsSubmitting(true);
 
-        const selectedRoute = routes.find(r => r.id === formData.routeId);
-        const selectedVehicle = vehicles.find(v => v.id === formData.vehicleId);
-
         try {
+            // Check if we have a selected route to get details
+            // Corrected to use global vehicles array instead of route.vehicles
+            const selectedVehicle = vehicles.find(v => v.id === formData.vehicleId);
+
             const res = await fetch('/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -465,6 +475,41 @@ const QuickBookingForm = ({
                                 ))}
                             </div>
                         </div>
+
+                        {/* Sub-Category Dropdown for Airport */}
+                        {serviceType === 'Airport' && (
+                            <div className="mb-4">
+                                <label className={styles.label}>Transfer Type</label>
+                                <div className="grid grid-cols-2 gap-2 mt-1">
+                                    <button
+                                        type="button"
+                                        className={`py-2 px-4 rounded-lg border text-sm font-medium transition-all ${airportType === 'Arrival'
+                                            ? 'bg-amber-500 text-white border-amber-500 shadow-md'
+                                            : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-500/50'
+                                            }`}
+                                        onClick={() => {
+                                            setAirportType('Arrival');
+                                            setFormData(prev => ({ ...prev, routeId: '' }));
+                                        }}
+                                    >
+                                        Arrival
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`py-2 px-4 rounded-lg border text-sm font-medium transition-all ${airportType === 'Departure'
+                                            ? 'bg-amber-500 text-white border-amber-500 shadow-md'
+                                            : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-500/50'
+                                            }`}
+                                        onClick={() => {
+                                            setAirportType('Departure');
+                                            setFormData(prev => ({ ...prev, routeId: '' }));
+                                        }}
+                                    >
+                                        Departure
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
                         <div className={styles.grid}>
 

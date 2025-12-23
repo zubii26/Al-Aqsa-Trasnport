@@ -150,7 +150,8 @@ export default function RoutesPage() {
         return matchesSearch && matchesCategory;
     });
 
-    const categories = ['All', 'Intercity', 'Airport', 'Ziarat'];
+    const categories = ['All', 'Intercity', 'Airport', 'Airport Arrival', 'Airport Departure', 'Ziarat'];
+    const formCategories = ['Intercity', 'Airport Arrival', 'Airport Departure', 'Ziarat']; // Exclude generic 'Airport' for new routes
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-8">
@@ -246,7 +247,7 @@ export default function RoutesPage() {
                                             </div>
                                         </td>
                                         <td>
-                                            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${route.category === 'Airport' ? 'bg-blue-500/10 text-blue-500' :
+                                            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${route.category === 'Airport' || route.category === 'Airport Arrival' || route.category === 'Airport Departure' ? 'bg-blue-500/10 text-blue-500' :
                                                 route.category === 'Ziarat' ? 'bg-emerald-500/10 text-emerald-500' :
                                                     'bg-amber-500/10 text-amber-500'
                                                 }`}>
@@ -357,13 +358,14 @@ export default function RoutesPage() {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
                                     <select
-                                        className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                        className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all cursor-pointer"
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value })}
                                     >
-                                        <option value="Intercity">Intercity Transfer</option>
-                                        <option value="Airport">Airport Transfer</option>
-                                        <option value="Ziarat">Ziarat Tour</option>
+                                        <option value="">Select Category</option>
+                                        {formCategories.map(c => (
+                                            <option key={c} value={c}>{c}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-200 dark:border-slate-800">
