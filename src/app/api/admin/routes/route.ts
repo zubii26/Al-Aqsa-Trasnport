@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { routeService } from '@/services/routeService';
 import { auditLogService } from '@/services/auditLogService';
 import { requireRole } from '@/lib/server-auth';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function GET() {
     const user = await requireRole(['ADMIN', 'MANAGER']);
@@ -52,9 +53,10 @@ export async function POST(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
         revalidatePath('/booking');
         revalidatePath('/admin/routes');
+        // @ts-expect-error: revalidateTag signature mismatch in this next version
+        revalidateTag('routes');
 
         return NextResponse.json(route);
     } catch {
@@ -97,9 +99,10 @@ export async function PUT(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
         revalidatePath('/booking');
         revalidatePath('/admin/routes');
+        // @ts-expect-error: revalidateTag signature mismatch in this next version
+        revalidateTag('routes');
 
         return NextResponse.json(route);
     } catch {
@@ -132,9 +135,10 @@ export async function DELETE(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
         revalidatePath('/booking');
         revalidatePath('/admin/routes');
+        // @ts-expect-error: revalidateTag signature mismatch in this next version
+        revalidateTag('routes');
 
         return NextResponse.json({ success: true });
     } catch {
