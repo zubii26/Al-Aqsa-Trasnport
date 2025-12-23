@@ -166,15 +166,25 @@ export default function ReviewsSection() {
                             </div>
                         </div>
 
-                        <a
-                            href="https://www.google.com/search?q=Al+Aqsa+Umrah+Transport#lrd=0x15c21d9da1e4d599:0xb8a485c3949902cc,3"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 px-6 py-3 rounded-full font-semibold transition-colors"
-                        >
-                            <MessageSquarePlus size={18} />
-                            <span>Write a Review</span>
-                        </a>
+                        <div className="flex flex-col items-center gap-3">
+                            <a
+                                href="https://search.google.com/local/writereview?placeid=ChIJmdXkoZ0dwhURzAKZlMOFpLg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 px-6 py-3 rounded-full font-semibold transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            >
+                                <MessageSquarePlus size={18} />
+                                <span>Write a Review</span>
+                            </a>
+                            <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">
+                                <span className="flex items-center justify-center w-4 h-4 rounded-full bg-green-500 text-white">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </span>
+                                <span>Verified on Google</span>
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
 

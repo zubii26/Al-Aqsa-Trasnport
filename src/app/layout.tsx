@@ -263,8 +263,16 @@ export default async function RootLayout({
               "sameAs": [
                 "https://facebook.com/alaqsaumrahtransport",
                 "https://twitter.com/alaqsatransport",
-                "https://instagram.com/alaqsaumrahtransport"
+                "https://instagram.com/alaqsaumrahtransport",
+                "https://www.google.com/maps?cid=13304906274217460428"
               ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "reviewCount": "153",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
               "geo": {
                 "@type": "GeoCoordinates",
                 "latitude": 21.4225,
