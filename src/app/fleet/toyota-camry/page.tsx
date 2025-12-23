@@ -9,16 +9,16 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
-    title: "Toyota Camry Umrah Taxi | Affordable Makkah to Madinah Taxi",
-    description: "Book Toyota Camry 2024 for Umrah. Reliable 4-seater taxi for Makkah to Madinah transfers, Jeddah Airport pickup, and Ziyarat. Best affordable transport in Saudi Arabia.",
+    title: "Toyota Camry Umrah Taxi | Makkah to Madinah Price",
+    description: "Book Toyota Camry 2024 for Umrah. Reliable 4-seater taxi for Jeddah Airport to Makkah and Madinah transfers. Affordable, private, and comfortable transport.",
     keywords: [
         "Toyota Camry Umrah Taxi",
         "Makkah to Madinah Taxi Price",
-        "Affordable Umrah Transport",
         "Jeddah Airport to Makkah Camry",
-        "4 Seater Taxi Saudi Arabia",
-        "Private Taxi for Umrah",
-        "Umrah Taxi Booking"
+        "Small Taxi Makkah",
+        "Toyota Camry Rental Saudi Arabia",
+        "Private Umrah Taxi",
+        "Cheap Taxi Jeddah to Madinah"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry',
@@ -52,8 +52,8 @@ export default async function ToyotaCamryPage() {
     return (
         <main className="overflow-x-hidden">
             <Hero
-                title="Toyota Camry 2024 | The Gold Standard of Reliability"
-                subtitle="Experience the perfect blend of comfort, fuel efficiency, and smooth performance. The most trusted choice for private Umrah transfers."
+                title="Toyota Camry 2024 | Reliable Umrah Taxi Makkah"
+                subtitle="The gold standard for private transfers. Affordable, comfortable, and efficient travel between Jeddah, Makkah, and Madinah."
                 bgImage={camryImage}
                 badge="Most Popular"
                 ctaText="Book via WhatsApp"
@@ -65,7 +65,7 @@ export default async function ToyotaCamryPage() {
                 vehicleId={camryId}
                 vehicleImage={camryImage}
                 vehicleType="camry"
-                title="Affordable Camry Transfer Rates"
+                title="Toyota Camry Transfer Rates | Makkah & Madinah"
                 subtitle="Premium service at economy prices. Transparent pricing for all your Makkah and Madinah journeys."
             />
 
@@ -86,11 +86,11 @@ export default async function ToyotaCamryPage() {
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Travel with Peace of Mind
+                                Reliable Toyota Camry for Umrah Travel
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                Our Toyota Camry fleet is meticulously maintained to ensure your Umrah journey is as smooth as possible.
-                                With its renowned suspension and quiet cabin, it's the perfect environment for reflection and rest between the holy cities.
+                                Our Toyota Camry fleet offers the smoothest ride for your Umrah journey. Ideal for small families or couples traveling from Jeddah Airport
+                                to Makkah, ensuring a peaceful and efficient trip to the Holy Cities.
                             </p>
 
                             <div className="grid grid-cols-2 gap-6">

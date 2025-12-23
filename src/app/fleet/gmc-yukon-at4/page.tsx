@@ -9,16 +9,17 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
-    title: "GMC Yukon Umrah Taxi | VIP Makkah to Madinah Transport",
-    description: "Book 2025 GMC Yukon XL for Umrah transport. Luxury 7-seater SUV for Makkah to Madinah & Jeddah airport transfers. VIP comfort, plenty of luggage space, and English-speaking drivers.",
+    title: "GMC Yukon Umrah Taxi | Luxury 7-Seater for Makkah to Madinah",
+    description: "Book 2025 GMC Yukon XL for VIP Umrah transport. Luxury 7-seater SUV for Jeddah Airport to Makkah, Madinah transfers, and Ziyarat. Spacious, comfortable, and reliable.",
     keywords: [
         "GMC Yukon Umrah Taxi",
         "GMC Yukon XL Makkah",
-        "Luxury SUV Umrah Transport",
-        "VIP Taxi Makkah to Madinah",
-        "Jeddah Airport GMC Pickup",
-        "Family Umrah Transport",
-        "Private SUV Saudi Arabia"
+        "Jeddah Airport to Makkah GMC",
+        "Makkah to Madinah VIP Transport",
+        "Luxury SUV Rental Saudi Arabia",
+        "7 Seater Taxi Jeddah",
+        "Private Umrah Transport",
+        "GMC Taxi Madinah"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
@@ -52,8 +53,8 @@ export default async function GmcYukonPage() {
     return (
         <main className="overflow-x-hidden">
             <Hero
-                title="GMC Yukon 2025 | The Ultimate VIP Umrah Experience"
-                subtitle="Travel in unmatched luxury and comfort. The preferred choice for families and VIP pilgrims visiting Makkah and Madinah."
+                title="GMC Yukon 2025 | VIP Umrah Transport Makkah & Madinah"
+                subtitle="Travel in unmatched luxury between Jeddah, Makkah, and Madinah. The preferred 7-seater choice for families and VIP pilgrims."
                 bgImage={gmcImage}
                 badge="VIP Choice"
                 ctaText="Book via WhatsApp"
@@ -65,7 +66,7 @@ export default async function GmcYukonPage() {
                 vehicleId={gmcId}
                 vehicleImage={gmcImage}
                 vehicleType="gmc"
-                title="VIP GMC Yukon Transfer Rates"
+                title="VIP GMC Yukon Rates | Jeddah, Makkah & Madinah"
                 subtitle="The pinnacle of comfort for your spiritual journey. Transparent VIP pricing for all routes."
             />
 
@@ -86,11 +87,11 @@ export default async function GmcYukonPage() {
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Why Choose the GMC Yukon?
+                                Why Choose GMC Yukon for Umrah Travel?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                The GMC Yukon XL defines luxury travel in Saudi Arabia. Whether you are arriving at Jeddah Airport or traveling between Makkah and Madinah,
-                                this vehicle offers the perfect blend of American luxury, massive space, and roadway safety.
+                                The GMC Yukon XL defines luxury travel in Saudi Arabia. Perfect for Jeddah Airport pickups and comfortable journeys between Makkah and Madinah,
+                                this vehicle offers American luxury, massive space, and top-tier safety for your family.
                             </p>
 
                             <div className="grid grid-cols-2 gap-6">

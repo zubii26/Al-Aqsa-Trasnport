@@ -9,16 +9,16 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
-    title: "Toyota Hiace Price Umrah Taxi | 10 Seater Bus Makkah",
-    description: "Rent Toyota Hiace with driver for Umrah group transport. Best price 10 seater bus for Makkah, Madinah, and Jeddah airport transfers. Spacious and reliable.",
+    title: "Toyota Hiace Umrah Taxi | 10-12 Seater Bus Makkah",
+    description: "Book Toyota Hiace for Umrah group transport. Reliable 10-12 seater bus for Makkah, Madinah, And Jeddah Airport transfers. Best commercial vehicle for large families.",
     keywords: [
         "Toyota Hiace Umrah Taxi",
-        "Hiace Bus Makkah",
-        "10 Seater Bus Rental Saudi Arabia",
-        "Group Umrah Transport",
-        "Cheap Bus for Umrah",
-        "Coaster Bus Makkah",
-        "Toyota Hiace Price Jeddah"
+        "Toyota Hiace Makkah to Madinah",
+        "10 Seater Bus Jeddah Airport",
+        "Group Umrah Transport Makkah",
+        "Toyota Hiace Rental Saudi Arabia",
+        "Cheap Umrah Bus",
+        "Hiace Taxi Madinah"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-hiace',
@@ -52,8 +52,8 @@ export default async function ToyotaHiacePage() {
     return (
         <main className="overflow-x-hidden">
             <Hero
-                title="Toyota Hiace 2024 | Ultimate Group Reliability"
-                subtitle="The most trusted vehicle for larger groups and dual families. Affordable, spacious, and perfect for your joint Makkah-Madinah journey."
+                title="Toyota Hiace 2024 | Group Umrah Transport"
+                subtitle="The trusted choice for large families and groups traveling between Jeddah, Makkah, and Madinah. Reliable and spacious."
                 bgImage={hiaceImage}
                 badge="Group Choice"
                 ctaText="Book via WhatsApp"
@@ -65,7 +65,7 @@ export default async function ToyotaHiacePage() {
                 vehicleId={hiaceId}
                 vehicleImage={hiaceImage}
                 vehicleType="hiace"
-                title="Group Friendly Hiace Rates"
+                title="Toyota Hiace Rates | Group Transport Makkah"
                 subtitle="Unbeatable value per person. Keep your whole group together safely and comfortably."
             />
 
@@ -86,11 +86,11 @@ export default async function ToyotaHiacePage() {
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Travel Together, Pray Together
+                                Why Choose Toyota Hiace for Group Umrah?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                Don't split your group into multiple taxis. The Toyota Hiace keeps your family or group united throughout the journey.
-                                Known for its legendary reliability and powerful air conditioning, it conquers the Saudi heat with ease while providing ample space for everyone.
+                                Keep your group united. The Toyota Hiace is perfect for families traveling from Jeddah Airport to Makkah.
+                                Known for its reliability and powerful AC, it ensures a comfortable journey across Saudi Arabia for up to 12 passengers.
                             </p>
 
                             <div className="grid grid-cols-2 gap-6">

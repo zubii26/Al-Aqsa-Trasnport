@@ -9,16 +9,16 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
-    title: "Hyundai H1 / Starex Umrah Taxi | 7 Seater Family Van",
-    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van for Makkah to Madinah transfers, Jeddah Airport pickup, and Ziyarat. Affordable and comfortable.",
+    title: "Hyundai Starex Umrah Taxi | Affordable 7-Seater Van Makkah",
+    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van for Makkah to Madinah transfers, Jeddah Airport pickup, and Ziyarat. Reliable and budget-friendly.",
     keywords: [
-        "Hyundai H1 Makkah Taxi",
-        "Hyundai Starex Umrah Transport",
-        "7 Seater Taxi Saudi Arabia",
-        "Family Van Makkah to Madinah",
-        "Cheap Family Taxi Jeddah",
-        "Private Van for Umrah",
-        "Hyundai H1 Rental Jeddah"
+        "Hyundai Starex Umrah Taxi",
+        "Hyundai H1 Makkah to Madinah",
+        "7 Seater Taxi Jeddah Airport",
+        "Makkah to Madinah Van Price",
+        "Cheap Family Taxi Makkah",
+        "Hyundai Starex Rental Saudi Arabia",
+        "Private Van for Ziyarat"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex',
@@ -52,8 +52,8 @@ export default async function HyundaiStarexPage() {
     return (
         <main className="overflow-x-hidden">
             <Hero
-                title="Hyundai H1 Starex | Practical Family Comfort"
-                subtitle="The time-tested choice for family Umrah trips. Reliable, spacious, and perfectly cooled for the Saudi Arabian climate."
+                title="Hyundai H1 Starex | Best Family Van for Umrah"
+                subtitle="The practical choice for family travel between Jeddah, Makkah, and Madinah. Reliable, spacious, and perfect for groups."
                 bgImage={starexImage}
                 badge="Family Favorite"
                 ctaText="Book via WhatsApp"
@@ -65,7 +65,7 @@ export default async function HyundaiStarexPage() {
                 vehicleId={starexId}
                 vehicleImage={starexImage}
                 vehicleType="starex"
-                title="Affordable Family Van Rates"
+                title="Hyundai Starex Rates | Makkah & Madinah"
                 subtitle="High-capacity comfort at an unbeatable price point. Perfect for families performing Umrah together."
             />
 
@@ -86,11 +86,11 @@ export default async function HyundaiStarexPage() {
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Why Choose the Hyundai H1 Starex?
+                                Why Book Hyundai Starex for Makkah Travel?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                The Hyundai H1 (Starex) is the go-to vehicle for families performing Umrah. It combines practicality with comfort,
-                                offering a high roof, easy sliding doors, and dual air conditioning to keep everyone comfortable during the journey.
+                                The Hyundai H1 (Starex) is the top choice for families performing Umrah. It offers excellent value for trips from Jeddah Airport to Makkah and
+                                provides a comfortable ride for Ziyarat tours in the Holy Cities.
                             </p>
 
                             <div className="grid grid-cols-2 gap-6">

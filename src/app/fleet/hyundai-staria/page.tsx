@@ -9,16 +9,16 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 
 export const metadata: Metadata = {
-    title: "Hyundai Staria Umrah Taxi | Comfortable 7-Seater Van Makkah",
-    description: "Book Hyundai Staria 2024 for Umrah. Modern, spacious 7-seater van for Makkah to Madinah transfers. Perfect for families, large luggage capacity, and smooth ride.",
+    title: "Hyundai Staria Umrah Taxi | Luxury 7-Seater Van Makkah",
+    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater van for Jeddah Airport to Makkah and Madinah. Modern, spacious, and perfect for VIP families.",
     keywords: [
         "Hyundai Staria Umrah Taxi",
-        "Staria Van Makkah",
-        "7 Seater Taxi Madinah",
-        "Family Van for Umrah",
-        "Hyundai Staria 2024 Rental",
+        "Hyundai Staria Makkah",
+        "Luxury Van Jeddah to Madinah",
+        "7 Seater VIP Taxi Makkah",
+        "Hyundai Staria Rental Saudi Arabia",
         "Comfortable Umrah Transport",
-        "Private Van Saudi Arabia"
+        "Staria Van for Ziyarat"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria',
@@ -52,8 +52,8 @@ export default async function HyundaiStariaPage() {
     return (
         <main className="overflow-x-hidden">
             <Hero
-                title="Hyundai Staria 2024 | The Future of Family Transport"
-                subtitle="Spacious, modern, and incredibly comfortable. The best 7-seater van for family Umrah groups who want a premium experience."
+                title="Hyundai Staria 2024 | Premium Umrah Transport"
+                subtitle="The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."
                 bgImage={stariaImage}
                 badge="Futuristic Choice"
                 ctaText="Book via WhatsApp"
@@ -65,7 +65,7 @@ export default async function HyundaiStariaPage() {
                 vehicleId={stariaId}
                 vehicleImage={stariaImage}
                 vehicleType="staria"
-                title="Premium Staria Van Services"
+                title="Hyundai Staria Rates | Jeddah, Makkah, Madinah"
                 subtitle="The perfect balance of modern luxury and group capacity. Ideal for families and small groups."
             />
 
@@ -86,11 +86,11 @@ export default async function HyundaiStariaPage() {
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Redefining Comfort: Hyundai Staria
+                                Experience Luxury: Hyundai Staria in Makkah
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                Forget cramped taxis. The Hyundai Staria offers a panoramic view of the Holy Lands with its massive windows and lounge-style seating.
-                                It is specifically chosen for our fleet to provide families with the most relaxing travel experience possible in Saudi Arabia.
+                                Enjoy panoramic views of the Holy Lands with the Hyundai Staria. Its lounge-style seating makes the journey between Jeddah, Makkah, and Madinah
+                                incredibly relaxing for pilgrims seeking a premium travel experience.
                             </p>
 
                             <div className="grid grid-cols-2 gap-6">

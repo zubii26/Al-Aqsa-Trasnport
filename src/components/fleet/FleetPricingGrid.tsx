@@ -74,7 +74,7 @@ const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId:
                 </div>
 
                 <Link
-                    href={`/booking?vehicle=${dbVehicleId}&routeId=${route.id}&quantity=${quantity}&notes=${encodeURIComponent(route.title)}&step=3`}
+                    href={`/booking?vehicle=${dbVehicleId}`}
                     className="block w-full bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground font-bold py-1.5 px-1 sm:py-2 sm:px-4 rounded text-[10px] sm:text-xs transition-all duration-300 shadow-sm hover:shadow-secondary/25 text-center whitespace-nowrap"
                 >
                     Book Now
@@ -102,7 +102,7 @@ export default function FleetPricingGrid({
         }))
         // Filter out some less common routes for the grid to keep it clean (like train stations)
         .filter(r => !r.title.toLowerCase().includes('train'))
-        .slice(0, 8); // Show top 8 routes
+        .filter(r => !r.title.toLowerCase().includes('train')); // Show all routes except train
 
     return (
         <section className="py-20 bg-slate-50 dark:bg-slate-950">

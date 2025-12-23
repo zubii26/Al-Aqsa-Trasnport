@@ -2,10 +2,10 @@
     "routes": [
         {
             "id": "692db09934f15bc89b45a5fd",
-            "name": "Jeddah Airport → Makkah Hotel",
+            "name": "Jeddah Airport to Makkah Hotel",
             "distance": "100 km",
             "time": "1 hr 30 min",
-            "baseRate": 200,
+            "baseRate": 250,
             "customRates": {
                 "camry": 250,
                 "hiace": 350,
@@ -16,53 +16,23 @@
             }
         },
         {
-            "id": "692db09934f15bc89b45a600",
-            "name": "Jeddah Airport → Madinah Hotel",
-            "distance": "400 km",
-            "time": "4 hrs",
-            "baseRate": 400,
+            "id": "madinah-ziyarat-wadi-jinn",
+            "name": "Madinah Ziyarat Taxi and Wadi Jin",
+            "distance": "50 km",
+            "time": "4-5 hrs",
+            "baseRate": 300,
             "customRates": {
-                "camry": 450,
-                "hiace": 550,
-                "gmc": 1000,
-                "starex": 450,
-                "staria": 500,
-                "coaster": 1100
-            }
-        },
-        {
-            "id": "692db09934f15bc89b45a5ff",
-            "name": "Makkah Hotel → Madinah Hotel",
-            "distance": "450 km",
-            "time": "4 hrs 30 min",
-            "baseRate": 400,
-            "customRates": {
-                "camry": 500,
-                "hiace": 550,
-                "gmc": 900,
-                "starex": 450,
-                "staria": 450,
-                "coaster": 900
-            }
-        },
-        {
-            "id": "692db09934f15bc89b45a600",
-            "name": "Madinah Hotel → Makkah Hotel",
-            "distance": "450 km",
-            "time": "4 hrs 30 min",
-            "baseRate": 400,
-            "customRates": {
-                "camry": 500,
-                "hiace": 550,
-                "gmc": 900,
-                "starex": 450,
-                "staria": 450,
-                "coaster": 900
+                "camry": 300,
+                "hiace": 350,
+                "gmc": 500,
+                "starex": 350,
+                "staria": 350,
+                "coaster": 600
             }
         },
         {
             "id": "692db09934f15bc89b45a601",
-            "name": "Makkah Hotel → Jeddah Airport",
+            "name": "Makkah Hotel to Jeddah Airport",
             "distance": "100 km",
             "time": "1 hr 30 min",
             "baseRate": 200,
@@ -76,101 +46,41 @@
             }
         },
         {
-            "id": "6949b368a41f6410e88ed738",
-            "name": "Madinah Airport ↔ Madinah Hotel",
-            "distance": "20 km",
-            "time": "25 min",
-            "baseRate": 150,
+            "id": "692db09934f15bc89b45a5ff",
+            "name": "Makkah Hotel to Madinah Hotel",
+            "distance": "450 km",
+            "time": "4 hrs 30 min",
+            "baseRate": 450,
             "customRates": {
-                "camry": 120,
-                "hiace": 250,
-                "gmc": 300,
-                "starex": 200,
-                "staria": 250,
-                "coaster": 400
+                "camry": 450,
+                "hiace": 550,
+                "gmc": 900,
+                "starex": 450,
+                "staria": 450,
+                "coaster": 900
             }
         },
         {
-            "id": "jed-train",
-            "name": "Jeddah Airport ↔ Jeddah Train Station",
-            "distance": "20 km",
-            "time": "30 min",
-            "baseRate": 120,
+            "id": "692db09934f15bc89b45a60e",
+            "name": "Shopping/ City Tour per hour",
+            "distance": "-",
+            "time": "1 Hour",
+            "baseRate": 80,
             "customRates": {
-                "camry": 150,
-                "hiace": 200,
-                "gmc": 250,
-                "starex": 180,
-                "staria": 180,
-                "coaster": 350
-            }
-        },
-        {
-            "id": "mak-train",
-            "name": "Makkah Hotel ↔ Makkah Train Station",
-            "distance": "15 km",
-            "time": "25 min",
-            "baseRate": 120,
-            "customRates": {
-                "camry": 100,
-                "hiace": 200,
-                "gmc": 250,
-                "starex": 180,
-                "staria": 180,
-                "coaster": 350
-            }
-        },
-        {
-            "id": "mad-train",
-            "name": "Madinah Hotel ↔ Madinah Train Station",
-            "distance": "15 km",
-            "time": "25 min",
-            "baseRate": 120,
-            "customRates": {
-                "camry": 100,
-                "hiace": 200,
-                "gmc": 250,
-                "starex": 180,
-                "staria": 180,
-                "coaster": 350
-            }
-        },
-        {
-            "id": "6949b368a41f6410e88ed732",
-            "name": "Makkah Ziarat (Half Day)",
-            "distance": "40 km",
-            "time": "3-4 hrs",
-            "baseRate": 200,
-            "customRates": {
-                "camry": 250,
-                "hiace": 300,
-                "gmc": 400,
-                "starex": 250,
-                "staria": 250,
-                "coaster": 500
-            }
-        },
-        {
-            "id": "6949b367a41f6410e88ed72e",
-            "name": "Madinah Ziarat (Half Day)",
-            "distance": "40 km",
-            "time": "3-4 hrs",
-            "baseRate": 200,
-            "customRates": {
-                "camry": 250,
-                "hiace": 250,
-                "gmc": 400,
-                "starex": 200,
-                "staria": 200,
-                "coaster": 500
+                "camry": 80,
+                "hiace": 120,
+                "gmc": 140,
+                "starex": 100,
+                "staria": 100,
+                "coaster": 250
             }
         },
         {
             "id": "692db09a34f15bc89b45a60b",
-            "name": "Makkah to Taif (Return)",
+            "name": "Taxi Makkah to Taif and Return",
             "distance": "180 km",
             "time": "8-10 hrs",
-            "baseRate": 400,
+            "baseRate": 500,
             "customRates": {
                 "camry": 500,
                 "hiace": 550,
@@ -182,10 +92,10 @@
         },
         {
             "id": "692db09a34f15bc89b45a60c",
-            "name": "Jeddah to Taif (Return)",
+            "name": "Taxi Jeddah to Taif and Return",
             "distance": "350 km",
             "time": "10-12 hrs",
-            "baseRate": 500,
+            "baseRate": 700,
             "customRates": {
                 "camry": 700,
                 "hiace": 700,
@@ -196,33 +106,138 @@
             }
         },
         {
-            "id": "badar-ziarat",
-            "name": "Badar Ziarat (Full Day)",
-            "distance": "300 km",
-            "time": "6-8 hrs",
-            "baseRate": 700,
+            "id": "6949b367a41f6410e88ed72e",
+            "name": "Madina Ziyarat Taxi",
+            "distance": "40 km",
+            "time": "3-4 hrs",
+            "baseRate": 250,
             "customRates": {
-                "camry": 600,
-                "hiace": 800,
-                "gmc": 1200,
-                "starex": 800,
-                "staria": 800,
-                "coaster": 1500
+                "camry": 250,
+                "hiace": 250,
+                "gmc": 400,
+                "starex": 200,
+                "staria": 200,
+                "coaster": 500
             }
         },
         {
-            "id": "692db09a34f15bc89b45a60e",
-            "name": "Hourly Rental (Per Hour)",
-            "distance": "-",
-            "time": "1 Hour",
-            "baseRate": 80,
+            "id": "6949b368a41f6410e88ed732",
+            "name": "Makkah Ziyarat Taxi",
+            "distance": "40 km",
+            "time": "3-4 hrs",
+            "baseRate": 250,
             "customRates": {
-                "camry": 80,
-                "hiace": 120,
-                "gmc": 140,
-                "starex": 100,
-                "staria": 100,
-                "coaster": 250
+                "camry": 250,
+                "hiace": 300,
+                "gmc": 400,
+                "starex": 250,
+                "staria": 250,
+                "coaster": 500
+            }
+        },
+        {
+            "id": "madinah-hotel-to-madinah-airport",
+            "name": "Madinah Hotel to Madinah Airport",
+            "distance": "20 km",
+            "time": "25 min",
+            "baseRate": 150,
+            "customRates": {
+                "camry": 150,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400
+            }
+        },
+        {
+            "id": "6949b368a41f6410e88ed738",
+            "name": "Madinah Airport to Madinah Hotel",
+            "distance": "20 km",
+            "time": "25 min",
+            "baseRate": 120,
+            "customRates": {
+                "camry": 120,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400
+            }
+        },
+        {
+            "id": "692db09934f15bc89b45a600",
+            "name": "Madinah Hotel to Makkah Hotel",
+            "distance": "450 km",
+            "time": "4 hrs 30 min",
+            "baseRate": 450,
+            "customRates": {
+                "camry": 450,
+                "hiace": 550,
+                "gmc": 900,
+                "starex": 450,
+                "staria": 450,
+                "coaster": 900
+            }
+        },
+        {
+            "id": "jeddah-airport-to-madina-hotel",
+            "name": "Jeddah Airport to Madina Hotel",
+            "distance": "400 km",
+            "time": "4 hrs",
+            "baseRate": 500,
+            "customRates": {
+                "camry": 500,
+                "hiace": 600,
+                "gmc": 1000,
+                "starex": 500,
+                "staria": 550,
+                "coaster": 1100
+            }
+        },
+        {
+            "id": "jeddah-airport-to-jeddah-hotel",
+            "name": "Jeddah Airport to Jeddah Hotel",
+            "distance": "30 km",
+            "time": "30 min",
+            "baseRate": 200,
+            "customRates": {
+                "camry": 200,
+                "hiace": 250,
+                "gmc": 350,
+                "starex": 250,
+                "staria": 250,
+                "coaster": 450
+            }
+        },
+        {
+            "id": "makkah-hotel-to-madina-airport",
+            "name": "Makkah Hotel To Madina Airport Taxi",
+            "distance": "460 km",
+            "time": "5 hrs",
+            "baseRate": 600,
+            "customRates": {
+                "camry": 600,
+                "hiace": 700,
+                "gmc": 1100,
+                "starex": 650,
+                "staria": 650,
+                "coaster": 1200
+            }
+        },
+        {
+            "id": "madina-hotel-to-jeddah-hotel",
+            "name": "Madina Hotel To Jeddah Hotel",
+            "distance": "400 km",
+            "time": "4 hrs",
+            "baseRate": 500,
+            "customRates": {
+                "camry": 500,
+                "hiace": 600,
+                "gmc": 1000,
+                "starex": 500,
+                "staria": 550,
+                "coaster": 1100
             }
         }
     ],
