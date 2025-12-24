@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -1420,113 +1421,188 @@ export default function BookingPage() {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-12"
+            className="py-6 md:py-12 px-4"
         >
-            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden max-w-3xl mx-auto text-left">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden max-w-2xl mx-auto text-left relative">
+
                 {/* Header / Islamic Greeting */}
-                <div className="bg-slate-50 dark:bg-slate-900/50 p-8 text-center border-b border-slate-100 dark:border-slate-800">
-                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                        <CheckCircle size={40} className="text-green-600 dark:text-green-400" />
+                <style jsx global>{`
+                    @media print {
+                        @page { margin: 0; size: auto; }
+                        
+                        /* 1. Hide everything initially */
+                        body {
+                            visibility: hidden;
+                        }
+
+                        /* 2. Hide interfering overlays/layout components */
+                        nav, footer, header, aside, .sticky, .fixed, 
+                        [role="dialog"], [class*="banner"], iframe, 
+                        div[id^="chat-widget"], button[class*="chat"] {
+                            display: none !important;
+                        }
+
+                        /* 3. Global opacity reset to fix blank page animation bugs */
+                        * {
+                            opacity: 1 !important;
+                        }
+
+                        /* 4. Show Receipt using FIXED positioning to break out of all parent containers */
+                        #printable-receipt {
+                            visibility: visible !important;
+                            position: fixed !important;
+                            left: 0 !important;
+                            top: 0 !important;
+                            width: 100% !important;
+                            height: 100% !important;
+                            margin: 0 !important;
+                            padding: 30px !important;
+                            background: white !important;
+                            color: black !important;
+                            z-index: 2147483647 !important;
+                        }
+
+                        /* Ensure children are visible */
+                        #printable-receipt * {
+                            visibility: visible !important;
+                        }
+                        
+                        /* Hide print utilities */
+                        .print\:hidden, #print-button {
+                            display: none !important;
+                        }
+                    }
+                `}</style>
+                {/* Header / Islamic Greeting */}
+                <div className="bg-slate-50/50 dark:bg-slate-900/50 pt-10 pb-8 px-6 md:px-10 text-center border-b border-slate-100 dark:border-slate-800 print:hidden">
+                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-4 ring-white dark:ring-slate-800">
+                        <CheckCircle size={36} className="text-green-600 dark:text-green-400" />
                     </div>
-                    <p className="text-xl font-bold text-[#D4AF37] mb-2 font-serif">﷽</p>
-                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Booking Confirmed</h2>
-                    <p className="text-slate-500 font-medium">Assalamu Alaikum wa Rahmatullahi wa Barakatuh</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">Booking Confirmed</h2>
                 </div>
 
-                <div className="p-8 space-y-8">
+                <div className="p-6 md:p-10 space-y-8">
                     {/* Welcome Text */}
-                    <div className="text-slate-600 dark:text-slate-300 space-y-4 text-lg leading-relaxed">
-                        <p>Dear <span className="font-bold text-slate-900 dark:text-white">{bookingData.name}</span>,</p>
+                    <div className="text-center md:text-left text-slate-600 dark:text-slate-300 space-y-4 text-base md:text-lg leading-relaxed print:hidden">
+                        <p>Dear <span className="font-bold text-slate-900 dark:text-white capitalize">{bookingData.name}</span>,</p>
                         <p>
-                            We are honored to serve you on your sacred journey. Your Umrah cab booking has been successfully confirmed with <strong className="text-secondary">Al Aqsa Umrah Transport</strong>.
+                            Thank you for choosing <span className="font-semibold text-secondary text-nowrap">Al Aqsa Umrah Transport</span>.
                         </p>
                     </div>
 
                     {/* Booking Details Card */}
-                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-                        <h3 className="text-[#D4AF37] font-bold text-lg mb-4 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
-                            <Briefcase size={20} /> Booking Details
-                        </h3>
-                        <div className="grid md:grid-cols-2 gap-y-4 gap-x-8">
-                            <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Booking ID</span>
-                                <span className="block font-bold text-slate-900 dark:text-white text-lg font-mono">{bookingResponse?._id || bookingResponse?.id || 'PENDING'}</span>
+                    <div id="printable-receipt" className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+
+                        {/* Print Header - Visible only in print */}
+                        <div className="hidden print:flex flex-row justify-between items-center p-8 border-b border-slate-100">
+                            <div className="flex items-center gap-4">
+                                <div className="relative w-16 h-16">
+                                    <Image src="/logo.png" alt="Al Aqsa" fill className="object-contain" />
+                                </div>
+                                <div>
+                                    <h1 className="text-xl font-bold text-slate-900">Al Aqsa Transport</h1>
+                                    <p className="text-sm text-slate-500 font-serif">النقل المعتمر الأقصى</p>
+                                </div>
                             </div>
-                            <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Date & Time</span>
-                                <span className="block font-bold text-slate-900 dark:text-white">
-                                    {bookingData.date?.toLocaleDateString()} at {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            <div className="text-right">
+                                <h2 className="text-lg font-bold text-[#D4AF37] uppercase tracking-wider">Booking Receipt</h2>
+                                <p className="text-xs text-slate-400 mt-1">Confirmed</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center print:hidden">
+                            <h3 className="text-secondary font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                                <Briefcase size={16} /> Booking Details
+                            </h3>
+                            <button
+                                id="print-button"
+                                onClick={() => window.print()}
+                                className="text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors print:hidden"
+                            >
+                                <span>Print Receipt</span>
+                            </button>
+                        </div>
+
+                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-y-6 gap-x-8">
+                            <div className="col-span-1 md:col-span-2 print:col-span-2 pb-4 border-b border-slate-100 dark:border-slate-700/50 text-center">
+                                <p className="text-2xl text-[#D4AF37] font-serif mb-2">﷽</p>
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference / مرجع الحجز</span>
+                                <span className="block font-mono text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                                    {(bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase()}
                                 </span>
                             </div>
+
                             <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup Location</span>
-                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.pickup}</span>
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Date & Time / التاريخ والوقت</span>
+                                <span className="block font-medium text-slate-900 dark:text-white">
+                                    {bookingData.date?.toLocaleDateString()}
+                                    <span className="text-slate-300 mx-2">|</span>
+                                    {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
                             </div>
+
                             <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</span>
-                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.dropoff}</span>
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Amount / المبلغ الإجمالي</span>
+                                <span className="block font-bold text-slate-900 dark:text-white text-lg">
+                                    {totalPrice} <span className="text-sm font-normal text-slate-500">SAR</span>
+                                </span>
                             </div>
-                            <div className="md:col-span-2">
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Vehicles</span>
-                                <div className="space-y-1">
+
+                            <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup / موقع الاستلام</span>
+                                <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.pickup}</span>
+                            </div>
+
+                            <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Destination / الوجهة</span>
+                                <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.dropoff}</span>
+                            </div>
+
+                            <div className="md:col-span-2 print:col-span-2 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-4 mt-2">
+                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Vehicle Configuration / تفاصيل المركبة</span>
+                                <div className="space-y-2">
                                     {bookingData.selectedVehicles.map((sv) => {
                                         const v = vehicles.find(veh => veh.id === sv.vehicleId);
                                         return v ? (
-                                            <div key={sv.vehicleId} className="font-bold text-slate-900 dark:text-white flex items-center justify-between">
-                                                <span>{v.name} <span className="text-sm font-normal text-slate-500">x{sv.quantity}</span></span>
+                                            <div key={sv.vehicleId} className="flex justify-between items-center text-sm">
+                                                <div className="font-bold text-slate-700 dark:text-slate-200">
+                                                    {v.name}
+                                                </div>
+                                                <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">
+                                                    x{sv.quantity}
+                                                </div>
                                             </div>
                                         ) : null;
                                     })}
                                 </div>
                             </div>
-                            <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Passengers</span>
-                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.passengers}</span>
-                            </div>
-                            <div>
-                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Luggage</span>
-                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.luggage}</span>
-                            </div>
-                            <div className="md:col-span-2 pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
-                                <div className="flex justify-between items-center">
-                                    <span className="font-bold text-slate-500">Total Quote</span>
-                                    <span className="font-black text-2xl text-secondary">{totalPrice} <span className="text-sm text-slate-400">SAR</span></span>
+
+                            {/* Print Footer - Spiritual Quote */}
+                            <div className="hidden print:block col-span-1 md:col-span-2 mt-8 pt-8 border-t border-slate-100 text-center">
+                                <p className="text-lg font-serif italic text-slate-700 mb-2">"The reward of Umrah is expiation for the sins committed between it and the next Umrah."</p>
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">– Prophet Muhammad (S.A.W.W)</p>
+                                <div className="mt-4 text-[10px] text-slate-300">
+                                    Generated by Al Aqsa Transport System
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Spiritual Reflection */}
-                    <div className="bg-[#FFFBEB] dark:bg-[#3E3010] p-6 rounded-xl border-l-4 border-[#D4AF37]">
-                        <h3 className="text-[#D4AF37] font-bold text-lg mb-4 flex items-center gap-2">
-                            <span className="text-2xl">✨</span> Spiritual Reflection
-                        </h3>
-                        <div className="space-y-4">
-                            <div>
-                                <p className="text-xl font-serif text-slate-900 dark:text-white mb-2 leading-loose" dir="rtl">
-                                    "الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا"
-                                </p>
-                                <p className="text-slate-700 dark:text-slate-200 italic">
-                                    “The reward of Umrah is expiation for the sins committed between it and the next Umrah.”
-                                </p>
-                                <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">– Prophet Muhammad (S.A.W.W)</p>
-                            </div>
-                            <div className="pt-4 border-t border-[#D4AF37]/20">
-                                <p className="text-slate-700 dark:text-slate-200 italic">
-                                    “When you set out for Hajj or Umrah, remember you are answering Allah’s call, so let your heart be filled with gratitude and humility.”
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <div className="text-center pt-2 print:hidden">
+                        <p className="text-slate-500 text-sm mb-6">A confirmation email has been sent to <strong>{bookingData.email}</strong></p>
 
-                    <div className="text-center text-slate-500 pt-4">
-                        <p className="mb-6">We pray that your journey is blessed, your worship accepted, and your soul enriched with peace.</p>
-
-                        <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <Link href="/" className="px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all">
-                                Return Home
+                        <div className="flex flex-col sm:flex-row justify-center gap-3">
+                            <Link
+                                href="/"
+                                className="w-full sm:w-auto px-8 py-3.5 bg-secondary text-white font-bold rounded-xl shadow-lg shadow-secondary/20 hover:shadow-xl hover:bg-[#B38E2D]/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                            >
+                                <span>Return Home</span>
+                                <ArrowRight size={18} />
                             </Link>
-                            <Link href="/contact" className="px-8 py-3 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                            <Link
+                                href="/contact"
+                                className="w-full sm:w-auto px-8 py-3.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-[0.98] transition-all flex items-center justify-center"
+                            >
                                 Contact Support
                             </Link>
                         </div>
@@ -1640,17 +1716,7 @@ export default function BookingPage() {
                     </div>
                 </div >
 
-                {/* Trust Badges */}
-                < div className="grid grid-cols-2 gap-4" >
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-700">
-                        <ShieldCheck size={24} className="text-emerald-500 mx-auto mb-2" />
-                        <span className="block text-xs font-semibold text-slate-900 dark:text-white">Secure Booking</span>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-700">
-                        <Headphones size={24} className="text-blue-500 mx-auto mb-2" />
-                        <span className="block text-xs font-semibold text-slate-900 dark:text-white">24/7 Support</span>
-                    </div>
-                </div >
+
             </div >
         );
     };
@@ -1658,7 +1724,7 @@ export default function BookingPage() {
     return (
         <main className="min-h-screen bg-white dark:bg-slate-950 pb-24">
             {/* Progress Bar (Sticky) */}
-            <div className="sticky top-[35px] z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
+            <div className="sticky top-[35px] z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300 print:hidden">
                 <div className="container mx-auto px-4">
                     <div className="flex items-start justify-between py-3 max-w-4xl mx-auto">
                         {[

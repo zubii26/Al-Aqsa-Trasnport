@@ -20,6 +20,7 @@ export async function GET() {
 export async function POST(request: Request) {
 
     try {
+        console.log('[Booking API] Received new booking request');
         const body = await request.json();
 
         // Validate input
@@ -112,8 +113,10 @@ export async function POST(request: Request) {
         } as any);
 
         // Send confirmation email to customer
+        console.log('[Booking API] Processing customer email...');
         try {
             if (booking && booking.email) {
+                console.log(`[Booking API] Sending to customer: ${booking.email}`);
                 await sendEmail({
                     to: booking.email,
                     subject: 'Booking Confirmation - Al Aqsa Transport',
@@ -143,9 +146,11 @@ export async function POST(request: Request) {
         }
 
         // Send notification email to admin
+        console.log('[Booking API] Processing admin notification...');
         try {
             const settings = await getSettings();
             if (settings.contact && settings.contact.email) {
+                console.log(`[Booking API] Sending to admin: ${settings.contact.email}`);
                 await sendEmail({
                     to: settings.contact.email,
                     subject: 'New Booking Received - Al Aqsa Transport',

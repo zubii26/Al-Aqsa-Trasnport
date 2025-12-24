@@ -16,6 +16,10 @@ interface EmailOptions {
 }
 
 export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
+    // Debug logging for server-side troubleshooting
+    console.log(`[Email] Attempting to send email to: ${to.substring(0, 3)}***@${to.split('@')[1]}`);
+    console.log(`[Email] Environment check - USER: ${!!process.env.EMAIL_USER ? 'Set' : 'Missing'}, PASS: ${!!process.env.EMAIL_PASS ? 'Set' : 'Missing'}`);
+
     try {
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -25,10 +29,13 @@ export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent:', info.messageId);
+        console.log('[Email] Sent successfully. MessageId:', info.messageId);
         return true;
-    } catch (error) {
-        console.error('Error sending email:', error);
+    } catch (error: any) {
+        console.error('[Email] Failed to send:', error.message);
+        if (error.response) {
+            console.error('[Email] SMTP Response:', error.response);
+        }
         return false;
     }
 };

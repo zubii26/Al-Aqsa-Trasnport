@@ -15,7 +15,19 @@ export async function GET() {
             .lean();
 
         const formattedBookings = bookings.map((booking: any) => {
-            const firstName = booking.name ? booking.name.split(' ')[0] : "Guest";
+            let firstName = "Guest";
+            
+            if (booking.name && typeof booking.name === 'string') {
+                // Check if name looks like email or phone to prevent PII leak
+                const isEmail = booking.name.includes('@');
+                const isPhone = /[\d]{5,}/.test(booking.name);
+                
+                if (!isEmail && !isPhone) {
+                    firstName = booking.name.split(' ')[0];
+                    // Capitalize first letter
+                    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+                }
+            }
 
             return {
                 id: booking._id.toString(),
