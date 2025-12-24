@@ -1478,7 +1478,8 @@ export default function BookingPage() {
                     <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-4 ring-white dark:ring-slate-800">
                         <CheckCircle size={36} className="text-green-600 dark:text-green-400" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">Booking Confirmed</h2>
+                    <p className="text-2xl text-[#D4AF37] font-serif mb-2">﷽</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#D4AF37] mb-2">Booking Confirmation</h2>
                 </div>
 
                 <div className="p-6 md:p-10 space-y-8">
