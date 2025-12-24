@@ -355,12 +355,20 @@
     }
 }
 
+/* Mobile - Fix for dynamic address bar causing jumps */
 @media (max-width: 768px) {
     .hero {
-        min-height: 100vh;
+        min-height: 100dvh;
+        /* Use dynamic viewport height */
         padding-bottom: 4rem;
         align-items: flex-start;
         padding-top: 120px;
+    }
+
+    /* Disable complex parallax on mobile if it causes issues, but here we stabilize it */
+    .hero {
+        transform: translateZ(0);
+        /* Force GPU */
     }
 
     .buttons {
@@ -389,19 +397,54 @@
     }
 }
 
+.hero {
+    /* ... existing styles ... */
+    /* Add this to create a stable stacking context */
+    isolation: isolate;
+}
+
+.bgImage {
+    /* ... */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translateZ(0);
+    /* Force GPU layer */
+    will-change: transform;
+    /* Hint to browser */
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale3d(1, 1, 1);
+        /* Use 3D Transform */
+    }
+
+    100% {
+        transform: scale3d(1.15, 1.15, 1);
+    }
+}
+
+.overlay {
+    /* ... */
+    /* Prevent overlay flicker */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize button pulse */
 @keyframes pulseBtn {
     0% {
-        transform: scale(1);
+        transform: scale3d(1, 1, 1);
         box-shadow: 0 8px 20px hsl(var(--secondary));
     }
 
     50% {
-        transform: scale(1.02);
+        transform: scale3d(1.02, 1.02, 1);
         box-shadow: 0 12px 25px hsl(var(--secondary));
     }
 
     100% {
-        transform: scale(1);
+        transform: scale3d(1, 1, 1);
         box-shadow: 0 8px 20px hsl(var(--secondary));
     }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
@@ -12,6 +12,12 @@ import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
 import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
 import SearchableSelect from '@/components/ui/SearchableSelect';
+
+const splitRouteName = (name: string): [string, string] => {
+    if (!name) return ['', ''];
+    const parts = name.split(/\s*(?:->|to|\u2192)\s*/i);
+    return [parts[0]?.trim() || '', parts[1]?.trim() || ''];
+};
 
 export default function BookingPage() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
@@ -38,8 +44,12 @@ export default function BookingPage() {
         arrivalDate: null as Date | null,
         notes: '',
         pickup: '',
-        dropoff: ''
+        dropoff: '',
+        passengers: 1,
+        luggage: 0
     });
+
+    const [bookingResponse, setBookingResponse] = useState<any>(null);
 
     // New Service Type State
 
@@ -75,17 +85,17 @@ export default function BookingPage() {
                 initialRouteId = paramRouteId;
                 const selectedRoute = routes.find(r => r.id === paramRouteId);
                 if (selectedRoute) {
-                    initialPickup = selectedRoute.name.split(' to ')[0] || '';
-                    initialDropoff = selectedRoute.name.split(' to ')[1] || '';
+                    const [p, d] = splitRouteName(selectedRoute.name);
+                    initialPickup = p;
+                    initialDropoff = d;
                 }
             } else if (paramNotes) {
                 // Formatting "Notes" to be route-like if we have notes but no ID
                 initialRouteId = 'custom';
-                // Try to parse "From to To" from notes if possible, or just default
-                if (paramNotes.toLowerCase().includes(' to ')) {
-                    const parts = paramNotes.split(' to ');
-                    initialPickup = parts[0];
-                    initialDropoff = parts[1];
+                const [p, d] = splitRouteName(paramNotes);
+                if (p && d) {
+                    initialPickup = p;
+                    initialDropoff = d;
                 }
             }
 
@@ -193,7 +203,7 @@ export default function BookingPage() {
         };
     }, []);
 
-    const updateData = (field: string, value: string | Date | null) => {
+    const updateData = (field: string, value: string | Date | null | number) => {
         setBookingData(prev => ({ ...prev, [field]: value }));
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
@@ -281,6 +291,8 @@ export default function BookingPage() {
                             phone: bookingData.phone,
                             pickup: bookingData.pickup,
                             dropoff: bookingData.dropoff,
+                            passengers: bookingData.passengers,
+                            luggage: bookingData.luggage,
                             date: bookingData.date ? `${bookingData.date.getFullYear()}-${String(bookingData.date.getMonth() + 1).padStart(2, '0')}-${String(bookingData.date.getDate()).padStart(2, '0')}` : undefined,
                             time: bookingData.time ? `${String(bookingData.time.getHours()).padStart(2, '0')}:${String(bookingData.time.getMinutes()).padStart(2, '0')}` : undefined,
                             country: bookingData.country,
@@ -293,11 +305,8 @@ export default function BookingPage() {
                         }),
                     });
 
-                    if (!res.ok) {
-                        const errorData = await res.json();
-                        const errorMessage = errorData.errors ? JSON.stringify(errorData.errors, null, 2) : (errorData.message || 'Booking failed');
-                        throw new Error(errorMessage);
-                    }
+                    const data = await res.json();
+                    setBookingResponse(data);
                     setStep(5);
                     scrollToWizard();
                 } catch (error: any) {
@@ -329,11 +338,13 @@ export default function BookingPage() {
             setSelectedRoute(null); // Clear selected route for custom
         } else {
             const selectedRoute = routes.find(r => r.id === routeId);
+            const [pickup, dropoff] = selectedRoute ? splitRouteName(selectedRoute.name) : ['', ''];
+
             setBookingData(prev => ({
                 ...prev,
                 routeId,
-                pickup: selectedRoute?.name.split(' to ')[0] || '',
-                dropoff: selectedRoute?.name.split(' to ')[1] || ''
+                pickup,
+                dropoff
             }));
             setSelectedRoute(selectedRoute || null); // Set selected route
         }
@@ -545,8 +556,8 @@ export default function BookingPage() {
                                     }}
                                     options={[
                                         ...Array.from(new Set(filteredRoutes.map(r => {
-                                            const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
-                                            return parts[0] ? parts[0].trim() : r.name;
+                                            const [p] = splitRouteName(r.name);
+                                            return p || r.name;
                                         }))).sort().map(p => ({ value: p, label: p })),
                                         { value: 'custom', label: 'Other / Custom Location' }
                                     ]}
@@ -573,9 +584,7 @@ export default function BookingPage() {
                                             // Try to find matching route
                                             if (prev.pickup && val) {
                                                 const matchedRoute = filteredRoutes.find(r => {
-                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
-                                                    const p = parts[0] ? parts[0].trim() : '';
-                                                    const d = parts[1] ? parts[1].trim() : '';
+                                                    const [p, d] = splitRouteName(r.name);
                                                     return p === prev.pickup && d === val;
                                                 });
 
@@ -597,12 +606,12 @@ export default function BookingPage() {
                                         bookingData.pickup && bookingData.pickup !== 'custom'
                                             ? Array.from(new Set(filteredRoutes
                                                 .filter(r => {
-                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
-                                                    return parts[0] && parts[0].trim() === bookingData.pickup;
+                                                    const [p] = splitRouteName(r.name);
+                                                    return p === bookingData.pickup;
                                                 })
                                                 .map(r => {
-                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
-                                                    return parts[1] ? parts[1].trim() : '';
+                                                    const [, d] = splitRouteName(r.name);
+                                                    return d;
                                                 })
                                                 .filter(Boolean)
                                             )).sort().map(d => ({ value: d, label: d }))
@@ -1182,6 +1191,48 @@ export default function BookingPage() {
                 </div>
             </div>
 
+            {/* Passenger & Luggage Count */}
+            <div className="pt-6 border-t border-slate-200 dark:border-slate-700 mt-6">
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Passenger & Luggage Details</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                    {/* Passengers */}
+                    <div className="relative group">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Passengers (Optional)</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <Users size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                            </div>
+                            <input
+                                type="number"
+                                min="1"
+                                className={`${inputClasses(false)} pl-11`}
+                                value={bookingData.passengers}
+                                onChange={(e) => updateData('passengers', parseInt(e.target.value) || '')}
+                                placeholder="1"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Luggage */}
+                    <div className="relative group">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Luggage Count (Optional)</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <Luggage size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                            </div>
+                            <input
+                                type="number"
+                                min="0"
+                                className={`${inputClasses(false)} pl-11`}
+                                value={bookingData.luggage}
+                                onChange={(e) => updateData('luggage', parseInt(e.target.value) || 0)}
+                                placeholder="0"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="pt-6 border-t border-slate-200 dark:border-slate-700 mt-6">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Additional information</h2>
 
@@ -1327,6 +1378,14 @@ export default function BookingPage() {
                                                 <span className="font-semibold text-slate-900 dark:text-white">{bookingData.arrivalDate?.toLocaleDateString()}</span>
                                             </div>
                                         )}
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-slate-500">Passengers</span>
+                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.passengers}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-slate-500">Luggage</span>
+                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.luggage}</span>
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}
@@ -1361,22 +1420,119 @@ export default function BookingPage() {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-12"
+            className="py-12"
         >
-            <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle size={48} className="text-green-600 dark:text-green-400" />
-            </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Booking Request Received!</h2>
-            <p className="text-slate-500 text-lg mb-8 max-w-lg mx-auto">
-                Thank you, {bookingData.name}. We have received your booking request. Our team will contact you shortly via WhatsApp to confirm your vehicle and route details.
-            </p>
-            <div className="flex justify-center gap-4">
-                <Link href="/" className="px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all">
-                    Return Home
-                </Link>
-                <Link href="/contact" className="px-8 py-3 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-                    Contact Support
-                </Link>
+            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden max-w-3xl mx-auto text-left">
+                {/* Header / Islamic Greeting */}
+                <div className="bg-slate-50 dark:bg-slate-900/50 p-8 text-center border-b border-slate-100 dark:border-slate-800">
+                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <CheckCircle size={40} className="text-green-600 dark:text-green-400" />
+                    </div>
+                    <p className="text-xl font-bold text-[#D4AF37] mb-2 font-serif">﷽</p>
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Booking Confirmed</h2>
+                    <p className="text-slate-500 font-medium">Assalamu Alaikum wa Rahmatullahi wa Barakatuh</p>
+                </div>
+
+                <div className="p-8 space-y-8">
+                    {/* Welcome Text */}
+                    <div className="text-slate-600 dark:text-slate-300 space-y-4 text-lg leading-relaxed">
+                        <p>Dear <span className="font-bold text-slate-900 dark:text-white">{bookingData.name}</span>,</p>
+                        <p>
+                            We are honored to serve you on your sacred journey. Your Umrah cab booking has been successfully confirmed with <strong className="text-secondary">Al Aqsa Umrah Transport</strong>.
+                        </p>
+                    </div>
+
+                    {/* Booking Details Card */}
+                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                        <h3 className="text-[#D4AF37] font-bold text-lg mb-4 flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+                            <Briefcase size={20} /> Booking Details
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-y-4 gap-x-8">
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Booking ID</span>
+                                <span className="block font-bold text-slate-900 dark:text-white text-lg font-mono">{bookingResponse?._id || bookingResponse?.id || 'PENDING'}</span>
+                            </div>
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Date & Time</span>
+                                <span className="block font-bold text-slate-900 dark:text-white">
+                                    {bookingData.date?.toLocaleDateString()} at {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup Location</span>
+                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.pickup}</span>
+                            </div>
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</span>
+                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.dropoff}</span>
+                            </div>
+                            <div className="md:col-span-2">
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Vehicles</span>
+                                <div className="space-y-1">
+                                    {bookingData.selectedVehicles.map((sv) => {
+                                        const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                        return v ? (
+                                            <div key={sv.vehicleId} className="font-bold text-slate-900 dark:text-white flex items-center justify-between">
+                                                <span>{v.name} <span className="text-sm font-normal text-slate-500">x{sv.quantity}</span></span>
+                                            </div>
+                                        ) : null;
+                                    })}
+                                </div>
+                            </div>
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Passengers</span>
+                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.passengers}</span>
+                            </div>
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Luggage</span>
+                                <span className="block font-bold text-slate-900 dark:text-white">{bookingData.luggage}</span>
+                            </div>
+                            <div className="md:col-span-2 pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+                                <div className="flex justify-between items-center">
+                                    <span className="font-bold text-slate-500">Total Quote</span>
+                                    <span className="font-black text-2xl text-secondary">{totalPrice} <span className="text-sm text-slate-400">SAR</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Spiritual Reflection */}
+                    <div className="bg-[#FFFBEB] dark:bg-[#3E3010] p-6 rounded-xl border-l-4 border-[#D4AF37]">
+                        <h3 className="text-[#D4AF37] font-bold text-lg mb-4 flex items-center gap-2">
+                            <span className="text-2xl">✨</span> Spiritual Reflection
+                        </h3>
+                        <div className="space-y-4">
+                            <div>
+                                <p className="text-xl font-serif text-slate-900 dark:text-white mb-2 leading-loose" dir="rtl">
+                                    "الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا"
+                                </p>
+                                <p className="text-slate-700 dark:text-slate-200 italic">
+                                    “The reward of Umrah is expiation for the sins committed between it and the next Umrah.”
+                                </p>
+                                <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">– Prophet Muhammad (S.A.W.W)</p>
+                            </div>
+                            <div className="pt-4 border-t border-[#D4AF37]/20">
+                                <p className="text-slate-700 dark:text-slate-200 italic">
+                                    “When you set out for Hajj or Umrah, remember you are answering Allah’s call, so let your heart be filled with gratitude and humility.”
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-center text-slate-500 pt-4">
+                        <p className="mb-6">We pray that your journey is blessed, your worship accepted, and your soul enriched with peace.</p>
+
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Link href="/" className="px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all">
+                                Return Home
+                            </Link>
+                            <Link href="/contact" className="px-8 py-3 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                                Contact Support
+                            </Link>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </motion.div>
     );
@@ -1401,7 +1557,7 @@ export default function BookingPage() {
                             <div>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Origin</span>
                                 <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.routeId === 'custom' ? (bookingData.pickup || 'Select Pickup') : (route ? route.name.split(' to ')[0] : 'Select Route')}
+                                    {bookingData.pickup || (route ? splitRouteName(route.name)[0] : 'Select Pickup')}
                                 </h4>
                                 {bookingData.date && (
                                     <p className="text-sm text-slate-500 mt-1">
@@ -1417,11 +1573,29 @@ export default function BookingPage() {
                             <div>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Destination</span>
                                 <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.routeId === 'custom' ? (bookingData.dropoff || 'Select Dropoff') : (route ? route.name.split(' to ')[1] : 'Select Route')}
+                                    {bookingData.dropoff || (route ? splitRouteName(route.name)[1] : 'Select Dropoff')}
                                 </h4>
                             </div>
                         </div>
                     </div>
+
+                    {/* Quick Stats */}
+                    {bookingData.passengers > 0 && (
+                        <div className="grid grid-cols-2 gap-2 mb-4 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                            <div className="flex items-center gap-2">
+                                <Users size={14} className="text-slate-400" />
+                                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    {bookingData.passengers} Passenger{bookingData.passengers > 1 ? 's' : ''}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Luggage size={14} className="text-slate-400" />
+                                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    {bookingData.luggage} Bag{bookingData.luggage !== 1 ? 's' : ''}
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="my-6 border-t border-slate-100 dark:border-slate-700" />
 
@@ -1464,10 +1638,10 @@ export default function BookingPage() {
                             </span>
                         </div>
                     </div>
-                </div>
+                </div >
 
                 {/* Trust Badges */}
-                <div className="grid grid-cols-2 gap-4">
+                < div className="grid grid-cols-2 gap-4" >
                     <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center border border-slate-100 dark:border-slate-700">
                         <ShieldCheck size={24} className="text-emerald-500 mx-auto mb-2" />
                         <span className="block text-xs font-semibold text-slate-900 dark:text-white">Secure Booking</span>
@@ -1476,8 +1650,8 @@ export default function BookingPage() {
                         <Headphones size={24} className="text-blue-500 mx-auto mb-2" />
                         <span className="block text-xs font-semibold text-slate-900 dark:text-white">24/7 Support</span>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     };
 
