@@ -23,6 +23,7 @@ export default function BookingPage() {
     const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
     const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
     const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [bookingData, setBookingData] = useState({
         routeId: '',
@@ -226,11 +227,11 @@ export default function BookingPage() {
                 newErrors.email = 'Please enter a valid email address';
             }
 
-            const phoneRegex = /^\+[0-9\s-]{10,}$/;
+            const phoneRegex = /^(\+|00)?[0-9\s-]{9,}$/;
             if (!bookingData.phone.trim()) {
-                newErrors.phone = 'Phone is required';
-            } else if (!phoneRegex.test(bookingData.phone)) {
-                newErrors.phone = 'Please include your country code';
+                newErrors.phone = 'Phone number is required';
+            } else if (!phoneRegex.test(bookingData.phone.trim())) {
+                newErrors.phone = 'Please enter a valid phone number (e.g., +966 50 123 4567 or 050 123 4567)';
             }
 
             if (!bookingData.date) newErrors.date = 'Date is required';
@@ -269,6 +270,7 @@ export default function BookingPage() {
             const route = getSelectedRoute();
 
             if (route && bookingData.selectedVehicles.length > 0) {
+                setIsSubmitting(true);
                 try {
                     const res = await fetch('/api/bookings', {
                         method: 'POST',
@@ -279,11 +281,11 @@ export default function BookingPage() {
                             phone: bookingData.phone,
                             pickup: bookingData.pickup,
                             dropoff: bookingData.dropoff,
-                            date: bookingData.date?.toISOString().split('T')[0],
-                            time: bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                            date: bookingData.date ? `${bookingData.date.getFullYear()}-${String(bookingData.date.getMonth() + 1).padStart(2, '0')}-${String(bookingData.date.getDate()).padStart(2, '0')}` : undefined,
+                            time: bookingData.time ? `${String(bookingData.time.getHours()).padStart(2, '0')}:${String(bookingData.time.getMinutes()).padStart(2, '0')}` : undefined,
                             country: bookingData.country,
                             flightNumber: bookingData.flightNumber,
-                            arrivalDate: bookingData.arrivalDate?.toISOString().split('T')[0],
+                            arrivalDate: bookingData.arrivalDate ? `${bookingData.arrivalDate.getFullYear()}-${String(bookingData.arrivalDate.getMonth() + 1).padStart(2, '0')}-${String(bookingData.arrivalDate.getDate()).padStart(2, '0')}` : undefined,
                             // Sending selectedVehicles array instead of single vehicle details
                             selectedVehicles: bookingData.selectedVehicles,
                             status: 'pending',
@@ -291,13 +293,19 @@ export default function BookingPage() {
                         }),
                     });
 
-                    if (!res.ok) throw new Error('Booking failed');
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        const errorMessage = errorData.errors ? JSON.stringify(errorData.errors, null, 2) : (errorData.message || 'Booking failed');
+                        throw new Error(errorMessage);
+                    }
                     setStep(5);
                     scrollToWizard();
-                } catch (error) {
+                } catch (error: any) {
                     console.error('Booking submission error:', error);
-                    alert('Failed to submit booking. Please try again.');
+                    alert(error.message || 'Failed to submit booking. Please try again.');
                     return;
+                } finally {
+                    setIsSubmitting(false);
                 }
             }
         } else {
@@ -509,178 +517,182 @@ export default function BookingPage() {
                             </div>
                         )}
 
-                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            <MapPin size={18} className="text-secondary" />
-                            <span>Choose Journey</span>
-                        </label>
-
-                        {/* Custom Dropdown for Routes */}
-                        <div className="relative mb-8" ref={dropdownRef}>
-                            <motion.div
-                                whileTap={{ scale: 0.98 }}
-                                className={`
-                                    relative w-full premium-input
-                                    rounded-xl px-4 py-4 flex items-center justify-between 
-                                    cursor-pointer transition-all hover:border-secondary/50 hover:shadow-md
-                                    ${isDropdownOpen ? 'border-secondary ring-2 ring-secondary/20' : ''}
-                                `}
-                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            >
-                                <span className="font-semibold text-slate-900 dark:text-white text-lg">
-                                    {getSelectedRoute()?.name || 'Select a Route'}
-                                </span>
-                                <ChevronDown
-                                    className={`text-slate-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-secondary' : ''}`}
-                                    size={20}
+                        {/* Pickup & Dropoff Selection */}
+                        <div className="grid md:grid-cols-2 gap-6 mb-8">
+                            {/* Pickup Location */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                    <MapPin size={18} className="text-secondary" />
+                                    <span>Pickup From</span>
+                                </label>
+                                <SearchableSelect
+                                    name="pickup"
+                                    value={bookingData.pickup}
+                                    onChange={(e: any) => {
+                                        const val = e.target.value;
+                                        if (val === 'custom') {
+                                            handleRouteSelect('custom');
+                                        } else {
+                                            // Reset route ID if changing pickup, wait for dropoff
+                                            setBookingData(prev => ({
+                                                ...prev,
+                                                pickup: val,
+                                                dropoff: '', // Reset dropoff when pickup changes
+                                                routeId: ''  // Clear route ID until both satisfy
+                                            }));
+                                            setSelectedRoute(null);
+                                        }
+                                    }}
+                                    options={[
+                                        ...Array.from(new Set(filteredRoutes.map(r => {
+                                            const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
+                                            return parts[0] ? parts[0].trim() : r.name;
+                                        }))).sort().map(p => ({ value: p, label: p })),
+                                        { value: 'custom', label: 'Other / Custom Location' }
+                                    ]}
+                                    placeholder="Select Pickup Location"
+                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
+                                    icon={<MapPin size={20} />}
                                 />
-                            </motion.div>
+                            </div>
 
-                            <AnimatePresence>
-                                {isDropdownOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10, height: 0 }}
-                                        animate={{ opacity: 1, y: 0, height: 'auto' }}
-                                        exit={{ opacity: 0, y: 10, height: 0 }}
-                                        className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden max-h-[300px] overflow-y-auto custom-scrollbar"
-                                    >
-                                        <motion.div
-                                            className={`
-                                                px-4 py-3 flex items-center gap-4 cursor-pointer transition-colors border-b border-slate-100 dark:border-slate-700/50
-                                                ${bookingData.routeId === 'custom' ? 'bg-secondary/10 dark:bg-secondary/10' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'}
-                                            `}
-                                            onClick={() => handleRouteSelect('custom')}
-                                        >
-                                            <div className={`
-                                                w-10 h-10 rounded-lg flex items-center justify-center shrink-0
-                                                ${bookingData.routeId === 'custom' ? 'bg-secondary/20 dark:bg-secondary/20 text-secondary' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}
-                                            `}>
-                                                <Navigation size={20} />
-                                            </div>
-                                            <div className="flex-1">
-                                                <span className="block font-semibold text-slate-900 dark:text-white">Custom Journey</span>
-                                                <span className="text-xs text-slate-500">Specify your own pickup and dropoff</span>
-                                            </div>
-                                            {bookingData.routeId === 'custom' && <CheckCircle size={18} className="text-secondary" />}
-                                        </motion.div>
-                                        {filteredRoutes.length > 0 ? (
-                                            filteredRoutes.map((route, i) => (
-                                                <motion.div
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    animate={{ opacity: 1, x: 0 }}
-                                                    transition={{ delay: i * 0.05 }}
-                                                    key={route.id}
-                                                    className={`
-                                                        px-4 py-3 flex items-center gap-4 cursor-pointer transition-colors border-b border-slate-100 dark:border-slate-700/50 last:border-0
-                                                        ${bookingData.routeId === route.id ? 'bg-secondary/10 dark:bg-secondary/10' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'}
-                                                    `}
-                                                    onClick={() => handleRouteSelect(route.id)}
-                                                >
-                                                    <div className={`
-                                                        w-10 h-10 rounded-lg flex items-center justify-center shrink-0
-                                                        ${bookingData.routeId === route.id ? 'bg-secondary/20 dark:bg-secondary/20 text-secondary dark:text-secondary' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}
-                                                    `}>
-                                                        <MapPin size={20} />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <span className="block font-semibold text-slate-900 dark:text-white">{route.name}</span>
-                                                        <span className="text-xs text-slate-500">{route.distance} • {route.time}</span>
-                                                    </div>
-                                                    {bookingData.routeId === route.id && <CheckCircle size={18} className="text-secondary" />}
-                                                </motion.div>
-                                            ))
-                                        ) : (
-                                            <div className="p-4 text-center text-slate-500 text-sm">
-                                                No specific routes found for this service type. Check "Intercity" or others.
-                                            </div>
-                                        )}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                            {/* Dropoff Location */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                    <MapPin size={18} className="text-secondary" />
+                                    <span>Dropoff To</span>
+                                </label>
+                                <SearchableSelect
+                                    name="dropoff"
+                                    value={bookingData.dropoff}
+                                    onChange={(e: any) => {
+                                        const val = e.target.value;
+                                        setBookingData(prev => {
+                                            const newData = { ...prev, dropoff: val };
+
+                                            // Try to find matching route
+                                            if (prev.pickup && val) {
+                                                const matchedRoute = filteredRoutes.find(r => {
+                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
+                                                    const p = parts[0] ? parts[0].trim() : '';
+                                                    const d = parts[1] ? parts[1].trim() : '';
+                                                    return p === prev.pickup && d === val;
+                                                });
+
+                                                if (matchedRoute) {
+                                                    newData.routeId = matchedRoute.id;
+                                                    setSelectedRoute(matchedRoute);
+                                                    setErrors(curr => ({ ...curr, pickup: '', dropoff: '' }));
+                                                } else {
+                                                    // Fallback or just keep routeId empty? 
+                                                    // Let's explicitly check if it's a known connection
+                                                    newData.routeId = '';
+                                                    setSelectedRoute(null);
+                                                }
+                                            }
+                                            return newData;
+                                        });
+                                    }}
+                                    options={
+                                        bookingData.pickup && bookingData.pickup !== 'custom'
+                                            ? Array.from(new Set(filteredRoutes
+                                                .filter(r => {
+                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
+                                                    return parts[0] && parts[0].trim() === bookingData.pickup;
+                                                })
+                                                .map(r => {
+                                                    const parts = r.name.split(/\s*(?:->|to|\u2192)\s*/i);
+                                                    return parts[1] ? parts[1].trim() : '';
+                                                })
+                                                .filter(Boolean)
+                                            )).sort().map(d => ({ value: d, label: d }))
+                                            : []
+                                    }
+                                    disabled={!bookingData.pickup || bookingData.pickup === 'custom'}
+                                    placeholder={!bookingData.pickup ? "Select Pickup First" : "Select Dropoff Location"}
+                                    className={`w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 ${(!bookingData.pickup || bookingData.pickup === 'custom') ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    icon={<Navigation size={20} />}
+                                />
+                            </div>
                         </div>
 
-                        {/* Custom Route Fields */}
-                        <AnimatePresence>
-                            {bookingData.routeId === 'custom' && (
+                        {/* Route Info Card or Custom Warning */}
+                        <AnimatePresence mode='wait'>
+                            {bookingData.routeId === 'custom' ? (
                                 <motion.div
+                                    key="custom-banner"
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className="mb-8 grid md:grid-cols-2 gap-6"
+                                    className="mb-8"
                                 >
-                                    <div>
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Pickup Location</label>
-                                        <SearchableSelect
-                                            name="pickup"
-                                            value={bookingData.pickup}
-                                            onChange={(e: any) => updateData('pickup', e.target.value)}
-                                            options={pickupLocations.map(p => ({ value: p, label: p }))}
-                                            placeholder="Select Pickup"
-                                            className={inputClasses(!!errors.pickup)}
-                                            icon={<MapPin size={18} />}
-                                        />
-                                        {errors.pickup && <p className="text-red-500 text-xs mt-1">{errors.pickup}</p>}
+                                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 shadow-sm mb-6">
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
+                                                <Info size={20} />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">Custom Journey Selected</h4>
+                                                <p className="text-xs text-slate-500 mt-1">
+                                                    Please specify your exact locations below. Our team will calculate the best rate and contact you.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Dropoff Destination</label>
-                                        <SearchableSelect
-                                            name="dropoff"
-                                            value={bookingData.dropoff}
-                                            onChange={(e: any) => updateData('dropoff', e.target.value)}
-                                            options={dropoffLocations.map(d => ({ value: d, label: d }))}
-                                            placeholder="Select Dropoff"
-                                            className={inputClasses(!!errors.dropoff)}
-                                            icon={<MapPin size={18} />}
-                                        />
-                                        {errors.dropoff && <p className="text-red-500 text-xs mt-1">{errors.dropoff}</p>}
+
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Precise Pickup Address</label>
+                                            <input
+                                                type="text"
+                                                value={bookingData.pickup === 'custom' ? '' : bookingData.pickup}
+                                                onChange={(e) => updateData('pickup', e.target.value)}
+                                                placeholder="Enter hotel name, airport terminal, etc."
+                                                className={inputClasses(!!errors.pickup)}
+                                            />
+                                            {errors.pickup && <p className="text-red-500 text-xs mt-1">{errors.pickup}</p>}
+                                        </div>
+                                        <div>
+                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Precise Dropoff Address</label>
+                                            <input
+                                                type="text"
+                                                value={bookingData.dropoff}
+                                                onChange={(e) => updateData('dropoff', e.target.value)}
+                                                placeholder="Enter destination address"
+                                                className={inputClasses(!!errors.dropoff)}
+                                            />
+                                            {errors.dropoff && <p className="text-red-500 text-xs mt-1">{errors.dropoff}</p>}
+                                        </div>
                                     </div>
                                 </motion.div>
+                            ) : (
+                                selectedRoute && (
+                                    <motion.div
+                                        key="route-info"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm mb-6"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+                                                <Info size={24} />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-slate-900 dark:text-white">Selected Route</h4>
+                                                <p className="text-sm text-slate-500">
+                                                    {selectedRoute.distance} • {selectedRoute.time} approx
+                                                </p>
+                                            </div>
+                                            <div className="ml-auto text-right">
+                                                <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
+                                                <span className="font-bold text-secondary text-lg">{selectedRoute.baseRate} SAR</span>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )
                             )}
                         </AnimatePresence>
-
-                        {/* Route Info Card */}
-                        {bookingData.routeId && bookingData.routeId !== 'custom' && getSelectedRoute() && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-                                        <Info size={24} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 dark:text-white">Route Details</h4>
-                                        <p className="text-sm text-slate-500">
-                                            {getSelectedRoute()?.distance} • {getSelectedRoute()?.time} approx
-                                        </p>
-                                    </div>
-                                    <div className="ml-auto text-right">
-                                        <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
-                                        <span className="font-bold text-secondary text-lg">{getSelectedRoute()?.baseRate} SAR</span>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
-
-                        {bookingData.routeId === 'custom' && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 shadow-sm"
-                            >
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
-                                        <Info size={20} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">Custom Quote Required</h4>
-                                        <p className="text-xs text-slate-500 mt-1">
-                                            The final price for custom routes may vary from the estimates. Our team will contact you to confirm the exact rate.
-                                        </p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
 
                     </div>
                 </motion.div>
@@ -1111,7 +1123,7 @@ export default function BookingPage() {
                                 className={`${inputClasses(!!errors.phone)} pl-11`}
                                 value={bookingData.phone}
                                 onChange={(e) => updateData('phone', e.target.value)}
-                                placeholder="+966 50 000 0000"
+                                placeholder="+966 50 000 0000 or 050..."
                             />
                         </div>
                         {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1">{errors.phone}</p>}
@@ -1530,10 +1542,11 @@ export default function BookingPage() {
                                 )}
                                 <button
                                     onClick={nextStep}
-                                    className="ml-auto flex items-center gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0"
+                                    disabled={isSubmitting}
+                                    className={`ml-auto flex items-center gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
-                                    {step === 4 ? 'Confirm Booking' : 'Continue'}
-                                    <ArrowRight size={20} />
+                                    {step === 4 ? (isSubmitting ? 'Booking...' : 'Confirm Booking') : 'Continue'}
+                                    {!isSubmitting && <ArrowRight size={20} />}
                                 </button>
                             </div>
                         )}

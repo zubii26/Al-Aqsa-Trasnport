@@ -17,6 +17,7 @@ interface SearchableSelectProps {
     className?: string;
     icon?: React.ReactNode;
     error?: string;
+    disabled?: boolean;
 }
 
 const SearchableSelect: React.FC<SearchableSelectProps> = ({
@@ -27,7 +28,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     placeholder,
     className,
     icon,
-    error
+    error,
+    disabled
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
@@ -89,7 +91,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     };
 
     return (
-        <div className="relative w-full" ref={containerRef}>
+        <div className={`relative w-full ${disabled ? 'opacity-60 pointer-events-none' : ''}`} ref={containerRef}>
             <div className="relative">
                 {icon && (
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10 text-slate-500 dark:text-white/60">
@@ -101,9 +103,10 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     name={name}
                     value={searchTerm}
                     onChange={handleInputChange}
-                    onFocus={() => setIsOpen(true)}
+                    onFocus={() => !disabled && setIsOpen(true)}
                     placeholder={placeholder}
                     autoComplete="off"
+                    disabled={disabled}
                     className={`${className} ${icon ? 'pl-11' : ''}`}
                 />
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-white/40">
