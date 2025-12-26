@@ -1,5 +1,80 @@
 export const staticBlogPosts = [
     {
+        _id: 'static-new-1',
+        slug: 'spiritual-preparation-during-your-umrah-ride',
+        title: 'Spiritual Preparation During Your Umrah Ride: A Pilgrim\'s Guide',
+        excerpt: 'The journey to Makkah is not just physical; it is a transition of the heart. Learn how to use your travel time for Niyyah (intention), Dhikr, and mental readiness.',
+        content: `
+            <h2>The Journey Before the Destination</h2>
+            <p>For many pilgrims, the flight to Jeddah and the subsequent car ride to Makkah are seen merely as logistical hurdles—time to be "gotten over" before the real worship begins. However, the scholars remind us that <strong>the path to the House of Allah is, in itself, an act of worship.</strong></p>
+
+            <h3>1. The Art of Niyyah (Intention)</h3>
+            <p>As you step into your transport, renew your intention. You are not just a passenger; you are a Guest of Ag-Rahman. Use the silence of the car ride to disconnect from the worldly distractions of the airport and focus your heart on the magnitude of where you are going.</p>
+            
+            <h3>2. Adab (Etiquette) with the Driver</h3>
+            <p>Part of the spiritual preparation is refining one's character. Treating your driver with kindness, patience, and generosity is a reflection of the Prophetic character. Remember, he is the facilitator of your sacred journey.</p>
+            
+            <h3>3. Recommended Dhikr</h3>
+            <p>Instead of scrolling through your phone, utilize this time for:</p>
+            <ul>
+                <li><strong>Talbiyah:</strong> "Labbayk Allahumma Labbayk..." – Keep this rhythm relevant even if you are tired.</li>
+                <li><strong>Istighfar:</strong> Seeking forgiveness before entering the Haram creates a clean vessel for blessings.</li>
+                <li><strong>Salawat:</strong> Sending peace upon the Prophet ﷺ connects you to the spiritual lineage of this land.</li>
+            </ul>
+
+            <p>By the time you see the Clock Tower or the minarets of the Haram, your heart should be trembling not from exhaustion, but from reverence. This transition happens in the car—don't waste it.</p>
+        `,
+        category: 'Spiritual',
+        date: new Date('2026-01-05'),
+        readTime: '5 min read',
+        image: '/images/blog/spiritual-preparation-car.png',
+        alt: 'Pilgrim reading Quran inside a luxury vehicle',
+        author: 'Sheikh Abdullah Yusuf',
+        tags: ['Spiritual Preparation', 'Adab', 'Dhikr', 'Pilgrim Guide'],
+        isPublished: true,
+        metaTitle: 'Spiritual Preparation During Umrah Ride | Pilgrim Guide',
+        metaDescription: 'Transform your transfer to Makkah into an act of worship. Learn about Niyyah, Adab, and recommended Dhikr during your Umrah transport.',
+        createdAt: new Date('2026-01-05'),
+        updatedAt: new Date('2026-01-05'),
+    },
+    {
+        _id: 'static-new-2',
+        slug: 'how-travel-becomes-worship',
+        title: 'How Travel Itself Becomes Part of Worship (Ibadah)',
+        excerpt: 'In Islam, the traveler (Musafir) holds a special status. Discover how patience with delays and gratitude for the journey earn you immense rewards.',
+        content: `
+            <h2>The Status of the Traveler (Musafir)</h2>
+            <p>In our modern age of speed, we often forget that travel is traditionally a time of vulnerability and dependence on Allah. The Prophet ﷺ said that the prayer of the traveler is accepted. Therefore, your transit time is a prime opportunity for Dua.</p>
+
+            <h3>Sabr: The Worship of Patience</h3>
+            <p>Delays happen. Flight schedules shift, traffic in Jeddah can be heavy, and checkpoints take time. Instead of frustration, view these moments as <strong>Sabr (Patience)</strong>. Every minute of waiting, borne with good character, is recorded as a good deed.</p>
+
+            <blockquote>
+                "And be patient. Indeed, Allah is with the patient." (Quran 8:46)
+            </blockquote>
+
+            <h3>Tafakkur: Reflection on Creation</h3>
+            <p>As you travel between the Holy Cities, look out the window at the desert landscape. This is the same terrain the Prophets traversed. Reflecting on the rugged mountains and the vast sky is a form of <strong>Tafakkur (intellectual worship)</strong> that softens the heart.</p>
+
+            <h3>The Dua of Travel</h3>
+            <p>When you settle into your seat and recite <em>"Subhanallahi al-ladhi sakh-khara lana hadha..."</em> (Glory be to Him who has subjected this to us...), you are acknowledging that this comfortable car, this smooth road, and this safety are purely gifts from Allah. This gratitude (Shukr) increases your blessings.</p>
+
+            <p>So next time you are on the road to Makkah or Madinah, remember: You are not just "getting there." You are in a state of Ibadah. Make it count.</p>
+        `,
+        category: 'Spiritual',
+        date: new Date('2026-01-02'),
+        readTime: '4 min read',
+        image: '/images/blog/desert-road-makkah.png',
+        alt: 'Scenic desert road leading to Makkah',
+        author: 'Dr. Sarah Ahmed',
+        tags: ['Travel as Worship', 'Sabr', 'Islamic Reminder', 'Tafakkur'],
+        isPublished: true,
+        metaTitle: 'Travel as Worship: Using Your Journey for Ibadah',
+        metaDescription: 'Learn how to turn travel delays and transit time into rewarding acts of worship through Patience (Sabr), Reflection (Tafakkur), and Gratitude (Shukr).',
+        createdAt: new Date('2026-01-02'),
+        updatedAt: new Date('2026-01-02'),
+    },
+    {
         _id: 'static-1',
         slug: 'top-10-umrah-transport-services-saudi-arabia',
         title: 'Top 10 Umrah Transport Services in Saudi Arabia: 2025 Guide',

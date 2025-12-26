@@ -47,21 +47,20 @@ export default function Navbar() {
     const links = [
         { href: '/', label: 'Home' },
         {
-            href: '/about',
-            label: 'About Us',
+            href: '/routes',
+            label: 'Routes',
             children: [
-                { href: '/about', label: 'Company Profile' },
-                { href: '/about/meet-our-drivers', label: 'Meet Our Drivers' },
+                { href: '/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah' },
+                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah' },
+                { href: '/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel' },
+                { href: '/services/intercity-transfer', label: 'Jeddah Airport ⇄ Madinah' },
+                { href: '/services/ziyarat-tours', label: 'Ziyarat Tours (City Tours)' },
             ]
         },
         {
             href: '/services',
             label: 'Services',
             children: [
-                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport Transfer' },
-                { href: '/services/makkah-madinah-taxi', label: 'Makkah to Madinah Taxi' },
-                { href: '/services/madinah-airport-transfer', label: 'Madinah Airport Transfer' },
-                { href: '/services/ziyarat-tours', label: 'Ziyarat Tours' },
                 { href: '/services/airport-transfers', label: 'Airport Transfer (General)' },
                 { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
                 { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
@@ -76,6 +75,14 @@ export default function Navbar() {
                 { href: '/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
                 { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
                 { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
+            ]
+        },
+        {
+            href: '/about',
+            label: 'About Us',
+            children: [
+                { href: '/about', label: 'Company Profile' },
+                { href: '/about/meet-our-drivers', label: 'Meet Our Drivers' },
             ]
         },
         { href: '/blog', label: 'Blog' },
@@ -120,16 +127,25 @@ export default function Navbar() {
                 <div className="hidden lg:flex items-center gap-8">
                     {links.map((link) => (
                         <div key={link.href} className="relative group">
-                            <Link
-                                href={link.href}
-                                className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
-                                    }`}
-                            >
-                                {link.label}
-                                {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
-                                <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                                    }`} />
-                            </Link>
+                            {link.href === '#' ? (
+                                <span
+                                    className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 cursor-default ${scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90'}`}
+                                >
+                                    {link.label}
+                                    {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                </span>
+                            ) : (
+                                <Link
+                                    href={link.href}
+                                    className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
+                                        }`}
+                                >
+                                    {link.label}
+                                    {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                    <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                        }`} />
+                                </Link>
+                            )}
 
                             {/* Dropdown Menu */}
                             {link.children && (
