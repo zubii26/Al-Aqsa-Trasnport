@@ -79,6 +79,11 @@ export default async function JeddahAirportTransferPage() {
                         <p className="text-slate-600 dark:text-slate-300">
                             We know arriving in a new country can be stressful. Here is how we make it easy:
                         </p>
+                        <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800/30 inline-block">
+                            <p className="text-green-800 dark:text-green-200 font-medium">
+                                "We wait for you, even if your flight is delayed – because your comfort matters."
+                            </p>
+                        </div>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">

@@ -1490,6 +1490,8 @@ export default function BookingPage() {
                         </p>
                     </div>
 
+
+
                     {/* Booking Details Card */}
                     <div id="printable-receipt" className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
 
@@ -1586,6 +1588,17 @@ export default function BookingPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Safar Dua Card - Spiritual Resonance */}
+                    <div className="bg-gradient-to-br from-amber-50 to-white dark:from-slate-900 dark:to-slate-800 p-6 rounded-xl border border-amber-100 dark:border-slate-700 text-center print:hidden">
+                        <p className="text-xs font-bold text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-3">Travel Supplication (Dua)</p>
+                        <p className="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-4 leading-loose" dir="rtl">
+                            سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ
+                        </p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                            &quot;Glory be to Him who has subjected this to us, and we could not have otherwise subdued it. And indeed we, to our Lord, will surely return.&quot;
+                        </p>
                     </div>
 
                     <div className="text-center pt-2 print:hidden">

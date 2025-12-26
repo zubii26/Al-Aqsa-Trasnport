@@ -81,6 +81,13 @@ export default async function MakkahMadinahTaxiPage() {
                                 The journey between the two Holy Cities (approx. 450km) requires a vehicle that guarantees comfort and safety.
                                 Skip the crowded buses and strict train schedules. Our private taxi service offers:
                             </p>
+
+                            <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30">
+                                <p className="text-amber-800 dark:text-amber-200 italic font-medium text-center font-serif">
+                                    "Welcome to the City of the Prophet ﷺ – May your journey be blessed."
+                                </p>
+                            </div>
+
                             <ul className="space-y-4">
                                 {[
                                     "Door-to-Door Service (Hotel to Hotel)",

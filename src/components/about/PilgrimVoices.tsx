@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import styles from './PilgrimVoices.module.css';
 import { Quote } from 'lucide-react';
+import GlassCard from '@/components/ui/GlassCard';
 
 export default function PilgrimVoices() {
     const [ref, isIntersecting] = useIntersectionObserver({ threshold: 0.1 });
@@ -15,37 +15,40 @@ export default function PilgrimVoices() {
     ];
 
     return (
-        <section className={styles.section} ref={ref as unknown as React.RefObject<HTMLElement>}>
-            <div className="container">
-                <div className={styles.header}>
-                    <h2 className={`${styles.title} ${isIntersecting ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <section className="py-20 bg-slate-50 dark:bg-slate-900" ref={ref as unknown as React.RefObject<HTMLElement>}>
+            <div className="container mx-auto px-4">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className={`text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-playfair transition-all duration-700 ${isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         Pilgrim Voices
                     </h2>
-                    <p className={`${styles.subtitle} ${isIntersecting ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ transitionDelay: '0.1s' }}>
+                    <p className={`text-lg text-slate-600 dark:text-slate-300 transition-all duration-700 delay-100 ${isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         Hear from those who have journeyed with us.
                     </p>
                 </div>
-                <div className={styles.grid}>
+
+                <div className="grid md:grid-cols-3 gap-8">
                     {testimonials.map((item, index) => (
-                        <div
+                        <GlassCard
                             key={item.id}
-                            className={`${styles.card} ${isIntersecting ? styles.animate : ''}`}
-                            style={{ transitionDelay: `${index * 0.2}s` }}
+                            className={`p-8 relative h-full flex flex-col`}
+                            delay={index * 0.2}
                         >
-                            <div className={styles.quoteIcon}>
-                                <Quote size={24} />
-                            </div>
-                            <p className={styles.text}>&quot;{item.text}&quot;</p>
-                            <div className={styles.author}>
-                                <div className={styles.avatar}>
+                            <Quote size={40} className="text-amber-500/20 absolute top-6 right-6" />
+
+                            <p className="text-slate-700 dark:text-slate-300 italic mb-6 relative z-10 flex-grow">
+                                &quot;{item.text}&quot;
+                            </p>
+
+                            <div className="flex items-center gap-4 mt-auto">
+                                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xl font-bold text-slate-500 dark:text-slate-400">
                                     {item.author.charAt(0)}
                                 </div>
                                 <div>
-                                    <div className={styles.name}>{item.author}</div>
-                                    <div className={styles.location}>{item.location}</div>
+                                    <div className="font-bold text-slate-900 dark:text-white">{item.author}</div>
+                                    <div className="text-sm text-slate-500 dark:text-slate-400">{item.location}</div>
                                 </div>
                             </div>
-                        </div>
+                        </GlassCard>
                     ))}
                 </div>
             </div>
