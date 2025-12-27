@@ -21,7 +21,7 @@ export default function Features() {
                     </h2>
                 </FadeIn>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 bg-white/5 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none divide-y md:divide-y-0 divide-white/10 dark:divide-white/5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-0.5 md:gap-8 bg-white/5 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none dark:divide-white/5">
                     <GlassCard delay={0.1} className="text-center group hover:bg-white/5 border-none md:border border-white/10 dark:border-white/5 rounded-none md:rounded-3xl shadow-none md:shadow-lg py-10 md:py-6">
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Shield size={32} />
