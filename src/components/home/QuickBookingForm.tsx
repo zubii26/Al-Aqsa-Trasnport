@@ -738,19 +738,7 @@ const QuickBookingForm = ({
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`${styles.inputGroup} mt-2`}>
-                                    <label className={styles.label}>Notes (Optional)</label>
-                                    <div className={styles.inputWrapper}>
-                                        <input
-                                            type="text"
-                                            name="notes"
-                                            placeholder="Specific requirements, oversized luggage, etc."
-                                            value={formData.notes}
-                                            onChange={handleChange}
-                                            className={styles.input}
-                                        />
-                                    </div>
-                                </div>
+
                             </div>
 
                             {/* Price Display */}
