@@ -47,7 +47,7 @@ export default async function HyundaiStarexPage() {
 
     // Hyundai Starex ID: 692db09834f15bc89b45a5fa
     const starexId = '692db09834f15bc89b45a5fa';
-    const starexImage = '/images/fleet/starex.png';
+    const starexImage = '/images/fleet/starex-hero-professional.png';
 
     return (
         <main className="overflow-x-hidden">

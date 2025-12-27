@@ -168,7 +168,8 @@ export default function Navbar() {
                 </div>
 
                 <div className="hidden lg:flex items-center gap-4">
-                    <ThemeToggle />
+                    {/* ThemeToggle hidden on desktop as requested */}
+                    {/* <ThemeToggle /> */}
                     <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                         Book Now
                     </GlassButton>

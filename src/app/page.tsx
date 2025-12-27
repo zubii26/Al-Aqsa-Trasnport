@@ -13,6 +13,8 @@ import AnimatedBackground from '@/components/ui/AnimatedBackground';
 // Lazy load heavy components
 const InstantPriceCalculator = dynamic(() => import('@/components/home/InstantPriceCalculator'));
 const Features = dynamic(() => import('@/components/home/Features'));
+const SafetyPromise = dynamic(() => import('@/components/home/SafetyPromise'));
+const PassengerCare = dynamic(() => import('@/components/home/PassengerCare'));
 const FleetCarouselWrapper = dynamic(() => import('@/components/home/FleetCarouselWrapper'));
 const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'));
 const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
@@ -20,6 +22,7 @@ const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'))
 const SEOContentSection = dynamic(() => import('@/components/home/SEOContentSection'));
 const TransportServices = dynamic(() => import('@/components/home/TransportServices'));
 const TestimonialHighlight = dynamic(() => import('@/components/reviews/TestimonialHighlight'));
+const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
 
 export async function generateMetadata() {
   return {
@@ -87,6 +90,12 @@ export default async function Home() {
       {/* Features Section */}
       <Features />
 
+      {/* Passenger Care Section */}
+      <PassengerCare />
+
+      {/* Fleet Gallery - NEW */}
+      <FleetGallery />
+
       {/* Fleet Section */}
       <FadeIn>
         <FleetCarouselWrapper />
@@ -106,6 +115,10 @@ export default async function Home() {
       {/* Latest Articles Section */}
       <LatestArticles />
 
+      {/* Safety Promise Section - Moved to Bottom */}
+      <FadeIn>
+        <SafetyPromise />
+      </FadeIn>
 
       {/* CTA Section */}
       <section className={styles.ctaSection}>

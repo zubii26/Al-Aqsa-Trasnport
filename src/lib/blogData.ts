@@ -71,7 +71,7 @@ export const blogPosts: BlogPost[] = [
         category: "Spiritual",
         date: "Nov 29, 2024",
         readTime: "8 min read",
-        image: "/images/blog/masjid-nabawi-view.jpg",
+        image: "/images/blog/masjid-nabawi-view-new.png",
         alt: "Masjid an-Nabawi in Madinah - The Prophet's Mosque",
         author: "Sheikh Abdullah",
         tags: ["Prophet Muhammad", "Seerah", "Madinah", "Spirituality"]
@@ -109,7 +109,7 @@ export const blogPosts: BlogPost[] = [
         category: "Guide",
         date: "Nov 28, 2024",
         readTime: "6 min read",
-        image: "/images/blog/highway-journey.png",
+        image: "/images/blog/highway-journey-new.png",
         alt: "Best Umrah transport service in Saudi Arabia - Luxury bus and taxi fleet",
         author: "Ahmed Al-Sayed",
         tags: ["Umrah Transport", "Saudi Arabia", "Travel Guide", "Safety"]
@@ -142,7 +142,7 @@ export const blogPosts: BlogPost[] = [
         category: "Travel Tips",
         date: "Nov 27, 2024",
         readTime: "5 min read",
-        image: "/images/blog/mobile-booking.jpg",
+        image: "/images/blog/mobile-booking-new.png",
         alt: "Travel tips for pilgrims in Makkah and Madinah - Family Umrah transport",
         author: "Sarah Khan",
         tags: ["Travel Tips", "Makkah", "Madinah", "Family Travel"]
@@ -172,7 +172,7 @@ export const blogPosts: BlogPost[] = [
         category: "FAQ",
         date: "Nov 26, 2024",
         readTime: "4 min read",
-        image: "/images/blog/faq.png",
+        image: "/images/blog/faq-new.png",
         alt: "FAQ about Umrah transport services - Booking and costs",
         author: "Support Team",
         tags: ["FAQ", "Booking", "Jeddah Airport", "Online Booking"]
@@ -201,7 +201,7 @@ export const blogPosts: BlogPost[] = [
         category: "Experience",
         date: "Nov 25, 2024",
         readTime: "5 min read",
-        image: "/images/blog/luxury-interior.jpg",
+        image: "/images/blog/luxury-interior-new.png",
         alt: "Comfortable and safe Umrah transport - Luxury GMC Yukon interior",
         author: "Mohammed Ali",
         tags: ["Comfort", "Safety", "Luxury Transport", "Testimonials"]
@@ -228,7 +228,7 @@ export const blogPosts: BlogPost[] = [
         category: "Value",
         date: "Nov 24, 2024",
         readTime: "4 min read",
-        image: "/images/blog/makkah-haram-view.jpg",
+        image: "/images/blog/makkah-haram-view-new.png",
         alt: "Affordable Umrah transport packages - Group travel bus",
         author: "Fatima Hassan",
         tags: ["Affordable", "Packages", "Deals", "Group Travel"]

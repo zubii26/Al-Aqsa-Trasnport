@@ -47,7 +47,7 @@ export default async function ToyotaHiacePage() {
 
     // Toyota Hiace ID: 692db09834f15bc89b45a5fb
     const hiaceId = '692db09834f15bc89b45a5fb';
-    const hiaceImage = '/images/fleet/hiace.png';
+    const hiaceImage = '/images/fleet/hiace-hero-professional.png';
 
     return (
         <main className="overflow-x-hidden">

@@ -638,3 +638,43 @@
         border-radius: 16px;
     }
 }
+
+/* Trust Bar Styles */
+.trustBar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trustItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+}
+
+.trustIconWrapper {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.trustIcon {
+    color: #fbbf24;
+}
+
+.trustText {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.1;
+    font-weight: 500;
+}

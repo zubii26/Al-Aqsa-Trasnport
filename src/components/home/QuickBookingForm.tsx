@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail, MapPin, PlaneLanding, PlaneTakeoff, Building2 } from 'lucide-react';
+import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail, MapPin, PlaneLanding, PlaneTakeoff, Building2, ShieldCheck, HeartHandshake, CreditCard, Headphones } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
@@ -174,6 +174,7 @@ const QuickBookingForm = ({
                 priceDisplay = ` - ${price} SAR${discountApplied > 0 ? ' (Offer)' : ''}`;
             }
         }
+
         return {
             value: vehicle.id,
             label: `${vehicle.name} (${vehicle.capacity})${priceDisplay}`
@@ -789,7 +790,7 @@ const QuickBookingForm = ({
 
                         <button
                             type="submit"
-                            className={styles.submitBtn}
+                            className={`${styles.submitBtn} group relative overflow-hidden`}
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? (
@@ -798,12 +799,37 @@ const QuickBookingForm = ({
                                     Processing...
                                 </span>
                             ) : (
-                                <>
-                                    <span>Book Now</span>
-                                    <ArrowRight size={20} />
-                                </>
+                                <span className="flex items-center justify-center gap-2">
+                                    Book Your Ride Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </span>
                             )}
                         </button>
+
+                        <p className="text-center text-[10px] text-slate-400 mt-2">
+                            No credit card required &bull; Free cancellation
+                        </p>
+
+                        <div className={styles.trustBar}>
+                            <div className={styles.trustItem}>
+                                <div className={styles.trustIconWrapper}>
+                                    <CreditCard size={12} className={styles.trustIcon} />
+                                </div>
+                                <span className={styles.trustText}>Pay Later</span>
+                            </div>
+                            <div className={styles.trustItem}>
+                                <div className={styles.trustIconWrapper}>
+                                    <ShieldCheck size={12} className={styles.trustIcon} />
+                                </div>
+                                <span className={styles.trustText}>Official</span>
+                            </div>
+                            <div className={styles.trustItem}>
+                                <div className={styles.trustIconWrapper}>
+                                    <Headphones size={12} className={styles.trustIcon} />
+                                </div>
+                                <span className={styles.trustText}>24/7 Help</span>
+                            </div>
+                        </div>
+
 
                     </motion.form>
                 )}

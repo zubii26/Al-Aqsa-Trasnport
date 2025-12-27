@@ -245,12 +245,12 @@
 
 @media (max-width: 768px) {
     .section {
-        padding: 4rem 0;
+        padding: 3rem 0;
     }
 
     .grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .cardBody {

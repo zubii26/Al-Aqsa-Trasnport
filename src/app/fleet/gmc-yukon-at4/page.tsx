@@ -48,7 +48,7 @@ export default async function GmcYukonPage() {
 
     // GMC Yukon ID: 692db09834f15bc89b45a5f8
     const gmcId = '692db09834f15bc89b45a5f8';
-    const gmcImage = '/images/fleet/gmc.png';
+    const gmcImage = '/images/fleet/gmc-yukon-hero-professional.png';
 
     return (
         <main className="overflow-x-hidden">

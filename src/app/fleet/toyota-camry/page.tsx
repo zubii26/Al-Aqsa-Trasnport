@@ -47,7 +47,7 @@ export default async function ToyotaCamryPage() {
 
     // Toyota Camry ID: 692db09834f15bc89b45a5f6
     const camryId = '692db09834f15bc89b45a5f6';
-    const camryImage = '/images/fleet/camry.png';
+    const camryImage = '/images/fleet/camry-hero-professional.png';
 
     return (
         <main className="overflow-x-hidden">

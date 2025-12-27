@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     },
 };
 
-const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Experience', 'Value', 'Spiritual', 'News', 'FAQ'];
+const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Safety', 'Accessibility', 'Experience', 'Value', 'Spiritual', 'News', 'FAQ'];
 
 export default async function BlogPage() {
     const dbPosts = await blogService.getPosts();
@@ -52,7 +52,7 @@ export default async function BlogPage() {
             <Hero
                 title="Pilgrim Resources & Insights"
                 subtitle="Expert guides, travel tips, and answers to your questions for a blessed and hassle-free Umrah journey."
-                bgImage="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
+                bgImage="/images/blog-hero-professional.png"
             />
 
             {/* Articles Section */}

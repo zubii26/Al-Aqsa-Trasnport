@@ -1,0 +1,30 @@
+.galleryContainer {
+    /* Mask disabled for visibility */
+    position: relative;
+    width: 100%;
+    /* layout shift protection */
+    min-height: 300px;
+}
+
+.scroller {
+    display: flex;
+    width: max-content;
+    gap: 1.5rem;
+    /* Matches gap-6 */
+    animation: scroll 60s linear infinite;
+}
+
+.scroller:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        /* Move 1/3 of the total width since we have 3 sets of images */
+        transform: translateX(calc(-100% / 3));
+    }
+}

@@ -47,7 +47,7 @@ export default async function HyundaiStariaPage() {
 
     // Hyundai Staria ID: 692db09834f15bc89b45a5f9
     const stariaId = '692db09834f15bc89b45a5f9';
-    const stariaImage = '/images/fleet/staria.png';
+    const stariaImage = '/images/fleet/staria-hero-professional.png';
 
     return (
         <main className="overflow-x-hidden">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -771,7 +771,11 @@ export default function BookingPage() {
 
                                             {/* Content */}
                                             <div className="absolute bottom-0 left-0 right-0 p-5">
-                                                <h3 className="text-2xl font-bold text-white mb-1 leading-tight">{v.name}</h3>
+                                                <h3 className="text-2xl font-bold text-white mb-1 leading-tight">
+                                                    {v.name}
+                                                    {v.name.includes('GMC') && <span className="ml-2 text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full inline-block align-middle transform -translate-y-1">VIP</span>}
+                                                    {v.name.includes('Hiace') && <span className="ml-2 text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full inline-block align-middle transform -translate-y-1">Family</span>}
+                                                </h3>
                                                 <div className="flex items-center gap-3 text-white/80 text-sm font-medium">
                                                     <span>{v.capacity} Seater</span>
                                                     <span className="w-1 h-1 rounded-full bg-white/50" />
@@ -838,6 +842,8 @@ export default function BookingPage() {
                                                     <div className="flex justify-between items-start mb-1">
                                                         <span className={`block font-bold text-sm ${isSelected ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'}`}>
                                                             {vehicle.name}
+                                                            {vehicle.name.includes('GMC') && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 border border-amber-200 px-1.5 py-0.5 rounded-full">VIP</span>}
+                                                            {vehicle.name.includes('Hiace') && <span className="ml-2 text-[10px] bg-blue-100 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded-full">Family</span>}
                                                         </span>
                                                         <div className="text-right shrink-0 ml-2">
                                                             {bookingData.routeId === 'custom' ? (
@@ -993,6 +999,8 @@ export default function BookingPage() {
                                         <div>
                                             <h3 className={`text - xl font - bold mb - 1 transition - colors ${quantity > 0 ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'} `}>
                                                 {vehicle.name}
+                                                {vehicle.name.includes('GMC') && <span className="ml-2 text-xs bg-amber-100 text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full align-middle">⭐ VIP</span>}
+                                                {vehicle.name.includes('Hiace') && <span className="ml-2 text-xs bg-blue-100 text-blue-600 border border-blue-200 px-2 py-0.5 rounded-full align-middle">👨‍👩‍👧‍👦 Family</span>}
                                             </h3>
                                             <p className="text-sm text-slate-500 font-medium">{vehicle.capacity}</p>
                                         </div>
@@ -1798,10 +1806,32 @@ export default function BookingPage() {
                                     disabled={isSubmitting}
                                     className={`ml-auto flex items-center gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
-                                    {step === 4 ? (isSubmitting ? 'Booking...' : 'Confirm Booking') : 'Continue'}
+                                    {step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}
                                     {!isSubmitting && <ArrowRight size={20} />}
                                 </button>
                             </div>
+                        )}
+
+                        {/* Trust Bar - Conversion Optimizer (Visible on Details & Review Steps) */}
+                        {step >= 3 && step < 5 && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 gap-2 text-center"
+                            >
+                                <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
+                                    <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                                    <span className="text-xs text-slate-500 font-medium">Official License</span>
+                                </div>
+                                <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
+                                    <Navigation className="w-5 h-5 text-blue-500" />
+                                    <span className="text-xs text-slate-500 font-medium">GPS Tracked</span>
+                                </div>
+                                <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
+                                    <HeartHandshake className="w-5 h-5 text-pink-500" />
+                                    <span className="text-xs text-slate-500 font-medium">Family Staff</span>
+                                </div>
+                            </motion.div>
                         )}
                     </div>
 
@@ -1812,7 +1842,7 @@ export default function BookingPage() {
                 </div>
             </div>
 
-        </main>
+        </main >
     );
 }
 
