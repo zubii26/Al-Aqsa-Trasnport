@@ -129,6 +129,11 @@
         padding: 2rem;
     }
 
+    .featuredCard {
+        border-radius: 0;
+        border: none;
+    }
+
     .featuredTitle {
         font-size: 2.25rem;
     }

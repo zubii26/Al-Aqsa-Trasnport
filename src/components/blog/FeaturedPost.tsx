@@ -12,7 +12,7 @@ interface FeaturedPostProps {
 
 export default function FeaturedPost({ post }: FeaturedPostProps) {
     return (
-        <GlassCard delay={0.2} className="p-0 overflow-hidden group">
+        <GlassCard delay={0.2} className="p-0 overflow-hidden group rounded-none md:rounded-[32px] border-none md:border">
             <Link href={`/blog/${post.id}`} className={styles.featuredCard}>
                 <div className={styles.featuredImage}>
                     <Image
