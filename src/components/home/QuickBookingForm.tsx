@@ -75,8 +75,7 @@ const QuickBookingForm = ({
     const vehicles = initialVehicles ? attachIcons(initialVehicles) : contextVehicles;
     const isLoading = (initialRoutes && initialVehicles) ? false : contextLoading;
 
-    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
-    const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
+
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -137,28 +136,8 @@ const QuickBookingForm = ({
         }
     }, [formData.pickup, formData.dropoff, routes, errors.routeId]);
 
-    // Enhanced Dropdown Data Preparation
-    // Filter routes based on Service Type (Category)
-    const filteredRoutes = routes.filter(r => {
-        // Strict category matching from DB (Extended for Airport sub-categories)
-        if (r.category) {
-
-            // Special handling for Airport tab to include 'Airport', 'Airport Arrival', 'Airport Departure'
-            if (serviceType === 'Airport') {
-                const isArrival = airportType === 'Arrival';
-                const targetCategory = isArrival ? 'Airport Arrival' : 'Airport Departure';
-                return r.category === targetCategory || r.category === 'Airport';
-            }
-
-            return r.category.toLowerCase() === serviceType.toLowerCase();
-        }
-
-        // Fallback for old routes without category
-        const lowerName = r.name.toLowerCase();
-        if (serviceType === 'Airport') return lowerName.includes('airport');
-        if (serviceType === 'Ziarat') return lowerName.includes('ziarat') || lowerName.includes('ziyarat');
-        return !lowerName.includes('airport') && !lowerName.includes('ziarat') && !lowerName.includes('ziyarat');
-    });
+    // Filter routes to include all available routes
+    const filteredRoutes = routes;
 
     // Enhanced Dropdown Data Preparation
     const routeOptions = [
@@ -454,63 +433,7 @@ const QuickBookingForm = ({
                         exit={{ opacity: 0 }}
                     >
 
-                        {/* Service Type Tabs */}
-                        <div className="mb-3">
-                            <div className={styles.segmentedControl}>
-                                {([
-                                    { id: 'Intercity', label: 'Intercity' },
-                                    { id: 'Airport', label: 'Airport' },
-                                    { id: 'Ziarat', label: 'Ziarat' }
-                                ]).map((type) => (
-                                    <button
-                                        key={type.id}
-                                        type="button"
-                                        onClick={() => {
-                                            setServiceType(type.id as any);
-                                            setFormData(prev => ({ ...prev, routeId: '' }));
-                                        }}
-                                        className={`${styles.tab} ${serviceType === type.id ? styles.activeTab : ''}`}
-                                    >
-                                        {type.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
 
-                        {/* Sub-Category Dropdown for Airport */}
-                        {serviceType === 'Airport' && (
-                            <div className="mb-4">
-                                <label className={styles.label}>Transfer Type</label>
-                                <div className="grid grid-cols-2 gap-2 mt-1">
-                                    <button
-                                        type="button"
-                                        className={`py-2 px-4 rounded-lg border text-sm font-medium transition-all ${airportType === 'Arrival'
-                                            ? 'bg-amber-500 text-white border-amber-500 shadow-md'
-                                            : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-500/50'
-                                            }`}
-                                        onClick={() => {
-                                            setAirportType('Arrival');
-                                            setFormData(prev => ({ ...prev, routeId: '' }));
-                                        }}
-                                    >
-                                        Arrival
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className={`py-2 px-4 rounded-lg border text-sm font-medium transition-all ${airportType === 'Departure'
-                                            ? 'bg-amber-500 text-white border-amber-500 shadow-md'
-                                            : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-500/50'
-                                            }`}
-                                        onClick={() => {
-                                            setAirportType('Departure');
-                                            setFormData(prev => ({ ...prev, routeId: '' }));
-                                        }}
-                                    >
-                                        Departure
-                                    </button>
-                                </div>
-                            </div>
-                        )}
 
                         <div className={styles.grid}>
 
