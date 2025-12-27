@@ -16,7 +16,7 @@ interface ArticleGridProps {
 export default function ArticleGrid({ posts, categories, activeCategory, onCategoryChange }: ArticleGridProps) {
     return (
         <section className={styles.section}>
-            <div className="container px-0 md:px-4">
+            <div className="container px-[10px] md:px-4">
                 <FadeIn>
                     <h2 className={styles.sectionTitle}>Latest Articles</h2>
                 </FadeIn>

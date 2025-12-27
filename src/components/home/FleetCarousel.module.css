@@ -329,7 +329,7 @@
         overflow-x: visible;
         scroll-snap-type: none;
         padding: 0;
-        gap: 5px;
+        gap: 15px;
     }
 
     .card {
