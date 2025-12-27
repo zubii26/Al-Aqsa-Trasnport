@@ -57,7 +57,7 @@ export default async function BlogPage() {
 
             {/* Articles Section */}
             <div className="bg-background pb-20 pt-20 min-h-[600px]">
-                <div className="container px-0 md:px-4">
+                <div className="container px-[5px] md:px-4">
                     {featuredPost && (
                         <FeaturedPost post={featuredPost} />
                     )}

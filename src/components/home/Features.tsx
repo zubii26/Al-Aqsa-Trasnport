@@ -14,7 +14,7 @@ export default function Features() {
                 <div className="absolute bottom-1/4 -right-64 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
             </div>
 
-            <div className="container px-0 md:px-4">
+            <div className="container px-[5px] md:px-4">
                 <FadeIn>
                     <h2 className="text-4xl md:text-5xl font-bold text-center mb-10 font-playfair px-4 md:px-0">
                         Why Choose Al Aqsa for <span className="text-gradient-gold">Umrah Transport?</span>
