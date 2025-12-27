@@ -38,7 +38,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
 
     return (
         <section className={styles.section}>
-            <div className="container">
+            <div className="container px-0 md:px-4">
                 <div className={styles.header}>
                     <h2 className={styles.title}>Our Premium Umrah Transport Fleet / أسطولنا الفاخر</h2>
                     <p className={styles.subtitle}>
