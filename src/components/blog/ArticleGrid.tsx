@@ -16,7 +16,7 @@ interface ArticleGridProps {
 export default function ArticleGrid({ posts, categories, activeCategory, onCategoryChange }: ArticleGridProps) {
     return (
         <section className={styles.section}>
-            <div className="container">
+            <div className="container px-0 md:px-4">
                 <FadeIn>
                     <h2 className={styles.sectionTitle}>Latest Articles</h2>
                 </FadeIn>
@@ -38,7 +38,7 @@ export default function ArticleGrid({ posts, categories, activeCategory, onCateg
 
                 <div className={styles.grid}>
                     {posts.map((article, index) => (
-                        <FadeIn key={article.id} delay={index * 0.1} className="h-full p-3">
+                        <FadeIn key={article.id} delay={index * 0.1} className="h-full p-0 md:p-3">
                             <div className={styles.articleCard}>
                                 <Link href={`/blog/${article.id}`} className="flex flex-col h-full w-full">
                                     <div className={styles.imageWrapper}>
