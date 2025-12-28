@@ -34,6 +34,8 @@ export default function CookieConsent() {
             // Apply existing preference
             if (consent === 'accepted') {
                 updateConsent(true);
+            } else if (consent === 'rejected') {
+                updateConsent(false);
             }
         } else {
             // Function to show banner
