@@ -28,7 +28,7 @@ export default function PassengerCare() {
                                 <div className="absolute inset-0 bg-pink-500/10 rounded-3xl transform rotate-3 scale-105" />
                                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/images/home/solo-sister-travel.jpg"
+                                        src="/images/blog/solo-sister-travel.jpg"
                                         alt="Safe transport for female travelers"
                                         fill
                                         className="object-cover hover:scale-105 transition-transform duration-700"
