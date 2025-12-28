@@ -16,12 +16,14 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           
-          // Default Consent Mode V2 (Denied by default)
+          // Default Consent Mode V2
+          // We grant analytics_storage by default to ensure connection/traffic data is visible.
+          // We DENY ad_storage (marketing) until explicit consent to be privacy-friendly but functional.
           gtag('consent', 'default', {
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'analytics_storage': 'denied'
+            'analytics_storage': 'granted'
           });
 
           gtag('js', new Date());
