@@ -28,7 +28,7 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
 
           gtag('js', new Date());
 
-          gtag('config', ${JSON.stringify(gaId)});
+          gtag('config', ${JSON.stringify(gaId)}, { 'debug_mode': true });
         `}
             </Script>
         </>
