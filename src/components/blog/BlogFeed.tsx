@@ -12,11 +12,14 @@ interface BlogFeedProps {
 
 export default function BlogFeed({ posts, categories }: BlogFeedProps) {
     const [activeCategory, setActiveCategory] = useState('All');
+    const [searchTerm, setSearchTerm] = useState('');
 
     // Filter logic
     const filteredPosts = posts.filter(post => {
-        if (activeCategory === 'All') return true;
-        return post.category === activeCategory;
+        const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
+        const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
     });
 
     return (
@@ -25,6 +28,8 @@ export default function BlogFeed({ posts, categories }: BlogFeedProps) {
             categories={categories}
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
         />
     );
 }
