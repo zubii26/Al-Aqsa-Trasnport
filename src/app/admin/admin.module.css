@@ -553,4 +553,50 @@
     .statValue {
         font-size: 1.5rem;
     }
+
+    /* Mobile Table / Card View */
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Hide standard header */
+    .table thead {
+        display: none;
+    }
+
+    /* Row becomes a card */
+    .table tbody tr {
+        margin-bottom: 1rem;
+        background: var(--admin-card);
+        border: 1px solid var(--admin-border);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    /* Cells become sections */
+    .table td {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--admin-border);
+        min-height: auto;
+        gap: 0.5rem;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+        background: rgba(0, 0, 0, 0.02);
+        padding: 0.75rem;
+    }
+
+    /* Adjust internal layouts for mobile */
+    .table td>div {
+        width: 100%;
+    }
 }

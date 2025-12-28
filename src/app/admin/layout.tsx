@@ -110,18 +110,29 @@ export default function AdminLayout({
         <div className={styles.container}>
             {/* Mobile Header / Hamburger */}
             <div className={styles.mobileHeader}>
-                <button
-                    className={styles.hamburgerBtn}
-                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    aria-label="Toggle Menu"
-                >
-                    <div className="flex flex-col gap-1.5 w-6">
-                        <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? 'rotate-45 translate-y-2' : ''}`} />
-                        <span className={`block w-full h-0.5 bg-current transition-opacity ${isSidebarOpen ? 'opacity-0' : ''}`} />
-                        <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                <div className="flex items-center gap-3">
+                    <button
+                        className={styles.hamburgerBtn}
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        aria-label="Toggle Menu"
+                    >
+                        <div className="flex flex-col gap-1.5 w-6">
+                            <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                            <span className={`block w-full h-0.5 bg-current transition-opacity ${isSidebarOpen ? 'opacity-0' : ''}`} />
+                            <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                        </div>
+                    </button>
+                    <span className={styles.mobileBrand}>Admin Panel</span>
+                </div>
+
+                {/* Mobile User Profile Trigger */}
+                {user && (
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-sm">
+                            {user.name.charAt(0)}
+                        </div>
                     </div>
-                </button>
-                <span className={styles.mobileBrand}>Admin Panel</span>
+                )}
             </div>
 
             {/* Mobile Overlay */}
