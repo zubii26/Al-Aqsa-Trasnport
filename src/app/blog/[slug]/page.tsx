@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { blogService } from '@/services/blogService';
 import FadeIn from '@/components/common/FadeIn';
 import GlassCard from '@/components/ui/GlassCard';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 
 interface BlogPostPageProps {
     params: Promise<{
@@ -103,6 +104,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
+
+
             {/* Premium Hero Section */}
             <div className={styles.heroSection}>
                 <div className={styles.heroBackground}>
@@ -117,10 +120,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 <div className={styles.heroContent}>
                     <FadeIn>
-                        <Link href="/blog" className={styles.backLink}>
-                            <ArrowLeft size={20} />
-                            Back to Blog
-                        </Link>
+                        <Breadcrumbs
+                            overrideLastItem={post.title}
+                            className="mb-6 justify-center"
+                        />
                         <span className={styles.heroCategory}>{post.category}</span>
                         <h1 className={styles.heroTitle}>{post.title}</h1>
 

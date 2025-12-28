@@ -26,6 +26,12 @@ export default function AdminLayout({
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    useEffect(() => {
+        // Close sidebar on route change (mobile)
+        setIsSidebarOpen(false);
+    }, [pathname]);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -102,7 +108,29 @@ export default function AdminLayout({
 
     return (
         <div className={styles.container}>
-            <aside className={styles.sidebar}>
+            {/* Mobile Header / Hamburger */}
+            <div className={styles.mobileHeader}>
+                <button
+                    className={styles.hamburgerBtn}
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    aria-label="Toggle Menu"
+                >
+                    <div className="flex flex-col gap-1.5 w-6">
+                        <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                        <span className={`block w-full h-0.5 bg-current transition-opacity ${isSidebarOpen ? 'opacity-0' : ''}`} />
+                        <span className={`block w-full h-0.5 bg-current transition-transform ${isSidebarOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                    </div>
+                </button>
+                <span className={styles.mobileBrand}>Admin Panel</span>
+            </div>
+
+            {/* Mobile Overlay */}
+            <div
+                className={`${styles.mobileOverlay} ${isSidebarOpen ? styles.overlayVisible : ''}`}
+                onClick={() => setIsSidebarOpen(false)}
+            />
+
+            <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
                 <div className={styles.logo}>
                     <div className="flex flex-col items-start gap-1 py-4 px-2">
                         <div className="flex flex-col items-start text-left">
