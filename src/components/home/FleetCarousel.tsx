@@ -28,6 +28,20 @@ interface FleetCarouselProps {
 }
 
 export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps) {
+    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (scrollContainerRef.current) {
+            const container = scrollContainerRef.current;
+            // Get proper scroll amount based on card width + gap
+            const cardWidth = container.firstElementChild?.clientWidth || 350;
+            const gap = 16; // Approx gap
+            const scrollAmount = direction === 'left' ? -(cardWidth + gap) : (cardWidth + gap);
+
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     if (vehicles.length === 0) return null;
 
     // Check if discount is active
@@ -40,28 +54,63 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
         <section className={styles.section}>
             <div className="container px-[10px] md:px-4">
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Our Premium Umrah Transport Fleet / أسطولنا الفاخر</h2>
+                    <span className="text-amber-600 dark:text-amber-500 font-bold tracking-widest text-sm uppercase mb-3 block">Our Premium Fleet</span>
+                    <h2 className={styles.title}>
+                        Travel in <span className="text-amber-600 dark:text-amber-500">Absolute Comfort</span>
+                    </h2>
                     <p className={styles.subtitle}>
-                        Experience VIP comfort for Makkah & Madinah travel with our luxury GMC Yukons and modern family vans.
+                        Experience VIP comfort specific for Makkah & Madinah travel.
+                        <br className="hidden md:block" />
+                        Choose from our luxury GMC Yukons and spacious family vans.
                     </p>
                 </div>
 
-                <div className="relative">
+                <div className="relative group">
                     <button
-                        onClick={() => {
-                            const container = document.getElementById('fleet-carousel-container');
-                            if (container) container.scrollBy({ left: -350, behavior: 'smooth' });
-                        }}
+                        onClick={() => scroll('left')}
                         className={`${styles.navBtn} ${styles.prevBtn}`}
                         aria-label="Scroll Left"
                     >
                         <ArrowRight className="rotate-180" size={24} />
                     </button>
 
-                    <div id="fleet-carousel-container" className={styles.carouselContainer}>
+                    <div
+                        ref={scrollContainerRef}
+                        className={`${styles.carouselContainer} cursor-grab active:cursor-grabbing select-none`}
+                        onMouseDown={(e) => {
+                            const slider = scrollContainerRef.current;
+                            if (!slider) return;
+                            let isDown = true;
+                            let startX = e.pageX - slider.offsetLeft;
+                            let scrollLeft = slider.scrollLeft;
+
+                            const onMouseLeave = () => {
+                                isDown = false;
+                                slider.classList.remove('active');
+                            };
+
+                            const onMouseUp = () => {
+                                isDown = false;
+                                slider.classList.remove('active');
+                                window.removeEventListener('mouseup', onMouseUp);
+                                window.removeEventListener('mousemove', onMouseMove);
+                            };
+
+                            const onMouseMove = (e: MouseEvent) => {
+                                if (!isDown) return;
+                                e.preventDefault();
+                                const x = e.pageX - slider.offsetLeft;
+                                const walk = (x - startX) * 2; // Scroll-fast
+                                slider.scrollLeft = scrollLeft - walk;
+                            };
+
+                            window.addEventListener('mouseup', onMouseUp);
+                            window.addEventListener('mousemove', onMouseMove);
+                        }}
+                    >
                         {vehicles.map((vehicle, index) => (
                             <div key={vehicle.id} className={`${styles.card} glass-card`}>
-                                <div className={styles.imageWrapper}>
+                                <div className={styles.imageWrapper} onDragStart={(e) => e.preventDefault()}>
                                     <Image
                                         src={vehicle.image}
                                         alt={vehicle.name}
@@ -69,6 +118,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                         className={styles.vehicleImage}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         priority={index < 2}
+                                        draggable={false}
                                     />
                                     {isDiscountActive && (
                                         <div className={styles.discountBadge}>
@@ -116,10 +166,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                     </div>
 
                     <button
-                        onClick={() => {
-                            const container = document.getElementById('fleet-carousel-container');
-                            if (container) container.scrollBy({ left: 350, behavior: 'smooth' });
-                        }}
+                        onClick={() => scroll('right')}
                         className={`${styles.navBtn} ${styles.nextBtn}`}
                         aria-label="Scroll Right"
                     >
