@@ -29,6 +29,8 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
           gtag('js', new Date());
 
           gtag('config', ${JSON.stringify(gaId)}, { 'debug_mode': true });
+          
+          console.log('Google Analytics Configured for:', ${JSON.stringify(gaId)});
         `}
             </Script>
         </>
