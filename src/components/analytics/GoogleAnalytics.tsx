@@ -15,6 +15,15 @@ export default function GoogleAnalytics({ gaId }: { gaId: string }) {
                 {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
+          
+          // Default Consent Mode V2 (Denied by default)
+          gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+          });
+
           gtag('js', new Date());
 
           gtag('config', ${JSON.stringify(gaId)});

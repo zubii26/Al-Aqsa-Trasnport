@@ -6,24 +6,42 @@ import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
 import styles from './CookieConsent.module.css';
 
+declare global {
+    interface Window {
+        gtag: (...args: any[]) => void;
+    }
+}
+
 export default function CookieConsent() {
     const [isVisible, setIsVisible] = useState(false);
+
+    const updateConsent = (granted: boolean) => {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('consent', 'update', {
+                'ad_storage': granted ? 'granted' : 'denied',
+                'ad_user_data': granted ? 'granted' : 'denied',
+                'ad_personalization': granted ? 'granted' : 'denied',
+                'analytics_storage': granted ? 'granted' : 'denied'
+            });
+        }
+    };
 
     useEffect(() => {
         // Check if user has already made a choice
         const consent = localStorage.getItem('cookie_consent');
 
-        if (!consent) {
+        if (consent) {
+            // Apply existing preference
+            if (consent === 'accepted') {
+                updateConsent(true);
+            }
+        } else {
             // Function to show banner
             const showBanner = () => setIsVisible(true);
 
-            // Check if preloader has already finished (we assume if it's been > 2.5s since load, it's done)
-            // But safer to just listen or use a small timeout if event missed?
-            // Actually, since they mount together, the event will fire after mount.
-
             window.addEventListener('preloader-complete', showBanner);
 
-            // Fallback: If for some reason event doesn't fire (e.g. preloader disabled/removed), show after 3s
+            // Fallback
             const fallbackTimer = setTimeout(showBanner, 2500);
 
             return () => {
@@ -35,11 +53,13 @@ export default function CookieConsent() {
 
     const handleAccept = () => {
         localStorage.setItem('cookie_consent', 'accepted');
+        updateConsent(true);
         setIsVisible(false);
     };
 
     const handleReject = () => {
         localStorage.setItem('cookie_consent', 'rejected');
+        updateConsent(false);
         setIsVisible(false);
     };
 
