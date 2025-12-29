@@ -50,7 +50,7 @@ export const staticBlogPosts = [
             </p>
         `,
         category: 'Spiritual',
-        date: new Date('2026-01-01'),
+        date: new Date('2025-12-28'),
         readTime: '5 min read',
         image: '/images/blog/makkah-haram-view-new.png',
         alt: 'Sunrise over Makkah Clock Tower symbolizing New Year 2026',
