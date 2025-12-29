@@ -109,12 +109,7 @@
     border-radius: 2px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-    padding: 0 1rem;
-}
+/* Grid Removed - Using Flex Stack in JSX */
 
 .card {
     background: var(--glass-bg);
@@ -172,8 +167,10 @@
     font-size: 0.95rem;
 }
 
+/* .serviceCard */
 .serviceCard {
-    padding: 1.5rem !important;
+    /* Padding is now handled by utility classes in the JSX */
+    border-radius: 20px !important;
 }
 
 /* Fleet Section */

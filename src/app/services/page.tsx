@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
-import { Bus, MapPin, Users, Headphones, ArrowRight, Calendar, CheckCircle, Car } from 'lucide-react';
+import { Bus, MapPin, Users, Headphones, ArrowRight, Calendar, CheckCircle, Car, Check } from 'lucide-react';
 import styles from './page.module.css';
 import FleetSectionLoader from '@/components/services/FleetSectionLoader';
 import FadeIn from '@/components/common/FadeIn';
@@ -42,27 +42,31 @@ export default function ServicesPage() {
     const services = [
         {
             title: 'Makkah to Madinah Transport',
-            description: 'Travel between Holy Cities in our luxury fleet. Choose from spacious GMC Yukons or comfortable Hyundai H1 vans for a relaxing 4-hour journey.',
-            icon: <Bus size={32} />,
-            link: '/services/intercity-transfer'
+            description: 'Travel between Holy Cities in our luxury fleet. Choose from spacious GMC Yukons or comfortable Hyundai H1 vans for a relaxing 450km journey.',
+            image: '/images/routes/makkah-madinah-route-hero.png',
+            link: '/services/makkah-madinah-taxi',
+            features: ['Door-to-Door Service', 'Luxury Fleet Options', '4.5 Hour Average Time']
         },
         {
             title: 'Jeddah Airport to Makkah Taxi',
             description: 'Reliable and punctual airport transfers. Our driver waits for you at King Abdulaziz International Airport (KAIA) for a seamless start to your Umrah.',
-            icon: <MapPin size={32} />,
-            link: '/services/airport-transfers'
+            image: '/images/routes/jeddah-airport-hero-professional.png',
+            link: '/services/jeddah-airport-transfer',
+            features: ['Flight Tracking', 'Free Meet & Greet', 'Luggage Assistance']
         },
         {
             title: 'VIP Luxury Umrah Transport',
             description: 'Experience premium comfort with our VIP service. Top-of-the-line vehicles (GMC Yukon XL) and private chauffeurs for maximum privacy and ease.',
-            icon: <Users size={32} />,
-            link: '/booking?service=luxury'
+            image: '/images/fleet/gmc-yukon-hero-professional.png',
+            link: '/booking?service=luxury',
+            features: ['Private Chauffeur', 'Latest Model Vehicles', 'Privacy Partition']
         },
         {
             title: 'Ziarah Tours & Daily Rentals',
             description: 'Explore historical sites in Makkah and Madinah with our flexible hourly rental packages. Visit Jabal Al-Nour, Quba Mosque, and more.',
-            icon: <Headphones size={32} />, // Keeping Headphones for support/custom requests context or switch to MapPin? Sticking to existing structure
-            link: '/contact'
+            image: '/images/routes/makkah-ziyarat-hero.png',
+            link: '/services/ziyarat-tours',
+            features: ['Custom Itinerary', 'Expert Local Knowledge', 'Flexible Hours']
         }
     ];
 
@@ -88,19 +92,61 @@ export default function ServicesPage() {
                     <FadeIn>
                         <h2 className={styles.sectionTitle}>Our Premium Umrah Transport Services</h2>
                     </FadeIn>
-                    <div className={styles.grid}>
-                        {services.map((service, index) => (
-                            <GlassCard key={index} delay={index * 0.1} className={`flex flex-col h-full ${styles.serviceCard}`}>
-                                <div className={styles.iconWrapper}>
-                                    {service.icon}
+                    <div className="flex flex-col gap-24 px-4 max-w-7xl mx-auto">
+                        {services.map((service, index) => {
+                            // Zig-Zag Logic:
+                            // Index 0 (First): Image Left, Text Right (Image Order 1)
+                            // Index 1 (Second): Text Left, Image Right (Image Order 2)
+                            const isImageRight = index % 2 !== 0;
+
+                            return (
+                                <div key={index} className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+                                    {/* Image Side */}
+                                    <div className={`w-full lg:w-1/2 relative h-[400px] lg:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl ${isImageRight ? 'lg:order-2' : 'lg:order-1'}`}>
+                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 z-10" />
+                                        <img
+                                            src={service.image}
+                                            alt={service.title}
+                                            className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110"
+                                        />
+                                    </div>
+
+                                    {/* Content Side */}
+                                    <div className={`w-full lg:w-1/2 flex flex-col justify-center ${isImageRight ? 'lg:order-1' : 'lg:order-2'}`}>
+                                        <div className="mb-6">
+                                            <h3 className="text-3xl lg:text-5xl font-bold font-playfair text-slate-900 dark:text-white mb-6 leading-tight">
+                                                {service.title}
+                                            </h3>
+                                            <div className="h-2 w-24 bg-amber-500 rounded-full" />
+                                        </div>
+
+                                        <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-8">
+                                            {service.description}
+                                        </p>
+
+                                        {/* Benefits List */}
+                                        <ul className="mb-10 space-y-4">
+                                            {service.features.map((feat, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-200 font-medium text-lg">
+                                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-50 text-red-500 flex items-center justify-center border border-red-100 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+                                                        <Check size={14} strokeWidth={3} />
+                                                    </span>
+                                                    {feat}
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <Link
+                                            href={service.link}
+                                            className="inline-flex items-center gap-2 text-white bg-amber-500 hover:bg-amber-600 px-8 py-4 rounded-full font-bold uppercase tracking-wider text-sm transition-all shadow-lg hover:shadow-amber-500/30 group/link self-start"
+                                        >
+                                            Learn More
+                                            <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </div>
                                 </div>
-                                <h3 className={styles.cardTitle}>{service.title}</h3>
-                                <p className={styles.cardDesc}>{service.description}</p>
-                                <Link href={service.link} className="text-primary font-semibold flex items-center gap-2 hover:gap-3 transition-all mt-auto">
-                                    Learn More <ArrowRight size={18} />
-                                </Link>
-                            </GlassCard>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
