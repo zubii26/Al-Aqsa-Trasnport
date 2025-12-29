@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import WelcomeSection from '@/components/about/WelcomeSection';
 import CompanyStory from '@/components/about/CompanyStory';
 import MissionVision from '@/components/about/MissionVision';
@@ -88,6 +89,7 @@ export default async function AboutPage() {
                     title={title}
                     subtitle={subtitle}
                     bgImage={bgImage}
+                    breadcrumbs={<Breadcrumbs />}
                 />
                 <WelcomeSection />
                 <ImpactStats />

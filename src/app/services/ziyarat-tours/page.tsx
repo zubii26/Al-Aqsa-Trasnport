@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Clock, Camera, Heart, BookOpen } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
@@ -21,6 +22,40 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/ziyarat-tours',
+    },
+    openGraph: {
+        title: "Ziyarat Tours Makkah & Madinah | Historical Site Visits",
+        description: "Guided private tours to Jabal Al-Nour, Masjid Quba, Mount Uhud, and more. deeply spiritual experience with knowledgeable drivers.",
+        images: [{ url: '/images/routes/makkah-ziyarat-hero.png', width: 1200, height: 630, alt: 'Jabal Al-Nour Makkah Ziyarat' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "Makkah and Madinah Ziyarat Tour",
+    "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
+    "provider": {
+        "@type": "TravelAgency",
+        "name": "Al Aqsa Transport"
+    },
+    "itinerary": [
+        {
+            "@type": "City",
+            "name": "Makkah",
+            "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat"
+        },
+        {
+            "@type": "City",
+            "name": "Madinah",
+            "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn"
+        }
+    ],
+    "offers": {
+        "@type": "Offer",
+        "price": "300",
+        "priceCurrency": "SAR",
+        "availability": "https://schema.org/InStock"
     }
 };
 
@@ -46,13 +81,18 @@ export default async function ZiyaratToursPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="Ziyarat Tours: Relive Islamic History"
                 subtitle="Walk in the footsteps of the Prophet (SAW). Comprehensive engaging tours of the holy sites in Makkah and Madinah."
-                bgImage="https://images.unsplash.com/photo-1564121211835-e88c852648ab?q=80&w=2000&auto=format&fit=crop"
+                bgImage="/images/routes/makkah-ziyarat-hero.png"
                 ctaText="Book Ziyarat Tour"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Makkah Ziyarat */}
@@ -153,7 +193,7 @@ export default async function ZiyaratToursPage() {
                                 <Clock size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-2">No Hasted Visits</h3>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Unlike group buses, we wait for you. Take your time to pray and reflect at each specific site.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Unlike group buses, we wait for you. Travel in our private <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Hyundai Staria</Link> and take your time to pray.</p>
                         </div>
                         <div className="p-6">
                             <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">
@@ -174,6 +214,9 @@ export default async function ZiyaratToursPage() {
                         <Link href="/booking" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-amber-500/25">
                             Book Your Private Ziyarat Tour <ArrowRight size={20} />
                         </Link>
+                        <p className="mt-6 text-sm text-slate-500">
+                            Need to travel between cities? We also offer <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah Taxi</Link> services.
+                        </p>
                     </div>
                 </div>
             </section>

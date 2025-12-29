@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FadeIn from '@/components/common/FadeIn';
 import BookingFormWrapper from '@/components/home/BookingFormWrapper';
 import InteractiveMapSection from '@/components/services/intercity/InteractiveMapSection';
@@ -15,6 +16,33 @@ export const metadata = {
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/intercity-transfer',
     },
+    openGraph: {
+        title: "Makkah to Madinah Taxi & Intercity Transport | VIP Fleet",
+        description: "Travel comfortably between Jeddah, Makkah, and Madinah. Premium private taxi service with experienced drivers.",
+        images: [{ url: '/images/routes/routes-network-hero.png', width: 1200, height: 630, alt: 'Saudi Arabia Intercity Transport Network' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Intercity Transport Service",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "Al Aqsa Transport"
+    },
+    "serviceType": "Ground Transport",
+    "areaServed": {
+        "@type": "Country",
+        "name": "Saudi Arabia"
+    },
+    "description": "Luxury intercity transfers between Makkah, Madinah, and Jeddah.",
+    "offers": {
+        "@type": "Offer",
+        "price": "450",
+        "priceCurrency": "SAR",
+        "availability": "https://schema.org/InStock"
+    }
 };
 
 // Fallback data
@@ -76,13 +104,18 @@ export default async function IntercityTransferPage() {
 
     return (
         <main>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="Premium Intercity Travel"
                 subtitle="Journey between the Holy Cities via our interactive premium network. Explore routes and book your VIP transfer instantly."
-                bgImage="/images/intercity-hero.png"
+                bgImage="/images/routes/routes-network-hero.png"
                 ctaText="Start Exploring"
                 ctaLink="#interactive-map"
                 backgroundChildren={<AnimatedMapBackground />}
+                breadcrumbs={<Breadcrumbs />}
             />
 
             <section className="py-16 md:py-24 bg-white dark:bg-slate-950 relative overflow-hidden">

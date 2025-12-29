@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, MapPin, Car, X } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface NotificationBooking {
     id: string;
@@ -19,6 +21,7 @@ export default function BookingNotification() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false); // If user closes, stop showing
+    const pathname = usePathname();
 
     // Fetch bookings on mount and polling
     useEffect(() => {
@@ -39,40 +42,69 @@ export default function BookingNotification() {
         return () => clearInterval(interval);
     }, []);
 
+    // Visibility Loop
     useEffect(() => {
-        if (bookings.length === 0) return;
+        if (hasInteracted || bookings.length === 0) return;
 
-        // Initial delay before starting the cycle
-        const initialTimer = setTimeout(() => {
-            if (!hasInteracted) setIsVisible(true);
-        }, 5000); // Start 5 seconds after load
+        let timer: NodeJS.Timeout;
 
-        return () => clearTimeout(initialTimer);
-    }, [hasInteracted, bookings]);
+        if (isVisible) {
+            // If visible, hide after 6 seconds
+            timer = setTimeout(() => {
+                setIsVisible(false);
+            }, 6000);
+        } else {
+            // If hidden, wait 2 minutes then show next
+            // Initial load delay is handled by the fact that isVisible starts as false
+            // But we want a shorter delay for the VERY FIRST appearance?
+            // The previous code had a 5s initial delay. 
+            // We can check if currentIndex is 0 and we haven't shown yet? 
+            // Let's just use a standard standard logic:
+            // If it's the very first time (currentIndex 0, not visible), maybe we want it sooner?
+            // The user said "again show this to 2 mints". 
+            // Let's start with a 5s delay for the first one, then 2 mins for subsequent.
 
-    useEffect(() => {
-        if (!isVisible || hasInteracted || bookings.length === 0) return;
+            const delay = currentIndex === 0 && !isVisible ? 5000 : 120000;
+            // Note: currentIndex changes when we show the NEXT one. 
+            // We need to be careful. 
+            // Let's use a separate 'isFirstLoad' state or just rely on the 2 mins for subsequent.
 
-        // Hide notification after 6 seconds
-        const hideTimer = setTimeout(() => {
-            setIsVisible(false);
-        }, 6000);
+            // To match previous behavior of 5s start:
+            // We can just set the delay based on the fact we just started?
+            // No, simplified:
 
-        // Show next notification after a random interval (15-30 seconds)
-        const nextTimer = setTimeout(() => {
-            if (!hasInteracted) {
+            timer = setTimeout(() => {
+                // If we are showing the first one, we don't increment yet?
+                // Or we increment when we show?
+                // The state is simple: 
+                // Hidden -> Wait -> Show -> Visible -> Wait -> Hide -> Hidden
+
+                // If we want the first one to appear quickly:
+                // We'll leave the logic simple.
+
                 setCurrentIndex((prev) => (prev + 1) % bookings.length);
                 setIsVisible(true);
-            }
-        }, Math.random() * (30000 - 15000) + 15000 + 6000);
+            }, 120000); // 2 minutes
+        }
 
-        return () => {
-            clearTimeout(hideTimer);
-            clearTimeout(nextTimer);
-        };
-    }, [isVisible, hasInteracted, bookings]);
+        return () => clearTimeout(timer);
+    }, [isVisible, hasInteracted, bookings.length]); // Removed currentIndex dependency to avoid double triggers, but we need it for set? No, setter uses callback. 
 
-    if (hasInteracted || bookings.length === 0) return null;
+    // Special initial trigger
+    useEffect(() => {
+        if (bookings.length > 0 && !hasInteracted && !isVisible) {
+            const timer = setTimeout(() => {
+                setIsVisible(true);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+        // This effect only runs once when bookings load
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [bookings.length]);
+
+
+    // Hide on booking page
+    if (pathname === '/booking' || hasInteracted || bookings.length === 0) return null;
 
     const booking = bookings[currentIndex];
 

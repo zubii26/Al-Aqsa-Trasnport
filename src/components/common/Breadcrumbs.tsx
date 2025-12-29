@@ -26,8 +26,31 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
         return segment.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     };
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alaqsaumrahtransport.com"
+            },
+            ...segments.map((segment, index) => ({
+                "@type": "ListItem",
+                "position": index + 2,
+                "name": formatSegment(segment),
+                "item": `https://alaqsaumrahtransport.com/${segments.slice(0, index + 1).join('/')}`
+            }))
+        ]
+    };
+
     return (
         <nav aria-label="Breadcrumb" className={`flex items-center text-sm ${className}`}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <ol className="flex items-center flex-wrap gap-2">
                 {/* Home Link */}
                 <li className="flex items-center">

@@ -146,7 +146,7 @@ export default function PassengerCare() {
                                 <div className="absolute inset-0 bg-amber-500/10 rounded-3xl transform rotate-3 scale-105" />
                                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/images/blog/elderly-umrah-care-final.png"
+                                        src="/images/blog/elderly-care-gmc.jpg"
                                         alt="Assisted transport for elderly pilgrims"
                                         fill
                                         className="object-cover hover:scale-105 transition-transform duration-700"

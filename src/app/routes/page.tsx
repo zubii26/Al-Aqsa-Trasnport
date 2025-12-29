@@ -1,14 +1,56 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Clock, ShieldCheck, Star } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 import FadeIn from '@/components/common/FadeIn';
 
 export const metadata: Metadata = {
-    title: 'Umrah Transport Routes | Makkah, Madinah & Jeddah Transfers',
-    description: 'Explore our premium transport routes across Saudi Arabia. Dedicated services for Jeddah Airport to Makkah, Makkah to Madinah, and Ziyarat tours.',
+    title: 'Umrah Transport Routes Network | Intercity & Airport Transfers',
+    description: 'Explore our comprehensive transport network connecting Jeddah, Makkah, and Madinah. Premium VIP transfers for your spiritual journey.',
+    alternates: {
+        canonical: 'https://alaqsaumrahtransport.com/routes',
+    },
+    openGraph: {
+        title: "Umrah Transport Routes Network | Al Aqsa Transport",
+        description: "Connect seamlessly between Holy Cities. VIP Jeddah to Makkah, Makkah to Madinah, and Airport Transfers.",
+        images: [{ url: '/images/routes/routes-network-hero.png', width: 1200, height: 630, alt: 'Saudi Arabia Transport Network Map' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Umrah Transport Routes",
+    "description": "Premium transport routes connecting Jeddah Airport, Makkah, and Madinah.",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Jeddah Airport to Makkah",
+            "url": "https://alaqsaumrahtransport.com/services/jeddah-airport-transfer"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Makkah to Madinah",
+            "url": "https://alaqsaumrahtransport.com/services/makkah-madinah-taxi"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Madinah Airport Transfer",
+            "url": "https://alaqsaumrahtransport.com/services/madinah-airport-transfer"
+        },
+        {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Makkah to Jeddah Airport",
+            "url": "https://alaqsaumrahtransport.com/services/makkah-jeddah-taxi"
+        }
+    ]
 };
 
 const ROUTES = [
@@ -21,7 +63,7 @@ const ROUTES = [
         price: 'From SAR 250',
         features: ['Meet & Greet', 'Flight Monitoring', 'Luggage Assistance'],
         link: '/services/jeddah-airport-transfer',
-        image: 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=800&auto=format&fit=crop'
+        image: '/images/routes/jeddah-airport-hero-professional.png'
     },
     {
         id: 'makkah-madinah',
@@ -32,7 +74,7 @@ const ROUTES = [
         price: 'From SAR 450',
         features: ['Miqat Stop', 'Premium Comfort', 'Rest Stops Available'],
         link: '/services/makkah-madinah-taxi',
-        image: 'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=800&auto=format&fit=crop'
+        image: '/images/routes/makkah-madinah-route-hero.png'
     },
     {
         id: 'madinah-airport',
@@ -43,7 +85,7 @@ const ROUTES = [
         price: 'From SAR 150',
         features: ['24/7 Service', 'Door-to-Door', 'Family Friendly'],
         link: '/services/madinah-airport-transfer',
-        image: 'https://images.unsplash.com/photo-1551041777-ed277b8dd948?q=80&w=800&auto=format&fit=crop'
+        image: '/images/routes/madinah-airport-hero.png'
     },
     {
         id: 'ziyarat-makkah',
@@ -54,7 +96,7 @@ const ROUTES = [
         price: 'From SAR 300',
         features: ['Historical Insight', 'Flexible Timing', 'Private Vehicle'],
         link: '/services/ziyarat-tours',
-        image: 'https://images.unsplash.com/photo-1627918512270-5b4819d20c29?q=80&w=800&auto=format&fit=crop'
+        image: '/images/routes/makkah-ziyarat-hero.png'
     },
     {
         id: 'jeddah-madinah',
@@ -65,17 +107,22 @@ const ROUTES = [
         price: 'From SAR 500',
         features: ['Direct Route', 'Maximum Comfort', 'Refreshments'],
         link: '/services/intercity-transfer',
-        image: 'https://images.unsplash.com/photo-1549140600-78c9b8275fd1?q=80&w=800&auto=format&fit=crop'
+        image: '/images/fleet/intercity-hero.png'
     }
 ];
 
 export default function RoutesPage() {
     return (
         <main className="bg-background min-h-screen pb-20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
-                title="Journeys of Faith"
-                subtitle="Navigate the Holy Lands with our premium network of dedicated routes. Safety, comfort, and reliability on every mile."
-                bgImage="https://images.unsplash.com/photo-1580418827493-f2b22c4f7ceb?q=80&w=2000&auto=format&fit=crop"
+                title="Our Transport Network"
+                subtitle="Connecting the Holy Cities with comfort, reliability, and precision. Your journey of faith deserves the best path."
+                bgImage="/images/routes/routes-network-hero.png"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             <section className="container mx-auto px-4 -mt-20 relative z-10">
@@ -137,9 +184,18 @@ export default function RoutesPage() {
                                                         {route.price}
                                                     </span>
                                                 </div>
-                                                <span className="flex items-center gap-2 text-sm font-semibold text-foreground group-hover:text-secondary transition-colors">
-                                                    View Details <ArrowRight size={16} />
-                                                </span>
+                                                <div className="flex gap-3">
+                                                    <Link
+                                                        href="/fleet"
+                                                        className="hidden md:flex items-center text-xs font-medium text-muted-foreground hover:text-secondary transition-colors"
+                                                        aria-label="View Fleet"
+                                                    >
+                                                        View Fleet
+                                                    </Link>
+                                                    <span className="flex items-center gap-2 text-sm font-semibold text-foreground group-hover:text-secondary transition-colors">
+                                                        View Details <ArrowRight size={16} />
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

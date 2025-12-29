@@ -62,7 +62,7 @@ export default function WelcomeSection() {
                         </div>
 
                         <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300">
-                            {parseMarkdown("Our fleet of [modern buses and vans](/fleet) ensures **stress‑free travel from Jeddah airport to Makkah and Madinah**, with professional drivers dedicated to hospitality and punctuality. Whether you are traveling solo, with family, or in large groups, Al Aqsa Umrah Transport offers **[customized packages](/booking)** to meet your needs.")}
+                            {parseMarkdown("Our fleet of [modern buses and vans](/fleet) ensures **stress‑free [Jeddah Airport transfers](/services/jeddah-airport-transfer) and [Makkah to Madinah journeys](/services/makkah-madinah-taxi)**. We provide professional drivers dedicated to hospitality and punctuality. Whether you are traveling solo, with family, or in large groups, Al Aqsa Umrah Transport offers **[customized packages](/booking)** to meet your needs.")}
                         </p>
                     </div>
 

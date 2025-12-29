@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import Link from 'next/link';
 import { ArrowRight, Plane, Clock, Hotel, MapPin } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import RouteVisual from '@/components/services/RouteVisual';
 
 export const metadata: Metadata = {
     title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",
@@ -20,6 +22,32 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/madinah-airport-transfer',
+    },
+    openGraph: {
+        title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",
+        description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup, meet & greet service.",
+        images: [{ url: '/images/routes/madinah-airport-hero.png', width: 1200, height: 630, alt: 'Madinah Airport Transfer Service' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Madinah Airport Transfer",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "Al Aqsa Transport"
+    },
+    "serviceType": "Airport Transfer",
+    "areaServed": {
+        "@type": "Airport",
+        "name": "Prince Mohammad Bin Abdulaziz International Airport"
+    },
+    "description": "Private transfer from Madinah Airport to Masjid Nabawi hotels.",
+    "offers": {
+        "@type": "Offer",
+        "price": "150",
+        "priceCurrency": "SAR"
     }
 };
 
@@ -45,13 +73,18 @@ export default async function MadinahAirportPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="Madinah Airport (MED) Transfers"
                 subtitle="Start your visit to the Prophet's City with peace of mind. Reliable meet & greet service from Prince Mohammad Bin Abdulaziz Airport."
-                bgImage="https://images.unsplash.com/photo-1570966455246-d8412aa6d25f?q=80&w=2000&auto=format&fit=crop"
+                bgImage="/images/routes/madinah-airport-hero.png"
                 ctaText="Book Airport Pickup"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Service Highlights */}
@@ -127,7 +160,7 @@ export default async function MadinahAirportPage() {
                                     <div className="flex items-center gap-3">
                                         <MapPin className="text-green-500" size={20} />
                                         <div>
-                                            <p className="font-bold text-slate-800 dark:text-white">To Makkah Hotel</p>
+                                            <p className="font-bold text-slate-800 dark:text-white"><Link href="/services/makkah-madinah-taxi" className="hover:text-green-600 transition-colors">To Makkah Hotel</Link></p>
                                             <p className="text-xs text-slate-500">Direct Transfer</p>
                                         </div>
                                     </div>
@@ -141,7 +174,7 @@ export default async function MadinahAirportPage() {
                                     <div className="flex items-center gap-3">
                                         <MapPin className="text-blue-500" size={20} />
                                         <div>
-                                            <p className="font-bold text-slate-800 dark:text-white">To Masjid Quba</p>
+                                            <p className="font-bold text-slate-800 dark:text-white"><Link href="/services/ziyarat-tours" className="hover:text-blue-600 transition-colors">To Masjid Quba</Link></p>
                                             <p className="text-xs text-slate-500">Ziyarat Start</p>
                                         </div>
                                     </div>
@@ -156,6 +189,19 @@ export default async function MadinahAirportPage() {
                                 *Travel times may vary based on traffic conditions
                             </p>
                         </div>
+                    </div>
+
+                    <div className="mt-16">
+                        <h3 className="text-2xl font-bold mb-8 text-center font-playfair">Journey to Markazia</h3>
+                        <RouteVisual
+                            from="Madinah Airport (MED)"
+                            fromLabel="Arrival Terminal"
+                            to="Masjid Nabawi Hotel"
+                            toLabel="Your Hotel / Markazia"
+                            duration="25 Mins"
+                            distance="20 km"
+                            showMiqat={false}
+                        />
                     </div>
                 </div>
             </section>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import Features from '@/components/home/Features';
 import styles from '@/app/page.module.css';
@@ -7,6 +8,7 @@ import Link from 'next/link';
 import { ArrowRight, Plane, ShieldCheck, UserCheck } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import VehicleCapacityGuide from '@/components/services/VehicleCapacityGuide';
+import RouteVisual from '@/components/services/RouteVisual';
 
 export const metadata: Metadata = {
     title: "Jeddah Airport Taxi to Makkah Price | Meet & Greet Services",
@@ -23,6 +25,32 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/jeddah-airport-transfer',
+    },
+    openGraph: {
+        title: "Jeddah Airport Taxi to Makkah Price | Meet & Greet Services",
+        description: "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall.",
+        images: [{ url: '/images/routes/jeddah-airport-hero-professional.png', width: 1200, height: 630, alt: 'Jeddah Airport VIP Transfer' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Jeddah Airport to Makkah Transfer",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "Al Aqsa Transport"
+    },
+    "serviceType": "Airport Transfer",
+    "areaServed": {
+        "@type": "Airport",
+        "name": "King Abdulaziz International Airport"
+    },
+    "description": "Private transfer from Jeddah Airport to Makkah hotels.",
+    "offers": {
+        "@type": "Offer",
+        "price": "200",
+        "priceCurrency": "SAR"
     }
 };
 
@@ -55,11 +83,15 @@ export default async function JeddahAirportTransferPage() {
     const content = {
         title: "Jeddah Airport to Makkah Transfers",
         subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service, and direct transfer to your Makkah hotel.",
-        heroImage: "/jeddah-airport-hero-v2.png"
+        heroImage: "/images/routes/jeddah-airport-hero-professional.png"
     };
 
     return (
         <main className="overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title={content.title}
                 subtitle={content.subtitle}
@@ -67,6 +99,7 @@ export default async function JeddahAirportTransferPage() {
                 ctaText="Book Arrival Transfer"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Arrival Guide Section */}
@@ -96,7 +129,7 @@ export default async function JeddahAirportTransferPage() {
                             {
                                 icon: <ShieldCheck size={40} className="text-amber-500" />,
                                 title: "2. Luggage Assistance",
-                                desc: "Our vehicles (GMC/H1) are chosen for their large luggage capacity. The driver will handle your bags."
+                                desc: <span>Our vehicles (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/H1) are chosen for their large luggage capacity. The driver will handle your bags.</span>
                             },
                             {
                                 icon: <Plane size={40} className="text-amber-500" />,
@@ -111,6 +144,22 @@ export default async function JeddahAirportTransferPage() {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Route Visual Section */}
+            <section className="py-8 bg-slate-50/50 dark:bg-slate-900/50">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-2xl font-bold text-center mb-8 font-playfair">Your Journey to Makkah</h2>
+                    <RouteVisual
+                        from="Jeddah Airport (JED)"
+                        fromLabel="Arrival Hall (Meet & Greet)"
+                        to="Makkah Hotel"
+                        toLabel="Hotel Reception Drop-off"
+                        duration="60-75 Mins"
+                        distance="95 km"
+                        showMiqat={false}
+                    />
                 </div>
             </section>
 
@@ -139,8 +188,11 @@ export default async function JeddahAirportTransferPage() {
                     <Link href="/booking" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
                         Check Taxi Fares <ArrowRight size={20} />
                     </Link>
+                    <p className="mt-6 text-sm text-slate-500">
+                        Going to Madinah next? Check our <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline font-medium">Makkah to Madinah Taxi</Link> rates.
+                    </p>
                 </div>
             </section>
-        </main>
+        </main >
     );
 }

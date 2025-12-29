@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import FleetSectionLoader from '@/components/services/FleetSectionLoader';
 import FadeIn from '@/components/common/FadeIn';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FAQSection from '@/components/services/FAQSection';
 import GlassCard from '@/components/ui/GlassCard';
 import TrustAmenities from '@/components/services/TrustAmenities';
@@ -81,6 +82,7 @@ export default function ServicesPage() {
                 ctaLink="/booking"
                 secondaryCtaText="Contact Us"
                 secondaryCtaLink="/contact"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Trust Amenities Section - NEW */}

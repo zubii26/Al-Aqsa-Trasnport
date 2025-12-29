@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import Link from 'next/link';
 import { ArrowRight, Shield, Star, Briefcase, Users, Wifi, MapPin } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
@@ -60,6 +61,7 @@ export default async function GmcYukonPage() {
                 ctaText="Book via WhatsApp"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             <FleetPricingGrid
@@ -155,7 +157,11 @@ export default async function GmcYukonPage() {
                         ].map((item, idx) => (
                             <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border-t-4 border-amber-500 transition-all hover:-translate-y-1">
                                 <item.icon className="w-10 h-10 text-amber-500 mb-4" />
-                                <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">{item.title}</h3>
+                                <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">
+                                    <Link href={idx === 0 ? "/services/makkah-madinah-taxi" : idx === 1 ? "/services/jeddah-airport-transfer" : "/services/ziyarat-tours"} className="hover:text-amber-600 transition-colors">
+                                        {item.title}
+                                    </Link>
+                                </h3>
                                 <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
                             </div>
                         ))}

@@ -13,6 +13,7 @@ import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
 import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
 import SearchableSelect from '@/components/ui/SearchableSelect';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 
 const splitRouteName = (name: string): [string, string] => {
     if (!name) return ['', ''];
@@ -1779,6 +1780,9 @@ export default function BookingPage() {
             </div>
 
             <div className="container mx-auto px-4 mt-24" ref={wizardRef}>
+                <div className="mb-6">
+                    <Breadcrumbs />
+                </div>
                 <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12">
                     {/* Main Wizard Area */}
                     <div className="lg:col-span-2">

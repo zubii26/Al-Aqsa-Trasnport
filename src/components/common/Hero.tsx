@@ -21,6 +21,7 @@ interface HeroProps {
     layout?: 'center' | 'two-column';
     badge?: string;
     backgroundChildren?: React.ReactNode;
+    breadcrumbs?: React.ReactNode;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -34,7 +35,8 @@ const Hero: React.FC<HeroProps> = ({
     children,
     layout = 'center',
     badge,
-    backgroundChildren
+    backgroundChildren,
+    breadcrumbs
 }) => {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
@@ -109,6 +111,11 @@ const Hero: React.FC<HeroProps> = ({
                     initial="hidden"
                     animate="visible"
                 >
+                    {breadcrumbs && (
+                        <motion.div variants={itemVariants} className="mb-4">
+                            {breadcrumbs}
+                        </motion.div>
+                    )}
                     {badge && (
                         <motion.div variants={itemVariants}>
                             <span className={styles.badge}>{badge}</span>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import Link from 'next/link';
 import { ArrowRight, Shield, Star, Briefcase, Users, Wifi, Fuel } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
@@ -59,6 +60,7 @@ export default async function HyundaiStariaPage() {
                 ctaText="Book via WhatsApp"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             <FleetPricingGrid

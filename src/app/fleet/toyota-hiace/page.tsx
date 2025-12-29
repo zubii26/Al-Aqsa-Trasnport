@@ -89,7 +89,7 @@ export default async function ToyotaHiacePage() {
                                 Why Choose Toyota Hiace for Group Umrah?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                Keep your group united. The Toyota Hiace is perfect for families traveling from Jeddah Airport to Makkah.
+                                Keep your group united. The Toyota Hiace is perfect for families traveling from <Link href="/services/jeddah-airport-transfer" className="text-emerald-600 font-medium hover:underline">Jeddah Airport to Makkah</Link>.
                                 Known for its reliability and powerful AC, it ensures a comfortable journey across Saudi Arabia for up to 12 passengers.
                             </p>
 

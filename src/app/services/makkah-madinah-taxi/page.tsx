@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import Features from '@/components/home/Features';
 import styles from '@/app/page.module.css';
@@ -23,6 +24,32 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/makkah-madinah-taxi',
+    },
+    openGraph: {
+        title: "Makkah to Madinah Taxi Price 2025 | VIP Private Transport",
+        description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon, Hyundai Staria, and VIP buses.",
+        images: [{ url: '/images/routes/makkah-madinah-route-hero.png', width: 1200, height: 630, alt: 'Makkah to Madinah Highway Scenic View' }]
+    }
+};
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Makkah to Madinah Taxi Service",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "Al Aqsa Transport"
+    },
+    "serviceType": "Intercity Transfer",
+    "areaServed": {
+        "@type": "Place",
+        "name": "Saudi Arabia"
+    },
+    "description": "Premium private transport between Makkah and Madinah.",
+    "offers": {
+        "@type": "Offer",
+        "price": "400",
+        "priceCurrency": "SAR"
     }
 };
 
@@ -55,11 +82,15 @@ export default async function MakkahMadinahTaxiPage() {
     const content = {
         title: "VIP Makkah to Madinah Taxi Services",
         subtitle: "Experience a spiritual journey with absolute comfort. 4-5 hours travel time in luxury GMC Yukon or Hyundai Staria.",
-        heroImage: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop"
+        heroImage: "/images/routes/makkah-madinah-route-hero.png"
     };
 
     return (
         <main className="overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title={content.title}
                 subtitle={content.subtitle}
@@ -67,6 +98,7 @@ export default async function MakkahMadinahTaxiPage() {
                 ctaText="Book Now via WhatsApp"
                 ctaLink={whatsappLink}
                 layout="center"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Trust/Benefits Section */}
@@ -79,7 +111,7 @@ export default async function MakkahMadinahTaxiPage() {
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                                 The journey between the two Holy Cities (approx. 450km) requires a vehicle that guarantees comfort and safety.
-                                Skip the crowded buses and strict train schedules. Our private taxi service offers:
+                                Skip the crowded buses and strict train schedules. Our private taxi service offers premium rides in our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 font-medium hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 font-medium hover:underline">Hyundai Staria</Link>:
                             </p>
 
                             <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30">
@@ -114,7 +146,7 @@ export default async function MakkahMadinahTaxiPage() {
                             </h3>
                             <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
                                 <p>• Pickup from your Makkah Hotel</p>
-                                <p>• Optional Ziyarat stops (on request)</p>
+                                <p>• Optional <Link href="/services/ziyarat-tours" className="text-amber-600 hover:underline">Ziyarat stops</Link> (on request)</p>
                                 <p>• Drop-off at Madinah Hotel / Masjid Nabawi</p>
                             </div>
                         </div>
