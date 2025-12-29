@@ -1,5 +1,68 @@
 export const staticBlogPosts = [
     {
+        _id: 'static-new-year-2026',
+        slug: 'planning-umrah-new-year-2026',
+        title: 'Start 2026 with a Clean Heart: The Ultimate Guide to Planning Your New Year Umrah',
+        excerpt: 'New Year, New Niyyah. Discover why 2026 is the perfect year to perform Umrah, key spiritual resolutions, and how to secure the best transport deals early.',
+        content: `
+            <h2>A Spiritual Resolution for 2026</h2>
+            <p>As the Gregorian calendar turns to 2026, many of us set resolutions: fitness, finance, or career. But what about your soul? There is no better way to begin a new chapter than by standing before the Kaaba and asking Allah to bless your year ahead.</p>
+            <p>Whether you are planning a solo spiritual retreat or a <a href="/blog/how-to-choose-best-umrah-transport-family" class="text-amber-600 hover:underline">family Umrah trip</a>, 2026 offers unique opportunities for pilgrims. Here is your complete guide to starting the year with Barakah.</p>
+
+            <h3>1. Why January 2026 is the "Golden Month"</h3>
+            <p>January in Saudi Arabia is arguably the best weather of the year. With daytime temperatures in Makkah averaging a pleasant 25°C (77°F) and Madinah being cool and crisp, it is the perfect time for walking between Ziyarat sites.</p>
+            <ul>
+                <li><strong>Crowd Control:</strong> Post-winter break, the crowds thin out slightly before the Ramadan rush begins.</li>
+                <li><strong>Comfort:</strong> The cool weather allows you to spend hours in the Mataf without exhaustion.</li>
+            </ul>
+
+            <h3>2. Key Islamic Dates in 2026 to Watch</h3>
+            <p>Mark your calendars early to secure the best <a href="/booking" class="text-amber-600 hover:underline">transport details</a>.</p>
+            <ul>
+                <li><strong>Ramadan 2026:</strong> Expected to begin around mid-February. Booking your transport 3 months in advance is critical.</li>
+                <li><strong>Hajj 2026:</strong> Expected in May. Umrah visas usually close a few weeks prior.</li>
+            </ul>
+
+            <h3>3. "Early Bird" Transport Benefits</h3>
+            <p>The smartest pilgrims book their ground transport before their flight. Why?</p>
+            <ul>
+                <li><strong>Price Locking:</strong> Transport rates often spike by 30-40% as the season peaks. Booking in January for a March trip locks in the lower rate.</li>
+                <li><strong>Vehicle Choice:</strong> High-demand vehicles like the <a href="/fleet/gmc-yukon-at4" class="text-amber-600 hover:underline">GMC Yukon XL</a> sell out fast. Early booking guarantees your specific car.</li>
+            </ul>
+
+            <div class="bg-emerald-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-emerald-500 my-8">
+                <h4 class="font-bold text-lg mb-2 text-emerald-800 dark:text-emerald-400">Resolution Idea: The "Digital Detox" Umrah</h4>
+                <p class="text-slate-700 dark:text-slate-300">For 2026, make a Niyyah to keep your phone in the hotel safe during Salah times. Use the travel time between <a href="/services/makkah-madinah-taxi" class="text-amber-600 hover:underline">Makkah and Madinah</a> to read Seerah instead of scrolling social media. Our wifi-enabled cars are there if you need them, but disconnecting is the ultimate luxury.</p>
+            </div>
+
+            <h3>4. Packing for a 2026 Umrah</h3>
+            <p>Rules and regulations change. For 2026, ensure you have:</p>
+            <ul>
+                <li><strong>Updated Nusuk App:</strong> Ensure your profile is verified for Rawdah permits.</li>
+                <li><strong>Universal Adapter:</strong> For all your devices.</li>
+                <li><strong>Interactive Dua List:</strong> Don't just read; feel the Duas you want to make for the year ahead.</li>
+            </ul>
+
+            <p>May 2026 be the year your heart finds peace in the Haram. We are here to carry you on that journey.</p>
+            
+            <p class="mt-8 font-bold text-center">
+                <a href="/booking" class="inline-block bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition-colors shadow-lg">Plan Your 2026 Journey Now</a>
+            </p>
+        `,
+        category: 'Spiritual',
+        date: new Date('2026-01-01'),
+        readTime: '5 min read',
+        image: '/images/blog/makkah-haram-view-new.png',
+        alt: 'Sunrise over Makkah Clock Tower symbolizing New Year 2026',
+        author: 'Al Aqsa Editorial Team',
+        tags: ['New Year 2026', 'Umrah Planning', 'Spiritual Resolutions', 'Makkah Weather'],
+        isPublished: true,
+        metaTitle: 'Planning Umrah for New Year 2026 | Dates, Weather & Tips',
+        metaDescription: 'Start 2026 with Umrah. A complete guide to weather, key dates like Ramadan 2026, and why early transport booking is your best spiritual investment.',
+        createdAt: new Date('2026-01-01'),
+        updatedAt: new Date('2026-01-01'),
+    },
+    {
         _id: 'static-new-gmc-family-1',
         slug: 'why-gmc-yukon-best-for-umrah-family',
         title: 'Why the GMC Yukon XL is the Ultimate Family Umrah Vehicle (2025 Review)',
