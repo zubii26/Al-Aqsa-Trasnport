@@ -1,5 +1,64 @@
 export const staticBlogPosts = [
     {
+        _id: 'static-new-gmc-family-1',
+        slug: 'why-gmc-yukon-best-for-umrah-family',
+        title: 'Why the GMC Yukon XL is the Ultimate Family Umrah Vehicle (2025 Review)',
+        excerpt: 'Traveling with family? Discover why the GMC Yukon XL is the top choice for comfort, space, and safety on the road between Makkah and Madinah.',
+        content: `
+            <h2>The King of the Road for Umrah Families</h2>
+            <p>When you are traveling with your family for Umrah, the journey between <a href="/services/jeddah-airport-transfer" class="text-amber-600 hover:underline">Jeddah Airport</a>, Makkah, and Madinah can be exhausting. The heat, the luggage, and the long hours on the road require a vehicle that offers more than just a seat.</p>
+            <p>Enter the <strong><a href="/fleet/gmc-yukon-at4" class="text-amber-600 hover:underline">GMC Yukon XL</a></strong>. In Saudi Arabia, this vehicle is not just an SUV; it is the gold standard for VIP family transport. Here is why it is the #1 choice for smart pilgrims in 2025.</p>
+
+            <h3>1. Unmatched Space for Luggage</h3>
+            <p>The "XL" stands for extended length, and that makes all the difference.</p>
+            <ul>
+                <li><strong>Trunk Capacity:</strong> Unlike standard SUVs that sacrifice trunk space for the 3rd row, the Yukon XL can comfortably fit <strong>6-7 large suitcases</strong> behind the third row.</li>
+                <li><strong>No Lap Luggage:</strong> You won't have to keep carry-ons on your lap. Everyone sits comfortably.</li>
+            </ul>
+
+            <h3>2. Gulf-Spec Climate Control</h3>
+            <p>Saudi summers can reach 45°C. The Yukon features a massive customized AC system with:</p>
+            <ul>
+                <li>Ceiling vents for every row.</li>
+                <li>Tri-zone climate control (Driver, Passenger, Rear).</li>
+                <li>Ventilated leather seats (in select trims) to keep you cool.</li>
+            </ul>
+
+            <h3>3. Captain Chairs for Elders</h3>
+            <p>Our fleet features the "Captain Chair" configuration in the second row. This provides:</p>
+            <ul>
+                <li><strong>Easy Access:</strong> A walkway to the third row, making it easy for kids to get in and out.</li>
+                <li><strong>Individual Comfort:</strong> Reclining seats with armrests, perfect for elderly parents who need to sleep during the 4.5-hour drive to Madinah.</li>
+            </ul>
+
+            <div class="bg-amber-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500 my-8">
+                <h4 class="font-bold text-lg mb-2 text-amber-800 dark:text-amber-400">Did You Know?</h4>
+                <p class="text-slate-700 dark:text-slate-300">The GMC Yukon XL suspension is tuned for "Magnetic Ride Control," meaning it absorbs the bumps of the desert highway better than almost any other vehicle, reducing motion sickness for children.</p>
+            </div>
+
+            <h3>4. Privacy and Power</h3>
+            <p>With factory-tinted rear windows, your family enjoys complete privacy. Plus, with multiple USB-C and 110V outlets, you can keep iPads and phones charged for the whole trip.</p>
+
+            <p>Don't compromise on your family's comfort. For a few riyals more than a van, you get the safety, silence, and speed of the GMC Yukon XL.</p>
+            
+            <p class="mt-8 font-bold text-center">
+                <a href="/booking" class="inline-block bg-amber-600 text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors shadow-lg">Check GMC Yukon Availability & Price</a>
+            </p>
+        `,
+        category: 'Vehicle Spotlight',
+        date: new Date('2026-02-01'),
+        readTime: '4 min read',
+        image: '/images/blog/gmc-yukon-xl-v2.png',
+        alt: 'GMC Yukon XL luxury SUV parked for family Umrah transport',
+        author: 'Fleet Manager',
+        tags: ['GMC Yukon', 'Family Travel', 'Luxury Transport', 'Umrah 2025', 'Review'],
+        isPublished: true,
+        metaTitle: 'GMC Yukon XL for Umrah | Best Family Transport Saudi Arabia (2025)',
+        metaDescription: 'Why the GMC Yukon XL is the #1 choice for families in 2025. Unmatched luggage space, cool AC, and safety for the Makkah-Madinah journey. Book your VIP ride today.',
+        createdAt: new Date('2026-02-01'),
+        updatedAt: new Date('2026-02-01'),
+    },
+    {
         _id: 'static-new-itinerary-15',
         slug: 'best-3-city-umrah-itinerary-jeddah-makkah-madinah',
         title: 'The 10-Day 3-City Itinerary: Optimizing Your Makkah-Madinah Route',
