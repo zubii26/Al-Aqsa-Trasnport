@@ -21,7 +21,7 @@ const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'
 const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
 const SEOContentSection = dynamic(() => import('@/components/home/SEOContentSection'));
 const TransportServices = dynamic(() => import('@/components/home/TransportServices'));
-const TestimonialHighlight = dynamic(() => import('@/components/reviews/TestimonialHighlight'));
+const Testimonials = dynamic(() => import('@/components/home/Testimonials'));
 const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
 
 export async function generateMetadata() {
@@ -105,7 +105,7 @@ export default async function Home() {
       <CustomerGallery />
 
       {/* Testimonials Section */}
-      <TestimonialHighlight />
+      <Testimonials />
       {/* Reviews Section */}
       <ReviewsSection />
 

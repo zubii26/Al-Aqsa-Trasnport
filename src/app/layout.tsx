@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 // Force reload - Backend verified
 import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
 
@@ -43,10 +43,11 @@ const reemKufi = Reem_Kufi({
 
 
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  themeColor: '#D4AF37',
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -90,6 +91,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
+    manifest: '/manifest.json',
     description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
     keywords: allKeywords,
     authors: [{ name: siteName }],
@@ -121,6 +123,14 @@ export async function generateMetadata(): Promise<Metadata> {
       title: settings.seo.defaultTitle || "Reliable Umrah Transport | Al Aqsa",
       description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
       images: ["/images/twitter-image.jpg"],
+    },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: siteName,
+    },
+    other: {
+      'mobile-web-app-capable': 'yes',
     },
     robots: {
       index: true,
