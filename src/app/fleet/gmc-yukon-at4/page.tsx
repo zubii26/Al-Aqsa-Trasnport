@@ -66,7 +66,7 @@ export default async function GmcYukonPage() {
 
             <FleetPricingGrid
                 vehicleId={gmcId}
-                vehicleImage={gmcImage}
+                vehicleImage="/images/fleet/gmc.png"
                 vehicleType="gmc"
                 title="VIP GMC Yukon Rates | Jeddah, Makkah & Madinah"
                 subtitle="The pinnacle of comfort for your spiritual journey. Transparent VIP pricing for all routes."
@@ -130,6 +130,62 @@ export default async function GmcYukonPage() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Detailed Specifications */}
+            <section className="py-12 bg-slate-50 dark:bg-slate-950">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-900 dark:text-white">Technical Specifications</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Engine & Power</h3>
+                            <p className="font-bold text-xl text-slate-900 dark:text-white">5.3L V8 Ecotec3</p>
+                            <p className="text-sm text-slate-400">355 Horsepower</p>
+                        </div>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Comfort Control</h3>
+                            <p className="font-bold text-xl text-slate-900 dark:text-white">Tri-Zone Climate</p>
+                            <p className="text-sm text-slate-400">Independent Rear AC</p>
+                        </div>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Luggage Capacity</h3>
+                            <p className="font-bold text-xl text-slate-900 dark:text-white">41.5 Cubic Ft</p>
+                            <p className="text-sm text-slate-400">Behind 3rd Row</p>
+                        </div>
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Entertainment</h3>
+                            <p className="font-bold text-xl text-slate-900 dark:text-white">Bose Premium</p>
+                            <p className="text-sm text-slate-400">9-Speaker Sound System</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 360 Interior Preview (Placeholder) */}
+            <section className="py-16 bg-slate-900 text-white overflow-hidden relative">
+                <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <span className="text-amber-500 font-bold tracking-widest uppercase text-sm mb-4 block">Experience the Luxury</span>
+                    <h2 className="text-3xl md:text-5xl font-bold font-playfair mb-8">Step Inside</h2>
+
+                    <div className="relative aspect-video max-w-4xl mx-auto bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl group cursor-grab active:cursor-grabbing">
+                        {/* Placeholder Content for 360 - simulating a view */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
+                            <p className="text-slate-500 text-lg animate-pulse">360° View Loading...</p>
+                            <div className="absolute inset-0 bg-[url('/images/fleet/gmc-yukon-feature.png')] bg-cover opacity-50 bg-center"></div> {/* Fallback/Placeholder Image */}
+                        </div>
+
+                        {/* Interactive Hint */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+                            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-full flex items-center gap-3">
+                                <Wifi className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-20" />
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                                <span className="font-bold">Click & Drag to Rotate</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="text-slate-400 mt-6 text-sm">Interactive 360° Interior View not available on mobile devices in low-data mode.</p>
                 </div>
             </section>
 

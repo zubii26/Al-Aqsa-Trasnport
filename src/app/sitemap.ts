@@ -18,6 +18,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/blog',
         '/contact',
         '/booking',
+        '/services/jeddah-airport-transfer',
+        '/services/makkah-madinah-taxi',
+        '/services/ziyarat-tours',
+        '/services/taif-city-tour',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),

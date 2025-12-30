@@ -1,15 +1,16 @@
 'use client';
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './FleetGallery.module.css';
 
 const FLEET_IMAGES = [
-    { src: '/images/fleet/gmc-yukon-hero-professional.png', alt: 'GMC Yukon VIP Transport', name: 'GMC Yukon 2025', badge: 'VIP Choice', capacity: '7 Pax' },
-    { src: '/images/fleet/staria-hero-professional.png', alt: 'Hyundai Staria Luxury Van', name: 'Hyundai Staria', badge: 'Family Favorite', capacity: '7 Pax' },
-    { src: '/images/fleet/camry-hero-professional.png', alt: 'Toyota Camry Sedan', name: 'Toyota Camry', badge: 'Best Value', capacity: '4 Pax' },
-    { src: '/images/fleet/hiace-hero-professional.png', alt: 'Toyota Hiace Family Bus', name: 'Toyota Hiace', badge: 'Large Groups', capacity: '10 Pax' },
-    { src: '/images/fleet/starex-hero-professional.png', alt: 'Hyundai H1 Starex', name: 'Hyundai H1', badge: 'Comfort', capacity: '7 Pax' },
+    { src: '/images/fleet/gmc-yukon-hero-professional.png', alt: 'GMC Yukon VIP Transport', name: 'GMC Yukon 2025', badge: 'VIP Choice', capacity: '7 Pax', url: '/fleet/gmc-yukon-at4' },
+    { src: '/images/fleet/staria-hero-professional.png', alt: 'Hyundai Staria Luxury Van', name: 'Hyundai Staria', badge: 'Family Favorite', capacity: '7 Pax', url: '/fleet/hyundai-staria' },
+    { src: '/images/fleet/camry-hero-professional.png', alt: 'Toyota Camry Sedan', name: 'Toyota Camry', badge: 'Best Value', capacity: '4 Pax', url: '/fleet/toyota-camry' },
+    { src: '/images/fleet/hiace-hero-professional.png', alt: 'Toyota Hiace Family Bus', name: 'Toyota Hiace', badge: 'Large Groups', capacity: '10 Pax', url: '/fleet/toyota-hiace' },
+    { src: '/images/fleet/starex-hero-professional.png', alt: 'Hyundai H1 Starex', name: 'Hyundai H1', badge: 'Comfort', capacity: '7 Pax', url: '/fleet/hyundai-starex' },
 ];
 
 export default function FleetGallery() {
@@ -129,9 +130,11 @@ export default function FleetGallery() {
                     onTouchStart={handleInteraction}
                 >
                     {displayImages.map((img, idx) => (
-                        <div
+                        <Link
                             key={`${img.name}-${idx}`}
-                            className="relative w-[300px] h-[225px] md:w-[450px] md:h-[340px] rounded-2xl overflow-hidden group shrink-0 border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 scroll-snap-align-start"
+                            href={img.url}
+                            className="relative w-[300px] h-[225px] md:w-[450px] md:h-[340px] rounded-2xl overflow-hidden group shrink-0 border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 scroll-snap-align-start block"
+                            draggable={false}
                         >
                             {/* Badge */}
                             <div className="absolute top-4 left-4 z-20">
@@ -159,14 +162,17 @@ export default function FleetGallery() {
                                     <div>
                                         <h3 className="text-white font-bold text-2xl font-playfair mb-2">{img.name}</h3>
                                         <div className="flex items-center gap-3 text-slate-300 text-sm">
-                                            <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-white text-xs">Book Now</span>
+                                            <span className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-white text-xs">View Details</span>
                                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                             <span className="text-amber-400 font-semibold">{img.capacity}</span>
                                         </div>
                                     </div>
+                                    <div className="bg-amber-500 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                        <ArrowRight size={20} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
                 <style jsx>{`

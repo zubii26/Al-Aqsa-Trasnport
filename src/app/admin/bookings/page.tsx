@@ -22,12 +22,32 @@ export default function BookingsPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
+        return [...bookingsToSort].sort((a, b) => {
+            // Priority 1: CreatedAt
+            if (a.createdAt && b.createdAt) {
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            }
+            // Priority 2: Booking Date + Time
+            try {
+                const dateA = new Date(`${a.date} ${a.time}`);
+                const dateB = new Date(`${b.date} ${b.time}`);
+                if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+                    return dateB.getTime() - dateA.getTime();
+                }
+            } catch (e) {
+                // Ignore parsing errors
+            }
+            return 0;
+        });
+    };
+
     useEffect(() => {
         const fetchBookings = async () => {
             try {
                 const res = await fetch('/api/bookings');
                 const data = await res.json();
-                setBookings(data);
+                setBookings(sortBookings(data));
             } catch (error) {
                 console.error('Failed to fetch bookings:', error);
                 showToast('Failed to load bookings', 'error');

@@ -41,7 +41,7 @@ export default function BookingPage() {
         name: '',
         email: '',
         phone: '',
-        country: 'Saudi Arabia',
+        country: '', // Changed from 'Saudi Arabia' to force selection
         flightNumber: '',
         arrivalDate: null as Date | null,
         notes: '',
@@ -239,11 +239,19 @@ export default function BookingPage() {
                 newErrors.email = 'Please enter a valid email address';
             }
 
-            const phoneRegex = /^(\+|00)?[0-9\s-]{9,}$/;
+            if (!bookingData.country) newErrors.country = 'Please select your country/region';
+
+            // Phone Validation: Allow international formats, ensure reasonable length
+            // Accepts: +966..., 00966..., 050... (local), with spaces/dashes
+            const phoneRegex = /^(\+|00)?[0-9\s-]{9,15}$/;
+            const saudiPhoneRegex = /^(\+966|00966|0)?5\d{8}$/;
+
             if (!bookingData.phone.trim()) {
                 newErrors.phone = 'Phone number is required';
+            } else if (bookingData.country === 'Saudi Arabia' && !saudiPhoneRegex.test(bookingData.phone.replace(/[\s-]/g, ''))) {
+                newErrors.phone = 'Invalid Saudi number. Format: 05XXXXXXXX or +9665XXXXXXXX';
             } else if (!phoneRegex.test(bookingData.phone.trim())) {
-                newErrors.phone = 'Please enter a valid phone number (e.g., +966 50 123 4567 or 050 123 4567)';
+                newErrors.phone = 'Please enter a valid phone number (min 9 digits)';
             }
 
             if (!bookingData.date) newErrors.date = 'Date is required';

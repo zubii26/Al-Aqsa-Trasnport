@@ -1,9 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Car, Calendar, Activity, TrendingUp, ArrowUpRight, Plus } from 'lucide-react';
+import { Car, Calendar, Activity, TrendingUp, ArrowUpRight, Plus, Check, X } from 'lucide-react';
 import styles from './admin.module.css';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Toast } from '@/components/ui/Toast';
 
 interface Booking {
     id: string;
@@ -59,14 +62,41 @@ export default function DashboardClient({
     confirmedBookings,
     routesCount,
     totalRevenue,
-    recentBookings,
+    recentBookings: initialRecentBookings,
     recentLogs
 }: DashboardProps) {
+    const router = useRouter();
+    const [recentBookings, setRecentBookings] = useState(initialRecentBookings);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    const showToast = (message: string, type: 'success' | 'error') => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3000);
+    };
 
+    const handleStatusChange = async (id: string, newStatus: string) => {
+        try {
+            const res = await fetch(`/api/bookings/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus }),
+            });
+            if (res.ok) {
+                setRecentBookings(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
+                showToast(`Booking marked as ${newStatus}`, 'success');
+                router.refresh(); // Refresh server props
+            } else {
+                throw new Error('Failed to update');
+            }
+        } catch (error) {
+            console.error('Failed to update status:', error);
+            showToast('Failed to update booking status', 'error');
+        }
+    };
 
     return (
         <div className="p-6 space-y-8">
+            {toast && <Toast message={toast.message} type={toast.type} isVisible={true} onClose={() => setToast(null)} />}
             <div className={styles.header}>
                 <div>
                     <motion.h1
@@ -196,6 +226,7 @@ export default function DashboardClient({
                                     <th>Route</th>
                                     <th>Date</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -221,11 +252,31 @@ export default function DashboardClient({
                                                 {booking.status || 'Pending'}
                                             </span>
                                         </td>
+                                        <td>
+                                            {booking.status === 'pending' && (
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                                                        className="p-1.5 rounded-md hover:bg-emerald-500/10 text-emerald-500 transition-colors"
+                                                        title="Confirm"
+                                                    >
+                                                        <Check size={16} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                                                        className="p-1.5 rounded-md hover:bg-red-500/10 text-red-500 transition-colors"
+                                                        title="Cancel"
+                                                    >
+                                                        <X size={16} />
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                                 {recentBookings.length === 0 && (
                                     <tr>
-                                        <td colSpan={4} className="text-center py-8 text-muted-foreground">
+                                        <td colSpan={5} className="text-center py-8 text-muted-foreground">
                                             No bookings found
                                         </td>
                                     </tr>
