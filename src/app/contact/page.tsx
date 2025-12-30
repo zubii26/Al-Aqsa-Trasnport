@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone, MessageCircle, Clock, ShieldCheck, Globe, Star } f
 import FadeIn from '@/components/common/FadeIn';
 import ContactForm from '@/components/contact/ContactForm';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import GlassCard from '@/components/ui/GlassCard';
 import { getSettings } from '@/lib/settings-storage';
 
@@ -86,6 +87,7 @@ export default async function ContactPage() {
                 title="Get in Touch | تواصل معنا"
                 subtitle="Reliable Booking & 24/7 Support for Your Umrah Journey. Premium Transport Services from Makkah to Madinah."
                 bgImage="/images/contact-hero.jpg"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             <div className="container mx-auto px-4 -mt-16 relative z-10">

@@ -56,11 +56,15 @@ const jsonLd = {
 const makkahMadinahFAQs = [
     {
         question: "How long is the journey from Makkah to Madinah?",
-        answer: "The distance is approximately 450 km. By private taxi (GMC/Staria), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah."
+        answer: <span>The distance is approximately 450 km. By private taxi (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/<Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Staria</Link>), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah.</span>
     },
     {
         question: "What is the price of a taxi from Makkah to Madinah?",
         answer: "Our prices are fixed and transparent. A private sedan starts from SAR 400, while a luxury GMC Yukon or Hyundai Staria starts from SAR 600-700. Prices may vary slightly during peak seasons like Ramadan or Hajj."
+    },
+    {
+        question: "Do you offer transport from Jeddah Airport to Makkah?",
+        answer: <span>Yes, we specialize in <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport transfers</Link>. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram.</span>
     },
     {
         question: "Is it better than the Haramain Train?",

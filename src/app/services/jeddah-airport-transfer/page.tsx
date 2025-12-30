@@ -129,12 +129,12 @@ export default async function JeddahAirportTransferPage() {
                             {
                                 icon: <ShieldCheck size={40} className="text-amber-500" />,
                                 title: "2. Luggage Assistance",
-                                desc: <span>Our vehicles (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/H1) are chosen for their large luggage capacity. The driver will handle your bags.</span>
+                                desc: <span>Our vehicles (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/<Link href="/fleet/hyundai-starex" className="text-amber-600 hover:underline">H1</Link>) are chosen for their large luggage capacity. The driver will handle your bags.</span>
                             },
                             {
                                 icon: <Plane size={40} className="text-amber-500" />,
                                 title: "3. Direct to Hotel",
-                                desc: "Relax in a cooled vehicle while we take you directly to your hotel door in Makkah (approx 60-75 mins)."
+                                desc: <span>Relax in a cooled vehicle while we take you directly to your <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">hotel door in Makkah</Link> (approx 60-75 mins).</span>
                             }
                         ].map((item, idx) => (
                             <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 text-center">

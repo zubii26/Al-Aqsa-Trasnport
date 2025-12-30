@@ -1,4 +1,5 @@
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { Suspense } from 'react';
 import FleetShowcaseLoader from '@/components/fleet/FleetShowcaseLoader';
 import ComparisonTable from '@/components/fleet/ComparisonTable';
@@ -37,6 +38,7 @@ export default async function FleetPage() {
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
                 badge={badge}
+                breadcrumbs={<Breadcrumbs />}
             />
             <FadeIn>
                 <Suspense fallback={<div className="h-[800px] w-full bg-muted animate-pulse rounded-xl" />}>

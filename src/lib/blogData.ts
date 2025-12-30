@@ -48,6 +48,46 @@ export const hadithCollection: Hadith[] = [
 
 export const blogPosts: BlogPost[] = [
     {
+        id: "private-taxi-vs-haramain-train-umrah",
+        title: "Private Taxi vs. Haramain Train: Which is Better for Umrah?",
+        excerpt: "Compare the speed of the train with the convenience of a private taxi. Find out which option offers the best peace of mind for your Umrah journey with family and luggage.",
+        content: `
+            <h2>The Great Debate: Comfort vs. Speed</h2>
+            <p>When planning your Umrah trip, one of the biggest questions is: <strong>Should I take the Haramain High-Speed Train or book a private taxi?</strong> Both are excellent options, but the right choice depends on your specific needs, especially if you are traveling with family or heavy luggage.</p>
+
+            <h3>The Haramain Train: Fast but Rigid</h3>
+            <p>The <strong>Haramain High-Speed Train</strong> is a marvel of modern engineering. It connects Jeddah Airport, Makkah, and Madinah at speeds of up to 300 km/h.</p>
+            <ul>
+                <li><strong>Pros:</strong> It is incredibly fast and comfortable.</li>
+                <li><strong>Cons:</strong> The stations are often located far from the main hotels. You will still need to find a taxi from the station to your hotel. Also, there are strict luggage limits and fixed schedules that might not match your flight arrival.</li>
+            </ul>
+
+            <h3>Private Taxi: Door-to-Door Peace of Mind</h3>
+            <p>For most pilgrims, a <strong>private taxi</strong> (like our GMC Yukon or Hyundai Staria) offers unmatched convenience.</p>
+            
+            <h4>1. Door-to-Door Service</h4>
+            <p>Unlike the train, a private car picks you up right outside the airport terminal and drops you off at your hotel lobby. No walking with bags, no waiting for connections.</p>
+
+            <h4>2. 24/7 Availability</h4>
+            <p>Flights land at all times. While trains stop running at night, our <strong>24/7 Umrah taxi service</strong> is always ready. We track your flight and wait for you, even if you are delayed.</p>
+
+            <h4>3. Unlimited Luggage & Privacy</h4>
+            <p>Traveling with family? You need space. Our vehicles accommodate all your suitcases with ease, and you enjoy the privacy of your own vehicle without sharing with strangers.</p>
+
+            <h3>Conclusion: Choose What Fits You</h3>
+            <p>If you are a solo traveler with a backpack, the train is great. But for families, elderly pilgrims, or anyone who values stress-free, direct transport, a <strong>private taxi from Jeddah to Makkah</strong> is the clear winner.</p>
+
+            <p>Experience the difference yourself. <a href="/booking">Book your private ride now</a> and start your Umrah with ease.</p>
+        `,
+        category: "Travel Guide",
+        date: "Dec 30, 2024",
+        readTime: "6 min read",
+        image: "/images/fleet/gmc-yukon-hero-professional.png",
+        alt: "Private GMC Yukon Taxi vs Haramain Train for Umrah Transport",
+        author: "Al Aqsa Team",
+        tags: ["Haramain Train", "Private Taxi", "Makkah Transport", "Family Travel"]
+    },
+    {
         id: "honoring-the-messenger-of-allah",
         title: "Honoring the Messenger of Allah (S.A.W.W)",
         excerpt: "Reflecting on the life, legacy, and teachings of the Prophet Muhammad (S.A.W.W) and how we can embody his wisdom in our daily lives.",

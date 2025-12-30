@@ -1,6 +1,7 @@
 import React from 'react';
 import HadithCarousel from '@/components/blog/HadithCarousel';
 import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FeaturedPost from '@/components/blog/FeaturedPost';
 import BlogFeed from '@/components/blog/BlogFeed';
 import RespectSection from '@/components/blog/RespectSection';
@@ -53,6 +54,7 @@ export default async function BlogPage() {
                 title="Pilgrim Resources & Insights"
                 subtitle="Expert guides, travel tips, and answers to your questions for a blessed and hassle-free Umrah journey."
                 bgImage="/images/blog-hero-professional.png"
+                breadcrumbs={<Breadcrumbs />}
             />
 
             {/* Articles Section */}

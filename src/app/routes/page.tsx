@@ -129,8 +129,11 @@ export default function RoutesPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {ROUTES.map((route, index) => (
                         <FadeIn key={route.id} delay={index * 0.1}>
-                            <Link href={route.link} className="block h-full group">
-                                <GlassCard className="h-full hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 overflow-hidden border-0 ring-1 ring-white/20">
+                            <div className="block h-full group relative">
+                                <GlassCard className="h-full hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 overflow-hidden border-0 ring-1 ring-white/20 relative">
+                                    <Link href={route.link} className="absolute inset-0 z-10">
+                                        <span className="sr-only">View {route.title}</span>
+                                    </Link>
                                     <div className="flex flex-col md:flex-row h-full">
                                         <div className="md:w-2/5 relative min-h-[200px] md:min-h-full overflow-hidden">
                                             <Image
@@ -184,7 +187,7 @@ export default function RoutesPage() {
                                                         {route.price}
                                                     </span>
                                                 </div>
-                                                <div className="flex gap-3">
+                                                <div className="flex gap-3 relative z-20">
                                                     <Link
                                                         href="/fleet"
                                                         className="hidden md:flex items-center text-xs font-medium text-muted-foreground hover:text-secondary transition-colors"
@@ -200,7 +203,7 @@ export default function RoutesPage() {
                                         </div>
                                     </div>
                                 </GlassCard>
-                            </Link>
+                            </div>
                         </FadeIn>
                     ))}
                 </div>

@@ -8,7 +8,7 @@ import GlassCard from '@/components/ui/GlassCard';
 
 interface FAQItem {
     question: string;
-    answer: string;
+    answer: string | React.ReactNode;
 }
 
 interface FAQSectionProps {
