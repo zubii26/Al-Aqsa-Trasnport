@@ -146,7 +146,6 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: {
       icon: [
         { url: '/favicon.png', sizes: '32x32' },
-        { url: '/favicon.ico' },
       ],
       shortcut: '/favicon.png',
       apple: '/apple-touch-icon.png',
