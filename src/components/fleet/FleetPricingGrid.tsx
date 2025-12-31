@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Plus, Minus } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import pricingData from '@/data/pricing.json';
+import { trackConversion } from '@/lib/analytics';
 
 interface RouteProduct {
     id: string;
@@ -75,6 +76,7 @@ const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId:
 
                 <Link
                     href={`/booking?vehicle=${dbVehicleId}`}
+                    onClick={() => trackConversion('other', `pricing_grid_${route.id}_${dbVehicleId}`)}
                     className="block w-full bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground font-bold py-1.5 px-1 sm:py-2 sm:px-4 rounded text-[10px] sm:text-xs transition-all duration-300 shadow-sm hover:shadow-secondary/25 text-center whitespace-nowrap"
                 >
                     Book Now

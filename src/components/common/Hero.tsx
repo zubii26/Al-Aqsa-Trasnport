@@ -7,6 +7,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import styles from './Hero.module.css';
 import GlassButton from '@/components/ui/GlassButton';
+import { trackConversion } from '@/lib/analytics';
 
 interface HeroProps {
     title: string;
@@ -131,7 +132,13 @@ const Hero: React.FC<HeroProps> = ({
 
                     <motion.div className={styles.buttons} variants={itemVariants}>
                         {ctaText && ctaLink && (
-                            <GlassButton href={ctaLink} variant="secondary" size="lg" className="gap-2 text-white">
+                            <GlassButton
+                                href={ctaLink}
+                                variant="secondary"
+                                size="lg"
+                                className="gap-2 text-white"
+                                onClick={() => trackConversion('whatsapp', `hero_${title.substring(0, 10)}`)}
+                            >
                                 {ctaText}
                                 <ArrowRight size={20} />
                             </GlassButton>

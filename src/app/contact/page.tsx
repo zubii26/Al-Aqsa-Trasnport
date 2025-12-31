@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './page.module.css';
-import { Mail, MapPin, Phone, MessageCircle, Clock, ShieldCheck, Globe, Star } from 'lucide-react';
+import { Clock, ShieldCheck, Globe, Star } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import ContactForm from '@/components/contact/ContactForm';
 import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import GlassCard from '@/components/ui/GlassCard';
 import { getSettings } from '@/lib/settings-storage';
+import ContactGrid from '@/components/contact/ContactGrid';
 
 export async function generateMetadata() {
     const title = "Contact Al Aqsa Umrah Transport | Book Your Ride Today";
@@ -46,40 +47,7 @@ export default async function ContactPage() {
     const whatsapp = phone1;
 
     // Contact Cards Data
-    const contactCards = [
-        {
-            icon: Phone,
-            title: "Call Us 24/7 (اتصل بنا)",
-            value: phone1,
-            sub: "Support in English, Arabic, Urdu",
-            action: `tel:${phone1.replace(/\s/g, '')}`,
-            btnText: "Call Now"
-        },
-        {
-            icon: MessageCircle,
-            title: "WhatsApp Support (واتساب)",
-            value: "Instant replies for bookings",
-            sub: "Average response: < 5 mins",
-            action: `https://wa.me/${whatsapp.replace(/\D/g, '')}`,
-            btnText: "Chat on WhatsApp"
-        },
-        {
-            icon: Mail,
-            title: "Email Us (البريد الإلكتروني)",
-            value: email,
-            sub: "For quote requests & inquiries",
-            action: `mailto:${email}`,
-            btnText: "Send Email"
-        },
-        {
-            icon: MapPin,
-            title: "Visit Our Office (موقعنا)",
-            value: address,
-            sub: "Open Daily: 9 AM - 10 PM",
-            action: "#map",
-            btnText: "View Location"
-        }
-    ];
+
 
     const jsonLd = {
         "@context": "https://schema.org",
@@ -160,32 +128,11 @@ export default async function ContactPage() {
                 <div className="grid lg:grid-cols-12 gap-8 items-start">
                     {/* Contact Info Column */}
                     <div className="lg:col-span-5 space-y-6">
-                        <FadeIn direction="right" delay={0.2}>
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
-                                {contactCards.map((card, index) => (
-                                    <GlassCard key={index} className="p-6 hover:border-amber-400/50 transition-colors group">
-                                        <div className="flex items-start gap-4">
-                                            <div className="p-3 bg-amber-100 dark:bg-amber-900/20 rounded-lg text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform">
-                                                <card.icon size={24} />
-                                            </div>
-                                            <div className="flex-1">
-                                                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1">{card.title}</h3>
-                                                <p className="font-medium text-slate-700 dark:text-slate-200 mb-1">{card.value}</p>
-                                                <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">{card.sub}</p>
-                                                <a
-                                                    href={card.action}
-                                                    target={card.action.startsWith('http') ? "_blank" : "_self"}
-                                                    rel="noopener noreferrer"
-                                                    className="inline-flex items-center text-sm font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400"
-                                                >
-                                                    {card.btnText} →
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </GlassCard>
-                                ))}
-                            </div>
-                        </FadeIn>
+                        <ContactGrid contactSettings={{
+                            phone: phone1,
+                            email,
+                            address
+                        }} />
 
                         {/* Map Placeholder */}
                         <FadeIn direction="up" delay={0.4}>

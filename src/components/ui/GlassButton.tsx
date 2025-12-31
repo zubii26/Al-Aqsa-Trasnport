@@ -40,7 +40,7 @@ export default function GlassButton({
 
     if (href) {
         return (
-            <Link href={href} className={baseStyles}>
+            <Link href={href} className={baseStyles} {...(props as any)}>
                 {children}
             </Link>
         );
