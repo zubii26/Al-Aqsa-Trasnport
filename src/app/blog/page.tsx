@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Umrah Travel Blog | Tips, Guides & Spiritual Insights',
     description: 'Read our latest articles on Umrah travel tips, spiritual guides, and transport advice for a blessed journey to Makkah and Madinah.',
     alternates: {
-        canonical: 'https://alaqsa-transport.com/blog',
+        canonical: 'https://alaqsaumrahtransport.com/blog',
     },
 };
 

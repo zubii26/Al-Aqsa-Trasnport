@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             "name": "Al Aqsa Umrah Transport",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://alaqsa-transport.com/logo.png" // Update with actual logo URL
+                "url": "https://alaqsaumrahtransport.com/logo.png" // Update with actual logo URL
             }
         },
         "description": post.excerpt,

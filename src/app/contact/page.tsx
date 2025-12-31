@@ -41,7 +41,7 @@ export default async function ContactPage() {
 
     // Fallback values
     const phone1 = settings?.contact.phone || '+966 50 000 0000';
-    const email = settings?.contact.email || 'info@alaqsa-transport.com';
+    const email = settings?.contact.email || 'info@alaqsaumrahtransport.com';
     const address = settings?.contact.address || 'Al Aziziyah, Makkah, Saudi Arabia';
     const whatsapp = phone1;
 
