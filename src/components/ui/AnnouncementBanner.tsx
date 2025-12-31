@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Percent, X, Clock, Sparkles } from 'lucide-react';
+import { X } from 'lucide-react';
+import Link from 'next/link';
 
 interface AnnouncementBannerProps {
     discount: {
@@ -14,45 +15,6 @@ interface AnnouncementBannerProps {
     };
 }
 
-const Confetti = () => {
-    const [particles, setParticles] = useState<number[]>([]);
-
-    useEffect(() => {
-        setParticles(Array.from({ length: 40 }, (_, i) => i));
-    }, []);
-
-    return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {particles.map((i) => (
-                <motion.div
-                    key={i}
-                    initial={{ y: -20, rotate: 0, opacity: 0 }}
-                    animate={{
-                        y: ['0vh', '15vh'],
-                        rotate: [0, 360],
-                        opacity: [1, 1, 0],
-                        x: [0, (Math.random() - 0.5) * 50] // Scatter
-                    }}
-                    transition={{
-                        duration: 2 + Math.random() * 3,
-                        repeat: Infinity,
-                        delay: Math.random() * 5,
-                        ease: "linear",
-                        repeatDelay: Math.random() * 2
-                    }}
-                    className="absolute w-2 h-2 rounded-full"
-                    style={{
-                        left: `${Math.random() * 100}%`,
-                        backgroundColor: ['#fff', '#FFD700', '#d4af37', '#fcd34d'][Math.floor(Math.random() * 4)],
-                        top: -10,
-                        boxShadow: '0 0 4px rgba(212, 175, 55, 0.4)'
-                    }}
-                />
-            ))}
-        </div>
-    );
-};
-
 export default function AnnouncementBanner({ discount }: AnnouncementBannerProps) {
     const [isVisible, setIsVisible] = useState(true);
     const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
@@ -62,7 +24,7 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
         setIsMounted(true);
     }, []);
 
-    // Calculate time left (Logic unchanged)
+    // Calculate time left
     useEffect(() => {
         if (!discount.endDate) return;
         const calculateTimeLeft = () => {
@@ -91,7 +53,6 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
 
     if (!isMounted || !isVisible || !discount.enabled) return null;
 
-    // Date checks (Logic unchanged)
     const now = new Date();
     if (discount.startDate) {
         const startDate = new Date(discount.startDate);
@@ -108,80 +69,56 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    // Refined Gold Gradient using #d4af37
-                    className="relative overflow-hidden bg-[linear-gradient(90deg,#b4941f_0%,#d4af37_50%,#b4941f_100%)] shadow-2xl z-50 border-b border-[#ffe5b4]"
+                    className="relative bg-[#ccff00] text-black z-50 overflow-hidden"
                 >
-                    <Confetti />
+                    <div className="container mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-sm sm:text-base font-medium">
 
-                    {/* Pattern Overlay */}
-                    <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1px, transparent 0)', backgroundSize: '20px 20px' }}></div>
+                        {/* Offer Text */}
+                        <div className="font-bold tracking-tight">
+                            Don&apos;t miss the New Year&apos;s Sale deals!
+                        </div>
 
-                    {/* Shine Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] animate-shimmer" />
+                        {/* Divider for mobile */}
+                        <div className="hidden sm:block w-px h-4 bg-black/20"></div>
 
-                    <div className="container mx-auto px-4 py-3 relative z-10">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-8">
-
-                            {/* Offer Text */}
-                            <div className="flex items-center gap-4 text-center md:text-left">
-                                <div className="hidden md:flex bg-slate-900 text-[#d4af37] p-2.5 rounded-xl shadow-lg transform rotate-3 ring-2 ring-[#d4af37]/50">
-                                    <Percent size={20} className="stroke-[3]" />
+                        {/* Countdown Timer */}
+                        {timeLeft && (
+                            <div className="flex items-center gap-3 font-mono font-bold tracking-wider">
+                                <div className="flex items-baseline">
+                                    <span className="text-lg">{String(timeLeft.days).padStart(2, '0')}</span>
+                                    <span className="text-[10px] ml-0.5">D</span>
                                 </div>
-                                <div className="flex flex-col items-center md:items-start">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-slate-900/90 border border-[#d4af37]/30 shadow-md">
-                                            <Sparkles size={12} className="text-[#d4af37] animate-pulse" />
-                                            <span className="text-[#d4af37] text-[10px] font-bold tracking-widest uppercase leading-none pt-0.5">Exciting Offer</span>
-                                        </div>
-                                    </div>
-                                    <p className="text-slate-900 font-bold text-sm md:text-base leading-tight drop-shadow-sm">
-                                        Get <span className="inline-block bg-slate-900 text-[#d4af37] px-2 py-0.5 rounded-md font-extrabold text-lg mx-1 shadow-md transform -skew-x-6 border border-[#d4af37]/50">
-                                            {discount.type === 'percentage' ? `${discount.value}% OFF` : `${discount.value} SAR OFF`}
-                                        </span>
-                                        on your first ride
-                                    </p>
+                                <div className="flex items-baseline">
+                                    <span className="text-lg">{String(timeLeft.hours).padStart(2, '0')}</span>
+                                    <span className="text-[10px] ml-0.5">H</span>
+                                </div>
+                                <div className="flex items-baseline">
+                                    <span className="text-lg">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                                    <span className="text-[10px] ml-0.5">M</span>
+                                </div>
+                                <div className="flex items-baseline">
+                                    <span className="text-lg">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                                    <span className="text-[10px] ml-0.5">S</span>
                                 </div>
                             </div>
+                        )}
 
-                            {/* Countdown Timer */}
-                            {timeLeft && (
-                                <div className="flex items-center gap-4 bg-slate-900/10 backdrop-blur-sm px-5 py-2 rounded-xl border border-slate-900/10 shadow-inner">
-                                    <div className="flex items-center gap-2 text-slate-900 text-xs font-bold uppercase tracking-wider border-r border-slate-900/20 pr-4 mr-1">
-                                        <Clock size={16} className="text-slate-900" />
-                                        <span>Ends In</span>
-                                    </div>
-                                    <div className="flex gap-3 text-center">
-                                        {[
-                                            { value: timeLeft.days, label: 'D' },
-                                            { value: timeLeft.hours, label: 'H' },
-                                            { value: timeLeft.minutes, label: 'M' },
-                                            { value: timeLeft.seconds, label: 'S' }
-                                        ].map((item, idx, arr) => (
-                                            <React.Fragment key={item.label}>
-                                                <div className="flex flex-col min-w-[32px]">
-                                                    <span className="text-slate-900 font-black text-xl leading-none tabular-nums tracking-tight font-mono">
-                                                        {String(item.value).padStart(2, '0')}
-                                                    </span>
-                                                    <span className="text-[10px] text-slate-800 font-bold uppercase tracking-wider mt-0.5">{item.label}</span>
-                                                </div>
-                                                {idx < arr.length - 1 && (
-                                                    <span className="text-slate-900/40 font-bold text-lg relative -top-1">:</span>
-                                                )}
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                        {/* Divider for mobile */}
+                        <div className="hidden sm:block w-px h-4 bg-black/20"></div>
 
-                            {/* Close Button */}
-                            <button
-                                onClick={() => setIsVisible(false)}
-                                className="absolute right-2 top-2 md:relative md:right-auto md:top-auto p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-900/10 rounded-full transition-all duration-300"
-                                aria-label="Close announcement"
-                            >
-                                <X size={18} />
-                            </button>
-                        </div>
+                        {/* Action Link */}
+                        <Link href="/booking" className="underline decoration-1 underline-offset-4 hover:no-underline font-bold uppercase text-xs tracking-wider">
+                            Explore
+                        </Link>
+
+                        {/* Close Button (Optional, but good for UX) */}
+                        <button
+                            onClick={() => setIsVisible(false)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-black/10 rounded-full transition-colors sm:static sm:translate-y-0 sm:ml-auto md:ml-0"
+                            aria-label="Close"
+                        >
+                            <X size={16} />
+                        </button>
                     </div>
                 </motion.div>
             )}
