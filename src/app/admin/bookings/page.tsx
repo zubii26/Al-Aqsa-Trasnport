@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import adminStyles from '../admin.module.css';
-import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase } from 'lucide-react';
+import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase, Download, LayoutList } from 'lucide-react';
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
+import dynamic from 'next/dynamic';
+
+const BookingCalendar = dynamic(() => import('@/components/admin/bookings/BookingCalendar'), { ssr: false });
 
 // Extend Booking type to include id and status if not in schema
 interface BookingWithDetails extends Booking {
@@ -20,8 +23,13 @@ export default function BookingsPage() {
     const [filter, setFilter] = useState('All');
     const [bookings, setBookings] = useState<BookingWithDetails[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [specificVehicle, setSpecificVehicle] = useState('All Vehicles');
 
+    // ... sortBookings function ...
     const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
         return [...bookingsToSort].sort((a, b) => {
             // Priority 1: CreatedAt
@@ -64,13 +72,57 @@ export default function BookingsPage() {
     };
 
     const filteredBookings = bookings.filter(booking => {
-        const matchesFilter = filter === 'All' || booking.status === filter.toLowerCase();
+        const matchesStatus = filter === 'All' || booking.status === filter.toLowerCase();
+
         const matchesSearch =
             booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             booking.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
             booking.id.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesFilter && matchesSearch;
+
+        // Date Range Filter
+        let matchesDate = true;
+        if (startDate) {
+            matchesDate = matchesDate && new Date(booking.date) >= new Date(startDate);
+        }
+        if (endDate) {
+            matchesDate = matchesDate && new Date(booking.date) <= new Date(endDate);
+        }
+
+        // Vehicle Filter
+        const matchesVehicle = specificVehicle === 'All Vehicles' ||
+            (booking.vehicle && booking.vehicle === specificVehicle) ||
+            (booking.selectedVehicles && booking.selectedVehicles.some(v => v.name === specificVehicle));
+
+        return matchesStatus && matchesSearch && matchesDate && matchesVehicle;
     });
+
+    // Extract unique vehicles for filter dropdown
+    const uniqueVehicles = Array.from(new Set(bookings.flatMap(b => {
+        if (b.selectedVehicles && b.selectedVehicles.length > 0) return b.selectedVehicles.map(v => v.name);
+        return [b.vehicle];
+    }).filter(Boolean))).sort();
+
+    // Calendar Events Transformation
+    const calendarEvents = bookings.map(booking => {
+        try {
+            // Combine date and time string to create a Date object
+            // Assuming format is YYYY-MM-DD and HH:mm
+            const startDateTime = new Date(`${booking.date}T${booking.time}`);
+
+            // Default duration 3 hours if not specified, or calculate based on service
+            const endDateTime = new Date(startDateTime.getTime() + (3 * 60 * 60 * 1000));
+
+            return {
+                id: booking.id,
+                title: `${booking.name} (${booking.vehicle})`,
+                start: startDateTime,
+                end: endDateTime,
+                resource: booking,
+            };
+        } catch (e) {
+            return null;
+        }
+    }).filter(Boolean) as any[]; // Type assertion for now
 
     const handleStatusChange = async (id: string, newStatus: BookingWithDetails['status']) => {
         try {
@@ -114,6 +166,38 @@ export default function BookingsPage() {
         }
     };
 
+    const handleExportCSV = () => {
+        const headers = ['ID', 'Date', 'Time', 'Name', 'Email', 'Phone', 'Pickup', 'Dropoff', 'Vehicle', 'Passengers', 'Status', 'Price'];
+        const csvContent = [
+            headers.join(','),
+            ...filteredBookings.map(b => [
+                b.id,
+                b.date,
+                b.time,
+                `"${b.name}"`,
+                b.email,
+                b.phone,
+                `"${b.pickup}"`,
+                `"${b.dropoff}"`,
+                b.vehicle,
+                b.passengers,
+                b.status,
+                // Add price if you have it in the booking object, otherwise empty
+                // Assuming price might be a calculated field not shown in basic type
+                ''
+            ].join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `bookings_export_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const getStatusBadge = (status: string) => {
         switch (status) {
             case 'confirmed': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
@@ -141,21 +225,76 @@ export default function BookingsPage() {
                     <h1 className={adminStyles.title}>Bookings</h1>
                     <p className="text-muted-foreground mt-1">Manage and track all your fleet reservations</p>
                 </div>
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+                    <button
+                        onClick={() => setViewMode('list')}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${viewMode === 'list'
+                            ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
+                    >
+                        <LayoutList size={18} /> List
+                    </button>
+                    <button
+                        onClick={() => setViewMode('calendar')}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${viewMode === 'calendar'
+                            ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
+                    >
+                        <Calendar size={18} /> Calendar
+                    </button>
+                </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4 bg-card border border-border p-4 rounded-xl shadow-sm">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Search bookings..."
-                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+            <div className="flex flex-col gap-4 bg-card border border-border p-4 rounded-xl shadow-sm">
+                <div className="flex flex-col md:flex-row gap-4">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Search bookings..."
+                            className="w-full pl-10 pr-4 py-2 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
 
+                    {/* Date Range Inputs */}
+                    <div className="flex gap-2">
+                        <div className="relative">
+                            <input
+                                type="date"
+                                className="pl-3 pr-2 py-2 rounded-lg border border-border bg-background text-sm focus:ring-2 focus:ring-primary/20 outline-none"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                                title="Start Date"
+                            />
+                        </div>
+                        <span className="self-center text-muted-foreground">-</span>
+                        <div className="relative">
+                            <input
+                                type="date"
+                                className="pl-3 pr-2 py-2 rounded-lg border border-border bg-background text-sm focus:ring-2 focus:ring-primary/20 outline-none"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                                title="End Date"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Vehicle Filter */}
+                    <select
+                        value={specificVehicle}
+                        onChange={(e) => setSpecificVehicle(e.target.value)}
+                        className="px-3 py-2 rounded-lg border border-border bg-background text-sm focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer max-w-[200px]"
+                    >
+                        <option value="All Vehicles">All Vehicles</option>
+                        {uniqueVehicles.map(v => (
+                            <option key={v} value={v}>{v}</option>
+                        ))}
+                    </select>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+
+                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 border-t border-border pt-4">
                     {['All', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
                         <button
                             key={status}
@@ -168,161 +307,181 @@ export default function BookingsPage() {
                             {status}
                         </button>
                     ))}
+                    <div className="flex-1"></div>
+                    <button
+                        onClick={handleExportCSV}
+                        className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500 text-white hover:bg-emerald-600 transition-colors flex items-center gap-2 whitespace-nowrap"
+                        title="Export to CSV"
+                    >
+                        <Download size={16} /> Export CSV
+                    </button>
                 </div>
             </div>
 
             <div className={adminStyles.glassCard}>
-                <div className="overflow-x-auto">
-                    <table className={adminStyles.table}>
-                        <thead>
-                            <tr>
-                                <th>ID & Customer</th>
-                                <th>Journey Details</th>
-                                <th>Vehicle</th>
-                                <th>Status</th>
-                                <th className="text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <AnimatePresence mode='popLayout'>
-                                {filteredBookings.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={5} className="text-center py-12 text-muted-foreground">
-                                            <div className="flex flex-col items-center justify-center">
-                                                <Calendar size={48} className="mb-4 opacity-20" />
-                                                <p>No bookings found matching your criteria</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    filteredBookings.map((booking) => (
-                                        <motion.tr
-                                            key={booking.id}
-                                            layout
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            className="group transition-colors"
-                                        >
-                                            <td>
-                                                <div className="flex flex-col gap-1">
-                                                    <span className="font-mono text-xs text-muted-foreground">#{booking.id.slice(0, 8)}</span>
-                                                    <span className="font-medium">{booking.name}</span>
-                                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                        <Mail size={12} /> {booking.email}
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                        <Phone size={12} /> {booking.phone}
-                                                    </div>
+                {viewMode === 'list' ? (
+                    <div className="overflow-x-auto">
+                        <table className={adminStyles.table}>
+                            <thead>
+                                <tr>
+                                    <th>ID & Customer</th>
+                                    <th>Journey Details</th>
+                                    <th>Vehicle</th>
+                                    <th>Status</th>
+                                    <th className="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <AnimatePresence mode='popLayout'>
+                                    {filteredBookings.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={5} className="text-center py-12 text-muted-foreground">
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <Calendar size={48} className="mb-4 opacity-20" />
+                                                    <p>No bookings found matching your criteria</p>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="flex items-center gap-2 text-sm">
-                                                        <MapPin size={14} className="text-emerald-500" />
-                                                        <span>{booking.pickup}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm">
-                                                        <MapPin size={14} className="text-red-500" />
-                                                        <span>{booking.dropoff}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                                                        <Calendar size={12} />
-                                                        <span>{booking.date} at {booking.time}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="flex flex-col gap-1">
-                                                    {booking.selectedVehicles && booking.selectedVehicles.length > 0 ? (
-                                                        <div className="flex flex-col gap-1">
-                                                            {booking.selectedVehicles.map((sv, i) => (
-                                                                <span key={i} className="font-medium">
-                                                                    {sv.name || 'Vehicle'} <span className="text-xs text-muted-foreground">x{sv.quantity}</span>
-                                                                </span>
-                                                            ))}
+                                        </tr>
+                                    ) : (
+                                        filteredBookings.map((booking) => (
+                                            <motion.tr
+                                                key={booking.id}
+                                                layout
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="group transition-colors"
+                                            >
+                                                <td>
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="font-mono text-xs text-muted-foreground">#{booking.id.slice(0, 8)}</span>
+                                                        <span className="font-medium">{booking.name}</span>
+                                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                                            <Mail size={12} /> {booking.email}
                                                         </div>
-                                                    ) : (
-                                                        <span className="font-medium">{booking.vehicle} <span className="text-xs text-muted-foreground">x{booking.vehicleCount || 1}</span></span>
-                                                    )}
+                                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                                            <Phone size={12} /> {booking.phone}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="flex flex-col gap-2">
+                                                        <div className="flex items-center gap-2 text-sm">
+                                                            <MapPin size={14} className="text-emerald-500" />
+                                                            <span>{booking.pickup}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-sm">
+                                                            <MapPin size={14} className="text-red-500" />
+                                                            <span>{booking.dropoff}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                                                            <Calendar size={12} />
+                                                            <span>{booking.date} at {booking.time}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="flex flex-col gap-1">
+                                                        {booking.selectedVehicles && booking.selectedVehicles.length > 0 ? (
+                                                            <div className="flex flex-col gap-1">
+                                                                {booking.selectedVehicles.map((sv, i) => (
+                                                                    <span key={i} className="font-medium">
+                                                                        {sv.name || 'Vehicle'} <span className="text-xs text-muted-foreground">x{sv.quantity}</span>
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        ) : (
+                                                            <span className="font-medium">{booking.vehicle} <span className="text-xs text-muted-foreground">x{booking.vehicleCount || 1}</span></span>
+                                                        )}
 
-                                                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                                                        <span className="flex items-center gap-1">
-                                                            <Users size={12} /> {booking.passengers}
-                                                        </span>
-                                                        <span className="flex items-center gap-1">
-                                                            <Briefcase size={12} /> {booking.luggage || 0}
-                                                        </span>
+                                                        <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                                                            <span className="flex items-center gap-1">
+                                                                <Users size={12} /> {booking.passengers}
+                                                            </span>
+                                                            <span className="flex items-center gap-1">
+                                                                <Briefcase size={12} /> {booking.luggage || 0}
+                                                            </span>
+                                                        </div>
+                                                        {booking.notes && (
+                                                            <div className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded mt-1 break-words max-w-[200px]">
+                                                                {booking.notes}
+                                                            </div>
+                                                        )}
+                                                        {/* Display Country, Flight, Arrival if present */}
+                                                        {(booking.country || booking.flightNumber || booking.arrivalDate) && (
+                                                            <div className="mt-1 pt-1 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
+                                                                {booking.country && <div>Country: {booking.country}</div>}
+                                                                {booking.flightNumber && <div>Flight: {booking.flightNumber}</div>}
+                                                                {booking.arrivalDate && <div>Arrival: {booking.arrivalDate}</div>}
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                    {booking.notes && (
-                                                        <div className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded mt-1 break-words max-w-[200px]">
-                                                            {booking.notes}
-                                                        </div>
-                                                    )}
-                                                    {/* Display Country, Flight, Arrival if present */}
-                                                    {(booking.country || booking.flightNumber || booking.arrivalDate) && (
-                                                        <div className="mt-1 pt-1 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
-                                                            {booking.country && <div>Country: {booking.country}</div>}
-                                                            {booking.flightNumber && <div>Flight: {booking.flightNumber}</div>}
-                                                            {booking.arrivalDate && <div>Arrival: {booking.arrivalDate}</div>}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                            <td>
-                                                <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusBadge(booking.status)}`}>
-                                                    {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-                                                </span>
-                                            </td>
-                                            <td className="text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    {booking.status === 'pending' && (
-                                                        <>
+                                                <td>
+                                                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusBadge(booking.status)}`}>
+                                                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                                                    </span>
+                                                </td>
+                                                <td className="text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        {booking.status === 'pending' && (
+                                                            <>
+                                                                <button
+                                                                    onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                                                                    className="p-2 rounded-lg hover:bg-emerald-500/10 text-emerald-500 transition-colors"
+                                                                    title="Confirm Booking"
+                                                                >
+                                                                    <Check size={18} />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                                                                    className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
+                                                                    title="Cancel Booking"
+                                                                >
+                                                                    <X size={18} />
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                        {booking.status === 'confirmed' && (
                                                             <button
-                                                                onClick={() => handleStatusChange(booking.id, 'confirmed')}
-                                                                className="p-2 rounded-lg hover:bg-emerald-500/10 text-emerald-500 transition-colors"
-                                                                title="Confirm Booking"
+                                                                onClick={() => handleStatusChange(booking.id, 'completed')}
+                                                                className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 text-xs font-medium transition-colors"
+                                                                title="Mark as Completed"
                                                             >
-                                                                <Check size={18} />
+                                                                <CheckCircle2 size={14} /> Complete
                                                             </button>
+                                                        )}
+                                                        {(booking.status === 'completed' || booking.status === 'cancelled') && (
                                                             <button
-                                                                onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                                                                onClick={() => handleDelete(booking.id)}
                                                                 className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
-                                                                title="Cancel Booking"
+                                                                title="Delete Booking"
                                                             >
-                                                                <X size={18} />
+                                                                <Trash2 size={18} />
                                                             </button>
-                                                        </>
-                                                    )}
-                                                    {booking.status === 'confirmed' && (
-                                                        <button
-                                                            onClick={() => handleStatusChange(booking.id, 'completed')}
-                                                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 text-xs font-medium transition-colors"
-                                                            title="Mark as Completed"
-                                                        >
-                                                            <CheckCircle2 size={14} /> Complete
-                                                        </button>
-                                                    )}
-                                                    {(booking.status === 'completed' || booking.status === 'cancelled') && (
-                                                        <button
-                                                            onClick={() => handleDelete(booking.id)}
-                                                            className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
-                                                            title="Delete Booking"
-                                                        >
-                                                            <Trash2 size={18} />
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        </motion.tr>
-                                    ))
-                                )}
-                            </AnimatePresence>
-                        </tbody>
-                    </table>
-                </div>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </motion.tr>
+                                        ))
+                                    )}
+                                </AnimatePresence>
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <div className="p-4">
+                        <BookingCalendar
+                            events={calendarEvents}
+                            onSelectEvent={(event) => {
+                                // Maybe open a details modal later
+                                console.log('Selected event:', event);
+                            }}
+                        />
+                    </div>
+                )}
             </div>
-        </div >
+        </div>
     );
 }

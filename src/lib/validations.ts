@@ -38,6 +38,7 @@ export const VehicleSchema = z.object({
     price: z.string().min(1, 'Price information is required'),
     category: z.enum(['Standard', 'Premium', 'VIP']).optional(),
     isActive: z.boolean().optional(),
+    unavailableDates: z.array(z.string()).optional(),
 });
 
 export const ContactSchema = z.object({
@@ -104,6 +105,10 @@ export const SettingsSchema = z.object({
         value: z.number().min(0),
         startDate: z.string().optional(),
         endDate: z.string().optional(),
+    }).optional(),
+    emailTemplates: z.object({
+        bookingConfirmation: z.string().optional(),
+        adminNotification: z.string().optional(),
     }).optional(),
 });
 

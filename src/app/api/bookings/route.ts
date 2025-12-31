@@ -63,6 +63,12 @@ export async function POST(request: Request) {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const vehicle = (vehicles as any[]).find(v => v.id === sv.vehicleId);
                     if (vehicle) {
+                        // Check availability
+                        if (bookingData.date && vehicle.unavailableDates?.includes(bookingData.date)) {
+                            // If this specific vehicle is unavailable on the requested date
+                            throw new Error(`Vehicle ${vehicle.name} is unavailable on ${bookingData.date}`);
+                        }
+
                         selectedVehiclesList.push({ name: vehicle.name, quantity: sv.quantity });
                         vehicleNames.push(`${sv.quantity} x ${vehicle.name}`);
 
@@ -112,11 +118,17 @@ export async function POST(request: Request) {
             selectedVehicles: selectedVehiclesList
         } as any);
 
+        // Fetch settings for email templates and admin logic
+        const settings = await getSettings();
+
         // Send confirmation email to customer
         console.log('[Booking API] Processing customer email...');
         try {
             if (booking && booking.email) {
                 console.log(`[Booking API] Sending to customer: ${booking.email}`);
+                // Ensure we have a template string, falling back to default if somehow missing in both DB vs Code (though getSettings handles default)
+                const template = settings.emailTemplates?.bookingConfirmation || '';
+
                 await sendEmail({
                     to: booking.email,
                     subject: 'Booking Confirmation - Al Aqsa Transport',
@@ -138,7 +150,7 @@ export async function POST(request: Request) {
                         country: booking.country,
                         flightNumber: booking.flightNumber,
                         arrivalDate: booking.arrivalDate
-                    }),
+                    }, template),
                 });
             }
         } catch (error) {
@@ -148,9 +160,10 @@ export async function POST(request: Request) {
         // Send notification email to admin
         console.log('[Booking API] Processing admin notification...');
         try {
-            const settings = await getSettings();
             if (settings.contact && settings.contact.email) {
                 console.log(`[Booking API] Sending to admin: ${settings.contact.email}`);
+                const adminTemplate = settings.emailTemplates?.adminNotification || '';
+
                 await sendEmail({
                     to: settings.contact.email,
                     subject: 'New Booking Received - Al Aqsa Transport',
@@ -172,7 +185,7 @@ export async function POST(request: Request) {
                         country: booking.country,
                         flightNumber: booking.flightNumber,
                         arrivalDate: booking.arrivalDate
-                    }),
+                    }, adminTemplate),
                 });
                 console.log('Admin notification email sent to:', settings.contact.email);
             }

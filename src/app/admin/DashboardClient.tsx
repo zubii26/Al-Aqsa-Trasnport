@@ -27,6 +27,16 @@ interface Log {
     user: string;
 }
 
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
+
+// ... other imports
+
+interface AnalyticsData {
+    revenueChart: { name: string; revenue: number; bookings: number }[];
+    statusPie: { name: string; value: number; color: string }[];
+    vehicleBar: { name: string; value: number }[];
+}
+
 interface DashboardProps {
     totalBookings: number;
     activeFleet: number;
@@ -37,6 +47,7 @@ interface DashboardProps {
     totalRevenue: number;
     recentBookings: Booking[];
     recentLogs: Log[];
+    analyticsData: AnalyticsData;
 }
 
 const container = {
@@ -63,7 +74,8 @@ export default function DashboardClient({
     routesCount,
     totalRevenue,
     recentBookings: initialRecentBookings,
-    recentLogs
+    recentLogs,
+    analyticsData
 }: DashboardProps) {
     const router = useRouter();
     const [recentBookings, setRecentBookings] = useState(initialRecentBookings);
@@ -98,33 +110,16 @@ export default function DashboardClient({
         <div className="p-6 space-y-8">
             {toast && <Toast message={toast.message} type={toast.type} isVisible={true} onClose={() => setToast(null)} />}
             <div className={styles.header}>
+                {/* ... title ... */}
                 <div>
-                    <motion.h1
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className={styles.title}
-                    >
-                        Dashboard
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className={styles.subtitle}
-                    >
-                        Overview of your transport business
-                    </motion.p>
+                    <h1 className={styles.title}>Dashboard</h1>
+                    <p className={styles.subtitle}>Overview of your transport business & analytics</p>
                 </div>
                 <div className="flex gap-3">
                     <Link href="/admin/bookings">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className={styles.actionButton}
-                        >
-                            <Plus size={18} />
-                            New Booking
-                        </motion.button>
+                        <div className={styles.actionButton}>
+                            <Plus size={18} /> New Booking
+                        </div>
                     </Link>
                 </div>
             </div>
@@ -135,7 +130,7 @@ export default function DashboardClient({
                 animate="show"
                 className={styles.statsGrid}
             >
-                {/* Revenue Card */}
+                {/* Keep existing Stat Cards */}
                 <motion.div variants={item} className={styles.glassCard}>
                     <div className={styles.statHeader}>
                         <div className={styles.statLabel}>Total Revenue</div>
@@ -145,11 +140,7 @@ export default function DashboardClient({
                     </div>
                     <div className={styles.statValue}>SAR {totalRevenue.toLocaleString()}</div>
                     <div className={styles.statTrend}>
-                        <span className={styles.trendUp}>
-                            <ArrowUpRight size={14} className="inline mr-1" />
-                            12%
-                        </span>
-                        <span className="text-muted-foreground">vs last month</span>
+                        <span className="text-muted-foreground">Lifetime Revenue</span>
                     </div>
                 </motion.div>
 
@@ -163,8 +154,8 @@ export default function DashboardClient({
                     </div>
                     <div className={styles.statValue}>{totalBookings}</div>
                     <div className={styles.statTrend}>
-                        <span className="text-emerald-500 font-medium">
-                            {confirmedBookings} confirmed
+                        <span className={styles.trendUp}>
+                            {analyticsData.revenueChart[analyticsData.revenueChart.length - 1]?.bookings || 0} this month
                         </span>
                     </div>
                 </motion.div>
@@ -172,18 +163,14 @@ export default function DashboardClient({
                 {/* Fleet Card */}
                 <motion.div variants={item} className={styles.glassCard}>
                     <div className={styles.statHeader}>
-                        <div className={styles.statLabel}>Fleet Status</div>
+                        <div className={styles.statLabel}>Active Fleet</div>
                         <div className={`${styles.statIcon} bg-purple-500/10 text-purple-400`}>
                             <Car size={20} />
                         </div>
                     </div>
-                    <div className={styles.statValue}>
-                        {activeFleet} <span className="text-lg text-muted-foreground">/ {totalFleet}</span>
-                    </div>
+                    <div className={styles.statValue}>{activeFleet} <span className="text-sm text-muted-foreground">/ {totalFleet}</span></div>
                     <div className={styles.statTrend}>
-                        <span className="text-muted-foreground">
-                            {activeFleet === totalFleet ? 'All vehicles active' : `${totalFleet - activeFleet} inactive`}
-                        </span>
+                        <span className="text-muted-foreground">Vehicles available</span>
                     </div>
                 </motion.div>
 
@@ -197,10 +184,83 @@ export default function DashboardClient({
                     </div>
                     <div className={styles.statValue}>{routesCount}</div>
                     <div className={styles.statTrend}>
-                        <span className="text-muted-foreground">Available for booking</span>
+                        <span className="text-muted-foreground">Destinations</span>
                     </div>
                 </motion.div>
             </motion.div>
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className={`${styles.glassCard} p-6`}
+                >
+                    <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
+                        <TrendingUp size={18} className="text-emerald-500" />
+                        Revenue Trend (Last 6 Months)
+                    </h3>
+                    <div className="h-[300px] w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={analyticsData.revenueChart}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} />
+                                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `SAR ${value}`} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#f8fafc' }}
+                                    itemStyle={{ color: '#10b981' }}
+                                />
+                                <Line type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} activeDot={{ r: 8 }} dot={{ r: 4 }} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className={`${styles.glassCard} p-6`}
+                >
+                    <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
+                        <Activity size={18} className="text-blue-500" />
+                        Booking Status & Top Vehicles
+                    </h3>
+                    <div className="flex flex-col md:flex-row h-[300px] gap-4">
+                        <div className="flex-1 h-full min-h-[200px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={analyticsData.statusPie}
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                    >
+                                        {analyticsData.statusPie.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px' }} />
+                                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="flex-1 h-full min-h-[200px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={analyticsData.vehicleBar} layout="vertical" margin={{ left: 30 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} horizontal={false} />
+                                    <XAxis type="number" hide />
+                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={11} width={80} tickLine={false} axisLine={false} />
+                                    <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px' }} />
+                                    <Bar dataKey="value" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={20} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Recent Bookings */}

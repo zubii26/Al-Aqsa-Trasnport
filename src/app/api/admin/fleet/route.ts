@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json();
-        const { name, image, passengers, luggage, features, price, hourlyRate, category, isActive } = body;
+        const { name, image, passengers, luggage, features, price, hourlyRate, category, isActive, unavailableDates } = body;
 
         const vehicle = await vehicleService.createVehicle({
             name,
@@ -52,7 +52,8 @@ export async function POST(request: Request) {
             price,
             hourlyRate,
             category,
-            isActive
+            isActive,
+            unavailableDates
         });
 
         // Audit Log
@@ -82,7 +83,7 @@ export async function PUT(request: Request) {
 
     try {
         const body = await request.json();
-        const { id, name, image, passengers, luggage, features, price, hourlyRate, category, isActive } = body;
+        const { id, name, image, passengers, luggage, features, price, hourlyRate, category, isActive, unavailableDates } = body;
 
         if (!id) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 });
@@ -97,7 +98,8 @@ export async function PUT(request: Request) {
             price,
             hourlyRate,
             category,
-            isActive
+            isActive,
+            unavailableDates
         });
 
         if (!vehicle) {

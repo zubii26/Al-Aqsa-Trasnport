@@ -22,27 +22,20 @@ interface Vehicle {
     hourlyRate?: string;
     category: string;
     isActive: boolean;
+    unavailableDates?: string[];
 }
 
 export default function FleetPage() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
-    const [editingId, setEditingId] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('All');
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [showModal, setShowModal] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-
-    // Security Modal State
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-
-    const [confirmDialog, setConfirmDialog] = useState<{
-        isOpen: boolean;
-        title: string;
-        message: string;
-        onConfirm: () => void;
-    }>({ isOpen: false, title: '', message: '', onConfirm: () => { } });
-
+    const [confirmDialog, setConfirmDialog] = useState<{ isOpen: boolean; title: string; message: string; onConfirm: () => void }>({ isOpen: false, title: '', message: '', onConfirm: () => { } });
+    // ...
     const [formData, setFormData] = useState({
         name: '',
         image: '',
@@ -52,7 +45,8 @@ export default function FleetPage() {
         price: '',
         hourlyRate: '',
         category: 'Standard',
-        isActive: true
+        isActive: true,
+        unavailableDates: [] as string[]
     });
     const [featureInput, setFeatureInput] = useState('');
 
@@ -91,66 +85,13 @@ export default function FleetPage() {
             price: vehicle.price,
             hourlyRate: vehicle.hourlyRate || '',
             category: vehicle.category,
-            isActive: vehicle.isActive
+            isActive: vehicle.isActive,
+            unavailableDates: vehicle.unavailableDates || []
         });
         setShowModal(true);
     };
 
-    const handleSaveVehicle = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsPasswordModalOpen(true);
-    };
-
-    const handleFinalSave = async () => {
-        setIsPasswordModalOpen(false);
-        try {
-            const url = '/api/admin/fleet';
-            const method = editingId ? 'PUT' : 'POST';
-            const body = editingId ? { ...formData, id: editingId } : formData;
-
-            const res = await fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            });
-
-            if (res.ok) {
-                setShowModal(false);
-                fetchVehicles();
-                resetForm();
-                showToast(`Vehicle ${editingId ? 'updated' : 'added'} successfully`, 'success');
-            } else {
-                throw new Error('Failed to save');
-            }
-        } catch (error) {
-            console.error('Failed to save vehicle:', error);
-            showToast('Failed to save vehicle', 'error');
-        }
-    };
-
-    const handleDelete = (id: string) => {
-        setConfirmDialog({
-            isOpen: true,
-            title: 'Delete Vehicle',
-            message: 'Are you sure you want to delete this vehicle? This action cannot be undone.',
-            onConfirm: async () => {
-                try {
-                    const res = await fetch(`/api/admin/fleet?id=${id}`, { method: 'DELETE' });
-                    if (res.ok) {
-                        fetchVehicles();
-                        showToast('Vehicle deleted successfully', 'success');
-                    } else {
-                        throw new Error('Failed to delete');
-                    }
-                } catch (error) {
-                    console.error('Failed to delete vehicle:', error);
-                    showToast('Failed to delete vehicle', 'error');
-                } finally {
-                    setConfirmDialog(prev => ({ ...prev, isOpen: false }));
-                }
-            }
-        });
-    };
+    // ...
 
     const resetForm = () => {
         setEditingId(null);
@@ -163,7 +104,8 @@ export default function FleetPage() {
             price: '',
             hourlyRate: '',
             category: 'Standard',
-            isActive: true
+            isActive: true,
+            unavailableDates: []
         });
     };
 
@@ -189,6 +131,58 @@ export default function FleetPage() {
         const matchesCategory = filterCategory === 'All' || v.category === filterCategory;
         return matchesSearch && matchesCategory;
     });
+
+    const handleSaveVehicle = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsPasswordModalOpen(true);
+    };
+
+    const handleFinalSave = async () => {
+        setIsPasswordModalOpen(false);
+        try {
+            const method = editingId ? 'PUT' : 'POST';
+            const body = { ...formData, id: editingId };
+
+            const res = await fetch('/api/admin/fleet', {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) throw new Error('Failed to save vehicle');
+
+            showToast(`Vehicle ${editingId ? 'updated' : 'added'} successfully`, 'success');
+            fetchVehicles();
+            setShowModal(false);
+            resetForm();
+        } catch (error) {
+            console.error(error);
+            showToast('Failed to save vehicle', 'error');
+        }
+    };
+
+    const handleDelete = (id: string) => {
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Delete Vehicle',
+            message: 'Are you sure you want to delete this vehicle? This action cannot be undone.',
+            onConfirm: () => performDelete(id)
+        });
+    };
+
+    const performDelete = async (id: string) => {
+        setConfirmDialog(prev => ({ ...prev, isOpen: false }));
+        try {
+            const res = await fetch(`/api/admin/fleet?id=${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Failed to delete');
+
+            showToast('Vehicle deleted successfully', 'success');
+            fetchVehicles();
+        } catch (error) {
+            console.error(error);
+            showToast('Failed to delete vehicle', 'error');
+        }
+    };
 
     const categories = ['All', 'Standard', 'Premium', 'VIP', 'Bus'];
 
@@ -561,6 +555,46 @@ export default function FleetPage() {
                                                     type="button"
                                                     onClick={() => removeFeature(index)}
                                                     className="text-slate-400 hover:text-red-500 transition-colors ml-1"
+                                                >
+                                                    <X size={14} />
+                                                </button>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Unavailable Dates */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Unavailable Dates</label>
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="date"
+                                            className="flex-1 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            onChange={(e) => {
+                                                if (e.target.value && !formData.unavailableDates?.includes(e.target.value)) {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        unavailableDates: [...(prev.unavailableDates || []), e.target.value].sort()
+                                                    }));
+                                                    e.target.value = ''; // Reset input
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 mt-2 min-h-[2.5rem] p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
+                                        {(!formData.unavailableDates || formData.unavailableDates.length === 0) && (
+                                            <span className="text-sm text-slate-400 italic">No unavailable dates set</span>
+                                        )}
+                                        {formData.unavailableDates?.map((date, index) => (
+                                            <span key={index} className="flex items-center gap-1 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 px-3 py-1 rounded-full text-xs font-mono text-red-700 dark:text-red-300">
+                                                {date}
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setFormData(prev => ({
+                                                        ...prev,
+                                                        unavailableDates: prev.unavailableDates?.filter((_, i) => i !== index)
+                                                    }))}
+                                                    className="text-red-400 hover:text-red-600 transition-colors ml-1"
                                                 >
                                                     <X size={14} />
                                                 </button>

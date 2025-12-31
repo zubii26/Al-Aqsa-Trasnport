@@ -1,0 +1,76 @@
+.calendarWrapper :global(.rbc-calendar) {
+    font-family: inherit;
+}
+
+.calendarWrapper :global(.rbc-header) {
+    padding: 12px 0;
+    font-weight: 600;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--border);
+}
+
+.calendarWrapper :global(.rbc-month-view),
+.calendarWrapper :global(.rbc-time-view) {
+    border-color: var(--border);
+}
+
+.calendarWrapper :global(.rbc-day-bg + .rbc-day-bg),
+.calendarWrapper :global(.rbc-month-row + .rbc-month-row) {
+    border-color: var(--border);
+}
+
+.calendarWrapper :global(.rbc-off-range-bg) {
+    background-color: var(--muted-background, #f9fafb);
+}
+
+.calendarWrapper :global(.rbc-today) {
+    background-color: rgba(245, 158, 11, 0.05);
+    /* Amber-50 equivalent with transparency */
+}
+
+.calendarWrapper :global(.rbc-event) {
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.85em;
+    font-weight: 500;
+    border: none;
+    transition: transform 0.1s;
+}
+
+.calendarWrapper :global(.rbc-event:hover) {
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.calendarWrapper :global(.rbc-toolbar button) {
+    color: var(--foreground);
+}
+
+/* Dark mode specific - naive implementation assuming dark mode sets class on html/body, 
+   but here we rely on CSS variables or manual overrides if 'dark' class is present on a parent.
+   Since react-big-calendar doesn't inherit tailwind dark, we use CSS variables if defined,
+   or rely on the wrapper class. */
+
+:global(.dark) .calendarWrapper :global(.rbc-off-range-bg) {
+    background-color: #0f172a;
+    /* Slate 900 */
+    opacity: 0.5;
+}
+
+:global(.dark) .calendarWrapper :global(.rbc-day-bg),
+:global(.dark) .calendarWrapper :global(.rbc-month-view),
+:global(.dark) .calendarWrapper :global(.rbc-time-view),
+:global(.dark) .calendarWrapper :global(.rbc-header),
+:global(.dark) .calendarWrapper :global(.rbc-month-row) {
+    border-color: #1e293b;
+    /* Slate 800 */
+}
+
+:global(.dark) .calendarWrapper :global(.rbc-today) {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+:global(.dark) .calendarWrapper :global(.rbc-show-more) {
+    color: #f59e0b;
+    /* Amber 500 */
+}

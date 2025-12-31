@@ -11,6 +11,15 @@ export default function LogsPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Filters
+    const [actionFilter, setActionFilter] = useState('ALL');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 20;
+
     useEffect(() => {
         fetchLogs();
     }, []);
@@ -21,6 +30,8 @@ export default function LogsPage() {
             const res = await fetch('/api/logs');
             if (res.ok) {
                 const data = await res.json();
+                // Sort by newset first by default if not already
+                data.sort((a: LogEntry, b: LogEntry) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
                 setLogs(data);
             }
         } catch (error) {
@@ -30,10 +41,59 @@ export default function LogsPage() {
         }
     };
 
-    const filteredLogs = logs.filter(log =>
-        log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (log.user || '').toLowerCase().includes(searchTerm.toLowerCase())
+    const handleExportCSV = () => {
+        const headers = ['Action', 'Details', 'User', 'IP', 'Timestamp'];
+        const csvContent = [
+            headers.join(','),
+            ...filteredLogs.map(log => [
+                log.action,
+                `"${log.details.replace(/"/g, '""')}"`,
+                log.user || 'System',
+                log.ip || '',
+                new Date(log.timestamp).toISOString()
+            ].join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `audit_logs_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const uniqueActions = Array.from(new Set(logs.map(l => l.action).filter(Boolean))).sort();
+
+    const filteredLogs = logs.filter(log => {
+        const matchesSearch =
+            log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            log.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (log.user || '').toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesAction = actionFilter === 'ALL' || log.action === actionFilter;
+
+        let matchesDate = true;
+        const logDate = new Date(log.timestamp);
+        if (startDate) {
+            matchesDate = matchesDate && logDate >= new Date(startDate);
+        }
+        if (endDate) {
+            // Add 1 day to end date to include the full day
+            const end = new Date(endDate);
+            end.setDate(end.getDate() + 1);
+            matchesDate = matchesDate && logDate < end;
+        }
+
+        return matchesSearch && matchesAction && matchesDate;
+    });
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+    const paginatedLogs = filteredLogs.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
     );
 
     return (
@@ -79,28 +139,60 @@ export default function LogsPage() {
                     className={adminStyles.glassCard}
                 >
                     {/* Toolbar */}
-                    <div className="flex flex-col md:flex-row gap-4 mb-6 p-4 bg-muted/20 rounded-xl border border-border/50">
+                    <div className="flex flex-col xl:flex-row gap-4 mb-6 p-4 bg-muted/20 rounded-xl border border-border/50">
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search logs..."
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
                                 className="w-full pl-10 pr-4 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                             />
                         </div>
-                        <div className="flex gap-2">
-                            <button className="px-4 py-2 bg-background border border-input rounded-lg hover:bg-muted transition-colors flex items-center gap-2 text-sm font-medium">
-                                <Filter size={16} /> Filter
-                            </button>
-                            <button className="px-4 py-2 bg-background border border-input rounded-lg hover:bg-muted transition-colors flex items-center gap-2 text-sm font-medium">
+
+                        <div className="flex flex-col sm:flex-row gap-2">
+                            {/* Action Filter */}
+                            <select
+                                value={actionFilter}
+                                onChange={(e) => { setActionFilter(e.target.value); setCurrentPage(1); }}
+                                className="px-3 py-2 bg-background border border-input rounded-lg text-sm focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
+                            >
+                                <option value="ALL">All Actions</option>
+                                {uniqueActions.map(action => (
+                                    <option key={action} value={action}>{action}</option>
+                                ))}
+                            </select>
+
+                            {/* Date Filter */}
+                            <div className="flex items-center gap-2 bg-background border border-input rounded-lg px-2">
+                                <input
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => { setStartDate(e.target.value); setCurrentPage(1); }}
+                                    className="bg-transparent text-sm py-2 outline-none w-32"
+                                    title="Start Date"
+                                />
+                                <span className="text-muted-foreground">-</span>
+                                <input
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => { setEndDate(e.target.value); setCurrentPage(1); }}
+                                    className="bg-transparent text-sm py-2 outline-none w-32"
+                                    title="End Date"
+                                />
+                            </div>
+
+                            <button
+                                onClick={handleExportCSV}
+                                className="px-4 py-2 bg-background border border-input rounded-lg hover:bg-muted transition-colors flex items-center gap-2 text-sm font-medium whitespace-nowrap"
+                            >
                                 <Download size={16} /> Export
                             </button>
                         </div>
                     </div>
 
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto min-h-[400px]">
                         <table className={adminStyles.table}>
                             <thead>
                                 <tr>
@@ -111,7 +203,7 @@ export default function LogsPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-border/50">
-                                {filteredLogs.length === 0 ? (
+                                {paginatedLogs.length === 0 ? (
                                     <tr>
                                         <td colSpan={4} className="text-center py-12 text-muted-foreground">
                                             <div className="flex flex-col items-center gap-3">
@@ -123,7 +215,7 @@ export default function LogsPage() {
                                         </td>
                                     </tr>
                                 ) : (
-                                    filteredLogs.map((log, index) => (
+                                    paginatedLogs.map((log, index) => (
                                         <motion.tr
                                             key={log.id}
                                             initial={{ opacity: 0, y: 10 }}
@@ -132,7 +224,13 @@ export default function LogsPage() {
                                             className="hover:bg-muted/30 transition-colors group"
                                         >
                                             <td className="pl-6 py-4 font-medium">
-                                                {log.action}
+                                                <span className={`px-2 py-1 rounded text-xs border ${log.action.includes('DELETE') ? 'bg-red-500/10 text-red-500 border-red-500/20' :
+                                                        log.action.includes('UPDATE') ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
+                                                            log.action.includes('CREATE') ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                                                                'bg-slate-500/10 text-slate-500 border-slate-500/20'
+                                                    }`}>
+                                                    {log.action}
+                                                </span>
                                             </td>
                                             <td className="py-4">
                                                 <div className="text-sm text-foreground/80">{log.details}</div>
@@ -162,6 +260,29 @@ export default function LogsPage() {
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="flex justify-center items-center gap-2 p-4 border-t border-border mt-4">
+                            <button
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                                className="px-3 py-1 text-sm bg-muted rounded disabled:opacity-50"
+                            >
+                                Previous
+                            </button>
+                            <span className="text-sm text-muted-foreground">
+                                Page {currentPage} of {totalPages}
+                            </span>
+                            <button
+                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                disabled={currentPage === totalPages}
+                                className="px-3 py-1 text-sm bg-muted rounded disabled:opacity-50"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </motion.div>
             </div>
         </div>

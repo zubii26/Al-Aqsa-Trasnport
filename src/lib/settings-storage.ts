@@ -3,6 +3,8 @@ import { Settings as SettingsModel } from '@/models';
 import { Settings } from './validations';
 import { unstable_cache, revalidateTag } from 'next/cache';
 
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from './email-templates';
+
 const DEFAULT_SETTINGS: Settings = {
     general: {
         siteName: 'Al Aqsa Umrah',
@@ -40,6 +42,10 @@ const DEFAULT_SETTINGS: Settings = {
         startDate: '',
         endDate: '',
     },
+    emailTemplates: {
+        bookingConfirmation: DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
+        adminNotification: DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
+    }
 };
 
 export const getSettings = async (): Promise<Settings> => {
@@ -91,6 +97,10 @@ export const getSettings = async (): Promise<Settings> => {
                 startDate: settingsMap['discount_start_date'] || '',
                 endDate: settingsMap['discount_end_date'] || '',
             },
+            emailTemplates: {
+                bookingConfirmation: settingsMap['email_template_booking_confirmation'] || DEFAULT_SETTINGS.emailTemplates?.bookingConfirmation || DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
+                adminNotification: settingsMap['email_template_admin_notification'] || DEFAULT_SETTINGS.emailTemplates?.adminNotification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
+            }
         };
 
         console.log('[Settings] Retrieved discount settings:', mergedSettings.discount);
@@ -135,6 +145,9 @@ export async function saveSettings(newSettings: Settings): Promise<void> {
         { key: 'discount_value', value: String(newSettings.discount?.value || 0) },
         { key: 'discount_start_date', value: newSettings.discount?.startDate || '' },
         { key: 'discount_end_date', value: newSettings.discount?.endDate || '' },
+
+        { key: 'email_template_booking_confirmation', value: newSettings.emailTemplates?.bookingConfirmation || '' },
+        { key: 'email_template_admin_notification', value: newSettings.emailTemplates?.adminNotification || '' },
     ];
 
     // Update each setting

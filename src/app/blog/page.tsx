@@ -7,6 +7,7 @@ import BlogFeed from '@/components/blog/BlogFeed';
 import RespectSection from '@/components/blog/RespectSection';
 import TravelTips from '@/components/blog/TravelTips';
 import FAQSection from '@/components/blog/FAQSection';
+import NewsletterSignup from '@/components/blog/NewsletterSignup';
 import { blogService } from '@/services/blogService';
 import { Metadata } from 'next';
 
@@ -70,6 +71,8 @@ export default async function BlogPage() {
                 posts={posts}
                 categories={CATEGORIES}
             />
+
+            <NewsletterSignup />
 
             <HadithCarousel />
             <RespectSection />

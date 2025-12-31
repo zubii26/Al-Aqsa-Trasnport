@@ -12,6 +12,9 @@ interface ArticleGridProps {
     onCategoryChange: (category: string) => void;
     searchTerm: string;
     onSearchChange: (term: string) => void;
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
 }
 
 export default function ArticleGrid({
@@ -20,7 +23,10 @@ export default function ArticleGrid({
     activeCategory,
     onCategoryChange,
     searchTerm,
-    onSearchChange
+    onSearchChange,
+    currentPage,
+    totalPages,
+    onPageChange
 }: ArticleGridProps) {
     return (
         <section className="py-24 bg-gradient-to-b from-background to-slate-50 dark:from-background dark:to-slate-950/50 relative overflow-hidden">
@@ -141,6 +147,58 @@ export default function ArticleGrid({
                         </FadeIn>
                     ))}
                 </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="mt-16 flex justify-center items-center gap-2">
+                        <button
+                            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
+                            className="p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 disabled:opacity-50 disabled:cursor-not-allowed hover:border-primary hover:text-primary transition-colors"
+                        >
+                            <ArrowRight size={20} className="rotate-180" />
+                        </button>
+
+                        <div className="flex gap-2">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                                if (
+                                    page === 1 ||
+                                    page === totalPages ||
+                                    (page >= currentPage - 1 && page <= currentPage + 1)
+                                ) {
+                                    return (
+                                        <button
+                                            key={page}
+                                            onClick={() => onPageChange(page)}
+                                            className={`
+                                                w-10 h-10 rounded-full font-medium flex items-center justify-center transition-all
+                                                ${currentPage === page
+                                                    ? 'bg-primary text-white shadow-lg shadow-primary/25 scale-110'
+                                                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 hover:border-primary hover:text-primary'}
+                                            `}
+                                        >
+                                            {page}
+                                        </button>
+                                    );
+                                } else if (
+                                    (page === currentPage - 2 && page > 1) ||
+                                    (page === currentPage + 2 && page < totalPages)
+                                ) {
+                                    return <span key={page} className="w-10 h-10 flex items-center justify-center text-slate-400">...</span>;
+                                }
+                                return null;
+                            })}
+                        </div>
+
+                        <button
+                            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+                            disabled={currentPage === totalPages}
+                            className="p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 disabled:opacity-50 disabled:cursor-not-allowed hover:border-primary hover:text-primary transition-colors"
+                        >
+                            <ArrowRight size={20} />
+                        </button>
+                    </div>
+                )}
 
                 {posts.length === 0 && (
                     <div className="text-center py-20">

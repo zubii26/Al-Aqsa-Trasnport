@@ -13,6 +13,7 @@ export interface IVehicle extends Document {
     hourlyRate?: string;
     category: string;
     isActive: boolean;
+    unavailableDates?: string[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -161,6 +162,7 @@ const VehicleSchema = new Schema<IVehicle>({
     hourlyRate: { type: String },
     category: { type: String, default: 'Standard' },
     isActive: { type: Boolean, default: true },
+    unavailableDates: { type: [String], default: [] },
 }, { timestamps: true });
 
 const BookingSchema = new Schema<IBooking>({
@@ -350,5 +352,20 @@ const SectionSchema = new Schema<ISection>({
     lastUpdatedBy: { type: String },
 }, { timestamps: true });
 
-export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+const SubscriberSchema = new Schema({
+    email: { type: String, required: true, unique: true },
+    isActive: { type: Boolean, default: true },
+    source: { type: String, default: 'website' },
+}, { timestamps: true });
+
+export interface ISubscriber extends Document {
+    email: string;
+    isActive: boolean;
+    source: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
+export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
