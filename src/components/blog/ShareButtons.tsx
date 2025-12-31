@@ -10,7 +10,7 @@ interface ShareButtonsProps {
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ slug, title }) => {
     const [copied, setCopied] = useState(false);
-    const url = `https://alaqsa-transport.com/blog/${slug}`;
+    const url = `https://alaqsaumrahtransport.com/blog/${slug}`;
     const encodedUrl = encodeURIComponent(url);
     const encodedTitle = encodeURIComponent(title);
 

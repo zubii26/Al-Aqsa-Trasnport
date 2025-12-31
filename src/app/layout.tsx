@@ -83,13 +83,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const allKeywords = Array.from(new Set([...OPTIMIZED_KEYWORDS, ...settingsKeywords, ...ARABIC_KEYWORDS]));
 
   return {
-    metadataBase: new URL('https://alaqsa-transport.com'),
+    metadataBase: new URL('https://alaqsaumrahtransport.com'),
     title: {
       default: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia | Jeddah to Makkah Taxi",
       template: `%s | ${siteName}`
     },
     alternates: {
-      canonical: 'https://alaqsa-transport.com',
+      canonical: 'https://alaqsaumrahtransport.com',
     },
     manifest: '/manifest.json',
     description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
@@ -105,7 +105,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: settings.seo.defaultTitle || "Best Umrah Transport Services | Makkah to Madinah Taxi",
       description: settings.seo.defaultDescription || OPTIMIZED_DESCRIPTION,
-      url: "https://alaqsa-transport.com",
+      url: "https://alaqsaumrahtransport.com",
       siteName: siteName,
       images: [
         {
@@ -252,10 +252,10 @@ export default async function RootLayout({
               "@type": "TravelAgency",
               "name": settings.general.siteName,
               "description": settings.general.description,
-              "logo": "https://alaqsa-transport.com/logo.png",
-              "image": "https://alaqsa-transport.com/images/og-image.jpg",
-              "@id": "https://alaqsa-transport.com",
-              "url": "https://alaqsa-transport.com",
+              "logo": "https://alaqsaumrahtransport.com/logo.png",
+              "image": "https://alaqsaumrahtransport.com/images/og-image.jpg",
+              "@id": "https://alaqsaumrahtransport.com",
+              "url": "https://alaqsaumrahtransport.com",
               "telephone": settings.contact.phone,
               "priceRange": "$$",
               "address": {
