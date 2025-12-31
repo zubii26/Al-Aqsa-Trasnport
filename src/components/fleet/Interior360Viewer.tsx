@@ -1,172 +1,115 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
-import { Wifi, Info, Maximize2 } from 'lucide-react';
-import Image from 'next/image';
+import React, { Suspense, useState, useEffect } from 'react';
+import { Canvas, useLoader, useThree } from '@react-three/fiber';
+import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
+import { TextureLoader, BackSide, Texture } from 'three';
+import { Maximize2, Rotate3d, Info } from 'lucide-react';
+import * as THREE from 'three';
 
 interface Interior360ViewerProps {
-    imageSrc: string;
+    imageUrl: string;
     title?: string;
-    description?: string;
 }
 
-export default function Interior360Viewer({
-    imageSrc,
-    title = "Luxury Interior",
-    description = "Experience the premium cabin comfort"
-}: Interior360ViewerProps) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [backgroundPositionX, setBackgroundPositionX] = useState(50); // Percent
-    const [isLoaded, setIsLoaded] = useState(false);
+function Sphere({ imageUrl }: { imageUrl: string }) {
+    const texture = useLoader(TextureLoader, imageUrl);
+    // Determine mapping based on image aspect ratio? Standard equirectangular is 2:1.
+    // Three.js handles this well by default on spheres.
+    // We render on the *back* side so we view it from inside.
+    return (
+        <mesh scale={[-1, 1, 1]}>
+            <sphereGeometry args={[500, 60, 40]} />
+            <meshBasicMaterial map={texture} side={BackSide} toneMapped={false} />
+        </mesh>
+    );
+}
+
+function Loader() {
+    const { progress } = useProgress();
+    return (
+        <Html center>
+            <div className="flex flex-col items-center justify-center p-4 bg-black/80 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl">
+                <div className="w-12 h-12 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin mb-3"></div>
+                <div className="text-white font-mono text-sm tracking-widest">{progress.toFixed(0)}% LOADED</div>
+            </div>
+        </Html>
+    );
+}
+
+export default function Interior360Viewer({ imageUrl, title = "360° Interior Experience" }: Interior360ViewerProps) {
+    const [isInteracting, setIsInteracting] = useState(false);
     const [showHint, setShowHint] = useState(true);
 
-    // Speed of rotation
-    const SENSITIVITY = 0.1;
-
-    const handleMouseDown = (e: React.MouseEvent) => {
-        setIsDragging(true);
-        setStartX(e.clientX);
-        setShowHint(false);
-        // Change cursor
-        if (containerRef.current) containerRef.current.style.cursor = 'grabbing';
-    };
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setIsDragging(true);
-        setStartX(e.touches[0].clientX);
-        setShowHint(false);
-    };
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isDragging) return;
-
-        const deltaX = e.clientX - startX;
-        // Update background position based on delta
-        // We move position inversely to drag for natural "camera" feel, or directly for "object" feel.
-        // For interior pano, dragging left usually moves view right (so background moves left).
-
-        setBackgroundPositionX(prev => prev - (deltaX * SENSITIVITY));
-        setStartX(e.clientX);
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (!isDragging) return;
-        const deltaX = e.touches[0].clientX - startX;
-        setBackgroundPositionX(prev => prev - (deltaX * SENSITIVITY * 2)); // Higher sensitivity for touch
-        setStartX(e.touches[0].clientX);
-    };
-
-    const stopDragging = () => {
-        setIsDragging(false);
-        if (containerRef.current) containerRef.current.style.cursor = 'grab';
-    };
-
-    // Auto-rotate slowly when not interacting
     useEffect(() => {
-        let animationId: number;
-
-        const autoRotate = () => {
-            if (!isDragging && showHint) {
-                setBackgroundPositionX(prev => prev + 0.02); // Very slow drift
-                animationId = requestAnimationFrame(autoRotate);
-            }
-        };
-
-        const timeoutId = setTimeout(() => {
-            animationId = requestAnimationFrame(autoRotate);
-        }, 2000);
-
-        return () => {
-            cancelAnimationFrame(animationId);
-            clearTimeout(timeoutId);
-        };
-    }, [isDragging, showHint]);
-
-    // Preload image
-    useEffect(() => {
-        const img = new window.Image();
-        img.src = imageSrc;
-        img.onload = () => setIsLoaded(true);
-    }, [imageSrc]);
+        // Hide hint after 5 seconds of interaction
+        if (isInteracting) {
+            const timer = setTimeout(() => setShowHint(false), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [isInteracting]);
 
     return (
-        <div className="relative group rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
-            {/* Aspect Ratio Container */}
-            <div
-                ref={containerRef}
-                className="relative w-full aspect-[16/9] md:aspect-[21/9] cursor-grab active:cursor-grabbing bg-slate-900 overflow-hidden"
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={stopDragging}
-                onMouseLeave={stopDragging}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={stopDragging}
+        <div className="relative w-full h-[500px] md:h-[600px] bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
+            {/* Header / Overlay */}
+            <div className="absolute top-0 left-0 right-0 p-4 md:p-6 flex justify-between items-start z-10 pointer-events-none">
+                <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90 text-sm font-medium mb-2">
+                        <Rotate3d className="w-4 h-4 text-[#d4af37]" />
+                        <span>Interactive 3D View</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white drop-shadow-md hidden md:block">{title}</h3>
+                </div>
+                <button className="pointer-events-auto p-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-xl text-white transition-colors border border-white/10">
+                    <Maximize2 className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* Hint Overlay */}
+            {showHint && !isInteracting && (
+                <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+                    <div className="bg-black/60 backdrop-blur-sm p-4 rounded-xl border border-white/10 animate-pulse">
+                        <div className="flex items-center gap-3 text-white font-medium">
+                            <div className="w-8 h-8 rounded-full border-2 border-white/30 flex items-center justify-center">
+                                <span className="block w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>
+                            </div>
+                            <span>Drag to Explore</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <Canvas
+                camera={{ fov: 75, position: [0, 0, 0.1] }}
+                gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
+                onPointerDown={() => setIsInteracting(true)}
             >
-                {/* 360 Image Layer */}
-                <div
-                    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                        backgroundImage: `url('${imageSrc}')`,
-                        backgroundPosition: `${backgroundPositionX}% center`,
-                        // We use a very large width to simulate the panorama strip.
-                        // Ideally strictly equirectangular projection needs WebGL, but for "Premium Look" simple wider scrolling works surprisingly well if the image is wide enough.
-                        // We'll trust the user uploaded a wide pano or use `background-size: cover` isn't enough.
-                        // We need `background-size: auto 100%` or similar to stretch horizontally.
-                        backgroundSize: 'auto 110%', // Slight zoom to avoid edges
-                        backgroundRepeat: 'repeat-x'
-                    }}
+                <Suspense fallback={<Loader />}>
+                    <Sphere imageUrl={imageUrl} />
+                    <Preload all />
+                </Suspense>
+
+                <OrbitControls
+                    enableZoom={true}
+                    enablePan={false}
+                    enableDamping={true}
+                    dampingFactor={0.05}
+                    autoRotate={!isInteracting}
+                    autoRotateSpeed={0.5}
+                    rotateSpeed={-0.5} // Invert rotation for intuitive "drag scene" feel
+                    zoomSpeed={1.2}
+                    minDistance={0.1} // Prevent going outside sphere
+                    maxDistance={100} // Prevent zooming too far out (though inside sphere it behaves differently)
+                // We are actually inside the sphere, so zoom is FOV or position.
+                // OrbitControls moves the camera. 
                 />
+            </Canvas>
 
-                {/* Loading State */}
-                {!isLoaded && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
-                        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                    </div>
-                )}
+            {/* Bottom Gradient for depth */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></div>
 
-                {/* Lighting / Reflection Overlay for Realism */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
-                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
-
-                {/* Controls / Hints */}
-                <div
-                    className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 ${showHint ? 'opacity-100' : 'opacity-0'}`}
-                >
-                    <div className="bg-black/40 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full flex items-center gap-3">
-                        <div className="relative w-4 h-4">
-                            <span className="absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75 animate-ping"></span>
-                            <span className="relative inline-flex rounded-full h-4 w-4 bg-amber-500 border-2 border-slate-900"></span>
-                        </div>
-                        <span className="text-white text-sm font-bold tracking-wide">Drag to Explore Interior</span>
-                    </div>
-                </div>
-
-                {/* Footer Info */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent pointer-events-none flex justify-between items-end">
-                    <div>
-                        <h3 className="text-white font-bold text-xl font-playfair">{title}</h3>
-                        <p className="text-slate-300 text-sm">{description}</p>
-                    </div>
-                    <div className="hidden md:flex items-center gap-3">
-                        <div className="flex items-center gap-2 text-xs font-bold text-amber-500 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-500/20">
-                            <Wifi size={14} /> WiFi Onboard
-                        </div>
-                        <button className="p-2 text-white/50 hover:text-white transition-colors">
-                            <Info size={20} />
-                        </button>
-                        <button className="p-2 text-white/50 hover:text-white transition-colors">
-                            <Maximize2 size={20} />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Compass / Navigation Hint (Static for visual flair) */}
-                <div className="absolute top-6 left-6 pointer-events-none">
-                    <span className="text-[10px] font-mono text-amber-500 tracking-[0.2em] uppercase border border-amber-500/30 px-2 py-1 rounded">360° LIVE VIEW</span>
-                </div>
+            <div className="absolute bottom-6 left-6 z-10 pointer-events-none">
+                <p className="text-white/60 text-xs uppercase tracking-widest font-bold">Use Mouse/Touch to Rotate • Scroll to Zoom</p>
             </div>
         </div>
     );

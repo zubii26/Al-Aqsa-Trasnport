@@ -7,6 +7,7 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
+import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
 export const metadata: Metadata = {
     title: "Toyota Hiace Umrah Taxi | 10-12 Seater Bus Makkah",
@@ -166,21 +167,11 @@ export default async function ToyotaHiacePage() {
                     <span className="text-emerald-500 font-bold tracking-widest uppercase text-sm mb-4 block">Spacious Group Travel</span>
                     <h2 className="text-3xl md:text-5xl font-bold font-playfair mb-8">Step Inside</h2>
 
-                    <div className="relative aspect-video max-w-4xl mx-auto bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl group cursor-grab active:cursor-grabbing">
-                        {/* Placeholder Content for 360 - simulating a view */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
-                            <p className="text-slate-500 text-lg animate-pulse">360° View Loading...</p>
-                            <div className="absolute inset-0 bg-[url('/images/fleet/hiace-hero-professional.png')] bg-cover opacity-50 bg-center"></div>
-                        </div>
-
-                        {/* Interactive Hint */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-full flex items-center gap-3">
-                                <Wifi className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-20" />
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                                <span className="font-bold">Click & Drag to Rotate</span>
-                            </div>
-                        </div>
+                    <div className="max-w-6xl mx-auto">
+                        <Interior360Viewer
+                            imageUrl="/images/fleet/hiace-interior-360.jpg"
+                            title="Toyota Hiace Interior"
+                        />
                     </div>
                     <p className="text-slate-400 mt-6 text-sm">Interactive 360° Interior View not available on mobile devices in low-data mode.</p>
                 </div>

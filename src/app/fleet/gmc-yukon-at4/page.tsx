@@ -172,9 +172,8 @@ export default async function GmcYukonPage() {
 
                     <div className="max-w-6xl mx-auto">
                         <Interior360Viewer
-                            imageSrc="/images/fleet/gmc-yukon-interior-360.jpg"
+                            imageUrl="/images/fleet/gmc-yukon-interior-360.jpg"
                             title="GMC Yukon XL Denali Interior"
-                            description="Drag to explore the spacious leather-wrapped cabin with varying lighting options."
                         />
                     </div>
                     <p className="text-slate-400 mt-6 text-sm">Interactive 360° Interior Experience. Optimized for Desktop & Tablet.</p>
