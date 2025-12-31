@@ -62,7 +62,7 @@ export default async function Home() {
     </>
   );
 
-  const heroImage = getSectionImage(heroSection, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
+  const heroImage = getSectionImage(heroSection, 'desktop') || "/images/fleet/gmc-yukon-hero-professional.png";
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Ride / احجز الآن";
   const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
 

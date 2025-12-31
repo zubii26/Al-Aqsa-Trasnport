@@ -48,6 +48,16 @@ export async function POST(request: Request) {
             auditDetails = `Updated discount settings: ${updates['discount_enabled'] === 'true' ? 'Enabled' : 'Disabled'} (${updates['discount_value']}${updates['discount_type'] === 'percentage' ? '%' : ' SAR'})`;
         }
 
+        // Handle Email Templates Object Flattening
+        if (body.emailTemplates) {
+            updates['email_template_booking_confirmation'] = body.emailTemplates.bookingConfirmation;
+            updates['email_template_admin_notification'] = body.emailTemplates.adminNotification;
+
+            delete body.emailTemplates;
+            auditAction = 'UPDATE_EMAILS';
+            auditDetails = 'Updated email templates';
+        }
+
         // Merge remaining body items
         Object.entries(body).forEach(([key, value]) => {
             updates[key] = String(value);

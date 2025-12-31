@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent } from 'lucide-react';
+import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent, Mail } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast, ToastType } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
@@ -10,9 +10,11 @@ import dynamic from 'next/dynamic';
 const PasswordConfirmModal = dynamic(() => import('@/components/admin/PasswordConfirmModal'), { ssr: false });
 
 import DiscountManagement from '@/components/admin/settings/DiscountManagement';
+import EmailTemplateManager from '@/components/admin/settings/EmailTemplateManager';
 import { Settings } from '@/lib/validations';
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from '@/lib/email-templates';
 
-type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount';
+type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount' | 'emails';
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('general');
@@ -57,6 +59,10 @@ export default function SettingsPage() {
             value: 0,
             startDate: '',
             endDate: '',
+        },
+        emailTemplates: {
+            bookingConfirmation: '',
+            adminNotification: '',
         }
     });
 
@@ -85,10 +91,16 @@ export default function SettingsPage() {
                 endDate: data.discount_end_date || '',
             };
 
+            const emailTemplates = {
+                bookingConfirmation: data.email_template_booking_confirmation || DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
+                adminNotification: data.email_template_admin_notification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
+            };
+
             setSettings(prev => ({
                 ...prev,
                 ...data,
-                discount: discountSettings
+                discount: discountSettings,
+                emailTemplates: emailTemplates
             }));
         } catch (error) {
             console.error('Failed to fetch settings:', error);
@@ -234,6 +246,7 @@ export default function SettingsPage() {
         { id: 'seo', label: 'SEO', icon: Search, description: 'Search engine optimization' },
         { id: 'scripts', label: 'Scripts', icon: Code, description: 'Custom tracking scripts' },
         { id: 'discount', label: 'Discounts', icon: Percent, description: 'Promotions & offers' },
+        { id: 'emails', label: 'Email Templates', icon: Mail, description: 'Customize emails' },
         { id: 'security', label: 'Security', icon: ShieldCheck, description: 'Password & access' },
     ];
 
@@ -579,6 +592,13 @@ export default function SettingsPage() {
                                     settings={settings as unknown as Settings}
                                     onSave={handleSectionSave}
                                     isSaving={saving}
+                                />
+                            )}
+
+                            {activeTab === 'emails' && (
+                                <EmailTemplateManager
+                                    settings={settings as unknown as Settings}
+                                    onChange={handleSectionSave}
                                 />
                             )}
 

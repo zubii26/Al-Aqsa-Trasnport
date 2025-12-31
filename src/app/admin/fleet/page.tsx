@@ -569,6 +569,7 @@ export default function FleetPage() {
                                     <div className="flex gap-2">
                                         <input
                                             type="date"
+                                            min={new Date().toISOString().split('T')[0]}
                                             className="flex-1 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
                                             onChange={(e) => {
                                                 if (e.target.value && !formData.unavailableDates?.includes(e.target.value)) {

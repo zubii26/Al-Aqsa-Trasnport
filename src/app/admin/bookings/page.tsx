@@ -9,6 +9,8 @@ import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
 
+import BookingDetailsModal from '@/components/admin/bookings/BookingDetailsModal';
+
 const BookingCalendar = dynamic(() => import('@/components/admin/bookings/BookingCalendar'), { ssr: false });
 
 // Extend Booking type to include id and status if not in schema
@@ -28,6 +30,7 @@ export default function BookingsPage() {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [specificVehicle, setSpecificVehicle] = useState('All Vehicles');
+    const [selectedBooking, setSelectedBooking] = useState<BookingWithDetails | null>(null);
 
     // ... sortBookings function ...
     const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
@@ -475,13 +478,22 @@ export default function BookingsPage() {
                         <BookingCalendar
                             events={calendarEvents}
                             onSelectEvent={(event) => {
-                                // Maybe open a details modal later
-                                console.log('Selected event:', event);
+                                setSelectedBooking(event.resource);
                             }}
                         />
                     </div>
                 )}
             </div>
+
+            <BookingDetailsModal
+                booking={selectedBooking}
+                isOpen={!!selectedBooking}
+                onClose={() => setSelectedBooking(null)}
+                onStatusUpdate={(id, status) => {
+                    handleStatusChange(id, status);
+                    setSelectedBooking(null); // Close modal after update
+                }}
+            />
         </div>
     );
 }

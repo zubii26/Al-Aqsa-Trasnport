@@ -6,8 +6,9 @@ export interface LogEntry {
     action: string;
     details: string;
     timestamp: string;
-    ip?: string;
     user?: string;
+    entity?: string;
+    ip?: string;
 }
 
 export async function logAction(action: string, details: string, ip?: string, user: string = 'Admin') {
@@ -25,21 +26,48 @@ export async function logAction(action: string, details: string, ip?: string, us
     }
 }
 
-export async function getLogs(): Promise<LogEntry[]> {
+export async function getLogs(page: number = 1, limit: number = 20, search: string = ''): Promise<{ logs: LogEntry[], total: number, pages: number }> {
     try {
         await dbConnect();
-        const logs = await AuditLog.find({}).sort({ timestamp: -1 }).limit(100).lean();
 
-        return logs.map(log => ({
+        const query: any = {};
+        if (search) {
+            const searchRegex = new RegExp(search, 'i');
+            query.$or = [
+                { action: searchRegex },
+                { details: searchRegex },
+                { user: searchRegex }
+            ];
+        }
+
+        const skip = (page - 1) * limit;
+
+        const [logs, total] = await Promise.all([
+            AuditLog.find(query)
+                .sort({ timestamp: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            AuditLog.countDocuments(query)
+        ]);
+
+        const formattedLogs = logs.map(log => ({
             id: log._id.toString(),
             action: log.action,
             details: log.details || '',
             timestamp: log.timestamp.toISOString(),
             user: log.user,
-            ip: '' // IP not stored in AuditLog currently
+            entity: log.entity,
+            ip: ''
         }));
+
+        return {
+            logs: formattedLogs,
+            total,
+            pages: Math.ceil(total / limit)
+        };
     } catch (error) {
         console.error('Failed to fetch logs:', error);
-        return [];
+        return { logs: [], total: 0, pages: 0 };
     }
 }

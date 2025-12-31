@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import Image from 'next/image';
 
 interface FleetFeatureImageProps {
     src: string;
@@ -10,14 +11,18 @@ interface FleetFeatureImageProps {
 }
 
 export default function FleetFeatureImage({ src, alt, fallbackSrc, className }: FleetFeatureImageProps) {
+    const [imgSrc, setImgSrc] = useState(src);
+
     return (
-        <img
-            src={src}
+        <Image
+            src={imgSrc}
             alt={alt}
+            fill
             className={className}
-            onError={(e) => {
-                (e.target as HTMLImageElement).src = fallbackSrc;
+            onError={() => {
+                setImgSrc(fallbackSrc);
             }}
+            sizes="(max-width: 768px) 100vw, 50vw"
         />
     );
 }

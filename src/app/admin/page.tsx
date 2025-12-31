@@ -13,7 +13,7 @@ export default async function AdminDashboard() {
 
     const bookings = await getBookings();
     const fleet = await getFleet();
-    const logs = await getLogs();
+    const { logs } = await getLogs(1, 10); // get recent 10
     const routes = await routeService.getRoutes();
     const routesCount = routes.length;
 

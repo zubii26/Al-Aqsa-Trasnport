@@ -11,12 +11,13 @@ export async function GET() {
     }
 
     try {
-        const [bookings, fleet, pricing, logs] = await Promise.all([
+        const [bookings, fleet, pricing, logsData] = await Promise.all([
             getBookings(),
             getFleet(),
             getPricingData(),
             getLogs()
         ]);
+        const logs = logsData.logs;
 
         const totalBookings = bookings.length;
         const confirmedBookings = bookings.filter(b => b.status === 'confirmed');
