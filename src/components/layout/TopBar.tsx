@@ -19,57 +19,45 @@ const TopBar = async () => {
     // }
 
     return (
-        <>
-            {/* AnnouncementBanner is rendered in layout.tsx */}
-            <div className="hidden md:block bg-gradient-to-r from-slate-900 to-slate-800 text-slate-200 border-b border-white/10">
-                <div className="container mx-auto px-4 h-10 flex justify-between items-center text-xs tracking-wide font-medium">
-                    <div className="flex items-center gap-6">
-                        {contact.email && (
-                            <a href={`mailto:${contact.email}`} className="flex items-center gap-2 hover:text-amber-400 transition-colors duration-300">
-                                <Mail size={14} className="text-amber-400" />
-                                <span>{contact.email}</span>
-                            </a>
-                        )}
-                        {contact.phone && (
-                            <a href={`tel:${contact.phone}`} className="flex items-center gap-2 hover:text-amber-400 transition-colors duration-300">
-                                <Phone size={14} className="text-amber-400" />
-                                <span>{contact.phone}</span>
-                            </a>
-                        )}
-                        {contact.phone2 && (
-                            <a href={`tel:${contact.phone2}`} className="flex items-center gap-2 hover:text-amber-400 transition-colors duration-300">
-                                <Phone size={14} className="text-amber-400" />
-                                <span>{contact.phone2}</span>
-                            </a>
-                        )}
-                    </div>
+        <div className="hidden lg:block bg-[#0B1120] text-slate-300 border-b border-white/5 relative z-50">
+            <div className="container mx-auto px-4 h-12 flex justify-between items-center text-xs font-medium tracking-wide">
 
-                    <div className="flex items-center gap-1">
+                {/* Left Side: Contact Info */}
+                <div className="flex items-center gap-6">
+                    {contact.email && (
+                        <a
+                            href={`mailto:${contact.email}`}
+                            className="flex items-center gap-2 group transition-colors duration-300"
+                        >
+                            <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-amber-500 transition-colors duration-300">
+                                <Mail size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                            </div>
+                            <span className="group-hover:text-white transition-colors duration-300">{contact.email}</span>
+                        </a>
+                    )}
+                    <div className="h-4 w-px bg-white/10" />
+                    {contact.phone && (
+                        <a
+                            href={`tel:${contact.phone}`}
+                            className="flex items-center gap-2 group transition-colors duration-300"
+                        >
+                            <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-amber-500 transition-colors duration-300">
+                                <Phone size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                            </div>
+                            <span className="group-hover:text-white transition-colors duration-300">{contact.phone}</span>
+                        </a>
+                    )}
+                </div>
+
+                {/* Right Side: Socials & Extras */}
+                <div className="flex items-center gap-4">
+                    <span className="text-slate-500">Follow us:</span>
+                    <div className="flex items-center gap-2">
                         {[
                             { icon: Facebook, href: contact.social.facebook, label: 'Facebook' },
                             { icon: Instagram, href: contact.social.instagram, label: 'Instagram' },
                             { icon: Twitter, href: contact.social.twitter, label: 'Twitter' },
                             { icon: Linkedin, href: contact.social.linkedin, label: 'LinkedIn' },
-                            {
-                                icon: (props: any) => (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        {...props}
-                                    >
-                                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                                    </svg>
-                                ),
-                                href: contact.social.tiktok,
-                                label: 'TikTok'
-                            }
                         ].map((social, index) => (
                             social.href && (
                                 <a
@@ -78,16 +66,16 @@ const TopBar = async () => {
                                     target="_blank"
                                     rel="noreferrer"
                                     aria-label={social.label}
-                                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 hover:text-amber-400 hover:scale-110 transition-all duration-300 group"
+                                    className="w-7 h-7 flex items-center justify-center rounded-full bg-white/5 text-slate-400 hover:bg-amber-500 hover:text-white hover:-translate-y-0.5 transition-all duration-300"
                                 >
-                                    <social.icon size={15} className="group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
+                                    <social.icon size={13} />
                                 </a>
                             )
                         ))}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
