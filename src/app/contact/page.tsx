@@ -81,8 +81,56 @@ export default async function ContactPage() {
         }
     ];
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Al Aqsa Umrah Transport",
+        "image": "https://alaqsaumrahtransport.com/images/logo.png",
+        "@id": "https://alaqsaumrahtransport.com",
+        "url": "https://alaqsaumrahtransport.com",
+        "telephone": phone1,
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Al Aziziyah",
+            "addressLocality": "Makkah",
+            "addressRegion": "Makkah Region",
+            "postalCode": "24243",
+            "addressCountry": "SA"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 21.4478336,
+            "longitude": 39.8126588
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "opens": "00:00",
+            "closes": "23:59"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": phone1,
+            "contactType": "customer service",
+            "areaServed": "SA",
+            "availableLanguage": ["en", "ar", "ur"]
+        }
+    };
+
     return (
         <div className="bg-slate-50 dark:bg-slate-950 pb-20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="Get in Touch | تواصل معنا"
                 subtitle="Reliable Booking & 24/7 Support for Your Umrah Journey. Premium Transport Services from Makkah to Madinah."
