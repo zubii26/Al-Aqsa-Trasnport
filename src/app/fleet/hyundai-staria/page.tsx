@@ -10,21 +10,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Hyundai Staria 2024 Luxury Van",
+    "image": "https://alaqsaumrahtransport.com/images/fleet/staria-hero-professional.png",
+    "description": "Rent premium Hyundai Staria 2024 in Makkah. Luxury 7-seater van with panoramic views for VIP families.",
+    "brand": { "@type": "Brand", "name": "Hyundai" },
+    "offers": { "@type": "Offer", "price": "450", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+};
+
 export const metadata: Metadata = {
-    title: "Hyundai Staria Umrah Taxi | Luxury 7-Seater Van Makkah",
-    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater van for Jeddah Airport to Makkah and Madinah. Modern, spacious, and perfect for VIP families.",
+    title: "Hyundai Staria Rental Makkah | Luxury 2024 Family Van",
+    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater luxury van for Jeddah Airport to Makkah and Madinah. Modern comfort for VIP families.",
     keywords: [
-        "Hyundai Staria Umrah Taxi",
-        "Hyundai Staria Makkah",
-        "Luxury Van Jeddah to Madinah",
-        "7 Seater VIP Taxi Makkah",
-        "Hyundai Staria Rental Saudi Arabia",
-        "Comfortable Umrah Transport",
-        "Staria Van for Ziyarat"
+        "Hyundai Staria rental Makkah", "Luxury van Jeddah airport", "Staria 2024 Makkah to Madinah",
+        "VIP family transport Umrah", "Hyundai Staria taxi Saudi Arabia", "Premium van hire Makkah"
     ],
-    alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria',
-    }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' }
 };
 
 const stariaFAQs = [
@@ -53,6 +56,7 @@ export default async function HyundaiStariaPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Hero
                 title="Hyundai Staria 2024 | Premium Umrah Transport"
                 subtitle="The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."

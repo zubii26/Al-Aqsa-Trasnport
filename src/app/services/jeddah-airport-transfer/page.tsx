@@ -39,18 +39,43 @@ const jsonLd = {
     "name": "Jeddah Airport to Makkah Transfer",
     "provider": {
         "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport"
+        "name": "Al Aqsa Transport",
+        "image": "https://alaqsaumrahtransport.com/logo.png"
     },
     "serviceType": "Airport Transfer",
     "areaServed": {
         "@type": "Airport",
-        "name": "King Abdulaziz International Airport"
+        "name": "King Abdulaziz International Airport (JED)"
     },
-    "description": "Private transfer from Jeddah Airport to Makkah hotels.",
+    "description": "Private VIP transfer from Jeddah Airport to Makkah hotels. 24/7 Meet & Greet.",
     "offers": {
         "@type": "Offer",
         "price": "200",
-        "priceCurrency": "SAR"
+        "priceCurrency": "SAR",
+        "availability": "https://schema.org/InStock"
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alaqsaumrahtransport.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://alaqsaumrahtransport.com/services"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Jeddah Airport to Makkah",
+                "item": "https://alaqsaumrahtransport.com/services/jeddah-airport-transfer"
+            }
+        ]
     }
 };
 

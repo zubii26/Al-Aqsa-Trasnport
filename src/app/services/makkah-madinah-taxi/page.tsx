@@ -38,18 +38,43 @@ const jsonLd = {
     "name": "Makkah to Madinah Taxi Service",
     "provider": {
         "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport"
+        "name": "Al Aqsa Transport",
+        "image": "https://alaqsaumrahtransport.com/logo.png"
     },
     "serviceType": "Intercity Transfer",
     "areaServed": {
-        "@type": "Place",
+        "@type": "Country",
         "name": "Saudi Arabia"
     },
-    "description": "Premium private transport between Makkah and Madinah.",
+    "description": "Premium private transport between Makkah and Madinah in GMC Yukon or Staria.",
     "offers": {
         "@type": "Offer",
         "price": "400",
-        "priceCurrency": "SAR"
+        "priceCurrency": "SAR",
+        "availability": "https://schema.org/InStock"
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alaqsaumrahtransport.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://alaqsaumrahtransport.com/services"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Makkah to Madinah Taxi",
+                "item": "https://alaqsaumrahtransport.com/services/makkah-madinah-taxi"
+            }
+        ]
     }
 };
 

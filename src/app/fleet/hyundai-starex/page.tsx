@@ -9,21 +9,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Hyundai H1 Starex Van Rental",
+    "image": "https://alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
+    "description": "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
+    "brand": { "@type": "Brand", "name": "Hyundai" },
+    "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+};
+
 export const metadata: Metadata = {
-    title: "Hyundai Starex Umrah Taxi | Affordable 7-Seater Van Makkah",
-    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van for Makkah to Madinah transfers, Jeddah Airport pickup, and Ziyarat. Reliable and budget-friendly.",
+    title: "Hyundai H1 Starex Rental Makkah | 7 Seater Family Van",
+    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van for Makkah to Madinah transfers and Jeddah Airport pickup. Best value for families.",
     keywords: [
-        "Hyundai Starex Umrah Taxi",
-        "Hyundai H1 Makkah to Madinah",
-        "7 Seater Taxi Jeddah Airport",
-        "Makkah to Madinah Van Price",
-        "Cheap Family Taxi Makkah",
-        "Hyundai Starex Rental Saudi Arabia",
-        "Private Van for Ziyarat"
+        "Hyundai Starex rental Makkah", "7 seater taxi Jeddah airport", "Family van for Umrah",
+        "Hyundai H1 Makkah to Madinah", "Cheap family transport Saudi Arabia", "Starex van hire"
     ],
-    alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex',
-    }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex' }
 };
 
 const starexFAQs = [
@@ -52,6 +55,7 @@ export default async function HyundaiStarexPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Hero
                 title="Hyundai H1 Starex | Best Family Van for Umrah"
                 subtitle="The practical choice for family travel between Jeddah, Makkah, and Madinah. Reliable, spacious, and perfect for groups."

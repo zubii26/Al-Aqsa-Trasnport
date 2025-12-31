@@ -10,18 +10,37 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "GMC Yukon XL 2024 Rental Makkah",
+    "image": "https://alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
+    "description": "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
+    "brand": {
+        "@type": "Brand",
+        "name": "GMC"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "600",
+        "priceCurrency": "SAR",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2025-12-31"
+    }
+};
+
 export const metadata: Metadata = {
-    title: "GMC Yukon Umrah Taxi | Luxury 7-Seater for Makkah to Madinah",
-    description: "Book 2025 GMC Yukon XL for VIP Umrah transport. Luxury 7-seater SUV for Jeddah Airport to Makkah, Madinah transfers, and Ziyarat. Spacious, comfortable, and reliable.",
+    title: "GMC Yukon Rental Makkah | VIP Umrah Transport Saudi Arabia",
+    description: "Book GMC Yukon XL 2025 for Umrah. Luxury 7-seater SUV for Jeddah Airport to Makkah and Madinah transfers. VIP chauffeur service with spacious luggage capacity.",
     keywords: [
-        "GMC Yukon Umrah Taxi",
-        "GMC Yukon XL Makkah",
-        "Jeddah Airport to Makkah GMC",
-        "Makkah to Madinah VIP Transport",
-        "Luxury SUV Rental Saudi Arabia",
-        "7 Seater Taxi Jeddah",
-        "Private Umrah Transport",
-        "GMC Taxi Madinah"
+        "GMC Yukon rental Makkah",
+        "GMC Yukon taxi Jeddah airport",
+        "VIP transport Makkah to Madinah",
+        "Luxury SUV rental Saudi Arabia",
+        "Rent Yukon XL Madinah",
+        "GMC transport for Umrah",
+        "Private family taxi Makkah",
+        "VIP car rental with driver"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
@@ -54,6 +73,10 @@ export default async function GmcYukonPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="GMC Yukon 2025 | VIP Umrah Transport Makkah & Madinah"
                 subtitle="Travel in unmatched luxury between Jeddah, Makkah, and Madinah. The preferred 7-seater choice for families and VIP pilgrims."

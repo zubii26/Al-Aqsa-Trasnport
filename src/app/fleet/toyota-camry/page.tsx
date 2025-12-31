@@ -10,21 +10,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Toyota Camry 2024 Taxi Makkah",
+    "image": "https://alaqsaumrahtransport.com/images/fleet/camry-hero-professional.png",
+    "description": "Affordable Toyota Camry taxi for Umrah. Reliable 4-seater sedan for Jeddah to Makkah transfers.",
+    "brand": { "@type": "Brand", "name": "Toyota" },
+    "offers": { "@type": "Offer", "price": "200", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+};
+
 export const metadata: Metadata = {
-    title: "Toyota Camry Umrah Taxi | Makkah to Madinah Price",
-    description: "Book Toyota Camry 2024 for Umrah. Reliable 4-seater taxi for Jeddah Airport to Makkah and Madinah transfers. Affordable, private, and comfortable transport.",
+    title: "Toyota Camry Taxi Price Makkah | Cheap Umrah Transport",
+    description: "Best price Toyota Camry taxi for Umrah. Reliable sedan for Jeddah Airport to Makkah and Madinah transfers. Affordable choice for small families and couples.",
     keywords: [
-        "Toyota Camry Umrah Taxi",
-        "Makkah to Madinah Taxi Price",
-        "Jeddah Airport to Makkah Camry",
-        "Small Taxi Makkah",
-        "Toyota Camry Rental Saudi Arabia",
-        "Private Umrah Taxi",
-        "Cheap Taxi Jeddah to Madinah"
+        "Toyota Camry taxi Makkah", "Cheap Umrah taxi", "Camry Jeddah airport transfer",
+        "Makkah to Madinah taxi price", "Toyota Camry rental Saudi Arabia", "Small family Umrah transport"
     ],
-    alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry',
-    }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry' }
 };
 
 const camryFAQs = [
@@ -53,6 +56,7 @@ export default async function ToyotaCamryPage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Hero
                 title="Toyota Camry 2024 | Reliable Umrah Taxi Makkah"
                 subtitle="The gold standard for private transfers. Affordable, comfortable, and efficient travel between Jeddah, Makkah, and Madinah."

@@ -53,18 +53,18 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
-  const OPTIMIZED_DESCRIPTION = "Book top-rated Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers, VIP Makkah to Madinah taxi, and luxury GMC/Starex fleet. Trusted by thousands of pilgrims for safety and comfort.";
+  const OPTIMIZED_DESCRIPTION = "Book reliable Umrah taxi from Jeddah Airport to Makkah & Madinah. VIP GMC Yukon & Staria transfers, fixed rates, and 24/7 meet & greet service. Trusted by 10,000+ pilgrims.";
   const OPTIMIZED_KEYWORDS = [
-    "Umrah transport services",
+    "Umrah taxi Jeddah to Makkah",
     "Makkah to Madinah taxi fare",
-    "Jeddah airport to Makkah taxi",
+    "Jeddah airport luxury transfer",
     "VIP Umrah transport Saudi Arabia",
-    "GMC Yukon Umrah booking",
-    "Madinah airport to Masjid Nabawi",
-    "Luxury Pilgrim Transport",
-    "Umrah taxi service",
-    "Haramain train alternative",
-    "Ziyarat transport Makkah"
+    "GMC Yukon rental Makkah",
+    "Madinah airport taxi",
+    "Ziyarat transport Makkah",
+    "Jeddah airport taxi price",
+    "Private car Makkah to Madinah",
+    "Al Aqsa Umrah Transport"
   ];
 
   const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";

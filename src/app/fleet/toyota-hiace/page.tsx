@@ -9,21 +9,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Toyota Hiace 12-Seater Bus Rental",
+    "image": "https://alaqsaumrahtransport.com/images/fleet/hiace-hero-professional.png",
+    "description": "Rent Toyota Hiace bus in Makkah. Reliable 12-seater transport for Umrah groups and large families.",
+    "brand": { "@type": "Brand", "name": "Toyota" },
+    "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+};
+
 export const metadata: Metadata = {
-    title: "Toyota Hiace Umrah Taxi | 10-12 Seater Bus Makkah",
-    description: "Book Toyota Hiace for Umrah group transport. Reliable 10-12 seater bus for Makkah, Madinah, And Jeddah Airport transfers. Best commercial vehicle for large families.",
+    title: "Toyota Hiace Bus Rental Makkah | 12 Seater Group Transport",
+    description: "Book Toyota Hiace for Umrah group transport. Reliable 10-12 seater bus for Makkah, Madinah, and Jeddah Airport transfers. Best for large families and groups.",
     keywords: [
-        "Toyota Hiace Umrah Taxi",
-        "Toyota Hiace Makkah to Madinah",
-        "10 Seater Bus Jeddah Airport",
-        "Group Umrah Transport Makkah",
-        "Toyota Hiace Rental Saudi Arabia",
-        "Cheap Umrah Bus",
-        "Hiace Taxi Madinah"
+        "Toyota Hiace rental Makkah", "12 seater bus Jeddah airport", "Group Umrah transport",
+        "Rent Hiace bus Madinah", "Toyota Hiace taxi price", "Makkah to Madinah bus"
     ],
-    alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-hiace',
-    }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-hiace' }
 };
 
 const hiaceFAQs = [
@@ -52,6 +55,7 @@ export default async function ToyotaHiacePage() {
 
     return (
         <main className="overflow-x-hidden">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Hero
                 title="Toyota Hiace 2024 | Group Umrah Transport"
                 subtitle="The trusted choice for large families and groups traveling between Jeddah, Makkah, and Madinah. Reliable and spacious."
