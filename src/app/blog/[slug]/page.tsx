@@ -47,8 +47,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             authors: [post.author],
             images: [
                 {
-                    url: post.image, // Ensure this is an absolute URL in production
-                    alt: post.alt,
+                    url: post.image.startsWith('http') ? post.image : `https://alaqsa-transport.com${post.image.startsWith('/') ? '' : '/'}${post.image}`,
+                    alt: post.alt || post.title,
+                    width: 1200,
+                    height: 630,
                 },
             ],
         },
