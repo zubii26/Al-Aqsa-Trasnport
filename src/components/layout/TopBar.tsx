@@ -47,6 +47,20 @@ const TopBar = async () => {
                             <span className="group-hover:text-white transition-colors duration-300">{contact.phone}</span>
                         </a>
                     )}
+                    {contact.phone2 && (
+                        <>
+                            <div className="h-4 w-px bg-white/10" />
+                            <a
+                                href={`tel:${contact.phone2}`}
+                                className="flex items-center gap-2 group transition-colors duration-300"
+                            >
+                                <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-amber-500 transition-colors duration-300">
+                                    <Phone size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                                </div>
+                                <span className="group-hover:text-white transition-colors duration-300">{contact.phone2}</span>
+                            </a>
+                        </>
+                    )}
                 </div>
 
                 {/* Right Side: Socials & Extras */}
@@ -58,6 +72,26 @@ const TopBar = async () => {
                             { icon: Instagram, href: contact.social.instagram, label: 'Instagram' },
                             { icon: Twitter, href: contact.social.twitter, label: 'Twitter' },
                             { icon: Linkedin, href: contact.social.linkedin, label: 'LinkedIn' },
+                            {
+                                icon: (props: any) => (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="13"
+                                        height="13"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        {...props}
+                                    >
+                                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                                    </svg>
+                                ),
+                                href: contact.social.tiktok,
+                                label: 'TikTok'
+                            }
                         ].map((social, index) => (
                             social.href && (
                                 <a
