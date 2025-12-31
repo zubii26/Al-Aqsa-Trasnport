@@ -72,7 +72,7 @@ export default async function AboutPage() {
         "description": "Information about Al Aqsa Umrah Transport, a leading provider of pilgrim transport services in Saudi Arabia.",
         "url": "https://alaqsaumrahtransport.com/about",
         "mainEntity": {
-            "@type": "TravelAgency",
+            "@type": "TransportationService",
             "name": "Al Aqsa Umrah Transport",
             "sameAs": "https://alaqsaumrahtransport.com"
         }

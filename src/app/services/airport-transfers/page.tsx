@@ -42,7 +42,7 @@ export default async function AirportTransfersPage() {
         "@type": "Service",
         "name": "Jeddah Airport Transfer to Makkah",
         "provider": {
-            "@type": "TravelAgency",
+            "@type": "TransportationService",
             "name": "Al Aqsa Umrah Transport"
         },
         "description": "Premium airport transfer service from King Abdulaziz International Airport (KAIA) to Makkah and Madinah.",

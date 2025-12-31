@@ -51,7 +51,7 @@ export default async function ContactPage() {
 
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "TravelAgency",
+        "@type": "TransportationService",
         "name": "Al Aqsa Umrah Transport",
         "image": "https://alaqsaumrahtransport.com/images/logo.png",
         "@id": "https://alaqsaumrahtransport.com",

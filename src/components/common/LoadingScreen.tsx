@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+
 import Image from 'next/image';
 import styles from './Preloader.module.css';
 
@@ -15,7 +15,7 @@ export default function LoadingScreen() {
 
     if (!mounted) return null;
 
-    return createPortal(
+    return (
         <div className={styles.preloader} style={{ zIndex: 999999 }}>
             <div className={styles.particles}>
                 {[...Array(15)].map((_, i) => (
@@ -47,7 +47,6 @@ export default function LoadingScreen() {
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-[0.2em]">Premium Journey</p>
                 </div>
             </div>
-        </div>,
-        document.body
+        </div>
     );
 }

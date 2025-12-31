@@ -75,7 +75,7 @@ export default function TestimonialHighlight() {
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": "TravelAgency",
+                        "@type": "TransportationService",
                         "name": "Al Aqsa Umrah Transport",
                         "review": curatedTestimonials.map(t => ({
                             "@type": "Review",

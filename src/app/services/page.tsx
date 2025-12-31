@@ -240,7 +240,7 @@ export default function ServicesPage() {
                         "@type": "Service",
                         "serviceType": "Umrah Transport",
                         "provider": {
-                            "@type": "TravelAgency",
+                            "@type": "TransportationService",
                             "name": "Al Aqsa Transport"
                         },
                         "areaServed": {

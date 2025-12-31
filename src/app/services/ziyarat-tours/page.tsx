@@ -36,7 +36,7 @@ const jsonLd = {
     "name": "Makkah and Madinah Ziyarat Tour",
     "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
     "provider": {
-        "@type": "TravelAgency",
+        "@type": "TransportationService",
         "name": "Al Aqsa Transport"
     },
     "itinerary": [

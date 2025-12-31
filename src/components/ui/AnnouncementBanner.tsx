@@ -69,7 +69,7 @@ export default function AnnouncementBanner({ discount }: AnnouncementBannerProps
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="relative bg-[#ccff00] text-black z-50 overflow-hidden"
+                    className="relative bg-[#d4af37] text-black z-50 overflow-hidden"
                 >
                     <div className="container mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-sm sm:text-base font-medium">
 

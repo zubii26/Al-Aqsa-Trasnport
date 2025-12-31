@@ -249,7 +249,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "TravelAgency",
+              "@type": "TransportationService",
               "name": settings.general.siteName,
               "description": settings.general.description,
               "logo": "https://alaqsaumrahtransport.com/logo.png",
