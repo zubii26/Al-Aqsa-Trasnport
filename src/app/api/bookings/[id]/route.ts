@@ -7,18 +7,31 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const { id } = await params;
-    const { status } = await request.json();
-    const updated = await updateBookingStatus(id, status);
+    const body = await request.json();
+
+    // Extract updateable fields to prevent overwriting critical immutable data if needed
+    // For now, we trust admin input, but filtering is safer.
+    const { status, assignedDriverId, driverStatus } = body;
+    const updates: any = {};
+    if (status) updates.status = status;
+    if (assignedDriverId !== undefined) updates.assignedDriverId = assignedDriverId;
+    if (driverStatus) updates.driverStatus = driverStatus;
+
+    if (Object.keys(updates).length === 0) {
+        return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });
+    }
+
+    const { updateBooking } = await import('@/lib/db');
+    const updated = await updateBooking(id, updates);
 
     if (!updated) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
 
     // Send confirmation email if status changed to confirmed
     if (status === 'confirmed') {
         const { sendBookingConfirmationEmail } = await import('@/lib/email');
-        // Cast to any to access fields that might be missing in strict IBooking but present in DB result
         const bookingData = {
             ...updated,
-            id: updated._id.toString(), // Ensure ID is string
+            id: updated._id.toString(),
             email: updated.email,
             name: updated.name,
         } as any;

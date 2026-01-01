@@ -3,15 +3,21 @@ import dbConnect from '@/lib/mongodb';
 import { User } from '@/models';
 import { requireRole } from '@/lib/server-auth';
 
-export async function GET() {
+export async function GET(request: Request) {
     const user = await requireRole(['ADMIN']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     try {
+        const { searchParams } = new URL(request.url);
+        const role = searchParams.get('role');
+
         await dbConnect();
-        const users = await User.find({}).sort({ createdAt: -1 }).lean();
+
+        const query = role ? { role: role.toLowerCase() } : {};
+        const users = await User.find(query).sort({ createdAt: -1 }).lean();
+
         const formattedUsers = users.map(u => ({ ...u, id: u._id.toString() }));
         return NextResponse.json(formattedUsers);
     } catch {

@@ -45,6 +45,10 @@ export interface IBooking extends Document {
     country?: string;
     flightNumber?: string;
     arrivalDate?: string;
+
+    assignedDriverId?: string;
+    driverStatus?: 'pending' | 'accepted' | 'en_route' | 'arrived' | 'completed' | 'cancelled';
+
     createdAt: Date;
     updatedAt: Date;
 }
@@ -53,7 +57,7 @@ export interface IUser extends Document {
     id?: string;
     email: string;
     name?: string;
-    role: 'user' | 'admin' | 'manager' | 'operational_manager';
+    role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver';
     password?: string;
     createdAt: Date;
     updatedAt: Date;
@@ -196,12 +200,16 @@ const BookingSchema = new Schema<IBooking>({
     country: { type: String },
     flightNumber: { type: String },
     arrivalDate: { type: String },
+
+    // Driver Assignment
+    assignedDriverId: { type: String }, // Links to User._id (role: driver)
+    driverStatus: { type: String, enum: ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled'], default: 'pending' },
 }, { timestamps: true });
 
 const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     name: { type: String },
-    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager'], default: 'user' },
+    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver'], default: 'user' },
     password: { type: String },
 }, { timestamps: true });
 
@@ -304,68 +312,17 @@ const AuditLogSchema = new Schema<IAuditLog>({
     timestamp: { type: Date, default: Date.now },
 });
 
+// Revert hack
+export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
+export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
+export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
+export const Booking: Model<IBooking> = mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema);
 export const BlogPost: Model<IBlogPost> = mongoose.models.BlogPost || mongoose.model<IBlogPost>('BlogPost', BlogPostSchema);
 export const AuditLog: Model<IAuditLog> = mongoose.models.AuditLog || mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);
 export const Vehicle: Model<IVehicle> = mongoose.models.Vehicle || mongoose.model<IVehicle>('Vehicle', VehicleSchema);
-export const Booking: Model<IBooking> = mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema);
-export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
 export const Review: Model<IReview> = mongoose.models.Review || mongoose.model<IReview>('Review', ReviewSchema);
 export const Settings: Model<ISettings> = mongoose.models.Settings || mongoose.model<ISettings>('Settings', SettingsSchema);
 export const Route: Model<IRoute> = mongoose.models.Route || mongoose.model<IRoute>('Route', RouteSchema);
 export const RoutePrice: Model<IRoutePrice> = mongoose.models.RoutePrice || mongoose.model<IRoutePrice>('RoutePrice', RoutePriceSchema);
 export const GalleryItem: Model<IGalleryItem> = mongoose.models.GalleryItem || mongoose.model<IGalleryItem>('GalleryItem', GalleryItemSchema);
-
-const DriverSchema = new Schema<IDriver>({
-    name: { type: String, required: true },
-    photo: { type: String, required: true },
-    experience: { type: String, required: true },
-    languages: { type: [String], required: true },
-    certifications: { type: [String], default: [] },
-    rating: { type: Number, default: 5.0 },
-    trips: { type: String, default: '0' },
-    quote: { type: String },
-    badges: { type: [String], default: [] },
-    isActive: { type: Boolean, default: true },
-}, { timestamps: true });
-
-const SectionSchema = new Schema<ISection>({
-    name: { type: String, required: true, unique: true },
-    page: { type: String, required: true, index: true },
-    type: { type: String, required: true },
-    title: { type: String, required: true },
-    subtitle: { type: String },
-    content: { type: String },
-    images: [{
-        url: { type: String, required: true },
-        alt: { type: String },
-        type: { type: String, enum: ['desktop', 'mobile', 'thumbnail'], default: 'desktop' }
-    }],
-    customFields: [{
-        key: { type: String, required: true },
-        label: { type: String, required: true },
-        value: { type: String },
-        type: { type: String, enum: ['text', 'link', 'color', 'boolean'], default: 'text' }
-    }],
-    metaTitle: { type: String },
-    metaDescription: { type: String },
-    isActive: { type: Boolean, default: true },
-    lastUpdatedBy: { type: String },
-}, { timestamps: true });
-
-const SubscriberSchema = new Schema({
-    email: { type: String, required: true, unique: true },
-    isActive: { type: Boolean, default: true },
-    source: { type: String, default: 'website' },
-}, { timestamps: true });
-
-export interface ISubscriber extends Document {
-    email: string;
-    isActive: boolean;
-    source: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
-export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
-export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);

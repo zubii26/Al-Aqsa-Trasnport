@@ -353,7 +353,8 @@ export default function BookingsPage() {
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
-                                                className="group transition-colors"
+                                                className="group transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
+                                                onClick={() => setSelectedBooking(booking)}
                                             >
                                                 <td>
                                                     <div className="flex flex-col gap-1">
@@ -425,9 +426,15 @@ export default function BookingsPage() {
                                                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusBadge(booking.status)}`}>
                                                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                                                     </span>
+                                                    {booking.assignedDriverId && (
+                                                        <div className="mt-1 flex items-center gap-1 text-[10px] text-emerald-600 font-medium">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                                            Driver Assigned
+                                                        </div>
+                                                    )}
                                                 </td>
                                                 <td className="text-right">
-                                                    <div className="flex justify-end gap-2">
+                                                    <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                                                         {booking.status === 'pending' && (
                                                             <>
                                                                 <button
@@ -492,6 +499,13 @@ export default function BookingsPage() {
                 onStatusUpdate={(id, status) => {
                     handleStatusChange(id, status);
                     setSelectedBooking(null); // Close modal after update
+                }}
+                onUpdate={(id, updates) => {
+                    setBookings(bookings.map(b => b.id === id ? { ...b, ...updates } : b));
+                    if (selectedBooking && selectedBooking.id === id) {
+                        setSelectedBooking(prev => prev ? { ...prev, ...updates } : null);
+                    }
+                    showToast('Booking updated successfully', 'success');
                 }}
             />
         </div>

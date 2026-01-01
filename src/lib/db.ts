@@ -42,10 +42,14 @@ export async function addBooking(bookingData: Partial<IBooking>): Promise<IBooki
 }
 
 export async function updateBookingStatus(id: string, status: string): Promise<IBooking | null> {
+    return updateBooking(id, { status });
+}
+
+export async function updateBooking(id: string, updates: Partial<IBooking>): Promise<IBooking | null> {
     await dbConnect();
     const updatedBooking = await Booking.findByIdAndUpdate(
         id,
-        { status },
+        updates,
         { new: true }
     ).lean();
     if (!updatedBooking) return null;
@@ -60,6 +64,37 @@ export async function deleteBooking(id: string): Promise<boolean> {
     await dbConnect();
     const result = await Booking.findByIdAndDelete(id);
     return !!result;
+}
+
+export async function getDriverBookings(driverId: string): Promise<IBooking[]> {
+    await dbConnect();
+    const bookings = await Booking.find({
+        assignedDriverId: driverId,
+        // Optional: Filter by specific statuses if needed, e.g., not 'cancelled' unless recent
+        // For now, return all assigned
+    }).sort({ date: 1, time: 1 }).lean(); // Sort by upcoming
+
+    return bookings.map(b => ({
+        ...b,
+        _id: b._id.toString(),
+        id: b._id.toString(),
+    })) as unknown as IBooking[];
+}
+
+export async function updateDriverBookingStatus(bookingId: string, status: string): Promise<IBooking | null> {
+    await dbConnect();
+    const updatedBooking = await Booking.findByIdAndUpdate(
+        bookingId,
+        { driverStatus: status },
+        { new: true }
+    ).lean();
+
+    if (!updatedBooking) return null;
+    return {
+        ...updatedBooking,
+        _id: updatedBooking._id.toString(),
+        id: updatedBooking._id.toString()
+    } as unknown as IBooking;
 }
 
 // --- Fleet/Vehicle Functions ---

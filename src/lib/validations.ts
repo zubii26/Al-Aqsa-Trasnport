@@ -27,6 +27,8 @@ export const BookingSchema = z.object({
     country: z.string().optional(),
     flightNumber: z.string().optional(),
     arrivalDate: z.string().optional(),
+    assignedDriverId: z.string().optional(),
+    driverStatus: z.enum(['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled']).optional(),
 });
 
 export const VehicleSchema = z.object({
