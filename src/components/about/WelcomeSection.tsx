@@ -11,7 +11,6 @@ export default function WelcomeSection() {
             if (part && part.startsWith('**') && part.endsWith('**')) {
                 return <strong key={index} className="font-bold text-slate-900 dark:text-white">{part.slice(2, -2)}</strong>;
             }
-            // Simple regex for markdown links [text](url) - sufficient for our specific inputs
             const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
             if (linkMatch) {
                 return (
@@ -38,12 +37,16 @@ export default function WelcomeSection() {
 
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
-                    <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Welcome</span>
+                    <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">
+                        Welcome | أهلاً بك
+                    </span>
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-playfair leading-tight">
                         Welcome to Al Aqsa Umrah Transport
+                        <span className="block text-2xl md:text-4xl mt-3 font-reem-kufi text-amber-600">الأقصى لنقل المعتمرين</span>
                     </h2>
-                    <p className="text-xl text-slate-600 dark:text-slate-300 font-light">
+                    <p className="text-xl text-slate-600 dark:text-slate-300 font-light max-w-2xl mx-auto">
                         Your trusted partner in pilgrim travel across Saudi Arabia.
+                        <span className="block font-arabic text-lg mt-1 text-slate-500">شريكك الموثوق في رحلات العمرة عبر المملكة العربية السعودية.</span>
                     </p>
                 </div>
 
@@ -56,8 +59,11 @@ export default function WelcomeSection() {
                         </p>
 
                         <div className="bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500 p-6 rounded-r-xl">
-                            <p className="text-xl font-medium text-amber-900 dark:text-amber-100 italic">
+                            <p className="text-xl font-medium text-amber-900 dark:text-amber-100 italic mb-2">
                                 &quot;Serving the Guests of Allah with comfort and care is our mission.&quot;
+                            </p>
+                            <p className="text-lg font-arabic text-amber-800 dark:text-amber-200" dir="rtl">
+                                "خدمة ضيوف الرحمن راحة وأمانة."
                             </p>
                         </div>
 
@@ -70,7 +76,10 @@ export default function WelcomeSection() {
                     <div className="space-y-8">
                         {/* Features Box */}
                         <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800">
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">Why Choose Us?</h3>
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-playfair flex justify-between items-center">
+                                Why Choose Us?
+                                <span className="font-reem-kufi text-xl text-amber-600">لماذا نحن؟</span>
+                            </h3>
                             <ul className="space-y-4">
                                 {whyChooseUsItems.map((item, index) => (
                                     <li key={index} className="flex items-start gap-3">
@@ -87,7 +96,10 @@ export default function WelcomeSection() {
                             <blockquote className="relative z-10 text-lg font-serif leading-relaxed opacity-90 mb-4">
                                 “And proclaim to the people the Hajj; they will come to you on foot and on every lean camel; they will come from every distant pass.”
                             </blockquote>
-                            <cite className="block text-amber-400 font-medium not-italic">– Qur’an (22:27)</cite>
+                            <blockquote className="relative z-10 text-xl font-arabic leading-relaxed opacity-90 mb-4 text-right" dir="rtl">
+                                "وَأَذِّن فِي النَّاسِ بِالْحَجِّ يَأْتُوكَ رِجَالًا وَعَلَىٰ كُلِّ ضَامِرٍ يَأْتِينَ مِن كُلِّ فَجٍّ عَمِيقٍ"
+                            </blockquote>
+                            <cite className="block text-amber-400 font-medium not-italic text-sm">– Qur’an (22:27) | سورة الحج</cite>
 
                             <p className="mt-6 pt-6 border-t border-white/10 text-slate-300 text-sm leading-relaxed">
                                 {parseMarkdown("At Al Aqsa Umrah Transport, we believe that every journey to the holy cities should be filled with peace, comfort, and trust. That’s why we are committed to being the **leading Umrah transport company in Saudi Arabia**.")}

@@ -11,8 +11,8 @@ import VehicleCapacityGuide from '@/components/services/VehicleCapacityGuide';
 import RouteVisual from '@/components/services/RouteVisual';
 
 export const metadata: Metadata = {
-    title: "Jeddah Airport Taxi to Makkah Price | Meet & Greet Services",
-    description: "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall. Fixed prices, no hidden fees, and spacious vehicles for luggage.",
+    title: "Jeddah Airport Taxi to Makkah | Meet & Greet | تاكسي مطار جدة",
+    description: "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Meet & Greet service. Fixed prices. حجز تاكسي من مطار جدة الى مكة. توصيل فوري وسيارات حديثة.",
     keywords: [
         "Jeddah airport to Makkah taxi",
         "Jeddah airport taxi price",
@@ -21,7 +21,12 @@ export const metadata: Metadata = {
         "Madinah airport taxi services",
         "JED airport pickup",
         "Makkah hotel transfer",
-        "Umrah taxi booking"
+        "Umrah taxi booking",
+        "تاكسي مطار جدة",
+        "توصيل من مطار جدة الى مكة",
+        "سعر التوصيل من مطار جدة للكعبة",
+        "استقبال مطار جدة",
+        "حجز سيارة من مطار جدة"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/jeddah-airport-transfer',
@@ -37,6 +42,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Jeddah Airport to Makkah Transfer",
+    "alternateName": "توصيل من مطار جدة الى مكة",
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport",
@@ -47,7 +53,7 @@ const jsonLd = {
         "@type": "Airport",
         "name": "King Abdulaziz International Airport (JED)"
     },
-    "description": "Private VIP transfer from Jeddah Airport to Makkah hotels. 24/7 Meet & Greet.",
+    "description": "Private VIP transfer from Jeddah Airport to Makkah hotels. 24/7 Meet & Greet. خدمة توصيل vip من المطار.",
     "offers": {
         "@type": "Offer",
         "price": "200",
@@ -107,7 +113,7 @@ export default async function JeddahAirportTransferPage() {
 
     const content = {
         title: "Jeddah Airport to Makkah Transfers",
-        subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service, and direct transfer to your Makkah hotel.",
+        subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service (استقبال خاص). Direct transfer to your Makkah hotel.",
         heroImage: "/images/routes/jeddah-airport-hero-professional.png"
     };
 

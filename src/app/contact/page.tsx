@@ -23,7 +23,8 @@ export async function generateMetadata() {
             "Al Aqsa Transport Booking", "VIP Umrah Taxi",
             // Arabic Keywords
             "اتصال نقل العمرة", "حجز نقل العمرة", "تواصل استقبال مطار جدة", "حجز نقل مكة المدينة",
-            "رقم تاكسي العمرة", "دعم نقل المعتمرين في السعودية", "شركة نقل في مكة", "توصيل الحرمين"
+            "رقم تاكسي العمرة", "دعم نقل المعتمرين في السعودية", "شركة نقل في مكة", "توصيل الحرمين",
+            "واتساب تاكسي مكة", "رقم سائق في مكة", "حجز موصلات الحرم"
         ],
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/contact',
@@ -53,6 +54,7 @@ export default async function ContactPage() {
         "@context": "https://schema.org",
         "@type": "TransportationService",
         "name": "Al Aqsa Umrah Transport",
+        "alternateName": "الأقصى لنقل المعتمرين",
         "image": "https://alaqsaumrahtransport.com/images/logo.png",
         "@id": "https://alaqsaumrahtransport.com",
         "url": "https://alaqsaumrahtransport.com",

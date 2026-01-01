@@ -13,9 +13,9 @@ import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 export async function generateMetadata() {
     return {
-        title: "Best Umrah Taxi Service | Jeddah to Makkah & Madinah Transport",
-        description: "Book reliable Umrah transport services including Jeddah Airport to Makkah taxi, GMC Yukon VIP transfers, and Makkah Madinah Ziyarat tours. Affordable & comfortable.",
-        keywords: ["Umrah transport", "Jeddah to Makkah taxi", "Madinah to Makkah taxi", "GMC Yukon rental Saudi Arabia", "Ziyarat tours Makkah Madinah", "Jeddah airport taxi", "Haramain train transfers"],
+        title: "Best Umrah Taxi Service | Jeddah to Makkah & Madinah | خدمات نقل المعتمرين",
+        description: "Book reliable Umrah transport services including Jeddah Airport to Makkah taxi. Affordable & comfortable. أفضل شركة نقل معتمرين في السعودية. سيارات حديثة وخدمة متميزة.",
+        keywords: ["Umrah transport", "Jeddah to Makkah taxi", "Madinah to Makkah taxi", "GMC Yukon rental Saudi Arabia", "Ziyarat tours Makkah Madinah", "Jeddah airport taxi", "Haramain train transfers", "خدمات نقل المعتمرين", "شركة نقل عمرة", "توصيل معتمرين", "حجز مواصلات مكة"],
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/services',
         },
@@ -47,28 +47,32 @@ export default function ServicesPage() {
             description: 'Premium intercity transfers between the Holy Cities. Enjoy a comfortable 450km journey in our wide range of fleets including GMC Yukon XL and Hyundai H1.',
             image: '/images/routes/makkah-madinah-route-hero.png',
             link: '/services/makkah-madinah-taxi',
-            features: ['Door-to-Door Service', 'Luxury Fleet Options', '4.5 Hour Average Time']
+            features: ['Door-to-Door Service', 'Luxury Fleet Options', '4.5 Hour Average Time'],
+            alt: 'Makkah to Madinah Intercity Private Taxi App Map'
         },
         {
             title: 'Jeddah Airport (KAIA) to Makkah Taxi',
             description: 'Hassle-free airport authorities approved pickup. Our driver will welcome you at Jeddah Airport arrivals for a seamless transfer to your Makkah hotel or Haram.',
             image: '/images/routes/jeddah-airport-hero-professional.png',
             link: '/services/jeddah-airport-transfer',
-            features: ['Flight Tracking', 'Free Meet & Greet', 'Luggage Assistance']
+            features: ['Flight Tracking', 'Free Meet & Greet', 'Luggage Assistance'],
+            alt: 'Jeddah Airport (KAIA) to Makkah Hotel Transfer Driver Chauffeur'
         },
         {
             title: 'VIP Luxury GMC Yukon Umrah Transport',
             description: 'Travel in style with our VIP service. Top-of-the-line vehicles (GMC Yukon XL) and private chauffeurs for maximum privacy and ease.',
             image: '/images/fleet/gmc-yukon-hero-professional.png',
             link: '/booking?service=luxury',
-            features: ['Private Chauffeur', 'Latest Model Vehicles', 'Privacy Partition']
+            features: ['Private Chauffeur', 'Latest Model Vehicles', 'Privacy Partition'],
+            alt: 'GMC Yukon XL 2025 VIP Black SUV for Umrah Transport'
         },
         {
             title: 'Makkah & Madinah Ziyarat Tours',
             description: 'Comprehensive Ziyarat packages to holy sites. Visit Masjid Quba, Mount Uhud, Jabal Al-Nour, and other historical Islamic landmarks with knowledgeable drivers.',
             image: '/images/routes/makkah-ziyarat-hero.png',
             link: '/services/ziyarat-tours',
-            features: ['Custom Itinerary', 'Expert Local Knowledge', 'Flexible Hours']
+            features: ['Custom Itinerary', 'Expert Local Knowledge', 'Flexible Hours'],
+            alt: 'Makkah and Madinah Historical Ziyarat Tour Mountains and Mosques'
         }
     ];
 
@@ -111,6 +115,7 @@ export default function ServicesPage() {
                 secondaryCtaText="Contact Us"
                 secondaryCtaLink="/contact"
                 breadcrumbs={<Breadcrumbs />}
+                alt="Jeddah Airport to Makkah & Madinah Umrah Taxi Services Fleet"
             />
 
             {/* Trust Amenities Section - NEW */}
@@ -136,7 +141,7 @@ export default function ServicesPage() {
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 z-10" />
                                         <img
                                             src={service.image}
-                                            alt={service.title}
+                                            alt={service.alt}
                                             className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110"
                                         />
                                     </div>

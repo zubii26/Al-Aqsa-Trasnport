@@ -23,6 +23,7 @@ interface HeroProps {
     badge?: string;
     backgroundChildren?: React.ReactNode;
     breadcrumbs?: React.ReactNode;
+    alt?: string;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -37,7 +38,8 @@ const Hero: React.FC<HeroProps> = ({
     layout = 'center',
     badge,
     backgroundChildren,
-    breadcrumbs
+    breadcrumbs,
+    alt
 }) => {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
@@ -86,7 +88,7 @@ const Hero: React.FC<HeroProps> = ({
                 <div className={styles.bgImage}>
                     <Image
                         src={bgImage}
-                        alt="Umrah Transport Saudi Arabia Hero"
+                        alt={alt || "Umrah Transport Saudi Arabia Hero"}
                         fill
                         priority
                         quality={90}

@@ -8,22 +8,27 @@ import AirportInteractiveMap from '@/components/services/airport/AirportInteract
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
-    description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
-    keywords: ["Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi", "VIP Umrah Transport", "Jeddah Airport Shuttle", "Makkah Private Taxi"],
+    title: "Jeddah & Madinah Airport Transfers | Umrah Taxi | توصيل المطارات",
+    description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers. 24/7 service. توصيل من مطار جدة الى مكة. استقبال مطار المدينة المنورة.",
+    keywords: [
+        "Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi",
+        "VIP Umrah Transport", "Jeddah Airport Shuttle", "Makkah Private Taxi",
+        "توصيل مطار جدة", "تاكسي مطار المدينة", "استقبال المعتمرين",
+        "نقل من مطار الملك عبدالعزيز", "حجز تاكسي الحرم", "خدمات المعتمرين"
+    ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/airport-transfers',
     },
     openGraph: {
-        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
-        description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
+        title: "Jeddah & Madinah Airport Transfers | Al Aqsa Transport",
+        description: "Reliable airport pickups for Jeddah & Madinah. توصيل آمن ومريح من المطارات.",
         images: ["/images/fleet/gmc.png"],
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi Service",
-        description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers to your hotel or Haram. 24/7 service for a smooth arrival and departure.",
+        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi",
+        description: "Reliable airport pickups for Jeddah & Madinah. توصيل من مطار جدة ومطار المدينة.",
         images: ["/images/fleet/gmc.png"],
     }
 };
@@ -41,11 +46,12 @@ export default async function AirportTransfersPage() {
         "@context": "https://schema.org",
         "@type": "Service",
         "name": "Jeddah Airport Transfer to Makkah",
+        "alternateName": "توصيل من مطار جدة الى مكة",
         "provider": {
             "@type": "TransportationService",
             "name": "Al Aqsa Umrah Transport"
         },
-        "description": "Premium airport transfer service from King Abdulaziz International Airport (KAIA) to Makkah and Madinah.",
+        "description": "Premium airport transfer service from King Abdulaziz International Airport (KAIA) to Makkah. خدمة نقل فاخرة من مطار الملك عبدالعزيز الى مكة.",
         "areaServed": {
             "@type": "City",
             "name": "Makkah"
@@ -91,6 +97,7 @@ export default async function AirportTransfersPage() {
                 bgImage="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop"
                 ctaText="Book Transfer Now"
                 ctaLink="/booking?service=airport"
+                alt="Jeddah Airport Arrival Lounge Private Chauffeur Transfer"
             />
 
             {/* Interactive Map Section */}
@@ -206,7 +213,7 @@ export default async function AirportTransfersPage() {
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src="/images/fleet/camry.png"
-                                        alt="Standard Sedan"
+                                        alt="Toyota Camry Standard Sedan for Affordable Makkah Airport Transfer"
                                         className="w-auto h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>
@@ -227,7 +234,7 @@ export default async function AirportTransfersPage() {
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src="/images/fleet/gmc.png"
-                                        alt="GMC Yukon"
+                                        alt="GMC Yukon XL VIP Luxury SUV for Jeddah Airport Pickup"
                                         className="w-auto h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>
@@ -247,7 +254,7 @@ export default async function AirportTransfersPage() {
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src="/images/fleet/hiace.png"
-                                        alt="Toyota Hiace"
+                                        alt="Toyota Hiace 10-Seater Family Van for Airport Group Transport"
                                         className="w-auto h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>

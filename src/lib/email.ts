@@ -77,8 +77,13 @@ const formatVehicles = (booking: BookingData) => {
 const formatPriceRow = (booking: BookingData) => {
     if (!booking.price) return '';
     return `<tr>
-        <td style="padding: 5px 0; color: #666;">Total Price:</td>
-        <td style="padding: 5px 0; font-weight: bold; color: #d4af37;">${booking.price}</td>
+        <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+            <div style="font-size: 12px; text-transform: uppercase;">Total Price</div>
+            <div style="font-family: 'Amiri', serif; font-size: 12px;">السعر الإجمالي</div>
+        </td>
+        <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #d4af37; font-size: 18px;">
+            ${booking.price}
+        </td>
     </tr>`;
 };
 
@@ -97,6 +102,7 @@ const prepareBookingVariables = (booking: BookingData) => {
         price_row: formatPriceRow(booking), // Use row HTML for conditional rendering
         status: booking.status,
         submission_time: new Date().toLocaleString(),
+        year: new Date().getFullYear(), // Added for footer
         country_row: booking.country ? `<p><strong>Country:</strong> ${booking.country}</p>` : '',
         flight_row: booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : '',
         arrival_date_row: booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : '',

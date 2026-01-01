@@ -9,8 +9,8 @@ import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import RouteVisual from '@/components/services/RouteVisual';
 
 export const metadata: Metadata = {
-    title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",
-    description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup, meet & greet service, and fixed prices. Book your Madinah arrival transfer now.",
+    title: "Madinah Airport Taxi to Hotel | Meet & Greet | تاكسي مطار المدينة",
+    description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup. حجز تاكسي مطار المدينة المنورة. توصيل الى فندق الحرم.",
     keywords: [
         "Madinah Airport Taxi",
         "Madinah Airport to Masjid Nabawi",
@@ -18,7 +18,11 @@ export const metadata: Metadata = {
         "MED Airport Transfer",
         "Madinah Airport to Makkah Taxi",
         "Madinah Hotel Transfer",
-        "Umrah Taxi Madinah"
+        "Umrah Taxi Madinah",
+        "تاكسي مطار المدينة",
+        "استقبال مطار الامير محمد بن عبدالعزيز",
+        "توصيل من مطار المدينة للحرم",
+        "سعر مشوار مطار المدينة"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/madinah-airport-transfer',
@@ -34,6 +38,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Madinah Airport Transfer",
+    "alternateName": "توصيل مطار المدينة المنورة",
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport"

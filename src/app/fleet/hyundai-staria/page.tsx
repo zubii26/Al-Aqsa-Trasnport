@@ -21,11 +21,12 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Hyundai Staria Rental Makkah | Luxury 2024 Family Van",
-    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater luxury van for Jeddah Airport to Makkah and Madinah. Modern comfort for VIP families.",
+    title: "Hyundai Staria Rental Makkah | Luxury 2024 Family Van | هيونداي ستاريا",
+    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater luxury van. حجز هيونداي ستاريا في مكة. فان عائلي فخم لتوصيل المطار.",
     keywords: [
         "Hyundai Staria rental Makkah", "Luxury van Jeddah airport", "Staria 2024 Makkah to Madinah",
-        "VIP family transport Umrah", "Hyundai Staria taxi Saudi Arabia", "Premium van hire Makkah"
+        "VIP family transport Umrah", "Hyundai Staria taxi Saudi Arabia", "Premium van hire Makkah",
+        "هيونداي ستاريا مكة", "حجز ستاريا من مطار جدة", "فان عائلي فخم", "توصيل ستاريا للمدينة"
     ],
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' }
 };

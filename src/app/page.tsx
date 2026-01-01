@@ -26,8 +26,8 @@ const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
 
 export async function generateMetadata() {
   return {
-    title: "Al Aqsa Umrah Transport | #1 Taxi Jeddah Airport to Makkah & Madinah",
-    description: "Book trusted private taxi from Jeddah Airport to Makkah. Luxury GMC Yukon & Hyundai Staria fleet. 24/7 VIP Meet & Greet, fixed prices, and paid parking included.",
+    title: "Al Aqsa Transport | Jeddah Airport Taxi | تاكسي مطار جدة ومكة",
+    description: "Book reliable Umrah taxi from Jeddah Airport to Makkah. Luxury GMC Yukon. حجز تاكسي من مطار جدة الى مكة والمدينة. سيارات جمس حديثة وسائقين محترفين.",
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
@@ -35,11 +35,12 @@ export async function generateMetadata() {
       "Al Aqsa Umrah Transport", "Taxi Jeddah Airport to Makkah",
       "Makkah to Madinah taxi price", "Jeddah airport transfers", "VIP Umrah taxi",
       "Madinah airport transport", "Haram shuttle Makkah", "luxury GMC Yukon rental", "pilgrim transport saudi arabia",
-      "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة"
+      "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة",
+      "ارخص تاكسي من مطار جدة", "سعر التوصيل من مكة للمدينة", "حجز سيارة عائلية في مكة", "استقبال مطار جدة", "توصيل الحرم المكي"
     ],
     openGraph: {
-      title: "Al Aqsa Umrah Transport | VIP Jeddah to Makkah Taxi",
-      description: "Book trusted private taxi from Jeddah Airport to Makkah. Luxury GMC Yukon & Hyundai Staria fleet.",
+      title: "Al Aqsa Transport | VIP Jeddah to Makkah Taxi | تاكسي جدة مكة",
+      description: "Book trusted private taxi from Jeddah Airport to Makkah. Luxury GMC Yukon & Hyundai Staria fleet. خدمة توصيل vip للمعتمرين.",
     }
   };
 }
@@ -53,12 +54,14 @@ export default async function Home() {
   const heroSubtitleContent = (
     <>
       <span className="block mb-3 opacity-90">{heroSubtitleText}</span>
-      <span
+      <h2
         className="block text-2xl md:text-3xl mt-2 text-amber-400 font-bold tracking-wide"
         style={{ fontFamily: 'var(--font-reem-kufi)' }}
+        lang="ar"
+        dir="rtl"
       >
         خدمة نقل المعتمرين VIP
-      </span>
+      </h2>
     </>
   );
 

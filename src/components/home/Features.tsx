@@ -26,7 +26,8 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Shield size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Safe & Trusted Pilgrim Transport</h3>
+                        <h3 className="text-xl font-bold mb-1 font-playfair tracking-tight">Safe & Trusted Pilgrim Transport</h3>
+                        <p className="text-amber-500 font-bold font-reem-kufi mb-4">نقل آمن وموثوق</p>
                         <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
                             Officially licensed chauffeurs & well-maintained vehicles. The most trusted choice for safe Makkah to Madinah travel.
                         </p>
@@ -36,7 +37,8 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Clock size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">Punctual Airport Transfers</h3>
+                        <h3 className="text-xl font-bold mb-1 font-playfair tracking-tight">Punctual Airport Transfers</h3>
+                        <p className="text-amber-500 font-bold font-reem-kufi mb-4">دقة في المواعيد</p>
                         <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
                             We track your flight to ensure timely pickups. Reliable Jeddah & Madinah Airport service available 24/7.
                         </p>
@@ -46,7 +48,8 @@ export default function Features() {
                         <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/5 text-secondary group-hover:scale-110 group-hover:bg-secondary/10 transition-all duration-300 shadow-lg shadow-secondary/5">
                             <Heart size={32} />
                         </div>
-                        <h3 className="text-xl font-bold mb-4 font-playfair tracking-tight">VIP Hospitality & Comfort</h3>
+                        <h3 className="text-xl font-bold mb-1 font-playfair tracking-tight">VIP Hospitality & Comfort</h3>
+                        <p className="text-amber-500 font-bold font-reem-kufi mb-4">ضيافة وراحة VIP</p>
                         <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
                             Spacious GMC Yukons & luxury vans for families. We serve the guests of Allah with utmost respect and premium comfort.
                         </p>

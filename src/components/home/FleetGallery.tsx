@@ -6,11 +6,11 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './FleetGallery.module.css';
 
 const FLEET_IMAGES = [
-    { src: '/images/fleet/gmc-yukon-hero-professional.png', alt: 'GMC Yukon VIP Transport', name: 'GMC Yukon 2025', badge: 'VIP Choice', capacity: '7 Pax', url: '/fleet/gmc-yukon-at4' },
-    { src: '/images/fleet/staria-hero-professional.png', alt: 'Hyundai Staria Luxury Van', name: 'Hyundai Staria', badge: 'Family Favorite', capacity: '7 Pax', url: '/fleet/hyundai-staria' },
-    { src: '/images/fleet/camry-hero-professional.png', alt: 'Toyota Camry Sedan', name: 'Toyota Camry', badge: 'Best Value', capacity: '4 Pax', url: '/fleet/toyota-camry' },
-    { src: '/images/fleet/hiace-hero-professional.png', alt: 'Toyota Hiace Family Bus', name: 'Toyota Hiace', badge: 'Large Groups', capacity: '10 Pax', url: '/fleet/toyota-hiace' },
-    { src: '/images/fleet/starex-hero-professional.png', alt: 'Hyundai H1 Starex', name: 'Hyundai H1', badge: 'Comfort', capacity: '7 Pax', url: '/fleet/hyundai-starex' },
+    { src: '/images/fleet/gmc-yukon-hero-professional.png', alt: 'GMC Yukon AT4 Black VIP SUV Front View', name: 'GMC Yukon 2025', badge: 'VIP Choice', capacity: '7 Pax', url: '/fleet/gmc-yukon-at4' },
+    { src: '/images/fleet/staria-hero-professional.png', alt: 'Hyundai Staria Luxury Van for Families', name: 'Hyundai Staria', badge: 'Family Favorite', capacity: '7 Pax', url: '/fleet/hyundai-staria' },
+    { src: '/images/fleet/camry-hero-professional.png', alt: 'Toyota Camry Recent Model White Sedan', name: 'Toyota Camry', badge: 'Best Value', capacity: '4 Pax', url: '/fleet/toyota-camry' },
+    { src: '/images/fleet/hiace-hero-professional.png', alt: 'Toyota Hiace Commuter Bus High Roof White', name: 'Toyota Hiace', badge: 'Large Groups', capacity: '10 Pax', url: '/fleet/toyota-hiace' },
+    { src: '/images/fleet/starex-hero-professional.png', alt: 'Hyundai H1 Starex Practical Family Van', name: 'Hyundai H1', badge: 'Comfort', capacity: '7 Pax', url: '/fleet/hyundai-starex' },
 ];
 
 export default function FleetGallery() {

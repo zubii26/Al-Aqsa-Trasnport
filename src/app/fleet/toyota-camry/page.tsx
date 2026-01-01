@@ -21,11 +21,12 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Toyota Camry Taxi Price Makkah | Cheap Umrah Transport",
-    description: "Best price Toyota Camry taxi for Umrah. Reliable sedan for Jeddah Airport to Makkah and Madinah transfers. Affordable choice for small families and couples.",
+    title: "Toyota Camry Taxi Price Makkah | Cheap Umrah Transport | تاكسي كامري",
+    description: "Best price Toyota Camry taxi for Umrah. Reliable sedan for Jeddah Airport to Makkah. ارخص تاكسي من مطار جدة الى مكة. سيارة كامري موديل حديث.",
     keywords: [
         "Toyota Camry taxi Makkah", "Cheap Umrah taxi", "Camry Jeddah airport transfer",
-        "Makkah to Madinah taxi price", "Toyota Camry rental Saudi Arabia", "Small family Umrah transport"
+        "Makkah to Madinah taxi price", "Toyota Camry rental Saudi Arabia", "Small family Umrah transport",
+        "تاكسي كامري مكة", "حجز كامري من مطار جدة", "ارخص تاكسي في مكة", "مشوار مكة جدة كامري"
     ],
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry' }
 };

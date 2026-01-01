@@ -88,23 +88,26 @@ export default function CookieConsent() {
                                 <ShieldCheck size={28} />
                             </div>
                             <div className={styles.textContent}>
-                                <h3>Your Privacy Matters</h3>
+                                <h3 className="flex items-center gap-2">
+                                    Your Privacy Matters
+                                    <span className="text-amber-500 font-arabic text-sm opacity-80">| خصوصيتك تهمنا</span>
+                                </h3>
                                 <p>
                                     We use cookies to enhance your experience, provide secure booking, and deliver personalized pilgrim services.
-                                    You can accept all, reject non-essential, or manage your preferences.
+                                    <span className="block font-arabic text-xs mt-1 opacity-70">نستخدم ملفات تعريف الارتباط لتحسين تجربتك وضمان حجز آمن لضيوف الرحمن.</span>
                                 </p>
                             </div>
                         </div>
 
                         <div className={styles.actions}>
                             <button onClick={handleAccept} className={styles.btnAccept}>
-                                Accept All
+                                Accept All <span className="font-arabic text-xs ml-1">موافق</span>
                             </button>
                             <button onClick={handleReject} className={styles.btnReject}>
-                                Reject Non-Essential
+                                Reject <span className="font-arabic text-xs ml-1">رفض</span>
                             </button>
                             <Link href="/cookie-preferences" className={styles.linkManage}>
-                                Manage Preferences
+                                Preferences <span className="font-arabic text-xs ml-1">إعدادات</span>
                             </Link>
                         </div>
                     </div>

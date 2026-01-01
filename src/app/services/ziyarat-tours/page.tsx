@@ -8,8 +8,8 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 
 export const metadata: Metadata = {
-    title: "Ziyarat Tours Makkah & Madinah | Guided Holy Site Visits",
-    description: "Book private Ziyarat tours in Makkah and Madinah. Visit Masjid Quba, Mount Uhud, Cave Hira, and more with knowledgeable drivers. Spiritual history tours in comfort.",
+    title: "Ziyarat Tours Makkah & Madinah | رحلات زيارة مكة والمدينة",
+    description: "Book private Ziyarat tours in Makkah and Madinah. Visit Masjid Quba, Mount Uhud. رحلات زيارة الاماكن التاريخية في مكة والمدينة. زيارة مسجد قباء وجبل النور.",
     keywords: [
         "Ziyarat Tours Makkah",
         "Madinah Ziyarat Places",
@@ -18,7 +18,13 @@ export const metadata: Metadata = {
         "Cave Hira Taxi",
         "Makkah historical places",
         "Madinah sightseeing",
-        "Private Ziyarat Taxi"
+        "Private Ziyarat Taxi",
+        "رحلات زيارة مكة",
+        "مزارات المدينة المنورة",
+        "زيارة مسجد قباء",
+        "جبل النور",
+        "زيارة غار حراء",
+        "سعر باص زيارة المدينة"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/ziyarat-tours',
@@ -43,12 +49,12 @@ const jsonLd = {
         {
             "@type": "City",
             "name": "Makkah",
-            "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat"
+            "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat. زيارة جبل النور وغار ثور."
         },
         {
             "@type": "City",
             "name": "Madinah",
-            "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn"
+            "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn. زيارة مسجد قباء وجبل أحد."
         }
     ],
     "offers": {
@@ -93,6 +99,7 @@ export default async function ZiyaratToursPage() {
                 ctaLink={whatsappLink}
                 layout="center"
                 breadcrumbs={<Breadcrumbs />}
+                alt="Makkah and Madinah Historical Ziyarat Tours - Jabal Al Noor"
             />
 
             {/* Makkah Ziyarat */}
@@ -128,7 +135,7 @@ export default async function ZiyaratToursPage() {
                         <div className="md:w-1/2 relative h-[500px] rounded-2xl overflow-hidden shadow-2xl group">
                             <img
                                 src="https://images.unsplash.com/photo-1537181534458-7dc2614c9546?q=80&w=1000&auto=format&fit=crop"
-                                alt="Makkah Mountains"
+                                alt="Jabal Al-Nour (Cave of Hira) Mountain View Makkah"
                                 className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
@@ -172,7 +179,7 @@ export default async function ZiyaratToursPage() {
                         <div className="md:w-1/2 relative h-[500px] rounded-2xl overflow-hidden shadow-2xl group">
                             <img
                                 src="https://images.unsplash.com/photo-1551041777-ed02bed74fc4?q=80&w=1000&auto=format&fit=crop"
-                                alt="Masjid Quba"
+                                alt="Masjid Quba Madinah First Mosque in Islam Exterior"
                                 className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">

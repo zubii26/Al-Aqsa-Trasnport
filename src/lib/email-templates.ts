@@ -1,76 +1,105 @@
 export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
-<div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 30px;">
-        <p style="font-size: 18px; color: #d4af37; font-weight: bold; margin-bottom: 5px;">﷽</p>
-        <h1 style="color: #d4af37; margin: 0; font-size: 24px;">Booking Confirmation</h1>
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto; direction: ltr;">
+    <!-- Modern Header with Gold Accent -->
+    <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #d4af37; padding-bottom: 20px;">
+        <h1 style="color: #d4af37; margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 1px;">Booking Confirmed</h1>
+        <h2 style="color: #666; margin: 5px 0 0 0; font-size: 18px; font-weight: normal;">تم تأكيد الحجز</h2>
     </div>
 
-    <p>Dear {{name}},</p>
+    <!-- Bilingual Greeting -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 16px; margin-bottom: 5px;">Dear <strong>{{name}}</strong>,</p>
+        <p style="font-size: 18px; color: #d4af37; font-family: 'Amiri', serif; margin: 0;">أهلاً بك يا ضيف الرحمن</p>
+    </div>
 
-    <p style="font-size: 16px;"><strong>Assalamu Alaikum wa Rahmatullahi wa Barakatuh,</strong></p>
+    <p style="text-align: center;">Thank you for choosing Al Aqsa Umrah Transport. Your ride has been scheduled successfully.<br>
+    <span style="font-family: 'Amiri', serif; color: #666;">شكراً لاختيارك الأقصى للنقل. تم حجز رحلتك بنجاح.</span></p>
 
-    <p>We are honored to serve you on your sacred journey. Your Umrah cab booking has been successfully confirmed with Al Aqsa Umrah Transport.</p>
-
-    <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; margin: 25px 0;">
-        <h3 style="color: #d4af37; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">📌 Booking Details</h3>
+    <!-- Booking Details Card -->
+    <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; overflow: hidden; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <div style="background-color: #1a1a1a; padding: 10px 20px;">
+            <h3 style="color: #d4af37; margin: 0; font-size: 16px; text-transform: uppercase;">TRIP DETAILS | تفاصيل الرحلة</h3>
+        </div>
+        
         <table style="width: 100%; border-collapse: collapse;">
+            <!-- Booking Ref -->
             <tr>
-                <td style="padding: 5px 0; color: #666;">Booking ID:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{booking_id}}</td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Reference Code</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">رقم الحجز</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; font-family: monospace; font-size: 16px; color: #1a1a1a;">
+                    {{booking_id}}
+                </td>
             </tr>
+
+            <!-- Date & Time -->
             <tr>
-                <td style="padding: 5px 0; color: #666;">Date & Time:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{date}} at {{time}}</td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Date & Time</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">الموعد</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #1a1a1a;">
+                    {{date}}<br>
+                    <span style="color: #d4af37;">{{time}}</span>
+                </td>
             </tr>
+
+            <!-- Locations -->
             <tr>
-                <td style="padding: 5px 0; color: #666;">Pickup:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{pickup}}</td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">From & To</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">المسار</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    <div style="margin-bottom: 4px;">🟢 <strong>{{pickup}}</strong></div>
+                    <div>🔴 <strong>{{dropoff}}</strong></div>
+                </td>
             </tr>
+
+            <!-- Vehicle -->
             <tr>
-                <td style="padding: 5px 0; color: #666;">Destination:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{dropoff}}</td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Vehicle</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">السيارة</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    {{vehicle_details}}
+                </td>
             </tr>
-            <tr>
-                <td style="padding: 5px 0; color: #666; vertical-align: top;">Vehicle(s):</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{vehicle_details}}</td>
-            </tr>
-            <tr>
-                <td style="padding: 5px 0; color: #666;">Passengers:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{passengers}}</td>
-            </tr>
+
+             <!-- Passengers -->
              <tr>
-                <td style="padding: 5px 0; color: #666;">Luggage:</td>
-                <td style="padding: 5px 0; font-weight: bold;">{{luggage}}</td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Count</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">العدد</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    <strong>{{passengers}}</strong> Passengers | <strong>{{luggage}}</strong> Bags
+                </td>
             </tr>
+
+            <!-- Price -->
             {{price_row}}
         </table>
     </div>
 
-    <p>Our team is dedicated to ensuring your travel is comfortable, safe, and spiritually uplifting.</p>
-
-    <div style="background-color: #fffbeb; padding: 20px; border-radius: 8px; border-left: 4px solid #d4af37; margin: 25px 0;">
-        <h3 style="color: #d4af37; margin-top: 0; margin-bottom: 10px;">✨ Spiritual Reflection for Your Journey</h3>
-        
-        <p style="margin-bottom: 15px;">
-            <span style="font-size: 18px; color: #1a1a1a; display: block; margin-bottom: 5px; font-family: 'Times New Roman', serif;">"الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا"</span>
-            <em>“The reward of Umrah is expiation for the sins committed between it and the next Umrah.”</em><br/>
-            <span style="font-size: 12px; color: #666;">– Prophet Muhammad (S.A.W.W)</span>
-        </p>
-
-        <p>
-            <em>“When you set out for Hajj or Umrah, remember you are answering Allah’s call, so let your heart be filled with gratitude and humility.”</em>
-        </p>
+    <!-- Spiritual Note -->
+    <div style="background-color: #fffbeb; padding: 20px; border-radius: 8px; border-left: 4px solid #d4af37; margin: 25px 0; text-align: center;">
+        <p style="margin: 0; font-size: 18px; font-family: 'Amiri', serif; color: #1a1a1a;">"الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا"</p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;"><em>"The reward of Umrah is expiation for the sins committed between it and the next Umrah."</em></p>
     </div>
 
-    <p>We pray that your journey is blessed, your worship accepted, and your soul enriched with peace.</p>
+    <!-- Need Help -->
+    <div style="text-align: center; color: #666; font-size: 14px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+        <p>Need to make changes? Call/WhatsApp us anytime.</p>
+        <a href="https://wa.me/966500000000" style="display: inline-block; background-color: #25D366; color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; margin-top: 10px;">
+            WhatsApp Support
+        </a>
+    </div>
 
-    <p>If you have any questions or need assistance, please contact our support team.</p>
-
-    <p>May Allah grant you ease and barakah in every step of your pilgrimage.</p>
-
-    <p style="margin-top: 30px;">
-        Warm regards,<br/>
-        <strong>Al Aqsa Umrah Transport Team</strong>
+    <p style="text-align: center; margin-top: 30px; color: #999; font-size: 12px;">
+        &copy; {{year}} Al Aqsa Umrah Transport. All rights reserved.
     </p>
 </div>
 `;

@@ -18,13 +18,15 @@ import { Driver } from '@/models';
 
 export async function generateMetadata() {
     return {
-        title: "About Al Aqsa Umrah Transport | Premier Makkah & Madinah Taxi Service",
-        description: "Al Aqsa Umrah Transport is the #1 choice for pilgrims in Saudi Arabia. We provide VIP Jeddah Airport transfers, reliable Makkah to Madinah taxi integration, and luxury GMC/Bus fleets. Experience safety, spiritual comfort, and punctuality.",
+        title: "About Al Aqsa Umrah Transport | Premier Makkah Taxi | من نحن",
+        description: "Al Aqsa Umrah Transport: #1 choice for pilgrims. VIP Jeddah Airport transfers, Makkah to Madinah taxi, and GMC fleet. أفضل شركة نقل معتمرين في السعودية.",
         keywords: [
             "About Al Aqsa Transport", "Best Umrah transport company Saudi Arabia",
             "Makkah to Madinah taxi price", "Jeddah airport to Makkah taxi service",
             "VIP Umrah transfers", "Luxury GMC for Umrah", "Haramain transfer",
-            "Ziyarat Makkah Madinah", "Pilgrim transport services"
+            "Ziyarat Makkah Madinah", "Pilgrim transport services",
+            "من نحن", "مؤسسة الاقصى لنقل المعتمرين", "شركة نقل في مكة",
+            "ارقام تكاسي مكة", "خدمات المعتمرين", "توصيل مطار الملك عبدالعزيز"
         ],
         openGraph: {
             title: "About Al Aqsa Umrah Transport | Leading Pilgrim Service",

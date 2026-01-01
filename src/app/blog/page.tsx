@@ -12,8 +12,8 @@ import { blogService } from '@/services/blogService';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Umrah Travel Blog | Tips, Guides & Spiritual Insights',
-    description: 'Read our latest articles on Umrah travel tips, spiritual guides, and transport advice for a blessed journey to Makkah and Madinah.',
+    title: 'Umrah Travel Blog | Tips & Guides | مدونة العمرة',
+    description: 'Read our latest articles on Umrah travel tips, transport advice, and spiritual guides. نصائح وارشادات للمعتمرين. دليل المواصلات في مكة والمدينة.',
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/blog',
     },

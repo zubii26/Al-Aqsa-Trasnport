@@ -238,6 +238,8 @@ const QuickBookingForm = ({
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
+
+        // Name
         if (!formData.name.trim()) newErrors.name = 'Name is required';
 
         // Email Validation
@@ -245,26 +247,33 @@ const QuickBookingForm = ({
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!emailRegex.test(formData.email)) {
-            newErrors.email = 'Please enter a valid email address';
+            newErrors.email = 'Invalid email address';
         }
 
-        // Strict Phone Validation: Must start with + and include country code
-        const phoneRegex = /^\+[0-9\s-]{10,}$/;
+        // Strict Phone Validation
+        const phoneRegex = /^\+?[0-9\s-]{10,}$/;
         if (!formData.phone.trim()) {
             newErrors.phone = 'Phone is required';
         } else if (!phoneRegex.test(formData.phone)) {
-            newErrors.phone = 'Please include your country code (e.g., +966XXXXXXXXX)';
+            newErrors.phone = 'Invalid phone format (e.g., +96650...)';
         }
 
-        if (!formData.date) newErrors.date = 'Date is required';
-        if (!formData.time) newErrors.time = 'Time is required';
-        if (!formData.pickup.trim()) newErrors.pickup = 'Pickup location is required';
-        if (!formData.dropoff.trim()) newErrors.dropoff = 'Dropoff location is required';
-        if (!formData.routeId) newErrors.routeId = 'Route is required';
-        if (!formData.vehicleId) newErrors.vehicleId = 'Vehicle is required';
-        if (formData.vehicleCount < 1) newErrors.vehicleCount = 'At least 1 vehicle is required';
+        // Date & Time
+        if (!formData.date) newErrors.date = 'Please select a date';
+        if (!formData.time) newErrors.time = 'Please select a time';
+
+        // Locations
+        if (!formData.pickup.trim()) newErrors.pickup = 'Pickup is required';
+        if (!formData.dropoff.trim()) newErrors.dropoff = 'Dropoff is required';
+
+        // Selection
+        if (!formData.routeId) newErrors.routeId = 'Please select a route';
+        if (!formData.vehicleId) newErrors.vehicleId = 'Please select a vehicle';
+        if (formData.vehicleCount < 1) newErrors.vehicleCount = 'Min. 1 vehicle';
 
         setErrors(newErrors);
+
+        // Shake animation trigger could go here
         return Object.keys(newErrors).length === 0;
     };
 

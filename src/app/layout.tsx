@@ -251,7 +251,8 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "TransportationService",
               "name": settings.general.siteName,
-              "description": settings.general.description,
+              "alternateName": "الأقصى لنقل المعتمرين",
+              "description": settings.general.description + " | أفضل شركة نقل معتمرين من مطار جدة الى مكة",
               "logo": "https://alaqsaumrahtransport.com/logo.png",
               "image": "https://alaqsaumrahtransport.com/images/og-image.jpg",
               "@id": "https://alaqsaumrahtransport.com",
@@ -269,8 +270,8 @@ export default async function RootLayout({
               "areaServed": [
                 { "@type": "City", "name": "Makkah" },
                 { "@type": "City", "name": "Madinah" },
-                { "@type": "City", "name": "Jeddah" },
-                { "@type": "Country", "name": "Saudi Arabia" }
+                { "@type": "City", "name": "Jeddah", "alternateName": "جدة" },
+                { "@type": "Country", "name": "Saudi Arabia", "alternateName": "المملكة العربية السعودية" }
               ],
               "sameAs": [
                 "https://facebook.com/alaqsaumrahtransport",

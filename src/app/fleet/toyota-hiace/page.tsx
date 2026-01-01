@@ -20,11 +20,12 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Toyota Hiace Bus Rental Makkah | 12 Seater Group Transport",
-    description: "Book Toyota Hiace for Umrah group transport. Reliable 10-12 seater bus for Makkah, Madinah, and Jeddah Airport transfers. Best for large families and groups.",
+    title: "Toyota Hiace Bus Rental Makkah | 12 Seater Group Transport | باص هايس",
+    description: "Book Toyota Hiace for Umrah group transport. Reliable 10-12 seater bus. حجز باص هايس في مكة. نقل معتمرين من مطار جدة. باص عائلي مكيف.",
     keywords: [
         "Toyota Hiace rental Makkah", "12 seater bus Jeddah airport", "Group Umrah transport",
-        "Rent Hiace bus Madinah", "Toyota Hiace taxi price", "Makkah to Madinah bus"
+        "Rent Hiace bus Madinah", "Toyota Hiace taxi price", "Makkah to Madinah bus",
+        "باص هايس مكة", "حجز باص 12 راكب", "نقل مجموعات مكة", "باص عائلي للايجار"
     ],
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-hiace' }
 };

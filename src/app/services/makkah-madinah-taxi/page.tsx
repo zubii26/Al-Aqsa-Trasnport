@@ -10,8 +10,8 @@ import RouteVisual from '@/components/services/RouteVisual';
 import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
-    title: "Makkah to Madinah Taxi Price 2025 | VIP Private Transport & GMC",
-    description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon, Hyundai Staria, and VIP buses. Door-to-door transfer, English-speaking drivers, and fixed rates.",
+    title: "Makkah to Madinah Taxi Price 2025 | VIP Private Transport | تاكسي مكة المدينة",
+    description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon & VIP buses. Fixed rates. حجز تاكسي من مكة الى المدينة. توصيل باب الى باب.",
     keywords: [
         "Makkah to Madinah taxi",
         "Makkah to Madinah taxi fare",
@@ -20,7 +20,13 @@ export const metadata: Metadata = {
         "Makkah to Madinah bus VIP",
         "private car Makkah to Madinah",
         "Haramain train alternative",
-        "luxury transport Saudi Arabia"
+        "luxury transport Saudi Arabia",
+        "تاكسي مكة المدينة",
+        "سعر التوصيل من مكة للمدينة",
+        "حجز جمس من مكة الى المدينة",
+        "نقل معتمرين بين المدن",
+        "مشوار مكة المدينة",
+        "باصات vip مكة المدينة"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/makkah-madinah-taxi',
@@ -36,6 +42,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Makkah to Madinah Taxi Service",
+    "alternateName": "تاكسي مكة المدينة",
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport",
@@ -110,7 +117,7 @@ export default async function MakkahMadinahTaxiPage() {
 
     const content = {
         title: "VIP Makkah to Madinah Taxi Services",
-        subtitle: "Experience a spiritual journey with absolute comfort. 4-5 hours travel time in luxury GMC Yukon or Hyundai Staria.",
+        subtitle: "Experience a spiritual journey with absolute comfort (راحة تامة). 4-5 hours travel time in luxury GMC Yukon or Hyundai Staria.",
         heroImage: "/images/routes/makkah-madinah-route-hero.png"
     };
 

@@ -11,9 +11,12 @@ export default function PassengerCare() {
                 <FadeIn>
                     <div className="max-w-3xl mx-auto text-center mb-20">
                         <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Dedicated Service</span>
-                        <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">
+                        <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-2 font-playfair">
                             Tailored Care for <span className="text-amber-600 dark:text-amber-500">Every Guest</span>
                         </h2>
+                        <h3 className="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-6 font-reem-kufi">
+                            عناية خاصة لكل ضيف
+                        </h3>
                         <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                             We understand that every pilgrim's needs are unique. Our service is designed to provide specific, dignified support tailored to your personal requirements.
                         </p>
@@ -44,9 +47,10 @@ export default function PassengerCare() {
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2">
-                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">
+                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-playfair">
                                     Trusted & Secure for <span className="text-pink-600 dark:text-pink-400">Solo Sisters</span>
                                 </h3>
+                                <h4 className="text-xl font-bold text-pink-600 dark:text-pink-400 mb-6 font-reem-kufi">أمان تام للأخوات</h4>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
                                     <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-900 dark:text-pink-300 px-1 font-semibold">Is it safe? Absolutely.</span> We specialize in female-friendly transport where your security is our #1 priority.
                                     Our drivers are rigorously vetted professionals trained to respect your privacy and adhere to Islamic Etiquette (Adab).
@@ -103,9 +107,10 @@ export default function PassengerCare() {
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2">
-                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">
+                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-playfair">
                                     Privacy & Space for <span className="text-blue-600 dark:text-blue-400">Families</span>
                                 </h3>
+                                <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-6 font-reem-kufi">خصوصية وراحة للعوائل</h4>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
                                     <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-300 px-1 font-semibold">Travel Together, Comfortably.</span> We provide spacious GMC Yukons and H1 Vans so your entire family stays together.
                                     We create a calm environment for children and respect your family's private moments during the journey.
@@ -162,9 +167,10 @@ export default function PassengerCare() {
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2">
-                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">
+                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 font-playfair">
                                     Dignity & Patience for <span className="text-amber-600 dark:text-amber-500">Elderly Parents</span>
                                 </h3>
+                                <h4 className="text-xl font-bold text-amber-600 dark:text-amber-500 mb-6 font-reem-kufi">رعاية ورفق بكبار السن</h4>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
                                     <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-300 px-1 font-semibold">Serving them is our Honor.</span> We understand the physical challenges of Umrah.
                                     Our chauffeurs are trained to be extra patient, providing physical assistance at every step to ensure your parents perform their pilgrimage with ease.

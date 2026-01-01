@@ -5,12 +5,17 @@ import Link from 'next/link';
 import FadeIn from '@/components/common/FadeIn';
 
 export const metadata = {
-    title: "Safety Standards & Protocols | Al Aqsa Umrah Transport",
-    description: "Your safety is our sacred duty. Comprehensive vehicle sanitation, driver background checks, GPS tracking, and 24/7 emergency support for peace of mind.",
-    keywords: "Umrah safety, safe taxi Makkah, sanitized transport Saudi, female solo travel Umrah, licensed drivers Jeddah, family transport safety",
+    title: "Safety Standards & Protocols | Al Aqsa Transport | معايير السلامة",
+    description: "Your safety is our sacred duty. Comprehensive vehicle sanitation, driver checks, & 24/7 support. معايير سلامة عالية لخدمة المعتمرين. تعقيم شامل وسائقين محترفين.",
+    keywords: [
+        "Umrah safety", "safe taxi Makkah", "sanitized transport Saudi",
+        "female solo travel Umrah", "licensed drivers Jeddah", "family transport safety",
+        "معايير السلامة", "نقل معتمرين آمن", "تاكسي عائلي مكة",
+        "أمان المعتمرين", "توصيل آمن للنساء", "سائقين مرخصين"
+    ],
     openGraph: {
-        title: "Safety Standards | Al Aqsa Umrah Transport",
-        description: "Verified drivers, sanitized vehicles, and 24/7 support. Travel with peace of mind.",
+        title: "Safety Standards | Al Aqsa Umrah Transport | الأمان والراحة",
+        description: "Verified drivers, sanitized vehicles, and 24/7 support. Travel with peace of mind. رحلة آمنة ومريحة مع الأقصى للنقل.",
         images: ['/images/blog/comfort-safety-new.png'],
     }
 };
