@@ -14,10 +14,13 @@ import BookingDetailsModal from '@/components/admin/bookings/BookingDetailsModal
 const BookingCalendar = dynamic(() => import('@/components/admin/bookings/BookingCalendar'), { ssr: false });
 
 // Extend Booking type to include id and status if not in schema
-interface BookingWithDetails extends Booking {
+interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     id: string;
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     createdAt?: string;
+    rating?: number;
+    review?: string;
+    driverStatus?: string;
 }
 
 export default function BookingsPage() {
@@ -430,6 +433,11 @@ export default function BookingsPage() {
                                                         <div className="mt-1 flex items-center gap-1 text-[10px] text-emerald-600 font-medium">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                                             Driver Assigned
+                                                        </div>
+                                                    )}
+                                                    {booking.rating && (
+                                                        <div className="mt-1 flex items-center gap-1 text-[10px] text-amber-500 font-bold">
+                                                            <span>⭐ {booking.rating}/5</span>
                                                         </div>
                                                     )}
                                                 </td>

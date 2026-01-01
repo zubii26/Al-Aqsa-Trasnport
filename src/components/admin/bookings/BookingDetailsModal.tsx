@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 
 import { Booking } from '@/lib/validations';
 
-interface BookingWithDetails extends Booking {
+interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     id: string; // Ensure id is required here since we use it
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     vehicleCount?: number;
@@ -14,6 +14,11 @@ interface BookingWithDetails extends Booking {
 
     // Driver Details
     assignedDriverId?: string;
+    driverStatus?: string;
+
+    // Rating
+    rating?: number;
+    review?: string;
 }
 
 interface User {
@@ -220,7 +225,40 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                         </section>
                     </div>
 
-                    {/* Additional Details */}
+                    {/* Rating & Review */}
+                    {booking.rating && (
+                        <section className="bg-yellow-50 dark:bg-yellow-900/10 p-5 rounded-xl border border-yellow-200 dark:border-yellow-900/30">
+                            <h3 className="text-sm font-bold text-yellow-800 dark:text-yellow-500 mb-3 uppercase tracking-wider flex items-center gap-2">
+                                <span className="text-lg">⭐</span> Customer Feedback
+                            </h3>
+                            <div className="flex items-center gap-1 mb-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <svg
+                                        key={star}
+                                        className={`w-5 h-5 ${star <= (booking.rating || 0) ? 'text-amber-500 fill-amber-500' : 'text-slate-300'}`}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                    </svg>
+                                ))}
+                                <span className="ml-2 font-bold text-slate-700 dark:text-slate-300">
+                                    {booking.rating}/5
+                                </span>
+                            </div>
+                            {booking.review && (
+                                <p className="text-slate-700 dark:text-slate-300 italic">
+                                    "{booking.review}"
+                                </p>
+                            )}
+                        </section>
+                    )}
+
                     {(booking.notes || booking.flightNumber || booking.arrivalDate) && (
                         <section className="bg-amber-50 dark:bg-amber-900/10 p-4 rounded-xl border border-amber-100 dark:border-amber-900/20">
                             <h3 className="text-sm font-bold text-amber-800 dark:text-amber-500 mb-3">Additional Information</h3>
