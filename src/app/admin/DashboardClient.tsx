@@ -1,12 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Car, Calendar, Activity, TrendingUp, ArrowUpRight, Plus, Check, X } from 'lucide-react';
-import styles from './admin.module.css';
+import { Car, Calendar, Activity, TrendingUp, Plus, Check, X, Users, MapPin, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Toast } from '@/components/ui/Toast';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend, AreaChart, Area } from 'recharts';
 
 interface Booking {
     id: string;
@@ -26,10 +26,6 @@ interface Log {
     timestamp: Date;
     user: string;
 }
-
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
-
-// ... other imports
 
 interface AnalyticsData {
     revenueChart: { name: string; revenue: number; bookings: number }[];
@@ -69,7 +65,6 @@ export default function DashboardClient({
     totalBookings,
     activeFleet,
     totalFleet,
-
     confirmedBookings,
     routesCount,
     totalRevenue,
@@ -107,287 +102,406 @@ export default function DashboardClient({
     };
 
     return (
-        <div className="p-6 space-y-8">
+        <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-[#D4AF37]/30">
             {toast && <Toast message={toast.message} type={toast.type} isVisible={true} onClose={() => setToast(null)} />}
-            <div className={styles.header}>
-                {/* ... title ... */}
-                <div>
-                    <h1 className={styles.title}>Dashboard</h1>
-                    <p className={styles.subtitle}>Overview of your transport business & analytics</p>
-                </div>
-                <div className="flex gap-3">
-                    <Link href="/admin/bookings">
-                        <div className={styles.actionButton}>
-                            <Plus size={18} /> New Booking
-                        </div>
-                    </Link>
-                </div>
-            </div>
 
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className={styles.statsGrid}
-            >
-                {/* Keep existing Stat Cards */}
-                <motion.div variants={item} className={styles.glassCard}>
-                    <div className={styles.statHeader}>
-                        <div className={styles.statLabel}>Total Revenue</div>
-                        <div className={`${styles.statIcon} bg-emerald-500/10 text-emerald-400`}>
-                            <TrendingUp size={20} />
-                        </div>
-                    </div>
-                    <div className={styles.statValue}>SAR {totalRevenue.toLocaleString()}</div>
-                    <div className={styles.statTrend}>
-                        <span className="text-muted-foreground">Lifetime Revenue</span>
-                    </div>
-                </motion.div>
+            <div className="max-w-[1600px] mx-auto p-6 space-y-8">
 
-                {/* Bookings Card */}
-                <motion.div variants={item} className={styles.glassCard}>
-                    <div className={styles.statHeader}>
-                        <div className={styles.statLabel}>Total Bookings</div>
-                        <div className={`${styles.statIcon} bg-blue-500/10 text-blue-400`}>
-                            <Calendar size={20} />
-                        </div>
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">
+                            Command Center
+                        </h1>
+                        <p className="text-slate-400 text-sm md:text-base flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            System Operational • {new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>
                     </div>
-                    <div className={styles.statValue}>{totalBookings}</div>
-                    <div className={styles.statTrend}>
-                        <span className={styles.trendUp}>
-                            {analyticsData.revenueChart[analyticsData.revenueChart.length - 1]?.bookings || 0} this month
-                        </span>
-                    </div>
-                </motion.div>
-
-                {/* Fleet Card */}
-                <motion.div variants={item} className={styles.glassCard}>
-                    <div className={styles.statHeader}>
-                        <div className={styles.statLabel}>Active Fleet</div>
-                        <div className={`${styles.statIcon} bg-purple-500/10 text-purple-400`}>
-                            <Car size={20} />
-                        </div>
-                    </div>
-                    <div className={styles.statValue}>{activeFleet} <span className="text-sm text-muted-foreground">/ {totalFleet}</span></div>
-                    <div className={styles.statTrend}>
-                        <span className="text-muted-foreground">Vehicles available</span>
-                    </div>
-                </motion.div>
-
-                {/* Routes Card */}
-                <motion.div variants={item} className={styles.glassCard}>
-                    <div className={styles.statHeader}>
-                        <div className={styles.statLabel}>Active Routes</div>
-                        <div className={`${styles.statIcon} bg-amber-500/10 text-amber-400`}>
-                            <Activity size={20} />
-                        </div>
-                    </div>
-                    <div className={styles.statValue}>{routesCount}</div>
-                    <div className={styles.statTrend}>
-                        <span className="text-muted-foreground">Destinations</span>
-                    </div>
-                </motion.div>
-            </motion.div>
-
-            {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className={`${styles.glassCard} p-6`}
-                >
-                    <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-                        <TrendingUp size={18} className="text-emerald-500" />
-                        Revenue Trend (Last 6 Months)
-                    </h3>
-                    <div className="h-[300px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={analyticsData.revenueChart}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} />
-                                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `SAR ${value}`} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#f8fafc' }}
-                                    itemStyle={{ color: '#10b981' }}
-                                />
-                                <Line type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} activeDot={{ r: 8 }} dot={{ r: 4 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className={`${styles.glassCard} p-6`}
-                >
-                    <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-                        <Activity size={18} className="text-blue-500" />
-                        Booking Status & Top Vehicles
-                    </h3>
-                    <div className="flex flex-col md:flex-row h-[300px] gap-4">
-                        <div className="flex-1 h-full min-h-[200px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                    <Pie
-                                        data={analyticsData.statusPie}
-                                        innerRadius={60}
-                                        outerRadius={80}
-                                        paddingAngle={5}
-                                        dataKey="value"
-                                    >
-                                        {analyticsData.statusPie.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px' }} />
-                                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
-                                </PieChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className="flex-1 h-full min-h-[200px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={analyticsData.vehicleBar} layout="vertical" margin={{ left: 30 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} horizontal={false} />
-                                    <XAxis type="number" hide />
-                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={11} width={80} tickLine={false} axisLine={false} />
-                                    <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px' }} />
-                                    <Bar dataKey="value" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={20} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Recent Bookings */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className={`${styles.glassCard} lg:col-span-2`}
-                >
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-bold flex items-center gap-2 text-foreground font-playfair">
-                            Recent Bookings
-                        </h2>
-                        <Link href="/admin/bookings" className="text-sm text-[#d4af37] hover:text-[#f3e5ab] transition-colors">
-                            View All
+                    <div className="flex gap-3">
+                        <Link href="/admin/bookings">
+                            <button className="flex items-center gap-2 px-6 py-3 bg-[#D4AF37] hover:bg-[#B38E2D] text-white font-bold rounded-xl shadow-lg shadow-[#D4AF37]/20 transition-all active:scale-95">
+                                <Plus size={20} />
+                                <span>New Booking</span>
+                            </button>
                         </Link>
                     </div>
-                    <div className={styles.tableContainer}>
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>Customer</th>
-                                    <th>Route</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {recentBookings.map((booking, index) => (
-                                    <tr key={booking.id || index}>
-                                        <td>
-                                            <div className="font-medium text-foreground">{booking.name}</div>
-                                            <div className="text-xs text-muted-foreground">{booking.email}</div>
-                                        </td>
-                                        <td>
-                                            <div className="text-sm text-foreground/90">{booking.pickup}</div>
-                                            <div className="text-xs text-muted-foreground">to {booking.dropoff}</div>
-                                        </td>
-                                        <td className="text-sm text-foreground/80">
-                                            {new Date(booking.date).toLocaleDateString()}
-                                            <div className="text-xs text-muted-foreground">{booking.time}</div>
-                                        </td>
-                                        <td>
-                                            <span className={`${styles.statusBadge} ${booking.status === 'confirmed' ? styles.statusConfirmed :
-                                                booking.status === 'cancelled' ? styles.statusCancelled :
-                                                    styles.statusPending
-                                                }`}>
-                                                {booking.status || 'Pending'}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {booking.status === 'pending' && (
-                                                <div className="flex gap-2">
-                                                    <button
-                                                        onClick={() => handleStatusChange(booking.id, 'confirmed')}
-                                                        className="p-1.5 rounded-md hover:bg-emerald-500/10 text-emerald-500 transition-colors"
-                                                        title="Confirm"
-                                                    >
-                                                        <Check size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleStatusChange(booking.id, 'cancelled')}
-                                                        className="p-1.5 rounded-md hover:bg-red-500/10 text-red-500 transition-colors"
-                                                        title="Cancel"
-                                                    >
-                                                        <X size={16} />
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                                {recentBookings.length === 0 && (
-                                    <tr>
-                                        <td colSpan={5} className="text-center py-8 text-muted-foreground">
-                                            No bookings found
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                </div>
+
+                {/* KPI Cards Grid */}
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                >
+                    {/* Revenue Card */}
+                    <motion.div variants={item} className="relative group bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl hover:border-[#D4AF37]/30 transition-all duration-300 shadow-xl overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointers-events-none group-hover:bg-[#D4AF37]/10 transition-colors" />
+                        <div className="flex justify-between items-start mb-4 relative z-10">
+                            <div>
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Revenue</p>
+                                <h3 className="text-3xl font-bold text-white tracking-tight">
+                                    <span className="text-lg text-slate-500 font-normal mr-1">SAR</span>
+                                    {totalRevenue.toLocaleString()}
+                                </h3>
+                            </div>
+                            <div className="p-3 bg-slate-800 rounded-xl text-[#D4AF37] border border-slate-700/50">
+                                <TrendingUp size={24} />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-medium text-emerald-400 bg-emerald-500/10 w-fit px-2 py-1 rounded-full border border-emerald-500/20">
+                            <Activity size={12} />
+                            <span>+12.5% vs last month</span>
+                        </div>
+                    </motion.div>
+
+                    {/* Bookings Card */}
+                    <motion.div variants={item} className="relative group bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 shadow-xl overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointers-events-none group-hover:bg-blue-500/10 transition-colors" />
+                        <div className="flex justify-between items-start mb-4 relative z-10">
+                            <div>
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Bookings</p>
+                                <h3 className="text-3xl font-bold text-white tracking-tight">{totalBookings}</h3>
+                            </div>
+                            <div className="p-3 bg-slate-800 rounded-xl text-blue-400 border border-slate-700/50">
+                                <Calendar size={24} />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+                            <span>{confirmedBookings} Confirmed</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-600" />
+                            <span className="text-amber-400">{pendingBookings} Pending</span>
+                        </div>
+                    </motion.div>
+
+                    {/* Fleet Card */}
+                    <motion.div variants={item} className="relative group bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl hover:border-purple-500/30 transition-all duration-300 shadow-xl overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointers-events-none group-hover:bg-purple-500/10 transition-colors" />
+                        <div className="flex justify-between items-start mb-4 relative z-10">
+                            <div>
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Active Fleet</p>
+                                <h3 className="text-3xl font-bold text-white tracking-tight">{activeFleet} <span className="text-lg text-slate-500 font-normal">/ {totalFleet}</span></h3>
+                            </div>
+                            <div className="p-3 bg-slate-800 rounded-xl text-purple-400 border border-slate-700/50">
+                                <Car size={24} />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-medium text-purple-400 bg-purple-500/10 w-fit px-2 py-1 rounded-full border border-purple-500/20">
+                            <Activity size={12} />
+                            <span>High Availability</span>
+                        </div>
+                    </motion.div>
+
+                    {/* Routes Card */}
+                    <motion.div variants={item} className="relative group bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl hover:border-rose-500/30 transition-all duration-300 shadow-xl overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointers-events-none group-hover:bg-rose-500/10 transition-colors" />
+                        <div className="flex justify-between items-start mb-4 relative z-10">
+                            <div>
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Active Routes</p>
+                                <h3 className="text-3xl font-bold text-white tracking-tight">{routesCount}</h3>
+                            </div>
+                            <div className="p-3 bg-slate-800 rounded-xl text-rose-400 border border-slate-700/50">
+                                <MapPin size={24} />
+                            </div>
+                        </div>
+                        <div className="text-xs text-slate-500">
+                            Covering key locations across KSA
+                        </div>
+                    </motion.div>
                 </motion.div>
 
-                {/* Recent Activity */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className={styles.glassCard}
-                >
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-bold flex items-center gap-2 text-foreground font-playfair">
-                            Activity
-                        </h2>
-                    </div>
-                    <div className="space-y-4">
-                        {recentLogs.map((log, index) => (
-                            <div key={log.id || index} className="flex gap-3 pb-3 border-b border-white/5 last:border-0">
-                                <div className={`mt-1 p-1.5 rounded-lg h-fit ${log.action.includes('DELETE') ? 'bg-red-500/10 text-red-400' :
-                                    log.action.includes('UPDATE') ? 'bg-blue-500/10 text-blue-400' :
-                                        'bg-emerald-500/10 text-emerald-400'
-                                    }`}>
-                                    <Activity size={14} />
-                                </div>
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                    {/* Charts Section - Spans 2 Columns on large screens */}
+                    <div className="lg:col-span-2 space-y-8">
+
+                        {/* Revenue Chart */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 shadow-xl"
+                        >
+                            <div className="flex items-center justify-between mb-8">
                                 <div>
-                                    <div className="text-sm font-medium text-foreground/90">
-                                        {log.action.replace(/_/g, ' ')}
-                                    </div>
-                                    <div className="text-xs text-muted-foreground mt-0.5">
-                                        {log.details}
-                                    </div>
-                                    <div className="text-[10px] text-muted-foreground/60 mt-1">
-                                        {new Date(log.timestamp).toLocaleTimeString()} • {log.user}
-                                    </div>
+                                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                                        <TrendingUp size={20} className="text-[#D4AF37]" />
+                                        Revenue Analytics
+                                    </h3>
+                                    <p className="text-sm text-slate-400 mt-1">Monthly performance overview</p>
                                 </div>
                             </div>
-                        ))}
-                        {recentLogs.length === 0 && (
-                            <div className="text-center py-8 text-muted-foreground text-sm">
-                                No recent activity
+                            <div className="h-[350px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={analyticsData.revenueChart}>
+                                        <defs>
+                                            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3} />
+                                                <stop offset="95%" stopColor="#D4AF37" stopOpacity={0} />
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                                        <XAxis
+                                            dataKey="name"
+                                            stroke="#64748b"
+                                            fontSize={12}
+                                            tickLine={false}
+                                            axisLine={false}
+                                            dy={10}
+                                        />
+                                        <YAxis
+                                            stroke="#64748b"
+                                            fontSize={12}
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickFormatter={(value) => `${value / 1000}k`}
+                                            dx={-10}
+                                        />
+                                        <Tooltip
+                                            contentStyle={{
+                                                backgroundColor: '#0f172a',
+                                                borderColor: '#334155',
+                                                color: '#f8fafc',
+                                                borderRadius: '12px',
+                                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
+                                            }}
+                                            itemStyle={{ color: '#D4AF37' }}
+                                        />
+                                        <Area
+                                            type="monotone"
+                                            dataKey="revenue"
+                                            stroke="#D4AF37"
+                                            strokeWidth={3}
+                                            fillOpacity={1}
+                                            fill="url(#colorRevenue)"
+                                        />
+                                    </AreaChart>
+                                </ResponsiveContainer>
                             </div>
-                        )}
+                        </motion.div>
+
+                        {/* Recent Bookings Table */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl overflow-hidden shadow-xl"
+                        >
+                            <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                                    <Clock size={20} className="text-blue-500" />
+                                    Recent Bookings
+                                </h3>
+                                <Link href="/admin/bookings" className="text-sm font-semibold text-[#D4AF37] hover:text-[#f3e5ab] transition-colors flex items-center gap-1">
+                                    View All <ArrowUpRight size={14} />
+                                </Link>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="bg-slate-950/50 text-xs uppercase tracking-wider text-slate-500 border-b border-slate-800">
+                                            <th className="p-4 font-semibold">Customer</th>
+                                            <th className="p-4 font-semibold">Route</th>
+                                            <th className="p-4 font-semibold">Date & Time</th>
+                                            <th className="p-4 font-semibold">Status</th>
+                                            <th className="p-4 font-semibold text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-800">
+                                        {recentBookings.map((booking) => (
+                                            <tr key={booking.id} className="group hover:bg-slate-800/50 transition-colors">
+                                                <td className="p-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300">
+                                                            {booking.name.charAt(0)}
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-semibold text-white text-sm">{booking.name}</div>
+                                                            <div className="text-xs text-slate-500">{booking.email}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="p-4">
+                                                    <div className="flex flex-col gap-1">
+                                                        <div className="text-sm text-slate-300 flex items-center gap-1">
+                                                            <MapPin size={10} className="text-emerald-500" /> {booking.pickup}
+                                                        </div>
+                                                        <div className="text-sm text-slate-300 flex items-center gap-1">
+                                                            <MapPin size={10} className="text-rose-500" /> {booking.dropoff}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="p-4">
+                                                    <div className="text-sm text-slate-300 font-mono">
+                                                        {new Date(booking.date).toLocaleDateString()}
+                                                    </div>
+                                                    <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                                                        <Clock size={10} /> {booking.time}
+                                                    </div>
+                                                </td>
+                                                <td className="p-4">
+                                                    <span className={`
+                                                        inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide
+                                                        ${booking.status === 'confirmed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                                            booking.status === 'cancelled' ? 'bg-red-500/10 text-red-400 border border-red-500/20' :
+                                                                'bg-amber-500/10 text-amber-400 border border-amber-500/20'}
+                                                    `}>
+                                                        <span className={`w-1.5 h-1.5 rounded-full ${booking.status === 'confirmed' ? 'bg-emerald-500' :
+                                                                booking.status === 'cancelled' ? 'bg-red-500' :
+                                                                    'bg-amber-500'
+                                                            }`} />
+                                                        {booking.status || 'Pending'}
+                                                    </span>
+                                                </td>
+                                                <td className="p-4 text-right">
+                                                    {booking.status === 'pending' && (
+                                                        <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <button
+                                                                onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                                                                className="p-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 transition-all"
+                                                                title="Confirm"
+                                                            >
+                                                                <Check size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                                                                className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition-all"
+                                                                title="Cancel"
+                                                            >
+                                                                <X size={16} />
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        {recentBookings.length === 0 && (
+                                            <tr>
+                                                <td colSpan={5} className="p-8 text-center text-slate-500">
+                                                    No recent bookings found.
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </motion.div>
                     </div>
-                </motion.div>
+
+                    {/* Sidebar / Stats Column */}
+                    <div className="space-y-8">
+
+                        {/* Status Distribution */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 shadow-xl"
+                        >
+                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                                <Activity size={18} className="text-purple-500" />
+                                Booking Status
+                            </h3>
+                            <div className="h-[250px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie
+                                            data={analyticsData.statusPie}
+                                            innerRadius={60}
+                                            outerRadius={80}
+                                            paddingAngle={5}
+                                            dataKey="value"
+                                            stroke="none"
+                                        >
+                                            {analyticsData.statusPie.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.color} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip
+                                            contentStyle={{
+                                                backgroundColor: '#0f172a',
+                                                borderColor: '#334155',
+                                                borderRadius: '8px',
+                                                color: '#fff'
+                                            }}
+                                            itemStyle={{ color: '#fff' }}
+                                        />
+                                        <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </motion.div>
+
+                        {/* Recent Activity Feed */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                            className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 shadow-xl"
+                        >
+                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                                <Activity size={18} className="text-slate-400" />
+                                Live Activity
+                            </h3>
+                            <div className="space-y-6 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-[2px] before:bg-slate-800">
+                                {recentLogs.map((log, index) => (
+                                    <div key={log.id || index} className="relative pl-10">
+                                        <div className={`
+                                            absolute left-0 top-0 w-10 h-10 rounded-full border-4 border-slate-900 flex items-center justify-center z-10
+                                            ${log.action.includes('DELETE') ? 'bg-red-500/20 text-red-500' :
+                                                log.action.includes('UPDATE') ? 'bg-blue-500/20 text-blue-500' :
+                                                    'bg-emerald-500/20 text-emerald-500'}
+                                        `}>
+                                            <Activity size={16} />
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-800 hover:border-slate-700 transition-colors">
+                                            <p className="text-sm font-semibold text-slate-200">
+                                                {log.action.replace(/_/g, ' ')}
+                                            </p>
+                                            <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                                                {log.details}
+                                            </p>
+                                            <div className="flex items-center gap-2 mt-2 text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                                                <span>{new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                <span>•</span>
+                                                <span className="text-slate-400">{log.user}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                {recentLogs.length === 0 && (
+                                    <div className="text-center py-8 text-slate-500 text-sm pl-10">
+                                        No recent activity
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+
+                    </div>
+                </div>
             </div>
         </div>
+    );
+}
+
+// Helper icon component for arrows
+function ArrowUpRight({ size = 24 }: { size?: number }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
     );
 }
