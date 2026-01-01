@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin, Clock, Calendar, ChevronRight, LogOut, CheckCircle, Navigation } from 'lucide-react';
+import { LogOut, MapPin, Calendar, Clock, Phone, Navigation, CheckCircle, ChevronRight, User } from 'lucide-react';
+import NotificationBell from '@/components/common/NotificationBell';
 import Link from 'next/link';
 
 interface Booking {
@@ -72,9 +73,23 @@ export default function DriverDashboard() {
                         <h1 className="text-xl font-bold">My Jobs</h1>
                         <p className="text-slate-400 text-sm">Welcome back, Driver</p>
                     </div>
-                    <button onClick={handleLogout} className="p-2 bg-slate-800 rounded-full hover:bg-slate-700">
-                        <LogOut size={18} />
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <NotificationBell />
+                        <button
+                            onClick={() => router.push('/profile')}
+                            className="p-2 bg-slate-800 rounded-full text-slate-400 hover:text-white transition-colors"
+                            title="My Profile"
+                        >
+                            <User size={20} />
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="p-2 bg-slate-800 rounded-full text-slate-400 hover:text-red-400 transition-colors"
+                            title="Logout"
+                        >
+                            <LogOut size={20} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Tabs */}
@@ -82,8 +97,8 @@ export default function DriverDashboard() {
                     <button
                         onClick={() => setActiveTab('active')}
                         className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'active'
-                                ? 'bg-amber-500 text-slate-900 shadow-lg'
-                                : 'text-slate-400 hover:text-white'
+                            ? 'bg-amber-500 text-slate-900 shadow-lg'
+                            : 'text-slate-400 hover:text-white'
                             }`}
                     >
                         Active
@@ -91,8 +106,8 @@ export default function DriverDashboard() {
                     <button
                         onClick={() => setActiveTab('completed')}
                         className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'completed'
-                                ? 'bg-amber-500 text-slate-900 shadow-lg'
-                                : 'text-slate-400 hover:text-white'
+                            ? 'bg-amber-500 text-slate-900 shadow-lg'
+                            : 'text-slate-400 hover:text-white'
                             }`}
                     >
                         History

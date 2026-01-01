@@ -22,7 +22,31 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     }
 
     const { updateBooking } = await import('@/lib/db');
+    const { Notification } = await import('@/models'); // Import Notification model
+
+    // Store old booking to check against
+    const { Booking } = await import('@/models');
+    const oldBooking = await Booking.findById(id).lean();
+
     const updated = await updateBooking(id, updates);
+
+    // Trigger Notification: If driver assigned
+    if (updated && updates.assignedDriverId && updates.assignedDriverId !== oldBooking?.assignedDriverId?.toString()) {
+        try {
+            await Notification.create({
+                userId: updates.assignedDriverId,
+                title: 'New Trip Assigned',
+                message: `You have been assigned to Trip #${updated.id.slice(0, 8)}`,
+                type: 'info',
+                link: `/driver/jobs/${updated.id}`
+            });
+            console.log('Notification created for driver:', updates.assignedDriverId);
+        } catch (err) {
+            console.error('Failed to create notification', err);
+        }
+    }
+
+    // Trigger Notification: If admin confirms booking (Notify user? Not implemented yet as we lack user accounts for customers)
 
     if (!updated) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
 

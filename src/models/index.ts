@@ -312,12 +312,22 @@ const AuditLogSchema = new Schema<IAuditLog>({
     timestamp: { type: Date, default: Date.now },
 });
 
+const NotificationSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    title: { type: String, required: true },
+    message: { type: String, required: true },
+    type: { type: String, enum: ['info', 'success', 'warning', 'error'], default: 'info' },
+    link: { type: String },
+    isRead: { type: Boolean, default: false },
+}, { timestamps: true });
+
 // Revert hack
 export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
 export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
 export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
-export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
-export const Booking: Model<IBooking> = mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema);
+export const User = mongoose.models.User || mongoose.model('User', UserSchema);
+export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
+export const Notification = mongoose.models.Notification || mongoose.model('Notification', NotificationSchema);
 export const BlogPost: Model<IBlogPost> = mongoose.models.BlogPost || mongoose.model<IBlogPost>('BlogPost', BlogPostSchema);
 export const AuditLog: Model<IAuditLog> = mongoose.models.AuditLog || mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);
 export const Vehicle: Model<IVehicle> = mongoose.models.Vehicle || mongoose.model<IVehicle>('Vehicle', VehicleSchema);

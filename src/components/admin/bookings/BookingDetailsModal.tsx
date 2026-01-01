@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Calendar, MapPin, User, Mail, Phone, Briefcase, Car, Check, XCircle, CheckCircle2, SteeringWheel } from 'lucide-react';
+import { X, Calendar, MapPin, User, Mail, Phone, Briefcase, Car, Check, XCircle, CheckCircle2, CarFront } from 'lucide-react';
 import { format } from 'date-fns';
 
 import { Booking } from '@/lib/validations';
@@ -112,7 +112,7 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                         <div className="bg-slate-50 dark:bg-slate-800/30 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
                             <div className="flex items-center justify-between mb-3">
                                 <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                                    <SteeringWheel size={16} /> Driver Assignment
+                                    <CarFront size={16} /> Driver Assignment
                                 </h3>
                                 {booking.driverStatus && (
                                     <span className="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium capitalize">
