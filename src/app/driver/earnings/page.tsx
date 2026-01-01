@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Wallet, TrendingUp, Clock, Calendar, ArrowUpRight, ArrowDownRight, DollarSign } from 'lucide-react';
 import BottomNav from '@/components/driver/BottomNav';
