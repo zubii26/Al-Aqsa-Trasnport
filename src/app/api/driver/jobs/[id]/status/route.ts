@@ -18,7 +18,7 @@ export async function PATCH(
         const { status } = await request.json();
 
         // Validate status transition
-        const validStatuses = ['accepted', 'en_route', 'arrived', 'completed', 'cancelled'];
+        const validStatuses = ['accepted', 'en_route', 'arrived', 'completed', 'cancelled', 'rejected'];
         if (!validStatuses.includes(status)) {
             return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
         }
@@ -39,6 +39,27 @@ export async function PATCH(
         // Sync Main Status
         if (status === 'completed' || status === 'cancelled') {
             booking.status = status;
+        } else if (status === 'rejected') {
+            // If rejected, unassign driver and set back to pending for re-assignment
+            // Or keep as 'pending' but notify admin. 
+            // For MVP: Let's set main status to 'pending' and clear assignment so another driver can be assigned manually
+
+            // Actually, better to keep record of who rejected. Let's JUST status update for now.
+            // Admin will see 'rejected' and re-assign manually.
+            booking.status = 'pending'; // Reset main status if it was anything else
+            booking.assignedDriverId = undefined; // Unassign driver
+            booking.driverStatus = 'pending'; // Reset driver status for next driver
+
+            // Wait, if we reset everything, we lose the 'rejection' event.
+            // Better approach: Set main status to 'pending' (ready for reassignment) but MAYBE log it?
+            // To keep it simple and safe:
+            // 1. Cancel the specific driver assignment (make finding it via ID tricky if we use ID for job)
+            // 2. Actually, simplest MVP: Mark booking as 'cancelled' by driver (if policy allows) OR 'pending' + unassigned.
+
+            // Let's go with: Unassign Driver.
+            booking.assignedDriverId = null;
+            booking.driverStatus = 'pending';
+            // We return 'rejected' so UI knows, but DB state is reset.
         } else if (status === 'accepted') {
             booking.status = 'confirmed';
         }

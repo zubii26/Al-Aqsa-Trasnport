@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat } from 'lucide-react';
+import Link from 'next/link';
+import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat, Eye, Edit, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
 import { Toast } from '@/components/ui/Toast';
@@ -127,9 +128,21 @@ export default function UsersPage() {
         });
     };
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterRole, setFilterRole] = useState('all');
+
+    // ... existing hooks ...
+
+    const filteredUsers = users.filter(user => {
+        const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesRole = filterRole === 'all' || user.role === filterRole;
+        return matchesSearch && matchesRole;
+    });
+
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-8">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">User Management</h1>
                     <p className="text-slate-500 dark:text-slate-400">Manage system access and roles</p>
@@ -143,6 +156,33 @@ export default function UsersPage() {
                 </button>
             </div>
 
+            {/* Search and Filter Bar */}
+            <div className="flex flex-col md:flex-row gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input
+                        type="text"
+                        placeholder="Search by name or email..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                    />
+                </div>
+                <div className="flex gap-2">
+                    <select
+                        value={filterRole}
+                        onChange={(e) => setFilterRole(e.target.value)}
+                        className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"
+                    >
+                        <option value="all">All Roles</option>
+                        <option value="driver">Drivers Only</option>
+                        <option value="manager">Managers</option>
+                        <option value="operational_manager">Ops Managers</option>
+                        <option value="admin">Admins</option>
+                    </select>
+                </div>
+            </div>
+
             {loading ? (
                 <div className="flex justify-center py-20">
                     <Loader2 size={40} className="animate-spin text-amber-500" />
@@ -150,7 +190,7 @@ export default function UsersPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <AnimatePresence>
-                        {users.map((user) => (
+                        {filteredUsers.map((user) => (
                             <motion.div
                                 key={user.id}
                                 layout
@@ -178,11 +218,17 @@ export default function UsersPage() {
                                                     <UserIcon size={24} />}
                                     </div>
                                     <div className="flex gap-2">
+                                        <Link
+                                            href={`/admin/users/${user.id}`}
+                                            className="text-slate-400 hover:text-blue-500 transition-colors"
+                                        >
+                                            <Eye size={18} />
+                                        </Link>
                                         <button
                                             onClick={() => handleEdit(user)}
                                             className="text-slate-400 hover:text-amber-500 transition-colors text-sm font-medium"
                                         >
-                                            Edit
+                                            <Edit size={18} />
                                         </button>
                                         <button
                                             onClick={() => handleDelete(user.id)}

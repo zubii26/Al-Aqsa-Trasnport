@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent, Mail } from 'lucide-react';
+import { Save, Globe, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Video, Search, Code, Layout, AtSign, Hash, FileText, Link as LinkIcon, Lock, ShieldCheck, Percent, Mail, DatabaseBackup, Trash2 } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast, ToastType } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
@@ -14,7 +14,7 @@ import EmailTemplateManager from '@/components/admin/settings/EmailTemplateManag
 import { Settings } from '@/lib/validations';
 import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from '@/lib/email-templates';
 
-type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount' | 'emails';
+type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount' | 'emails' | 'database';
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('general');
@@ -28,6 +28,7 @@ export default function SettingsPage() {
 
     // Security Modal State
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [retentionMonths, setRetentionMonths] = useState('6');
     type PendingSaveType = 'GLOBAL' | 'SECTION' | null;
     const [pendingAction, setPendingAction] = useState<PendingSaveType>(null);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -247,6 +248,7 @@ export default function SettingsPage() {
         { id: 'scripts', label: 'Scripts', icon: Code, description: 'Custom tracking scripts' },
         { id: 'discount', label: 'Discounts', icon: Percent, description: 'Promotions & offers' },
         { id: 'emails', label: 'Email Templates', icon: Mail, description: 'Customize emails' },
+        { id: 'database', label: 'Maintenance', icon: DatabaseBackup, description: 'Data retention & cleanup' },
         { id: 'security', label: 'Security', icon: ShieldCheck, description: 'Password & access' },
     ];
 
@@ -600,6 +602,76 @@ export default function SettingsPage() {
                                     settings={settings as unknown as Settings}
                                     onChange={handleSectionSave}
                                 />
+                            )}
+
+                            {activeTab === 'database' && (
+                                <div className="space-y-8">
+                                    <div>
+                                        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                                            <DatabaseBackup className="text-amber-500" size={28} />
+                                            Database Maintenance
+                                        </h2>
+                                        <p className="text-muted-foreground">Manage data retention and optimization.</p>
+                                    </div>
+
+                                    <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+                                        <div className="flex items-start gap-4">
+                                            <div className="p-3 bg-amber-100 dark:bg-amber-800/30 rounded-xl text-amber-600 dark:text-amber-400">
+                                                <Trash2 size={24} />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2">Clean Up Old Data</h3>
+                                                <p className="text-slate-600 dark:text-slate-300 mb-4 text-sm leading-relaxed">
+                                                    Permanently remove <strong>Completed</strong> and <strong>Cancelled</strong> bookings that are older than the selected period.
+                                                    This action removes booking records and their associated driver assignments.
+                                                    <br /><span className="font-semibold text-red-500">Warning: This action cannot be undone.</span>
+                                                </p>
+
+                                                <div className="flex flex-col sm:flex-row gap-4 items-end sm:items-center">
+                                                    <div className="w-full sm:w-48">
+                                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Delete Older Than</label>
+                                                        <select
+                                                            value={retentionMonths}
+                                                            onChange={(e) => setRetentionMonths(e.target.value)}
+                                                            className="w-full p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500 outline-none font-medium"
+                                                        >
+                                                            <option value="1">1 Month</option>
+                                                            <option value="3">3 Months</option>
+                                                            <option value="6">6 Months</option>
+                                                            <option value="12">1 Year</option>
+                                                            <option value="24">2 Years</option>
+                                                        </select>
+                                                    </div>
+                                                    <button
+                                                        onClick={async () => {
+
+
+                                                            if (!confirm(`Are you SURE you want to delete all completed/cancelled bookings older than ${retentionMonths} months? This is irreversible.`)) return;
+
+                                                            setLoading(true);
+                                                            try {
+                                                                const res = await fetch(`/api/admin/maintenance/cleanup?months=${retentionMonths}`, { method: 'DELETE' });
+                                                                const data = await res.json();
+                                                                if (res.ok) {
+                                                                    showToast(data.message, 'success');
+                                                                } else {
+                                                                    showToast(data.error || 'Cleanup failed', 'error');
+                                                                }
+                                                            } catch (err) {
+                                                                showToast('Network error during cleanup', 'error');
+                                                            } finally {
+                                                                setLoading(false);
+                                                            }
+                                                        }}
+                                                        className="px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-bold shadow-lg shadow-red-500/20 transition-all active:scale-95"
+                                                    >
+                                                        Clean Up Now
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
 
                             {activeTab === 'security' && (

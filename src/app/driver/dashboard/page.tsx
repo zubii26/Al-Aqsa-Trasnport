@@ -7,6 +7,7 @@ import NotificationBell from '@/components/common/NotificationBell';
 import LocationTracker from '@/components/driver/LocationTracker';
 import BottomNav from '@/components/driver/BottomNav';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Booking {
     id: string;
@@ -114,8 +115,14 @@ export default function DriverDashboard() {
                     <div className="flex justify-between items-start mb-6">
                         <div className="flex items-center gap-3">
                             {/* Profile Image / Avatar Placeholder */}
-                            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-500 font-bold">
-                                <User size={20} />
+                            <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center overflow-hidden">
+                                <Image
+                                    src="/logo.png"
+                                    alt="Al Aqsa Logo"
+                                    width={64}
+                                    height={64}
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             <div>
                                 <h1 className="text-lg font-bold">Welcome Driver</h1>

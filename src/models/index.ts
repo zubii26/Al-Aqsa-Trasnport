@@ -269,7 +269,7 @@ const BookingSchema = new Schema<IBooking>({
 
     // Driver Assignment
     assignedDriverId: { type: String }, // Links to User._id (role: driver)
-    driverStatus: { type: String, enum: ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled'], default: 'pending' },
+    driverStatus: { type: String, enum: ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled', 'rejected'], default: 'pending' },
 
     // Rating & Review
     rating: { type: Number, min: 1, max: 5 },

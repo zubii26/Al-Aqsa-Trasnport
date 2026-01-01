@@ -251,18 +251,34 @@ export default function JobDetailsPage({ params }: { params: Promise<{ id: strin
             </div>
 
             {/* Sticky Action Footer */}
+            {/* Sticky Action Footer */}
             {nextAction && (
                 <div className="fixed bottom-0 left-0 right-0 p-6 pt-4 bg-white/90 backdrop-blur-xl border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-50 pb-8">
-                    <div className="max-w-md mx-auto">
+                    <div className="max-w-md mx-auto space-y-3">
                         <SwipeToConfirm
                             onConfirm={() => updateStatus(nextAction.action)}
                             label={nextAction.label}
                             colorClass={nextAction.color}
                             isUpdating={updating}
                         />
-                        <p className="text-center text-[10px] text-slate-400 mt-3 font-medium uppercase tracking-widest">
-                            Slide to update status
-                        </p>
+                        {job.driverStatus === 'pending' && (
+                            <button
+                                onClick={() => {
+                                    if (confirm('Are you sure you want to decline this job? It will be removed from your list.')) {
+                                        updateStatus('rejected');
+                                    }
+                                }}
+                                disabled={updating}
+                                className="w-full py-3 rounded-full bg-slate-100 text-slate-500 font-bold text-sm hover:bg-red-50 hover:text-red-500 transition-colors"
+                            >
+                                Decline Job
+                            </button>
+                        )}
+                        {!job.driverStatus.startsWith('pending') && (
+                            <p className="text-center text-[10px] text-slate-400 mt-2 font-medium uppercase tracking-widest">
+                                {job.driverStatus === 'completed' ? 'Job Completed' : 'Slide to update status'}
+                            </p>
+                        )}
                     </div>
                 </div>
             )}
