@@ -93,13 +93,13 @@ export default async function AdminDashboard() {
             routesCount={routesCount}
             totalRevenue={totalRevenue}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            recentBookings={bookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5) as any}
-            recentLogs={logs.slice(0, 5).map(log => ({ ...log, timestamp: new Date(log.timestamp), user: log.user || 'System' }))}
-            analyticsData={{
+            recentBookings={JSON.parse(JSON.stringify(bookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5))) as any}
+            recentLogs={JSON.parse(JSON.stringify(logs.slice(0, 5).map(log => ({ ...log, timestamp: new Date(log.timestamp), user: log.user || 'System' }))))}
+            analyticsData={JSON.parse(JSON.stringify({
                 revenueChart: chartData,
                 statusPie: pieData,
                 vehicleBar: barData
-            }}
+            }))}
         />
     );
 }
