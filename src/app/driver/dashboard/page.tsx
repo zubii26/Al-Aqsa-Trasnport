@@ -24,6 +24,8 @@ export default function DriverDashboard() {
     const [jobs, setJobs] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({ totalEarnings: 0, totalTrips: 0 });
+    const [activeTab, setActiveTab] = useState<'active' | 'completed'>('active');
+    const [isOnline, setIsOnline] = useState(false);
 
     useEffect(() => {
         fetchJobs();
@@ -42,6 +44,48 @@ export default function DriverDashboard() {
         } catch (error) {
             console.error('Failed to fetch stats', error);
         }
+    };
+
+    const fetchJobs = async () => {
+        try {
+            const res = await fetch('/api/driver/jobs');
+            if (res.status === 401) return router.push('/driver/login');
+            const data = await res.json();
+            setJobs(data.bookings || []);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const toggleStatus = async () => {
+        const newStatus = !isOnline;
+        setIsOnline(newStatus);
+        try {
+            await fetch('/api/driver/status', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isOnline: newStatus })
+            });
+        } catch (error) {
+            console.error('Failed to update status', error);
+            setIsOnline(!newStatus); // Revert
+        }
+    };
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        router.push('/driver/login');
+    };
+
+    const statusColors: Record<string, string> = {
+        pending: 'bg-yellow-100 text-yellow-700',
+        accepted: 'bg-blue-100 text-blue-700',
+        en_route: 'bg-indigo-100 text-indigo-700',
+        arrived: 'bg-purple-100 text-purple-700',
+        completed: 'bg-green-100 text-green-700',
+        cancelled: 'bg-red-100 text-red-700',
     };
 
     // ... (rest of code) ...
