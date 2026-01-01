@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { LogOut, MapPin, Calendar, Clock, Phone, Navigation, CheckCircle, ChevronRight, User } from 'lucide-react';
+import { LogOut, MapPin, Calendar, Clock, Phone, Navigation, CheckCircle, ChevronRight, User, Car } from 'lucide-react';
 import NotificationBell from '@/components/common/NotificationBell';
 import Link from 'next/link';
 
@@ -14,6 +14,7 @@ interface Booking {
     time: string;
     name: string;
     driverStatus: string;
+    selectedVehicles?: { name: string }[];
 }
 
 export default function DriverDashboard() {
@@ -193,20 +194,41 @@ export default function DriverDashboard() {
 
                             {/* Action Buttons */}
                             {!['completed', 'cancelled'].includes(job.driverStatus) && (
-                                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-50">
-                                    <a
-                                        href={`https://wa.me/?text=Hello ${job.name}, I am your driver for Al Aqsa Transport. I am on my way.`}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="flex items-center justify-center gap-2 py-2.5 bg-green-50 text-green-700 rounded-xl font-medium text-sm hover:bg-green-100 transition-colors"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">W</div>
-                                        WhatsApp
-                                    </a>
+                                <div className="space-y-3 pt-4 border-t border-slate-50">
+                                    {/* Vehicle Info */}
+                                    {/* @ts-ignore - vehicle data exists in API response but interface needs update */}
+                                    {job.selectedVehicles?.[0] && (
+                                        <div className="flex items-center gap-2 text-xs text-slate-500 bg-slate-50 p-2 rounded-lg">
+                                            <Car size={14} className="text-slate-400" />
+                                            <span>Vehicle: <span className="font-semibold text-slate-700">{job.selectedVehicles[0].name}</span></span>
+                                        </div>
+                                    )}
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <a
+                                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.pickup)}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex items-center justify-center gap-2 py-2.5 bg-blue-50 text-blue-700 rounded-xl font-medium text-sm hover:bg-blue-100 transition-colors"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <Navigation size={14} />
+                                            Navigate
+                                        </a>
+                                        <a
+                                            href={`https://wa.me/?text=Hello ${job.name}, I am your driver for Al Aqsa Transport. I am on my way.`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="flex items-center justify-center gap-2 py-2.5 bg-green-50 text-green-700 rounded-xl font-medium text-sm hover:bg-green-100 transition-colors"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">W</div>
+                                            WhatsApp
+                                        </a>
+                                    </div>
                                     <Link
                                         href={`/driver/jobs/${job.id}`}
-                                        className="flex items-center justify-center gap-2 py-2.5 bg-amber-50 text-amber-700 rounded-xl font-medium text-sm hover:bg-amber-100 transition-colors"
+                                        className="flex items-center justify-center gap-2 py-2.5 bg-amber-50 text-amber-700 rounded-xl font-medium text-sm hover:bg-amber-100 transition-colors w-full"
                                     >
                                         Details
                                         <ChevronRight size={16} />
