@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -434,7 +434,7 @@ export default function BookingPage() {
                 >
                     <div className="relative w-24 h-24 mb-6">
                         <motion.div
-                            className="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700"
+                            className="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-800"
                         />
                         <motion.div
                             className="absolute inset-0 rounded-full border-4 border-t-secondary border-r-secondary border-b-transparent border-l-transparent"
@@ -458,17 +458,20 @@ export default function BookingPage() {
                     transition={{ duration: 0.3 }}
                 >
                     <div className="mb-8 text-center md:text-left">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Begin Your Journey</h2>
-                        <p className="text-slate-500 text-lg">Select your travel details to view exclusive rates</p>
+                        <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Begin Your Journey</h2>
+                        <p className="text-slate-500 text-xl font-light">Experience premium transport with our gold-standard service.</p>
                     </div>
 
-                    <div className="max-w-xl mx-auto md:mx-0 bg-slate-50 dark:bg-slate-900/50 p-6 md:p-8 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div className="max-w-xl mx-auto md:mx-0 glass-card p-6 md:p-10 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-2xl relative">
+                        {/* Decorative Gold sheen - Contained to avoid spilling but separate from content clipping */}
+                        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                        </div>
 
                         {/* Service Type Dropdown */}
-                        <div className="mb-6">
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                                <Building2 size={18} className="text-secondary" />
-                                <span>Service Type</span>
+                        <div className="mb-8 relative z-30">
+                            <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">
+                                Service Type
                             </label>
                             <div className="relative">
                                 <SearchableSelect
@@ -484,7 +487,7 @@ export default function BookingPage() {
                                         { value: 'Ziarat', label: 'Ziarat Tour', icon: '🕌' }
                                     ]}
                                     placeholder="Select Service Type"
-                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
+                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-lg"
                                     icon={<Building2 size={20} />}
                                 />
                             </div>
@@ -492,12 +495,15 @@ export default function BookingPage() {
 
                         {/* Sub-Category Dropdown for Airport */}
                         {serviceType === 'Airport' && (
-                            <div className="mb-6">
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                                    {airportType === 'Arrival' ? <PlaneLanding size={18} className="text-secondary" /> : <PlaneTakeoff size={18} className="text-secondary" />}
-                                    <span>Transfer Type</span>
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                className="mb-8"
+                            >
+                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">
+                                    Transfer Direction
                                 </label>
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-100 dark:border-slate-700/50">
                                     <button
                                         type="button"
                                         onClick={() => {
@@ -506,10 +512,10 @@ export default function BookingPage() {
                                             setSelectedRoute(null);
                                         }}
                                         className={`
-                                            flex items-center justify-center gap-2 px-4 py-4 rounded-xl font-medium transition-all
+                                            flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all
                                             ${airportType === 'Arrival'
-                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/20 scale-[1.02]'
-                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-secondary/50'
+                                                ? 'bg-white dark:bg-slate-800 text-secondary shadow-lg scale-[1.02] ring-1 ring-black/5'
+                                                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                                             }
                                         `}
                                     >
@@ -524,10 +530,10 @@ export default function BookingPage() {
                                             setSelectedRoute(null);
                                         }}
                                         className={`
-                                            flex items-center justify-center gap-2 px-4 py-4 rounded-xl font-medium transition-all
+                                            flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all
                                             ${airportType === 'Departure'
-                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/20 scale-[1.02]'
-                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-secondary/50'
+                                                ? 'bg-white dark:bg-slate-800 text-secondary shadow-lg scale-[1.02] ring-1 ring-black/5'
+                                                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                                             }
                                         `}
                                     >
@@ -535,16 +541,15 @@ export default function BookingPage() {
                                         <span>Departure</span>
                                     </button>
                                 </div>
-                            </div>
+                            </motion.div>
                         )}
 
                         {/* Pickup & Dropoff Selection */}
-                        <div className="grid md:grid-cols-2 gap-6 mb-8">
-                            {/* Pickup Location */}
-                            <div>
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                                    <MapPin size={18} className="text-secondary" />
-                                    <span>Pickup From</span>
+                        <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-20">
+                            {/* Pickup Location - Higher Z-Index to overlap Dropoff */}
+                            <div className="relative group z-20">
+                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 group-focus-within:text-secondary transition-colors">
+                                    Pickup From
                                 </label>
                                 <SearchableSelect
                                     name="pickup"
@@ -571,17 +576,16 @@ export default function BookingPage() {
                                         }))).sort().map(p => ({ value: p, label: p })),
                                         { value: 'custom', label: 'Other / Custom Location' }
                                     ]}
-                                    placeholder="Select Pickup Location"
-                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
+                                    placeholder="Select Pickup"
+                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base"
                                     icon={<MapPin size={20} />}
                                 />
                             </div>
 
-                            {/* Dropoff Location */}
-                            <div>
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                                    <MapPin size={18} className="text-secondary" />
-                                    <span>Dropoff To</span>
+                            {/* Dropoff Location - Lower Z-Index */}
+                            <div className="relative group z-10">
+                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 group-focus-within:text-secondary transition-colors">
+                                    Dropoff To
                                 </label>
                                 <SearchableSelect
                                     name="dropoff"
@@ -628,8 +632,8 @@ export default function BookingPage() {
                                             : []
                                     }
                                     disabled={!bookingData.pickup || bookingData.pickup === 'custom'}
-                                    placeholder={!bookingData.pickup ? "Select Pickup First" : "Select Dropoff Location"}
-                                    className={`w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 ${(!bookingData.pickup || bookingData.pickup === 'custom') ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    placeholder={!bookingData.pickup ? "Select Pickup First" : "Select Dropoff"}
+                                    className={`w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base ${(!bookingData.pickup || bookingData.pickup === 'custom') ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     icon={<Navigation size={20} />}
                                 />
                             </div>
@@ -661,7 +665,7 @@ export default function BookingPage() {
 
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Precise Pickup Address</label>
+                                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 block">Precise Pickup Address</label>
                                             <input
                                                 type="text"
                                                 value={bookingData.pickup === 'custom' ? '' : bookingData.pickup}
@@ -672,7 +676,7 @@ export default function BookingPage() {
                                             {errors.pickup && <p className="text-red-500 text-xs mt-1">{errors.pickup}</p>}
                                         </div>
                                         <div>
-                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Precise Dropoff Address</label>
+                                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 block">Precise Dropoff Address</label>
                                             <input
                                                 type="text"
                                                 value={bookingData.dropoff}
@@ -691,21 +695,23 @@ export default function BookingPage() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
-                                        className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm mb-6"
+                                        className="bg-slate-50/50 dark:bg-slate-900/30 rounded-2xl p-6 border border-secondary/20 shadow-lg shadow-secondary/5 relative overflow-hidden"
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-                                                <Info size={24} />
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+
+                                        <div className="flex items-center gap-5 relative z-10">
+                                            <div className="w-14 h-14 rounded-full bg-secondary text-white flex items-center justify-center shadow-lg shadow-secondary/30">
+                                                <MapPin size={28} fill="currentColor" />
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-slate-900 dark:text-white">Selected Route</h4>
-                                                <p className="text-sm text-slate-500">
+                                                <h4 className="font-bold text-slate-900 dark:text-white text-lg">Route Selected</h4>
+                                                <p className="text-sm text-slate-500 font-medium">
                                                     {selectedRoute.distance} • {selectedRoute.time} approx
                                                 </p>
                                             </div>
                                             <div className="ml-auto text-right">
                                                 <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
-                                                <span className="font-bold text-secondary text-lg">{selectedRoute.baseRate} SAR</span>
+                                                <span className="font-black text-secondary text-2xl tracking-tight">{selectedRoute.baseRate} <span className="text-sm text-slate-500">SAR</span></span>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -729,11 +735,11 @@ export default function BookingPage() {
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.3 }}
-                className="space-y-6"
+                className="space-y-8"
             >
                 <div className="mb-6 pl-1">
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
-                    <p className="text-slate-500 text-sm">Choose a vehicle that fits your needs</p>
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
+                    <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
                 </div>
 
                 {/* Mobile Dropdown (Visible on small screens) */}
@@ -741,7 +747,7 @@ export default function BookingPage() {
                     <div className="relative">
                         <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                             <Briefcase size={18} className="text-secondary" />
-                            <span>Choose Vehicle</span>
+                            <span>Vehicle Selection</span>
                         </label>
 
                         {/* Selected Vehicle Cards (Mobile Hero) */}
@@ -757,33 +763,33 @@ export default function BookingPage() {
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, height: 0 }}
-                                            className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-lg border border-secondary/20 group"
+                                            className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-2xl border-2 border-secondary/50 group"
                                         >
                                             {/* Background Image / Placeholder */}
-                                            <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800">
+                                            <div className="absolute inset-0 bg-slate-900">
                                                 {v.image ? (
-                                                    <img src={v.image} alt={v.name} className="w-full h-full object-cover" />
+                                                    <img src={v.image} alt={v.name} className="w-full h-full object-cover opacity-90" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center">
-                                                        <Briefcase className="text-slate-400 opacity-20" size={48} />
+                                                        <Briefcase className="text-slate-700" size={48} />
                                                     </div>
                                                 )}
                                             </div>
 
                                             {/* Gradient Overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
 
                                             {/* 'SELECTED' Badge */}
-                                            <div className="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+                                            <div className="absolute top-4 right-4 bg-secondary text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider flex items-center gap-1">
+                                                <CheckCircle size={12} fill="currentColor" className="text-white" />
                                                 Selected {sv.quantity > 1 && `x${sv.quantity}`}
                                             </div>
 
                                             {/* Content */}
                                             <div className="absolute bottom-0 left-0 right-0 p-5">
-                                                <h3 className="text-2xl font-bold text-white mb-1 leading-tight">
+                                                <h3 className="text-2xl font-bold text-white mb-1 leading-tight flex items-center gap-2">
                                                     {v.name}
-                                                    {v.name.includes('GMC') && <span className="ml-2 text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full inline-block align-middle transform -translate-y-1">VIP</span>}
-                                                    {v.name.includes('Hiace') && <span className="ml-2 text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full inline-block align-middle transform -translate-y-1">Family</span>}
+                                                    {v.name.includes('GMC') && <span className="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full">VIP</span>}
                                                 </h3>
                                                 <div className="flex items-center gap-3 text-white/80 text-sm font-medium">
                                                     <span>{v.capacity} Seater</span>
@@ -800,17 +806,18 @@ export default function BookingPage() {
                         {/* Dropdown Header */}
                         <div
                             className={`
-                                relative w-full premium-input
+                                relative w-full premium-input bg-white dark:bg-slate-900
                                 rounded-xl px-4 py-4 flex items-center justify-between 
-                                cursor-pointer transition-all hover:border-secondary/50
-                                ${isVehicleDropdownOpen ? 'border-secondary ring-2 ring-secondary/20' : ''}
+                                cursor-pointer transition-all hover:border-secondary/50 shadow-sm
+                                ${isVehicleDropdownOpen ? 'border-secondary ring-2 ring-secondary/20' : 'border-slate-200 dark:border-slate-700'}
                             `}
                             onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
                         >
-                            <span className="font-semibold text-slate-900 dark:text-white">
+                            <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                                <Car size={20} className="text-secondary" />
                                 {bookingData.selectedVehicles.length > 0
-                                    ? `${bookingData.selectedVehicles.reduce((acc, v) => acc + v.quantity, 0)} Vehicles Selected`
-                                    : 'Select Vehicles'}
+                                    ? `${bookingData.selectedVehicles.reduce((acc, v) => acc + v.quantity, 0)} Vehicles Added`
+                                    : 'Tap to Add Vehicles'}
                             </span>
                             <ChevronDown className={`text-slate-400 transition-transform ${isVehicleDropdownOpen ? 'rotate-180 text-secondary' : ''}`} size={20} />
                         </div>
@@ -820,7 +827,7 @@ export default function BookingPage() {
                             <motion.div
                                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                                className="absolute top-full left-0 w-full mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-[100] max-h-[60vh] overflow-y-auto custom-scrollbar pb-4 ring-1 ring-black/5"
+                                className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl z-[100] max-h-[60vh] overflow-y-auto custom-scrollbar pb-4 ring-1 ring-black/5"
                             >
                                 {vehicles.map((vehicle, idx) => {
                                     const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
@@ -840,7 +847,6 @@ export default function BookingPage() {
                                             `}
                                         >
                                             <div className="flex items-center gap-4">
-                                                {/* List Item Image */}
                                                 <div className="w-20 h-14 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-white/10 shadow-sm relative">
                                                     {vehicle.image ? (
                                                         <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover" />
@@ -852,16 +858,13 @@ export default function BookingPage() {
                                                         <span className={`block font-bold text-sm ${isSelected ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'}`}>
                                                             {vehicle.name}
                                                             {vehicle.name.includes('GMC') && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 border border-amber-200 px-1.5 py-0.5 rounded-full">VIP</span>}
-                                                            {vehicle.name.includes('Hiace') && <span className="ml-2 text-[10px] bg-blue-100 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded-full">Family</span>}
                                                         </span>
                                                         <div className="text-right shrink-0 ml-2">
-                                                            {bookingData.routeId === 'custom' ? (
-                                                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400">Quote</span>
-                                                            ) : (
-                                                                <span className="text-sm font-bold text-slate-900 dark:text-white">
-                                                                    {priceDetails.price} <span className="text-xs font-normal text-slate-500">SAR</span>
-                                                                </span>
-                                                            )}
+
+                                                            <span className="text-sm font-bold text-slate-900 dark:text-white">
+                                                                {bookingData.routeId === 'custom' ? 'Quote' : `${priceDetails.price} SAR`}
+                                                            </span>
+
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
@@ -895,7 +898,7 @@ export default function BookingPage() {
                                                         onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
                                                         className="text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary transition-all"
                                                     >
-                                                        Add to Booking
+                                                        Add Vehicle
                                                     </button>
                                                 )}
                                             </div>
@@ -907,123 +910,128 @@ export default function BookingPage() {
                     </div>
                 </div>
 
-                {/* Desktop Grid (Hidden on mobile) */}
-                <div className="hidden lg:grid grid-cols-2 gap-6">
+                {/* Desktop Grid (Hidden on mobile) - Refined Premium Look */}
+                <div className="hidden lg:grid grid-cols-2 gap-8">
                     {vehicles.map((vehicle) => {
                         const Icon = vehicle.icon;
                         const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
                         const selectedMatch = bookingData.selectedVehicles.find(v => v.vehicleId === vehicle.id);
                         const quantity = selectedMatch ? selectedMatch.quantity : 0;
+                        const isSelected = quantity > 0;
 
                         return (
                             <motion.div
                                 key={vehicle.id}
                                 whileHover={{ y: -6 }}
-                                whileTap={{ scale: 0.98 }}
+                                onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1)}
                                 className={`
-                                    relative rounded-2xl transition-all duration-300 group overflow-hidden flex flex-col
-                                    ${quantity > 0 ? 'bg-white dark:bg-slate-800 border-2 border-secondary shadow-xl shadow-secondary/20' : 'premium-card hover:border-secondary/50'}
+                                    relative rounded-3xl transition-all duration-300 group overflow-hidden flex flex-col cursor-pointer
+                                    ${isSelected
+                                        ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20'
+                                        : 'bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
+                                    }
                                 `}
                             >
                                 {/* Image Container */}
-                                <div className="relative h-48 w-full overflow-hidden bg-slate-100 dark:bg-slate-900 border-b border-slate-100 dark:border-white/5">
+                                <div className={`
+                                    relative h-56 w-full overflow-hidden 
+                                    ${isSelected ? 'bg-slate-50 dark:bg-slate-800/50' : 'bg-slate-100/50 dark:bg-slate-950/50'}
+                                    transition-colors duration-300
+                                `}>
                                     {vehicle.image ? (
                                         <img
                                             src={vehicle.image}
                                             alt={vehicle.name}
-                                            className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110"
+                                            className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-105"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-slate-300">
-                                            <Icon size={64} />
+                                            <Icon size={72} />
                                         </div>
                                     )}
 
-                                    {/* Overlay Gradient for Text Readability if needed */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-
-                                    {/* Quantity Controls Overlay */}
-                                    <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-2">
-                                        {quantity > 0 ? (
-                                            <div className="flex items-center gap-2 bg-white dark:bg-slate-800 rounded-lg p-1 shadow-lg border border-slate-200 dark:border-slate-700">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleVehicleQuantityChange(vehicle.id, -1);
-                                                    }}
-                                                    className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors"
-                                                >
-                                                    -
-                                                </button>
-                                                <span className="font-bold text-slate-900 dark:text-white w-4 text-center">{quantity}</span>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleVehicleQuantityChange(vehicle.id, 1);
-                                                    }}
-                                                    className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90 transition-colors"
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleVehicleQuantityChange(vehicle.id, 1);
-                                                }}
-                                                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white border border-white/50 px-3 py-1.5 rounded-lg text-sm font-bold transition-all shadow-sm"
-                                            >
-                                                Add Vehicle
-                                            </button>
+                                    {/* Features Badges - Absolute */}
+                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                        {vehicle.name.includes('GMC') && (
+                                            <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider border border-slate-700">Premium</span>
+                                        )}
+                                        {vehicle.name.includes('Hiace') && (
+                                            <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider">Group</span>
                                         )}
                                     </div>
 
-                                    {/* Price Tag Overlay */}
-                                    <div className="absolute bottom-3 right-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-lg border border-white/20">
+                                    {/* Price Tag - Absolute */}
+                                    <div className={`
+                                        absolute bottom-4 right-4 px-4 py-2 rounded-xl shadow-lg border backdrop-blur-md
+                                        ${isSelected
+                                            ? 'bg-secondary text-white border-secondary'
+                                            : 'bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white border-white/20'
+                                        }
+                                    `}>
                                         {bookingData.routeId === 'custom' ? (
-                                            <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
-                                                Custom Quote
-                                            </span>
-                                        ) : priceDetails.discountApplied > 0 ? (
+                                            <span className="text-sm font-bold">Quote</span>
+                                        ) : (
                                             <div className="flex flex-col items-end leading-none">
-                                                <span className="text-[10px] text-slate-500 line-through decoration-red-500/50 mb-0.5">
-                                                    {priceDetails.originalPrice} SAR
-                                                </span>
-                                                <span className="text-lg font-black text-red-600">
-                                                    {priceDetails.price} <span className="text-[10px] font-bold text-slate-500">SAR</span>
+                                                {priceDetails.discountApplied > 0 && (
+                                                    <span className={`text-[10px] font-medium line-through mb-0.5 ${isSelected ? 'text-white/70' : 'text-slate-400'}`}>
+                                                        {priceDetails.originalPrice}
+                                                    </span>
+                                                )}
+                                                <span className="text-xl font-black">
+                                                    {priceDetails.price} <span className="text-xs font-bold opacity-70">SAR</span>
                                                 </span>
                                             </div>
-                                        ) : (
-                                            <span className="text-lg font-black text-slate-900 dark:text-white">
-                                                {priceDetails.price} <span className="text-xs font-bold text-slate-500">SAR</span>
-                                            </span>
                                         )}
                                     </div>
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-5 flex-1 flex flex-col">
-                                    <div className="flex justify-between items-start mb-2">
+                                <div className="p-6 flex-1 flex flex-col">
+                                    <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <h3 className={`text - xl font - bold mb - 1 transition - colors ${quantity > 0 ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'} `}>
+                                            <h3 className={`text-xl font-bold mb-1 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
                                                 {vehicle.name}
-                                                {vehicle.name.includes('GMC') && <span className="ml-2 text-xs bg-amber-100 text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full align-middle">⭐ VIP</span>}
-                                                {vehicle.name.includes('Hiace') && <span className="ml-2 text-xs bg-blue-100 text-blue-600 border border-blue-200 px-2 py-0.5 rounded-full align-middle">👨‍👩‍👧‍👦 Family</span>}
                                             </h3>
-                                            <p className="text-sm text-slate-500 font-medium">{vehicle.capacity}</p>
+                                            <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
+                                                <span className="flex items-center gap-1.5"><Users size={14} /> {vehicle.capacity}</span>
+                                                <span className="flex items-center gap-1.5"><Luggage size={14} /> {vehicle.luggage}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Quantity Control (Desktop) */}
+                                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 rounded-lg p-1 border border-slate-100 dark:border-slate-800">
+                                            {quantity > 0 ? (
+                                                <>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, -1); }}
+                                                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span className="font-bold text-slate-900 dark:text-white w-6 text-center">{quantity}</span>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
+                                                        className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
+                                                    className="px-4 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-secondary transition-colors"
+                                                >
+                                                    Select
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
 
-                                    <div className="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-50 dark:border-white/5">
-                                        <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/50 px-2.5 py-1.5 rounded-md border border-slate-100 dark:border-slate-600">
-                                            <Briefcase size={12} className="text-slate-400" />
-                                            <span>{vehicle.luggage}</span>
-                                        </div>
-                                        {vehicle.features.slice(0, 2).map((feature, idx) => (
-                                            <div key={idx} className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/50 px-2.5 py-1.5 rounded-md border border-slate-100 dark:border-slate-600">
-                                                <CheckCircle size={12} className="text-emerald-500" />
-                                                <span>{feature}</span>
+                                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-dashed dark:border-slate-800 grid grid-cols-2 gap-2">
+                                        {vehicle.features.slice(0, 4).map((feature, idx) => (
+                                            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                                                <CheckCircle size={12} className="text-emerald-500 shrink-0" />
+                                                <span className="truncate">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -1046,49 +1054,59 @@ export default function BookingPage() {
             transition={{ duration: 0.3 }}
             className="space-y-8"
         >
-            <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Trip Details</h2>
-                <p className="text-slate-500 text-sm mb-6">When do you need the ride?</p>
+            <div className="mb-6 pl-1">
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Trip Details</h2>
+                <p className="text-slate-500 text-lg">Help us coordinate your perfect pickup</p>
+            </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                            <Calendar size={16} className="text-secondary" /> Date
+            <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-xl relative overflow-hidden">
+                {/* Decorative Background */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-50" />
+
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                    <div className="space-y-3">
+                        <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
+                            <Calendar size={14} className="text-secondary" /> Pickup Date
                         </label>
-                        <div className="relative">
+                        <div className="relative group">
                             <DatePicker
                                 selected={bookingData.date}
                                 onChange={(date) => updateData('date', date)}
                                 placeholderText="Select Date"
-                                className={inputClasses(!!errors.date)}
+                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium"
                                 dateFormat="yyyy-MM-dd"
                                 minDate={new Date()}
                                 portalId="datepicker-portal"
                                 popperClassName="home-datepicker-popper"
                             />
-                            {errors.date && <p className="text-red-500 text-xs mt-1 absolute">{errors.date}</p>}
+                            {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
                         </div>
+                        {errors.date && <p className="text-red-500 text-xs ml-1 font-medium">{errors.date}</p>}
                     </div>
-                    <div className="space-y-2">
-                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                            <Clock size={16} className="text-secondary" /> Pickup Time
+
+                    <div className="space-y-3">
+                        <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
+                            <Clock size={14} className="text-secondary" /> Pickup Time
                         </label>
-                        <div className="relative">
+                        <div className="relative group">
                             <ClockTimePicker
                                 date={bookingData.time}
                                 onChange={(date) => updateData('time', date)}
                                 placeholderText="Select Time"
-                                className={inputClasses(!!errors.time)}
+                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium"
                             />
-                            {errors.time && <p className="text-red-500 text-xs mt-1 absolute">{errors.time}</p>}
+                            {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
                         </div>
+                        {errors.time && <p className="text-red-500 text-xs ml-1 font-medium">{errors.time}</p>}
                     </div>
                 </div>
-            </div>
 
-            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Detailed Information</h2>
-                <p className="text-slate-500 text-sm mb-6">Please provide your details below</p>
+                <div className="my-8 border-t border-slate-100 dark:border-slate-700/50" />
+
+                <div className="mb-6">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Contact Information</h3>
+                    <p className="text-sm text-slate-400">Where should we send your booking confirmation?</p>
+                </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                     {/* Full Name */}
@@ -1100,13 +1118,13 @@ export default function BookingPage() {
                             </div>
                             <input
                                 type="text"
-                                className={`${inputClasses(!!errors.name)} pl-11`}
+                                className="w-full premium-input rounded-xl pl-11 pr-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 font-medium placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all focus:ring-2 focus:ring-secondary/20"
                                 value={bookingData.name}
                                 onChange={(e) => updateData('name', e.target.value)}
                                 placeholder="Your full name"
                             />
                         </div>
-                        {errors.name && <p className="text-red-500 text-xs mt-1 ml-1">{errors.name}</p>}
+                        {errors.name && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.name}</p>}
                     </div>
 
                     {/* Country / Region */}
@@ -1133,7 +1151,7 @@ export default function BookingPage() {
                                 { value: "Other", label: "Other", icon: "🌍" }
                             ]}
                             placeholder="Select Country"
-                            className={inputClasses(false)}
+                            className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
                             icon={<Globe size={18} />}
                         />
                     </div>
@@ -1147,13 +1165,13 @@ export default function BookingPage() {
                             </div>
                             <input
                                 type="tel"
-                                className={`${inputClasses(!!errors.phone)} pl-11`}
+                                className="w-full premium-input rounded-xl pl-11 pr-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 font-medium placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all focus:ring-2 focus:ring-secondary/20"
                                 value={bookingData.phone}
                                 onChange={(e) => updateData('phone', e.target.value)}
-                                placeholder="+966 50 000 0000 or 050..."
+                                placeholder="+966 50 000 0000"
                             />
                         </div>
-                        {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1">{errors.phone}</p>}
+                        {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.phone}</p>}
                     </div>
 
                     {/* Email */}
@@ -1165,57 +1183,64 @@ export default function BookingPage() {
                             </div>
                             <input
                                 type="email"
-                                className={`${inputClasses(!!errors.email)} pl-11`}
+                                className="w-full premium-input rounded-xl pl-11 pr-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 font-medium placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all focus:ring-2 focus:ring-secondary/20"
                                 value={bookingData.email}
                                 onChange={(e) => updateData('email', e.target.value)}
                                 placeholder="name@example.com"
                             />
                         </div>
-                        {errors.email && <p className="text-red-500 text-xs mt-1 ml-1">{errors.email}</p>}
+                        {errors.email && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.email}</p>}
                     </div>
+                </div>
+            </div>
 
+            {/* Optional Details Section */}
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-6 md:p-8 border border-slate-100 dark:border-slate-800">
+                <div className="mb-6 flex items-center justify-between">
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Additional Details</h3>
+                        <p className="text-sm text-slate-400">Optional info to help us serve you better</p>
+                    </div>
+                    <span className="text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-500 px-3 py-1 rounded-full">Optional</span>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
                     {/* Flight Details */}
                     <div className="relative group col-span-2">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Flight Details (Optional)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Flight Number</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span className="text-slate-400 font-bold text-xs">FL</span>
+                                <PlaneLanding size={18} className="text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                             </div>
                             <input
                                 type="text"
-                                className={`${inputClasses(false)} pl-11`}
+                                className="w-full bg-white dark:bg-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-blue-500 transition-all text-sm"
                                 value={bookingData.flightNumber}
                                 onChange={(e) => updateData('flightNumber', e.target.value)}
-                                placeholder="Flight Number (e.g., SV123)"
+                                placeholder="e.g. SV123 (Helps us track delays)"
                             />
                         </div>
                     </div>
 
                     {/* Arrival Airport Date */}
                     <div className="relative group col-span-2">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Arrival Airport Date (Optional)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Arrival Date (If different)</label>
                         <div className="relative">
                             <DatePicker
                                 selected={bookingData.arrivalDate}
                                 onChange={(date) => updateData('arrivalDate', date)}
                                 placeholderText="Select Arrival Date"
-                                className={`${inputClasses(false)} pl-4`}
+                                className="w-full bg-white dark:bg-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-blue-500 transition-all text-sm pl-4"
                                 dateFormat="yyyy-MM-dd"
                                 minDate={new Date()}
                                 portalId="datepicker-portal-arrival"
                             />
                         </div>
                     </div>
-                </div>
-            </div>
 
-            {/* Passenger & Luggage Count */}
-            <div className="pt-6 border-t border-slate-200 dark:border-slate-700 mt-6">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Passenger & Luggage Details</h2>
-                <div className="grid md:grid-cols-2 gap-6">
                     {/* Passengers */}
                     <div className="relative group">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Passengers (Optional)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Passengers</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <Users size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
@@ -1223,7 +1248,7 @@ export default function BookingPage() {
                             <input
                                 type="number"
                                 min="1"
-                                className={`${inputClasses(false)} pl-11`}
+                                className="w-full bg-white dark:bg-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-secondary transition-all text-sm"
                                 value={bookingData.passengers}
                                 onChange={(e) => updateData('passengers', parseInt(e.target.value) || '')}
                                 placeholder="1"
@@ -1233,7 +1258,7 @@ export default function BookingPage() {
 
                     {/* Luggage */}
                     <div className="relative group">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Luggage Count (Optional)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Luggage Items</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <Luggage size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
@@ -1241,27 +1266,25 @@ export default function BookingPage() {
                             <input
                                 type="number"
                                 min="0"
-                                className={`${inputClasses(false)} pl-11`}
+                                className="w-full bg-white dark:bg-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-secondary transition-all text-sm"
                                 value={bookingData.luggage}
                                 onChange={(e) => updateData('luggage', parseInt(e.target.value) || 0)}
                                 placeholder="0"
                             />
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div className="pt-6 border-t border-slate-200 dark:border-slate-700 mt-6">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Additional information</h2>
+                    <div className="col-span-2 border-t border-slate-200 dark:border-slate-700/50 my-2" />
 
-                <div className="relative group">
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Order Notes (optional)</label>
-                    <textarea
-                        className={`${inputClasses(false)} pl-4 py-3 min-h-[120px] resize-y`}
-                        value={bookingData.notes || ''}
-                        onChange={(e) => updateData('notes', e.target.value)}
-                        placeholder="Notes about your order, e.g. special notes for delivery."
-                    />
+                    <div className="relative group col-span-2">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Special Requests / Notes</label>
+                        <textarea
+                            className="w-full bg-white dark:bg-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-secondary transition-all text-sm min-h-[100px] resize-y"
+                            value={bookingData.notes || ''}
+                            onChange={(e) => updateData('notes', e.target.value)}
+                            placeholder="Any special instructions for the driver..."
+                        />
+                    </div>
                 </div>
             </div>
         </motion.div>
@@ -1281,8 +1304,6 @@ export default function BookingPage() {
             };
         }, { originalPrice: 0, discountApplied: 0, price: 0 });
 
-
-
         return (
             <motion.div
                 key="step4"
@@ -1291,144 +1312,163 @@ export default function BookingPage() {
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.3 }}
-                className="space-y-6"
+                className="space-y-8"
             >
                 <div className="mb-6 pl-1">
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Review & Confirm</h2>
-                    <p className="text-slate-500 text-sm">Please verify your booking details</p>
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Review Booking</h2>
+                    <p className="text-slate-500 text-lg">One last check before we secure your ride</p>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-                    {/* Journey Details Accordion */}
-                    <div className="border-b border-slate-100 dark:border-slate-700">
-                        <button
-                            className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
-                            onClick={() => setAccordionOpen(accordionOpen === 'journey' ? '' : 'journey')}
-                        >
-                            <h3 className="text-sm font-bold text-secondary uppercase tracking-wider flex items-center gap-2">
-                                <MapPin size={16} /> Journey Details
-                            </h3>
-                            <ChevronDown className={`text - slate - 400 transition - transform ${accordionOpen === 'journey' ? 'rotate-180' : ''} `} size={20} />
-                        </button>
-                        <AnimatePresence>
-                            {accordionOpen === 'journey' && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden"
-                                >
-                                    <div className="px-6 pb-6 pt-2 space-y-3">
-                                        <div className="flex justify-between items-start text-sm">
-                                            <span className="text-slate-500 shrink-0">Route</span>
-                                            <span className="font-bold text-slate-900 dark:text-white text-right">{route?.name}</span>
-                                        </div>
-                                        <div className="flex justify-between items-start text-sm">
-                                            <span className="text-slate-500 shrink-0">Vehicles</span>
-                                            <div className="text-right">
-                                                {bookingData.selectedVehicles.map(sv => {
-                                                    const vRef = vehicles.find(v => v.id === sv.vehicleId);
-                                                    return vRef ? (
-                                                        <div key={sv.vehicleId} className="font-bold text-slate-900 dark:text-white">
-                                                            {vRef.name} <span className="text-xs font-normal text-slate-500">x{sv.quantity}</span>
-                                                        </div>
-                                                    ) : null;
-                                                })}
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Date & Time</span>
-                                            <span className="font-bold text-slate-900 dark:text-white">
-                                                {bookingData.date?.toLocaleDateString()} at {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                            </span>
+                {/* Digital Ticket Container */}
+                <div className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative">
+                    {/* Top Gold Bar */}
+                    <div className="h-2 w-full bg-gradient-to-r from-secondary/80 to-[#B38E2D]" />
+
+                    <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-800">
+
+                        {/* Left Section: Trip Details */}
+                        <div className="p-8 col-span-2 space-y-8">
+                            {/* Route Visual */}
+                            <div className="flex items-start gap-4">
+                                <div className="flex flex-col items-center pt-2">
+                                    <div className="w-3 h-3 rounded-full bg-secondary ring-4 ring-secondary/20" />
+                                    <div className="w-0.5 h-16 bg-gradient-to-b from-secondary to-slate-200 dark:to-slate-800 my-1" />
+                                    <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-white ring-4 ring-slate-100 dark:ring-slate-700" />
+                                </div>
+                                <div className="flex-1 space-y-8">
+                                    <div>
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                            {bookingData.pickup || (route ? splitRouteName(route.name)[0] : 'Unknown Pickup')}
+                                        </h3>
+                                        <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
+                                            <Calendar size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
+                                            <span className="w-1 h-1 rounded-full bg-slate-300" />
+                                            <Clock size={14} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </div>
                                     </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</p>
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                            {bookingData.dropoff || (route ? splitRouteName(route.name)[1] : 'Unknown Dropoff')}
+                                        </h3>
+                                        {route && (
+                                            <div className="flex items-center gap-2 mt-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-md w-fit">
+                                                <span>{route.distance}</span>
+                                                <span>•</span>
+                                                <span>{route.time}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <button onClick={() => setStep(1)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
+                                    EDIT
+                                </button>
+                            </div>
 
-                    {/* Passenger Details Accordion */}
-                    <div className="border-b border-slate-100 dark:border-slate-700">
-                        <button
-                            className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
-                            onClick={() => setAccordionOpen(accordionOpen === 'passenger' ? '' : 'passenger')}
-                        >
-                            <h3 className="text-sm font-bold text-secondary uppercase tracking-wider flex items-center gap-2">
-                                <User size={16} /> Passenger Details
-                            </h3>
-                            <ChevronDown className={`text - slate - 400 transition - transform ${accordionOpen === 'passenger' ? 'rotate-180' : ''} `} size={20} />
-                        </button>
-                        <AnimatePresence>
-                            {accordionOpen === 'passenger' && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden"
-                                >
-                                    <div className="px-6 pb-6 pt-2 space-y-3">
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Full Name</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.name}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Phone</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.phone}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Email</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.email}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Country</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.country}</span>
-                                        </div>
-                                        {bookingData.flightNumber && (
-                                            <div className="flex justify-between items-center text-sm">
-                                                <span className="text-slate-500">Flight</span>
-                                                <span className="font-semibold text-slate-900 dark:text-white">{bookingData.flightNumber}</span>
+                            <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
+                                <div className="flex justify-between items-start mb-4">
+                                    <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                        <Briefcase size={18} className="text-secondary" />
+                                        Selected Vehicles
+                                    </h4>
+                                    <button onClick={() => setStep(2)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
+                                        EDIT
+                                    </button>
+                                </div>
+                                <div className="space-y-4">
+                                    {bookingData.selectedVehicles.map(sv => {
+                                        const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                        return v ? (
+                                            <div key={sv.vehicleId} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
+                                                <div className="w-16 h-10 bg-white dark:bg-slate-700/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600">
+                                                    {v.image ? <img src={v.image} alt={v.name} className="w-full h-full object-cover" /> : <User size={20} />}
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</p>
+                                                    <p className="text-xs text-slate-500">{v.capacity} Passengers • {v.luggage} Bags</p>
+                                                </div>
+                                                <div className="ml-auto font-bold text-sm bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 shadow-sm">
+                                                    x{sv.quantity}
+                                                </div>
                                             </div>
-                                        )}
-                                        {bookingData.arrivalDate && (
-                                            <div className="flex justify-between items-center text-sm">
-                                                <span className="text-slate-500">Arrival Date</span>
-                                                <span className="font-semibold text-slate-900 dark:text-white">{bookingData.arrivalDate?.toLocaleDateString()}</span>
-                                            </div>
-                                        )}
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Passengers</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.passengers}</span>
+                                        ) : null;
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Section: Passenger & Pricing */}
+                        <div className="bg-slate-50/50 dark:bg-black/20 p-8 flex flex-col h-full">
+                            <div className="mb-8">
+                                <div className="flex justify-between items-start mb-4">
+                                    <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">Passenger</h4>
+                                    <button onClick={() => setStep(3)} className="text-[10px] font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
+                                        EDIT
+                                    </button>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
+                                            <User size={14} />
                                         </div>
-                                        <div className="flex justify-between items-center text-sm">
-                                            <span className="text-slate-500">Luggage</span>
-                                            <span className="font-semibold text-slate-900 dark:text-white">{bookingData.luggage}</span>
+                                        <div className="overflow-hidden">
+                                            <p className="font-bold text-slate-900 dark:text-white truncate">{bookingData.name}</p>
+                                            <p className="text-xs text-slate-500 truncate">{bookingData.email}</p>
                                         </div>
                                     </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
+                                            <Phone size={14} />
+                                        </div>
+                                        <p className="font-medium text-slate-700 dark:text-slate-300 text-sm">{bookingData.phone}</p>
+                                    </div>
+                                </div>
+                                {(bookingData.notes) && (
+                                    <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-lg">
+                                        <p className="text-[10px] uppercase font-bold text-yellow-600 dark:text-yellow-500 mb-1">Notes</p>
+                                        <p className="text-xs text-slate-700 dark:text-slate-300 italic">"{bookingData.notes}"</p>
+                                    </div>
+                                )}
+                            </div>
 
-                    {/* Total - Always Visible */}
-                    <div className="bg-slate-50 dark:bg-slate-900/50 p-6">
-                        {priceDetails.discountApplied > 0 && (
-                            <div className="flex justify-between text-sm mb-2">
-                                <span className="text-slate-400">Original Price</span>
-                                <span className="text-slate-400 line-through">{priceDetails.originalPrice} SAR</span>
+                            <div className="mt-auto pt-6 border-t border-dashed border-slate-300 dark:border-slate-700">
+                                <div className="space-y-2 mb-4">
+                                    <div className="flex justify-between text-sm text-slate-500">
+                                        <span>Base Rate</span>
+                                        <span>{priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price} SAR</span>
+                                    </div>
+                                    {priceDetails.discountApplied > 0 && (
+                                        <div className="flex justify-between text-sm text-green-600 font-medium">
+                                            <span>Discount</span>
+                                            <span>-{priceDetails.discountApplied} SAR</span>
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between text-sm text-slate-500">
+                                        <span>Taxes & Fees</span>
+                                        <span>Included</span>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-end p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                    <div>
+                                        <span className="block text-[10px] uppercase font-bold text-slate-400">Total</span>
+                                        <span className="block text-xl font-black text-slate-900 dark:text-white">
+                                            {totalPrice} <span className="text-xs text-slate-500 font-bold">SAR</span>
+                                        </span>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="text-[10px] font-bold text-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">Secure SSL</span>
+                                    </div>
+                                </div>
                             </div>
-                        )}
-                        {priceDetails.discountApplied > 0 && (
-                            <div className="flex justify-between text-sm mb-3">
-                                <span className="text-green-600">Discount</span>
-                                <span className="text-green-600">-{priceDetails.discountApplied} SAR</span>
-                            </div>
-                        )}
-                        <div className="flex justify-between items-center">
-                            <span className="font-bold text-slate-900 dark:text-white text-lg">Total Price</span>
-                            <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#B38E2D]">{totalPrice} <span className="text-sm text-slate-500 font-bold ml-1">SAR</span></span>
                         </div>
                     </div>
+                </div>
+
+                {/* Security Badge */}
+                <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+                    <ShieldCheck size={14} />
+                    <span>Your data is encrypted and secure. We never share your details. (Official License #12345)</span>
                 </div>
             </motion.div>
         );
