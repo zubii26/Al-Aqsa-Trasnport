@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Toast } from '@/components/ui/Toast';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, BarChart, Bar } from 'recharts';
 
 interface Booking {
     id: string;
@@ -31,6 +31,7 @@ interface AnalyticsData {
     revenueChart: { name: string; revenue: number; bookings: number }[];
     statusPie: { name: string; value: number; color: string }[];
     vehicleBar: { name: string; value: number }[];
+    routeBar: { name: string; value: number }[];
 }
 
 interface DashboardProps {
@@ -350,8 +351,8 @@ export default function DashboardClient({
                                                                 'bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20'}
                                                     `}>
                                                         <span className={`w-1.5 h-1.5 rounded-full ${booking.status === 'confirmed' ? 'bg-emerald-500' :
-                                                                booking.status === 'cancelled' ? 'bg-red-500' :
-                                                                    'bg-amber-500'
+                                                            booking.status === 'cancelled' ? 'bg-red-500' :
+                                                                'bg-amber-500'
                                                             }`} />
                                                         {booking.status || 'Pending'}
                                                     </span>
@@ -431,6 +432,38 @@ export default function DashboardClient({
                                         />
                                         <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
                                     </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </motion.div>
+
+                        {/* Top Routes Chart */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.45 }}
+                            className="bg-white dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm shadow-slate-200/50 dark:shadow-xl"
+                        >
+                            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                                <TrendingUp size={18} className="text-emerald-500" />
+                                Popular Routes
+                            </h3>
+                            <div className="h-[250px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart
+                                        data={analyticsData.routeBar}
+                                        layout="vertical"
+                                        margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
+                                        <XAxis type="number" hide />
+                                        <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 10 }} interval={0} />
+                                        <Tooltip
+                                            cursor={{ fill: 'transparent' }}
+                                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                            formatter={(value: any) => [value, 'Bookings']}
+                                        />
+                                        <Bar dataKey="value" fill="#10b981" radius={[0, 4, 4, 0]} barSize={20} />
+                                    </BarChart>
                                 </ResponsiveContainer>
                             </div>
                         </motion.div>

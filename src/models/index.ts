@@ -52,6 +52,7 @@ export interface IBooking extends Document {
 
     rating?: number;
     review?: string;
+    reviewEmailSent?: boolean;
 
     createdAt: Date;
     updatedAt: Date;
@@ -274,6 +275,7 @@ const BookingSchema = new Schema<IBooking>({
     // Rating & Review
     rating: { type: Number, min: 1, max: 5 },
     review: { type: String },
+    reviewEmailSent: { type: Boolean, default: false },
 }, { timestamps: true });
 
 const UserSchema = new Schema<IUser>({

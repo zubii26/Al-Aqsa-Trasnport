@@ -96,6 +96,18 @@ export async function GET() {
             }
         ]);
 
+        // 6. Top Routes
+        const topRoutes = await Booking.aggregate([
+            {
+                $group: {
+                    _id: { $concat: ["$pickup", " → ", "$dropoff"] },
+                    count: { $count: {} }
+                }
+            },
+            { $sort: { count: -1 } },
+            { $limit: 5 }
+        ]);
+
         const currentRevenue = currentMonthStats[0]?.revenue || 0;
         const lastRevenue = lastMonthStats[0]?.revenue || 0;
         const growth = lastRevenue === 0 ? 100 : ((currentRevenue - lastRevenue) / lastRevenue) * 100;
@@ -117,6 +129,10 @@ export async function GET() {
                 trips: item.trips
             })),
             pieData: statusDistribution.map(item => ({
+                name: item._id,
+                value: item.count
+            })),
+            routeData: topRoutes.map(item => ({
                 name: item._id,
                 value: item.count
             }))

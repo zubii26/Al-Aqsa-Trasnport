@@ -83,6 +83,18 @@ export default async function AdminDashboard() {
         .sort((a, b) => b.value - a.value)
         .slice(0, 5); // Top 5
 
+    // 4. Top Routes
+    const routeCounts = bookings.reduce((acc, curr) => {
+        const route = `${curr.pickup} → ${curr.dropoff}`;
+        acc[route] = (acc[route] || 0) + 1;
+        return acc;
+    }, {} as Record<string, number>);
+
+    const routeData = Object.entries(routeCounts)
+        .map(([name, value]) => ({ name: name.length > 20 ? name.substring(0, 20) + '...' : name, full: name, value }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 5);
+
     return (
         <DashboardClient
             totalBookings={totalBookings}
@@ -98,7 +110,8 @@ export default async function AdminDashboard() {
             analyticsData={JSON.parse(JSON.stringify({
                 revenueChart: chartData,
                 statusPie: pieData,
-                vehicleBar: barData
+                vehicleBar: barData,
+                routeBar: routeData
             }))}
         />
     );

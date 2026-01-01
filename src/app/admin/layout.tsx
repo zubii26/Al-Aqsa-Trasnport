@@ -92,6 +92,7 @@ export default function AdminLayout({
         { href: '/admin/blog', label: 'Blog', icon: FileText, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/content', label: 'Content', icon: PenTool, roles: ['admin', 'manager', 'operational_manager'] },
+        { href: '/admin/marketing', label: 'Marketing', icon: MessageSquare, roles: ['admin', 'manager'] },
         { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin'] },
         { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
     ];
