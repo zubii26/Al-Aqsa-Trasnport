@@ -59,6 +59,7 @@ export interface IUser extends Document {
     email: string;
     name?: string;
     role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver';
+    isOnline?: boolean;
     password?: string;
     phone?: string;
     createdAt: Date;
