@@ -60,6 +60,7 @@ export interface IUser extends Document {
     name?: string;
     role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver';
     password?: string;
+    phone?: string;
     createdAt: Date;
     updatedAt: Date;
 }
