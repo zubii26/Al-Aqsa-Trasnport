@@ -1,8 +1,6 @@
-'use client';
-
 import { useState } from 'react';
 import { Settings } from '@/lib/validations'; // Your settings type
-import { Save, Info } from 'lucide-react';
+import { Save, Info, Eye, X } from 'lucide-react';
 
 interface EmailTemplateManagerProps {
     settings: Settings;
@@ -11,6 +9,7 @@ interface EmailTemplateManagerProps {
 
 export default function EmailTemplateManager({ settings, onChange }: EmailTemplateManagerProps) {
     const [activeTab, setActiveTab] = useState<'customer' | 'admin'>('customer');
+    const [previewOpen, setPreviewOpen] = useState(false);
 
     // Local state for editing to prevent lag on every keystroke if parent state is heavy
     const [bookingTemplate, setBookingTemplate] = useState(settings.emailTemplates?.bookingConfirmation || '');
@@ -29,24 +28,68 @@ export default function EmailTemplateManager({ settings, onChange }: EmailTempla
         '{{passengers}}', '{{price_row}}', '{{status}}'
     ];
 
+    const getPreviewHtml = (template: string) => {
+        let html = template;
+        const dummyData: Record<string, string> = {
+            '{{name}}': 'Abdullah Al-Saudi',
+            '{{booking_id}}': 'BK-2025-8899',
+            '{{date}}': '2025-01-15',
+            '{{time}}': '14:30',
+            '{{pickup}}': 'Jeddah International Airport (Terminal 1)',
+            '{{dropoff}}': 'Pullman ZamZam Makkah',
+            '{{vehicle_details}}': '<ul style="margin: 0; padding-left: 20px;"><li>1 x GMC Yukon XL (2024 Model)</li></ul>',
+            '{{passengers}}': '4',
+            '{{status}}': 'Confirmed',
+            '{{price_row}}': `
+                <tr>
+                    <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                        <div style="font-size: 12px; text-transform: uppercase;">Total Price</div>
+                        <div style="font-family: 'Amiri', serif; font-size: 12px;">السعر الإجمالي</div>
+                    </td>
+                    <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #d4af37; font-size: 18px;">
+                        450 SAR
+                    </td>
+                </tr>
+            `
+        };
+
+        // Replace all variables
+        Object.keys(dummyData).forEach(key => {
+            html = html.replace(new RegExp(key, 'g'), dummyData[key]);
+        });
+
+        // Also clean up any conditional blocks if you have them (advanced)
+        // For now, simple replacement
+        return html;
+    };
+
     return (
         <div className="space-y-6">
-            <div className="flex items-center gap-4 border-b border-border pb-1">
+            <div className="flex items-center justify-between border-b border-border pb-1">
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={() => setActiveTab('customer')}
+                        className={`pb-2 text-sm font-medium transition-colors ${activeTab === 'customer'
+                            ? 'border-b-2 border-primary text-primary'
+                            : 'text-muted-foreground hover:text-foreground'}`}
+                    >
+                        Customer Confirmation
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('admin')}
+                        className={`pb-2 text-sm font-medium transition-colors ${activeTab === 'admin'
+                            ? 'border-b-2 border-primary text-primary'
+                            : 'text-muted-foreground hover:text-foreground'}`}
+                    >
+                        Admin Notification
+                    </button>
+                </div>
                 <button
-                    onClick={() => setActiveTab('customer')}
-                    className={`pb-2 text-sm font-medium transition-colors ${activeTab === 'customer'
-                        ? 'border-b-2 border-primary text-primary'
-                        : 'text-muted-foreground hover:text-foreground'}`}
+                    onClick={() => setPreviewOpen(true)}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-secondary/10 text-secondary hover:bg-secondary/20 rounded-lg text-sm font-medium transition-colors"
                 >
-                    Customer Confirmation
-                </button>
-                <button
-                    onClick={() => setActiveTab('admin')}
-                    className={`pb-2 text-sm font-medium transition-colors ${activeTab === 'admin'
-                        ? 'border-b-2 border-primary text-primary'
-                        : 'text-muted-foreground hover:text-foreground'}`}
-                >
-                    Admin Notification
+                    <Eye size={16} />
+                    Preview
                 </button>
             </div>
 
@@ -104,6 +147,33 @@ export default function EmailTemplateManager({ settings, onChange }: EmailTempla
                     </div>
                 </div>
             </div>
+
+            {/* Preview Modal */}
+            {previewOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                        <div className="flex items-center justify-between p-4 border-b border-border bg-muted/10">
+                            <h3 className="font-bold text-lg flex items-center gap-2">
+                                <Eye size={20} className="text-secondary" />
+                                Email Preview ({activeTab === 'customer' ? 'Customer' : 'Admin'})
+                            </h3>
+                            <button
+                                onClick={() => setPreviewOpen(false)}
+                                className="p-2 hover:bg-red-50 hover:text-red-500 rounded-full transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-auto p-8 bg-slate-100 dark:bg-slate-950">
+                            <div className="max-w-[600px] mx-auto bg-white shadow-sm min-h-[400px]">
+                                <div dangerouslySetInnerHTML={{
+                                    __html: getPreviewHtml(activeTab === 'customer' ? bookingTemplate : adminTemplate)
+                                }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
