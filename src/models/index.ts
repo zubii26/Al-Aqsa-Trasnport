@@ -265,6 +265,7 @@ const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     name: { type: String },
     role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver'], default: 'user' },
+    isOnline: { type: Boolean, default: false },
     password: { type: String },
     phone: { type: String },
 }, { timestamps: true });

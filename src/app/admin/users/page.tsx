@@ -12,6 +12,7 @@ interface User {
     email: string;
     role: 'admin' | 'manager' | 'operational_manager' | 'driver';
     createdAt: string;
+    isOnline?: boolean;
 }
 
 export default function UsersPage() {
@@ -160,12 +161,19 @@ export default function UsersPage() {
                             >
                                 <div className="flex justify-between items-start mb-4">
                                     <div className={`p-3 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400' :
-                                            user.role === 'driver' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' :
-                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
-                                                    'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                                        user.role === 'driver' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' :
+                                            user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
+                                                'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
                                         }`}>
                                         {user.role === 'admin' ? <Shield size={24} /> :
-                                            user.role === 'driver' ? <Car size={24} /> :
+                                            user.role === 'driver' ? (
+                                                <div className="relative">
+                                                    <Car size={24} />
+                                                    {user.isOnline && (
+                                                        <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full animate-pulse" />
+                                                    )}
+                                                </div>
+                                            ) :
                                                 user.role === 'operational_manager' ? <HardHat size={24} /> :
                                                     <UserIcon size={24} />}
                                     </div>
@@ -188,9 +196,9 @@ export default function UsersPage() {
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{user.email}</p>
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' :
-                                            user.role === 'driver' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
-                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
-                                                    'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                        user.role === 'driver' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
+                                            user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
+                                                'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                                         }`}>
                                         {user.role}
                                     </span>
