@@ -60,6 +60,13 @@ export interface IUser extends Document {
     name?: string;
     role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver';
     isOnline?: boolean;
+    location?: {
+        lat: number;
+        lng: number;
+        address?: string;
+        lastUpdated: Date;
+        heading?: number;
+    };
     password?: string;
     phone?: string;
     createdAt: Date;
@@ -267,6 +274,13 @@ const UserSchema = new Schema<IUser>({
     name: { type: String },
     role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver'], default: 'user' },
     isOnline: { type: Boolean, default: false },
+    location: {
+        lat: { type: Number },
+        lng: { type: Number },
+        address: { type: String },
+        lastUpdated: { type: Date },
+        heading: { type: Number }
+    },
     password: { type: String },
     phone: { type: String },
 }, { timestamps: true });

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { LogOut, MapPin, Calendar, Clock, Phone, Navigation, CheckCircle, ChevronRight, User, Car } from 'lucide-react';
 import NotificationBell from '@/components/common/NotificationBell';
+import LocationTracker from '@/components/driver/LocationTracker';
 import Link from 'next/link';
 
 interface Booking {
@@ -86,6 +87,7 @@ export default function DriverDashboard() {
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20">
+            <LocationTracker isOnline={isOnline} />
             {/* Header */}
             <div className="bg-slate-900 text-white p-6 rounded-b-[30px] shadow-lg sticky top-0 z-10 transition-all duration-300">
                 <div className="flex justify-between items-start mb-6">
