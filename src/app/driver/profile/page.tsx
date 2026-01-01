@@ -79,7 +79,22 @@ export default function DriverProfile() {
             label: 'Notifications',
             value: notifications ? 'On' : 'Off',
             color: 'bg-blue-500/10 text-blue-500',
-            action: () => setNotifications(!notifications)
+            action: async () => {
+                if (!notifications) {
+                    // Turning ON
+                    if ('Notification' in window) {
+                        const permission = await Notification.requestPermission();
+                        if (permission === 'granted') {
+                            setNotifications(true);
+                        } else {
+                            alert('You need to allow notifications in your browser settings.');
+                        }
+                    }
+                } else {
+                    // Turning OFF
+                    setNotifications(false);
+                }
+            }
         },
         {
             icon: Globe,
