@@ -36,7 +36,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             await Notification.create({
                 userId: updates.assignedDriverId,
                 title: 'New Trip Assigned',
-                message: `You have been assigned to Trip #${updated.id.slice(0, 8)}`,
+                message: `You have been assigned to Trip #${(updated.id || updated._id).toString().slice(0, 8)}`,
                 type: 'info',
                 link: `/driver/jobs/${updated.id}`
             });

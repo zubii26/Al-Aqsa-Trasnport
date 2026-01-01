@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { Booking } from '@/lib/validations';
 
 interface BookingWithDetails extends Booking {
-    id: string;
+    id: string; // Ensure id is required here since we use it
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     vehicleCount?: number;
     createdAt?: string;

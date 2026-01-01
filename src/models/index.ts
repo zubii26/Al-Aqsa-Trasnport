@@ -265,6 +265,7 @@ const UserSchema = new Schema<IUser>({
     name: { type: String },
     role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver'], default: 'user' },
     password: { type: String },
+    phone: { type: String },
 }, { timestamps: true });
 
 const ReviewSchema = new Schema<IReview>({
