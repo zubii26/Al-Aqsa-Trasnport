@@ -19,6 +19,7 @@ export interface IVehicle extends Document {
 }
 
 export interface IBooking extends Document {
+    id?: string;
     name: string;
     email: string;
     phone: string;
@@ -322,9 +323,9 @@ const NotificationSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Revert hack
-export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
-export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
-export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
+// export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
+// export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+// export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
 export const Notification = mongoose.models.Notification || mongoose.model('Notification', NotificationSchema);
