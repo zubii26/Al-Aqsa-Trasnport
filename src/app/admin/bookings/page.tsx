@@ -8,6 +8,7 @@ import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, T
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
+import { downloadCSV } from '@/lib/export';
 
 import BookingDetailsModal from '@/components/admin/bookings/BookingDetailsModal';
 
@@ -173,35 +174,30 @@ export default function BookingsPage() {
     };
 
     const handleExportCSV = () => {
-        const headers = ['ID', 'Date', 'Time', 'Name', 'Email', 'Phone', 'Pickup', 'Dropoff', 'Vehicle', 'Passengers', 'Status', 'Price'];
-        const csvContent = [
-            headers.join(','),
-            ...filteredBookings.map(b => [
-                b.id,
-                b.date,
-                b.time,
-                `"${b.name}"`,
-                b.email,
-                b.phone,
-                `"${b.pickup}"`,
-                `"${b.dropoff}"`,
-                b.vehicle,
-                b.passengers,
-                b.status,
-                // Add price if you have it in the booking object, otherwise empty
-                // Assuming price might be a calculated field not shown in basic type
-                ''
-            ].join(','))
-        ].join('\n');
+        const exportData = filteredBookings.map(b => {
+            // Extract vehicle names safely
+            const vehiclesStr = b.selectedVehicles?.map(v => `${v.name} (x${v.quantity})`).join('; ') || b.vehicle || 'Unknown';
 
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.setAttribute('href', url);
-        link.setAttribute('download', `bookings_export_${new Date().toISOString().split('T')[0]}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            return {
+                'Booking ID': b.id,
+                'Date': b.date,
+                'Time': b.time,
+                'Name': b.name,
+                'Email': b.email,
+                'Phone': b.phone,
+                'Pickup': b.pickup,
+                'Dropoff': b.dropoff,
+                'Vehicles': vehiclesStr,
+                'Passengers': b.passengers || 0,
+                'Status': b.status,
+                'Price': b.finalPrice || b.originalPrice || '',
+                'Driver Status': b.driverStatus || 'N/A',
+                'Flight': b.flightNumber || '',
+                'Arrival': b.arrivalDate || ''
+            };
+        });
+
+        downloadCSV(exportData, `bookings_export_${new Date().toISOString().split('T')[0]}`);
     };
 
     const getStatusBadge = (status: string) => {

@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat, Eye, Edit, Search } from 'lucide-react';
+import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat, Eye, Edit, Search, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
 import { Toast } from '@/components/ui/Toast';
+import { downloadCSV } from '@/lib/export';
 
 interface User {
     id: string;
@@ -180,6 +181,24 @@ export default function UsersPage() {
                         <option value="operational_manager">Ops Managers</option>
                         <option value="admin">Admins</option>
                     </select>
+                    <button
+                        onClick={() => {
+                            const exportData = filteredUsers.map(u => ({
+                                'ID': u.id,
+                                'Name': u.name,
+                                'Email': u.email,
+                                'Role': u.role,
+                                'Created At': u.createdAt,
+                                'Status': u.isOnline ? 'Online' : 'Offline'
+                            }));
+                            downloadCSV(exportData, `users_export_${new Date().toISOString().split('T')[0]}`);
+                        }}
+                        className="px-4 py-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors flex items-center gap-2 shadow-sm"
+                        title="Export CSV"
+                    >
+                        <Download size={20} />
+                        <span className="hidden sm:inline">Export</span>
+                    </button>
                 </div>
             </div>
 

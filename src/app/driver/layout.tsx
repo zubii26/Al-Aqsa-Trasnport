@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     manifest: '/driver-manifest.json', // This tells Next.js/Browser to use the driver specific manifest
 };
 
+import PWAInit from '@/components/driver/PWAInit';
+import InstallPrompt from '@/components/driver/InstallPrompt';
+
 export default function DriverLayout({
     children,
 }: {
@@ -13,6 +16,8 @@ export default function DriverLayout({
 }) {
     return (
         <>
+            <PWAInit />
+            <InstallPrompt />
             {children}
         </>
     );
