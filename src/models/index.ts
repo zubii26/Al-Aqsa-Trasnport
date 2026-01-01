@@ -155,8 +155,7 @@ export interface ISection extends Document {
     updatedAt: Date;
 }
 
-updatedAt: Date;
-}
+
 
 export interface ISubscriber extends Document {
     email: string;
