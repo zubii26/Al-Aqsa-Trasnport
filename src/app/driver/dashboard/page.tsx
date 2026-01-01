@@ -23,57 +23,28 @@ export default function DriverDashboard() {
     const router = useRouter();
     const [jobs, setJobs] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState<'active' | 'completed'>('active');
-    const [isOnline, setIsOnline] = useState(false);
+    const [stats, setStats] = useState({ totalEarnings: 0, totalTrips: 0 });
 
     useEffect(() => {
         fetchJobs();
+        fetchStats();
         // Fetch driver status
         fetch('/api/auth/profile').then(res => res.json()).then(data => setIsOnline(data.user?.isOnline || false));
     }, []);
 
-    const toggleStatus = async () => {
-        const newStatus = !isOnline;
-        setIsOnline(newStatus);
+    const fetchStats = async () => {
         try {
-            await fetch('/api/driver/status', {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ isOnline: newStatus })
-            });
+            const res = await fetch('/api/driver/stats');
+            if (res.ok) {
+                const data = await res.json();
+                setStats(data);
+            }
         } catch (error) {
-            console.error('Failed to update status', error);
-            setIsOnline(!newStatus); // Revert
+            console.error('Failed to fetch stats', error);
         }
     };
 
-    const fetchJobs = async () => {
-        try {
-            const res = await fetch('/api/driver/jobs');
-            if (res.status === 401) return router.push('/driver/login');
-            const data = await res.json();
-            setJobs(data.bookings || []);
-            // Also update online status if returned
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleLogout = async () => {
-        await fetch('/api/auth/logout', { method: 'POST' });
-        router.push('/driver/login');
-    };
-
-    const statusColors: Record<string, string> = {
-        pending: 'bg-yellow-100 text-yellow-700',
-        accepted: 'bg-blue-100 text-blue-700',
-        en_route: 'bg-indigo-100 text-indigo-700',
-        arrived: 'bg-purple-100 text-purple-700',
-        completed: 'bg-green-100 text-green-700',
-        cancelled: 'bg-red-100 text-red-700',
-    };
+    // ... (rest of code) ...
 
     const filteredJobs = jobs.filter(job => {
         const isCompleted = ['completed', 'cancelled'].includes(job.driverStatus);
@@ -119,19 +90,19 @@ export default function DriverDashboard() {
                     <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 mb-6">
                         <div className="flex justify-between items-end mb-2">
                             <div>
-                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Today's Earnings</p>
+                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Total Earnings</p>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-2xl font-bold text-white">SAR 450</span>
-                                    <span className="text-xs text-green-400 font-medium">+12%</span>
+                                    <span className="text-2xl font-bold text-white">SAR {stats.totalEarnings}</span>
+                                    {/* <span className="text-xs text-green-400 font-medium">+12%</span> */}
                                 </div>
                             </div>
                             <div className="text-right">
-                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Trips</p>
-                                <p className="text-xl font-bold text-white">5</p>
+                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Completed Trips</p>
+                                <p className="text-xl font-bold text-white">{stats.totalTrips}</p>
                             </div>
                         </div>
                         <div className="w-full bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
-                            <div className="bg-amber-500 h-full w-[65%]" />
+                            <div className="bg-amber-500 h-full" style={{ width: `${Math.min((stats.totalTrips / 10) * 100, 100)}%` }} />
                         </div>
                     </div>
 

@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Users, Suitcase, Star, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, Briefcase, Star, ArrowRight } from 'lucide-react';
 
 const FLEET_IMAGES = [
     {
@@ -176,7 +176,7 @@ export default function FleetGallery() {
                                             <span className="text-sm font-medium">{img.capacity}</span>
                                         </div>
                                         <div className="flex items-center gap-2 text-slate-300">
-                                            <Suitcase size={16} className="text-[#D4AF37]" />
+                                            <Briefcase size={16} className="text-[#D4AF37]" />
                                             <span className="text-sm font-medium">{img.luggage}</span>
                                         </div>
                                     </div>
