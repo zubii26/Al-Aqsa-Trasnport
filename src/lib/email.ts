@@ -158,4 +158,72 @@ export const sendBookingConfirmationEmail = async (booking: BookingData) => {
     });
 };
 
-import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE } from './email-templates';
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, STATUS_UPDATE_TEMPLATE } from './email-templates';
+
+export const sendBookingStatusEmail = async (booking: BookingData, driverName: string) => {
+    // Status Logic
+    let status_display = '';
+    let status_arabic = '';
+    let status_message = '';
+    let rating_cta = '';
+
+    const domain = process.env.NEXT_PUBLIC_APP_URL || 'https://alaqsaumrahtransport.com';
+
+    switch (booking.status) {
+        case 'accepted':
+            status_display = 'Driver Assigned';
+            status_arabic = 'تم تعيين السائق';
+            status_message = 'A driver has accepted your trip request and will be with you shortly.';
+            break;
+        case 'en_route':
+            status_display = 'On The Way';
+            status_arabic = 'السائق في الطريق';
+            status_message = 'Your driver is currently en route to the pickup location.';
+            break;
+        case 'arrived':
+            status_display = 'Driver Arrived';
+            status_arabic = 'وصل السائق';
+            status_message = 'Your driver has arrived at the pickup location. Please meet them.';
+            break;
+        case 'completed':
+            status_display = 'Trip Completed';
+            status_arabic = 'تمت الرحلة';
+            status_message = 'Thank you for riding with us. We hope you had a pleasant journey.';
+            rating_cta = `
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="${domain}/rate/${booking.id}" style="
+                        display: inline-block;
+                        background-color: #d4af37;
+                        color: #ffffff;
+                        text-decoration: none;
+                        padding: 12px 30px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                        font-size: 16px;
+                    ">Rate Your Trip | قيم رحلتك</a>
+                </div>
+            `;
+            break;
+        default:
+            return false; // Don't send emails for other statuses
+    }
+
+    const variables = {
+        name: booking.name,
+        status_display,
+        status_arabic,
+        status_message,
+        pickup: booking.pickup,
+        driver_name: driverName,
+        rating_cta,
+        year: new Date().getFullYear(),
+    };
+
+    const htmlContent = replaceTemplateVariables(STATUS_UPDATE_TEMPLATE, variables as any);
+
+    return await sendEmail({
+        to: booking.email || '',
+        subject: `Trip Update: ${status_display} | تحديث الرحلة`,
+        html: htmlContent
+    });
+};

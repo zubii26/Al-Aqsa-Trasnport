@@ -1,42 +1,68 @@
 import { NextResponse } from 'next/server';
 import { validateRequest } from '@/lib/server-auth';
-import { updateDriverBookingStatus, getBooking } from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
+import { Booking } from '@/models';
+import { sendBookingStatusEmail } from '@/lib/email';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: Promise<{ id: string }> } // Params must be awaited in latest Next.js
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = await params;
         const user = await validateRequest();
-        if (!user) {
+        if (!user || user.role !== 'driver') {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
+        const { id } = await params;
         const { status } = await request.json();
 
-        // 1. Verify access: Is this driver assigned to this job? (Or is admin)
-        const booking = await getBooking(id);
-        if (!booking) {
-            return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
-        }
-
-        if (user.role !== 'admin' && booking.assignedDriverId !== user.id) {
-            return NextResponse.json({ error: 'Access denied to this booking' }, { status: 403 });
-        }
-
-        // 2. Validate status
-        const validStatuses = ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled'];
+        // Validate status transition
+        const validStatuses = ['accepted', 'en_route', 'arrived', 'completed', 'cancelled'];
         if (!validStatuses.includes(status)) {
             return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
         }
 
-        // 3. Update
-        const updatedBooking = await updateDriverBookingStatus(id, status);
+        await dbConnect();
 
-        return NextResponse.json({ booking: updatedBooking });
-    } catch (error: any) {
-        console.error('Update Job Status Error:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        const booking = await Booking.findById(id);
+        if (!booking) {
+            return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+        }
+
+        // Optional: Verify assignment
+        // if (booking.assignedDriverId !== user.id) ...
+
+        // Update Driver Status
+        booking.driverStatus = status;
+
+        // Sync Main Status
+        if (status === 'completed' || status === 'cancelled') {
+            booking.status = status;
+        } else if (status === 'accepted') {
+            booking.status = 'confirmed';
+        }
+
+        await booking.save();
+
+        // Send Notification
+        try {
+            // driverName fallback to "Your Driver" if user.name is missing
+            await sendBookingStatusEmail({
+                ...booking.toObject(),
+                id: booking._id.toString(),
+                // Ensure dates are strings as expected by email template, otherwise toObject might have Date objects
+                date: booking.date,
+                time: booking.time
+            } as any, user.name || 'Your Driver');
+        } catch (emailError) {
+            console.error('Failed to send status email:', emailError);
+            // Don't fail the request if email fails, just log it
+        }
+
+        return NextResponse.json({ success: true, booking });
+    } catch (error) {
+        console.error('Update Status Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

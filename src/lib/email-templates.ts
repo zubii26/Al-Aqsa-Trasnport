@@ -133,6 +133,49 @@ export const DEFAULT_ADMIN_NOTIFICATION_TEMPLATE = `
 </div>
 `;
 
+export const STATUS_UPDATE_TEMPLATE = `
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto; direction: ltr;">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #d4af37; padding-bottom: 20px;">
+        <h1 style="color: #d4af37; margin: 0; font-size: 24px;">Trip Status Update</h1>
+        <h2 style="color: #666; margin: 5px 0 0 0; font-size: 18px; font-weight: normal;">تحديث حالة الرحلة</h2>
+    </div>
+
+    <!-- Greeting -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 16px;">Dear <strong>{{name}}</strong>,</p>
+    </div>
+
+    <!-- Status Badge -->
+    <div style="text-align: center; margin: 40px 0;">
+        <div style="background-color: #f8f9fa; border: 2px solid #d4af37; border-radius: 12px; padding: 20px; display: inline-block;">
+            <p style="margin: 0; font-size: 14px; text-transform: uppercase; color: #666;">Current Status</p>
+            <h2 style="margin: 10px 0 0 0; font-size: 24px; color: #1a1a1a;">{{status_display}}</h2>
+            <h3 style="margin: 5px 0 0 0; font-size: 20px; color: #d4af37; font-family: 'Amiri', serif;">{{status_arabic}}</h3>
+        </div>
+    </div>
+
+    <!-- Message Body -->
+    <p style="text-align: center; font-size: 16px; margin-bottom: 30px;">
+        {{status_message}}
+    </p>
+
+    <!-- Trip Details Mini -->
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 14px; color: #555;">
+        <p style="margin: 5px 0;"><strong>Pickup:</strong> {{pickup}}</p>
+        <p style="margin: 5px 0;"><strong>Driver:</strong> {{driver_name}}</p>
+    </div>
+
+    <!-- Rating CTA (Only for Completed) -->
+    {{rating_cta}}
+
+    <!-- Footer -->
+    <p style="text-align: center; margin-top: 30px; color: #999; font-size: 12px;">
+        &copy; {{year}} Al Aqsa Umrah Transport.
+    </p>
+</div>
+`;
+
 export const replaceTemplateVariables = (template: string, variables: Record<string, string | number | undefined>) => {
     let result = template;
     for (const [key, value] of Object.entries(variables)) {
