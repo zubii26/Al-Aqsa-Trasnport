@@ -9,7 +9,23 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const { id } = await params;
     const { status } = await request.json();
     const updated = await updateBookingStatus(id, status);
+
     if (!updated) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+
+    // Send confirmation email if status changed to confirmed
+    if (status === 'confirmed') {
+        const { sendBookingConfirmationEmail } = await import('@/lib/email');
+        // Cast to any to access fields that might be missing in strict IBooking but present in DB result
+        const bookingData = {
+            ...updated,
+            id: updated._id.toString(), // Ensure ID is string
+            email: updated.email,
+            name: updated.name,
+        } as any;
+
+        await sendBookingConfirmationEmail(bookingData);
+    }
+
     return NextResponse.json(updated);
 }
 

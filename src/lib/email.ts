@@ -42,6 +42,7 @@ export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
 
 interface BookingData {
     name: string;
+    email?: string; // Added email field
     status: string;
     id: string;
     vehicle: string; // Keep for fallback/summary
@@ -139,3 +140,22 @@ export const getContactFeedbackTemplate = ({ name, message }: ContactFeedbackDat
     </div>
 `;
 };
+
+// Implement the function used in API routes
+export const sendBookingConfirmationEmail = async (booking: BookingData) => {
+    // 1. Prepare HTML using the bilingual template
+    const templateString = DEFAULT_BOOKING_CONFIRMATION_TEMPLATE;
+    const htmlContent = getBookingConfirmationTemplate(booking, templateString);
+
+    // 2. Bilingual Subject
+    const subject = `Booking Confirmation #${booking.id} | تأكيد الحجز`;
+
+    // 3. Send
+    return await sendEmail({
+        to: booking.email || '', // Ensure email exists
+        subject,
+        html: htmlContent
+    });
+};
+
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE } from './email-templates';
