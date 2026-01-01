@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, MapPin, Phone, Navigation, Clock, Calendar, ShieldCheck, User, Plane } from 'lucide-react';
+import SwipeToConfirm from '@/components/driver/SwipeToConfirm';
 
 interface Booking {
     id: string;
@@ -146,23 +147,41 @@ export default function JobDetailsPage({ params }: { params: Promise<{ id: strin
 
                     <div className="h-px bg-slate-100" />
 
-                    {/* Passenger */}
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-500">
-                            <User size={24} />
-                        </div>
-                        <div className="flex-1">
-                            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Passenger</label>
-                            <p className="font-bold text-slate-900">{job.name}</p>
-                            <div className="flex items-center gap-2 text-sm text-slate-500 mt-0.5">
-                                <span>{job.passengers} pax</span>
-                                <span>•</span>
-                                <span>{job.luggage} bags</span>
+                    {/* Passenger & Actions */}
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-500">
+                                <User size={24} />
+                            </div>
+                            <div className="flex-1">
+                                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Passenger</label>
+                                <p className="font-bold text-slate-900">{job.name}</p>
+                                <div className="flex items-center gap-2 text-sm text-slate-500 mt-0.5">
+                                    <span>{job.passengers} pax</span>
+                                    <span>•</span>
+                                    <span>{job.luggage} bags</span>
+                                </div>
                             </div>
                         </div>
-                        <a href={`tel:${job.phone}`} className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center hover:bg-green-200 transition-colors shadow-sm">
-                            <Phone size={20} />
-                        </a>
+
+                        {/* Big Action Buttons */}
+                        <div className="grid grid-cols-2 gap-3">
+                            <a
+                                href={`tel:${job.phone}`}
+                                className="flex items-center justify-center gap-2 py-3 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-sm border border-emerald-100 shadow-sm active:scale-95 transition-all"
+                            >
+                                <Phone size={18} />
+                                Call
+                            </a>
+                            <a
+                                href={`https://wa.me/${job.phone?.replace(/[^0-9]/g, '')}?text=Hello ${job.name}, I am your driver from Al Aqsa Transport.`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex items-center justify-center gap-2 py-3 bg-green-50 text-green-700 rounded-xl font-bold text-sm border border-green-100 shadow-sm active:scale-95 transition-all"
+                            >
+                                <span>WhatsApp</span>
+                            </a>
+                        </div>
                     </div>
 
                     {/* Flight Info (Conditional) */}
@@ -193,14 +212,13 @@ export default function JobDetailsPage({ params }: { params: Promise<{ id: strin
 
             {/* Sticky Action Footer */}
             {nextAction && (
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-20">
-                    <button
-                        onClick={() => updateStatus(nextAction.action)}
-                        disabled={updating}
-                        className={`w-full py-4 rounded-xl flex items-center justify-center gap-2 text-white font-bold text-lg shadow-lg active:scale-95 transition-all ${nextAction.color} ${updating ? 'opacity-80' : 'hover:brightness-110'}`}
-                    >
-                        {updating ? 'Updating...' : nextAction.label}
-                    </button>
+                <div className="fixed bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-20 pb-8">
+                    <SwipeToConfirm
+                        onConfirm={() => updateStatus(nextAction.action)}
+                        label={nextAction.label}
+                        colorClass={nextAction.color}
+                        isUpdating={updating}
+                    />
                 </div>
             )}
         </div>

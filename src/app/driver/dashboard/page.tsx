@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { LogOut, MapPin, Calendar, Clock, Phone, Navigation, CheckCircle, ChevronRight, User, Car } from 'lucide-react';
 import NotificationBell from '@/components/common/NotificationBell';
 import LocationTracker from '@/components/driver/LocationTracker';
+import BottomNav from '@/components/driver/BottomNav';
 import Link from 'next/link';
 
 interface Booking {
@@ -86,65 +87,90 @@ export default function DriverDashboard() {
     );
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-20">
+        <div className="min-h-screen bg-slate-50 pb-24">
             <LocationTracker isOnline={isOnline} />
-            {/* Header */}
-            <div className="bg-slate-900 text-white p-6 rounded-b-[30px] shadow-lg sticky top-0 z-10 transition-all duration-300">
-                <div className="flex justify-between items-start mb-6">
-                    <div>
-                        <h1 className="text-xl font-bold mb-1">My Jobs</h1>
-                        <div className="flex items-center gap-2">
-                            <div className={`w-2.5 h-2.5 rounded-full ${isOnline ? 'bg-green-500 animate-pulse' : 'bg-slate-500'}`} />
-                            <p className="text-slate-400 text-sm">{isOnline ? 'You represent Al Aqsa' : 'You are offline'}</p>
+
+            {/* Header / Earnings Card */}
+            <div className="bg-slate-900 text-white p-6 pb-8 rounded-b-[30px] shadow-lg relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+                <div className="relative z-10">
+                    <div className="flex justify-between items-start mb-6">
+                        <div className="flex items-center gap-3">
+                            {/* Profile Image / Avatar Placeholder */}
+                            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-500 font-bold">
+                                <User size={20} />
+                            </div>
+                            <div>
+                                <h1 className="text-lg font-bold">Welcome Driver</h1>
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500 animate-pulse' : 'bg-slate-500'}`} />
+                                    <p className="text-slate-400 text-xs">{isOnline ? 'Online' : 'Offline'}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <NotificationBell />
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <NotificationBell />
-                        <button
-                            onClick={() => router.push('/profile')}
-                            className="p-2 bg-slate-800 rounded-full text-slate-400 hover:text-white transition-colors"
-                            title="My Profile"
-                        >
-                            <User size={20} />
-                        </button>
-                    </div>
-                </div>
 
-                {/* Status Toggle & Tabs Group */}
-                <div className="space-y-4">
-                    {/* Toggle Switch */}
-                    <div className="bg-slate-800/50 p-2 rounded-xl backdrop-blur-sm flex items-center justify-between px-4">
-                        <span className="text-sm font-medium text-slate-300">Availability</span>
-                        <button
-                            onClick={toggleStatus}
-                            className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${isOnline ? 'bg-green-500' : 'bg-slate-600'}`}
-                        >
-                            <span
-                                className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isOnline ? 'translate-x-6' : 'translate-x-1'}`}
-                            />
-                        </button>
+                    {/* Earnings Summary Card */}
+                    <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 mb-6">
+                        <div className="flex justify-between items-end mb-2">
+                            <div>
+                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Today's Earnings</p>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-2xl font-bold text-white">SAR 450</span>
+                                    <span className="text-xs text-green-400 font-medium">+12%</span>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Trips</p>
+                                <p className="text-xl font-bold text-white">5</p>
+                            </div>
+                        </div>
+                        <div className="w-full bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-amber-500 h-full w-[65%]" />
+                        </div>
                     </div>
 
-                    {/* Tabs */}
-                    <div className="flex bg-slate-800/50 p-1 rounded-xl backdrop-blur-sm">
-                        <button
-                            onClick={() => setActiveTab('active')}
-                            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'active'
-                                ? 'bg-amber-500 text-slate-900 shadow-lg'
-                                : 'text-slate-400 hover:text-white'
-                                }`}
-                        >
-                            Active
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('completed')}
-                            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'completed'
-                                ? 'bg-amber-500 text-slate-900 shadow-lg'
-                                : 'text-slate-400 hover:text-white'
-                                }`}
-                        >
-                            History
-                        </button>
+                    {/* Status Toggle & Tabs Group */}
+                    <div className="space-y-4">
+                        {/* Toggle Switch */}
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-slate-300">Go Online</span>
+                            <button
+                                onClick={toggleStatus}
+                                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${isOnline ? 'bg-green-500' : 'bg-slate-600'}`}
+                            >
+                                <span
+                                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isOnline ? 'translate-x-6' : 'translate-x-1'}`}
+                                />
+                            </button>
+                        </div>
+
+                        {/* Tabs */}
+                        <div className="flex bg-slate-800/50 p-1 rounded-xl backdrop-blur-sm">
+                            <button
+                                onClick={() => setActiveTab('active')}
+                                className={`flex-1 py-2 text-xs font-bold uppercase tracking-wide rounded-lg transition-all ${activeTab === 'active'
+                                    ? 'bg-amber-500 text-slate-900 shadow-lg'
+                                    : 'text-slate-400 hover:text-white'
+                                    }`}
+                            >
+                                Active Jobs
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('completed')}
+                                className={`flex-1 py-2 text-xs font-bold uppercase tracking-wide rounded-lg transition-all ${activeTab === 'completed'
+                                    ? 'bg-amber-500 text-slate-900 shadow-lg'
+                                    : 'text-slate-400 hover:text-white'
+                                    }`}
+                            >
+                                History
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,17 +237,17 @@ export default function DriverDashboard() {
                                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.pickup)}`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center justify-center gap-2 py-2.5 bg-blue-50 text-blue-700 rounded-xl font-medium text-sm hover:bg-blue-100 transition-colors"
+                                            className="flex items-center justify-center gap-2 py-3 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm hover:bg-blue-100 transition-colors"
                                             onClick={(e) => e.stopPropagation()}
                                         >
-                                            <Navigation size={14} />
+                                            <Navigation size={16} />
                                             Navigate
                                         </a>
                                         <a
                                             href={`https://wa.me/?text=Hello ${job.name}, I am your driver for Al Aqsa Transport. I am on my way.`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center justify-center gap-2 py-2.5 bg-green-50 text-green-700 rounded-xl font-medium text-sm hover:bg-green-100 transition-colors"
+                                            className="flex items-center justify-center gap-2 py-3 bg-green-50 text-green-700 rounded-xl font-bold text-sm hover:bg-green-100 transition-colors"
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">W</div>
@@ -230,10 +256,10 @@ export default function DriverDashboard() {
                                     </div>
                                     <Link
                                         href={`/driver/jobs/${job.id}`}
-                                        className="flex items-center justify-center gap-2 py-2.5 bg-amber-50 text-amber-700 rounded-xl font-medium text-sm hover:bg-amber-100 transition-colors w-full"
+                                        className="flex items-center justify-center gap-2 py-3 bg-amber-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-amber-500/20 hover:bg-amber-600 transition-all w-full"
                                     >
-                                        Details
-                                        <ChevronRight size={16} />
+                                        View Details
+                                        <ChevronRight size={18} />
                                     </Link>
                                 </div>
                             )}
@@ -241,6 +267,8 @@ export default function DriverDashboard() {
                     ))
                 )}
             </div>
+
+            <BottomNav />
         </div>
     );
 }
