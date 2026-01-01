@@ -155,7 +155,61 @@ export interface ISection extends Document {
     updatedAt: Date;
 }
 
+updatedAt: Date;
+}
+
+export interface ISubscriber extends Document {
+    email: string;
+    source: string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 // --- Schemas ---
+
+const DriverSchema = new Schema<IDriver>({
+    name: { type: String, required: true },
+    photo: { type: String, required: true },
+    experience: { type: String, required: true },
+    languages: { type: [String], required: true },
+    certifications: { type: [String], default: [] },
+    rating: { type: Number, default: 5 },
+    trips: { type: String, default: '0' },
+    quote: { type: String },
+    badges: { type: [String], default: [] },
+    isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+const SectionSchema = new Schema<ISection>({
+    name: { type: String, required: true, unique: true },
+    page: { type: String, required: true },
+    type: { type: String, required: true },
+    title: { type: String, required: true },
+    subtitle: { type: String },
+    content: { type: String },
+    images: [{
+        url: { type: String },
+        alt: { type: String },
+        type: { type: String, enum: ['desktop', 'mobile', 'thumbnail'] }
+    }],
+    customFields: [{
+        key: { type: String },
+        label: { type: String },
+        value: { type: String },
+        type: { type: String, enum: ['text', 'link', 'color', 'boolean'] }
+    }],
+    metaTitle: { type: String },
+    metaDescription: { type: String },
+    isActive: { type: Boolean, default: true },
+    lastUpdatedBy: { type: String },
+}, { timestamps: true });
+
+const SubscriberSchema = new Schema<ISubscriber>({
+    email: { type: String, required: true, unique: true },
+    source: { type: String, default: 'website' },
+    isActive: { type: Boolean, default: true },
+}, { timestamps: true });
 
 const VehicleSchema = new Schema<IVehicle>({
     name: { type: String, required: true },
@@ -323,9 +377,10 @@ const NotificationSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Revert hack
-// export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
-// export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
-// export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
+// Revert hack
+export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
+export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
+export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
 export const Notification = mongoose.models.Notification || mongoose.model('Notification', NotificationSchema);
