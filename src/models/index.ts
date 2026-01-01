@@ -50,6 +50,9 @@ export interface IBooking extends Document {
     assignedDriverId?: string;
     driverStatus?: 'pending' | 'accepted' | 'en_route' | 'arrived' | 'completed' | 'cancelled';
 
+    rating?: number;
+    review?: string;
+
     createdAt: Date;
     updatedAt: Date;
 }
@@ -267,6 +270,10 @@ const BookingSchema = new Schema<IBooking>({
     // Driver Assignment
     assignedDriverId: { type: String }, // Links to User._id (role: driver)
     driverStatus: { type: String, enum: ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled'], default: 'pending' },
+
+    // Rating & Review
+    rating: { type: Number, min: 1, max: 5 },
+    review: { type: String },
 }, { timestamps: true });
 
 const UserSchema = new Schema<IUser>({
