@@ -14,7 +14,6 @@ interface BookingWithDetails extends Booking {
 
     // Driver Details
     assignedDriverId?: string;
-    driverStatus?: string;
 }
 
 interface User {
