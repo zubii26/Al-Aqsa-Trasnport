@@ -60,9 +60,56 @@ export default function BookingPage() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const [dropdownRef, setDropdownRef] = useState<HTMLDivElement | null>(null);
     const wizardRef = useRef<HTMLDivElement>(null);
     const searchParams = useSearchParams();
+    const [draftId, setDraftId] = useState<string | null>(null);
+
+    // Auto-Save Draft Logic
+    useEffect(() => {
+        const saveDraft = async () => {
+            // Only save if we have at least some contact info or substantial progress (Step 3+)
+            // Or if we are in Step 3 and have typed something
+            const hasContact = bookingData.email || bookingData.phone;
+
+            if (!hasContact && step < 3) return;
+
+            try {
+                const payload = {
+                    draftId,
+                    step,
+                    email: bookingData.email,
+                    phone: bookingData.phone,
+                    name: bookingData.name,
+                    data: {
+                        ...bookingData,
+                        currentStep: step,
+                        serviceType,
+                        airportType
+                    }
+                };
+
+                const res = await fetch('/api/bookings/draft', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.draftId && data.draftId !== draftId) {
+                        setDraftId(data.draftId);
+                    }
+                }
+            } catch (err) {
+                // Silent fail for drafts
+                console.error("Draft Auto-save failed", err);
+            }
+        };
+
+        const timeoutId = setTimeout(saveDraft, 2000); // Debounce 2s
+        return () => clearTimeout(timeoutId);
+    }, [bookingData, step, draftId, serviceType, airportType]);
 
     // Initialize defaults when data loads and handle URL params for deep linking
     useEffect(() => {
@@ -194,7 +241,8 @@ export default function BookingPage() {
     // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            // @ts-ignore
+            if (dropdownRef && !dropdownRef.contains(event.target as Node)) {
                 setIsDropdownOpen(false);
             }
         };
@@ -203,7 +251,7 @@ export default function BookingPage() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [dropdownRef]);
 
     const updateData = (field: string, value: string | Date | null | number) => {
         setBookingData(prev => ({ ...prev, [field]: value }));

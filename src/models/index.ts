@@ -402,6 +402,28 @@ const NotificationSchema = new mongoose.Schema({
     isRead: { type: Boolean, default: false },
 }, { timestamps: true });
 
+export interface IDraftBooking extends Document {
+    email?: string;
+    phone?: string;
+    name?: string;
+    step: number;
+    data: any; // Flexible JSON for whatever state they were in
+    lastActive: Date;
+    recoveryEmailSent: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const DraftBookingSchema = new Schema<IDraftBooking>({
+    email: { type: String, index: true },
+    phone: { type: String },
+    name: { type: String },
+    step: { type: Number, default: 1 },
+    data: { type: Schema.Types.Mixed },
+    lastActive: { type: Date, default: Date.now },
+    recoveryEmailSent: { type: Boolean, default: false },
+}, { timestamps: true });
+
 // Revert hack
 // Revert hack
 export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
@@ -410,6 +432,7 @@ export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscrib
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
 export const Notification = mongoose.models.Notification || mongoose.model('Notification', NotificationSchema);
+export const DraftBooking: Model<IDraftBooking> = mongoose.models.DraftBooking || mongoose.model<IDraftBooking>('DraftBooking', DraftBookingSchema);
 export const BlogPost: Model<IBlogPost> = mongoose.models.BlogPost || mongoose.model<IBlogPost>('BlogPost', BlogPostSchema);
 export const AuditLog: Model<IAuditLog> = mongoose.models.AuditLog || mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);
 export const Vehicle: Model<IVehicle> = mongoose.models.Vehicle || mongoose.model<IVehicle>('Vehicle', VehicleSchema);
