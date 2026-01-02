@@ -10,11 +10,22 @@ import { calculateFinalPrice } from '@/lib/pricing';
 
 export async function GET() {
     const user = await validateRequest();
-    if (!user || (user.role !== 'admin' && !user.role.toLowerCase().includes('manager'))) {
+
+    // Allow Admin, Manager, Agency, and User roles
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
     const bookings = await getBookings();
-    return NextResponse.json(bookings);
+
+    // If Admin/Manager, return all. If Agency/User, filter by their ID.
+    if (user.role === 'admin' || user.role.toLowerCase().includes('manager')) {
+        return NextResponse.json(bookings);
+    } else {
+        // Filter for specific user
+        const userBookings = bookings.filter((b: any) => b.userId === user.userId);
+        return NextResponse.json(userBookings);
+    }
 }
 
 export async function POST(request: Request) {
@@ -107,90 +118,68 @@ export async function POST(request: Request) {
             }
         }
 
+        // Check if user is logged in (Optional)
+        let userId = undefined;
+        try {
+            const { verifyToken } = await import('@/lib/auth-utils');
+            const { cookies } = await import('next/headers');
+            const cookieStore = await cookies();
+            const token = cookieStore.get('admin_token')?.value;
+
+            if (token) {
+                const decoded = await verifyToken(token);
+                if (decoded && decoded.userId) {
+                    userId = decoded.userId;
+                }
+            }
+        } catch (err) {
+            console.log('Booking created as guest (no valid token found)');
+        }
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const booking = await addBooking({
             ...bookingData,
             ...priceDetails,
-            userId: null,
+            userId, // Attach User ID if authenticated
             // Ensure we save the detailed selection if the DB supports it, 
             // otherwise 'vehicle' string covers the basics. 
             // We assume addBooking can handle extra fields or ignores them.
             selectedVehicles: selectedVehiclesList
         } as any);
 
-        // Fetch settings for email templates and admin logic
-        const settings = await getSettings();
-
-        // Send confirmation email to customer
+        // Send standardized confirmation email to customer
         console.log('[Booking API] Processing customer email...');
         try {
             if (booking && booking.email) {
-                console.log(`[Booking API] Sending to customer: ${booking.email}`);
-                // Ensure we have a template string, falling back to default if somehow missing in both DB vs Code (though getSettings handles default)
-                const template = settings.emailTemplates?.bookingConfirmation || '';
+                const { sendBookingConfirmationEmail, sendAdminNewBookingEmail } = await import('@/lib/email');
 
-                await sendEmail({
-                    to: booking.email,
-                    subject: 'Booking Confirmation - Al Aqsa Transport',
-                    html: getBookingConfirmationTemplate({
-                        name: booking.name,
-                        status: booking.status,
-                        id: booking._id.toString(),
-                        vehicle: booking.vehicle,
-                        pickup: booking.pickup,
-                        dropoff: booking.dropoff,
-                        date: booking.date,
-                        time: booking.time,
-                        passengers: booking.passengers,
-                        vehicleCount: booking.vehicleCount,
-                        luggage: booking.luggage,
-                        notes: booking.notes,
-                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined,
-                        selectedVehicles: selectedVehiclesList,
-                        country: booking.country,
-                        flightNumber: booking.flightNumber,
-                        arrivalDate: booking.arrivalDate
-                    }, template),
-                });
+                const emailData = {
+                    name: booking.name,
+                    email: booking.email,
+                    status: booking.status,
+                    id: booking._id.toString(),
+                    vehicle: booking.vehicle,
+                    pickup: booking.pickup,
+                    dropoff: booking.dropoff,
+                    date: booking.date,
+                    time: booking.time,
+                    passengers: booking.passengers,
+                    vehicleCount: booking.vehicleCount,
+                    luggage: booking.luggage,
+                    notes: booking.notes,
+                    price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined,
+                    selectedVehicles: selectedVehiclesList,
+                    country: booking.country,
+                    flightNumber: booking.flightNumber,
+                    arrivalDate: booking.arrivalDate
+                };
+
+                await sendBookingConfirmationEmail(emailData);
+                await sendAdminNewBookingEmail(emailData);
+                console.log('Standardized emails sent successfully');
             }
         } catch (error) {
-            console.error('Error sending customer confirmation email:', error);
-        }
-
-        // Send notification email to admin
-        console.log('[Booking API] Processing admin notification...');
-        try {
-            if (settings.contact && settings.contact.email) {
-                console.log(`[Booking API] Sending to admin: ${settings.contact.email}`);
-                const adminTemplate = settings.emailTemplates?.adminNotification || '';
-
-                await sendEmail({
-                    to: settings.contact.email,
-                    subject: 'New Booking Received - Al Aqsa Transport',
-                    html: getAdminBookingNotificationTemplate({
-                        name: booking.name,
-                        status: booking.status,
-                        id: booking._id.toString(),
-                        vehicle: booking.vehicle,
-                        pickup: booking.pickup,
-                        dropoff: booking.dropoff,
-                        date: booking.date,
-                        time: booking.time,
-                        passengers: booking.passengers,
-                        vehicleCount: booking.vehicleCount,
-                        luggage: booking.luggage,
-                        notes: booking.notes,
-                        price: booking.finalPrice ? `${booking.finalPrice} SAR` : undefined,
-                        selectedVehicles: selectedVehiclesList,
-                        country: booking.country,
-                        flightNumber: booking.flightNumber,
-                        arrivalDate: booking.arrivalDate
-                    }, adminTemplate),
-                });
-                console.log('Admin notification email sent to:', settings.contact.email);
-            }
-        } catch (error) {
-            console.error('Error sending admin notification:', error);
+            console.error('Error sending standardized emails:', error);
         }
 
         return NextResponse.json(booking);

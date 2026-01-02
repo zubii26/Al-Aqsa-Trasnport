@@ -57,6 +57,40 @@ export async function middleware(request: NextRequest) {
             return response;
         }
     }
+    // Check if the request is for the agency portal
+    if (pathname.startsWith('/agency')) {
+        // Exclude the login/register pages
+        if (pathname === '/agency/login' || pathname === '/agency/register') {
+            return NextResponse.next();
+        }
+
+        const token = request.cookies.get('token'); // Assuming 'token' is used for non-admin users
+
+        if (!token) {
+            const loginUrl = new URL('/agency/login', request.url);
+            return NextResponse.redirect(loginUrl);
+        }
+
+        try {
+            const { verifyToken } = await import('@/lib/auth-utils');
+            const payload = await verifyToken(token.value);
+
+            if (!payload || payload.role !== 'agency') {
+                // If logged in but not an agency, redirect to appropriate dashboard or error
+                if (payload && payload.role === 'user') {
+                    return NextResponse.redirect(new URL('/dashboard', request.url));
+                }
+                const loginUrl = new URL('/agency/login', request.url);
+                loginUrl.searchParams.set('error', 'Unauthorized access');
+                return NextResponse.redirect(loginUrl);
+            }
+        } catch {
+            const loginUrl = new URL('/agency/login', request.url);
+            const response = NextResponse.redirect(loginUrl);
+            response.cookies.delete('token');
+            return response;
+        }
+    }
 
     return NextResponse.next();
 }

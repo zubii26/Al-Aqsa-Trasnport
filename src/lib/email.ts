@@ -158,9 +158,24 @@ export const sendBookingConfirmationEmail = async (booking: BookingData) => {
     });
 };
 
-import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, STATUS_UPDATE_TEMPLATE } from './email-templates';
+export const sendAdminNewBookingEmail = async (booking: BookingData) => {
+    const adminEmail = process.env.ADMIN_EMAIL_NOTIFICATIONS || process.env.EMAIL_USER; // Fallback
+    if (!adminEmail) return false;
+
+    const htmlContent = getAdminBookingNotificationTemplate(booking, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE);
+
+    return await sendEmail({
+        to: adminEmail,
+        subject: `🔔 New Booking #${booking.id} Received`,
+        html: htmlContent
+    });
+};
+
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, STATUS_UPDATE_TEMPLATE, LOW_CREDIT_ALERT_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from './email-templates';
 
 export const sendBookingStatusEmail = async (booking: BookingData, driverName: string) => {
+    // ... existing status logic ...
+    // ... kept brief for replacement chunk context ...
     // Status Logic
     let status_display = '';
     let status_arabic = '';
@@ -224,6 +239,32 @@ export const sendBookingStatusEmail = async (booking: BookingData, driverName: s
     return await sendEmail({
         to: booking.email || '',
         subject: `Trip Update: ${status_display} | تحديث الرحلة`,
+        html: htmlContent
+    });
+};
+
+interface CreditAlertData {
+    email: string;
+    agencyName: string;
+    creditLimit: number;
+    outstanding: number;
+}
+
+export const sendLowCreditEmail = async (data: CreditAlertData) => {
+    const usagePercent = Math.round((data.outstanding / data.creditLimit) * 100);
+    const variables = {
+        agency_name: data.agencyName,
+        usage_percent: usagePercent,
+        credit_limit: data.creditLimit.toLocaleString(),
+        outstanding_balance: data.outstanding.toLocaleString(),
+        remaining_credit: (data.creditLimit - data.outstanding).toLocaleString()
+    };
+
+    const htmlContent = replaceTemplateVariables(LOW_CREDIT_ALERT_TEMPLATE, variables as any);
+
+    return await sendEmail({
+        to: data.email,
+        subject: `⚠️ Urgent: Low Credit Alert (${usagePercent}%)`,
         html: htmlContent
     });
 };

@@ -20,6 +20,13 @@ export async function GET() {
         }
 
         const activeRoutes = routes;
+        // Sort routes alphabetically by Origin -> Destination
+        activeRoutes.sort((a: any, b: any) => {
+            const nameA = `${a.origin} ${a.destination}`.toLowerCase();
+            const nameB = `${b.origin} ${b.destination}`.toLowerCase();
+            return nameA.localeCompare(nameB);
+        });
+
         const activeVehicles = vehicles;
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,6 +41,8 @@ export async function GET() {
             return {
                 id: route.id,
                 name: `${route.origin} → ${route.destination}`,
+                origin: route.origin,
+                destination: route.destination,
                 distance: route.distance || '',
                 time: route.duration || '',
                 baseRate: 0, // Not used when customRates are present
@@ -46,6 +55,7 @@ export async function GET() {
             id: vehicle.id,
             name: vehicle.name,
             capacity: vehicle.capacity || `${vehicle.passengers} Seater`,
+            passengers: vehicle.passengers,
             multiplier: 1, // Not used
             features: vehicle.features,
             luggage: `${vehicle.luggage} Bags`,

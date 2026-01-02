@@ -33,6 +33,7 @@ export interface IBooking extends Document {
     luggage?: number;
     notes?: string;
     status: string;
+    paymentStatus: 'paid' | 'unpaid' | 'refunded';
     userId?: string;
     price?: string;
     originalPrice?: number;
@@ -62,7 +63,9 @@ export interface IUser extends Document {
     id?: string;
     email: string;
     name?: string;
-    role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver';
+    role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver' | 'agency';
+    activeContracts?: number;
+    creditLimit?: number;
     isOnline?: boolean;
     location?: {
         lat: number;
@@ -73,6 +76,13 @@ export interface IUser extends Document {
     };
     password?: string;
     phone?: string;
+    pushSubscription?: {
+        endpoint: string;
+        keys: {
+            p256dh: string;
+            auth: string;
+        };
+    };
     createdAt: Date;
     updatedAt: Date;
 }
@@ -250,6 +260,7 @@ const BookingSchema = new Schema<IBooking>({
     luggage: { type: Number, default: 0 },
     notes: { type: String },
     status: { type: String, default: 'pending' },
+    paymentStatus: { type: String, enum: ['paid', 'unpaid', 'refunded'], default: 'unpaid' },
     userId: { type: String },
     price: { type: String },
     originalPrice: { type: Number },
@@ -281,7 +292,9 @@ const BookingSchema = new Schema<IBooking>({
 const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     name: { type: String },
-    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver'], default: 'user' },
+    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver', 'agency'], default: 'user' },
+    activeContracts: { type: Number, default: 0 },
+    creditLimit: { type: Number, default: 0 },
     isOnline: { type: Boolean, default: false },
     location: {
         lat: { type: Number },
@@ -292,6 +305,13 @@ const UserSchema = new Schema<IUser>({
     },
     password: { type: String },
     phone: { type: String },
+    pushSubscription: {
+        endpoint: { type: String },
+        keys: {
+            p256dh: { type: String },
+            auth: { type: String }
+        }
+    }
 }, { timestamps: true });
 
 const ReviewSchema = new Schema<IReview>({
@@ -441,3 +461,51 @@ export const Settings: Model<ISettings> = mongoose.models.Settings || mongoose.m
 export const Route: Model<IRoute> = mongoose.models.Route || mongoose.model<IRoute>('Route', RouteSchema);
 export const RoutePrice: Model<IRoutePrice> = mongoose.models.RoutePrice || mongoose.model<IRoutePrice>('RoutePrice', RoutePriceSchema);
 export const GalleryItem: Model<IGalleryItem> = mongoose.models.GalleryItem || mongoose.model<IGalleryItem>('GalleryItem', GalleryItemSchema);
+
+export interface IMessage extends Document {
+    senderId: string;
+    receiverId?: string; // If 1:1 chat (optional if group)
+    senderRole: 'admin' | 'driver' | 'user';
+    content: string;
+    isRead: boolean;
+    channelId: string; // Helper to group conversations (e.g. `chat_${driverId}`)
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const MessageSchema = new Schema<IMessage>({
+    senderId: { type: String, required: true },
+    receiverId: { type: String },
+    senderRole: { type: String, enum: ['admin', 'driver', 'user', 'agency'], required: true },
+    content: { type: String, required: true },
+    isRead: { type: Boolean, default: false },
+    channelId: { type: String, required: true, index: true },
+}, { timestamps: true });
+
+export const Message: Model<IMessage> = mongoose.models.Message || mongoose.model<IMessage>('Message', MessageSchema);
+
+export interface IPayment extends Document {
+    userId: string; // The Agency or User who paid
+    amount: number;
+    currency: string;
+    method: 'bank_transfer' | 'cash' | 'credit_card' | 'other';
+    reference?: string; // e.g. Transaction ID, Check #
+    notes?: string;
+    status: 'pending' | 'completed' | 'failed' | 'refunded';
+    recordedBy: string; // Admin ID
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const PaymentSchema = new Schema<IPayment>({
+    userId: { type: String, required: true, index: true },
+    amount: { type: Number, required: true },
+    currency: { type: String, default: 'SAR' },
+    method: { type: String, enum: ['bank_transfer', 'cash', 'credit_card', 'other'], required: true },
+    reference: { type: String },
+    notes: { type: String },
+    status: { type: String, enum: ['pending', 'completed', 'failed', 'refunded'], default: 'completed' },
+    recordedBy: { type: String, required: true },
+}, { timestamps: true });
+
+export const Payment: Model<IPayment> = mongoose.models.Payment || mongoose.model<IPayment>('Payment', PaymentSchema);

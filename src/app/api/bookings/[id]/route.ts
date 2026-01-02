@@ -11,11 +11,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
     // Extract updateable fields to prevent overwriting critical immutable data if needed
     // For now, we trust admin input, but filtering is safer.
-    const { status, assignedDriverId, driverStatus } = body;
+    const { status, assignedDriverId, driverStatus, paymentStatus } = body;
     const updates: any = {};
     if (status) updates.status = status;
     if (assignedDriverId !== undefined) updates.assignedDriverId = assignedDriverId;
     if (driverStatus) updates.driverStatus = driverStatus;
+    if (paymentStatus) updates.paymentStatus = paymentStatus;
 
     if (Object.keys(updates).length === 0) {
         return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });

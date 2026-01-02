@@ -27,6 +27,18 @@ export default function BookingPage() {
     const [isSearching, setIsSearching] = useState(false);
     const [accordionOpen, setAccordionOpen] = useState<string>('journey');
 
+    // PWA Install Prompt State
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+    useEffect(() => {
+        const handler = (e: any) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
     // Core State
     const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
     const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
@@ -767,6 +779,45 @@ export default function BookingPage() {
                             )}
                         </AnimatePresence>
 
+
+                        {/* Agency App Promo - PWA Install Trigger (Moved to Step 1) */}
+                        <div className="mt-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-transform hover:scale-[1.01]"
+                            onClick={() => {
+                                if (deferredPrompt) {
+                                    deferredPrompt.prompt();
+                                    deferredPrompt.userChoice.then((choiceResult: any) => {
+                                        if (choiceResult.outcome === 'accepted') {
+                                            console.log('User accepted the install prompt');
+                                        } else {
+                                            console.log('User dismissed the install prompt');
+                                        }
+                                        setDeferredPrompt(null);
+                                    });
+                                } else {
+                                    // Fallback: Redirect to Agency Login
+                                    window.location.href = '/agency/login';
+                                }
+                            }}
+                        >
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <Building2 size={80} className="text-white" />
+                            </div>
+                            <div className="relative z-10 flex items-center justify-between">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="bg-amber-500 text-slate-900 text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm">For Agencies</span>
+                                    </div>
+                                    <h4 className="text-white font-bold text-lg">Book 3x Faster with Our App</h4>
+                                    <p className="text-slate-400 text-sm max-w-sm">
+                                        Install the Al Aqsa B2B Booking App to your desktop or mobile. Save passenger details & track upcoming trips.
+                                    </p>
+                                </div>
+                                <div className="bg-white/10 p-3 rounded-full text-white group-hover:bg-white/20 transition-colors">
+                                    <ArrowRight size={24} />
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </motion.div>
             )}
@@ -791,6 +842,8 @@ export default function BookingPage() {
                 </div>
 
                 {/* Mobile Dropdown (Visible on small screens) */}
+
+
                 <div className="lg:hidden mb-8">
                     <div className="relative">
                         <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">

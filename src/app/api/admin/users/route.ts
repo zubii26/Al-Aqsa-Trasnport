@@ -32,8 +32,8 @@ export async function POST(request: Request) {
     }
 
     try {
-        const body: { name: string; email: string; password?: string; role: string } = await request.json();
-        const { name, email, password, role } = body;
+        const body: { name: string; email: string; password?: string; role: string; activeContracts?: number; creditLimit?: number } = await request.json();
+        const { name, email, password, role, activeContracts, creditLimit } = body;
 
         await dbConnect();
 
@@ -47,7 +47,9 @@ export async function POST(request: Request) {
             name,
             email,
             password,
-            role: role.toLowerCase() // Ensure role is lowercase
+            role: role.toLowerCase(), // Ensure role is lowercase
+            activeContracts: activeContracts || 0,
+            creditLimit: creditLimit || 0
         });
 
         console.log(`Created user: ${name} (${role})`);
@@ -66,8 +68,8 @@ export async function PUT(request: Request) {
     }
 
     try {
-        const body: { id: string; name: string; email: string; password?: string; role: string } = await request.json();
-        const { id, name, email, password, role } = body;
+        const body: { id: string; name: string; email: string; password?: string; role: string; activeContracts?: number; creditLimit?: number } = await request.json();
+        const { id, name, email, password, role, activeContracts, creditLimit } = body;
 
         if (!id) {
             return NextResponse.json({ error: 'User ID required' }, { status: 400 });
@@ -75,7 +77,10 @@ export async function PUT(request: Request) {
 
         await dbConnect();
 
-        const updateData: Record<string, string> = { name, email, role: role.toLowerCase() };
+        const updateData: Record<string, any> = { name, email, role: role.toLowerCase() };
+        if (activeContracts !== undefined) updateData.activeContracts = activeContracts;
+        if (creditLimit !== undefined) updateData.creditLimit = creditLimit;
+
         if (password && password.trim() !== '') {
             updateData.password = password;
         }

@@ -1,16 +1,15 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Booking } from '@/models';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { requireRole } from '@/lib/server-auth';
 import { sendEmail } from '@/lib/email';
 import { ReviewTemplate } from '@/components/emails/ReviewTemplate';
 import { render } from '@react-email/render';
 
 export async function POST() {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session || (session.user.role !== 'admin' && session.user.role !== 'operational_manager')) {
+        const user = await requireRole(['admin', 'operational_manager']);
+        if (!user) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -38,11 +37,13 @@ export async function POST() {
                 // specific review page: /reviews/new?bookingId=...
                 const reviewLink = `${process.env.NEXT_PUBLIC_APP_URL}/reviews/new?id=${booking._id}`;
 
-                const html = render(ReviewTemplate({
-                    customerName: booking.name,
-                    bookingId: booking._id.toString(),
-                    reviewLink: reviewLink
-                }));
+                const html = await render(
+                    <ReviewTemplate
+                        customerName={booking.name}
+                        bookingId={booking._id.toString()}
+                        reviewLink={reviewLink}
+                    />
+                );
 
                 await sendEmail({
                     to: booking.email,

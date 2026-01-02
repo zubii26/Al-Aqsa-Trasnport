@@ -176,6 +176,47 @@ export const STATUS_UPDATE_TEMPLATE = `
 </div>
 `;
 
+export const LOW_CREDIT_ALERT_TEMPLATE = `
+<div style="font-family: 'Segoe UI', serif; color: #333; max-width: 600px; margin: 0 auto;">
+    <div style="text-align: center; border-bottom: 3px solid #dc2626; padding-bottom: 20px; margin-bottom: 30px;">
+        <h1 style="color: #dc2626; margin: 0;">⚠️ Low Credit Alert</h1>
+        <h2 style="color: #666; font-size: 16px; margin-top: 5px;">تنبيه انخفاض الرصيد</h2>
+    </div>
+
+    <p>Dear <strong>{{agency_name}}</strong>,</p>
+
+    <div style="background-color: #fef2f2; border: 1px solid #fecaca; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 0; color: #991b1b; font-weight: bold;">
+            You have used <strong>{{usage_percent}}%</strong> of your credit limit.
+        </p>
+        <p style="margin: 10px 0 0 0; color: #991b1b;">
+            Please clear your outstanding balance to avoid service interruption.
+        </p>
+    </div>
+
+    <table style="width: 100%; margin-bottom: 20px;">
+        <tr>
+            <td style="padding: 10px;"><strong>Credit Limit:</strong></td>
+            <td style="text-align: right;">{{credit_limit}} SAR</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px;"><strong>Outstanding Balance:</strong></td>
+            <td style="text-align: right;">{{outstanding_balance}} SAR</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border-top: 1px solid #eee;"><strong>Remaining Credit:</strong></td>
+            <td style="text-align: right; border-top: 1px solid #eee; font-weight: bold;">{{remaining_credit}} SAR</td>
+        </tr>
+    </table>
+
+    <p>Please contact accounting immediately to arrange a payment.</p>
+    
+    <p style="text-align: center; margin-top: 30px; font-size: 12px; color: #aaa;">
+        Al Aqsa Transport Accounting Team
+    </p>
+</div>
+`;
+
 export const replaceTemplateVariables = (template: string, variables: Record<string, string | number | undefined>) => {
     let result = template;
     for (const [key, value] of Object.entries(variables)) {

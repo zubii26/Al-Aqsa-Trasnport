@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         }
 
         // Role Verification
-        const allowedRoles = ['admin', 'manager', 'operational_manager', 'driver'];
+        const allowedRoles = ['admin', 'manager', 'operational_manager', 'driver', 'user', 'agency'];
         if (!allowedRoles.includes(user.role)) {
             console.warn(`Unauthorized role login attempt for ${username} (${user.role}) from ${ip}`);
             return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 403 });
@@ -72,7 +72,9 @@ export async function POST(request: Request) {
 
         // Set cookie
         const cookieStore = await cookies();
-        cookieStore.set('admin_token', token, {
+        const cookieName = user.role === 'agency' ? 'token' : 'admin_token';
+
+        cookieStore.set(cookieName, token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',

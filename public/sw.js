@@ -1,35 +1,29 @@
-
-self.addEventListener('install', (event) => {
-    console.log('Driver App Service Worker installing.');
-    // Skip waiting to activate immediately
-    self.skipWaiting();
-});
-
-self.addEventListener('activate', (event) => {
-    console.log('Driver App Service Worker activating.');
-    event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', (event) => {
-    // Basic pass-through for now
-    // Future: Implement offline caching for static assets
-});
-
-self.addEventListener('push', (event) => {
+self.addEventListener('push', function (event) {
     if (event.data) {
         const data = event.data.json();
         const options = {
             body: data.body,
-            icon: '/android-chrome-192x192.png',
-            badge: '/android-chrome-192x192.png',
+            icon: '/icons/icon-192x192.png',
+            badge: '/icons/icon-72x72.png',
             vibrate: [100, 50, 100],
             data: {
                 dateOfArrival: Date.now(),
                 primaryKey: '2'
-            }
+            },
+            actions: [
+                { action: 'explore', title: 'View Details', icon: '/icons/checkmark.png' },
+                { action: 'close', title: 'Close', icon: '/icons/xmark.png' },
+            ]
         };
         event.waitUntil(
             self.registration.showNotification(data.title, options)
         );
     }
+});
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    event.waitUntil(
+        clients.openWindow('http://localhost:3000/agency/dashboard')
+    );
 });

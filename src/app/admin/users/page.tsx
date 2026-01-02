@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat, Eye, Edit, Search, Download } from 'lucide-react';
+import { Plus, Trash2, Shield, User as UserIcon, Loader2, Car, HardHat, Eye, Edit, Search, Download, Building2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
 import { Toast } from '@/components/ui/Toast';
@@ -12,16 +12,18 @@ interface User {
     id: string;
     name: string;
     email: string;
-    role: 'admin' | 'manager' | 'operational_manager' | 'driver';
+    role: 'admin' | 'manager' | 'operational_manager' | 'driver' | 'agency';
     createdAt: string;
     isOnline?: boolean;
+    activeContracts?: number;
+    creditLimit?: number;
 }
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'manager' });
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
     const [submitting, setSubmitting] = useState(false);
 
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -63,13 +65,13 @@ export default function UsersPage() {
     }, [fetchUsers]);
 
     const handleEdit = (user: User) => {
-        setFormData({ name: user.name, email: user.email, password: '', role: user.role });
+        setFormData({ name: user.name, email: user.email, password: '', role: user.role, activeContracts: user.activeContracts || 0, creditLimit: user.creditLimit || 0 });
         setEditingId(user.id);
         setIsModalOpen(true);
     };
 
     const openCreateModal = () => {
-        setFormData({ name: '', email: '', password: '', role: 'manager' });
+        setFormData({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
         setEditingId(null);
         setIsModalOpen(true);
     };
@@ -90,7 +92,7 @@ export default function UsersPage() {
 
             if (res.ok) {
                 setIsModalOpen(false);
-                setFormData({ name: '', email: '', password: '', role: 'manager' });
+                setFormData({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
                 setEditingId(null);
                 fetchUsers();
                 showToast(editingId ? 'User updated successfully' : 'User created successfully', 'success');
@@ -177,6 +179,7 @@ export default function UsersPage() {
                     >
                         <option value="all">All Roles</option>
                         <option value="driver">Drivers Only</option>
+                        <option value="agency">Agencies</option>
                         <option value="manager">Managers</option>
                         <option value="operational_manager">Ops Managers</option>
                         <option value="admin">Admins</option>
@@ -221,8 +224,9 @@ export default function UsersPage() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div className={`p-3 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400' :
                                         user.role === 'driver' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' :
-                                            user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
-                                                'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                                            user.role === 'agency' ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' :
+                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
+                                                    'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
                                         }`}>
                                         {user.role === 'admin' ? <Shield size={24} /> :
                                             user.role === 'driver' ? (
@@ -233,8 +237,9 @@ export default function UsersPage() {
                                                     )}
                                                 </div>
                                             ) :
-                                                user.role === 'operational_manager' ? <HardHat size={24} /> :
-                                                    <UserIcon size={24} />}
+                                                user.role === 'agency' ? <Building2 size={24} /> :
+                                                    user.role === 'operational_manager' ? <HardHat size={24} /> :
+                                                        <UserIcon size={24} />}
                                     </div>
                                     <div className="flex gap-2">
                                         <Link
@@ -262,8 +267,9 @@ export default function UsersPage() {
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' :
                                         user.role === 'driver' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
-                                            user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
-                                                'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                            user.role === 'agency' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' :
+                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
+                                                    'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                                         }`}>
                                         {user.role}
                                     </span>
@@ -338,9 +344,43 @@ export default function UsersPage() {
                                     <option value="manager">Manager</option>
                                     <option value="operational_manager">Operational Manager</option>
                                     <option value="driver">Driver</option>
+                                    <option value="agency">Agency Partner</option>
                                     <option value="admin">Boss Admin</option>
                                 </select>
                             </div>
+
+                            {formData.role === 'agency' && (
+                                <>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                            <div className="flex items-center gap-2">
+                                                <Building2 size={16} />
+                                                Active Contracts
+                                            </div>
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={formData.activeContracts}
+                                            onChange={(e) => setFormData({ ...formData, activeContracts: parseInt(e.target.value) || 0 })}
+                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                            placeholder="0"
+                                        />
+                                        <p className="text-xs text-slate-500 mt-1">Number of active agreements displayed on their dashboard</p>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Credit Limit (SAR)</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                            value={formData.creditLimit}
+                                            onChange={(e) => setFormData({ ...formData, creditLimit: parseInt(e.target.value) || 0 })}
+                                        />
+                                        <p className="text-xs text-slate-500 mt-1">Maximum allowed outstanding balance</p>
+                                    </div>
+                                </>
+                            )}
                             <div className="flex gap-3 mt-6">
                                 <button
                                     type="button"

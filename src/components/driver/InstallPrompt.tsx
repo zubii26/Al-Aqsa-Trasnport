@@ -5,7 +5,15 @@ import { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function InstallPrompt() {
+interface InstallPromptProps {
+    appName?: string;
+    description?: string;
+}
+
+export default function InstallPrompt({
+    appName = "Install Driver App",
+    description = "Add to home screen for quick access"
+}: InstallPromptProps) {
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -14,6 +22,7 @@ export default function InstallPrompt() {
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
             // Stash the event so it can be triggered later.
+            window.deferredPrompt = e; // Expose globally for manual triggers if needed
             setDeferredPrompt(e);
             setIsVisible(true);
         };
@@ -32,6 +41,7 @@ export default function InstallPrompt() {
         console.log(`User response to the install prompt: ${outcome}`);
         // We've used the prompt, and can't use it again, discard it
         setDeferredPrompt(null);
+        window.deferredPrompt = null;
         setIsVisible(false);
     };
 
@@ -49,8 +59,8 @@ export default function InstallPrompt() {
                             <Download size={20} />
                         </div>
                         <div>
-                            <p className="font-bold text-sm">Install Driver App</p>
-                            <p className="text-xs text-slate-400">Add to home screen for quick access</p>
+                            <p className="font-bold text-sm">{appName}</p>
+                            <p className="text-xs text-slate-400">{description}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">

@@ -1,17 +1,16 @@
 
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth'; // FIXED IMPORT
+import { requireRole } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
-import { Booking, DraftBooking } from '@/models'; // FIXED IMPORT
+import { Booking, DraftBooking } from '@/models';
 import { sendEmail } from '@/lib/email';
 import { render } from '@react-email/render';
 import AbandonedCartTemplate from '@/components/emails/AbandonedCartTemplate';
 
 export async function POST(req: Request) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session || !['admin', 'manager', 'operational_manager'].includes(session.user.role)) {
+        const user = await requireRole(['admin', 'manager', 'operational_manager']);
+        if (!user) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -68,13 +67,13 @@ export async function POST(req: Request) {
                 }
 
                 const emailHtml = await render(
-                    AbandonedCartTemplate({
-                        customerName: draft.name || 'Valued Guest',
-                        pickup: draft.data?.pickup || 'Pickup Location',
-                        dropoff: draft.data?.dropoff || 'Destination',
-                        vehicleName,
-                        recoveryLink
-                    })
+                    <AbandonedCartTemplate
+                        customerName={draft.name || 'Valued Guest'}
+                        pickup={draft.data?.pickup || 'Pickup Location'}
+                        dropoff={draft.data?.dropoff || 'Destination'}
+                        vehicleName={vehicleName}
+                        recoveryLink={recoveryLink}
+                    />
                 );
 
                 await sendEmail({

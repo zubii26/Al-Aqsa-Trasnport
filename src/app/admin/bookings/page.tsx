@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import adminStyles from '../admin.module.css';
-import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase, Download, LayoutList } from 'lucide-react';
+import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase, Download, LayoutList, Building2 } from 'lucide-react';
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
@@ -18,10 +18,12 @@ const BookingCalendar = dynamic(() => import('@/components/admin/bookings/Bookin
 interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     id: string;
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+    paymentStatus: 'paid' | 'unpaid' | 'refunded';
     createdAt?: string;
     rating?: number;
     review?: string;
     driverStatus?: string;
+    isAgency?: boolean;
 }
 
 export default function BookingsPage() {
@@ -35,6 +37,7 @@ export default function BookingsPage() {
     const [endDate, setEndDate] = useState('');
     const [specificVehicle, setSpecificVehicle] = useState('All Vehicles');
     const [selectedBooking, setSelectedBooking] = useState<BookingWithDetails | null>(null);
+    const [agencies, setAgencies] = useState<Record<string, boolean>>({});
 
     // ... sortBookings function ...
     const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
@@ -58,19 +61,43 @@ export default function BookingsPage() {
     };
 
     useEffect(() => {
-        const fetchBookings = async () => {
+        const loadData = async () => {
             try {
-                const res = await fetch('/api/bookings');
-                const data = await res.json();
-                setBookings(sortBookings(data));
+                // Fetch bookings
+                const bookingsRes = await fetch('/api/bookings');
+                const bookingsData = await bookingsRes.json();
+
+                // Fetch agencies (users with role 'agency')
+                // Note: This requires admin access to users API
+                let agencyMap: Record<string, boolean> = {};
+                try {
+                    const usersRes = await fetch('/api/admin/users?role=agency');
+                    if (usersRes.ok) {
+                        const agencyUsers = await usersRes.json();
+                        agencyUsers.forEach((u: any) => {
+                            agencyMap[u.id] = true;
+                        });
+                        setAgencies(agencyMap);
+                    }
+                } catch (e) {
+                    console.log('Failed to fetch agencies map', e);
+                }
+
+                // Enhance bookings with agency flag
+                const enhancedBookings = bookingsData.map((b: any) => ({
+                    ...b,
+                    isAgency: !!(b.userId && agencyMap[b.userId])
+                }));
+
+                setBookings(sortBookings(enhancedBookings));
             } catch (error) {
-                console.error('Failed to fetch bookings:', error);
+                console.error('Failed to fetch data:', error);
                 showToast('Failed to load bookings', 'error');
             } finally {
                 setIsLoaded(true);
             }
         };
-        fetchBookings();
+        loadData();
     }, []);
 
     const showToast = (message: string, type: 'success' | 'error') => {
@@ -79,7 +106,11 @@ export default function BookingsPage() {
     };
 
     const filteredBookings = bookings.filter(booking => {
-        const matchesStatus = filter === 'All' || booking.status === filter.toLowerCase();
+        const matchesStatus = filter === 'All'
+            ? true
+            : filter === 'Agency'
+                ? booking.isAgency
+                : booking.status === filter.toLowerCase();
 
         const matchesSearch =
             booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -130,6 +161,25 @@ export default function BookingsPage() {
             return null;
         }
     }).filter(Boolean) as any[]; // Type assertion for now
+
+    const handlePaymentStatusChange = async (id: string, newStatus: BookingWithDetails['paymentStatus']) => {
+        try {
+            const res = await fetch(`/api/bookings/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paymentStatus: newStatus }),
+            });
+            if (res.ok) {
+                setBookings(bookings.map(b => b.id === id ? { ...b, paymentStatus: newStatus } : b));
+                showToast(`Payment marked as ${newStatus}`, 'success');
+            } else {
+                throw new Error('Failed to update');
+            }
+        } catch (error) {
+            console.error('Failed to update payment status:', error);
+            showToast('Failed to update payment status', 'error');
+        }
+    };
 
     const handleStatusChange = async (id: string, newStatus: BookingWithDetails['status']) => {
         try {
@@ -297,7 +347,7 @@ export default function BookingsPage() {
                 </div>
 
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 border-t border-border pt-4">
-                    {['All', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
+                    {['All', 'Agency', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
                         <button
                             key={status}
                             onClick={() => setFilter(status)}
@@ -358,7 +408,14 @@ export default function BookingsPage() {
                                                 <td>
                                                     <div className="flex flex-col gap-1">
                                                         <span className="font-mono text-xs text-muted-foreground">#{booking.id.slice(0, 8)}</span>
-                                                        <span className="font-medium">{booking.name}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="font-medium">{booking.name}</span>
+                                                            {booking.isAgency && (
+                                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 flex items-center gap-1" title="Agency Booking">
+                                                                    <Building2 size={10} /> B2B
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                                             <Mail size={12} /> {booking.email}
                                                         </div>
@@ -436,6 +493,22 @@ export default function BookingsPage() {
                                                             <span>⭐ {booking.rating}/5</span>
                                                         </div>
                                                     )}
+
+                                                    {/* Payment Status Toggle */}
+                                                    <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+                                                        <select
+                                                            value={booking.paymentStatus || 'unpaid'}
+                                                            onChange={(e) => handlePaymentStatusChange(booking.id, e.target.value as any)}
+                                                            className={`text-[10px] font-bold uppercase border rounded px-1.5 py-0.5 outline-none cursor-pointer ${booking.paymentStatus === 'paid'
+                                                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                                    : 'bg-slate-50 text-slate-500 border-slate-200'
+                                                                }`}
+                                                        >
+                                                            <option value="unpaid">Unpaid</option>
+                                                            <option value="paid">Paid</option>
+                                                            <option value="refunded">Refunded</option>
+                                                        </select>
+                                                    </div>
                                                 </td>
                                                 <td className="text-right">
                                                     <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
