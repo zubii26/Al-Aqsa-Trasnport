@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { validateRequest } from '@/lib/auth';
+import { validateRequest } from '@/lib/server-auth';
 import { User } from '@/models';
 
 export async function POST(request: Request) {
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         const subscription = await request.json();
 
         // Update user with subscription
-        await User.findByIdAndUpdate(user.userId, {
+        await User.findByIdAndUpdate(user.id, {
             pushSubscription: subscription
         });
 
