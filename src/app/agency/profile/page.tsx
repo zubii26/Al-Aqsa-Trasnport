@@ -17,7 +17,7 @@ export default function AgencyProfilePage() {
                 if (res.ok) {
                     const data = await res.json();
                     setProfile(data.user);
-                    setFormData((prev: { name: string }) => ({ ...prev, name: data.user.name || '' }));
+                    setFormData(prev => ({ ...prev, name: data.user.name || '' }));
                 }
             } catch (error) {
                 console.error('Failed to load profile', error);
@@ -48,7 +48,7 @@ export default function AgencyProfilePage() {
 
             if (res.ok) {
                 const data = await res.json();
-                setProfile(prev => ({ ...prev, name: data.user.name }));
+                setProfile((prev: any) => ({ ...prev, name: data.user.name }));
                 setToast({ message: 'Profile updated successfully', type: 'success' });
                 setIsEditing(false);
                 setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));

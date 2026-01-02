@@ -1,0 +1,17 @@
+.next/dev/types/validator.ts(729,31): error TS2344: Type 'typeof import("D:/with data base/Al aqsa web/transport/src/app/api/admin/agencies/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/admin/agencies/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ error: string; }> | NextResponse<{ agency: { id: any; name: any; email: any; phone: any; creditLimit: any; }; ledger: { ...; }[]; summary: { ...; }; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+src/app/agency/profile/page.tsx(20,33): error TS2345: Argument of type '(prev: { name: string; }) => { name: any; }' is not assignable to parameter of type 'SetStateAction<{ name: string; password: string; confirmPassword: string; }>'.
+  Type '(prev: { name: string; }) => { name: any; }' is not assignable to type '(prevState: { name: string; password: string; confirmPassword: string; }) => { name: string; password: string; confirmPassword: string; }'.
+    Type '{ name: any; }' is missing the following properties from type '{ name: string; password: string; confirmPassword: string; }': password, confirmPassword
+src/app/agency/profile/page.tsx(51,28): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/app/api/bookings/bulk/route.ts(79,34): error TS2339: Property 'userId' does not exist on type 'IUser'.
+src/app/api/bookings/bulk/route.ts(81,21): error TS2353: Object literal may only specify known properties, and 'isAgency' does not exist in type 'Partial<IBooking>'.
+src/app/api/bookings/bulk/route.ts(96,57): error TS2339: Property 'userId' does not exist on type 'IUser'.
+src/app/api/bookings/bulk/route.ts(99,74): error TS2339: Property 'userId' does not exist on type 'IUser'.
+src/app/api/notifications/send/route.ts(2,21): error TS7016: Could not find a declaration file for module 'web-push'. 'D:/with data base/Al aqsa web/transport/node_modules/web-push/src/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/web-push` if it exists or add a new declaration (.d.ts) file containing `declare module 'web-push';`

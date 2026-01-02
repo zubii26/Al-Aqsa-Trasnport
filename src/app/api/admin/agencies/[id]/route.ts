@@ -3,7 +3,8 @@ import dbConnect from '@/lib/mongodb';
 import { User, Booking, Payment } from '@/models';
 import { requireRole } from '@/lib/server-auth';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+    const params = await context.params;
     const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
@@ -31,7 +32,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
                 type: 'INVOICE',
                 date: b.createdAt,
                 description: `Invoice #${b._id.toString().slice(-6).toUpperCase()} - ${b.pickup} -> ${b.dropoff}`,
-                amount: b.totalPrice || parseFloat(b.price || '0') || 0, // Debit
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                amount: (b as any).totalPrice || parseFloat(b.price || '0') || 0, // Debit
                 reference: b._id.toString(),
                 status: b.paymentStatus
             })),
@@ -44,7 +46,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
                 reference: p.reference,
                 status: p.status
             }))
-        ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        ].sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         // 5. Calculate Running Balance
         let currentBalance = 0;
@@ -60,10 +62,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
         // 6. Summary Stats
         const summary = {
-            totalInvoiced: bookings.reduce((sum, b) => sum + (b.totalPrice || parseFloat(b.price || '0') || 0), 0),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            totalInvoiced: bookings.reduce((sum, b) => sum + ((b as any).totalPrice || parseFloat(b.price || '0') || 0), 0),
             totalPaid: payments.reduce((sum, p) => sum + (p.status === 'completed' ? p.amount : 0), 0),
             outstanding: currentBalance,
-            creditLimit: agency.creditLimit || 0
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            creditLimit: (agency as any).creditLimit || 0
         };
 
         return NextResponse.json({
@@ -72,7 +76,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
                 name: agency.name,
                 email: agency.email,
                 phone: agency.phone,
-                creditLimit: agency.creditLimit
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                creditLimit: (agency as any).creditLimit
             },
             ledger: ledgerWithBalance.reverse(), // Show newest first
             summary
@@ -84,7 +89,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 }
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
+    const params = await context.params;
     // Record Payment
     const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });

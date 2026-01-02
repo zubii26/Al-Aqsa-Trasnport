@@ -76,9 +76,10 @@ export async function POST(request: Request) {
                     luggage: bookingData.luggage || 0,
                     notes: bookingData.notes,
                     status: 'pending', // Default to pending for admin appoval
-                    userId: user.userId,
+                    userId: user.id,
                     ...priceDetails,
-                    isAgency: true // Flag or relies on userId role check
+                    // isAgency irrelevant if using role based logic or add to IBooking if needed.
+                    // removing for now to fix build.
                 });
 
                 results.push(newBooking);
@@ -93,10 +94,10 @@ export async function POST(request: Request) {
         // 1. Calculate new financials
         if (user.role === 'agency') {
             const { User, Booking } = await import('@/models'); // Dynamic import to avoid circular dep issues in some setups
-            const agencyUser = await User.findById(user.userId);
+            const agencyUser = await User.findById(user.id);
 
             if (agencyUser) {
-                const agencyBookings = await Booking.find({ userId: user.userId });
+                const agencyBookings = await Booking.find({ userId: user.id });
                 const outstanding = agencyBookings
                     .filter(b => b.paymentStatus !== 'paid' && b.status !== 'cancelled')
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any

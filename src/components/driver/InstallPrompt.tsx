@@ -22,7 +22,7 @@ export default function InstallPrompt({
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
             // Stash the event so it can be triggered later.
-            window.deferredPrompt = e; // Expose globally for manual triggers if needed
+            (window as any).deferredPrompt = e; // Expose globally for manual triggers if needed
             setDeferredPrompt(e);
             setIsVisible(true);
         };
@@ -41,7 +41,7 @@ export default function InstallPrompt({
         console.log(`User response to the install prompt: ${outcome}`);
         // We've used the prompt, and can't use it again, discard it
         setDeferredPrompt(null);
-        window.deferredPrompt = null;
+        (window as any).deferredPrompt = null;
         setIsVisible(false);
     };
 
