@@ -23,7 +23,7 @@ export async function GET() {
         return NextResponse.json(bookings);
     } else {
         // Filter for specific user
-        const userBookings = bookings.filter((b: any) => b.userId === user.userId);
+        const userBookings = bookings.filter((b: any) => b.userId === user.id);
         return NextResponse.json(userBookings);
     }
 }
@@ -177,9 +177,16 @@ export async function POST(request: Request) {
                 await sendBookingConfirmationEmail(emailData);
                 await sendAdminNewBookingEmail(emailData);
                 console.log('Standardized emails sent successfully');
+
+                const { pusherServer } = await import('@/lib/pusher');
+                await pusherServer.trigger('admin-channel', 'new-booking', {
+                    message: `New booking: ${booking._id}`,
+                    bookingId: booking._id,
+                    data: emailData
+                });
             }
         } catch (error) {
-            console.error('Error sending standardized emails:', error);
+            console.error('Error sending standardized emails or notifications:', error);
         }
 
         return NextResponse.json(booking);

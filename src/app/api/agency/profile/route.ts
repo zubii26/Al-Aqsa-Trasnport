@@ -6,7 +6,7 @@ import { validateRequest } from '@/lib/server-auth';
 export async function PUT(request: Request) {
     console.log('[AgencyProfile] PUT request received');
     const user = await validateRequest();
-    console.log('[AgencyProfile] User validated:', user ? user.userId : 'No user');
+    console.log('[AgencyProfile] User validated:', user ? user.id : 'No user');
 
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -19,9 +19,9 @@ export async function PUT(request: Request) {
 
         await dbConnect();
 
-        const currentUser = await User.findById(user.userId);
+        const currentUser = await User.findById(user.id);
         if (!currentUser) {
-            console.error('[AgencyProfile] User not found in DB:', user.userId);
+            console.error('[AgencyProfile] User not found in DB:', user.id);
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 

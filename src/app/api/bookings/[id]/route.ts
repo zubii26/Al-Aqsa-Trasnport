@@ -52,6 +52,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (!updated) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
 
     // Send confirmation email if status changed to confirmed
+    // Send confirmation email if status changed to confirmed
     if (status === 'confirmed') {
         const { sendBookingConfirmationEmail } = await import('@/lib/email');
         const bookingData = {
@@ -61,7 +62,34 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             name: updated.name,
         } as any;
 
-        await sendBookingConfirmationEmail(bookingData);
+        try {
+            await sendBookingConfirmationEmail(bookingData);
+        } catch (e) {
+            console.error('Failed to send confirmation email', e);
+        }
+    }
+
+    // Realtime Updates
+    try {
+        const { pusherServer } = await import('@/lib/pusher');
+        // Notify Admins
+        await pusherServer.trigger('admin-channel', 'booking-updated', {
+            id: updated._id,
+            status: updated.status,
+            updatedBy: 'admin' // or generic
+        });
+
+        // Notify Agency/User
+        if (updated.userId) {
+            await pusherServer.trigger(`agency-channel-${updated.userId}`, 'booking-updated', {
+                id: updated._id,
+                status: updated.status,
+                paymentStatus: updated.paymentStatus,
+                driverStatus: updated.driverStatus
+            });
+        }
+    } catch (realtimeErr) {
+        console.error('Realtime update failed:', realtimeErr);
     }
 
     return NextResponse.json(updated);

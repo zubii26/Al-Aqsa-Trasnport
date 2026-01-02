@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePusher } from '@/hooks/usePusher';
 import { Search, Filter, Calendar, MapPin, Car, Plus } from 'lucide-react';
 
 export default function AgencyBookingsPage() {
@@ -9,24 +10,62 @@ export default function AgencyBookingsPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
+    const [userId, setUserId] = useState<string | null>(null);
+
+    // Note: Since I can't easily change top-level imports in one chunk cleanly without viewing file, I will try to update imports if possible, or use dynamic import which is messy in hooks.
+    // Let's assume I can replace the top imports. 
+    // Wait, replace_file_content allows replacing a block.
+    // I need to add `import { usePusher } from '@/hooks/usePusher';` at the top.
+
+    // I'll do this in two steps or a larger block. Let's do a large block replacement of the top and component start.
+    // But verify line numbers first. 
+    // I'll start by fetching bookings AND user.
 
     useEffect(() => {
-        const fetchBookings = async () => {
+        const initData = async () => {
             try {
-                const res = await fetch('/api/bookings');
-                if (res.ok) {
-                    const data = await res.json();
-                    // Basic client-side sort by date desc
+                const [bookingsRes, userRes] = await Promise.all([
+                    fetch('/api/bookings'),
+                    fetch('/api/auth/me')
+                ]);
+
+                if (bookingsRes.ok) {
+                    const data = await bookingsRes.json();
                     setBookings(data.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
                 }
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    if (userData.user?.userId) setUserId(userData.user.userId);
+                }
             } catch (error) {
-                console.error('Failed to load bookings', error);
+                console.error('Failed to load data', error);
             } finally {
                 setIsLoading(false);
             }
         };
-        fetchBookings();
+        initData();
     }, []);
+
+    // Pusher Subscription
+    const pusher = usePusher();
+
+    useEffect(() => {
+        if (!pusher || !userId) return;
+
+        const channel = pusher.subscribe(`agency-channel-${userId}`);
+
+        channel.bind('booking-updated', (data: any) => {
+            console.log('Realtime update:', data);
+            setBookings(prev => prev.map(b =>
+                b._id === data.id ? { ...b, ...data } : b
+            ));
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [pusher, userId]);
 
     const filteredBookings = bookings.filter(b => {
         const matchesSearch =
@@ -88,8 +127,8 @@ export default function AgencyBookingsPage() {
                                 key={status}
                                 onClick={() => setStatusFilter(status)}
                                 className={`px-4 py-2 rounded-xl text-sm font-medium capitalize whitespace-nowrap transition-colors ${statusFilter === status
-                                        ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200'
-                                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                                    ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200'
+                                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
                                     }`}
                             >
                                 {status}
