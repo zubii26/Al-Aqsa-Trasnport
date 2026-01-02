@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
-import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3, Building2 } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
 import AdminAutoLock from '@/components/admin/AdminAutoLock';
@@ -93,6 +93,7 @@ export default function AdminLayout({
         { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/content', label: 'Content', icon: PenTool, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/marketing', label: 'Marketing', icon: MessageSquare, roles: ['admin', 'manager'] },
+        { href: '/admin/agencies', label: 'Agencies', icon: Building2, roles: ['admin', 'manager'] },
         { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin'] },
         { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
     ];
