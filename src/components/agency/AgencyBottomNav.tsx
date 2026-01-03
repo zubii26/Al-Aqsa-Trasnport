@@ -9,8 +9,8 @@ export default function AgencyBottomNav() {
 
     const navItems = [
         { name: 'Home', href: '/agency/dashboard', icon: LayoutDashboard },
-        { name: 'Book', href: '/agency/booking', icon: Zap },
-        { name: 'Earnings', href: '/agency/earnings', icon: Wallet },
+        { name: 'Book', href: '/agency/bookings', icon: Zap },
+        { name: 'Earnings', href: '/agency/invoices', icon: Wallet },
         { name: 'Profile', href: '/agency/profile', icon: User },
     ];
 
