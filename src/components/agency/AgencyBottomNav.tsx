@@ -7,6 +7,11 @@ import { LayoutDashboard, Zap, Wallet, User } from 'lucide-react';
 export default function AgencyBottomNav() {
     const pathname = usePathname();
 
+    // Hide on auth pages
+    if (pathname?.includes('/login') || pathname?.includes('/register')) {
+        return null;
+    }
+
     const navItems = [
         { name: 'Home', href: '/agency/dashboard', icon: LayoutDashboard },
         { name: 'Book', href: '/agency/bookings', icon: Zap },
