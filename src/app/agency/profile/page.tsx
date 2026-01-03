@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { User, Mail, Phone, Building2, CreditCard, Loader2 } from 'lucide-react';
+import { User, Mail, Phone, Building2, CreditCard, Loader2, LogOut } from 'lucide-react';
 
 export default function AgencyProfilePage() {
     const [profile, setProfile] = useState<any>(null);
@@ -188,6 +188,17 @@ export default function AgencyProfilePage() {
                                     <p className="font-medium text-slate-900">{profile.activeContracts || 0} Contracts</p>
                                 </div>
                             </div>
+
+                            <button
+                                onClick={() => {
+                                    document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                                    window.location.href = '/login';
+                                }}
+                                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors font-medium mt-6"
+                            >
+                                <LogOut size={20} />
+                                Sign Out
+                            </button>
                         </div>
                     </div>
                 </div>
