@@ -1,21 +1,26 @@
 {
     "name": "Al Aqsa Umrah Transport",
-    "short_name": "Al Aqsa Transport",
+    "short_name": "Al Aqsa",
     "description": "Book VIP Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers and Makkah to Madinah taxi.",
     "start_url": "/",
     "display": "standalone",
+    "orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#D4AF37",
+    "id": "/",
+    "scope": "/",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
             "src": "/android-chrome-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }
