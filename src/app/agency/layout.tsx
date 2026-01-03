@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-    manifest: '/agency-manifest.json',
+    manifest: '/agency-manifest.json?v=1',
     title: 'Al Aqsa Agency Portal',
     appleWebApp: {
         capable: true,
