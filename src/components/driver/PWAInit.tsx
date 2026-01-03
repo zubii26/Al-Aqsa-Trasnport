@@ -23,17 +23,15 @@ function urlBase64ToUint8Array(base64String: string) {
 export default function PWAInit() {
     useEffect(() => {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(
-                    (registration) => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                        subscribeUser(registration);
-                    },
-                    (err) => {
-                        console.log('ServiceWorker registration failed: ', err);
-                    }
-                );
-            });
+            // Register immediately since we are in useEffect (client-side)
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    subscribeUser(registration);
+                })
+                .catch((err) => {
+                    console.error('ServiceWorker registration failed: ', err);
+                });
         }
     }, []);
 
