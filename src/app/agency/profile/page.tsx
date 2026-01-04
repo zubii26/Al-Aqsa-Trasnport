@@ -190,9 +190,10 @@ export default function AgencyProfilePage() {
                             </div>
 
                             <button
-                                onClick={() => {
+                                onClick={async () => {
+                                    try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) { }
                                     document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-                                    window.location.href = '/login';
+                                    window.location.href = '/agency/login';
                                 }}
                                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors font-medium mt-6"
                             >

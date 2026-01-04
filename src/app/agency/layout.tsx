@@ -25,7 +25,7 @@ export default function AgencyLayout({
     return (
         <div className="min-h-screen bg-slate-50 pb-20 lg:pb-0">
             {/* PWA Service Worker Registration */}
-            <PWAInit />
+            <PWAInit serviceWorkerUrl="/agency-sw.js" scope="/agency/" />
 
             {/* Desktop Sidebar */}
             <AgencySidebar />

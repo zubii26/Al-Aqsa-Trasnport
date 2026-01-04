@@ -40,8 +40,8 @@ export default function AgencySidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${isActive
-                                    ? 'bg-blue-50 text-blue-600 shadow-sm'
-                                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 float-up'
+                                ? 'bg-blue-50 text-blue-600 shadow-sm'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 float-up'
                                 }`}
                         >
                             <item.icon size={20} strokeWidth={isActive ? 2.5 : 2} />
@@ -54,9 +54,10 @@ export default function AgencySidebar() {
             {/* Bottom Actions */}
             <div className="p-4 border-t border-slate-100">
                 <button
-                    onClick={() => {
+                    onClick={async () => {
+                        try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) { }
                         document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-                        window.location.href = '/login';
+                        window.location.href = '/agency/login';
                     }}
                     className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors font-medium"
                 >

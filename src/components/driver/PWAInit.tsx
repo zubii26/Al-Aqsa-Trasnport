@@ -20,11 +20,19 @@ function urlBase64ToUint8Array(base64String: string) {
     return outputArray;
 }
 
-export default function PWAInit() {
+interface PWAInitProps {
+    serviceWorkerUrl?: string;
+    scope?: string;
+}
+
+export default function PWAInit(props: PWAInitProps) {
     useEffect(() => {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
             // Register immediately since we are in useEffect (client-side)
-            navigator.serviceWorker.register('/sw.js')
+            const swUrl = props.serviceWorkerUrl || '/sw.js';
+            const scope = props.scope || undefined;
+
+            navigator.serviceWorker.register(swUrl, { scope })
                 .then((registration) => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                     subscribeUser(registration);
