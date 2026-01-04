@@ -1,89 +1,84 @@
 import { NextResponse } from 'next/server';
-import { validateRequest } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import { Booking } from '@/models';
-import { sendBookingStatusEmail } from '@/lib/email';
+import { verifyToken } from '@/lib/auth-utils';
+import { cookies } from 'next/headers';
 
-export async function PATCH(
-    request: Request,
-    { params }: { params: Promise<{ id: string }> }
+export async function POST(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> } // Standard Next.js 15+ async params
 ) {
     try {
-        const user = await validateRequest();
-        if (!user || user.role !== 'driver') {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const { id } = await params;
-        const { status } = await request.json();
+        const { status } = await req.json();
 
         // Validate status transition
-        const validStatuses = ['accepted', 'en_route', 'arrived', 'completed', 'cancelled', 'rejected'];
+        const validStatuses = ['en_route', 'arrived', 'completed', 'passenger_onboard'];
         if (!validStatuses.includes(status)) {
             return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
         }
 
-        await dbConnect();
+        const cookieStore = await cookies();
+        const token = cookieStore.get('token');
 
-        const booking = await Booking.findById(id);
-        if (!booking) {
-            return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+        if (!token) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Optional: Verify assignment
-        // if (booking.assignedDriverId !== user.id) ...
+        const payload = await verifyToken(token.value);
+        if (!payload || payload.role !== 'driver') {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
+
+        await dbConnect();
+
+        // Find booking (ensure assigned to this driver)
+        const booking = await Booking.findOne({ _id: id, assignedDriverId: payload.userId });
+        if (!booking) {
+            return NextResponse.json({ error: 'Booking not found or not assigned to you' }, { status: 404 });
+        }
 
         // Update Driver Status
         booking.driverStatus = status;
 
-        // Sync Main Status
-        if (status === 'completed' || status === 'cancelled') {
-            booking.status = status;
-        } else if (status === 'rejected') {
-            // If rejected, unassign driver and set back to pending for re-assignment
-            // Or keep as 'pending' but notify admin. 
-            // For MVP: Let's set main status to 'pending' and clear assignment so another driver can be assigned manually
-
-            // Actually, better to keep record of who rejected. Let's JUST status update for now.
-            // Admin will see 'rejected' and re-assign manually.
-            booking.status = 'pending'; // Reset main status if it was anything else
-            booking.assignedDriverId = undefined; // Unassign driver
-            booking.driverStatus = 'pending'; // Reset driver status for next driver
-
-            // Wait, if we reset everything, we lose the 'rejection' event.
-            // Better approach: Set main status to 'pending' (ready for reassignment) but MAYBE log it?
-            // To keep it simple and safe:
-            // 1. Cancel the specific driver assignment (make finding it via ID tricky if we use ID for job)
-            // 2. Actually, simplest MVP: Mark booking as 'cancelled' by driver (if policy allows) OR 'pending' + unassigned.
-
-            // Let's go with: Unassign Driver.
-            booking.assignedDriverId = null;
-            booking.driverStatus = 'pending';
-            // We return 'rejected' so UI knows, but DB state is reset.
-        } else if (status === 'accepted') {
-            booking.status = 'confirmed';
+        // Sync with main booking status
+        if (status === 'completed') {
+            booking.status = 'completed';
+            // If payment was cash, mark as paid? Let's leave payment separate for now or assume driver collected.
+            // booking.paymentStatus = 'paid'; 
+        } else if (status === 'en_route') {
+            booking.status = 'confirmed'; // Ensure it stays confirmed/active
         }
 
         await booking.save();
 
-        // Send Notification
+        // Trigger Real-time Event (Admin/Agency)
         try {
-            // driverName fallback to "Your Driver" if user.name is missing
-            await sendBookingStatusEmail({
-                ...booking.toObject(),
-                id: booking._id.toString(),
-                // Ensure dates are strings as expected by email template, otherwise toObject might have Date objects
-                date: booking.date,
-                time: booking.time
-            } as any, user.name || 'Your Driver');
-        } catch (emailError) {
-            console.error('Failed to send status email:', emailError);
-            // Don't fail the request if email fails, just log it
+            const { pusherServer } = await import('@/lib/pusher');
+            // Notify Admin
+            await pusherServer.trigger('admin-channel', 'booking-updated', {
+                bookingId: booking._id,
+                status: booking.status,
+                driverStatus: status,
+                message: `Driver updated status to ${status}`
+            });
+
+            // Notify Agency (if applicable)
+            if (booking.userId) { // Assuming userId on booking is Agency/User ID
+                await pusherServer.trigger(`agency-channel-${booking.userId}`, 'booking-updated', {
+                    bookingId: booking._id,
+                    status: booking.status,
+                    driverStatus: status
+                });
+            }
+        } catch (err) {
+            console.error('Realtime trigger failed', err);
         }
 
         return NextResponse.json({ success: true, booking });
+
     } catch (error) {
-        console.error('Update Status Error:', error);
+        console.error('Error updating job status:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

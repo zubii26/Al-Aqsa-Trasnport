@@ -34,6 +34,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     // Trigger Notification: If driver assigned
     if (updated && updates.assignedDriverId && updates.assignedDriverId !== oldBooking?.assignedDriverId?.toString()) {
         try {
+            // 1. Create DB Notification
             await Notification.create({
                 userId: updates.assignedDriverId,
                 title: 'New Trip Assigned',
@@ -41,9 +42,25 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
                 type: 'info',
                 link: `/driver/jobs/${updated.id}`
             });
-            console.log('Notification created for driver:', updates.assignedDriverId);
+
+            // 2. Send Web Push (Background)
+            const { sendPushNotification } = await import('@/lib/notifications');
+            await sendPushNotification(updates.assignedDriverId, {
+                title: 'New Trip Assigned 🚖',
+                body: `Trip #${(updated.id || updated._id).toString().slice(-6)}: ${updated.pickup} -> ${updated.dropoff}`,
+                url: `/driver/jobs/${updated.id}`
+            });
+
+            // 3. Send Pusher Event (Foreground)
+            const { pusherServer } = await import('@/lib/pusher');
+            await pusherServer.trigger(`driver-channel-${updates.assignedDriverId}`, 'booking-assigned', {
+                id: updated._id,
+                message: 'New Trip Assigned'
+            });
+
+            console.log('Driver notifications sent to:', updates.assignedDriverId);
         } catch (err) {
-            console.error('Failed to create notification', err);
+            console.error('Failed to send driver notifications', err);
         }
     }
 

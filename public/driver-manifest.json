@@ -1,11 +1,14 @@
 {
-    "name": "Al Aqsa Driver Portal",
-    "short_name": "Al Aqsa Driver",
-    "description": "Driver App for Al Aqsa Umrah Transport",
+    "name": "Al Aqsa Driver",
+    "short_name": "Aqsa Driver",
+    "description": "Driver functionality for Al Aqsa Umrah Transport",
     "start_url": "/driver/login",
     "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#f59e0b",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#D4AF37",
+    "id": "/driver/",
+    "scope": "/driver/",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

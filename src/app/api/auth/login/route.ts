@@ -23,8 +23,10 @@ export async function POST(request: Request) {
 
         await dbConnect();
 
-        // Find user by email (username field maps to email)
-        const user = await User.findOne({ email: username }).lean();
+        // Find user by email or phone
+        const user = await User.findOne({
+            $or: [{ email: username }, { phone: username }]
+        }).lean();
 
         // Simple password check (In production, use bcrypt)
         // Since we are migrating, we are using plain text passwords for now as per user request/legacy state.
@@ -72,7 +74,8 @@ export async function POST(request: Request) {
 
         // Set cookie
         const cookieStore = await cookies();
-        const cookieName = user.role === 'agency' ? 'token' : 'admin_token';
+        // Agencies and Drivers use 'token', Admins use 'admin_token'
+        const cookieName = (user.role === 'agency' || user.role === 'driver') ? 'token' : 'admin_token';
 
         cookieStore.set(cookieName, token, {
             httpOnly: true,

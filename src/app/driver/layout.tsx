@@ -1,13 +1,27 @@
-import { Metadata } from 'next';
+import { Viewport, Metadata } from 'next';
+import DriverLayoutClient from '@/components/driver/DriverLayoutClient';
 
-export const metadata: Metadata = {
-    title: 'Driver Portal - Al Aqsa Transport',
-    description: 'Driver Dashboard and Job Management',
-    manifest: '/driver-manifest.json', // This tells Next.js/Browser to use the driver specific manifest
+export const viewport: Viewport = {
+    themeColor: '#D4AF37', // Gold theme for branding
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false, // Prevent zooming effectively for app-like feel
 };
 
-import PWAInit from '@/components/driver/PWAInit';
-import InstallPrompt from '@/components/driver/InstallPrompt';
+export const metadata: Metadata = {
+    manifest: '/driver-manifest.json',
+    title: 'Al Aqsa Driver',
+    applicationName: 'Al Aqsa Driver',
+    appleWebApp: {
+        capable: true,
+        title: 'Aqsa Driver',
+        statusBarStyle: 'default',
+    },
+    other: {
+        'mobile-web-app-capable': 'yes',
+    },
+};
 
 export default function DriverLayout({
     children,
@@ -15,10 +29,8 @@ export default function DriverLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
-            <PWAInit />
-            <InstallPrompt />
+        <DriverLayoutClient>
             {children}
-        </>
+        </DriverLayoutClient>
     );
 }

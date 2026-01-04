@@ -2,28 +2,25 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Car, Loader2, AlertCircle } from 'lucide-react';
-import Image from 'next/image';
+import { Loader2, CarFront, Phone, Lock, ChevronRight } from 'lucide-react';
 
-export default function DriverLogin() {
+export default function DriverLoginPage() {
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
+        setIsLoading(true);
 
         try {
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: formData.email, password: formData.password }),
+                body: JSON.stringify({ username, password })
             });
 
             const data = await res.json();
@@ -32,98 +29,88 @@ export default function DriverLogin() {
                 throw new Error(data.error || 'Login failed');
             }
 
-            // Verify role
-            if (data.user?.role !== 'driver' && data.user?.role !== 'admin') {
-                throw new Error('Access denied. Driver account required.');
+            if (data.user.role === 'driver') {
+                router.push('/driver/dashboard');
+            } else {
+                setError('Access Denied: Driver account required.');
             }
 
-            router.push('/driver/dashboard');
         } catch (err: any) {
             setError(err.message);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-6 relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-amber-500 rounded-full blur-[100px]" />
-                <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px]" />
-            </div>
-
-            <div className="relative w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-                <div className="flex flex-col items-center mb-8">
-                    <div className="bg-amber-500/20 p-4 rounded-full mb-4 ring-1 ring-amber-500/50">
-                        <Car className="text-amber-500 w-10 h-10" />
+        <div className="min-h-screen bg-slate-900 text-white flex flex-col justify-center px-6">
+            <div className="w-full max-w-sm mx-auto space-y-8">
+                {/* Header */}
+                <div className="text-center space-y-2">
+                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/10 text-amber-500 mb-4 ring-1 ring-amber-500/30">
+                        <CarFront size={40} />
                     </div>
-                    <h1 className="text-2xl font-bold text-white tracking-tight">Driver Portal</h1>
-                    <p className="text-slate-400 text-sm">Al Aqsa Transport</p>
+                    <h1 className="text-3xl font-bold tracking-tight">Driver Login</h1>
+                    <p className="text-slate-400">Welcome to Al Aqsa Transport</p>
                 </div>
 
-                {error && (
-                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 text-red-400 text-sm">
-                        <AlertCircle size={18} />
-                        {error}
-                    </div>
-                )}
-
+                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Email or Phone</label>
-                        <input
-                            type="email"
-                            required
-                            className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
-                            placeholder="driver@alaqsa.com"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                        <input
-                            type="password"
-                            required
-                            className="w-full bg-slate-950/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        />
+                    {error && (
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl text-sm text-center">
+                            {error}
+                        </div>
+                    )}
+
+                    <div className="space-y-4">
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                                <Phone size={20} />
+                            </div>
+                            <input
+                                type="text"
+                                required
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="block w-full pl-11 rounded-xl bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:border-amber-500 focus:ring-amber-500 py-4 text-lg"
+                                placeholder="Phone or Email"
+                            />
+                        </div>
+
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                                <Lock size={20} />
+                            </div>
+                            <input
+                                type="password"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="block w-full pl-11 rounded-xl bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:border-amber-500 focus:ring-amber-500 py-4 text-lg"
+                                placeholder="Password"
+                            />
+                        </div>
                     </div>
 
                     <button
                         type="submit"
-                        disabled={loading}
-                        className="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3.5 rounded-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+                        disabled={isLoading}
+                        className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-4 rounded-xl text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {loading ? <Loader2 className="animate-spin" /> : 'Log In'}
+                        {isLoading ? (
+                            <Loader2 className="animate-spin" size={24} />
+                        ) : (
+                            <>
+                                Start Driving <ChevronRight size={20} />
+                            </>
+                        )}
                     </button>
                 </form>
 
-                <div className="mt-8 text-center space-y-4">
-                    <p className="text-slate-500 text-xs">
-                        Need help? Contact Dispatch
+                <div className="text-center">
+                    <p className="text-sm text-slate-500">
+                        Need help? Contact <span className="text-amber-500">Operations</span>
                     </p>
-
-                    <div className="pt-4 border-t border-white/10">
-                        <p className="text-slate-400 text-sm mb-3">Get easier access:</p>
-                        <div className="flex gap-2 justify-center">
-                            <button
-                                onClick={() => alert("On iPhone/Safari: Tap the Share button (box with arrow) → Scroll down → Tap 'Add to Home Screen'")}
-                                className="px-3 py-2 bg-slate-800 rounded-lg text-xs text-slate-300 hover:bg-slate-700 border border-slate-700 transition-all"
-                            >
-                                📱 Install on iPhone
-                            </button>
-                            <button
-                                onClick={() => alert("On Android/Chrome: Tap the Menu icon (⋮) → Tap 'Install App' or 'Add to Home Screen'")}
-                                className="px-3 py-2 bg-slate-800 rounded-lg text-xs text-slate-300 hover:bg-slate-700 border border-slate-700 transition-all"
-                            >
-                                🤖 Install on Android
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -2,178 +2,125 @@
 
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, MapPin, Phone, Navigation, Clock, Calendar, ShieldCheck, User, Plane } from 'lucide-react';
-import SwipeToConfirm from '@/components/driver/SwipeToConfirm';
+import {
+    MapPin, Phone, MessageCircle, Navigation,
+    CheckCircle2, Loader2, ArrowLeft, Clock, CalendarDays,
+    ShieldCheck
+} from 'lucide-react';
+import { format } from 'date-fns';
 
-interface Booking {
-    id: string;
-    pickup: string;
-    dropoff: string;
-    date: string;
-    time: string;
-    name: string;
-    phone: string;
-    vehicle: string;
-    status: string;
-    driverStatus: string;
-    passengers: number;
-    luggage: number;
-    flightNumber?: string;
-    notes?: string;
-}
-
-export default function JobDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+export default function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params); // React 19 / Next 15 unwrap
     const router = useRouter();
-    const [job, setJob] = useState<Booking | null>(null);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [job, setJob] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-    const [updating, setUpdating] = useState(false);
+    const [actionLoading, setActionLoading] = useState(false);
 
     useEffect(() => {
-        // Since we don't have a single job endpoint exposed to driver yet, reuse the dashboard logic or specific GET
-        // But cleaner is to verify we can fetch by ID. The GET /api/bookings/[id] might be admin-only.
-        // We should update the general booking API to allow 'driver' role if assigned.
-        // Or fetch from the list array for now (quick) or better, fix API.
-        // Let's assume we can fetch all and filtering, or we create a specific detail endpoint.
-        // Actually, the best way in MVP is to just fetch the list and find it, OR update GET /api/booking/[id] to allow driver.
-        // Since I can't easily modify the complex booking API right now without risk, I'll fetch ALL driver jobs and find the one.
-        // Wait, I fetch /api/driver/jobs which returns all. Let's make an endpoint /api/driver/jobs/[id] via reusing current route logic?
-        // No, let's just fetch all for now, it's efficient enough for 1 driver.
-
         fetchJob();
     }, [id]);
 
     const fetchJob = async () => {
         try {
-            const res = await fetch('/api/driver/jobs');
-            if (res.status === 401) return router.push('/driver/login');
-            const data = await res.json();
-            const found = data.bookings.find((b: Booking) => b.id === id);
-            if (found) setJob(found);
-            else console.error('Job not found');
-        } catch (err) {
-            console.error(err);
+            const res = await fetch('/api/driver/jobs'); // Determine how to fetch ONE using existing API or new logic?
+            // Actually, we can fetch all and filtering, OR create GET /api/driver/jobs/[id]
+            // For efficiency, let's just fetch all for now or creating `GET` in the dynamic route logic.
+            // Wait, I didn't create GET in [id]/status, only POST.
+            // Let's rely on filtering list for now since driver wont have 1000s jobs.
+            // Or better: update fetch logic.
+
+            // QUICK FIX: Since I made GET /api/driver/jobs logic, I can just use that if I don't want to make another GET.
+            // BUT, a dedicated GET is better. Let's assume I create GET in the SAME file as existing API or...
+            // Let's just create GET /api/driver/jobs/[id] separately.
+
+            // Actually, better: use the list endpoint and find it client side for now to save a tool roundtrip
+            // UNLESS the list endpoint paginates. It doesn't.
+
+            const listRes = await fetch('/api/driver/jobs');
+            if (listRes.ok) {
+                const list = await listRes.json();
+                const found = list.find((j: any) => j._id === id);
+                if (found) setJob(found);
+                else setJob(null); // Not found
+            }
+        } catch (error) {
+            console.error(error);
         } finally {
             setLoading(false);
         }
     };
 
     const updateStatus = async (newStatus: string) => {
-        setUpdating(true);
+        setActionLoading(true);
         try {
             const res = await fetch(`/api/driver/jobs/${id}/status`, {
-                method: 'PATCH',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus }),
+                body: JSON.stringify({ status: newStatus })
             });
             if (res.ok) {
-                setJob(prev => prev ? { ...prev, driverStatus: newStatus } : null);
+                // Refresh data
+                await fetchJob(); // Re-fetch list to get updated state
             }
         } catch (error) {
-            console.error('Failed to update status', error);
+            console.error('Update failed', error);
         } finally {
-            setUpdating(false);
+            setActionLoading(false);
         }
     };
 
-    if (loading || !job) return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
-        </div>
-    );
+    if (loading) return <div className="h-screen flex items-center justify-center bg-slate-50"><Loader2 className="animate-spin" /></div>;
+    if (!job) return <div className="p-10 text-center">Job not found</div>;
 
-    const getNextAction = () => {
-        switch (job.driverStatus) {
-            case 'pending': return { label: 'Accept Job', action: 'accepted', color: 'bg-blue-600' };
-            case 'accepted': return { label: 'Start Trip (On Way)', action: 'en_route', color: 'bg-indigo-600' };
-            case 'en_route': return { label: 'Arrived at Pickup', action: 'arrived', color: 'bg-purple-600' };
-            case 'arrived': return { label: 'Complete Trip', action: 'completed', color: 'bg-green-600' };
-            default: return null;
-        }
-    };
-
-    const nextAction = getNextAction();
+    const isCompleted = job.driverStatus === 'completed';
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-32">
-            {/* Premium Header */}
-            <div className="bg-slate-900 text-white p-6 pb-24 rounded-b-[40px] shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-
-                <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-6">
-                        <button
-                            onClick={() => router.back()}
-                            className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md hover:bg-white/20 transition-colors"
-                        >
-                            <ArrowLeft size={20} />
-                        </button>
-                        <div className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-                            {job.driverStatus.replace('_', ' ')}
-                        </div>
-                    </div>
-
-                    <div className="px-2">
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Job Reference</p>
-                        <h1 className="text-3xl font-bold font-mono tracking-tight text-white mb-2">#{job.id.slice(0, 8)}</h1>
-                        <div className="flex items-center gap-4 text-sm text-slate-300">
-                            <div className="flex items-center gap-1.5">
-                                <Calendar size={14} className="text-amber-500" />
-                                <span>{job.date}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                                <Clock size={14} className="text-amber-500" />
-                                <span>{job.time}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="min-h-screen bg-slate-50 pb-24">
+            {/* Nav */}
+            <div className="bg-white p-4 sticky top-0 z-10 shadow-sm flex items-center gap-4">
+                <button onClick={() => router.back()} className="p-2 -ml-2 rounded-full hover:bg-slate-100">
+                    <ArrowLeft size={24} className="text-slate-700" />
+                </button>
+                <h1 className="text-lg font-bold">Job Details</h1>
+                <span className="ml-auto text-xs font-mono bg-slate-100 px-2 py-1 rounded">
+                    #{job._id.slice(-6)}
+                </span>
             </div>
 
-            {/* Content Area - Overlapping Cards */}
-            <div className="px-4 -mt-12 relative z-20 space-y-4">
+            <div className="p-4 space-y-6">
 
                 {/* Route Card */}
-                <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 opacity-50" />
-
-                    <div className="relative z-10">
-                        <div className="flex gap-4">
-                            {/* Visual Timeline */}
-                            <div className="flex flex-col items-center pt-2">
-                                <div className="w-4 h-4 rounded-full border-[3px] border-slate-900 bg-white shadow-sm z-10" />
-                                <div className="w-0.5 flex-1 bg-gradient-to-b from-slate-900 via-slate-300 to-amber-500 opacity-30 min-h-[50px] my-1" />
-                                <div className="w-4 h-4 rounded-full bg-amber-500 shadow-md shadow-amber-500/40 z-10" />
+                <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                    <div className="space-y-6">
+                        <div className="flex gap-4 relative">
+                            <div className="flex flex-col items-center">
+                                <div className="w-4 h-4 rounded-full border-2 border-green-500 bg-white z-10"></div>
+                                <div className="w-0.5 flex-1 bg-slate-200 my-1"></div>
+                                <div className="w-4 h-4 rounded-full border-2 border-red-500 bg-white z-10"></div>
                             </div>
-
-                            <div className="flex-1 space-y-8 pb-2">
-                                {/* Pickup */}
+                            <div className="flex-1 space-y-6">
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Pickup Location</label>
-                                    <h3 className="text-lg font-bold text-slate-800 leading-tight mb-2">{job.pickup}</h3>
+                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wide">Pickup From</label>
+                                    <p className="text-lg font-bold text-slate-900 leading-tight mt-1">{job.pickup}</p>
                                     <a
                                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.pickup)}`}
                                         target="_blank"
-                                        rel="noreferrer"
-                                        className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors"
+                                        className="inline-flex items-center gap-1 text-blue-600 text-sm font-semibold mt-2"
                                     >
-                                        <Navigation size={12} />
-                                        Navigate
+                                        <Navigation size={14} /> Navigate
                                     </a>
                                 </div>
-
-                                {/* Dropoff */}
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Dropoff Location</label>
-                                    <h3 className="text-lg font-bold text-slate-800 leading-tight mb-2">{job.dropoff}</h3>
+                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wide">Dropoff To</label>
+                                    <p className="text-lg font-bold text-slate-900 leading-tight mt-1">{job.dropoff}</p>
                                     <a
                                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.dropoff)}`}
                                         target="_blank"
-                                        rel="noreferrer"
-                                        className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors"
+                                        className="inline-flex items-center gap-1 text-blue-600 text-sm font-semibold mt-2"
                                     >
-                                        <Navigation size={12} />
-                                        Navigate
+                                        <Navigation size={14} /> Navigate
                                     </a>
                                 </div>
                             </div>
@@ -181,107 +128,119 @@ export default function JobDetailsPage({ params }: { params: Promise<{ id: strin
                     </div>
                 </div>
 
-                {/* Customer Card */}
-                <div className="bg-white rounded-3xl shadow-lg p-5 border border-slate-100">
-                    <div className="flex items-center gap-4 mb-5">
-                        <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-500 shadow-inner">
-                            <User size={28} />
+                {/* Schedule */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center">
+                            <CalendarDays size={20} />
                         </div>
-                        <div className="flex-1">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Passenger</label>
-                            <h3 className="text-xl font-bold text-slate-900">{job.name}</h3>
-                            <div className="flex items-center gap-2 text-xs font-medium text-slate-500 mt-0.5">
-                                <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-600">{job.passengers} Passengers</span>
-                                <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-600">{job.luggage} Bags</span>
+                        <div>
+                            <p className="text-xs text-slate-400 font-semibold">Date</p>
+                            <p className="font-bold text-slate-900">{format(new Date(job.date), 'dd MMM')}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <Clock size={20} />
+                        </div>
+                        <div>
+                            <p className="text-xs text-slate-400 font-semibold">Time</p>
+                            <p className="font-bold text-slate-900">{job.time}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Passenger Info */}
+                <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-4 block">Passenger Info</label>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center text-lg font-bold">
+                                {job.name.charAt(0)}
+                            </div>
+                            <div>
+                                <p className="font-bold text-lg text-slate-900">{job.name}</p>
+                                <p className="text-slate-500 text-sm">{job.passengers} Passengers</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3 mt-6">
                         <a
                             href={`tel:${job.phone}`}
-                            className="flex flex-col items-center justify-center gap-1 py-3 bg-emerald-50 text-emerald-700 rounded-2xl font-bold text-xs border border-emerald-100 shadow-sm active:scale-95 transition-all outline-none focus:ring-2 focus:ring-emerald-500/20"
+                            className="flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-100 text-slate-900 font-bold hover:bg-slate-200 transition-colors"
                         >
-                            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-emerald-600 mb-1">
-                                <Phone size={16} />
-                            </div>
-                            Call Customer
+                            <Phone size={18} /> Call
                         </a>
                         <a
-                            href={`https://wa.me/${job.phone?.replace(/[^0-9]/g, '')}?text=Hello ${job.name}, I am your driver from Al Aqsa Transport.`}
+                            href={`https://wa.me/${job.phone.replace(/[^0-9]/g, '')}`}
                             target="_blank"
-                            rel="noreferrer"
-                            className="flex flex-col items-center justify-center gap-1 py-3 bg-green-50 text-green-700 rounded-2xl font-bold text-xs border border-green-100 shadow-sm active:scale-95 transition-all outline-none focus:ring-2 focus:ring-green-500/20"
+                            className="flex items-center justify-center gap-2 py-3 rounded-xl bg-green-50 text-green-600 font-bold hover:bg-green-100 transition-colors"
                         >
-                            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-green-600 mb-1">
-                                <span className="font-bold text-lg leading-none">W</span>
-                            </div>
-                            WhatsApp
+                            <MessageCircle size={18} /> WhatsApp
                         </a>
                     </div>
                 </div>
 
-                {/* Additional Info Cards */}
-                {(job.flightNumber || job.notes) && (
-                    <div className="grid grid-cols-1 gap-4">
-                        {job.flightNumber && (
-                            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 relative overflow-hidden flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg shadow-sm text-slate-500">
-                                    <Plane size={18} />
-                                </div>
-                                <div>
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">Flight Number</label>
-                                    <p className="font-bold text-slate-900">{job.flightNumber}</p>
-                                </div>
-                            </div>
+                {/* Status Controls */}
+                {!isCompleted && (
+                    <div className="bg-white p-5 rounded-3xl shadow-lg border border-slate-100 fixed bottom-0 left-0 right-0 m-4 mb-6 z-20">
+                        {(!job.driverStatus || job.driverStatus === 'pending' || job.driverStatus === 'accepted') && (
+                            <button
+                                onClick={() => updateStatus('en_route')}
+                                disabled={actionLoading}
+                                className="w-full py-4 bg-blue-600 text-white font-bold text-lg rounded-xl shadow-blue-200 hover:bg-blue-700 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+                            >
+                                {actionLoading ? <Loader2 className="animate-spin" /> : 'Start Trip'}
+                            </button>
                         )}
-                        {job.notes && (
-                            <div className="bg-amber-50 rounded-2xl p-4 border border-amber-100 relative overflow-hidden flex items-start gap-3">
-                                <div className="p-2 bg-white rounded-lg shadow-sm text-amber-500">
-                                    <ShieldCheck size={18} />
-                                </div>
-                                <div>
-                                    <label className="text-[10px] font-bold text-amber-600/70 uppercase tracking-wider block mb-0.5">Special Notes</label>
-                                    <p className="text-sm font-medium text-amber-900">{job.notes}</p>
-                                </div>
+
+                        {job.driverStatus === 'en_route' && (
+                            <button
+                                onClick={() => updateStatus('arrived')}
+                                disabled={actionLoading}
+                                className="w-full py-4 bg-amber-500 text-white font-bold text-lg rounded-xl shadow-amber-200 hover:bg-amber-600 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+                            >
+                                {actionLoading ? <Loader2 className="animate-spin" /> : 'Arrived at Pickup'}
+                            </button>
+                        )}
+
+                        {(job.driverStatus === 'arrived' || job.driverStatus === 'passenger_onboard') && (
+                            <div className="space-y-3">
+                                {job.driverStatus === 'arrived' && (
+                                    <button
+                                        onClick={() => updateStatus('passenger_onboard')}
+                                        disabled={actionLoading}
+                                        className="w-full py-4 bg-slate-900 text-white font-bold text-lg rounded-xl hover:bg-slate-800 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+                                    >
+                                        {actionLoading ? <Loader2 className="animate-spin" /> : 'Passenger Onboard'}
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => updateStatus('completed')}
+                                    disabled={actionLoading}
+                                    className="w-full py-4 bg-green-600 text-white font-bold text-lg rounded-xl shadow-green-200 hover:bg-green-700 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+                                >
+                                    {actionLoading ? <Loader2 className="animate-spin" /> : <><CheckCircle2 /> Complete Trip</>}
+                                </button>
                             </div>
                         )}
                     </div>
                 )}
-            </div>
 
-            {/* Sticky Action Footer */}
-            {/* Sticky Action Footer */}
-            {nextAction && (
-                <div className="fixed bottom-0 left-0 right-0 p-6 pt-4 bg-white/90 backdrop-blur-xl border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-50 pb-8">
-                    <div className="max-w-md mx-auto space-y-3">
-                        <SwipeToConfirm
-                            onConfirm={() => updateStatus(nextAction.action)}
-                            label={nextAction.label}
-                            colorClass={nextAction.color}
-                            isUpdating={updating}
-                        />
-                        {job.driverStatus === 'pending' && (
-                            <button
-                                onClick={() => {
-                                    if (confirm('Are you sure you want to decline this job? It will be removed from your list.')) {
-                                        updateStatus('rejected');
-                                    }
-                                }}
-                                disabled={updating}
-                                className="w-full py-3 rounded-full bg-slate-100 text-slate-500 font-bold text-sm hover:bg-red-50 hover:text-red-500 transition-colors"
-                            >
-                                Decline Job
-                            </button>
-                        )}
-                        {!job.driverStatus.startsWith('pending') && (
-                            <p className="text-center text-[10px] text-slate-400 mt-2 font-medium uppercase tracking-widest">
-                                {job.driverStatus === 'completed' ? 'Job Completed' : 'Slide to update status'}
-                            </p>
-                        )}
+                {isCompleted && (
+                    <div className="bg-green-50 border border-green-100 p-6 rounded-3xl text-center">
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-4">
+                            <ShieldCheck size={32} />
+                        </div>
+                        <h3 className="text-xl font-bold text-green-900">Trip Completed</h3>
+                        <p className="text-green-700 mt-1">Great job! This trip has been recorded.</p>
+                        <button onClick={() => router.push('/driver/dashboard')} className="mt-6 text-green-700 font-bold underline">
+                            Back to Dashboard
+                        </button>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

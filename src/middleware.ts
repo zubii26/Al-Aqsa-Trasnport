@@ -92,6 +92,35 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Check if the request is for the driver app
+    if (pathname.startsWith('/driver')) {
+        if (pathname === '/driver/login') {
+            return NextResponse.next();
+        }
+
+        const token = request.cookies.get('token');
+
+        if (!token) {
+            return NextResponse.redirect(new URL('/driver/login', request.url));
+        }
+
+        try {
+            const { verifyToken } = await import('@/lib/auth-utils');
+            const payload = await verifyToken(token.value);
+
+            if (!payload || payload.role !== 'driver') {
+                const loginUrl = new URL('/driver/login', request.url);
+                loginUrl.searchParams.set('error', 'Unauthorized access');
+                return NextResponse.redirect(loginUrl);
+            }
+        } catch {
+            const loginUrl = new URL('/driver/login', request.url);
+            const response = NextResponse.redirect(loginUrl);
+            response.cookies.delete('token');
+            return response;
+        }
+    }
+
     return NextResponse.next();
 }
 
