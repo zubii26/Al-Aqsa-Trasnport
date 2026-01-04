@@ -82,7 +82,8 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
     };
 
     const totalVehicles = data.vehicles.reduce((acc: number, v: any) => acc + (v.count || 0), 0);
-    const insufficientCredit = wallet && summary && (wallet.balance + summary.totalCost > wallet.creditLimit);
+    // Logic: Cost must be <= Available (Limit + Balance)
+    const insufficientCredit = wallet && summary && (summary.totalCost > (wallet.creditLimit + wallet.balance));
 
     return (
         <div className="space-y-8 text-center md:text-left">
@@ -157,18 +158,18 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
                             <div>
                                 <p className="text-xs font-bold text-blue-600/70 uppercase">Available Credit</p>
                                 <p className={`text-3xl font-black ${insufficientCredit ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
-                                    SAR {(wallet.creditLimit - wallet.balance).toLocaleString()}
+                                    SAR {(wallet.creditLimit + wallet.balance).toLocaleString()}
                                 </p>
                             </div>
                             <div className="bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                                <span>Used: SAR {wallet.balance.toLocaleString()}</span>
+                                <span>{wallet.balance >= 0 ? 'Your Funds' : 'Used'}: SAR {Math.abs(wallet.balance).toLocaleString()}</span>
                                 <span>Limit: SAR {wallet.creditLimit.toLocaleString()}</span>
                             </div>
 
                             {insufficientCredit && (
                                 <div className="p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-xl text-[10px] font-bold flex items-center gap-2">
                                     <AlertTriangle size={14} />
-                                    Booking exceeds your remaining credit.
+                                    Booking exceeds your available funds.
                                 </div>
                             )}
                         </div>

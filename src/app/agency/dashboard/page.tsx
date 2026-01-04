@@ -210,7 +210,7 @@ export default function AgencyDashboard() {
         }
     };
 
-    const availableCredit = Math.max(0, stats.creditLimit - stats.outstanding);
+    const availableCredit = Math.max(0, stats.creditLimit + stats.outstanding); // outstanding here is actually balance (+ or -)
     const creditUsagePercent = stats.creditLimit > 0 ? (stats.outstanding / stats.creditLimit) * 100 : 0;
 
     return (

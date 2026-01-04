@@ -32,7 +32,10 @@ export async function GET() {
         return NextResponse.json({
             balance: wallet.balance,
             creditLimit: wallet.creditLimit,
-            availableCredit: wallet.creditLimit - wallet.balance,
+            // Available = Limit + Balance (since Balance decreases with spend)
+            // Example: Limit 0, Topup 5000 -> Bal +5000 -> Avail 5000.
+            // Example: Limit 1000, Spend 100 -> Bal -100 -> Avail 900.
+            availableCredit: wallet.creditLimit + wallet.balance,
             currency: wallet.currency,
             transactions
         });
