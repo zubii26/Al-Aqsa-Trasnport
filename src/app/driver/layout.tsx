@@ -11,7 +11,17 @@ export const viewport: Viewport = {
 
 // Metadata removed to inherit root layout PWA settings (or fall back to standard web behavior).
 export const metadata: Metadata = {
+    manifest: '/driver-manifest.json',
     title: 'Al Aqsa Driver',
+    applicationName: 'Al Aqsa Driver',
+    appleWebApp: {
+        capable: true,
+        title: 'Aqsa Driver',
+        statusBarStyle: 'default',
+    },
+    other: {
+        'mobile-web-app-capable': 'yes',
+    },
 };
 
 export default function DriverLayout({
