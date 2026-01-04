@@ -31,7 +31,7 @@ export default async function MeetOurDriversPage() {
                 subtitle="More than just drivers, we are your guides to a spiritual and safe journey in the Holy Cities."
                 bgImage="/images/fleet/gmc-yukon-hero.png" // Reusing high quality image
                 ctaText="Book a Ride"
-                ctaLink="/booking"
+                ctaLink="/umrah/booking"
                 layout="center"
             />
 
@@ -93,7 +93,7 @@ export default async function MeetOurDriversPage() {
 
             {/* Back Button */}
             <div className="container mx-auto px-4 py-8">
-                <Link href="/about" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-500 transition-colors">
+                <Link href="/umrah/about" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-500 transition-colors">
                     <ArrowLeft size={18} />
                     Back to About Us
                 </Link>

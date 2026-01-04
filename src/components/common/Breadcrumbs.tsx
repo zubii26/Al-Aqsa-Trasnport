@@ -16,6 +16,17 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
     // Split pathname into segments, filter empty strings
     const segments = pathname.split('/').filter(Boolean);
 
+    // Identify the app root (first segment)
+    const appRoot = segments[0] || '';
+    const isMultiApp = ['umrah', 'agency', 'driver'].includes(appRoot);
+
+    // If we rely on multi-app structure, Home should point to /appRoot
+    // And we should filter out the appRoot from the specific breadcrumb segments shown
+    const homeLink = isMultiApp ? `/${appRoot}` : '/';
+
+    // Filter segments to display (remove the app root if it is one of our known apps)
+    const displaySegments = isMultiApp ? segments.slice(1) : segments;
+
     // Map segments to readable names (optional dictionary)
     const formatSegment = (segment: string) => {
         // Handle common routes if needed, otherwise capitalize
@@ -34,13 +45,13 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://alaqsaumrahtransport.com"
+                "item": `https://alaqsaumrahtransport.com${homeLink}`
             },
-            ...segments.map((segment, index) => ({
+            ...displaySegments.map((segment, index) => ({
                 "@type": "ListItem",
                 "position": index + 2,
                 "name": formatSegment(segment),
-                "item": `https://alaqsaumrahtransport.com/${segments.slice(0, index + 1).join('/')}`
+                "item": `https://alaqsaumrahtransport.com${homeLink === '/' ? '' : homeLink}/${displaySegments.slice(0, index + 1).join('/')}`
             }))
         ]
     };
@@ -55,7 +66,7 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
                 {/* Home Link */}
                 <li className="flex items-center">
                     <Link
-                        href="/"
+                        href={homeLink}
                         className="text-white/70 hover:text-white transition-colors flex items-center gap-1"
                     >
                         <Home size={14} />
@@ -63,12 +74,13 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
                     </Link>
                 </li>
 
-                {segments.map((segment, index) => {
-                    const isLast = index === segments.length - 1;
-                    const path = `/${segments.slice(0, index + 1).join('/')}`;
-
-                    // Specific logic: if we are on a numeric page (e.g. /blog/page/2), skip or handle?
-                    // For now, simple logic is fine.
+                {displaySegments.map((segment, index) => {
+                    const isLast = index === displaySegments.length - 1;
+                    // Reconstruct path: /appRoot/seg1/seg2...
+                    // If multi-app, prepend /appRoot. If not, just /seg1...
+                    const path = isMultiApp
+                        ? `/${appRoot}/${displaySegments.slice(0, index + 1).join('/')}`
+                        : `/${displaySegments.slice(0, index + 1).join('/')}`;
 
                     // If it's the last item and we have an override (e.g., Article Title)
                     const displayText = (isLast && overrideLastItem)

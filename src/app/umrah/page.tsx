@@ -67,7 +67,7 @@ export default async function Home() {
 
   const heroImage = getSectionImage(heroSection, 'desktop') || "/images/blog/makkah-haram-view.jpg";
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Ride / احجز الآن";
-  const ctaLink = getCustomField(heroSection, 'cta_link') || "/book";
+  const ctaLink = getCustomField(heroSection, 'cta_link') || "/umrah/book";
 
   return (
     <main className="overflow-x-hidden">
@@ -131,7 +131,7 @@ export default async function Home() {
             <p className={styles.ctaText}>
               Book your VIP transport now and let us take care of the logistics while you focus on your worship.
             </p>
-            <Link href="/book" className={styles.ctaButton}>
+            <Link href="/umrah/book" className={styles.ctaButton}>
               Book Your Ride Now <ArrowRight size={20} />
             </Link>
           </FadeIn>

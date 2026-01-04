@@ -71,7 +71,7 @@ const ROUTES = [
         price: 'From SAR 250',
         features: ['Meet & Greet', 'Flight Monitoring', 'Luggage Assistance'],
         featuresAr: ['خدمة استقبال', 'متابعة الرحلات', 'مساعدة في الحقائب'],
-        link: '/services/jeddah-airport-transfer',
+        link: '/umrah/services/jeddah-airport-transfer',
         image: '/images/routes/jeddah-airport-hero-professional.png'
     },
     {
@@ -85,7 +85,7 @@ const ROUTES = [
         price: 'From SAR 450',
         features: ['Miqat Stop', 'Premium Comfort', 'Rest Stops Available'],
         featuresAr: ['توقف للميقات', 'سيارات فارهة', 'استراحات طريق'],
-        link: '/services/makkah-madinah-taxi',
+        link: '/umrah/services/makkah-madinah-taxi',
         image: '/images/routes/makkah-madinah-route-hero.png'
     },
     {
@@ -99,7 +99,7 @@ const ROUTES = [
         price: 'From SAR 150',
         features: ['24/7 Service', 'Door-to-Door', 'Family Friendly'],
         featuresAr: ['خدمة 24/7', 'توصيل لباب الفندق', 'مناسب للعوائل'],
-        link: '/services/madinah-airport-transfer',
+        link: '/umrah/services/madinah-airport-transfer',
         image: '/images/routes/madinah-airport-hero.png'
     },
     {
@@ -113,7 +113,7 @@ const ROUTES = [
         price: 'From SAR 300',
         features: ['Historical Insight', 'Flexible Timing', 'Private Vehicle'],
         featuresAr: ['معلومات تاريخية', 'وقت مرن', 'سيارة خاصة'],
-        link: '/services/ziyarat-tours',
+        link: '/umrah/services/ziyarat-tours',
         image: '/images/routes/makkah-ziyarat-hero.png'
     },
     {
@@ -127,7 +127,7 @@ const ROUTES = [
         price: 'From SAR 500',
         features: ['Direct Route', 'Maximum Comfort', 'Refreshments'],
         featuresAr: ['طريق مباشر', 'راحة قصوى', 'مشروبات ضيافة'],
-        link: '/services/intercity-transfer',
+        link: '/umrah/services/intercity-transfer',
         image: '/images/fleet/intercity-hero.png'
     }
 ];
@@ -228,7 +228,7 @@ export default function RoutesPage() {
                                                 </div>
                                                 <div className="flex gap-3 relative z-20">
                                                     <Link
-                                                        href="/fleet"
+                                                        href="/umrah/fleet"
                                                         className="hidden md:flex items-center text-xs font-medium text-muted-foreground hover:text-secondary transition-colors"
                                                         aria-label="View Fleet"
                                                     >

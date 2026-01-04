@@ -115,7 +115,7 @@ export default function SafetyPromise() {
 
                                     {/* Action Button */}
                                     <div className="mt-8 pt-6 border-t border-slate-700/50 text-center">
-                                        <a href="/safety" className="text-xs md:text-sm text-slate-400 hover:text-white transition-colors flex items-center justify-center gap-2 group">
+                                        <a href="/umrah/safety" className="text-xs md:text-sm text-slate-400 hover:text-white transition-colors flex items-center justify-center gap-2 group">
                                             View Full Safety Documentation
                                             <Zap size={14} className="text-amber-500 group-hover:fill-amber-500 transition-all" />
                                         </a>
