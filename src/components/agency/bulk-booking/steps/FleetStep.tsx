@@ -67,13 +67,25 @@ export default function FleetStep({ data, updateData, onNext, onBack }: FleetSte
                                 <Bus className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <select
                                     className="w-full pl-11 pr-4 py-3 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 rounded-xl outline-none focus:border-blue-500/50 transition-all appearance-none text-slate-900 dark:text-white"
-                                    value={v.type}
-                                    onChange={(e) => updateVehicle(index, 'type', e.target.value)}
+                                    value={v.vehicleId || ''}
+                                    onChange={(e) => {
+                                        const selectedId = e.target.value;
+                                        const selectedVehicle = availableVehicles.find(av => av._id === selectedId);
+                                        if (selectedVehicle) {
+                                            const newVehicles = [...data.vehicles];
+                                            newVehicles[index] = {
+                                                ...newVehicles[index],
+                                                vehicleId: selectedId,
+                                                type: selectedVehicle.name
+                                            };
+                                            updateData({ vehicles: newVehicles });
+                                        }
+                                    }}
                                     required
                                 >
                                     <option value="">Select Vehicle...</option>
                                     {availableVehicles.map(av => (
-                                        <option key={av._id} value={av.name}>{av.name} ({av.capacity} Pax)</option>
+                                        <option key={av._id} value={av._id}>{av.name} ({av.capacity} Pax)</option>
                                     ))}
                                 </select>
                             </div>

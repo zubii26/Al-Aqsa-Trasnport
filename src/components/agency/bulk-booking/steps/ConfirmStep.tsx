@@ -18,25 +18,45 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
 
     useEffect(() => {
         const fetchSummary = async () => {
+            setIsLoading(true);
             try {
-                const res = await fetch('/api/agency/wallet');
-                if (res.ok) {
-                    const walletData = await res.json();
+                // 1. Fetch Wallet
+                const walletRes = await fetch('/api/agency/wallet');
+                if (walletRes.ok) {
+                    const walletData = await walletRes.json();
                     setWallet(walletData);
                 }
 
-                // Simulate/Check pricing for summary 
-                // In a real app, you'd call a preview API
-                // For now we calculate locally based on a simple fetching pattern?
-                // Actually, let's keep it simple for now as the server calculates it too.
+                // 2. Fetch Quote
+                const quoteRes = await fetch('/api/agency/bookings/quote', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        routeId: data.routeId,
+                        vehicles: data.vehicles
+                    })
+                });
+
+                if (quoteRes.ok) {
+                    const quoteData = await quoteRes.json();
+                    setSummary(quoteData);
+                } else {
+                    const errData = await quoteRes.json();
+                    setError(errData.error || 'Failed to calculate quote');
+                }
             } catch (err) {
                 console.error(err);
+                setError('Failed to load booking summary');
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchSummary();
-    }, []);
+    }, [data.routeId, data.vehicles]);
 
     const handleSubmit = async () => {
+        if (!summary) return;
+
         setIsLoading(true);
         setError(null);
 
@@ -62,6 +82,7 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
     };
 
     const totalVehicles = data.vehicles.reduce((acc: number, v: any) => acc + (v.count || 0), 0);
+    const insufficientCredit = wallet && summary && (wallet.balance + summary.totalCost > wallet.creditLimit);
 
     return (
         <div className="space-y-8 text-center md:text-left">
@@ -83,19 +104,41 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
                         <span>{totalVehicles} Vehicles</span>
                     </div>
 
-                    <div className="space-y-3">
-                        {data.vehicles.map((v: any, i: number) => (
-                            <div key={i} className="flex justify-between items-center">
-                                <span className="text-slate-600 dark:text-slate-400 font-medium">{v.type}</span>
-                                <span className="font-black text-slate-900 dark:text-white">x{v.count}</span>
+                    <div className="space-y-4">
+                        {summary?.details.map((v: any, i: number) => (
+                            <div key={i} className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-slate-900 dark:text-white font-bold">{v.type}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase">SAR {v.unitPrice.toLocaleString()} per unit</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-slate-900 dark:text-white font-black">SAR {v.total.toLocaleString()}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold">Qty: {v.count}</p>
+                                </div>
                             </div>
                         ))}
+
+                        {!summary && !error && (
+                            <div className="space-y-2 animate-pulse">
+                                <div className="h-10 bg-slate-200 dark:bg-slate-700 rounded-xl" />
+                                <div className="h-10 bg-slate-200 dark:bg-slate-700 rounded-xl w-3/4" />
+                            </div>
+                        )}
                     </div>
+
+                    {summary && (
+                        <div className="pt-4 border-t-2 border-dashed border-slate-200 dark:border-slate-700">
+                            <div className="flex justify-between items-center">
+                                <span className="text-sm font-black text-slate-500 uppercase tracking-wider">Total Est. Cost</span>
+                                <span className="text-2xl font-black text-blue-600">SAR {summary.totalCost.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
                         <div className="flex justify-between items-center">
                             <span className="text-sm font-bold text-slate-500">Scheduled for</span>
-                            <span className="text-sm font-black text-blue-600">{data.date} @ {data.time}</span>
+                            <span className="text-sm font-black text-slate-900 dark:text-white">{data.date} @ {data.time}</span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +156,7 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
                         <div className="space-y-4">
                             <div>
                                 <p className="text-xs font-bold text-blue-600/70 uppercase">Available Credit</p>
-                                <p className="text-3xl font-black text-slate-900 dark:text-white">
+                                <p className={`text-3xl font-black ${insufficientCredit ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
                                     SAR {(wallet.creditLimit - wallet.balance).toLocaleString()}
                                 </p>
                             </div>
@@ -121,6 +164,13 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
                                 <span>Used: SAR {wallet.balance.toLocaleString()}</span>
                                 <span>Limit: SAR {wallet.creditLimit.toLocaleString()}</span>
                             </div>
+
+                            {insufficientCredit && (
+                                <div className="p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-xl text-[10px] font-bold flex items-center gap-2">
+                                    <AlertTriangle size={14} />
+                                    Booking exceeds your remaining credit.
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="h-24 animate-pulse bg-blue-100/50 dark:bg-blue-900/20 rounded-xl" />
@@ -138,7 +188,7 @@ export default function ConfirmStep({ data, onBack }: ConfirmStepProps) {
             <div className="pt-6">
                 <button
                     onClick={handleSubmit}
-                    disabled={isLoading}
+                    disabled={isLoading || !!error || insufficientCredit || !summary}
                     className="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-xl rounded-2xl shadow-xl shadow-blue-500/20 hover:scale-[1.01] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                     {isLoading ? (

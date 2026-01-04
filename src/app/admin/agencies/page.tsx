@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Building2, CreditCard, Users, ArrowUpRight, Search, FileText, Download, Wallet } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import { Pencil, Check, X } from 'lucide-react';
+import { usePusher } from '@/hooks/usePusher';
 
 function CreditLimitEditor({ agencyId, currentLimit, onUpdate }: { agencyId: string, currentLimit: number, onUpdate: () => void }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -64,21 +65,41 @@ export default function AdminAgenciesPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        const fetchAgencies = async () => {
-            try {
-                const res = await fetch('/api/admin/agencies');
-                if (res.ok) {
-                    setAgencies(await res.json());
-                }
-            } catch (error) {
-                console.error('Failed to load agencies', error);
-            } finally {
-                setIsLoading(false);
+    const fetchAgencies = async () => {
+        try {
+            const res = await fetch('/api/admin/agencies');
+            if (res.ok) {
+                setAgencies(await res.json());
             }
-        };
+        } catch (error) {
+            console.error('Failed to load agencies', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchAgencies();
     }, []);
+
+    // Pusher Subscription
+    const pusher = usePusher();
+
+    useEffect(() => {
+        if (!pusher) return;
+
+        const channel = pusher.subscribe('admin-channel');
+
+        channel.bind('wallet-updated', (data: any) => {
+            console.log('Real-time: Wallet updated event received', data);
+            fetchAgencies(); // Refresh the list
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [pusher]);
 
     const filteredAgencies = agencies.filter(a =>
         a.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -252,10 +273,9 @@ export default function AdminAgenciesPage() {
                                                         agencyId={agency.id}
                                                         currentLimit={agency.creditLimit}
                                                         onUpdate={() => {
-                                                            // Refresh list
-                                                            // Simplest way is reload or refetch. 
-                                                            // Ideally we pass a refresh callback
-                                                            window.location.reload();
+                                                            // No longer need window.location.reload()
+                                                            // The Pusher event (or manual fetch) will handle it
+                                                            fetchAgencies();
                                                         }}
                                                     />
                                                 </td>

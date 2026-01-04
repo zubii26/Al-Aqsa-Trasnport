@@ -121,8 +121,8 @@ export default function AgencyWalletPage() {
             {showTopUp && (
                 <div className="bg-white p-6 rounded-xl border border-blue-100 shadow-sm animate-in slide-in-from-top-2">
                     <h3 className="font-semibold text-slate-900 mb-4">Request Balance Top-up</h3>
-                    <form onSubmit={handleTopUp} className="flex gap-4 items-end">
-                        <div className="flex-1">
+                    <form onSubmit={handleTopUp} className="flex flex-col sm:flex-row gap-4 sm:items-end">
+                        <div className="flex-1 w-full">
                             <label className="block text-sm text-slate-600 mb-1">Amount ({wallet.currency})</label>
                             <input
                                 type="number"
@@ -136,7 +136,7 @@ export default function AgencyWalletPage() {
                         </div>
                         <button
                             disabled={isTopUpLoading}
-                            className="bg-slate-900 text-white px-6 py-2 rounded-lg font-medium disabled:opacity-50"
+                            className="w-full sm:w-auto bg-slate-900 text-white px-6 py-2 rounded-lg font-medium disabled:opacity-50"
                         >
                             {isTopUpLoading ? 'Submitting...' : 'Submit Request'}
                         </button>

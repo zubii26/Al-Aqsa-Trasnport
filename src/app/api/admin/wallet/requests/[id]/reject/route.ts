@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
-import { WalletTransaction } from '@/models';
+import { WalletTransaction, AgencyWallet } from '@/models';
 import { requireRole } from '@/lib/server-auth';
 import { auditLogService } from '@/services/auditLogService';
 
@@ -32,14 +32,27 @@ export async function POST(
         transaction.description = (transaction.description || '') + ' (Rejected by Admin)';
         await transaction.save();
 
-        // 2. Log Audit
-        await auditLogService.log({
-            action: 'REJECT_TOPUP',
-            entity: 'WalletTransaction',
-            entityId: id,
-            details: `Rejected top-up request ${id}`,
-            user: admin.name || 'Admin'
-        });
+        const wallet = await AgencyWallet.findById(transaction.walletId);
+        const agencyId = wallet?.agencyId;
+
+        // Trigger Real-time Dashboard Sync
+        try {
+            const { pusherServer } = await import('@/lib/pusher');
+            if (agencyId) {
+                await pusherServer.trigger(`agency-channel-${agencyId}`, 'wallet-updated', {
+                    agencyId,
+                    transactionId: id,
+                    type: 'top-up-rejected'
+                });
+            }
+            // Also notify Admin list
+            await pusherServer.trigger('admin-channel', 'wallet-updated', {
+                agencyId,
+                type: 'request-rejected'
+            });
+        } catch (realtimeErr) {
+            console.error('Realtime wallet update failed:', realtimeErr);
+        }
 
         return NextResponse.json({ success: true, message: 'Top-up rejected' });
 

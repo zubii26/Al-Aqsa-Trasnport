@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Building2, Download, Plus, FileText, Calendar, CreditCard, Wallet, X, CheckCircle } from 'lucide-react';
 import { Toast } from '@/components/ui/Toast';
+import { usePusher } from '@/hooks/usePusher';
 
 export default function AgencyLedgerPage() {
     const params = useParams();
@@ -40,6 +41,33 @@ export default function AgencyLedgerPage() {
     useEffect(() => {
         fetchData();
     }, [params.id]);
+
+    // Pusher Subscription
+    const pusher = usePusher();
+
+    useEffect(() => {
+        if (!pusher || !params.id) return;
+
+        const channel = pusher.subscribe(`agency-channel-${params.id}`);
+        const adminChannel = pusher.subscribe('admin-channel');
+
+        const handleUpdate = (data: any) => {
+            console.log('Real-time: Ledger refresh triggered', data);
+            fetchData();
+        };
+
+        // Bind to both agency-specific and general wallet updates
+        channel.bind('wallet-updated', handleUpdate);
+        channel.bind('booking-updated', handleUpdate);
+        adminChannel.bind('wallet-updated', handleUpdate);
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+            adminChannel.unbind_all();
+            adminChannel.unsubscribe();
+        };
+    }, [pusher, params.id]);
 
     const handlePaymentSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -238,8 +266,8 @@ export default function AgencyLedgerPage() {
                                             key={method}
                                             onClick={() => setPaymentForm({ ...paymentForm, method })}
                                             className={`px-3 py-2 text-sm font-medium rounded-lg border transition-all ${paymentForm.method === method
-                                                    ? 'bg-emerald-50 border-emerald-500 text-emerald-700 ring-1 ring-emerald-500'
-                                                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                                                ? 'bg-emerald-50 border-emerald-500 text-emerald-700 ring-1 ring-emerald-500'
+                                                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                                                 }`}
                                         >
                                             {method.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}

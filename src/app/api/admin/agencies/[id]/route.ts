@@ -44,8 +44,10 @@ export async function GET(
             const debit = tx.type === 'DEBIT' ? tx.amount : 0;
             const credit = tx.type === 'CREDIT' ? tx.amount : 0;
 
-            // Running Debt
-            runningBalance += (debit - credit);
+            // Running Balance (Positive = Credit, Negative = Debt)
+            // CREDIT (Payment/Topup) -> Adds to balance
+            // DEBIT (Booking) -> Subtracts from balance
+            runningBalance += (credit - debit);
 
             return {
                 id: tx._id,
