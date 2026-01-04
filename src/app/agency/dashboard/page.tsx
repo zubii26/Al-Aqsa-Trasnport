@@ -9,12 +9,17 @@ import BookingStatusChart from '@/components/agency/analytics/BookingStatusChart
 import RoutePopularityChart from '@/components/agency/analytics/RoutePopularityChart';
 import FleetUtilizationChart from '@/components/agency/analytics/FleetUtilizationChart';
 import NotificationControl from '@/components/agency/NotificationControl';
+import { usePusher } from '@/hooks/usePusher';
 
 export default function AgencyDashboard() {
     const [greeting, setGreeting] = useState('Welcome Back');
     const [stats, setStats] = useState({ totalSpend: 0, activeTrips: 0, activeContracts: 0, creditLimit: 0, outstanding: 0 });
     const [recentBookings, setRecentBookings] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [userId, setUserId] = useState<string | null>(null);
+
+    // Pusher Subscription
+    const pusher = usePusher();
 
     // Analytics Data State
     const [spendingData, setSpendingData] = useState<any[]>([]);
@@ -28,8 +33,42 @@ export default function AgencyDashboard() {
         else if (hour < 18) setGreeting('Good Afternoon');
         else setGreeting('Good Evening');
 
-        fetchStats();
+        const initDashboard = async () => {
+            await fetchStats();
+            // Fetch User ID for Pusher
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) setUserId(data.user.id);
+                }
+            } catch (err) {
+                console.error('Failed to fetch user context', err);
+            }
+        };
+
+        initDashboard();
     }, []);
+
+    // Real-time Sync
+    useEffect(() => {
+        if (!pusher || !userId) return;
+
+        const channel = pusher.subscribe(`agency-channel-${userId}`);
+
+        const handleUpdate = () => {
+            console.log('Real-time Dashboard Refresh Triggered');
+            fetchStats();
+        };
+
+        channel.bind('booking-updated', handleUpdate);
+        channel.bind('wallet-updated', handleUpdate);
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [pusher, userId]);
 
     const fetchStats = async () => {
         try {

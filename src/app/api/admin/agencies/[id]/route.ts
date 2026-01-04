@@ -127,6 +127,18 @@ export async function POST(
             url: '/agency/wallet'
         });
 
+        // Trigger Real-time Dashboard Sync
+        try {
+            const { pusherServer } = await import('@/lib/pusher');
+            await pusherServer.trigger(`agency-channel-${id}`, 'wallet-updated', {
+                agencyId: id,
+                amount: amountNum,
+                type: 'payment'
+            });
+        } catch (realtimeErr) {
+            console.error('Realtime wallet update failed:', realtimeErr);
+        }
+
         return NextResponse.json({ success: true });
 
     } catch (error) {

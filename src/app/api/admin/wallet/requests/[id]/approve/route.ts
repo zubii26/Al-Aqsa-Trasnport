@@ -54,6 +54,18 @@ export async function POST(
             user: admin.name || 'Admin'
         });
 
+        // Trigger Real-time Dashboard Sync
+        try {
+            const { pusherServer } = await import('@/lib/pusher');
+            await pusherServer.trigger(`agency-channel-${wallet.agencyId}`, 'wallet-updated', {
+                agencyId: wallet.agencyId,
+                amount: transaction.amount,
+                type: 'top-up-approved'
+            });
+        } catch (realtimeErr) {
+            console.error('Realtime wallet update failed:', realtimeErr);
+        }
+
         return NextResponse.json({ success: true, message: 'Top-up approved successfully' });
 
     } catch (error) {

@@ -44,6 +44,18 @@ export async function PATCH(
         // 3. Update User Profile as well (for redundancy/quick access if needed, though Wallet is source of truth)
         await User.findByIdAndUpdate(id, { creditLimit: creditLimit });
 
+        // Trigger Real-time Dashboard Sync
+        try {
+            const { pusherServer } = await import('@/lib/pusher');
+            await pusherServer.trigger(`agency-channel-${id}`, 'wallet-updated', {
+                agencyId: id,
+                creditLimit,
+                type: 'limit-change'
+            });
+        } catch (realtimeErr) {
+            console.error('Realtime wallet update failed:', realtimeErr);
+        }
+
         return NextResponse.json({ success: true, wallet });
 
     } catch (error) {
