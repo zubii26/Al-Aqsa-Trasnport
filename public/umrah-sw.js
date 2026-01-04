@@ -1,8 +1,10 @@
 
-const CACHE_NAME = 'agency-app-v1';
+const CACHE_NAME = 'umrah-app-v1';
 const STATIC_ASSETS = [
-    '/agency/',
-    '/agency/login',
+    '/umrah/',
+    '/umrah/about',
+    '/umrah/services',
+    '/umrah/contact',
     '/offline.html',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png'
@@ -31,8 +33,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    // Only handle requests within the /agency/ scope
-    if (!event.request.url.includes('/agency/')) return;
+    // Only handle requests within the /umrah/ scope
+    if (!event.request.url.includes('/umrah/')) return;
 
     event.respondWith(
         caches.match(event.request).then((response) => {

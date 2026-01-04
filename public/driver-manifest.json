@@ -1,8 +1,8 @@
 {
     "name": "Al Aqsa Driver",
-    "short_name": "Aqsa Driver",
+    "short_name": "Driver",
     "description": "Driver functionality for Al Aqsa Umrah Transport",
-    "start_url": "/driver/login",
+    "start_url": "/driver/",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#ffffff",

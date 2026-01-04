@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import Image from 'next/image';
-import PWAInit from '@/components/driver/PWAInit';
+import PWAInit from '@/components/common/PWAInit';
 import AgencySidebar from '@/components/agency/AgencySidebar';
 import { usePushSubscription } from '@/hooks/usePushSubscription';
 

@@ -1,14 +1,14 @@
 {
-    "name": "Al Aqsa Agency",
-    "short_name": "Agency",
-    "description": "Agency Partner Portal for Al Aqsa Transport",
-    "start_url": "/agency/",
+    "name": "Al Aqsa Umrah Transport",
+    "short_name": "Aqsa Umrah",
+    "description": "Book VIP Umrah transport services in Saudi Arabia. Reliable Jeddah airport transfers and Makkah to Madinah taxi.",
+    "start_url": "/umrah/",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#ffffff",
-    "theme_color": "#2563EB",
-    "id": "/agency/",
-    "scope": "/agency/",
+    "theme_color": "#D4AF37",
+    "id": "/umrah/",
+    "scope": "/umrah/",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

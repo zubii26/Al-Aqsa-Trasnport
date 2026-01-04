@@ -8,7 +8,6 @@ const ScrollToTop = dynamic(() => import('@/components/common/ScrollToTop'), { s
 const AIChatBox = dynamic(() => import('@/components/home/AIChatBox'), { ssr: false });
 const CookieConsent = dynamic(() => import('@/components/privacy/CookieConsent'), { ssr: false });
 const BookingNotification = dynamic(() => import('@/components/common/BookingNotification'), { ssr: false });
-const PWAInit = dynamic(() => import('@/components/driver/PWAInit'), { ssr: false });
 const PWAInstallPrompt = dynamic(() => import('@/components/common/PWAInstallPrompt'), { ssr: false });
 
 interface GlobalClientComponentsProps {
@@ -36,7 +35,6 @@ export default function GlobalClientComponents({ contactSettings }: GlobalClient
             />
             <BookingNotification />
             <CookieConsent />
-            <PWAInit />
             <PWAInstallPrompt />
         </>
     );

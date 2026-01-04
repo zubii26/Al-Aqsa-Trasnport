@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import PWAInit from '@/components/driver/PWAInit';
+import PWAInit from '@/components/common/PWAInit';
 
 export default function DriverLayoutClient({
     children,
