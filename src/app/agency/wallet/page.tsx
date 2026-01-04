@@ -60,12 +60,7 @@ export default function AgencyWalletPage() {
             const res = await fetch('/api/agency/wallet');
             if (res.ok) {
                 const data = await res.json();
-                setWallet(data.wallet); // Check if data.wallet exists? The API returns object spread, not { wallet: ... }. API returns { balance, ... } directly??
-                // Wait! In route.ts: return NextResponse.json({ balance: ..., transactions });
-                // But in page.tsx: setWallet(data.wallet);
-                // THIS IS THE BUG!
                 // The API returns the wallet fields directly in the root of the JSON response (plus transactions).
-                // It does NOT wrap them in a "wallet" property.
                 setWallet({
                     balance: data.balance,
                     creditLimit: data.creditLimit,

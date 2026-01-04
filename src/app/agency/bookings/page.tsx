@@ -14,15 +14,7 @@ export default function AgencyBookingsPage() {
     const [userId, setUserId] = useState<string | null>(null);
     const [userProfile, setUserProfile] = useState<any>(null);
 
-    // Note: Since I can't easily change top-level imports in one chunk cleanly without viewing file, I will try to update imports if possible, or use dynamic import which is messy in hooks.
-    // Let's assume I can replace the top imports. 
-    // Wait, replace_file_content allows replacing a block.
-    // I need to add `import { usePusher } from '@/hooks/usePusher';` at the top.
-
-    // I'll do this in two steps or a larger block. Let's do a large block replacement of the top and component start.
-    // But verify line numbers first. 
-    // I'll start by fetching bookings AND user.
-
+    // Data Initialization
     useEffect(() => {
         const initData = async () => {
             try {

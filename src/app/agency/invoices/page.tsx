@@ -1,7 +1,5 @@
 'use client';
 
-// Fixing useEffect import
-
 import { useState, useEffect } from 'react';
 import { ChevronLeft, FileText, Download, Filter, Search, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import Link from 'next/link';
