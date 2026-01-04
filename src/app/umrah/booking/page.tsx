@@ -780,32 +780,7 @@ export default function BookingPage() {
                         </AnimatePresence>
 
 
-                        {/* Agency App Promo - Redirects to Agency Portal for specific install */}
-                        <Link href="/agency/login" className="mt-8 block">
-                            <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-transform hover:scale-[1.01]">
-                                <div className="relative z-10 flex items-center justify-between">
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="bg-amber-400 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-                                                For Agencies
-                                            </span>
-                                        </div>
-                                        <h3 className="text-xl font-bold text-white mb-1">Book 3x Faster with Our App</h3>
-                                        <p className="text-slate-300 text-sm max-w-sm">
-                                            Install the Al Aqsa B2B Booking App to your desktop or mobile. Save passenger details & track upcoming trips.
-                                        </p>
-                                    </div>
-                                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm group-hover:bg-white/20 transition-colors">
-                                        <ArrowRight className="text-white" />
-                                    </div>
-                                </div>
 
-                                {/* Background Icon */}
-                                <div className="absolute -right-4 -bottom-4 opacity-10 rotate-12">
-                                    <Building2 size={120} className="text-white" />
-                                </div>
-                            </div>
-                        </Link>
                     </div>
 
                 </motion.div>
