@@ -3,10 +3,11 @@
 import { motion } from 'framer-motion';
 import { Car, Calendar, Activity, TrendingUp, Plus, Check, X, Users, MapPin, Clock, Search } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Toast } from '@/components/ui/Toast';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, BarChart, Bar } from 'recharts';
+import { usePusher } from '@/hooks/usePusher';
 
 interface Booking {
     id: string;
@@ -82,6 +83,31 @@ export default function DashboardClient({
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
     };
+
+    // Pusher Subscription
+    const pusher = usePusher();
+
+    useEffect(() => {
+        if (!pusher) return;
+
+        const channel = pusher.subscribe('admin-channel');
+
+        const handleBookingUpdate = (data: any) => {
+            console.log('Real-time Admin Refresh Triggered:', data);
+            router.refresh(); // Fetch new server props
+            if (data.message) {
+                showToast(data.message, 'success');
+            }
+        };
+
+        channel.bind('new-booking', handleBookingUpdate);
+        channel.bind('booking-updated', handleBookingUpdate);
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [pusher, router]);
 
     const handleStatusChange = async (id: string, newStatus: string) => {
         try {

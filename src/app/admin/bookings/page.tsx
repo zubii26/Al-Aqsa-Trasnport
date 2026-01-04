@@ -9,6 +9,7 @@ import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
 import { downloadCSV } from '@/lib/export';
+import { usePusher } from '@/hooks/usePusher';
 
 import BookingDetailsModal from '@/components/admin/bookings/BookingDetailsModal';
 
@@ -61,44 +62,81 @@ export default function BookingsPage() {
     };
 
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                // Fetch bookings
-                const bookingsRes = await fetch('/api/bookings');
-                const bookingsData = await bookingsRes.json();
-
-                // Fetch agencies (users with role 'agency')
-                // Note: This requires admin access to users API
-                let agencyMap: Record<string, boolean> = {};
-                try {
-                    const usersRes = await fetch('/api/admin/users?role=agency');
-                    if (usersRes.ok) {
-                        const agencyUsers = await usersRes.json();
-                        agencyUsers.forEach((u: any) => {
-                            agencyMap[u.id] = true;
-                        });
-                        setAgencies(agencyMap);
-                    }
-                } catch (e) {
-                    console.log('Failed to fetch agencies map', e);
-                }
-
-                // Enhance bookings with agency flag
-                const enhancedBookings = bookingsData.map((b: any) => ({
-                    ...b,
-                    isAgency: !!(b.userId && agencyMap[b.userId])
-                }));
-
-                setBookings(sortBookings(enhancedBookings));
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-                showToast('Failed to load bookings', 'error');
-            } finally {
-                setIsLoaded(true);
-            }
-        };
         loadData();
     }, []);
+
+    // Pusher Subscription
+    const pusher = usePusher();
+
+    useEffect(() => {
+        if (!pusher) return;
+
+        const channel = pusher.subscribe('admin-channel');
+
+        channel.bind('new-booking', (data: any) => {
+            console.log('Real-time: New booking received', data);
+            if (data.data) {
+                const newBooking = {
+                    ...data.data,
+                    id: data.data.id,
+                    status: data.data.status || 'pending',
+                    paymentStatus: data.data.paymentStatus || 'unpaid',
+                    createdAt: new Date().toISOString()
+                };
+                setBookings(prev => sortBookings([newBooking as any, ...prev]));
+                showToast(`New booking from ${newBooking.name}`, 'success');
+            }
+        });
+
+        channel.bind('booking-updated', (data: any) => {
+            console.log('Real-time: Booking updated', data);
+            setBookings(prev => prev.map(b =>
+                b.id === data.id ? { ...b, ...data } : b
+            ));
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [pusher]);
+
+    const loadData = async () => {
+        try {
+            // Fetch bookings
+            const bookingsRes = await fetch('/api/bookings');
+            const bookingsData = await bookingsRes.json();
+
+            // Fetch agencies (users with role 'agency')
+            // Note: This requires admin access to users API
+            let agencyMap: Record<string, boolean> = {};
+            try {
+                const usersRes = await fetch('/api/admin/users?role=agency');
+                if (usersRes.ok) {
+                    const agencyUsers = await usersRes.json();
+                    agencyUsers.forEach((u: any) => {
+                        agencyMap[u.id] = true;
+                    });
+                    setAgencies(agencyMap);
+                }
+            } catch (e) {
+                console.log('Failed to fetch agencies map', e);
+            }
+
+            // Enhance bookings with agency flag
+            const enhancedBookings = bookingsData.map((b: any) => ({
+                ...b,
+                isAgency: !!(b.userId && agencyMap[b.userId])
+            }));
+
+            setBookings(sortBookings(enhancedBookings));
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            showToast('Failed to load bookings', 'error');
+        } finally {
+            setIsLoaded(true);
+        }
+    };
 
     const showToast = (message: string, type: 'success' | 'error') => {
         setToast({ message, type });
@@ -500,8 +538,8 @@ export default function BookingsPage() {
                                                             value={booking.paymentStatus || 'unpaid'}
                                                             onChange={(e) => handlePaymentStatusChange(booking.id, e.target.value as any)}
                                                             className={`text-[10px] font-bold uppercase border rounded px-1.5 py-0.5 outline-none cursor-pointer ${booking.paymentStatus === 'paid'
-                                                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                                                    : 'bg-slate-50 text-slate-500 border-slate-200'
+                                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                                : 'bg-slate-50 text-slate-500 border-slate-200'
                                                                 }`}
                                                         >
                                                             <option value="unpaid">Unpaid</option>
