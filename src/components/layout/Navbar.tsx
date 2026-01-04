@@ -171,7 +171,7 @@ export default function Navbar() {
                 <div className="hidden xl:flex items-center gap-4">
                     {/* ThemeToggle hidden on desktop as requested */}
                     {/* <ThemeToggle /> */}
-                    <GlassButton href="/umrah/book" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
+                    <GlassButton href="/umrah/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                         Book Now
                     </GlassButton>
                 </div>
@@ -277,7 +277,7 @@ export default function Navbar() {
                     </div>
 
                     <GlassButton
-                        href="/umrah/book"
+                        href="/umrah/booking"
                         variant="secondary"
                         size="lg"
                         className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
