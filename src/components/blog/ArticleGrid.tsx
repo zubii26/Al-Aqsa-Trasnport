@@ -86,7 +86,7 @@ export default function ArticleGrid({
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {posts.map((article, index) => (
                         <FadeIn key={article.id} delay={index * 0.05}>
-                            <Link href={`/blog/${article.id}`} className="group h-full block">
+                            <Link href={`/umrah/blog/${article.id}`} className="group h-full block">
                                 <article className="h-full flex flex-col bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 relative isolate">
 
                                     {/* Image */}

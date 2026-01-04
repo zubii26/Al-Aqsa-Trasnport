@@ -13,7 +13,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
     return (
         <section className="mb-24 relative group">
             <GlassCard delay={0.2} className="p-0 overflow-hidden rounded-[2.5rem] border border-white/20 dark:border-white/5 shadow-2xl relative isolate">
-                <Link href={`/blog/${post.id}`} className="grid grid-cols-1 lg:grid-cols-2 relative min-h-[500px]">
+                <Link href={`/umrah/blog/${post.id}`} className="grid grid-cols-1 lg:grid-cols-2 relative min-h-[500px]">
 
                     {/* Image Section */}
                     <div className="relative h-[300px] lg:h-full overflow-hidden">

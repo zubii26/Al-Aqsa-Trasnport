@@ -25,7 +25,7 @@ export default async function LatestArticles() {
                 <div className={styles.grid}>
                     {latestPosts.map((post, index) => (
                         <FadeIn key={post.id} delay={index * 0.1}>
-                            <Link href={`/blog/${post.slug}`} className={styles.card}>
+                            <Link href={`/umrah/blog/${post.slug}`} className={styles.card}>
                                 <div className={styles.imageWrapper}>
                                     <Image
                                         src={post.image}
