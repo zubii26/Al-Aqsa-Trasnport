@@ -34,6 +34,7 @@ export interface IBooking extends Document {
     notes?: string;
     status: string;
     paymentStatus: 'paid' | 'unpaid' | 'refunded';
+    paymentMethod?: string; // 'cash', 'credit_card', 'agency_wallet', etc.
     userId?: string;
     price?: string;
     originalPrice?: number;
@@ -57,6 +58,8 @@ export interface IBooking extends Document {
 
     createdAt: Date;
     updatedAt: Date;
+    groupId?: string;
+    isBulk?: boolean;
 }
 
 export interface IUser extends Document {
@@ -85,6 +88,13 @@ export interface IUser extends Document {
     };
     createdAt: Date;
     updatedAt: Date;
+    branding?: {
+        logo: string;
+        primaryColor: string;
+    };
+    paymentTerms?: 'Net15' | 'Net30' | 'Prepaid';
+    parentId?: string; // For sub-accounts (Employee of Agency)
+    permissions?: string[]; // ['BOOKING', 'FINANCE', 'ADMIN']
 }
 
 export interface IReview extends Document {
@@ -261,6 +271,7 @@ const BookingSchema = new Schema<IBooking>({
     notes: { type: String },
     status: { type: String, default: 'pending' },
     paymentStatus: { type: String, enum: ['paid', 'unpaid', 'refunded'], default: 'unpaid' },
+    paymentMethod: { type: String },
     userId: { type: String },
     price: { type: String },
     originalPrice: { type: Number },
@@ -287,6 +298,8 @@ const BookingSchema = new Schema<IBooking>({
     rating: { type: Number, min: 1, max: 5 },
     review: { type: String },
     reviewEmailSent: { type: Boolean, default: false },
+    groupId: { type: String, index: true },
+    isBulk: { type: Boolean, default: false },
 }, { timestamps: true });
 
 const UserSchema = new Schema<IUser>({
@@ -311,7 +324,14 @@ const UserSchema = new Schema<IUser>({
             p256dh: { type: String },
             auth: { type: String }
         }
-    }
+    },
+    branding: {
+        logo: { type: String },
+        primaryColor: { type: String }
+    },
+    paymentTerms: { type: String, enum: ['Net15', 'Net30', 'Prepaid'], default: 'Net30' },
+    parentId: { type: String, index: true },
+    permissions: { type: [String], default: [] }
 }, { timestamps: true });
 
 const ReviewSchema = new Schema<IReview>({
@@ -509,3 +529,96 @@ const PaymentSchema = new Schema<IPayment>({
 }, { timestamps: true });
 
 export const Payment: Model<IPayment> = mongoose.models.Payment || mongoose.model<IPayment>('Payment', PaymentSchema);
+
+// --- Agency Wallet System ---
+
+export interface IAgencyWallet extends Document {
+    agencyId: string; // Links to User._id (role: agency)
+    // Example: Agency given 10k Limit. Balance 0. Available 10k.
+    // Book 1k ride -> Balance -1k. Available 9k.
+    // Pay 1k -> Balance 0.
+
+
+    balance: number;
+    creditLimit: number;
+    currency: string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const AgencyWalletSchema = new Schema<IAgencyWallet>({
+    agencyId: { type: String, required: true, unique: true, index: true },
+    balance: { type: Number, default: 0 }, // Negative means debt, Positive means prepaid credit
+    creditLimit: { type: Number, default: 0 },
+    currency: { type: String, default: 'SAR' },
+    isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+export interface IWalletTransaction extends Document {
+    walletId: string;
+    amount: number;
+    type: 'DEBIT' | 'CREDIT'; // DEBIT = Booking (Increases debt/Lowers balance), CREDIT = Payment (Reduces debt/increases balance)
+    referenceType: 'BOOKING' | 'PAYMENT' | 'ADJUSTMENT' | 'REFUND';
+    referenceId: string;
+    description: string;
+    status: 'PENDING' | 'COMPLETED' | 'FAILED';
+    performedBy: string; // User ID
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const WalletTransactionSchema = new Schema<IWalletTransaction>({
+    walletId: { type: String, required: true, index: true },
+    amount: { type: Number, required: true }, // Always positive magnitude
+    type: { type: String, enum: ['DEBIT', 'CREDIT'], required: true },
+    referenceType: { type: String, enum: ['BOOKING', 'PAYMENT', 'ADJUSTMENT', 'REFUND'], required: true },
+    referenceId: { type: String, required: true },
+    description: { type: String },
+    status: { type: String, enum: ['PENDING', 'COMPLETED', 'FAILED'], default: 'COMPLETED' },
+    performedBy: { type: String, required: true },
+}, { timestamps: true });
+
+export const AgencyWallet: Model<IAgencyWallet> = mongoose.models.AgencyWallet || mongoose.model<IAgencyWallet>('AgencyWallet', AgencyWalletSchema);
+export const WalletTransaction: Model<IWalletTransaction> = mongoose.models.WalletTransaction || mongoose.model<IWalletTransaction>('WalletTransaction', WalletTransactionSchema);
+
+export interface IInvoice extends Document {
+    agencyId: string;
+    invoiceNumber: string;
+    periodStart: Date;
+    periodEnd: Date;
+    dueDate: Date;
+    totalAmount: number;
+    status: 'DRAFT' | 'ISSUED' | 'PAID' | 'PARTIAL' | 'OVERDUE';
+    items: {
+        description: string;
+        amount: number;
+        referenceId?: string; // Booking ID or Transaction ID
+        date: Date;
+    }[];
+    paidAmount: number;
+    pdfUrl?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const InvoiceSchema = new Schema<IInvoice>({
+    agencyId: { type: String, required: true, index: true },
+    invoiceNumber: { type: String, required: true, unique: true },
+    periodStart: { type: Date, required: true },
+    periodEnd: { type: Date, required: true },
+    dueDate: { type: Date, required: true },
+    totalAmount: { type: Number, required: true },
+    status: { type: String, enum: ['DRAFT', 'ISSUED', 'PAID', 'PARTIAL', 'OVERDUE'], default: 'DRAFT' },
+    items: [{
+        description: { type: String, required: true },
+        amount: { type: Number, required: true },
+        referenceId: { type: String },
+        date: { type: Date, required: true }
+    }],
+    paidAmount: { type: Number, default: 0 },
+    pdfUrl: { type: String }
+}, { timestamps: true });
+
+export const Invoice: Model<IInvoice> = mongoose.models.Invoice || mongoose.model<IInvoice>('Invoice', InvoiceSchema);
+

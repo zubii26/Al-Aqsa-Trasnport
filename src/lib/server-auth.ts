@@ -4,7 +4,7 @@ import { User, IUser } from '@/models';
 
 export async function validateRequest(): Promise<IUser | null> {
     const cookieStore = await cookies();
-    const token = cookieStore.get('admin_token');
+    const token = cookieStore.get('admin_token') || cookieStore.get('token');
 
     if (!token?.value) {
         return null;

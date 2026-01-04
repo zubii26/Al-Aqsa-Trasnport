@@ -147,16 +147,33 @@ const QuickBookingForm = ({
 
     const vehicleOptions = vehicles.map(vehicle => {
         let priceDisplay = '';
+        let originalPriceDisplay = '';
+        let discountAppliedDisplay = 0;
+        let finalPrice = 0;
+
         if (formData.routeId && formData.routeId !== 'custom') {
-            const { price, discountApplied } = calculatePrice(formData.routeId, vehicle.id);
+            const { price, originalPrice, discountApplied } = calculatePrice(formData.routeId, vehicle.id);
             if (price > 0) {
-                priceDisplay = ` - ${price} SAR${discountApplied > 0 ? ' (Offer)' : ''}`;
+                // priceDisplay = ` - ${price} SAR${discountApplied > 0 ? ' (Offer)' : ''}`;
+                // We'll handle display in custom renderer, but keep label simple for the input text
+                priceDisplay = `${price} SAR`;
+                finalPrice = price;
+                originalPriceDisplay = originalPrice > price ? `${originalPrice}` : '';
+                discountAppliedDisplay = discountApplied;
             }
         }
 
         return {
             value: vehicle.id,
-            label: `${vehicle.name} (${vehicle.capacity})${priceDisplay}`
+            label: `${vehicle.name} (${vehicle.capacity} seater)`, // Main text in input
+            // Extra props for custom renderer
+            image: vehicle.image,
+            capacity: vehicle.capacity,
+            luggage: vehicle.luggage,
+            price: finalPrice,
+            originalPrice: originalPriceDisplay,
+            discount: discountAppliedDisplay,
+            isVip: vehicle.name.includes('GMC')
         };
     });
 
@@ -598,10 +615,42 @@ const QuickBookingForm = ({
                                                 name="vehicleId"
                                                 value={formData.vehicleId}
                                                 onChange={handleChange as any}
+                                                // @ts-ignore
                                                 options={vehicleOptions}
                                                 placeholder="Choose vehicle..."
                                                 className={`${styles.input} ${errors.vehicleId ? styles.error : ''}`}
                                                 icon={<Car size={20} />}
+                                                renderOption={(option: any) => (
+                                                    <div className="flex items-center gap-3 w-full">
+                                                        <div className="w-12 h-8 relative rounded overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
+                                                            {option.image ? (
+                                                                <img src={option.image} alt="" className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <Car size={16} className="absolute inset-0 m-auto text-slate-400" />
+                                                            )}
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="flex justify-between items-center">
+                                                                <span className="font-bold text-slate-900 dark:text-white truncate text-sm">
+                                                                    {option.label.split('(')[0]}
+                                                                    {option.isVip && <span className="ml-1 text-[9px] bg-amber-500 text-white px-1 rounded-sm">VIP</span>}
+                                                                </span>
+                                                                {option.price > 0 && (
+                                                                    <span className="text-secondary font-bold text-sm shrink-0 ml-2">
+                                                                        {option.price} <span className="text-[10px] text-slate-500">SAR</span>
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            <div className="flex items-center gap-2 text-[10px] text-slate-500">
+                                                                <span>{option.capacity} Pass</span>
+                                                                <span>•</span>
+                                                                <span>{option.luggage} Bags</span>
+                                                                {option.discount > 0 && <span className="text-green-600 font-bold bg-green-50 px-1 rounded">Save {option.discount}</span>}
+                                                            </div>
+                                                        </div>
+                                                        {formData.vehicleId === option.value && <CheckCircle size={16} className="text-secondary shrink-0" />}
+                                                    </div>
+                                                )}
                                             />
                                         </div>
                                         {errors.vehicleId && <span className={styles.errorMessage}>{errors.vehicleId}</span>}

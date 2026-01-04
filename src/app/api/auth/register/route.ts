@@ -29,8 +29,15 @@ export async function POST(request: Request) {
         // Hash password
         const hashedPassword = await hashPassword(password);
 
-        // Determine safe role (prevent admin/driver registration via public API)
-        const safeRole = role === 'agency' ? 'agency' : 'user';
+        // Disable generic user/customer registration
+        if (role !== 'agency') {
+            return NextResponse.json(
+                { success: false, error: 'Public registration is disabled. Only agency applications are accepted.' },
+                { status: 403 }
+            );
+        }
+
+        const safeRole = 'agency';
 
         // Create new user
         const user = await User.create({

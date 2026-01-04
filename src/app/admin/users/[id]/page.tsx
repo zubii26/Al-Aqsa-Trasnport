@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, User, Mail, Calendar, Shield, DollarSign, Briefcase, MapPin, TrendingUp, CheckCircle, Clock } from 'lucide-react';
+import { ArrowLeft, User, Mail, Calendar, Shield, DollarSign, Briefcase, MapPin, TrendingUp, CheckCircle, Clock, Building2 } from 'lucide-react';
 import adminStyles from '../../admin.module.css';
 
 interface BookingSummary {
@@ -242,6 +242,59 @@ export default function UserDetailsPage() {
                                         No history available.
                                     </div>
                                 )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Agency Financials */}
+            {user.role === 'agency' && (user as any).wallet && (
+                <div className="space-y-6">
+                    <h3 className="text-lg font-bold flex items-center gap-2">
+                        <Building2 className="text-blue-600" /> Agency Financials
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Wallet Card */}
+                        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                            <div className="relative z-10">
+                                <p className="text-slate-400 font-medium mb-1 uppercase text-xs tracking-wider">Credit Limit</p>
+                                <h4 className="text-3xl font-bold mb-4">
+                                    SAR {(user as any).wallet.creditLimit?.toLocaleString() || '0'}
+                                </h4>
+                                <div className="flex justify-between items-end border-t border-slate-700 pt-4">
+                                    <div>
+                                        <p className="text-slate-400 text-xs">Current Balance (Debt)</p>
+                                        <p className={`text-xl font-bold ${(user as any).wallet.balance > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                                            SAR {(user as any).wallet.balance?.toLocaleString() || '0'}
+                                        </p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-slate-400 text-xs">Payment Terms</p>
+                                        <p className="font-bold">{(user as any).paymentTerms || 'Prepaid'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Branding Card */}
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <h4 className="font-bold text-slate-900 dark:text-white mb-4">Agency Branding</h4>
+                            <div className="flex items-center gap-4">
+                                {(user as any).branding?.logo ? (
+                                    <img src={(user as any).branding.logo} alt="Logo" className="w-16 h-16 object-contain rounded-lg border border-slate-100" />
+                                ) : (
+                                    <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-xs text-center">No Logo</div>
+                                )}
+                                <div>
+                                    <p className="text-sm text-slate-500">Primary Color</p>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <div
+                                            className="w-8 h-8 rounded-full border border-slate-200 shadow-inner"
+                                            style={{ backgroundColor: (user as any).branding?.primaryColor || '#000000' }}
+                                        />
+                                        <span className="font-mono text-xs">{(user as any).branding?.primaryColor || 'N/A'}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

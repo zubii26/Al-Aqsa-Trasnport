@@ -45,7 +45,15 @@ export async function GET(
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                // Include Agency Specifics
+                ...(user.role === 'agency' ? {
+                    branding: user.branding,
+                    paymentTerms: user.paymentTerms,
+                    wallet: await import('@/models').then(async ({ AgencyWallet }) => {
+                        return await AgencyWallet.findOne({ agencyId: user._id });
+                    })
+                } : {})
             },
             stats: {
                 totalEarnings,

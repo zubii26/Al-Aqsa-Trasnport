@@ -1,19 +1,21 @@
 import { Viewport, Metadata } from 'next';
-import AgencyBottomNav from '@/components/agency/AgencyBottomNav';
-import PWAInit from '@/components/driver/PWAInit';
-import AgencySidebar from '@/components/agency/AgencySidebar';
+import AgencyLayoutClient from '@/components/agency/AgencyLayoutClient';
 
 export const viewport: Viewport = {
     themeColor: '#2563EB', // Blue for Agency (vs Amber for Public/Driver)
 };
 
 export const metadata: Metadata = {
-    manifest: '/agency-manifest.json?v=1',
+    manifest: '/agency-manifest.json?v=2',
     title: 'Al Aqsa Agency Portal',
+    applicationName: 'Al Aqsa Agency',
     appleWebApp: {
         capable: true,
         title: 'Al Aqsa Agency',
         statusBarStyle: 'default',
+    },
+    other: {
+        'mobile-web-app-capable': 'yes',
     },
 };
 
@@ -23,20 +25,8 @@ export default function AgencyLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-slate-50 pb-20 lg:pb-0">
-            {/* PWA Service Worker Registration */}
-            <PWAInit serviceWorkerUrl="/agency-sw.js" scope="/agency/" />
-
-            {/* Desktop Sidebar */}
-            <AgencySidebar />
-
-            {/* Main Content */}
-            <main className="lg:pl-64 min-h-screen">
-                {children}
-            </main>
-
-            {/* Mobile Bottom Navigation */}
-            <AgencyBottomNav />
-        </div>
+        <AgencyLayoutClient>
+            {children}
+        </AgencyLayoutClient>
     );
 }

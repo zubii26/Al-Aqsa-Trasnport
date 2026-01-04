@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePusher } from '@/hooks/usePusher';
-import { Search, Filter, Calendar, MapPin, Car, Plus } from 'lucide-react';
+import { Search, Filter, Calendar, MapPin, Car, Plus, Download } from 'lucide-react';
+import { generateBookingInvoice } from '@/lib/pdf-generator';
 
 export default function AgencyBookingsPage() {
     const [bookings, setBookings] = useState<any[]>([]);
@@ -11,6 +12,7 @@ export default function AgencyBookingsPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [userId, setUserId] = useState<string | null>(null);
+    const [userProfile, setUserProfile] = useState<any>(null);
 
     // Note: Since I can't easily change top-level imports in one chunk cleanly without viewing file, I will try to update imports if possible, or use dynamic import which is messy in hooks.
     // Let's assume I can replace the top imports. 
@@ -35,7 +37,10 @@ export default function AgencyBookingsPage() {
                 }
                 if (userRes.ok) {
                     const userData = await userRes.json();
-                    if (userData.user?.userId) setUserId(userData.user.userId);
+                    if (userData.user) {
+                        setUserId(userData.user.userId || userData.user.id);
+                        setUserProfile(userData.user);
+                    }
                 }
             } catch (error) {
                 console.error('Failed to load data', error);
@@ -87,6 +92,14 @@ export default function AgencyBookingsPage() {
             case 'cancelled': return 'bg-red-100 text-red-700';
             default: return 'bg-slate-100 text-slate-700';
         }
+    };
+
+    const handleDownloadInvoice = (booking: any) => {
+        if (!userProfile) {
+            alert('Agency profile not loaded');
+            return;
+        }
+        generateBookingInvoice(booking, userProfile);
     };
 
     return (
@@ -149,6 +162,7 @@ export default function AgencyBookingsPage() {
                                 <th className="px-6 py-3">Passengers</th>
                                 <th className="px-6 py-3">Status</th>
                                 <th className="px-6 py-3 text-right">Price</th>
+                                <th className="px-6 py-3 text-right">Invoice</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -202,6 +216,15 @@ export default function AgencyBookingsPage() {
                                         </td>
                                         <td className="px-6 py-4 text-right font-medium text-slate-900">
                                             {booking.finalPrice ? `SAR ${booking.finalPrice}` : booking.price}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <button
+                                                onClick={() => handleDownloadInvoice(booking)}
+                                                className="p-2 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-blue-600 transition-colors"
+                                                title="Download Invoice"
+                                            >
+                                                <Download size={18} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

@@ -4,6 +4,60 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Building2, CreditCard, Users, ArrowUpRight, Search, FileText, Download, Wallet } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
+import { Pencil, Check, X } from 'lucide-react';
+
+function CreditLimitEditor({ agencyId, currentLimit, onUpdate }: { agencyId: string, currentLimit: number, onUpdate: () => void }) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [limit, setLimit] = useState(currentLimit);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSave = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch(`/api/admin/agencies/${agencyId}/limit`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ creditLimit: limit })
+            });
+            if (res.ok) {
+                setIsEditing(false);
+                onUpdate();
+            }
+        } catch (error) {
+            console.error('Failed to update limit', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    if (isEditing) {
+        return (
+            <div className="flex items-center justify-end gap-2">
+                <input
+                    type="number"
+                    value={limit}
+                    onChange={e => setLimit(Number(e.target.value))}
+                    className="w-24 border rounded px-2 py-1 text-sm"
+                />
+                <button onClick={handleSave} disabled={isLoading} className="text-emerald-600 hover:bg-emerald-50 p-1 rounded">
+                    <Check size={16} />
+                </button>
+                <button onClick={() => setIsEditing(false)} className="text-red-600 hover:bg-red-50 p-1 rounded">
+                    <X size={16} />
+                </button>
+            </div>
+        );
+    }
+
+    return (
+        <div className="group flex items-center justify-end gap-2 text-slate-500">
+            <span>{currentLimit.toLocaleString()} SAR</span>
+            <button onClick={() => setIsEditing(true)} className="opacity-0 group-hover:opacity-100 text-blue-600 p-1 hover:bg-blue-50 rounded transition-all">
+                <Pencil size={14} />
+            </button>
+        </div>
+    );
+}
 
 export default function AdminAgenciesPage() {
     const [agencies, setAgencies] = useState<any[]>([]);
@@ -193,18 +247,28 @@ export default function AdminAgenciesPage() {
                                                         {agency.totalBookings}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-right text-slate-500">
-                                                    {agency.creditLimit.toLocaleString()} SAR
+                                                <td className="px-6 py-4 text-right">
+                                                    <CreditLimitEditor
+                                                        agencyId={agency.id}
+                                                        currentLimit={agency.creditLimit}
+                                                        onUpdate={() => {
+                                                            // Refresh list
+                                                            // Simplest way is reload or refetch. 
+                                                            // Ideally we pass a refresh callback
+                                                            window.location.reload();
+                                                        }}
+                                                    />
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-2">
-                                                        {/* Placeholder actions - future: View Invoices, Record Payment */}
                                                         <Link href={`/admin/agencies/${agency.id}`} title="View Ledger" className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors inline-block">
                                                             <FileText size={18} />
                                                         </Link>
+                                                        {/* 
                                                         <button title="Record Payment" className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
                                                             <Wallet size={18} />
                                                         </button>
+                                                        */}
                                                     </div>
                                                 </td>
                                             </tr>

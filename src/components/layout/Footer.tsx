@@ -83,6 +83,7 @@ export default function Footer() {
                             <li><Link href="/about">About Us</Link></li>
                             <li><Link href="/blog">Blog & Updates</Link></li>
                             <li><Link href="/safety">Safety Guide</Link></li>
+                            <li><Link href="/track-booking">Track Booking</Link></li>
                             <li><Link href="/contact">Contact Support</Link></li>
                             <li><Link href="/privacy">Privacy Policy</Link></li>
                         </ul>

@@ -64,6 +64,7 @@ export default function Navbar() {
                 { href: '/services/airport-transfers', label: 'Airport Transfer (General)' },
                 { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
                 { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
+                { href: '/track-booking', label: 'Track Booking' },
             ]
         },
         {
@@ -170,7 +171,7 @@ export default function Navbar() {
                 <div className="hidden xl:flex items-center gap-4">
                     {/* ThemeToggle hidden on desktop as requested */}
                     {/* <ThemeToggle /> */}
-                    <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
+                    <GlassButton href="/book" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                         Book Now
                     </GlassButton>
                 </div>
@@ -276,7 +277,7 @@ export default function Navbar() {
                     </div>
 
                     <GlassButton
-                        href="/booking"
+                        href="/book"
                         variant="secondary"
                         size="lg"
                         className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"

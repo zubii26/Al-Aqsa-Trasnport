@@ -16,8 +16,13 @@ export default function AgencyProfilePage() {
                 const res = await fetch('/api/auth/me');
                 if (res.ok) {
                     const data = await res.json();
-                    setProfile(data.user);
-                    setFormData(prev => ({ ...prev, name: data.user.name || '' }));
+                    if (data.user) {
+                        setProfile(data.user);
+                        setFormData(prev => ({ ...prev, name: data.user.name || '' }));
+                    } else {
+                        // Session invalid or expired
+                        window.location.href = '/agency/login';
+                    }
                 }
             } catch (error) {
                 console.error('Failed to load profile', error);

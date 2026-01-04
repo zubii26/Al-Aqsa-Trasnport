@@ -780,48 +780,38 @@ export default function BookingPage() {
                         </AnimatePresence>
 
 
-                        {/* Agency App Promo - PWA Install Trigger (Moved to Step 1) */}
-                        <div className="mt-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-transform hover:scale-[1.01]"
-                            onClick={() => {
-                                if (deferredPrompt) {
-                                    deferredPrompt.prompt();
-                                    deferredPrompt.userChoice.then((choiceResult: any) => {
-                                        if (choiceResult.outcome === 'accepted') {
-                                            console.log('User accepted the install prompt');
-                                        } else {
-                                            console.log('User dismissed the install prompt');
-                                        }
-                                        setDeferredPrompt(null);
-                                    });
-                                } else {
-                                    // Fallback: Redirect to Agency Login
-                                    window.location.href = '/agency/login';
-                                }
-                            }}
-                        >
-                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <Building2 size={80} className="text-white" />
-                            </div>
-                            <div className="relative z-10 flex items-center justify-between">
-                                <div>
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="bg-amber-500 text-slate-900 text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm">For Agencies</span>
+                        {/* Agency App Promo - Redirects to Agency Portal for specific install */}
+                        <Link href="/agency/login" className="mt-8 block">
+                            <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-transform hover:scale-[1.01]">
+                                <div className="relative z-10 flex items-center justify-between">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="bg-amber-400 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                                                For Agencies
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-white mb-1">Book 3x Faster with Our App</h3>
+                                        <p className="text-slate-300 text-sm max-w-sm">
+                                            Install the Al Aqsa B2B Booking App to your desktop or mobile. Save passenger details & track upcoming trips.
+                                        </p>
                                     </div>
-                                    <h4 className="text-white font-bold text-lg">Book 3x Faster with Our App</h4>
-                                    <p className="text-slate-400 text-sm max-w-sm">
-                                        Install the Al Aqsa B2B Booking App to your desktop or mobile. Save passenger details & track upcoming trips.
-                                    </p>
+                                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm group-hover:bg-white/20 transition-colors">
+                                        <ArrowRight className="text-white" />
+                                    </div>
                                 </div>
-                                <div className="bg-white/10 p-3 rounded-full text-white group-hover:bg-white/20 transition-colors">
-                                    <ArrowRight size={24} />
+
+                                {/* Background Icon */}
+                                <div className="absolute -right-4 -bottom-4 opacity-10 rotate-12">
+                                    <Building2 size={120} className="text-white" />
                                 </div>
                             </div>
-                        </div>
-
+                        </Link>
                     </div>
+
                 </motion.div>
-            )}
-        </AnimatePresence>
+            )
+            }
+        </AnimatePresence >
     );
 
     const renderStep2 = () => {

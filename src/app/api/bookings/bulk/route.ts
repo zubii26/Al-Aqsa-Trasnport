@@ -5,9 +5,13 @@ import { calculateFinalPrice } from '@/lib/pricing';
 import { getSettings } from '@/lib/settings-storage';
 import { routeService, RouteWithPrices } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
+import { AgencyWallet, WalletTransaction } from '@/models';
+import dbConnect from '@/lib/mongodb';
 
 export async function POST(request: Request) {
     try {
+        await dbConnect();
+
         const user = await validateRequest();
         if (!user) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -20,111 +24,151 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Invalid bookings array' }, { status: 400 });
         }
 
-        const results = [];
-        const errors = [];
+        // 1. Calculate Total Cost & Validate Wallet
+        let totalBatchCost = 0;
+        const bookingsToProcess: any[] = [];
+        const errors: any[] = [];
 
-        // Pre-fetch settings and data to avoid repetitive DB calls
+        // Pre-fetch settings and data
         const [settings, routes, vehicles] = await Promise.all([
             getSettings(),
             routeService.getRoutes(),
             vehicleService.getVehicles()
         ]);
 
+        // First Pass: Calculate Prices and Validate
         for (const bookingData of bookings) {
-            try {
-                // Determine price if not manually set (similar to single booking logic)
-                // Note: In bulk, we might trust the client or re-calc. Better to re-calc.
-                let priceDetails = {};
-                let vehicleString = bookingData.vehicle || 'Standard Vehicle';
+            let priceDetails = {
+                price: '0',
+                finalPrice: 0,
+                originalPrice: 0,
+                discountApplied: 0,
+                discountType: null
+            };
+            let vehicleString = bookingData.vehicle || 'Standard Vehicle';
 
-                if (bookingData.routeId && bookingData.vehicleId) {
-                    const route = (routes as RouteWithPrices[]).find(r => r.id === bookingData.routeId);
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const vehicle = (vehicles as any[]).find(v => v.id === bookingData.vehicleId);
+            if (bookingData.routeId && bookingData.vehicleId) {
+                const route = (routes as RouteWithPrices[]).find(r => r.id === bookingData.routeId || r._id === bookingData.routeId);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const vehicle = (vehicles as any[]).find(v => v.id === bookingData.vehicleId || v._id === bookingData.vehicleId);
 
-                    if (route && vehicle) {
-                        const quantity = bookingData.quantity || 1;
-                        const priceEntry = route.prices?.find(p => p.vehicleId === bookingData.vehicleId);
+                if (route && vehicle) {
+                    const quantity = Number(bookingData.quantity) || 1;
+                    const priceEntry = route.prices?.find(p => p.vehicleId === bookingData.vehicleId);
 
-                        if (priceEntry) {
-                            const basePrice = priceEntry.price * quantity;
-                            const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
+                    if (priceEntry) {
+                        const basePrice = priceEntry.price * quantity;
+                        // const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
+                        // For Agency, maybe no discount or specific agency discount? 
+                        // Using standard logic for now.
+                        const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
 
-                            priceDetails = {
-                                originalPrice,
-                                discountApplied,
-                                finalPrice: price,
-                                discountType,
-                                price: String(price)
-                            };
-                        }
-                        vehicleString = `${quantity} x ${vehicle.name}`;
+                        priceDetails = {
+                            originalPrice,
+                            discountApplied: 0, // Reset discount for agency? Or keep. Let's keep data consistent.
+                            finalPrice: price,
+                            discountType: null, // removing generic discount for agencies usually
+                            price: String(price)
+                        };
+                        // Actually, agencies might have their own fixed rates. 
+                        // For now, assuming standard rates apply unless overridden. 
                     }
+                    vehicleString = `${quantity} x ${vehicle.name}`;
                 }
+            }
 
+            bookingsToProcess.push({
+                ...bookingData,
+                vehicleString,
+                priceDetails
+            });
+            totalBatchCost += Number(priceDetails.finalPrice || 0);
+        }
+
+        // Check Wallet
+        let wallet = null;
+        if (user.role === 'agency') {
+            wallet = await AgencyWallet.findOne({ agencyId: user.id });
+            if (!wallet) {
+                return NextResponse.json({ error: 'Agency wallet not found' }, { status: 404 });
+            }
+
+            if ((wallet.balance + wallet.creditLimit) < totalBatchCost) {
+                return NextResponse.json({
+                    error: 'Insufficient credit limit for this batch',
+                    required: totalBatchCost,
+                    available: wallet.balance + wallet.creditLimit
+                }, { status: 402 });
+            }
+        }
+
+        // 2. Process Bookings & Deduct
+        const results = [];
+
+        for (const item of bookingsToProcess) {
+            try {
+                // Create Booking
                 const newBooking = await addBooking({
-                    name: user.name || bookingData.name || 'Agency Agent',
+                    name: user.name || item.name || 'Agency Agent',
                     email: user.email,
-                    phone: user.phone || bookingData.phone || '',
-                    pickup: bookingData.pickup,
-                    dropoff: bookingData.dropoff,
-                    date: bookingData.date,
-                    time: bookingData.time,
-                    vehicle: vehicleString,
-                    passengers: bookingData.passengers || 1,
-                    vehicleCount: bookingData.quantity || 1,
-                    luggage: bookingData.luggage || 0,
-                    notes: bookingData.notes,
-                    status: 'pending', // Default to pending for admin appoval
+                    phone: user.phone || item.phone || '',
+                    pickup: item.pickup,
+                    dropoff: item.dropoff,
+                    date: item.date,
+                    time: item.time,
+                    vehicle: item.vehicleString,
+                    passengers: item.passengers || 1,
+                    vehicleCount: item.quantity || 1,
+                    luggage: item.luggage || 0,
+                    notes: item.notes,
+                    status: 'pending',
                     userId: user.id,
-                    ...priceDetails,
-                    // isAgency irrelevant if using role based logic or add to IBooking if needed.
-                    // removing for now to fix build.
+                    paymentStatus: 'paid', // Mark as paid via Wallet
+                    paymentMethod: 'agency_wallet',
+                    ...item.priceDetails
                 });
 
                 results.push(newBooking);
-            } catch (err) {
-                console.error('Failed to create bulk booking item', err);
-                errors.push({ booking: bookingData, error: 'Failed to create' });
-            }
-        }
 
-        // --- Notifications & Credit Check ---
+                // Create Transaction (Per Booking)
+                if (wallet) {
+                    const cost = Number(item.priceDetails.finalPrice || 0);
+                    if (cost > 0) {
+                        wallet.balance -= cost;
+                        // Save immediately inside loop to prevent race condition if we were doing parallel, 
+                        // but here we are serial. Better to update in memory and save once at end? 
+                        // No, risk of failure leaving DB inconsistent. 
+                        // Ideally: Transactions (ACID). Mongo supports sessions. 
+                        // For now, simple serial update.
 
-        // 1. Calculate new financials
-        if (user.role === 'agency') {
-            const { User, Booking } = await import('@/models'); // Dynamic import to avoid circular dep issues in some setups
-            const agencyUser = await User.findById(user.id);
-
-            if (agencyUser) {
-                const agencyBookings = await Booking.find({ userId: user.id });
-                const outstanding = agencyBookings
-                    .filter(b => b.paymentStatus !== 'paid' && b.status !== 'cancelled')
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    .reduce((sum, b) => sum + (b.totalPrice || parseFloat(b.price || '0') || 0), 0);
-
-                // Check threshold (90%)
-                if (agencyUser.creditLimit > 0 && (outstanding / agencyUser.creditLimit) >= 0.9) {
-                    const { sendLowCreditEmail } = await import('@/lib/email');
-                    await sendLowCreditEmail({
-                        email: agencyUser.email,
-                        agencyName: agencyUser.name,
-                        creditLimit: agencyUser.creditLimit,
-                        outstanding: outstanding
-                    });
-                    console.log('Low credit alert sent to', agencyUser.email);
+                        await WalletTransaction.create({
+                            walletId: wallet._id.toString(),
+                            amount: cost,
+                            type: 'DEBIT',
+                            referenceType: 'BOOKING',
+                            referenceId: newBooking._id.toString(),
+                            description: `Bulk Booking: ${item.vehicleString}`,
+                            status: 'COMPLETED',
+                            performedBy: user.id
+                        });
+                    }
                 }
+
+            } catch (err) {
+                console.error('Failed to create item', err);
+                errors.push({ item, error: 'Failed to create' });
             }
         }
 
-        // 2. Notify Admin about the Batch
-        // For bulk, sending individual emails might be too much. We'll implement a batch notification later.
-        // For now, we rely on the dashboard.
+        // Final Save of Wallet Balance (if we did batch update)
+        // Since we modified wallet balance in loop but didn't save `wallet`, we save now.
+        if (wallet) {
+            await wallet.save();
+        }
 
         return NextResponse.json({
             success: true,
             count: results.length,
-            totalRequested: bookings.length,
             errors: errors.length > 0 ? errors : undefined
         });
 

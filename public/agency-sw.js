@@ -27,17 +27,43 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
+const API_CACHE_NAME = 'agency-api-data-v1';
+
 self.addEventListener('fetch', (event) => {
+    const url = new URL(event.request.url);
+
+    // 1. Navigation Requests (HTML) -> Network First, fall back to Offline Page
     if (event.request.mode === 'navigate') {
         event.respondWith(
             fetch(event.request)
                 .catch(() => {
-                    return caches.match(OFFLINE_URL) || fetch(event.request);
+                    return caches.match(OFFLINE_URL);
                 })
         );
         return;
     }
 
+    // 2. API Requests (Bookings/Wallet) -> Stale-While-Revalidate
+    if (url.pathname.startsWith('/api/agency/bookings') || url.pathname.startsWith('/api/agency/wallet')) {
+        event.respondWith(
+            caches.open(API_CACHE_NAME).then((cache) => {
+                return cache.match(event.request).then((cachedResponse) => {
+                    // Fetch from network to update cache in background
+                    const fetchPromise = fetch(event.request).then((networkResponse) => {
+                        cache.put(event.request, networkResponse.clone());
+                        return networkResponse;
+                    });
+
+                    // Return cached response immediately if available, otherwise wait for network
+                    return cachedResponse || fetchPromise;
+                });
+            })
+        );
+        return;
+    }
+
+    // 3. Static Assets -> Cache First (Standard browser behavior usually handles this, but good to be explicit for PWA assets)
+    // For now, defaulting to network for everything else
     event.respondWith(fetch(event.request));
 });
 

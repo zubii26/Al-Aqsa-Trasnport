@@ -1,117 +1,136 @@
 import { NextResponse } from 'next/server';
+import { validateRequest } from '@/lib/server-auth';
+import { User, AgencyWallet, WalletTransaction } from '@/models';
 import dbConnect from '@/lib/mongodb';
-import { User, Booking, Payment } from '@/models';
-import { requireRole } from '@/lib/server-auth';
 
-export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
-    const params = await context.params;
-    const user = await requireRole(['ADMIN', 'MANAGER']);
-    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+export const dynamic = 'force-dynamic';
 
+export async function GET(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
         await dbConnect();
-        const agencyId = params.id;
 
-        // 1. Fetch Agency Details
-        const agency = await User.findById(agencyId).lean();
+        const admin = await validateRequest();
+        if (!admin || !['admin', 'manager'].includes(admin.role)) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { id } = await params;
+
+        // 1. Fetch User & Wallet
+        const agency = await User.findById(id).lean();
         if (!agency) return NextResponse.json({ error: 'Agency not found' }, { status: 404 });
 
-        // 2. Fetch Bookings (Debits) - Only confirmed/completed ones should usually charge, but for now lets take all non-cancelled
-        const bookings = await Booking.find({
-            userId: agencyId,
-            status: { $ne: 'cancelled' }
-        }).lean();
+        let wallet = await AgencyWallet.findOne({ agencyId: id }).lean();
 
-        // 3. Fetch Payments (Credits)
-        const payments = await Payment.find({ userId: agencyId }).lean();
+        // 2. Fetch All Transactions for Ledger
+        let transactions: any[] = [];
+        if (wallet && wallet._id) {
+            transactions = await WalletTransaction.find({ walletId: wallet._id.toString() })
+                .sort({ createdAt: 1 }) // Oldest first to calculate running balance
+                .lean();
+        }
 
-        // 4. Merge & Sort
-        const ledger = [
-            ...bookings.map(b => ({
-                id: b._id.toString(),
-                type: 'INVOICE',
-                date: b.createdAt,
-                description: `Invoice #${b._id.toString().slice(-6).toUpperCase()} - ${b.pickup} -> ${b.dropoff}`,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                amount: (b as any).totalPrice || parseFloat(b.price || '0') || 0, // Debit
-                reference: b._id.toString(),
-                status: b.paymentStatus
-            })),
-            ...payments.map(p => ({
-                id: p._id.toString(),
-                type: 'PAYMENT',
-                date: p.createdAt,
-                description: `Payment via ${p.method} - ${p.reference || ''}`,
-                amount: -(p.amount), // Credit (Negative for calculation, but visual will handle it)
-                reference: p.reference,
-                status: p.status
-            }))
-        ].sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        // 3. Calculate Ledger with Running Balance
+        let runningBalance = 0;
 
-        // 5. Calculate Running Balance
-        let currentBalance = 0;
-        const ledgerWithBalance = ledger.map(item => {
-            currentBalance += item.amount;
+        const ledger = transactions.map((tx: any) => {
+            // Effect on "Outstanding Debt":
+            // DEBIT (Booking): Increase Debt.
+            // CREDIT (Payment): Decrease Debt.
+
+            const debit = tx.type === 'DEBIT' ? tx.amount : 0;
+            const credit = tx.type === 'CREDIT' ? tx.amount : 0;
+
+            // Running Debt
+            runningBalance += (debit - credit);
+
             return {
-                ...item,
-                balance: currentBalance,
-                debit: item.type === 'INVOICE' ? item.amount : 0,
-                credit: item.type === 'PAYMENT' ? Math.abs(item.amount) : 0
+                id: tx._id,
+                date: tx.createdAt,
+                description: tx.description,
+                reference: tx.referenceId,
+                type: tx.type === 'DEBIT' ? 'BOOKING' : 'PAYMENT',
+                debit,
+                credit,
+                balance: runningBalance // This represents "Outstanding Amount"
             };
-        });
-
-        // 6. Summary Stats
-        const summary = {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            totalInvoiced: bookings.reduce((sum, b) => sum + ((b as any).totalPrice || parseFloat(b.price || '0') || 0), 0),
-            totalPaid: payments.reduce((sum, p) => sum + (p.status === 'completed' ? p.amount : 0), 0),
-            outstanding: currentBalance,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            creditLimit: (agency as any).creditLimit || 0
-        };
+        }).reverse(); // Show newest first
 
         return NextResponse.json({
             agency: {
-                id: agency._id,
                 name: agency.name,
                 email: agency.email,
                 phone: agency.phone,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                creditLimit: (agency as any).creditLimit
             },
-            ledger: ledgerWithBalance.reverse(), // Show newest first
-            summary
+            summary: {
+                outstanding: wallet ? Math.abs(Math.min(0, wallet.balance)) : 0, // Current Debt
+                creditLimit: wallet ? wallet.creditLimit : agency.creditLimit || 0
+            },
+            ledger
         });
 
     } catch (error) {
-        console.error('Ledger error:', error);
-        return NextResponse.json({ error: 'Failed to fetch ledger' }, { status: 500 });
+        console.error('Agency Detail API Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
 
-export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
-    const params = await context.params;
-    // Record Payment
-    const user = await requireRole(['ADMIN', 'MANAGER']);
-    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-
+export async function POST(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
         await dbConnect();
-        const body = await request.json();
 
-        const payment = await Payment.create({
-            userId: params.id,
-            amount: Number(body.amount),
-            method: body.method,
-            reference: body.reference,
-            notes: body.notes,
-            recordedBy: (user as any).id,
-            status: 'completed'
+        const admin = await validateRequest();
+        if (!admin || !['admin', 'manager'].includes(admin.role)) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { id } = await params;
+        const body = await req.json();
+        const { amount, method, reference, notes } = body;
+
+        const wallet = await AgencyWallet.findOne({ agencyId: id });
+        if (!wallet) return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
+
+        const amountNum = Number(amount);
+        if (isNaN(amountNum) || amountNum <= 0) {
+            return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
+        }
+
+        // Create Transaction (CREDIT - Payment)
+        // Payment INCREASES the wallet balance (reducing debt)
+        // e.g. Balance -100. Pay 100. Balance becomes 0.
+        wallet.balance += amountNum;
+        await wallet.save();
+
+        await WalletTransaction.create({
+            walletId: wallet._id.toString(),
+            amount: amountNum,
+            type: 'CREDIT',
+            referenceType: 'PAYMENT',
+            referenceId: reference || `MANUAL-${Date.now()}`,
+            description: `Payment Received via ${method}. ${notes || ''}`,
+            status: 'COMPLETED',
+            performedBy: admin.id
         });
 
-        return NextResponse.json(payment);
+        // Trigger Push Notification
+        const { sendPushNotification } = await import('@/lib/notifications');
+        await sendPushNotification(id, {
+            title: 'Payment Received',
+            body: `A payment of SAR ${amountNum} has been credited to your wallet.`,
+            url: '/agency/wallet'
+        });
+
+        return NextResponse.json({ success: true });
 
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to record payment' }, { status: 500 });
+        console.error('Record Payment API Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

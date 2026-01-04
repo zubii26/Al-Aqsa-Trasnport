@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft, Printer, Download, Mail, Phone, MapPin, Building2, Calendar, Clock, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { generateInvoice } from '@/services/InvoiceGenerator';
 
 export default function InvoiceDetailPage() {
     const params = useParams();
@@ -13,20 +14,12 @@ export default function InvoiceDetailPage() {
     const [booking, setBooking] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [agencyInfo, setAgencyInfo] = useState<any>(null);
+    const [isGenerating, setIsGenerating] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch Booking
-                const res = await fetch(`/api/bookings/${id}?fromList=true`); // Assuming generic booking fetch or we filter client-side if API doesn't support ID get easily here, but usually it does. 
-                // Wait, typically we don't have a public public /api/bookings/[id] for users unless ownership check. 
-                // Let's assume we can fetch via the list endpoint or specific if implemented.
-                // For safety in this mock, I will fetch list and find. 
-                // Actually, let's try strict ID fetch if available, else list.
-
-                // Note: In a real app we'd have a specific secure endpoint.
-                // I'll grab all for now to be safe as I didn't verify the ID endpoint access level for 'agency' role specifically in this session, 
-                // though usually it restricts to owner.
+                // Fetch Booking (Simulated via list for safety/ease if direct ID endpoint varies)
                 const bookingsRes = await fetch('/api/bookings');
                 if (bookingsRes.ok) {
                     const bookings = await bookingsRes.json();
@@ -50,6 +43,19 @@ export default function InvoiceDetailPage() {
 
         if (id) fetchData();
     }, [id]);
+
+    const handleDownloadPDF = async () => {
+        if (!booking) return;
+        setIsGenerating(true);
+        try {
+            await generateInvoice(booking, agencyInfo);
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            alert('Failed to generate PDF. Please try again.');
+        } finally {
+            setIsGenerating(false);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -77,9 +83,6 @@ export default function InvoiceDetailPage() {
 
     const subtotal = getPrice(booking.finalPrice);
     const vatRate = 0.15; // 15% VAT
-    // Assuming finalPrice INCLUDES VAT or is base? Usually normally explicit. 
-    // Let's assume Final Price is TOTAL for now for simplicity, or we can reverse calc if needed.
-    // For this demo: Price is inclusive.
     const vatAmount = subtotal - (subtotal / 1.15);
     const subtotalExclVat = subtotal - vatAmount;
 
@@ -94,13 +97,27 @@ export default function InvoiceDetailPage() {
                         </Link>
                         <h1 className="font-bold text-slate-900">Invoice Details</h1>
                     </div>
-                    <button
-                        onClick={() => window.print()}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-sm"
-                    >
-                        <Printer size={18} />
-                        <span className="hidden sm:inline">Print / Save PDF</span>
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => window.print()}
+                            className="bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-colors shadow-sm"
+                        >
+                            <Printer size={18} />
+                            <span className="hidden sm:inline">Print</span>
+                        </button>
+                        <button
+                            onClick={handleDownloadPDF}
+                            disabled={isGenerating}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+                        >
+                            {isGenerating ? (
+                                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                            ) : (
+                                <Download size={18} />
+                            )}
+                            <span className="hidden sm:inline">{isGenerating ? 'Generating...' : 'Download PDF'}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

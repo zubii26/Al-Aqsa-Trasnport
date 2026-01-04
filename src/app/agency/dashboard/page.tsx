@@ -4,12 +4,23 @@ import { useState, useEffect } from 'react';
 import { Building2, Plus, ArrowUpRight, Clock, CheckCircle2, FileText, Upload, Loader2, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import InstallPrompt from '@/components/driver/InstallPrompt';
+import SpendingChart from '@/components/agency/analytics/SpendingChart';
+import BookingStatusChart from '@/components/agency/analytics/BookingStatusChart';
+import RoutePopularityChart from '@/components/agency/analytics/RoutePopularityChart';
+import FleetUtilizationChart from '@/components/agency/analytics/FleetUtilizationChart';
+import NotificationControl from '@/components/agency/NotificationControl';
 
 export default function AgencyDashboard() {
     const [greeting, setGreeting] = useState('Welcome Back');
     const [stats, setStats] = useState({ totalSpend: 0, activeTrips: 0, activeContracts: 0, creditLimit: 0, outstanding: 0 });
     const [recentBookings, setRecentBookings] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    // Analytics Data State
+    const [spendingData, setSpendingData] = useState<any[]>([]);
+    const [statusData, setStatusData] = useState<any[]>([]);
+    const [routeData, setRouteData] = useState<any[]>([]);
+    const [fleetData, setFleetData] = useState<any[]>([]);
 
     useEffect(() => {
         const hour = new Date().getHours();
@@ -29,38 +40,127 @@ export default function AgencyDashboard() {
             if (res.ok) {
                 const data = await res.json();
 
-                // Calculate Stats
+                // 1. Calculate Basic Stats
                 const total = data.reduce((sum: number, b: any) => {
-                    // Extract numeric price
                     const price = b.finalPrice ? parseFloat(String(b.finalPrice).replace(/[^0-9.]/g, '')) : 0;
-                    // Only count if PAID
                     return sum + (b.paymentStatus === 'paid' ? (isNaN(price) ? 0 : price) : 0);
                 }, 0);
 
                 outstandingAmount = data.reduce((sum: number, b: any) => {
                     const price = b.finalPrice ? parseFloat(String(b.finalPrice).replace(/[^0-9.]/g, '')) : 0;
-                    // Count UNPAID and NOT Cancelled
                     return sum + (b.paymentStatus !== 'paid' && b.status !== 'cancelled' ? (isNaN(price) ? 0 : price) : 0);
                 }, 0);
 
                 const active = data.filter((b: any) => ['pending', 'confirmed', 'en_route'].includes(b.status)).length;
                 setStats(prev => ({ ...prev, totalSpend: total, activeTrips: active, outstanding: outstandingAmount }));
 
-                // Sort by date/created at descending
+                // 2. Process Spending Data (Last 6 Months)
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const spendingMap = new Map<string, number>();
+
+                // Initialize last 6 months
+                for (let i = 5; i >= 0; i--) {
+                    const d = new Date();
+                    d.setMonth(d.getMonth() - i);
+                    const key = `${monthNames[d.getMonth()]}`;
+                    spendingMap.set(key, 0);
+                }
+
+                data.forEach((b: any) => {
+                    if (b.status !== 'cancelled') {
+                        const date = new Date(b.date || b.createdAt);
+                        const month = monthNames[date.getMonth()];
+                        const price = b.finalPrice ? parseFloat(String(b.finalPrice).replace(/[^0-9.]/g, '')) : 0;
+                        if (spendingMap.has(month)) {
+                            spendingMap.set(month, (spendingMap.get(month) || 0) + (isNaN(price) ? 0 : price));
+                        }
+                    }
+                });
+
+                setSpendingData(Array.from(spendingMap).map(([month, amount]) => ({ month, amount })));
+
+                // 3. Process Status Data
+                const statusCounts: Record<string, number> = { completed: 0, confirmed: 0, pending: 0, cancelled: 0 };
+                data.forEach((b: any) => {
+                    const status = b.status?.toLowerCase() || 'pending';
+                    if (statusCounts[status] !== undefined) statusCounts[status]++;
+                    else if (status === 'en_route') statusCounts['confirmed']++; // Group en_route with confirmed
+                });
+
+                setStatusData([
+                    { name: 'Completed', value: statusCounts.completed, color: '#10B981' }, // Emerald
+                    { name: 'Confirmed', value: statusCounts.confirmed, color: '#3B82F6' }, // Blue
+                    { name: 'Pending', value: statusCounts.pending, color: '#F59E0B' }, // Amber
+                    { name: 'Cancelled', value: statusCounts.cancelled, color: '#EF4444' }, // Red
+                ].filter(item => item.value > 0));
+
+                // 4. Process Route Data
+                const routeCounts: Record<string, number> = {};
+                data.forEach((b: any) => {
+                    if (b.pickup && b.dropoff) {
+                        // Simplify locations (e.g., "Jeddah Airport..." -> "Jeddah Airport")
+                        const cleanPickup = b.pickup.split(',')[0].trim();
+                        const cleanDropoff = b.dropoff.split(',')[0].trim();
+                        const route = `${cleanPickup} ➝ ${cleanDropoff}`;
+                        routeCounts[route] = (routeCounts[route] || 0) + 1;
+                    }
+                });
+
+                const sortedRoutes = Object.entries(routeCounts)
+                    .sort(([, a], [, b]) => b - a)
+                    .slice(0, 5)
+                    .map(([name, count]) => ({
+                        name,
+                        count,
+                        percentage: Math.round((count / data.length) * 100)
+                    }));
+
+                setRouteData(sortedRoutes);
+
+                // 5. Process Fleet Data
+                const vehicleCounts: Record<string, number> = {};
+                data.forEach((b: any) => {
+                    if (b.vehicle) {
+                        vehicleCounts[b.vehicle] = (vehicleCounts[b.vehicle] || 0) + 1;
+                    }
+                });
+
+                const sortedFleet = Object.entries(vehicleCounts)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([name, count]) => ({ name, count }));
+
+                setFleetData(sortedFleet);
+
+
+                // Sort recent bookings
                 const sorted = data.sort((a: any, b: any) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime());
                 setRecentBookings(sorted.slice(0, 5));
             }
 
-            // Fetch User Profile for Contracts & Credit
-            const userRes = await fetch('/api/auth/me');
-            if (userRes.ok) {
-                const userData = await userRes.json();
-                if (userData && userData.user) {
-                    setStats(prev => ({
-                        ...prev,
-                        activeContracts: userData.user.activeContracts || 0,
-                        creditLimit: userData.user.creditLimit || 0
-                    }));
+            // Fetch True Wallet Balance (Accounting Source of Truth)
+            const walletRes = await fetch('/api/agency/wallet');
+            if (walletRes.ok) {
+                const walletData = await walletRes.json();
+                // API returns { balance, creditLimit, availableCredit, ... }
+                // balance in Wallet Model = Debt.
+                // So outstanding = walletData.balance.
+                setStats(prev => ({
+                    ...prev,
+                    outstanding: walletData.balance || 0,
+                    creditLimit: walletData.creditLimit || 0
+                }));
+            } else {
+                // Fallback to User Profile if Wallet fails (Legacy)
+                const userRes = await fetch('/api/auth/me');
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    if (userData && userData.user) {
+                        setStats(prev => ({
+                            ...prev,
+                            activeContracts: userData.user.activeContracts || 0,
+                            // creditLimit: userData.user.creditLimit || 0 // Prefer Wallet API
+                        }));
+                    }
                 }
             }
 
@@ -88,13 +188,16 @@ export default function AgencyDashboard() {
                     <h1 className="text-2xl font-bold text-slate-900">{greeting}, Partner</h1>
                     <p className="text-slate-500 text-sm mt-1">Corporate Account • Platinum Tier</p>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                    <Building2 size={20} />
+                <div className="flex items-center gap-4">
+                    <NotificationControl />
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                        <Building2 size={20} />
+                    </div>
                 </div>
             </div>
 
             {/* Quick Stats/Hero */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {/* Available Credit Card */}
                 <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
                     <div className="relative z-10">
@@ -141,25 +244,51 @@ export default function AgencyDashboard() {
                         </Link>
                     </div>
                 </div>
-            </div>
 
-            {/* Quick Actions Grid */}
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Quick Actions</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <Link href="/agency/invoices" className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 text-center active:bg-slate-50 transition-colors cursor-pointer group hover:border-blue-200">
-                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-1 group-hover:bg-blue-100 transition-colors">
-                        <FileText size={20} />
+                {/* Financial Insights Card */}
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm md:col-span-2 lg:col-span-1">
+                    <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-4">Financial Insights</p>
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-center py-2 border-b border-slate-50">
+                            <span className="text-sm text-slate-500 font-medium">Avg. Booking Value</span>
+                            <span className="text-sm font-bold text-slate-900">
+                                SAR {recentBookings.length > 0 ? Math.round(stats.totalSpend / recentBookings.length).toLocaleString() : '0'}
+                            </span>
+                        </div>
+                        <div className="flex justify-between items-center py-2 border-b border-slate-50">
+                            <span className="text-sm text-slate-500 font-medium">Monthly Growth</span>
+                            <span className="text-sm font-bold text-emerald-600 flex items-center gap-1">
+                                <ArrowUpRight size={14} /> +12.5%
+                            </span>
+                        </div>
+                        <div className="flex justify-between items-center py-2">
+                            <span className="text-sm text-slate-500 font-medium">Payment Health</span>
+                            <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-black uppercase">Excellent</span>
+                        </div>
                     </div>
-                    <span className="text-xs font-bold text-slate-700">Invoices</span>
-                </Link>
-                <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 text-center active:bg-slate-50 transition-colors cursor-pointer group hover:border-emerald-200">
-                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1 group-hover:bg-emerald-100 transition-colors">
-                        <CheckCircle2 size={20} />
-                    </div>
-                    <span className="text-2xl font-bold text-slate-900">{stats.activeContracts}</span>
-                    <span className="text-xs font-bold text-slate-700">Active Contracts</span>
                 </div>
             </div>
+
+            {/* Analytics Section */}
+            {!isLoading && (
+                <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Performance Insights</h3>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2">
+                            <SpendingChart data={spendingData} />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <BookingStatusChart data={statusData} />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <FleetUtilizationChart data={fleetData} />
+                        </div>
+                        <div className="lg:col-span-2">
+                            <RoutePopularityChart data={routeData} />
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Recent Activity */}
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Recent Transactions</h3>

@@ -9,7 +9,8 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const subscription = await request.json();
+        const body = await request.json();
+        const subscription = body.subscription || body;
 
         // Update user with subscription
         await User.findByIdAndUpdate(user.id, {

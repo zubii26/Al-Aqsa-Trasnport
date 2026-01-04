@@ -88,6 +88,13 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
                 driverStatus: updated.driverStatus
             });
         }
+
+        // Notify Guest Tracker
+        await pusherServer.trigger(`booking-channel-${updated._id}`, 'status-updated', {
+            id: updated._id,
+            status: updated.status,
+            // Trigger client refresh
+        });
     } catch (realtimeErr) {
         console.error('Realtime update failed:', realtimeErr);
     }

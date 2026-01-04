@@ -29,6 +29,9 @@ export const BookingSchema = z.object({
     arrivalDate: z.string().optional(),
     assignedDriverId: z.string().optional(),
     driverStatus: z.enum(['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled']).optional(),
+    paymentMethod: z.string().optional(),
+    paymentStatus: z.enum(['paid', 'unpaid', 'refunded']).optional(),
+    price: z.string().optional(),
 });
 
 export const VehicleSchema = z.object({

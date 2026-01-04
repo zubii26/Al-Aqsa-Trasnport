@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, PlusCircle, User, LogOut, Receipt, History } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, User, LogOut, Receipt, History, Wallet, Users } from 'lucide-react';
 
 export default function AgencySidebar() {
     const pathname = usePathname();
@@ -12,7 +12,9 @@ export default function AgencySidebar() {
         { name: 'Dashboard', href: '/agency/dashboard', icon: LayoutDashboard },
         { name: 'My Bookings', href: '/agency/bookings', icon: History },
         { name: 'Bulk Booking', href: '/agency/bulk-booking', icon: PlusCircle },
+        { name: 'My Wallet', href: '/agency/wallet', icon: Wallet },
         { name: 'Invoices', href: '/agency/invoices', icon: Receipt },
+        { name: 'Team', href: '/agency/team', icon: Users },
         { name: 'Profile', href: '/agency/profile', icon: User },
     ];
 
@@ -57,6 +59,7 @@ export default function AgencySidebar() {
                     onClick={async () => {
                         try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) { }
                         document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                         window.location.href = '/agency/login';
                     }}
                     className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors font-medium"

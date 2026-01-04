@@ -18,6 +18,7 @@ interface SearchableSelectProps {
     icon?: React.ReactNode;
     error?: string;
     disabled?: boolean;
+    renderOption?: (option: Option) => React.ReactNode;
 }
 
 const SearchableSelect: React.FC<SearchableSelectProps> = ({
@@ -29,7 +30,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     className,
     icon,
     error,
-    disabled
+    disabled,
+    renderOption
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
@@ -133,13 +135,17 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                                 className="px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10 
                                            text-slate-700 dark:text-slate-200 
                                            transition-colors duration-150 flex items-center justify-between
-                                           text-sm"
+                                           text-sm border-b border-slate-50 dark:border-white/5 last:border-0"
                             >
-                                <div className="flex items-center gap-3">
-                                    {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
-                                    <span className="font-medium">{option.label}</span>
-                                </div>
-                                {value === option.value && <Check size={14} className="text-secondary" />}
+                                {renderOption ? renderOption(option) : (
+                                    <>
+                                        <div className="flex items-center gap-3">
+                                            {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
+                                            <span className="font-medium">{option.label}</span>
+                                        </div>
+                                        {value === option.value && <Check size={14} className="text-secondary" />}
+                                    </>
+                                )}
                             </li>
                         ))}
                     </motion.ul>

@@ -68,7 +68,7 @@ export default function PWAInstallPrompt() {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 100, opacity: 0 }}
-                className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:w-auto flex justify-center"
+                className="fixed bottom-24 left-4 right-4 z-50 md:bottom-8 md:left-1/2 md:right-auto md:-translate-x-1/2 flex justify-center"
             >
                 <div className="bg-[#1e293b] border border-gray-700/50 rounded-2xl shadow-2xl p-4 flex items-center gap-4 w-full max-w-sm backdrop-blur-sm">
                     {/* Icon */}

@@ -94,6 +94,7 @@ export default function AdminLayout({
         { href: '/admin/content', label: 'Content', icon: PenTool, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/marketing', label: 'Marketing', icon: MessageSquare, roles: ['admin', 'manager'] },
         { href: '/admin/agencies', label: 'Agencies', icon: Building2, roles: ['admin', 'manager'] },
+        { href: '/admin/wallet-requests', label: 'Wallet Requests', icon: DollarSign, roles: ['admin', 'manager'] },
         { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin'] },
         { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
     ];
