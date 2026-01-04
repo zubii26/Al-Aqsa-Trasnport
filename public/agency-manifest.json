@@ -2,7 +2,7 @@
     "name": "Al Aqsa Agency",
     "short_name": "Agency",
     "description": "Agency Partner Portal for Al Aqsa Transport",
-    "start_url": "/agency/",
+    "start_url": "/agency/login",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#ffffff",
