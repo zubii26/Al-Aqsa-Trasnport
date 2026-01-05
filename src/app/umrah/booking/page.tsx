@@ -40,8 +40,6 @@ export default function BookingPage() {
     }, []);
 
     // Core State
-    const [serviceType, setServiceType] = useState<'Intercity' | 'Airport' | 'Ziarat'>('Intercity');
-    const [airportType, setAirportType] = useState<'Arrival' | 'Departure'>('Arrival');
     const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -64,9 +62,6 @@ export default function BookingPage() {
     });
 
     const [bookingResponse, setBookingResponse] = useState<any>(null);
-
-    // New Service Type State
-
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -95,9 +90,7 @@ export default function BookingPage() {
                     name: bookingData.name,
                     data: {
                         ...bookingData,
-                        currentStep: step,
-                        serviceType,
-                        airportType
+                        currentStep: step
                     }
                 };
 
@@ -121,7 +114,7 @@ export default function BookingPage() {
 
         const timeoutId = setTimeout(saveDraft, 2000); // Debounce 2s
         return () => clearTimeout(timeoutId);
-    }, [bookingData, step, draftId, serviceType, airportType]);
+    }, [bookingData, step, draftId]);
 
     // Initialize defaults when data loads and handle URL params for deep linking
     useEffect(() => {
@@ -422,50 +415,12 @@ export default function BookingPage() {
         setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
     };
 
-    // Filter routes based on Service Type (Category)
-    const filteredRoutes = routes.filter(r => {
-        // Strict category matching from DB
-        if (r.category) {
+    const filteredRoutes = routes;
 
-            // Special handling for Airport tab
-            if (serviceType === 'Airport') {
-                const isArrival = airportType === 'Arrival';
-                const targetCategory = isArrival ? 'Airport Arrival' : 'Airport Departure';
-                return r.category === targetCategory || r.category === 'Airport';
-            }
-
-            return r.category.toLowerCase() === serviceType.toLowerCase();
-        }
-
-        // Fallback
-        const lowerName = r.name.toLowerCase();
-        if (serviceType === 'Airport') return lowerName.includes('airport');
-        if (serviceType === 'Ziarat') return lowerName.includes('ziarat') || lowerName.includes('ziyarat');
-        return !lowerName.includes('airport') && !lowerName.includes('ziarat') && !lowerName.includes('ziyarat');
-    });
-
-    const allPickupLocations = [
-        "Makkah Hotel", "Makkah Setup", "Madinah Airport", "Madinah Hotel", "Makkah Haram",
-        "Madinah Haram", "Jeddah Hotel", "Jeddah Airport", "Jeddah Port", "Al Taif Hotel",
-        "Al Taif Airport", "Badar Hotel", "Al Ula Hotel", "Yanbu Hotel", "Yanbu Airport"
-    ];
-
-    const allDropoffLocations = [
-        "Makkah Hotel", "Makkah Haram", "Madinah Hotel", "Madinah Airport", "Madinah Haram",
-        "Jeddah Hotel", "Jeddah Airport", "Jeddah Port", "Al Taif Hotel", "Al Taif Airport",
-        "Badar Hotel", "Al Ula Hotel", "Yanbu Hotel", "Yanbu Airport", "Jeddah City Tour",
-        "Makkah Ziyarat", "Madinah Ziyarat", "Taif Ziyarat", "Badar Ziyarat", "Al Ula Tour"
-    ];
-
-    const pickupLocations = allPickupLocations.filter(loc => {
-        if (serviceType === 'Airport') return loc.toLowerCase().includes('airport');
-        return true;
-    });
-
-    const dropoffLocations = allDropoffLocations.filter(loc => {
-        if (serviceType === 'Airport') return loc.toLowerCase().includes('airport');
-        return true;
-    });
+    const pickupLocations = Array.from(new Set(routes.map(r => {
+        const [p] = splitRouteName(r.name);
+        return p || r.name;
+    }))).sort();
 
     if (isLoading) return <div className="min-h-screen flex items-center justify-center text-secondary">Loading...</div>;
 
@@ -528,81 +483,6 @@ export default function BookingPage() {
                             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                         </div>
 
-                        {/* Service Type Dropdown */}
-                        <div className="mb-8 relative z-30">
-                            <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">
-                                Service Type
-                            </label>
-                            <div className="relative">
-                                <SearchableSelect
-                                    name="serviceType"
-                                    value={serviceType}
-                                    onChange={(e: any) => {
-                                        setServiceType(e.target.value);
-                                        updateData('routeId', '');
-                                    }}
-                                    options={[
-                                        { value: 'Intercity', label: 'Intercity Transfer', icon: '🚗' },
-                                        { value: 'Airport', label: 'Airport Transfer', icon: '✈️' },
-                                        { value: 'Ziarat', label: 'Ziarat Tour', icon: '🕌' }
-                                    ]}
-                                    placeholder="Select Service Type"
-                                    className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-lg"
-                                    icon={<Building2 size={20} />}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Sub-Category Dropdown for Airport */}
-                        {serviceType === 'Airport' && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                className="mb-8"
-                            >
-                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">
-                                    Transfer Direction
-                                </label>
-                                <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-100 dark:border-slate-700/50">
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setAirportType('Arrival');
-                                            setBookingData(prev => ({ ...prev, routeId: '' }));
-                                            setSelectedRoute(null);
-                                        }}
-                                        className={`
-                                            flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all
-                                            ${airportType === 'Arrival'
-                                                ? 'bg-white dark:bg-slate-800 text-secondary shadow-lg scale-[1.02] ring-1 ring-black/5'
-                                                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                                            }
-                                        `}
-                                    >
-                                        <PlaneLanding size={20} />
-                                        <span>Arrival</span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setAirportType('Departure');
-                                            setBookingData(prev => ({ ...prev, routeId: '' }));
-                                            setSelectedRoute(null);
-                                        }}
-                                        className={`
-                                            flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all
-                                            ${airportType === 'Departure'
-                                                ? 'bg-white dark:bg-slate-800 text-secondary shadow-lg scale-[1.02] ring-1 ring-black/5'
-                                                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                                            }
-                                        `}
-                                    >
-                                        <PlaneTakeoff size={20} />
-                                        <span>Departure</span>
-                                    </button>
-                                </div>
-                            </motion.div>
-                        )}
 
                         {/* Pickup & Dropoff Selection */}
                         <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-20">

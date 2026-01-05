@@ -43,9 +43,18 @@ export async function GET() {
                 name: `${route.origin} → ${route.destination}`,
                 origin: route.origin,
                 destination: route.destination,
+                // Infer category if missing for better filtering
+                category: route.category || (
+                    route.destination.toLowerCase().includes('airport') ? 'Airport Departure' :
+                        route.origin.toLowerCase().includes('airport') ? 'Airport Arrival' :
+                            (route.name.toLowerCase().includes('ziarat') || route.name.toLowerCase().includes('ziyarat')) ? 'Ziarat' :
+                                'Intercity'
+                ),
                 distance: route.distance || '',
                 time: route.duration || '',
-                baseRate: 0, // Not used when customRates are present
+                baseRate: customRates && Object.values(customRates).length > 0
+                    ? Math.min(...(Object.values(customRates) as number[]))
+                    : 0,
                 customRates
             };
         });

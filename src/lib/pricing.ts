@@ -1,4 +1,5 @@
 import { LucideIcon } from 'lucide-react';
+import pricingData from '@/data/pricing.json';
 
 export interface Route {
     id: string;
@@ -11,7 +12,7 @@ export interface Route {
     customRates?: { [vehicleId: string]: number };
 }
 
-export const ROUTES: Route[] = [];
+export const ROUTES: Route[] = pricingData.routes as unknown as Route[];
 
 export interface Vehicle {
     id: string;
@@ -26,7 +27,7 @@ export interface Vehicle {
     image?: string;
 }
 
-export const VEHICLES: Vehicle[] = [];
+export const VEHICLES: Vehicle[] = pricingData.vehicles as unknown as Vehicle[];
 
 export * from './pricing-calc';
 // import { calculateFinalPrice } from './pricing-calc'; // Removed redundant import

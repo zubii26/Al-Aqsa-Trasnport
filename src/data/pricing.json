@@ -1,6 +1,32 @@
 {
     "routes": [
         {
+            "id": "madinah-airport-to-makkah-hotel",
+            "name": "Madinah Airport to Makkah Hotel",
+            "slug": "madinah-airport-to-makkah",
+            "seo": {
+                "title": "Taxi Madinah Airport to Makkah | Arrival Transfer",
+                "description": "Direct VIP taxi from Madinah Airport to Makkah Hotel. Comfortable 4.5 hour journey. Meet & Greet included.",
+                "keywords": [
+                    "Madinah Airport to Makkah",
+                    "Madinah Airport taxi",
+                    "Makkah arrival",
+                    "توصيل مطار المدينة مكة"
+                ]
+            },
+            "distance": "450 km",
+            "time": "4 hrs 30 min",
+            "baseRate": 450,
+            "customRates": {
+                "camry": 450,
+                "hiace": 550,
+                "gmc": 900,
+                "starex": 450,
+                "staria": 450,
+                "coaster": 900
+            }
+        },
+        {
             "id": "692db09934f15bc89b45a5fd",
             "name": "Jeddah Airport to Makkah Hotel",
             "slug": "jeddah-airport-to-makkah",
@@ -113,7 +139,7 @@
         },
         {
             "id": "692db09934f15bc89b45a60e",
-            "name": "Shopping/ City Tour per hour",
+            "name": "Makkah/Madinah Hotel to Hourly Rental",
             "slug": "hourly-rental-makkah-madinah",
             "seo": {
                 "title": "Hourly Car Rental with Driver Makkah & Madinah",
@@ -139,7 +165,7 @@
         },
         {
             "id": "692db09a34f15bc89b45a60b",
-            "name": "Taxi Makkah to Taif and Return",
+            "name": "Makkah Hotel to Taif and Return",
             "slug": "makkah-to-taif-taxi",
             "seo": {
                 "title": "Taxi Makkah to Taif | Day Trip & Return | توصيل مكة الطائف",
@@ -167,7 +193,7 @@
         },
         {
             "id": "692db09a34f15bc89b45a60c",
-            "name": "Taxi Jeddah to Taif and Return",
+            "name": "Jeddah Hotel to Taif and Return",
             "slug": "jeddah-to-taif-taxi",
             "seo": {
                 "title": "Taxi Jeddah to Taif | Private Transfer",
@@ -192,7 +218,7 @@
         },
         {
             "id": "6949b367a41f6410e88ed72e",
-            "name": "Madina Ziyarat Taxi",
+            "name": "Madinah Hotel to Madinah Ziyarat",
             "slug": "madinah-ziyarat-taxi",
             "seo": {
                 "title": "Madinah Ziyarat Taxi Service | Visit Holy Places",
@@ -220,7 +246,7 @@
         },
         {
             "id": "6949b368a41f6410e88ed732",
-            "name": "Makkah Ziyarat Taxi",
+            "name": "Makkah Hotel to Makkah Ziyarat",
             "slug": "makkah-ziyarat-taxi",
             "seo": {
                 "title": "Makkah Ziyarat Taxi Tour | Hira Cave & Thawr",
@@ -326,7 +352,7 @@
         },
         {
             "id": "jeddah-airport-to-madina-hotel",
-            "name": "Jeddah Airport to Madina Hotel",
+            "name": "Jeddah Airport to Madinah Hotel",
             "slug": "jeddah-airport-to-madinah",
             "seo": {
                 "title": "Taxi Jeddah Airport to Madinah | Direct Transfer",
@@ -376,7 +402,7 @@
         },
         {
             "id": "makkah-hotel-to-madina-airport",
-            "name": "Makkah Hotel To Madina Airport Taxi",
+            "name": "Makkah Hotel to Madinah Airport",
             "slug": "makkah-to-madinah-airport",
             "seo": {
                 "title": "Taxi Makkah to Madinah Airport | Long Distance Cab",
@@ -400,7 +426,7 @@
         },
         {
             "id": "madina-hotel-to-jeddah-hotel",
-            "name": "Madina Hotel To Jeddah Hotel",
+            "name": "Madinah Hotel to Jeddah Hotel",
             "slug": "madinah-to-jeddah-taxi",
             "seo": {
                 "title": "Taxi Madinah to Jeddah | Private Intercity Transfer",
