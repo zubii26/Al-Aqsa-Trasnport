@@ -12,7 +12,9 @@ export async function GET() {
             id: user.id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            isOnline: user.isOnline || false,
+            photo: (user as any).photo || '/logo.png' // Helpful for dashboard avatar
         }
     });
 }

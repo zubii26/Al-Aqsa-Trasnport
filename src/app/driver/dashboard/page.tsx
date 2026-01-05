@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 
 import { usePusher } from '@/hooks/usePusher';
+import ShiftToggle from '@/components/driver/ShiftToggle';
+import EarningsWidget from '@/components/driver/EarningsWidget';
+import LocationTracker from '@/components/driver/LocationTracker';
 
 interface Job {
     _id: string;
@@ -31,16 +34,22 @@ export default function DriverDashboard() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState<string | null>(null);
+    const [isOnline, setIsOnline] = useState(false);
+    const [userPhoto, setUserPhoto] = useState('/logo.png');
 
     // Real-time updates
     const pusherClient = usePusher();
 
     useEffect(() => {
-        // Fetch User ID
+        // Fetch User ID & Status
         fetch('/api/auth/me')
             .then(res => res.json())
             .then(data => {
-                if (data.user) setUserId(data.user.id);
+                if (data.user) {
+                    setUserId(data.user.id);
+                    setIsOnline(data.user.isOnline);
+                    if (data.user.photo) setUserPhoto(data.user.photo);
+                }
             })
             .catch(err => console.error('Auth check failed', err));
 
@@ -95,12 +104,15 @@ export default function DriverDashboard() {
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20">
+            {/* Location Tracker */}
+            <LocationTracker isOnline={isOnline} />
+
             {/* Header */}
             <div className="bg-slate-900 text-white p-6 rounded-b-3xl shadow-lg sticky top-0 z-10">
                 <div className="flex justify-between items-center mb-6">
                     <div>
-                        <h1 className="text-2xl font-bold">My Jobs</h1>
-                        <p className="text-slate-400 text-sm">Welcome, Driver</p>
+                        <h1 className="text-2xl font-bold">Driver Portal</h1>
+                        <p className="text-slate-400 text-sm">Al Aqsa Transport</p>
                     </div>
                     <button
                         onClick={handleLogout}
@@ -135,6 +147,9 @@ export default function DriverDashboard() {
 
             {/* Content */}
             <div className="p-4 space-y-4">
+                <ShiftToggle isOnline={isOnline} onToggle={setIsOnline} />
+                <EarningsWidget />
+
                 {loading ? (
                     <div className="flex justify-center py-10">
                         <Loader2 className="animate-spin text-amber-500" size={32} />

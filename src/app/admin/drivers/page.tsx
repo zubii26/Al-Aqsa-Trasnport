@@ -7,6 +7,8 @@ import { Plus, Edit, Trash2, Search, Star } from 'lucide-react';
 import styles from '../admin.module.css';
 import { Toast } from '@/components/ui/Toast';
 import AdminConfirmDialog from '@/components/admin/AdminConfirmDialog';
+import LiveFleetMap from '@/components/admin/drivers/LiveFleetMap';
+import DriverStatusCards from '@/components/admin/drivers/DriverStatusCards';
 
 interface Driver {
     _id: string;
@@ -20,6 +22,7 @@ interface Driver {
 
 export default function DriversPage() {
     const [drivers, setDrivers] = useState<Driver[]>([]);
+    const [onlineCount, setOnlineCount] = useState(0); // Tracked by LiveMap
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -84,10 +87,19 @@ export default function DriversPage() {
         <div className="p-6 max-w-[95%] mx-auto">
             {toast && <Toast message={toast.message} type={toast.type} isVisible={true} onClose={() => setToast(null)} />}
 
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div className="mb-8">
+                <h1 className={styles.title}>Driver Fleet Command</h1>
+                <p className="text-muted-foreground">Live tracking and fleet management</p>
+            </div>
+
+            {/* Live Map & Stats */}
+            <LiveFleetMap onDriversLoaded={(count) => setOnlineCount(count)} />
+            <DriverStatusCards drivers={drivers} onlineCount={onlineCount} />
+
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 mt-12">
                 <div>
-                    <h1 className={styles.title}>Driver Management</h1>
-                    <p className="text-muted-foreground">Manage your team of professional drivers</p>
+                    <h2 className="text-xl font-bold">Driver Profiles</h2>
+                    <p className="text-muted-foreground text-sm">Manage profile details and documents</p>
                 </div>
 
                 <div className="flex items-center gap-4 w-full md:w-auto">

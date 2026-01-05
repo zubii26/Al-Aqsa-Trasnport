@@ -95,6 +95,12 @@ export interface IUser extends Document {
     paymentTerms?: 'Net15' | 'Net30' | 'Prepaid';
     parentId?: string; // For sub-accounts (Employee of Agency)
     permissions?: string[]; // ['BOOKING', 'FINANCE', 'ADMIN']
+
+    // Driver Compliance
+    licenseExpiry?: Date;
+    iqamaExpiry?: Date;
+    insuranceExpiry?: Date;
+    vehicleRegistrationExpiry?: Date;
 }
 
 export interface IReview extends Document {
@@ -331,7 +337,13 @@ const UserSchema = new Schema<IUser>({
     },
     paymentTerms: { type: String, enum: ['Net15', 'Net30', 'Prepaid'], default: 'Net30' },
     parentId: { type: String, index: true },
-    permissions: { type: [String], default: [] }
+    permissions: { type: [String], default: [] },
+
+    // Driver Compliance
+    licenseExpiry: { type: Date },
+    iqamaExpiry: { type: Date },
+    insuranceExpiry: { type: Date },
+    vehicleRegistrationExpiry: { type: Date }
 }, { timestamps: true });
 
 const ReviewSchema = new Schema<IReview>({
@@ -621,4 +633,38 @@ const InvoiceSchema = new Schema<IInvoice>({
 }, { timestamps: true });
 
 export const Invoice: Model<IInvoice> = mongoose.models.Invoice || mongoose.model<IInvoice>('Invoice', InvoiceSchema);
+
+// --- Shift Logging ---
+
+export interface IShift extends Document {
+    driverId: string; // User._id
+    startTime: Date;
+    endTime?: Date;
+    duration?: number; // minutes
+    initialLocation?: { lat: number; lng: number };
+    endLocation?: { lat: number; lng: number };
+    status: 'active' | 'completed';
+    earnings?: number; // cache earnings for this shift
+    tripsCompleted?: number;
+}
+
+const ShiftSchema = new Schema<IShift>({
+    driverId: { type: String, required: true, index: true },
+    startTime: { type: Date, required: true, default: Date.now },
+    endTime: { type: Date },
+    duration: { type: Number }, // minutes
+    initialLocation: {
+        lat: Number,
+        lng: Number
+    },
+    endLocation: {
+        lat: Number,
+        lng: Number
+    },
+    status: { type: String, enum: ['active', 'completed'], default: 'active' },
+    earnings: { type: Number, default: 0 },
+    tripsCompleted: { type: Number, default: 0 }
+}, { timestamps: true });
+
+export const Shift: Model<IShift> = mongoose.models.Shift || mongoose.model<IShift>('Shift', ShiftSchema);
 
