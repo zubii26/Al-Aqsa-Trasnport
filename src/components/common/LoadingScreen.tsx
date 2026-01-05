@@ -17,20 +17,24 @@ export default function LoadingScreen() {
 
     return (
         <div className={styles.preloader} style={{ zIndex: 999999 }}>
-            <div className={styles.particles}>
-                {[...Array(15)].map((_, i) => (
-                    <div key={i} className={styles.particle} style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        animationDelay: `${Math.random() * 3}s`
-                    }} />
-                ))}
-            </div>
             <div className={styles.content}>
-                <div className={styles.logoWrapper}>
-                    <div className={styles.ringOuter}></div>
-                    <div className={styles.ringInner}></div>
-                    <div className={styles.glow}></div>
+                <div className={styles.loaderContainer}>
+                    {/* Rotating Gold Ring */}
+                    <svg className={styles.spinner} viewBox="0 0 100 100">
+                        <circle
+                            className={styles.spinnerPath}
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            fill="none"
+                            strokeWidth="2"
+                        />
+                    </svg>
+
+                    {/* Static Inner Border */}
+                    <div className={styles.innerCircle}></div>
+
+                    {/* Logo */}
                     <div className={styles.logoImage}>
                         <Image
                             src="/logo.png"
@@ -42,9 +46,11 @@ export default function LoadingScreen() {
                         />
                     </div>
                 </div>
+
                 <div className={styles.textWrapper}>
-                    <h1 className="text-2xl font-bold text-slate-100 font-playfair tracking-wider mt-4">Al Aqsa Transport</h1>
-                    <p className="text-sm text-slate-400 font-medium uppercase tracking-[0.2em]">Premium Journey</p>
+                    <h1 className={styles.title}>Al Aqsa Transport</h1>
+                    <div className={styles.divider}></div>
+                    <p className={styles.subtitle}>Premium Journey</p>
                 </div>
             </div>
         </div>
