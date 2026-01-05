@@ -9,24 +9,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+import pricingData from '@/data/pricing.json';
+
+const vehicleData = pricingData.vehicles.find(v => v.id === 'starex');
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Hyundai H1 Starex Van Rental",
+    "name": vehicleData?.seo?.title || "Hyundai H1 Starex Van Rental",
     "image": "https://alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
-    "description": "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
+    "description": vehicleData?.seo?.description || "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
 };
 
 export const metadata: Metadata = {
-    title: "Hyundai H1 Starex Rental Makkah | 7 Seater Family Van | اتش ون",
-    description: "Book Hyundai H1 Starex for Umrah. Spacious 7-passenger family van. حجز هيونداي H1 في مكة. تاكسي عائلي رخيص من مطار جدة.",
-    keywords: [
-        "Hyundai Starex rental Makkah", "7 seater taxi Jeddah airport", "Family van for Umrah",
-        "Hyundai H1 Makkah to Madinah", "Cheap family transport Saudi Arabia", "Starex van hire",
-        "هيونداي H1 مكة", "تاكسي عائلي جدة", "باص H1 للايجار", "سعر توصيل H1"
-    ],
+    title: vehicleData?.seo?.title,
+    description: vehicleData?.seo?.description,
+    keywords: vehicleData?.seo?.keywords,
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex' }
 };
 

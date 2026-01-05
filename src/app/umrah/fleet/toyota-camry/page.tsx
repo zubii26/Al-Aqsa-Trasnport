@@ -10,24 +10,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+import pricingData from '@/data/pricing.json';
+
+const vehicleData = pricingData.vehicles.find(v => v.id === 'camry');
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Toyota Camry 2024 Taxi Makkah",
+    "name": vehicleData?.seo?.title || "Toyota Camry 2024 Taxi Makkah",
     "image": "https://alaqsaumrahtransport.com/images/fleet/camry-hero-professional.png",
-    "description": "Affordable Toyota Camry taxi for Umrah. Reliable 4-seater sedan for Jeddah to Makkah transfers.",
+    "description": vehicleData?.seo?.description || "Affordable Toyota Camry taxi for Umrah. Reliable 4-seater sedan for Jeddah to Makkah transfers.",
     "brand": { "@type": "Brand", "name": "Toyota" },
     "offers": { "@type": "Offer", "price": "200", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
 };
 
 export const metadata: Metadata = {
-    title: "Toyota Camry Taxi Price Makkah | Cheap Umrah Transport | تاكسي كامري",
-    description: "Best price Toyota Camry taxi for Umrah. Reliable sedan for Jeddah Airport to Makkah. ارخص تاكسي من مطار جدة الى مكة. سيارة كامري موديل حديث.",
-    keywords: [
-        "Toyota Camry taxi Makkah", "Cheap Umrah taxi", "Camry Jeddah airport transfer",
-        "Makkah to Madinah taxi price", "Toyota Camry rental Saudi Arabia", "Small family Umrah transport",
-        "تاكسي كامري مكة", "حجز كامري من مطار جدة", "ارخص تاكسي في مكة", "مشوار مكة جدة كامري"
-    ],
+    title: vehicleData?.seo?.title,
+    description: vehicleData?.seo?.description,
+    keywords: vehicleData?.seo?.keywords,
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry' }
 };
 

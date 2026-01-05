@@ -3,6 +3,19 @@
         {
             "id": "692db09934f15bc89b45a5fd",
             "name": "Jeddah Airport to Makkah Hotel",
+            "slug": "jeddah-airport-to-makkah",
+            "seo": {
+                "title": "Taxi Jeddah Airport to Makkah | VIP Umrah Transfer | تاكسي مطار جدة مكة",
+                "description": "Book trusted VIP taxi from Jeddah Airport to Makkah hotels. Luxury GMC Yukon & Staria fleet. 24/7 Service, Meet & Greet at KAIA. تبدأ من 250 ريال.",
+                "keywords": [
+                    "Jeddah Airport to Makkah taxi",
+                    "Jeddah airport transfer",
+                    "KAIA to Makkah",
+                    "Umrah taxi Jeddah",
+                    "توصيل من مطار جدة الى مكة",
+                    "تاكسي مطار جدة"
+                ]
+            },
             "distance": "100 km",
             "time": "1 hr 30 min",
             "baseRate": 250,
@@ -18,6 +31,19 @@
         {
             "id": "madinah-ziyarat-wadi-jinn",
             "name": "Madinah Ziyarat Taxi and Wadi Jin",
+            "slug": "madinah-ziyarat-wadi-jinn",
+            "seo": {
+                "title": "Madinah Ziyarat Tour & Wadi Jinn | Historical Places Visit",
+                "description": "Comprehensive Ziyarat tour in Madinah including Wadi-e-Jinn, Ohud, Quba Mosque. Private air-conditioned vehicle with knowledgeable driver. مزارات المدينة المنورة.",
+                "keywords": [
+                    "Madinah Ziyarat places",
+                    "Wadi Jinn Madinah",
+                    "Ziyarat taxi Madinah",
+                    "places to visit in Madinah",
+                    "مزارات المدينة المنورة",
+                    "وادي الجن"
+                ]
+            },
             "distance": "50 km",
             "time": "4-5 hrs",
             "baseRate": 300,
@@ -33,6 +59,18 @@
         {
             "id": "692db09934f15bc89b45a601",
             "name": "Makkah Hotel to Jeddah Airport",
+            "slug": "makkah-to-jeddah-airport",
+            "seo": {
+                "title": "Taxi Makkah to Jeddah Airport | Reliable Departure Transfer",
+                "description": "Guaranteed pickup from your Makkah hotel to Jeddah Airport (KAIA). Low rates, punctual drivers, no hidden fees. توصيل من مكة الى مطار جدة.",
+                "keywords": [
+                    "Makkah to Jeddah Airport taxi",
+                    "Makkah to KAIA",
+                    "taxi from Makkah to Jeddah airport",
+                    "توصيل من مكة للمطار",
+                    "تاكسي مكة جدة"
+                ]
+            },
             "distance": "100 km",
             "time": "1 hr 30 min",
             "baseRate": 200,
@@ -48,6 +86,19 @@
         {
             "id": "692db09934f15bc89b45a5ff",
             "name": "Makkah Hotel to Madinah Hotel",
+            "slug": "makkah-to-madinah-taxi",
+            "seo": {
+                "title": "Makkah to Madinah Taxi Price | VIP Private Car | توصيل مكة المدينة",
+                "description": "Comfortable private taxi from Makkah to Madinah. 4.5 hour journey in luxury GMC or Staria. Stop at Miqat included. Book now from 450 SAR.",
+                "keywords": [
+                    "Makkah to Madinah taxi fare",
+                    "Makkah to Madinah car rental",
+                    "taxi Makkah Madinah",
+                    "private car Makkah Madinah",
+                    "توصيل من مكة الى المدينة",
+                    "سعر التوصيل من مكة للمدينة"
+                ]
+            },
             "distance": "450 km",
             "time": "4 hrs 30 min",
             "baseRate": 450,
@@ -63,6 +114,17 @@
         {
             "id": "692db09934f15bc89b45a60e",
             "name": "Shopping/ City Tour per hour",
+            "slug": "hourly-rental-makkah-madinah",
+            "seo": {
+                "title": "Hourly Car Rental with Driver Makkah & Madinah",
+                "description": "Rent a car with driver by the hour in Makkah or Madinah for shopping, meetings, or personal ziyarat. Flexible service.",
+                "keywords": [
+                    "hourly car rental Makkah",
+                    "rent car with driver Makkah",
+                    "hourly chauffeur Saudi Arabia",
+                    "ايجار سيارة بالساعة مكة"
+                ]
+            },
             "distance": "-",
             "time": "1 Hour",
             "baseRate": 80,
@@ -78,6 +140,19 @@
         {
             "id": "692db09a34f15bc89b45a60b",
             "name": "Taxi Makkah to Taif and Return",
+            "slug": "makkah-to-taif-taxi",
+            "seo": {
+                "title": "Taxi Makkah to Taif | Day Trip & Return | توصيل مكة الطائف",
+                "description": "Enjoy a day trip from Makkah to Taif. Visit cable cars, rose factories, and museums. Round trip with waiting included. توصيل من مكة الى الطائف.",
+                "keywords": [
+                    "Makkah to Taif taxi",
+                    "Taif tour from Makkah",
+                    "taxi Makkah Taif price",
+                    "trip to Taif",
+                    "رحلة الطائف من مكة",
+                    "تاكسي مكة الطائف"
+                ]
+            },
             "distance": "180 km",
             "time": "8-10 hrs",
             "baseRate": 500,
@@ -93,6 +168,16 @@
         {
             "id": "692db09a34f15bc89b45a60c",
             "name": "Taxi Jeddah to Taif and Return",
+            "slug": "jeddah-to-taif-taxi",
+            "seo": {
+                "title": "Taxi Jeddah to Taif | Private Transfer",
+                "description": "Direct taxi from Jeddah to Taif. Enjoy the cool weather of Taif with our reliable transport service. One way or round trip available.",
+                "keywords": [
+                    "Jeddah to Taif taxi",
+                    "Jeddah Taif transfer",
+                    "taxi fare Jeddah to Taif"
+                ]
+            },
             "distance": "350 km",
             "time": "10-12 hrs",
             "baseRate": 700,
@@ -108,6 +193,19 @@
         {
             "id": "6949b367a41f6410e88ed72e",
             "name": "Madina Ziyarat Taxi",
+            "slug": "madinah-ziyarat-taxi",
+            "seo": {
+                "title": "Madinah Ziyarat Taxi Service | Visit Holy Places",
+                "description": "Book Madinah Ziyarat taxi to visit Masjid Quba, Qiblatun, Khandaq, and Mount Uhud. 3-4 hour spiritual tour with local driver.",
+                "keywords": [
+                    "Madinah Ziyarat taxi",
+                    "ziyarat tour Madinah",
+                    "places to visit in Madinah",
+                    "taxi for ziyarat",
+                    "مزارات المدينة",
+                    "جولة مزارات"
+                ]
+            },
             "distance": "40 km",
             "time": "3-4 hrs",
             "baseRate": 250,
@@ -123,6 +221,20 @@
         {
             "id": "6949b368a41f6410e88ed732",
             "name": "Makkah Ziyarat Taxi",
+            "slug": "makkah-ziyarat-taxi",
+            "seo": {
+                "title": "Makkah Ziyarat Taxi Tour | Hira Cave & Thawr",
+                "description": "Private taxi for Makkah Ziyarat. Visit Jabal Al-Nour (Hira), Thawr, Arafat, Mina, and Muzdalifah. 3-4 hour comprehensive tour.",
+                "keywords": [
+                    "Makkah Ziyarat taxi",
+                    "ziyarat places Makkah",
+                    "Hira cave transport",
+                    "Makkah tour",
+                    "مزارات مكة",
+                    "جبل النور",
+                    "عرفات"
+                ]
+            },
             "distance": "40 km",
             "time": "3-4 hrs",
             "baseRate": 250,
@@ -138,6 +250,16 @@
         {
             "id": "madinah-hotel-to-madinah-airport",
             "name": "Madinah Hotel to Madinah Airport",
+            "slug": "madinah-hotel-to-airport",
+            "seo": {
+                "title": "Taxi Madinah Hotel to Airport | Departure Transfer",
+                "description": "Reliable drop-off from your Madinah hotel to Prince Mohammad Bin Abdulaziz Airport. Punctual, clean cars.",
+                "keywords": [
+                    "Madinah hotel to airport",
+                    "Madinah airport drop off",
+                    "taxi Madinah airport"
+                ]
+            },
             "distance": "20 km",
             "time": "25 min",
             "baseRate": 150,
@@ -153,6 +275,17 @@
         {
             "id": "6949b368a41f6410e88ed738",
             "name": "Madinah Airport to Madinah Hotel",
+            "slug": "madinah-airport-to-hotel",
+            "seo": {
+                "title": "Taxi Madinah Airport to Hotel | Arrival Transfer",
+                "description": "Direct transfer from Madinah Airport to your hotel. English/Urdu speaking drivers available. 24/7 Service.",
+                "keywords": [
+                    "Madinah airport to hotel",
+                    "taxi Madinah airport",
+                    "Madinah arrival transfer",
+                    "توصيل مطار المدينة"
+                ]
+            },
             "distance": "20 km",
             "time": "25 min",
             "baseRate": 120,
@@ -168,6 +301,17 @@
         {
             "id": "692db09934f15bc89b45a600",
             "name": "Madinah Hotel to Makkah Hotel",
+            "slug": "madinah-to-makkah-taxi",
+            "seo": {
+                "title": "Madinah to Makkah Taxi | VIP Private Transfer",
+                "description": "Book a comfortable ride from Madinah to Makkah. Features Miqat stop, luxury AC cars, and experienced drivers. Best rates guaranteed.",
+                "keywords": [
+                    "Madinah to Makkah taxi",
+                    "private car Madinah Makkah",
+                    "taxi fare Madinah to Makkah",
+                    "توصيل من المدينة الى مكة"
+                ]
+            },
             "distance": "450 km",
             "time": "4 hrs 30 min",
             "baseRate": 450,
@@ -183,6 +327,16 @@
         {
             "id": "jeddah-airport-to-madina-hotel",
             "name": "Jeddah Airport to Madina Hotel",
+            "slug": "jeddah-airport-to-madinah",
+            "seo": {
+                "title": "Taxi Jeddah Airport to Madinah | Direct Transfer",
+                "description": "Travel directly from Jeddah Airport to Madinah Hotels. Comfortable, long-distance certified vehicles for a smooth 4-hour journey.",
+                "keywords": [
+                    "Jeddah Airport to Madinah taxi",
+                    "KAIA to Madinah",
+                    "taxi Jeddah Madinah price"
+                ]
+            },
             "distance": "400 km",
             "time": "4 hrs",
             "baseRate": 500,
@@ -198,6 +352,16 @@
         {
             "id": "jeddah-airport-to-jeddah-hotel",
             "name": "Jeddah Airport to Jeddah Hotel",
+            "slug": "jeddah-airport-transfer",
+            "seo": {
+                "title": "Jeddah Airport Taxi to Jeddah Hotel",
+                "description": "Fast and affordable taxi from Jeddah Airport to any hotel or district in Jeddah. Meet and greet included.",
+                "keywords": [
+                    "Jeddah airport taxi",
+                    "taxi to Jeddah hotel",
+                    "KAIA transfer"
+                ]
+            },
             "distance": "30 km",
             "time": "30 min",
             "baseRate": 200,
@@ -213,6 +377,15 @@
         {
             "id": "makkah-hotel-to-madina-airport",
             "name": "Makkah Hotel To Madina Airport Taxi",
+            "slug": "makkah-to-madinah-airport",
+            "seo": {
+                "title": "Taxi Makkah to Madinah Airport | Long Distance Cab",
+                "description": "Direct taxi from Makkah to Madinah Airport (MED). Ensure you reach your flight on time with our reliable intercity service.",
+                "keywords": [
+                    "Makkah to Madinah airport taxi",
+                    "Makkah to MED transfer"
+                ]
+            },
             "distance": "460 km",
             "time": "5 hrs",
             "baseRate": 600,
@@ -228,6 +401,16 @@
         {
             "id": "madina-hotel-to-jeddah-hotel",
             "name": "Madina Hotel To Jeddah Hotel",
+            "slug": "madinah-to-jeddah-taxi",
+            "seo": {
+                "title": "Taxi Madinah to Jeddah | Private Intercity Transfer",
+                "description": "Travel from Madinah to Jeddah in comfort. Ideal for post-Umrah stays or catchments. Professional drivers.",
+                "keywords": [
+                    "Madinah to Jeddah taxi",
+                    "car rental Madinah to Jeddah",
+                    "توصيل المدينة جدة"
+                ]
+            },
             "distance": "400 km",
             "time": "4 hrs",
             "baseRate": 500,
@@ -245,72 +428,147 @@
         {
             "id": "camry",
             "name": "Toyota Camry",
+            "slug": "toyota-camry",
+            "seo": {
+                "title": "Toyota Camry Taxi Makkah & Jeddah | Economy Choice",
+                "description": "Book Toyota Camry taxi for Umrah. Affordable, comfortable, and reliable for small families (3-4 pax). Jeddah, Makkah, Madinah transfers.",
+                "keywords": [
+                    "Toyota Camry Makkah",
+                    "Camry taxi Jeddah",
+                    "economy umrah transport",
+                    "كامري توصيل مكة"
+                ]
+            },
             "capacity": "4 Seater",
             "multiplier": 1,
             "features": [
                 "Air Conditioning",
                 "Comfortable Seating",
-                "USB Charging"
+                "USB Charging",
+                "Perfect for couples"
             ],
             "luggage": "2 Large Suitcases"
         },
         {
             "id": "gmc",
             "name": "GMC Yukon",
+            "slug": "gmc-yukon-at4",
+            "seo": {
+                "title": "GMC Yukon Rental Makkah | VIP Umrah Transport | جمس يوكن",
+                "description": "Luxury GMC Yukon XL 2025 rental in Makkah. 7-seater SUV for VIP Jeddah airport transfers and Makkah-Madinah travel. حجز جمس يوكن.",
+                "keywords": [
+                    "GMC Yukon Makkah",
+                    "GMC Yukon taxi Jeddah",
+                    "VIP transport Umrah",
+                    "luxury SUV Saudi Arabia",
+                    "جمس يوكن توصيل"
+                ]
+            },
             "capacity": "7 Seater",
             "multiplier": 1.5,
             "features": [
                 "Luxury Leather Seats",
                 "Premium Sound",
-                "Extra Legroom"
+                "Extra Legroom",
+                "Privacy Tint",
+                "Dual AC"
             ],
             "luggage": "5 Large Suitcases"
         },
         {
             "id": "staria",
             "name": "Hyundai Staria",
+            "slug": "hyundai-staria",
+            "seo": {
+                "title": "Hyundai Staria Taxi Makkah | 2025 Model Van",
+                "description": "Ride in the futuristic Hyundai Staria. Spacious 7-seater van perfect for families. Modern interior, panoramic windows. Jeddah & Makkah.",
+                "keywords": [
+                    "Hyundai Staria Makkah",
+                    "Staria taxi Jeddah",
+                    "family van rental Umrah",
+                    "هيونداي ستاريا نقل"
+                ]
+            },
             "capacity": "7 Seater",
             "multiplier": 1.3,
             "features": [
                 "Modern Design",
                 "Panoramic Windows",
-                "Premium Comfort"
+                "Premium Comfort",
+                "Pilot Seats",
+                "USB-C Ports"
             ],
             "luggage": "4 Large Suitcases"
         },
         {
             "id": "starex",
             "name": "Hyundai Starex",
+            "slug": "hyundai-starex",
+            "seo": {
+                "title": "Hyundai H1 Starex Taxi Makkah | Family Van",
+                "description": "Reliable Hyundai H1 (Starex) van for rent. Affordable family transport for Jeddah to Makkah/Madinah. 7+ passengers.",
+                "keywords": [
+                    "Hyundai H1 Makkah",
+                    "Starex taxi",
+                    "cheap family van Umrah",
+                    "اتش ون توصيل"
+                ]
+            },
             "capacity": "7 Seater",
             "multiplier": 1.2,
             "features": [
                 "Spacious Interior",
                 "AC Vents for Rear",
-                "Sliding Doors"
+                "Sliding Doors",
+                "Budget Friendly"
             ],
             "luggage": "4 Large Suitcases"
         },
         {
             "id": "hiace",
             "name": "Toyota Hiace",
+            "slug": "toyota-hiace",
+            "seo": {
+                "title": "Toyota Hiace Bus Rental Makkah | 10 Seater",
+                "description": "Rent Toyota Hiace 14-seater (used as 10-seater for comfort) in Makkah/Jeddah. Ideal for small groups and large families with luggage.",
+                "keywords": [
+                    "Toyota Hiace Makkah",
+                    "10 seater taxi Jeddah",
+                    "small bus rental Umrah",
+                    "باص هايس توصيل"
+                ]
+            },
             "capacity": "10/11 Seater",
             "multiplier": 1.6,
             "features": [
                 "High Roof",
                 "Individual Seats",
-                "Ample Luggage Space"
+                "Ample Luggage Space",
+                "Group Travel"
             ],
             "luggage": "8 Large Suitcases"
         },
         {
             "id": "coaster",
             "name": "Toyota Coaster",
+            "slug": "toyota-coaster",
+            "seo": {
+                "title": "Toyota Coaster Bus Makkah | 20-25 Pax Transport",
+                "description": "Toyota Coaster bus rental for Umrah groups. Comfortable 21+ seater mini bus for Jeddah to Makkah transfers and Ziyarat.",
+                "keywords": [
+                    "Toyota Coaster Makkah",
+                    "bus rental Jeddah",
+                    "group transport Umrah",
+                    "باص كوستر ايجار"
+                ]
+            },
             "capacity": "21 Seater",
             "multiplier": 2.5,
             "features": [
                 "Microphone System",
                 "Curtains",
-                "Reclining Seats"
+                "Reclining Seats",
+                "Large Windows"
             ],
             "luggage": "15 Large Suitcases"
         }

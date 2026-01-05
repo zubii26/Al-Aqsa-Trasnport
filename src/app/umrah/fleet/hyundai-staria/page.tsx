@@ -10,24 +10,24 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+import pricingData from '@/data/pricing.json';
+
+const vehicleData = pricingData.vehicles.find(v => v.id === 'staria');
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Hyundai Staria 2024 Luxury Van",
+    "name": vehicleData?.seo?.title || "Hyundai Staria 2024 Luxury Van",
     "image": "https://alaqsaumrahtransport.com/images/fleet/staria-hero-professional.png",
-    "description": "Rent premium Hyundai Staria 2024 in Makkah. Luxury 7-seater van with panoramic views for VIP families.",
+    "description": vehicleData?.seo?.description || "Rent premium Hyundai Staria 2024 in Makkah. Luxury 7-seater van with panoramic views for VIP families.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { "@type": "Offer", "price": "450", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
 };
 
 export const metadata: Metadata = {
-    title: "Hyundai Staria Rental Makkah | Luxury 2024 Family Van | هيونداي ستاريا",
-    description: "Book Hyundai Staria 2024 for Umrah transport. Premium 7-seater luxury van. حجز هيونداي ستاريا في مكة. فان عائلي فخم لتوصيل المطار.",
-    keywords: [
-        "Hyundai Staria rental Makkah", "Luxury van Jeddah airport", "Staria 2024 Makkah to Madinah",
-        "VIP family transport Umrah", "Hyundai Staria taxi Saudi Arabia", "Premium van hire Makkah",
-        "هيونداي ستاريا مكة", "حجز ستاريا من مطار جدة", "فان عائلي فخم", "توصيل ستاريا للمدينة"
-    ],
+    title: vehicleData?.seo?.title,
+    description: vehicleData?.seo?.description,
+    keywords: vehicleData?.seo?.keywords,
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' }
 };
 

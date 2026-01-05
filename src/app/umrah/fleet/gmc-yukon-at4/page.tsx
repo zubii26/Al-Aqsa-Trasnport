@@ -10,12 +10,16 @@ import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
 import Interior360Viewer from '@/components/fleet/Interior360Viewer';
 
+import pricingData from '@/data/pricing.json';
+
+const vehicleData = pricingData.vehicles.find(v => v.id === 'gmc');
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "GMC Yukon XL 2024 Rental Makkah",
+    "name": vehicleData?.seo?.title || "GMC Yukon XL 2024 Rental Makkah",
     "image": "https://alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
-    "description": "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
+    "description": vehicleData?.seo?.description || "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
     "brand": {
         "@type": "Brand",
         "name": "GMC"
@@ -30,23 +34,9 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "GMC Yukon Rental Makkah | VIP Umrah Transport | جمس يوكن 2025",
-    description: "Book GMC Yukon XL 2025 for Umrah. Luxury 7-seater SUV for Jeddah Airport to Makkah. حجز جمس يوكن في مكة. سيارة عائلية فخمة لتوصيل المعتمرين.",
-    keywords: [
-        "GMC Yukon rental Makkah",
-        "GMC Yukon taxi Jeddah airport",
-        "VIP transport Makkah to Madinah",
-        "Luxury SUV rental Saudi Arabia",
-        "Rent Yukon XL Madinah",
-        "GMC transport for Umrah",
-        "Private family taxi Makkah",
-        "VIP car rental with driver",
-        "حجز جمس يوكن مكة",
-        "ايجار جمس يوكن من مطار جدة",
-        "توصيل جمس يوكن للمدينة",
-        "سيارات عائلية للايجار في مكة",
-        "سعر حجز جمس يوكن 2025"
-    ],
+    title: vehicleData?.seo?.title,
+    description: vehicleData?.seo?.description,
+    keywords: vehicleData?.seo?.keywords,
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
     }

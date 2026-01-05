@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { MetadataRoute } from 'next';
 import { blogService } from '@/services/blogService';
+import pricingData from '@/data/pricing.json';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://alaqsaumrahtransport.com';
@@ -35,6 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route === '/umrah' ? 1 : 0.8,
     }));
 
+    // Dynamic Route Pages from Pricing Data
+    const transportRoutes = pricingData.routes
+        .filter(r => r.slug)
+        .map((route) => ({
+            url: `${baseUrl}/umrah/routes/${route.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        }));
+
     // Dynamic Blog Posts
     let blogRoutes: MetadataRoute.Sitemap = [];
     try {
@@ -50,5 +62,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Continue without blog routes to ensure build succeeds
     }
 
-    return [...routes, ...blogRoutes];
+    return [...routes, ...transportRoutes, ...blogRoutes];
 }
