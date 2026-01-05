@@ -1,13 +1,12 @@
-
 const CACHE_NAME = 'umrah-app-v1';
 const STATIC_ASSETS = [
     '/umrah/',
     '/umrah/about',
     '/umrah/services',
-    '/umrah/contact',
+    '/umrah/',
     '/offline.html',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
+    '/android-chrome-192x192.png',
+    '/android-chrome-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {

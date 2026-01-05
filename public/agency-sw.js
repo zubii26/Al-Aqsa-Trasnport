@@ -4,8 +4,8 @@ const STATIC_ASSETS = [
     '/agency/',
     '/agency/login',
     '/offline.html',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
+    '/android-chrome-192x192.png',
+    '/android-chrome-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {

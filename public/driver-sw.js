@@ -6,8 +6,10 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll([
                 OFFLINE_URL,
-                '/driver/login',
-                '/logo.png',
+                '/driver/',
+                '/offline.html',
+                '/android-chrome-192x192.png',
+                '/android-chrome-512x512.png',
                 '/driver-manifest.json'
             ]);
         })
