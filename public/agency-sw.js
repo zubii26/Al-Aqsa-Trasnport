@@ -1,11 +1,10 @@
 
 const CACHE_NAME = 'agency-app-v1';
 const STATIC_ASSETS = [
-    '/agency/',
-    '/agency/login',
     '/offline.html',
     '/android-chrome-192x192.png',
-    '/android-chrome-512x512.png'
+    '/android-chrome-512x512.png',
+    '/agency-screenshot.png'
 ];
 
 self.addEventListener('install', (event) => {
