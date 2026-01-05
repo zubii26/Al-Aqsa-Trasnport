@@ -22,6 +22,13 @@
     animation: kenBurns 40s ease-out infinite alternate;
 }
 
+@media (max-width: 768px) {
+    .bgImage {
+        animation: none;
+        /* Disable heavy animation on mobile */
+    }
+}
+
 @keyframes kenBurns {
     0% {
         transform: scale(1);
@@ -365,7 +372,7 @@
     }
 }
 
-/* Mobile - Fix for dynamic address bar causing jumps */
+/* Mobile - Fix for dynamic address bar causing jumps & parallax issues */
 @media (max-width: 768px) {
     .hero {
         min-height: 100dvh;
@@ -375,10 +382,10 @@
         padding-top: 120px;
     }
 
-    /* Disable complex parallax on mobile if it causes issues, but here we stabilize it */
-    .hero {
-        transform: translateZ(0);
-        /* Force GPU */
+    /* CRITICAL FIX: Disable Framer Motion JS parallax on mobile by overriding inline styles */
+    .hero>div:first-child {
+        transform: none !important;
+        opacity: 1 !important;
     }
 
     .buttons {
@@ -404,6 +411,17 @@
 
     .title {
         font-size: 2.75rem;
+        /* Stabilization */
+        will-change: auto;
+    }
+
+    .subtitle {
+        will-change: auto;
+    }
+
+    /* Hide heavy animated background blobs on mobile */
+    .hero>div:nth-child(3) {
+        display: none;
     }
 }
 
