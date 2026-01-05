@@ -45,9 +45,18 @@ export default function Preloader() {
             window.addEventListener('load', handleLoad);
         }
 
+        // Safety fallback: Force remove preloader after 4 seconds max
+        const safetyTimeout = setTimeout(() => {
+            if (isLoading) {
+                console.warn('Preloader safety timeout triggered');
+                handleLoad();
+            }
+        }, 4000);
+
         return () => {
             window.removeEventListener('load', handleLoad);
             clearInterval(interval);
+            clearTimeout(safetyTimeout);
         };
     }, []);
 
