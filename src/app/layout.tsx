@@ -9,8 +9,6 @@ import NextTopLoader from 'nextjs-toploader';
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { getSettings } from "@/lib/settings-storage";
 import "./globals.css";
-import "react-datepicker/dist/react-datepicker.css";
-import "@/styles/datepicker.css";
 
 
 const inter = Inter({
