@@ -14,7 +14,7 @@ const FLEET_IMAGES = [
         badge: 'VIP Choice',
         capacity: '7 Pax',
         luggage: '5 Bags',
-        url: '/fleet/gmc-yukon-at4',
+        url: '/umrah/fleet/gmc-yukon-at4',
         gradient: 'from-amber-500/20 to-amber-900/40'
     },
     {
@@ -24,7 +24,7 @@ const FLEET_IMAGES = [
         badge: 'Family Favorite',
         capacity: '7 Pax',
         luggage: '4 Bags',
-        url: '/fleet/hyundai-staria',
+        url: '/umrah/fleet/hyundai-staria',
         gradient: 'from-blue-500/20 to-slate-900/40'
     },
     {
@@ -34,7 +34,7 @@ const FLEET_IMAGES = [
         badge: 'Best Value',
         capacity: '4 Pax',
         luggage: '2 Bags',
-        url: '/fleet/toyota-camry',
+        url: '/umrah/fleet/toyota-camry',
         gradient: 'from-emerald-500/20 to-slate-900/40'
     },
     {
@@ -44,7 +44,7 @@ const FLEET_IMAGES = [
         badge: 'Large Groups',
         capacity: '10 Pax',
         luggage: '8 Bags',
-        url: '/fleet/toyota-hiace',
+        url: '/umrah/fleet/toyota-hiace',
         gradient: 'from-slate-500/20 to-slate-900/40'
     },
     {
@@ -54,7 +54,7 @@ const FLEET_IMAGES = [
         badge: 'Comfort',
         capacity: '7 Pax',
         luggage: '4 Bags',
-        url: '/fleet/hyundai-starex',
+        url: '/umrah/fleet/hyundai-starex',
         gradient: 'from-purple-500/20 to-slate-900/40'
     },
 ];
@@ -147,7 +147,7 @@ export default function FleetGallery() {
 
                                 {/* Badge */}
                                 <div className="absolute top-6 left-6 z-20">
-                                    <span className="px-5 py-2 glass-card bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">
+                                    <span className="px-5 py-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">
                                         {img.badge}
                                     </span>
                                 </div>
@@ -185,7 +185,7 @@ export default function FleetGallery() {
                                         <span className="text-[#D4AF37] font-semibold text-sm uppercase tracking-wider group-hover:text-white transition-colors">
                                             View Details
                                         </span>
-                                        <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-[#D4AF37] transition-colors duration-300">
+                                        <div className="w-10 h-10 rounded-full bg-[#D4AF37] text-white flex items-center justify-center shadow-lg shadow-[#D4AF37]/20 group-hover:bg-[#b89628] transition-all duration-300 transform group-hover:scale-110">
                                             <ArrowRight size={18} />
                                         </div>
                                     </div>

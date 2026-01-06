@@ -9,7 +9,7 @@ export const usePusher = () => {
 
     useEffect(() => {
         if (!PUSHER_KEY) {
-            console.error('Pusher Key missing in env');
+            // console.warn('Pusher Key missing in env - Realtime features disabled');
             return;
         }
 

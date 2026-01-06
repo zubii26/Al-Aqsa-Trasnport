@@ -24,7 +24,7 @@ const services = [
         description: 'Experience safe, comfortable travel between major Saudi cities. Our premium intercity transport ensures a smooth journey for pilgrims performing Umrah and Ziyarat. Punctual, reliable, and stress-free long-distance travel.',
         image: '/images/services/intercity-transport.png',
         icon: <Car size={32} />,
-        link: '/services/intercity-transfer',
+        link: '/umrah/services/intercity-transfer',
         keywords: ['intercity transport Saudi Arabia', 'Makkah to Madinah transport', 'long-distance travel for pilgrims']
     },
     {
@@ -34,7 +34,7 @@ const services = [
         description: 'Seamless pickup and drop-off from Jeddah and Madinah airports. We offer real-time flight tracking, professional meet-and-greet service, and luggage assistance for a stress-free arrival in the Holy Land.',
         icon: <Plane size={32} />,
         image: '/images/services/airport-transfer-real.jpg',
-        link: '/services/airport-transfers',
+        link: '/umrah/services/airport-transfers',
         keywords: ['Jeddah Airport pickup', 'Madinah Airport transfer', 'Umrah airport transport']
     },
     {
@@ -44,7 +44,7 @@ const services = [
         description: 'Quick and reliable transfers between your hotel and the Holy Mosques. Enjoy premium comfort and cleanliness, perfectly suitable for families, groups, and elderly pilgrims seeking ease of movement.',
         icon: <Building2 size={32} />,
         image: '/images/services/hotel-transfer-real.jpg',
-        link: '/services/hotel-transfers', // Updated link to new dedicated page
+        link: '/umrah/services/hotel-transfers', // Updated link to new dedicated page
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
     }
 ];
@@ -72,8 +72,8 @@ export default function TransportServices() {
                     {services.map((service, index) => (
                         <FadeIn key={service.id} delay={index * 0.1} scale>
                             <article className="group h-full bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-800 flex flex-col">
-                                {/* Image Container */}
-                                <div className="relative h-48 md:h-64 overflow-hidden">
+                                {/* Image Container - Now Clickable */}
+                                <Link href={service.link} className="relative h-48 md:h-64 overflow-hidden block">
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
                                     <Image
                                         src={service.image}
@@ -84,14 +84,16 @@ export default function TransportServices() {
                                     <div className="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur p-2 rounded-lg shadow-sm text-amber-500">
                                         {service.icon}
                                     </div>
-                                </div>
+                                </Link>
 
                                 {/* Content */}
                                 <div className="p-6 flex flex-col flex-1">
                                     <div className="mb-4">
-                                        <h3 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white mb-1">
-                                            {service.title}
-                                        </h3>
+                                        <Link href={service.link}>
+                                            <h3 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white mb-1 hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                                {service.title}
+                                            </h3>
+                                        </Link>
                                         <p className="text-sm font-medium text-amber-600 dark:text-amber-500">
                                             {service.subtitle}
                                         </p>

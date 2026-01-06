@@ -62,6 +62,7 @@ interface BookingData {
 }
 
 import { replaceTemplateVariables } from './email-templates';
+import { getSettings } from './settings-storage';
 
 // ... imports
 
@@ -141,16 +142,18 @@ export const getContactFeedbackTemplate = ({ name, message }: ContactFeedbackDat
 `;
 };
 
-// Implement the function used in API routes
 export const sendBookingConfirmationEmail = async (booking: BookingData) => {
-    // 1. Prepare HTML using the bilingual template
-    const templateString = DEFAULT_BOOKING_CONFIRMATION_TEMPLATE;
+    // 1. Fetch Request Settings
+    const settings = await getSettings();
+    const templateString = settings.emailTemplates?.bookingConfirmation || DEFAULT_BOOKING_CONFIRMATION_TEMPLATE;
+
+    // 2. Prepare HTML using the dynamic template
     const htmlContent = getBookingConfirmationTemplate(booking, templateString);
 
-    // 2. Bilingual Subject
+    // 3. Bilingual Subject
     const subject = `Booking Confirmation #${booking.id} | تأكيد الحجز`;
 
-    // 3. Send
+    // 4. Send
     return await sendEmail({
         to: booking.email || '', // Ensure email exists
         subject,
@@ -162,7 +165,11 @@ export const sendAdminNewBookingEmail = async (booking: BookingData) => {
     const adminEmail = process.env.ADMIN_EMAIL_NOTIFICATIONS || process.env.EMAIL_USER; // Fallback
     if (!adminEmail) return false;
 
-    const htmlContent = getAdminBookingNotificationTemplate(booking, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE);
+    // 1. Fetch Request Settings
+    const settings = await getSettings();
+    const templateString = settings.emailTemplates?.adminNotification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE;
+
+    const htmlContent = getAdminBookingNotificationTemplate(booking, templateString);
 
     return await sendEmail({
         to: adminEmail,

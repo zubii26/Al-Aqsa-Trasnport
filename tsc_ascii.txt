@@ -1,0 +1,4 @@
+src/app/api/admin/finance/agencies/[id]/route.ts(42,61): error TS2322: Type 'ObjectId' is not assignable to type 'Condition<ApplyBasicQueryCasting<string>> | undefined'.
+  Type 'ObjectId' is not assignable to type 'FilterOperators<string | RegExp | string[] | BSONRegExp | null>'.
+    Types of property 'id' are incompatible.
+      Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'undefined'.
