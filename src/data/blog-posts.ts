@@ -1575,5 +1575,91 @@ export const staticBlogPosts = [
         metaDescription: 'Detailed review of the best transport for Umrah. We compare VIP Taxis vs Haramain Train vs Buses. Price, safety, and comfort rankings for 2025.',
         createdAt: new Date('2025-12-28'),
         updatedAt: new Date('2025-12-28'),
+    },
+    {
+        _id: 'best-umrah-transport-services-saudi-arabia-ar',
+        slug: 'best-umrah-transport-services-saudi-arabia-ar',
+        title: 'أفضل خدمات نقل المعتمرين في السعودية: دليلك الشامل لعام 2026',
+        excerpt: 'هل تبحث عن أفضل وسيلة تنقل بين جدة ومكة والمدينة؟ اكتشف معنا خيارات النقل الفاخرة والاقتصادية، ونصائح لاختيار الخدمة الأنسب لرحلتك الإيمانية.',
+        content: `
+            <div dir="rtl" class="text-right">
+                <h2>اختيار وسيلة النقل المناسبة لرحلتك الإيمانية</h2>
+                <p>تعتبر رحلة العمرة تجربة روحانية فريدة، وآخر ما يود المعتمر القلق بشأنه هو تفاصيل التنقل والمواصلات. إن اختيار <strong>أفضل شركة نقل للمعتمرين</strong> يمكن أن يحدث فرقاً كبيراً بين رحلة مريحة تفرغك للعبادة، وبين رحلة مليئة بالمتاعب. في هذا المقال، نستعرض بالتفصيل أفضل الخيارات المتاحة للتنقل بين جدة، مكة المكرمة، والمدينة المنورة لعام 2026.</p>
+
+                <h3>1. النقل الخاص الفاخر (ليكزس، جمس يوكون، بي إم دبليو)</h3>
+                <p><strong>الخيار الأمثل لـ:</strong> العائلات، كبار السن، والباحثين عن الراحة والخصوصية.</p>
+                <p>تعتبر السيارات الخاصة من طراز <strong>GMC Yukon XL</strong> أو <strong>Lexus ES</strong> الخيار الذهبي لمن ينشد الراحة.</p>
+                <ul>
+                    <li><strong>المميزات:</strong> خدمة من الباب للباب، سعة كبيرة للحقائب (تصل لـ 7 حقائب)، خصوصية تامة للعوائل، وتكييف عالي الجودة يناسب أجواء المملكة الحارة.</li>
+                    <li><strong>لماذا نحن؟</strong> في "الأقصى للنقل"، نوفر سائقين محترفين يتحدثون لغتك، وسيارات موديل السنة لضمان رحلة آمنة ومريحة.</li>
+                </ul>
+
+                <h3>2. الحافلات العائلية (تويوتا هايس)</h3>
+                <p><strong>الخيار الأمثل لـ:</strong> المجموعات المتوسطة (7-10 أشخاص) والعائلات الكبيرة.</p>
+                <p>تعتبر حافلات تويوتا هايس "سقف عالي" الخيار الاقتصادي والعملي للمجموعات.</p>
+                <ul>
+                    <li><strong>التوفير:</strong> بدلاً من حجز سيارتين صغيرتين، يمكن لسيارة واحدة أن تقل العائلة بأكملها مع حقائبهم.</li>
+                    <li><strong>المرونة:</strong> إمكانية التوقف في الميقات أو الاستراحات حسب رغبة العائلة، بعكس حافلات النقل الجماعي.</li>
+                </ul>
+
+                <h3>3. قطار الحرمين السريع</h3>
+                <p><strong>الخيار الأمثل لـ:</strong> الأفراد أو الأزواج بحقائب خفيفة.</p>
+                <p>خيار سريع ومميز يربط بين مكة والمدينة في وقت قياسي.</p>
+                <ul>
+                    <li><strong>التحديات:</strong> المحطات بعيدة نوعاً ما عن الحرم والفنادق المركزية، مما يضطرك لطلب تاكسي إضافي. كما أن هناك قيوداً صارمة على حجم وعدد الحقائب.</li>
+                </ul>
+
+                <h3>مقارنة سريعة: التاكسي vs النقل الخاص</h3>
+                <table class="w-full border-collapse border border-slate-200 dark:border-slate-700 my-8 text-sm text-right">
+                    <thead class="bg-amber-50 dark:bg-slate-900">
+                        <tr>
+                            <th class="p-3 border border-slate-200 dark:border-slate-700">وجه المقارنة</th>
+                            <th class="p-3 border border-slate-200 dark:border-slate-700">النقل الخاص (الأقصى)</th>
+                            <th class="p-3 border border-slate-200 dark:border-slate-700">تاكسي المطار / التطبيقات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700 font-bold">السعر</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">ثابت ومعروف مسبقاً</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">متغير وقد يزيد فجأة</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700 font-bold">الاستقبال</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">استقبال بالاسم داخل المطار</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">البحث عن السائق خارج الصالة</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700 font-bold">جودة السيارة</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">موديلات حديثة ونظيفة ومعقمة</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-700">تتفاوت الجودة والنظافة</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>نصائح ذهبية لحجز ناجح</h3>
+                <ul>
+                    <li><strong>احجز مبكراً:</strong> خاصة في مواسم الذروة (رمضان، الحج، وإجازات المدارس) لضمان توفر السيارة التي تناسبك.</li>
+                    <li><strong>تأكد من الترخيص:</strong> تعامل دائماً مع شركات مرخصة لضمان حقوقك وأمانك.</li>
+                    <li><strong>اطلب كرسي أطفال:</strong> سلامة أطفالك أولوية. نحن نوفر كراسي للأطفال عند الطلب المسبق.</li>
+                </ul>
+
+                <h3>الخاتمة: راحتك تبدأ من هنا</h3>
+                <p>لا تدع عناء الطريق يؤثر على روحانية عمرتك. في <strong>الأقصى للنقل</strong>، نحن نفهم احتياجات المعتمر بدقة. بداية من الاستقبال الدافئ في المطار، وحتى الوصول الآمن لباب فندقك، نحن معك في كل خطوة.</p>
+                <p><em>احجز رحلتك الآن واستمتع بأفضل خدمات النقل في المملكة.</em></p>
+            </div>
+        `,
+        category: 'Travel Guide',
+        date: new Date('2026-01-06'),
+        readTime: '8 min read',
+        image: '/images/blog/gmc-yukon-xl-v2.png',
+        alt: 'أفضل خدمات نقل المعتمرين في السعودية - جي إم سي يوكون',
+        author: 'فريق التحرير',
+        tags: ['نقل معتمرين', 'سيارات خاصة', 'مكة', 'المدينة', 'جمس يوكون'],
+        isPublished: true,
+        metaTitle: 'أفضل خدمات نقل المعتمرين في السعودية 2026 | الأقصى للنقل',
+        metaDescription: 'دليل شامل لأفضل وسائل النقل للمعتمرين بين جدة ومكة والمدينة. قارن بين السيارات الخاصة والقطار، وتعرف على مميزات الجمس يوكون للعائلات.',
+        createdAt: new Date('2026-01-06'),
+        updatedAt: new Date('2026-01-06'),
     }
 ];

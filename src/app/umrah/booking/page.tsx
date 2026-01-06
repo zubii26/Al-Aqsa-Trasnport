@@ -7,11 +7,9 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
-import DatePicker from 'react-datepicker';
 
 import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
-import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 
@@ -1015,15 +1013,19 @@ export default function BookingPage() {
                             <Calendar size={14} className="text-secondary" /> Pickup Date
                         </label>
                         <div className="relative group">
-                            <DatePicker
-                                selected={bookingData.date}
-                                onChange={(date) => updateData('date', date)}
-                                placeholderText="Select Date"
-                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium"
-                                dateFormat="yyyy-MM-dd"
-                                minDate={new Date()}
-                                portalId="datepicker-portal"
-                                popperClassName="home-datepicker-popper"
+                            <input
+                                type="date"
+                                value={bookingData.date ? bookingData.date.toISOString().split('T')[0] : ''}
+                                onChange={(e) => {
+                                    if (!e.target.value) {
+                                        updateData('date', null);
+                                        return;
+                                    }
+                                    const newDate = new Date(e.target.value);
+                                    updateData('date', newDate);
+                                }}
+                                min={new Date().toISOString().split('T')[0]}
+                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
                             />
                             {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
                         </div>
@@ -1035,11 +1037,21 @@ export default function BookingPage() {
                             <Clock size={14} className="text-secondary" /> Pickup Time
                         </label>
                         <div className="relative group">
-                            <ClockTimePicker
-                                date={bookingData.time}
-                                onChange={(date) => updateData('time', date)}
-                                placeholderText="Select Time"
-                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium"
+                            <input
+                                type="time"
+                                value={bookingData.time ? bookingData.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                onChange={(e) => {
+                                    if (!e.target.value) {
+                                        updateData('time', null);
+                                        return;
+                                    }
+                                    const [hours, minutes] = e.target.value.split(':').map(Number);
+                                    const newTime = new Date();
+                                    newTime.setHours(hours);
+                                    newTime.setMinutes(minutes);
+                                    updateData('time', newTime);
+                                }}
+                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
                             />
                             {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
                         </div>
@@ -1172,14 +1184,19 @@ export default function BookingPage() {
                     <div className="relative group col-span-2">
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Arrival Date (If different)</label>
                         <div className="relative">
-                            <DatePicker
-                                selected={bookingData.arrivalDate}
-                                onChange={(date) => updateData('arrivalDate', date)}
-                                placeholderText="Select Arrival Date"
-                                className="w-full bg-white dark:bg-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-blue-500 transition-all text-sm pl-4"
-                                dateFormat="yyyy-MM-dd"
-                                minDate={new Date()}
-                                portalId="datepicker-portal-arrival"
+                            <input
+                                type="date"
+                                value={bookingData.arrivalDate ? bookingData.arrivalDate.toISOString().split('T')[0] : ''}
+                                onChange={(e) => {
+                                    if (!e.target.value) {
+                                        updateData('arrivalDate', null);
+                                        return;
+                                    }
+                                    const newDate = new Date(e.target.value);
+                                    updateData('arrivalDate', newDate);
+                                }}
+                                min={new Date().toISOString().split('T')[0]}
+                                className="w-full bg-white dark:bg-slate-800 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-blue-500 transition-all text-sm pl-4 [color-scheme:light] dark:[color-scheme:dark]"
                             />
                         </div>
                     </div>

@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Calendar, Clock, PlaneLanding, PlaneTakeoff, Building2, Navigation, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import DatePicker from 'react-datepicker';
-import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
+
 import MapAutocomplete from '../MapAutocomplete';
 import { usePricing } from '@/context/PricingContext';
 import { splitRouteName } from '@/lib/utils/route-utils'; // Need to create or check if exists
@@ -107,11 +106,18 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
                             <Calendar size={20} />
                         </div>
-                        <DatePicker
-                            selected={data.date}
-                            onChange={(date) => updateData({ date })}
-                            minDate={new Date()}
-                            placeholderText="Select Date"
+                        <input
+                            type="date"
+                            value={data.date ? data.date.toISOString().split('T')[0] : ''}
+                            onChange={(e) => {
+                                if (!e.target.value) {
+                                    updateData({ date: null });
+                                    return;
+                                }
+                                const newDate = new Date(e.target.value);
+                                updateData({ date: newDate });
+                            }}
+                            min={new Date().toISOString().split('T')[0]}
                             className={`
                                 w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
                                 border-2 border-slate-100 dark:border-slate-800 
@@ -119,6 +125,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                 focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                 text-slate-900 dark:text-white
                                 ${errors.date ? 'border-red-500' : ''}
+                                [color-scheme:light] dark:[color-scheme:dark]
                             `}
                         />
                     </div>
@@ -131,10 +138,20 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
                             <Clock size={20} />
                         </div>
-                        <ClockTimePicker
-                            date={data.time}
-                            onChange={(time) => updateData({ time })}
-                            placeholderText="Select Time"
+                        <input
+                            type="time"
+                            value={data.time ? data.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                            onChange={(e) => {
+                                if (!e.target.value) {
+                                    updateData({ time: null });
+                                    return;
+                                }
+                                const [hours, minutes] = e.target.value.split(':').map(Number);
+                                const newTime = new Date();
+                                newTime.setHours(hours);
+                                newTime.setMinutes(minutes);
+                                updateData({ time: newTime });
+                            }}
                             className={`
                                 w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
                                 border-2 border-slate-100 dark:border-slate-800 
@@ -142,6 +159,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                 focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                 text-slate-900 dark:text-white
                                 ${errors.time ? 'border-red-500' : ''}
+                                [color-scheme:light] dark:[color-scheme:dark]
                             `}
                         />
                     </div>

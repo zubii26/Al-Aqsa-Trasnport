@@ -23,6 +23,7 @@ const SEOContentSection = dynamic(() => import('@/components/home/SEOContentSect
 const TransportServices = dynamic(() => import('@/components/home/TransportServices'));
 const Testimonials = dynamic(() => import('@/components/home/Testimonials'));
 const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
+const BookingGuide = dynamic(() => import('@/components/home/BookingGuide'));
 
 export async function generateMetadata() {
   return {
@@ -89,6 +90,9 @@ export default async function Home() {
 
       {/* Instant Price Calculator Section */}
       <InstantPriceCalculator />
+
+      {/* Booking Guide Section - NEW */}
+      <BookingGuide />
 
       {/* Features Section */}
       <Features />

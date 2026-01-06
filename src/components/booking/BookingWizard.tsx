@@ -7,13 +7,12 @@ import { usePricing } from '@/context/PricingContext';
 import JourneyStep from './steps/JourneyStep';
 import VehicleStep from './steps/VehicleStep';
 import ContactStep from './steps/ContactStep';
-import SummaryStep from './steps/SummaryStep';
+import DetailsStep from './steps/DetailsStep';
 
 const STEPS = [
     { id: 1, title: 'Journey', description: 'Route & Date' },
     { id: 2, title: 'Vehicle', description: 'Choose Fleet' },
-    { id: 3, title: 'Contact', description: 'Direct Details' },
-    { id: 4, title: 'Finish', description: 'Confirmation' }
+    { id: 3, title: 'Details', description: 'Confirm & Book' }
 ];
 
 export default function BookingWizard() {
@@ -41,7 +40,7 @@ export default function BookingWizard() {
     };
 
     const handleNext = () => {
-        if (currentStep < 4) setCurrentStep(prev => prev + 1);
+        if (currentStep < 3) setCurrentStep(prev => prev + 1);
     };
 
     const handleBack = () => {
@@ -91,8 +90,7 @@ export default function BookingWizard() {
                         >
                             {currentStep === 1 && <JourneyStep data={bookingData} updateData={updateData} onNext={handleNext} />}
                             {currentStep === 2 && <VehicleStep data={bookingData} updateData={updateData} onNext={handleNext} onBack={handleBack} />}
-                            {currentStep === 3 && <ContactStep data={bookingData} updateData={updateData} onNext={handleNext} onBack={handleBack} />}
-                            {currentStep === 4 && <SummaryStep data={bookingData} onBack={handleBack} />}
+                            {currentStep === 3 && <DetailsStep data={bookingData} updateData={updateData} onBack={handleBack} />}
                         </motion.div>
                     </AnimatePresence>
                 </div>

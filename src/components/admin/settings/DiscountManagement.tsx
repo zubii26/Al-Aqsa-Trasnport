@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { Settings } from '@/lib/validations';
 import { Save, Percent, DollarSign, Calendar, AlertCircle } from 'lucide-react';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+
 
 interface DiscountManagementProps {
     settings: Settings;
@@ -163,13 +162,12 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                                 <Calendar size={18} className="text-slate-400" />
                             </div>
-                            <DatePicker
-                                selected={formData.startDate ? new Date(formData.startDate) : null}
-                                onChange={(date) => handleChange('startDate', date ? date.toISOString() : '')}
-                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                                placeholderText="Select start date"
-                                dateFormat="MMMM d, yyyy"
-                                isClearable
+                            <input
+                                type="date"
+                                value={formData.startDate ? formData.startDate.split('T')[0] : ''}
+                                onChange={(e) => handleChange('startDate', e.target.value ? new Date(e.target.value).toISOString() : '')}
+                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
+                                placeholder="Select start date"
                             />
                         </div>
                     </div>
@@ -183,14 +181,13 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                                 <Calendar size={18} className="text-slate-400" />
                             </div>
-                            <DatePicker
-                                selected={formData.endDate ? new Date(formData.endDate) : null}
-                                onChange={(date) => handleChange('endDate', date ? date.toISOString() : '')}
-                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                                placeholderText="Select end date"
-                                dateFormat="MMMM d, yyyy"
-                                minDate={formData.startDate ? new Date(formData.startDate) : undefined}
-                                isClearable
+                            <input
+                                type="date"
+                                value={formData.endDate ? formData.endDate.split('T')[0] : ''}
+                                onChange={(e) => handleChange('endDate', e.target.value ? new Date(e.target.value).toISOString() : '')}
+                                min={formData.startDate ? formData.startDate.split('T')[0] : undefined}
+                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
+                                placeholder="Select end date"
                             />
                         </div>
                     </div>

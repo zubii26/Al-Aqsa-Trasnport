@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail, MapPin, PlaneLanding, PlaneTakeoff, Building2, ShieldCheck, HeartHandshake, CreditCard, Headphones } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import DatePicker from 'react-datepicker';
-import ClockTimePicker from '@/components/ui/TimePicker/ClockTimePicker';
+
 import SearchableSelect from '@/components/ui/SearchableSelect';
 
 import styles from './QuickBookingForm.module.css';
@@ -463,346 +462,308 @@ const QuickBookingForm = ({
 
                         <div className={styles.grid}>
 
-                            <div className={`${styles.inputGroup} ${styles.fullWidthMobile}`}>
-                                <label className={styles.label}>Full Name</label>
-                                <div className={styles.inputWrapper}>
-                                    <User size={20} className={styles.icon} />
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Enter your name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        className={`${styles.input} ${errors.name ? styles.error : ''}`}
-                                    />
-                                </div>
-                                {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
-                            </div>
-
-                            <div className={`${styles.inputGroup} ${styles.fullWidthMobile}`}>
-                                <label className={styles.label}>Email Address</label>
-                                <div className={styles.inputWrapper}>
-                                    <Mail size={20} className={styles.icon} />
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Enter your email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        className={`${styles.input} ${errors.email ? styles.error : ''}`}
-                                    />
-                                </div>
-                                {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
-                            </div>
-
-                            <div className={`${styles.inputGroup} ${styles.fullWidthMobile}`}>
-                                <label className={styles.label}>Phone Number</label>
-                                <div className={styles.inputWrapper}>
-                                    <Phone size={20} className={styles.icon} />
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        placeholder="+966 50 000 0000"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        className={`${styles.input} ${errors.phone ? styles.error : ''}`}
-                                    />
-                                </div>
-                                {errors.phone && <span className={styles.errorMessage}>{errors.phone}</span>}
-                            </div>
-
-                            <div className={`${styles.inputGroup} ${styles.halfWidthMobile}`}>
-                                <label className={styles.label}>Travel Date</label>
-                                <div className={styles.inputWrapper}>
-                                    <Calendar size={20} className={styles.icon} />
-                                    <DatePicker
-                                        selected={formData.date}
-                                        onChange={handleDateChange}
-                                        placeholderText="Select Date"
-                                        className={`${styles.input} ${errors.date ? styles.error : ''}`}
-                                        dateFormat="yyyy-MM-dd"
-                                        minDate={new Date()}
-                                        wrapperClassName={styles.datePickerWrapper}
-                                        popperPlacement="bottom-start"
-                                        popperClassName={variant === 'default' ? 'home-datepicker-popper' : ''}
-                                        portalId="datepicker-portal"
-                                        onFocus={(e) => e.target.blur()}
-                                    />
-                                </div>
-                                {errors.date && <span className={styles.errorMessage}>{errors.date}</span>}
-                            </div>
-
-                            <div className={`${styles.inputGroup} ${styles.halfWidthMobile}`}>
-                                <label className={styles.label}>Pickup Time</label>
-                                <div className={styles.inputWrapper}>
-                                    <Clock size={20} className={styles.icon} />
-                                    <ClockTimePicker
-                                        date={formData.time}
-                                        onChange={handleTimeChange}
-                                        placeholderText="Select Time"
-                                        className={`${styles.input} ${errors.time ? styles.error : ''}`}
-                                        align="right"
-                                    />
-                                </div>
-                                {errors.time && <span className={styles.errorMessage}>{errors.time}</span>}
-                            </div>
 
 
-                            {/* Editable Route Fields */}
+                            {/* Route Selection Pills */}
+                            <div className="col-span-full mb-3">
+                                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2 block">Where are you going?</label>
+                                <div className="flex flex-wrap gap-2 mt-1.5">
+                                    {[
+                                        { label: 'Jeddah ⇄ Makkah', icon: PlaneLanding, pickup: 'Jeddah Airport', dropoff: 'Makkah Hotel' },
+                                        { label: 'Makkah ⇄ Madinah', icon: Bus, pickup: 'Makkah Hotel', dropoff: 'Madinah Hotel' },
+                                        { label: 'Jeddah ⇄ Madinah', icon: PlaneTakeoff, pickup: 'Jeddah Airport', dropoff: 'Madinah Hotel' },
+                                        { label: 'Custom Route', icon: MapPin, pickup: '', dropoff: '', isCustom: true },
+                                    ].map((route) => {
+                                        // Dynamic active check
+                                        let isActive = false;
+                                        if (route.isCustom) {
+                                            isActive = formData.routeId === 'custom';
+                                        } else {
+                                            // Check if current form values match this preset
+                                            const p = formData.pickup.toLowerCase();
+                                            const d = formData.dropoff.toLowerCase();
+                                            const rp = route.pickup.toLowerCase();
+                                            const rd = route.dropoff.toLowerCase();
+                                            // Loose matching for UX
+                                            isActive = p.includes(rp) && d.includes(rd) && formData.routeId !== 'custom';
+                                        }
 
-                            <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
-                                <label className={styles.label}>Select Base Route (Optional)</label>
-                                <div className={styles.inputWrapper}>
-                                    <SearchableSelect
-                                        name="routeId"
-                                        value={formData.routeId}
-                                        onChange={handleRouteChange}
-                                        options={routeOptions}
-                                        placeholder="Choose base route for pricing..."
-                                        className={`${styles.input} ${errors.routeId ? styles.error : ''}`}
-                                        icon={<Navigation size={20} />}
-                                    />
+                                        return (
+                                            <button
+                                                key={route.label}
+                                                type="button"
+                                                onClick={() => {
+                                                    if (route.isCustom) {
+                                                        setFormData(prev => ({ ...prev, routeId: 'custom', pickup: '', dropoff: '' }));
+                                                    } else {
+                                                        // Find ID dynamically
+                                                        const matched = routes.find(r => {
+                                                            const n = r.name.toLowerCase();
+                                                            return n.includes(route.pickup.toLowerCase()) && n.includes(route.dropoff.toLowerCase());
+                                                        });
+                                                        setFormData(prev => ({
+                                                            ...prev,
+                                                            pickup: route.pickup,
+                                                            dropoff: route.dropoff,
+                                                            routeId: matched ? matched.id : ''
+                                                        }));
+                                                    }
+                                                    setErrors({});
+                                                }}
+                                                className={`
+                                                    flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border
+                                                    ${isActive
+                                                        ? 'bg-slate-900 border-slate-900 text-white shadow-lg scale-105'
+                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 hover:bg-amber-50'
+                                                    }
+                                                `}
+                                            >
+                                                <route.icon size={16} className={isActive ? 'text-amber-400' : 'text-slate-400'} />
+                                                {route.label}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                                 {errors.routeId && <span className={styles.errorMessage}>{errors.routeId}</span>}
                             </div>
 
-                            {/* Editable Route Fields - Only show if Custom Route is selected */}
+                            {/* Horizontal Input Group */}
+                            <div className="col-span-full grid grid-cols-1 md:grid-cols-12 gap-3 p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+
+                                {/* Date Input */}
+                                <div className="md:col-span-3 relative">
+                                    <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Travel Date</label>
+                                    <div className="relative">
+                                        <Calendar size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <input
+                                            type="date"
+                                            value={formData.date ? formData.date.toISOString().split('T')[0] : ''}
+                                            onChange={(e) => {
+                                                if (!e.target.value) { handleDateChange(null); return; }
+                                                handleDateChange(new Date(e.target.value));
+                                            }}
+                                            min={new Date().toISOString().split('T')[0]}
+                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                                        />
+                                    </div>
+                                    {errors.date && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.date}</span>}
+                                </div>
+
+                                {/* Time Input */}
+                                <div className="md:col-span-3 relative">
+                                    <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Pickup Time</label>
+                                    <div className="relative">
+                                        <Clock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <input
+                                            type="time"
+                                            value={formData.time ? formData.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                            onChange={(e) => {
+                                                if (!e.target.value) { handleTimeChange(null); return; }
+                                                const [h, m] = e.target.value.split(':').map(Number);
+                                                const t = new Date(); t.setHours(h); t.setMinutes(m);
+                                                handleTimeChange(t);
+                                            }}
+                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                                        />
+                                    </div>
+                                    {errors.time && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.time}</span>}
+                                </div>
+
+                                {/* Vehicle Select (Simplified) */}
+                                <div className="md:col-span-6 relative">
+                                    <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Preferred Vehicle</label>
+                                    <SearchableSelect
+                                        name="vehicleId"
+                                        value={formData.vehicleId}
+                                        onChange={handleChange as any}
+                                        // @ts-ignore
+                                        options={vehicleOptions}
+                                        placeholder="Select Vehicle & See Price"
+                                        className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
+                                        icon={<Car size={18} />}
+                                    />
+                                    {errors.vehicleId && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.vehicleId}</span>}
+                                </div>
+                            </div>
+
+                            {/* Custom Route Fields (Expandable) */}
                             {formData.routeId === 'custom' && (
-                                <>
-                                    <div className={`${styles.inputGroup} ${styles.halfWidthMobile}`}>
-                                        <label className={styles.label}>From (Pickup)</label>
-                                        <div className={styles.inputWrapper}>
-                                            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white/60 pointer-events-none">
-                                                {/* Icon handled manually to preserve layout, SearchableSelect will have padding */}
-                                            </div>
+                                <div className="col-span-full grid grid-cols-2 gap-3 mt-2 animate-in fade-in slide-in-from-top-4 duration-300">
+                                    <div className="md:col-span-6 relative">
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">From (Pickup)</label>
+                                        <div className="relative">
                                             <SearchableSelect
                                                 name="pickup"
                                                 value={formData.pickup}
                                                 onChange={handleChange as any}
                                                 options={pickupLocations}
                                                 placeholder="Pickup Location"
-                                                className={`${styles.input} ${errors.pickup ? styles.error : ''}`}
-                                                icon={<MapPin size={20} />}
+                                                className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
+                                                icon={<MapPin size={18} />}
                                             />
                                         </div>
-                                        {errors.pickup && <span className={styles.errorMessage}>{errors.pickup}</span>}
+                                        {errors.pickup && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.pickup}</span>}
                                     </div>
-
-                                    <div className={`${styles.inputGroup} ${styles.halfWidthMobile}`}>
-                                        <label className={styles.label}>Destination (Drop-off)</label>
-                                        <div className={styles.inputWrapper}>
+                                    <div className="md:col-span-6 relative">
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Destination (Drop-off)</label>
+                                        <div className="relative">
                                             <SearchableSelect
                                                 name="dropoff"
                                                 value={formData.dropoff}
                                                 onChange={handleChange as any}
                                                 options={dropoffLocations}
                                                 placeholder="Drop-off Location"
-                                                className={`${styles.input} ${errors.dropoff ? styles.error : ''}`}
-                                                icon={<MapPin size={20} />}
+                                                className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
+                                                icon={<MapPin size={18} />}
                                             />
                                         </div>
-                                        {errors.dropoff && <span className={styles.errorMessage}>{errors.dropoff}</span>}
+                                        {errors.dropoff && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.dropoff}</span>}
                                     </div>
-                                </>
+                                </div>
                             )}
 
-                            <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
-                                <div className="flex gap-4">
-                                    <div className="flex-1">
-                                        <label className={styles.label}>Vehicle Type</label>
-                                        <div className={styles.inputWrapper}>
-                                            <SearchableSelect
-                                                name="vehicleId"
-                                                value={formData.vehicleId}
-                                                onChange={handleChange as any}
-                                                // @ts-ignore
-                                                options={vehicleOptions}
-                                                placeholder="Choose vehicle..."
-                                                className={`${styles.input} ${errors.vehicleId ? styles.error : ''}`}
-                                                icon={<Car size={20} />}
-                                                renderOption={(option: any) => (
-                                                    <div className="flex items-center gap-3 w-full">
-                                                        <div className="w-12 h-8 relative rounded overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
-                                                            {option.image ? (
-                                                                <img src={option.image} alt="" className="w-full h-full object-cover" />
-                                                            ) : (
-                                                                <Car size={16} className="absolute inset-0 m-auto text-slate-400" />
-                                                            )}
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="font-bold text-slate-900 dark:text-white truncate text-sm">
-                                                                    {option.label.split('(')[0]}
-                                                                    {option.isVip && <span className="ml-1 text-[9px] bg-amber-500 text-white px-1 rounded-sm">VIP</span>}
-                                                                </span>
-                                                                {option.price > 0 && (
-                                                                    <span className="text-secondary font-bold text-sm shrink-0 ml-2">
-                                                                        {option.price} <span className="text-[10px] text-slate-500">SAR</span>
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                            <div className="flex items-center gap-2 text-[10px] text-slate-500">
-                                                                <span>{option.capacity} Pass</span>
-                                                                <span>•</span>
-                                                                <span>{option.luggage} Bags</span>
-                                                                {option.discount > 0 && <span className="text-green-600 font-bold bg-green-50 px-1 rounded">Save {option.discount}</span>}
-                                                            </div>
-                                                        </div>
-                                                        {formData.vehicleId === option.value && <CheckCircle size={16} className="text-secondary shrink-0" />}
-                                                    </div>
-                                                )}
-                                            />
-                                        </div>
-                                        {errors.vehicleId && <span className={styles.errorMessage}>{errors.vehicleId}</span>}
+                            {/* Passenger & Luggage (Compact Row) */}
+                            <div className="col-span-full grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                                <div className="relative">
+                                    <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Vehicles</label>
+                                    <div className="relative">
+                                        <Car size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <input
+                                            type="number"
+                                            name="vehicleCount"
+                                            min="1"
+                                            max="5"
+                                            value={formData.vehicleCount}
+                                            onChange={handleChange}
+                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors"
+                                        />
                                     </div>
-                                    <div className="w-1/3">
-                                        <label className={styles.label}>Count</label>
-                                        <div className={styles.inputWrapper}>
-                                            <input
-                                                type="number"
-                                                name="vehicleCount"
-                                                min="1"
-                                                max="10"
-                                                value={formData.vehicleCount}
-                                                onChange={handleChange}
-                                                className={styles.input}
-                                            />
-                                        </div>
+                                </div>
+                                <div className="relative">
+                                    <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Passengers</label>
+                                    <div className="relative">
+                                        <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <input
+                                            type="number"
+                                            name="passengers"
+                                            min="1"
+                                            value={formData.passengers}
+                                            onChange={handleChange}
+                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors"
+                                        />
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Passenger & Luggage Section */}
-                            <div className="col-span-full border-t border-slate-200 dark:border-slate-700 pt-2 mt-1">
-                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 block">Passenger & Luggage Details</h4>
-                                <div className="grid grid-cols-2 gap-2">
-                                    <div className={styles.inputGroup}>
-                                        <label className={styles.label}>Passengers</label>
-                                        <div className={styles.inputWrapper}>
-                                            <User size={20} className={styles.icon} />
+                            {/* Contact Details (Hidden until Route Selected) */}
+                            {formData.routeId && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    className="col-span-full grid grid-cols-1 md:grid-cols-3 gap-3 mt-2 overflow-hidden"
+                                >
+                                    <div className="relative">
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Full Name</label>
+                                        <div className="relative">
+                                            <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
-                                                type="number"
-                                                name="passengers"
-                                                min="1"
-                                                value={formData.passengers}
+                                                type="text"
+                                                name="name"
+                                                placeholder="Your Name"
+                                                value={formData.name}
                                                 onChange={handleChange}
-                                                className={`${styles.input} ${errors.passengers ? styles.error : ''}`}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.name ? 'border-red-500 bg-red-50' : ''}`}
                                             />
                                         </div>
-                                        {(() => {
-                                            const selectedV = vehicles.find(v => v.id === formData.vehicleId);
-                                            if (selectedV) {
-                                                const maxCap = parseInt(selectedV.capacity) * Number(formData.vehicleCount);
-                                                if (Number(formData.passengers) > maxCap) {
-                                                    return (
-                                                        <span className="text-[10px] text-amber-500 font-medium mt-1 block leading-tight">
-                                                            ⚠️ Exceeds capacity ({maxCap}). Consider upgrading.
-                                                        </span>
-                                                    );
-                                                }
-                                            }
-                                            return null;
-                                        })()}
+                                        {errors.name && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.name}</span>}
                                     </div>
-                                    <div className={styles.inputGroup}>
-                                        <label className={styles.label}>Luggage Count</label>
-                                        <div className={styles.inputWrapper}>
+                                    <div className="relative">
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Email</label>
+                                        <div className="relative">
+                                            <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
-                                                type="number"
-                                                name="luggage"
-                                                min="0"
-                                                placeholder="0"
-                                                value={formData.luggage}
+                                                type="email"
+                                                name="email"
+                                                placeholder="email@example.com"
+                                                value={formData.email}
                                                 onChange={handleChange}
-                                                className={styles.input}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.email ? 'border-red-500 bg-red-50' : ''}`}
                                             />
                                         </div>
+                                        {errors.email && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.email}</span>}
                                     </div>
-                                </div>
+                                    <div className="relative">
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Phone</label>
+                                        <div className="relative">
+                                            <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                placeholder="+966 50..."
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.phone ? 'border-red-500 bg-red-50' : ''}`}
+                                            />
+                                        </div>
+                                        {errors.phone && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.phone}</span>}
+                                    </div>
+                                </motion.div>
+                            )}
 
-                            </div>
+                            {/* Price & Action Row */}
+                            <div className="col-span-full mt-4 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-100 pt-4">
 
-                            {/* Price Display */}
-                            {formData.routeId && formData.vehicleId && (
-                                <div className="col-span-full mt-2 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
-                                    {(() => {
-                                        // Calculate price using the function from context (already available at top level)
-                                        const { price, originalPrice, discountApplied } = calculatePrice(formData.routeId, formData.vehicleId);
-
-                                        if (price === 0) return null;
-
-                                        return (
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Estimated Price:</span>
-                                                <div className="text-right">
-                                                    {discountApplied > 0 && (
-                                                        <div className="flex items-center justify-end gap-2 text-sm text-slate-400 line-through">
-                                                            <span>{originalPrice} SAR</span>
-                                                        </div>
-                                                    )}
-                                                    <div className="text-xl font-bold text-amber-600 dark:text-amber-500">
-                                                        {price * formData.vehicleCount} SAR
+                                {/* Dynamic Price Display */}
+                                <div className="flex-1">
+                                    {formData.routeId && formData.vehicleId ? (
+                                        (() => {
+                                            const { price, originalPrice, discountApplied } = calculatePrice(formData.routeId, formData.vehicleId);
+                                            if (price === 0) return <span className="text-sm text-slate-400">Select route & vehicle to see price</span>;
+                                            return (
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Estimate</span>
+                                                    <div className="flex items-baseline gap-2">
+                                                        <span className="text-2xl font-bold text-slate-900">{price * formData.vehicleCount} <span className="text-base font-medium text-slate-500">SAR</span></span>
+                                                        {discountApplied > 0 && <span className="text-sm text-slate-400 line-through">{originalPrice} SAR</span>}
                                                     </div>
-                                                    {discountApplied > 0 && (
-                                                        <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">
-                                                            Save {discountApplied * formData.vehicleCount} SAR
-                                                        </span>
-                                                    )}
                                                 </div>
-                                            </div>
-                                        );
-                                    })()}
+                                            );
+                                        })()
+                                    ) : (
+                                        <span className="text-sm text-slate-400 italic">Instant quote available</span>
+                                    )}
                                 </div>
-                            )}
+
+                                {/* Submit Action */}
+                                <div className="w-full md:w-auto">
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full md:w-64 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-amber-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        {isSubmitting ? (
+                                            <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                Book Now <ArrowRight size={18} />
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
 
                         </div>
 
-                        <button
-                            type="submit"
-                            className={`${styles.submitBtn} group relative overflow-hidden`}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? (
-                                <span className="flex items-center gap-2">
-                                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    Processing...
-                                </span>
-                            ) : (
-                                <span className="flex items-center justify-center gap-2">
-                                    Book Your Ride Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                </span>
-                            )}
-                        </button>
-
-                        <p className="text-center text-[10px] text-slate-400 mt-2">
-                            No credit card required &bull; Free cancellation
-                        </p>
-
-                        <div className={styles.trustBar}>
-                            <div className={styles.trustItem}>
-                                <div className={styles.trustIconWrapper}>
-                                    <CreditCard size={12} className={styles.trustIcon} />
-                                </div>
-                                <span className={styles.trustText}>Pay Later</span>
-                            </div>
-                            <div className={styles.trustItem}>
-                                <div className={styles.trustIconWrapper}>
-                                    <ShieldCheck size={12} className={styles.trustIcon} />
-                                </div>
-                                <span className={styles.trustText}>Official</span>
-                            </div>
-                            <div className={styles.trustItem}>
-                                <div className={styles.trustIconWrapper}>
-                                    <Headphones size={12} className={styles.trustIcon} />
-                                </div>
-                                <span className={styles.trustText}>24/7 Help</span>
-                            </div>
+                        {/* Trust Indicators (Footer) */}
+                        <div className="mt-4 flex justify-center gap-6 text-[10px] text-slate-400 font-medium uppercase tracking-wide opacity-80">
+                            <span className="flex items-center gap-1.5"><CreditCard size={12} /> Pay Later</span>
+                            <span className="flex items-center gap-1.5"><ShieldCheck size={12} /> Insured Rides</span>
+                            <span className="flex items-center gap-1.5"><HeartHandshake size={12} /> 24/7 Support</span>
                         </div>
-
-
                     </motion.form>
+
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
         </motion.div >
     );
 };
