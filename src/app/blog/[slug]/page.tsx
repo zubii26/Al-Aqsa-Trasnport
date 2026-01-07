@@ -10,14 +10,14 @@ import NewsletterSignup from '@/components/blog/NewsletterSignup';
 import { Calendar, Clock, ChevronLeft, User, ThumbsUp } from 'lucide-react';
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
-// Generate Metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const post = staticBlogPosts.find((p) => p.slug === params.slug);
+    const { slug } = await params;
+    const post = staticBlogPosts.find((p) => p.slug === slug);
 
     if (!post) {
         return {
@@ -46,8 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default function SingleBlogPage({ params }: Props) {
-    const post = staticBlogPosts.find((p) => p.slug === params.slug);
+export default async function SingleBlogPage({ params }: Props) {
+    const { slug } = await params;
+    const post = staticBlogPosts.find((p) => p.slug === slug);
 
     if (!post) {
         notFound();
