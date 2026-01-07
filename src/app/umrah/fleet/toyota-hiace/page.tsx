@@ -24,9 +24,18 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title,
-    description: vehicleData?.seo?.description,
-    keywords: vehicleData?.seo?.keywords,
+    title: "Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
+    description: "Book Toyota Hiace 12-seater bus for Umrah groups. Affordable transport from Jeddah Airport to Makkah & Madinah. Reliable & spacious.",
+    keywords: [
+        "Toyota Hiace Rental Makkah",
+        "10 Seater Bus Makkah",
+        "Cheap Umrah Transport",
+        "Group Taxi Jeddah to Makkah",
+        "Toyota Hiace Bus Price",
+        "تأجير باص هايس",
+        "نقل جماعي مكة",
+        "باص 10 راكب جدة"
+    ],
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-hiace' }
 };
 

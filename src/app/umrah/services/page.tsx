@@ -13,9 +13,13 @@ import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 export async function generateMetadata() {
     return {
-        title: "Best Umrah Taxi Service | Jeddah to Makkah & Madinah | خدمات نقل المعتمرين",
-        description: "Book reliable Umrah transport services including Jeddah Airport to Makkah taxi. Affordable & comfortable. أفضل شركة نقل معتمرين في السعودية. سيارات حديثة وخدمة متميزة.",
-        keywords: ["Umrah transport", "Jeddah to Makkah taxi", "Madinah to Makkah taxi", "GMC Yukon rental Saudi Arabia", "Ziyarat tours Makkah Madinah", "Jeddah airport taxi", "Haramain train transfers", "خدمات نقل المعتمرين", "شركة نقل عمرة", "توصيل معتمرين", "حجز مواصلات مكة"],
+        title: "Umrah Taxi Services & Ziyarat Tours | Jeddah, Makkah, Madinah",
+        description: "Comprehensive Umrah transport services: Jeddah Airport pickup, Makkah to Madinah taxi, and historic Ziyarat tours. Reliable 24/7 service.",
+        keywords: [
+            "Umrah Taxi Services", "Ziyarat Tours Makkah", "Intercity Transfers Saudi",
+            "Jeddah Airport Pickup", "Madinah Ziyarat", "Makkah to Madinah Taxi",
+            "خدمات نقل المعتمرين", "زيارات المدينة المنورة", "توصيل مطار جدة"
+        ],
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/services',
         },

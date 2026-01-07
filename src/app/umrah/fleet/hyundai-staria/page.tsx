@@ -25,9 +25,18 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title,
-    description: vehicleData?.seo?.description,
-    keywords: vehicleData?.seo?.keywords,
+    title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
+    description: "Rent Hyundai Staria 2025 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
+    keywords: [
+        "Hyundai Staria Rental Makkah",
+        "Family Van for Umrah",
+        "Hyundai Staria Jeddah Airport",
+        "7 Seater Taxi Makkah",
+        "Luxury Van Rental Saudi Arabia",
+        "هيونداي ستاريا مكة",
+        "تاكسي عائلي جدة",
+        "سيارة عائلية للعمرة"
+    ],
     alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' }
 };
 

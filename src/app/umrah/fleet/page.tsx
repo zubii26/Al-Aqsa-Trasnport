@@ -13,8 +13,13 @@ import { getSectionContent, getSectionImage, getCustomField } from '@/lib/conten
 
 export async function generateMetadata() {
     return {
-        title: "Luxury Umrah Fleet | GMC Yukon, H1 & Coaster Buses",
-        description: "Browse our premium fleet: Luxury GMC Yukons, H1 vans, and spacious buses. Clean, well-maintained vehicles ensuring comfort and safety for your Umrah journey.",
+        title: "Umrah Taxi Fleet 2025 | Book GMC Yukon & Hyundai Staria",
+        description: "Explore our premium Umrah taxi fleet. Book a luxury GMC Yukon XL, family Hyundai Staria, or Toyota Hiace for your journey in Saudi Arabia.",
+        keywords: [
+            "Umrah Taxi Fleet", "GMC Yukon Booking", "Hyundai Staria Rental",
+            "Toyota Hiace Bus Makkah", "Luxury Car Rental Saudi Arabia", "Family Umrah Transport",
+            "أسطول نقل المعتمرين", "حجز جمس يوكن", "تأجير باص هيونداي"
+        ],
         alternates: {
             canonical: 'https://alaqsaumrahtransport.com/fleet',
         },

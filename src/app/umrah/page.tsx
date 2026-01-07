@@ -27,21 +27,20 @@ const BookingGuide = dynamic(() => import('@/components/home/BookingGuide'));
 
 export async function generateMetadata() {
   return {
-    title: "Al Aqsa Transport | Jeddah Airport Taxi | تاكسي مطار جدة ومكة",
-    description: "Book reliable Umrah taxi from Jeddah Airport to Makkah. Luxury GMC Yukon. حجز تاكسي من مطار جدة الى مكة والمدينة. سيارات جمس حديثة وسائقين محترفين.",
+    title: "Umrah Transport Services Saudi Arabia | Taxi Jeddah to Makkah",
+    description: "Book trusted Umrah taxi services. Private GMC Yukon & Hyundai Staria transfers from Jeddah Airport to Makkah & Madinah. Official licensed transport company.",
     alternates: {
       canonical: 'https://alaqsaumrahtransport.com',
     },
     keywords: [
-      "Al Aqsa Umrah Transport", "Taxi Jeddah Airport to Makkah",
-      "Makkah to Madinah taxi price", "Jeddah airport transfers", "VIP Umrah taxi",
-      "Madinah airport transport", "Haram shuttle Makkah", "luxury GMC Yukon rental", "pilgrim transport saudi arabia",
-      "نقل معتمرين", "تاكسي مكة", "توصيل من مطار جدة الى مكة", "شركة نقل عمرة", "سيارات جمس للعمرة",
-      "ارخص تاكسي من مطار جدة", "سعر التوصيل من مكة للمدينة", "حجز سيارة عائلية في مكة", "استقبال مطار جدة", "توصيل الحرم المكي"
+      "Umrah Transport Services", "Taxi Jeddah Airport to Makkah",
+      "Taxi Makkah to Madinah", "VIP Umrah Taxi", "Jeddah Airport Transfer",
+      "GMC Yukon Booking Makkah", "Saudi Transport Company",
+      "تاكسي مطار جدة", "نقل معتمرين", "توصيل من مكة للمدينة", "حجز جمس يوكن"
     ],
     openGraph: {
-      title: "Al Aqsa Transport | VIP Jeddah to Makkah Taxi | تاكسي جدة مكة",
-      description: "Book trusted private taxi from Jeddah Airport to Makkah. Luxury GMC Yukon & Hyundai Staria fleet. خدمة توصيل vip للمعتمرين.",
+      title: "Umrah Transport Services Saudi Arabia | VIP Taxi Jeddah to Makkah",
+      description: "Book trusted private taxi from Jeddah Airport to Makkah. Luxury GMC Yukon & Hyundai Staria fleet. Official licensed service.",
     }
   };
 }

@@ -10,29 +10,25 @@ import RouteVisual from '@/components/services/RouteVisual';
 import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
-    title: "Makkah to Madinah Taxi Price 2025 | VIP Private Transport | تاكسي مكة المدينة",
-    description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon & VIP buses. Fixed rates. حجز تاكسي من مكة الى المدينة. توصيل باب الى باب.",
+    title: "Taxi Makkah to Madinah Price 2025 | VIP Private Car Cost",
+    description: "Book private taxi from Makkah to Madinah. 4-hour luxury transfer in GMC Yukon or Hyundai Staria. Door-to-door service with Miqat option (احرام).",
     keywords: [
-        "Makkah to Madinah taxi",
-        "Makkah to Madinah taxi fare",
-        "GMC Yukon Makkah to Madinah",
-        "Madinah to Makkah transport",
-        "Makkah to Madinah bus VIP",
-        "private car Makkah to Madinah",
-        "Haramain train alternative",
-        "luxury transport Saudi Arabia",
+        "Taxi Makkah to Madinah",
+        "Makkah to Madinah Taxi Price",
+        "Private Car Makkah to Madinah",
+        "Distance Makkah to Madinah Taxi Time",
+        "VIP Transport Makkah Madinah",
         "تاكسي مكة المدينة",
         "سعر التوصيل من مكة للمدينة",
         "حجز جمس من مكة الى المدينة",
         "نقل معتمرين بين المدن",
-        "مشوار مكة المدينة",
-        "باصات vip مكة المدينة"
+        "مشوار مكة المدينة"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/makkah-madinah-taxi',
     },
     openGraph: {
-        title: "Makkah to Madinah Taxi Price 2025 | VIP Private Transport",
+        title: "Taxi Makkah to Madinah Price 2025 | VIP Private Transport",
         description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon, Hyundai Staria, and VIP buses.",
         images: [{ url: '/images/routes/makkah-madinah-route-hero.png', width: 1200, height: 630, alt: 'Makkah to Madinah Highway Scenic View' }]
     }

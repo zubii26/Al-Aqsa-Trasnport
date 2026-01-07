@@ -34,9 +34,18 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title,
-    description: vehicleData?.seo?.description,
-    keywords: vehicleData?.seo?.keywords,
+    title: "GMC Yukon Rental Makkah | VIP Umrah Taxi Cost",
+    description: "Book new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel. VIP private chauffeur.",
+    keywords: [
+        "GMC Yukon Rental Makkah",
+        "GMC Yukon XL Saudi Arabia",
+        "VIP Umrah Taxi Makkah",
+        "Luxury SUV Rental Jeddah",
+        "GMC Yukon with Driver",
+        "حجز جمس يوكن مكة",
+        "ايجار سيارات فخمة جدة",
+        "توصيل كبار الشخصيات"
+    ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
     }

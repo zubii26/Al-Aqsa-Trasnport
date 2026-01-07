@@ -8,29 +8,26 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 
 export const metadata: Metadata = {
-    title: "Ziyarat Tours Makkah & Madinah | رحلات زيارة مكة والمدينة",
-    description: "Book private Ziyarat tours in Makkah and Madinah. Visit Masjid Quba, Mount Uhud. رحلات زيارة الاماكن التاريخية في مكة والمدينة. زيارة مسجد قباء وجبل النور.",
+    title: "Ziyarat Makkah Madinah Tours | Visit Historical Sites",
+    description: "Private Ziyarat tours in Makkah (Jabal Al-Nour, Arafat) & Madinah (Masjid Quba, Uhud). Experienced drivers sharing Islamic history.",
     keywords: [
         "Ziyarat Tours Makkah",
-        "Madinah Ziyarat Places",
+        "Ziyarat Madinah Places",
         "Masjid Quba Transport",
-        "Mount Uhud Tour",
-        "Cave Hira Taxi",
-        "Makkah historical places",
-        "Madinah sightseeing",
+        "Historical Places Tour Makkah",
         "Private Ziyarat Taxi",
+        "Taif Day Trip from Makkah",
         "رحلات زيارة مكة",
         "مزارات المدينة المنورة",
         "زيارة مسجد قباء",
         "جبل النور",
-        "زيارة غار حراء",
-        "سعر باص زيارة المدينة"
+        "زيارة غار حراء"
     ],
     alternates: {
         canonical: 'https://alaqsaumrahtransport.com/services/ziyarat-tours',
     },
     openGraph: {
-        title: "Ziyarat Tours Makkah & Madinah | Historical Site Visits",
+        title: "Ziyarat Makkah Madinah Tours | Historical Site Visits",
         description: "Guided private tours to Jabal Al-Nour, Masjid Quba, Mount Uhud, and more. deeply spiritual experience with knowledgeable drivers.",
         images: [{ url: '/images/routes/makkah-ziyarat-hero.png', width: 1200, height: 630, alt: 'Jabal Al-Nour Makkah Ziyarat' }]
     }
