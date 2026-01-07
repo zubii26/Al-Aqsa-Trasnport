@@ -6,7 +6,6 @@ import { ChevronRight, ChevronLeft, ShieldCheck, Headphones, CreditCard } from '
 import { usePricing } from '@/context/PricingContext';
 import JourneyStep from './steps/JourneyStep';
 import VehicleStep from './steps/VehicleStep';
-import ContactStep from './steps/ContactStep';
 import DetailsStep from './steps/DetailsStep';
 
 const STEPS = [

@@ -27,6 +27,7 @@ export default async function BlogPage() {
     // Map to match component interface (convert Date to string) and ensure serializable data
     const posts = dbPosts.map((post: any) => ({
         id: post.slug,
+        slug: post.slug,
         title: post.title,
         excerpt: post.excerpt,
         content: post.content,

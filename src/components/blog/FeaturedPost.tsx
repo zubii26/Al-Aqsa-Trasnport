@@ -1,19 +1,35 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import styles from './FeaturedPost.module.css';
+import { ArrowRight, Calendar, Clock, Sparkles } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
-import { BlogPost } from '@/lib/blogData';
 
 interface FeaturedPostProps {
-    post: BlogPost;
+    post: {
+        slug: string;
+        title: string;
+        excerpt: string;
+        image: string;
+        alt: string;
+        category: string;
+        author: string;
+        readTime: string;
+        date: Date | string;
+    };
 }
 
 export default function FeaturedPost({ post }: FeaturedPostProps) {
+    const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
     return (
         <section className="mb-24 relative group">
             <GlassCard delay={0.2} className="p-0 overflow-hidden rounded-[2.5rem] border border-white/20 dark:border-white/5 shadow-2xl relative isolate">
-                <Link href={`/umrah/blog/${post.id}`} className="grid grid-cols-1 lg:grid-cols-2 relative min-h-[500px]">
+                <Link href={`/blog/${post.slug}`} className="grid grid-cols-1 lg:grid-cols-2 relative min-h-[500px]">
 
                     {/* Image Section */}
                     <div className="relative h-[300px] lg:h-full overflow-hidden">
@@ -50,6 +66,19 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
                         <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-light">
                             {post.excerpt}
                         </p>
+
+                        {/* Meta Info */}
+                        <div className="flex items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400 mb-6">
+                            <span className="flex items-center gap-1.5">
+                                <Calendar size={14} className="text-amber-500" />
+                                {formattedDate}
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                            <span className="flex items-center gap-1.5">
+                                <Clock size={14} className="text-amber-500" />
+                                {post.readTime}
+                            </span>
+                        </div>
 
                         <div className="flex items-center gap-3 text-primary font-bold uppercase tracking-widest text-sm group/btn">
                             Read Full Article
