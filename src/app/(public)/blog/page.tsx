@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'Umrah Travel Blog | Tips & Guides | مدونة العمرة',
     description: 'Read our latest articles on Umrah travel tips, transport advice, and spiritual guides. نصائح وارشادات للمعتمرين. دليل المواصلات في مكة والمدينة.',
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/umrah/blog',
+        canonical: 'https://alaqsaumrahtransport.com/blog',
     },
 };
 

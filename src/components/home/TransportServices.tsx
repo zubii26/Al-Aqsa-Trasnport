@@ -24,7 +24,7 @@ const services = [
         description: 'Experience safe, comfortable travel between major Saudi cities. Our premium intercity transport ensures a smooth journey for pilgrims performing Umrah and Ziyarat. Punctual, reliable, and stress-free long-distance travel.',
         image: '/images/services/intercity-transport.png',
         icon: <Car size={32} />,
-        link: '/umrah/services/intercity-transfer',
+        link: '/services/intercity-transfer',
         keywords: ['intercity transport Saudi Arabia', 'Makkah to Madinah transport', 'long-distance travel for pilgrims']
     },
     {
@@ -34,7 +34,7 @@ const services = [
         description: 'Seamless pickup and drop-off from Jeddah and Madinah airports. We offer real-time flight tracking, professional meet-and-greet service, and luggage assistance for a stress-free arrival in the Holy Land.',
         icon: <Plane size={32} />,
         image: '/images/services/airport-transfer-real.jpg',
-        link: '/umrah/services/airport-transfers',
+        link: '/services/airport-transfers',
         keywords: ['Jeddah Airport pickup', 'Madinah Airport transfer', 'Umrah airport transport']
     },
     {
@@ -44,7 +44,7 @@ const services = [
         description: 'Quick and reliable transfers between your hotel and the Holy Mosques. Enjoy premium comfort and cleanliness, perfectly suitable for families, groups, and elderly pilgrims seeking ease of movement.',
         icon: <Building2 size={32} />,
         image: '/images/services/hotel-transfer-real.jpg',
-        link: '/umrah/services/hotel-transfers', // Updated link to new dedicated page
+        link: '/services/hotel-transfers', // Updated link to new dedicated page
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
     }
 ];

@@ -45,49 +45,49 @@ export default function Navbar() {
     }, [pathname, setIsMenuOpen]);
 
     const links = [
-        { href: '/umrah/', label: 'Home' },
+        { href: '/', label: 'Home' },
         {
-            href: '/umrah/routes',
+            href: '/routes',
             label: 'Routes',
             children: [
-                { href: '/umrah/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah' },
-                { href: '/umrah/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah' },
-                { href: '/umrah/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel' },
-                { href: '/umrah/services/intercity-transfer', label: 'Jeddah Airport ⇄ Madinah' },
-                { href: '/umrah/services/ziyarat-tours', label: 'Ziyarat Tours (City Tours)' },
+                { href: '/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah' },
+                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah' },
+                { href: '/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel' },
+                { href: '/services/intercity-transfer', label: 'Jeddah Airport ⇄ Madinah' },
+                { href: '/services/ziyarat-tours', label: 'Ziyarat Tours (City Tours)' },
             ]
         },
         {
-            href: '/umrah/services',
+            href: '/services',
             label: 'Services',
             children: [
-                { href: '/umrah/services/airport-transfers', label: 'Airport Transfer (General)' },
-                { href: '/umrah/services/intercity-transfer', label: 'Intercity Transfer' },
-                { href: '/umrah/services/hotel-transfers', label: 'Hotel Transfer' },
-                { href: '/umrah/track-booking', label: 'Track Booking' },
+                { href: '/services/airport-transfers', label: 'Airport Transfer (General)' },
+                { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
+                { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
+                { href: '/track-booking', label: 'Track Booking' },
             ]
         },
         {
-            href: '/umrah/fleet',
+            href: '/fleet',
             label: 'Fleet',
             children: [
-                { href: '/umrah/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
-                { href: '/umrah/fleet/hyundai-staria', label: 'Hyundai Staria' },
-                { href: '/umrah/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
-                { href: '/umrah/fleet/toyota-hiace', label: 'Toyota Hiace' },
-                { href: '/umrah/fleet/toyota-camry', label: 'Toyota Camry' },
+                { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
+                { href: '/fleet/hyundai-staria', label: 'Hyundai Staria' },
+                { href: '/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
+                { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
+                { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
             ]
         },
         {
-            href: '/umrah/about',
+            href: '/about',
             label: 'About Us',
             children: [
-                { href: '/umrah/about', label: 'Company Profile' },
-                { href: '/umrah/about/meet-our-drivers', label: 'Meet Our Drivers' },
+                { href: '/about', label: 'Company Profile' },
+                { href: '/about/meet-our-drivers', label: 'Meet Our Drivers' },
             ]
         },
-        { href: '/umrah/blog', label: 'Blog' },
-        { href: '/umrah/contact', label: 'Contact us' },
+        { href: '/blog', label: 'Blog' },
+        { href: '/contact', label: 'Contact us' },
     ];
 
     return (
@@ -98,7 +98,7 @@ export default function Navbar() {
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
-                <Link href="/umrah/" className="flex items-center gap-3 group">
+                <Link href="/" className="flex items-center gap-3 group">
                     <div className="relative flex items-center">
                         <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${scrolled ? 'w-[60px] h-[60px] lg:w-[80px] lg:h-[80px]' : 'w-[80px] h-[80px] lg:w-[100px] lg:h-[100px]'} group-hover:scale-105`}>
                             <Image
@@ -171,7 +171,7 @@ export default function Navbar() {
                 <div className="hidden xl:flex items-center gap-4">
                     {/* ThemeToggle hidden on desktop as requested */}
                     {/* <ThemeToggle /> */}
-                    <GlassButton href="/umrah/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
+                    <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
                         Book Now
                     </GlassButton>
                 </div>
@@ -204,7 +204,7 @@ export default function Navbar() {
                 aria-label="Mobile navigation"
             >
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
-                    <Link href="/umrah/" className="flex items-center gap-3">
+                    <Link href="/" className="flex items-center gap-3">
                         <div className="relative w-[80px] h-[80px]">
                             <Image
                                 src="/logo.png"
@@ -277,7 +277,7 @@ export default function Navbar() {
                     </div>
 
                     <GlassButton
-                        href="/umrah/booking"
+                        href="/booking"
                         variant="secondary"
                         size="lg"
                         className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"

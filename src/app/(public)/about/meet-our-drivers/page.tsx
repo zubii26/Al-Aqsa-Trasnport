@@ -93,7 +93,7 @@ export default async function MeetOurDriversPage() {
 
             {/* Back Button */}
             <div className="container mx-auto px-4 py-8">
-                <Link href="/umrah/about" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-500 transition-colors">
+                <Link href="/about" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-500 transition-colors">
                     <ArrowLeft size={18} />
                     Back to About Us
                 </Link>

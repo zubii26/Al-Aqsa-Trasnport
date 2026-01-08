@@ -14,7 +14,7 @@ const FLEET_IMAGES = [
         badge: 'VIP Choice',
         capacity: '7 Pax',
         luggage: '5 Bags',
-        url: '/umrah/fleet/gmc-yukon-at4',
+        url: '/fleet/gmc-yukon-at4',
         gradient: 'from-amber-500/20 to-amber-900/40'
     },
     {
@@ -24,7 +24,7 @@ const FLEET_IMAGES = [
         badge: 'Family Favorite',
         capacity: '7 Pax',
         luggage: '4 Bags',
-        url: '/umrah/fleet/hyundai-staria',
+        url: '/fleet/hyundai-staria',
         gradient: 'from-blue-500/20 to-slate-900/40'
     },
     {
@@ -34,7 +34,7 @@ const FLEET_IMAGES = [
         badge: 'Best Value',
         capacity: '4 Pax',
         luggage: '2 Bags',
-        url: '/umrah/fleet/toyota-camry',
+        url: '/fleet/toyota-camry',
         gradient: 'from-emerald-500/20 to-slate-900/40'
     },
     {
@@ -44,7 +44,7 @@ const FLEET_IMAGES = [
         badge: 'Large Groups',
         capacity: '10 Pax',
         luggage: '8 Bags',
-        url: '/umrah/fleet/toyota-hiace',
+        url: '/fleet/toyota-hiace',
         gradient: 'from-slate-500/20 to-slate-900/40'
     },
     {
@@ -54,7 +54,7 @@ const FLEET_IMAGES = [
         badge: 'Comfort',
         capacity: '7 Pax',
         luggage: '4 Bags',
-        url: '/umrah/fleet/hyundai-starex',
+        url: '/fleet/hyundai-starex',
         gradient: 'from-purple-500/20 to-slate-900/40'
     },
 ];

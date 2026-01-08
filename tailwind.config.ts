@@ -11,10 +11,13 @@ const config: Config = {
     theme: {
         container: {
             center: true,
-            padding: "2rem",
-            screens: {
-                "2xl": "1400px",
-            },
+        },
+        fontFamily: {
+            sans: ["var(--font-geist-sans)", "sans-serif"],
+            mono: ["var(--font-geist-mono)", "monospace"],
+            playfair: ["var(--font-playfair)", "serif"],
+            opensans: ["var(--font-open-sans)", "sans-serif"],
+            reem: ["var(--font-reem-kufi)", "sans-serif"],
         },
         extend: {
             colors: {
@@ -74,6 +77,6 @@ const config: Config = {
             },
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
 export default config;

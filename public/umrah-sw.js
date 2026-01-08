@@ -1,9 +1,8 @@
 const CACHE_NAME = 'umrah-app-v1';
 const STATIC_ASSETS = [
-    '/umrah/',
-    '/umrah/about',
-    '/umrah/services',
-    '/umrah/',
+    '/',
+    '/about',
+    '/services',
     '/offline.html',
     '/android-chrome-192x192.png',
     '/android-chrome-512x512.png'
@@ -32,8 +31,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    // Only handle requests within the /umrah/ scope
-    if (!event.request.url.includes('/umrah/')) return;
+    // Exclude other apps scopes if necessary, or just generic handle
+    if (event.request.url.includes('/agency') || event.request.url.includes('/driver')) return;
 
     event.respondWith(
         caches.match(event.request).then((response) => {

@@ -124,7 +124,7 @@ export default function BookingGuide() {
                     className="mt-20 text-center"
                 >
                     <Link
-                        href="/umrah/booking"
+                        href="/booking"
                         className="inline-flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-12 py-6 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-900/20 hover:shadow-amber-500/20 hover:-translate-y-1 transition-all group relative overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />

@@ -99,7 +99,7 @@ const ROUTES = [
         price: 'From SAR 150',
         features: ['24/7 Service', 'Door-to-Door', 'Family Friendly'],
         featuresAr: ['خدمة 24/7', 'توصيل لباب الفندق', 'مناسب للعوائل'],
-        link: '/umrah/services/madinah-airport-transfer',
+        link: '/services/madinah-airport-transfer',
         image: '/images/routes/madinah-airport-hero.png'
     },
     {

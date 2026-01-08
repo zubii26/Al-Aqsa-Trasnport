@@ -8,40 +8,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Static Routes
     const routes = [
-        '/umrah',
-        '/umrah/about',
-        '/umrah/services',
-        '/umrah/fleet',
-        '/umrah/fleet/gmc-yukon-at4',
-        '/umrah/fleet/toyota-camry',
-        '/umrah/fleet/hyundai-starex',
-        '/umrah/fleet/hyundai-staria',
-        '/umrah/fleet/toyota-hiace',
-        '/umrah/blog',
-        '/umrah/contact',
-        '/umrah/booking',
-        '/umrah/services/jeddah-airport-transfer',
-        '/umrah/services/makkah-madinah-taxi',
-        '/umrah/services/ziyarat-tours',
-        '/umrah/services/madinah-airport-transfer',
-        '/umrah/services/makkah-jeddah-taxi',
-        '/umrah/services/intercity-transfer',
-        '/umrah/services/airport-transfers',
-        '/umrah/routes',
-        '/umrah/safety',
-        '/umrah/services/taif-city-tour',
+        '/',
+        '/about',
+        '/services',
+        '/fleet',
+        '/fleet/gmc-yukon-at4',
+        '/fleet/toyota-camry',
+        '/fleet/hyundai-starex',
+        '/fleet/hyundai-staria',
+        '/fleet/toyota-hiace',
+        '/blog',
+        '/contact',
+        '/booking',
+        '/services/jeddah-airport-transfer',
+        '/services/makkah-madinah-taxi',
+        '/services/ziyarat-tours',
+        '/services/madinah-airport-transfer',
+        '/services/makkah-jeddah-taxi',
+        '/services/intercity-transfer',
+        '/services/airport-transfers',
+        '/routes',
+        '/safety',
+        '/services/taif-city-tour',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
-        priority: route === '/umrah' ? 1 : 0.8,
+        priority: route === '/' ? 1 : 0.8,
     }));
 
     // Dynamic Route Pages from Pricing Data
     const transportRoutes = pricingData.routes
         .filter(r => r.slug)
         .map((route) => ({
-            url: `${baseUrl}/umrah/routes/${route.slug}`,
+            url: `${baseUrl}/routes/${route.slug}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.9,
@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
         const posts = await blogService.getPosts();
         blogRoutes = posts.map((post) => ({
-            url: `${baseUrl}/umrah/blog/${post.slug}`,
+            url: `${baseUrl}/blog/${post.slug}`,
             lastModified: new Date(post.updatedAt || post.date),
             changeFrequency: 'monthly' as const,
             priority: 0.7,

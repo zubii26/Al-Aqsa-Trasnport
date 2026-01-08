@@ -70,11 +70,11 @@ export default function PassengerCare() {
                                     </li>
                                 </ul>
                                 <div className="mt-8">
-                                    <a href="/umrah/blog/safe-solo-female-umrah-travel-guide" className="inline-flex items-center text-pink-600 dark:text-pink-400 font-bold hover:underline group">
+                                    <a href="/blog/safe-solo-female-umrah-travel-guide" className="inline-flex items-center text-pink-600 dark:text-pink-400 font-bold hover:underline group">
                                         Read Our Sisters' Safety Guide <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
                                     </a>
                                     <div className="mt-3">
-                                        <a href="/umrah/blog/avoid-taxi-scams-jeddah-makkah-2025" className="text-sm text-slate-500 hover:text-pink-600 transition-colors flex items-center gap-2">
+                                        <a href="/blog/avoid-taxi-scams-jeddah-makkah-2025" className="text-sm text-slate-500 hover:text-pink-600 transition-colors flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
                                             Essential Read: How to Avoid Airport Taxi Scams
                                         </a>
@@ -130,11 +130,11 @@ export default function PassengerCare() {
                                     </li>
                                 </ul>
                                 <div className="mt-8">
-                                    <a href="/umrah/blog/stress-free-family-umrah-tips" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-bold hover:underline group">
+                                    <a href="/blog/stress-free-family-umrah-tips" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-bold hover:underline group">
                                         Read Family Transport Tips <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
                                     </a>
                                     <div className="mt-3">
-                                        <a href="/umrah/blog/gmc-yukon-vs-toyota-hiace-umrah-transport" className="text-sm text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-2">
+                                        <a href="/blog/gmc-yukon-vs-toyota-hiace-umrah-transport" className="text-sm text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
                                             Guide: GMC Yukon vs Toyota Hiace - Which fits?
                                         </a>
@@ -190,7 +190,7 @@ export default function PassengerCare() {
                                     </li>
                                 </ul>
                                 <div className="mt-8">
-                                    <a href="/umrah/blog/accessible-umrah-elderly-transport" className="inline-flex items-center text-amber-600 dark:text-amber-500 font-bold hover:underline group">
+                                    <a href="/blog/accessible-umrah-elderly-transport" className="inline-flex items-center text-amber-600 dark:text-amber-500 font-bold hover:underline group">
                                         See Elderly Care Tips <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
                                     </a>
                                 </div>

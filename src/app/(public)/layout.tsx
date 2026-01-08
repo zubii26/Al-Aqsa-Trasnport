@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-    manifest: '/umrah-manifest.json',
+    manifest: '/manifest.json',
     title: {
         default: "Umrah Transport Services Saudi Arabia | Jeddah to Makkah Taxi",
         template: `%s | Al Aqsa Umrah Transport`
