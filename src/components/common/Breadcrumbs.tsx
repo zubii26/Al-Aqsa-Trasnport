@@ -18,7 +18,7 @@ export default function Breadcrumbs({ overrideLastItem, className = '' }: Breadc
 
     // Identify the app root (first segment)
     const appRoot = segments[0] || '';
-    const isMultiApp = ['umrah', 'agency', 'driver'].includes(appRoot);
+    const isMultiApp = ['umrah'].includes(appRoot);
 
     // If we rely on multi-app structure, Home should point to /appRoot
     // And we should filter out the appRoot from the specific breadcrumb segments shown

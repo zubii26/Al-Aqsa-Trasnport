@@ -5,7 +5,7 @@ import { calculateFinalPrice } from '@/lib/pricing';
 import { getSettings } from '@/lib/settings-storage';
 import { routeService, RouteWithPrices } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
-import { AgencyWallet, WalletTransaction } from '@/models';
+
 import dbConnect from '@/lib/mongodb';
 
 export async function POST(request: Request) {
@@ -38,12 +38,12 @@ export async function POST(request: Request) {
 
         // First Pass: Calculate Prices and Validate
         for (const bookingData of bookings) {
-            let priceDetails = {
+            let priceDetails: any = {
                 price: '0',
                 finalPrice: 0,
                 originalPrice: 0,
                 discountApplied: 0,
-                discountType: null
+                discountType: undefined
             };
             let vehicleString = bookingData.vehicle || 'Standard Vehicle';
 
@@ -59,19 +59,15 @@ export async function POST(request: Request) {
                     if (priceEntry) {
                         const basePrice = priceEntry.price * quantity;
                         // const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
-                        // For Agency, maybe no discount or specific agency discount? 
-                        // Using standard logic for now.
                         const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(basePrice, settings.discount);
 
                         priceDetails = {
                             originalPrice,
-                            discountApplied: 0, // Reset discount for agency? Or keep. Let's keep data consistent.
+                            discountApplied,
                             finalPrice: price,
-                            discountType: null, // removing generic discount for agencies usually
+                            discountType,
                             price: String(price)
                         };
-                        // Actually, agencies might have their own fixed rates. 
-                        // For now, assuming standard rates apply unless overridden. 
                     }
                     vehicleString = `${quantity} x ${vehicle.name}`;
                 }
@@ -85,31 +81,12 @@ export async function POST(request: Request) {
             totalBatchCost += Number(priceDetails.finalPrice || 0);
         }
 
-        // Check Wallet
-        let wallet = null;
-        if (user.role === 'agency') {
-            wallet = await AgencyWallet.findOne({ agencyId: user.id });
-            if (!wallet) {
-                return NextResponse.json({ error: 'Agency wallet not found' }, { status: 404 });
-            }
-
-            if ((wallet.balance + wallet.creditLimit) < totalBatchCost) {
-                return NextResponse.json({
-                    error: 'Insufficient credit limit for this batch',
-                    required: totalBatchCost,
-                    available: wallet.balance + wallet.creditLimit
-                }, { status: 402 });
-            }
-        }
-
-        // 2. Process Bookings & Deduct
+        // Create Booking
         const results = [];
-
         for (const item of bookingsToProcess) {
             try {
-                // Create Booking
                 const newBooking = await addBooking({
-                    name: user.name || item.name || 'Agency Agent',
+                    name: user.name || item.name || 'Customer',
                     email: user.email,
                     phone: user.phone || item.phone || '',
                     pickup: item.pickup,
@@ -123,47 +100,15 @@ export async function POST(request: Request) {
                     notes: item.notes,
                     status: 'pending',
                     userId: user.id,
-                    paymentStatus: 'paid', // Mark as paid via Wallet
-                    paymentMethod: 'agency_wallet',
+                    paymentStatus: 'unpaid',
                     ...item.priceDetails
                 });
 
                 results.push(newBooking);
-
-                // Create Transaction (Per Booking)
-                if (wallet) {
-                    const cost = Number(item.priceDetails.finalPrice || 0);
-                    if (cost > 0) {
-                        wallet.balance -= cost;
-                        // Save immediately inside loop to prevent race condition if we were doing parallel, 
-                        // but here we are serial. Better to update in memory and save once at end? 
-                        // No, risk of failure leaving DB inconsistent. 
-                        // Ideally: Transactions (ACID). Mongo supports sessions. 
-                        // For now, simple serial update.
-
-                        await WalletTransaction.create({
-                            walletId: wallet._id.toString(),
-                            amount: cost,
-                            type: 'DEBIT',
-                            referenceType: 'BOOKING',
-                            referenceId: newBooking._id.toString(),
-                            description: `Bulk Booking: ${item.vehicleString}`,
-                            status: 'COMPLETED',
-                            performedBy: user.id
-                        });
-                    }
-                }
-
             } catch (err) {
                 console.error('Failed to create item', err);
                 errors.push({ item, error: 'Failed to create' });
             }
-        }
-
-        // Final Save of Wallet Balance (if we did batch update)
-        // Since we modified wallet balance in loop but didn't save `wallet`, we save now.
-        if (wallet) {
-            await wallet.save();
         }
 
         return NextResponse.json({

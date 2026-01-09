@@ -23,8 +23,6 @@ interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     createdAt?: string;
     rating?: number;
     review?: string;
-    driverStatus?: string;
-    isAgency?: boolean;
 }
 
 export default function BookingsPage() {
@@ -38,7 +36,6 @@ export default function BookingsPage() {
     const [endDate, setEndDate] = useState('');
     const [specificVehicle, setSpecificVehicle] = useState('All Vehicles');
     const [selectedBooking, setSelectedBooking] = useState<BookingWithDetails | null>(null);
-    const [agencies, setAgencies] = useState<Record<string, boolean>>({});
 
     // ... sortBookings function ...
     const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
@@ -107,29 +104,7 @@ export default function BookingsPage() {
             const bookingsRes = await fetch('/api/bookings');
             const bookingsData = await bookingsRes.json();
 
-            // Fetch agencies (users with role 'agency')
-            // Note: This requires admin access to users API
-            let agencyMap: Record<string, boolean> = {};
-            try {
-                const usersRes = await fetch('/api/admin/users?role=agency');
-                if (usersRes.ok) {
-                    const agencyUsers = await usersRes.json();
-                    agencyUsers.forEach((u: any) => {
-                        agencyMap[u.id] = true;
-                    });
-                    setAgencies(agencyMap);
-                }
-            } catch (e) {
-                console.log('Failed to fetch agencies map', e);
-            }
-
-            // Enhance bookings with agency flag
-            const enhancedBookings = bookingsData.map((b: any) => ({
-                ...b,
-                isAgency: !!(b.userId && agencyMap[b.userId])
-            }));
-
-            setBookings(sortBookings(enhancedBookings));
+            setBookings(sortBookings(bookingsData));
         } catch (error) {
             console.error('Failed to fetch data:', error);
             showToast('Failed to load bookings', 'error');
@@ -146,9 +121,7 @@ export default function BookingsPage() {
     const filteredBookings = bookings.filter(booking => {
         const matchesStatus = filter === 'All'
             ? true
-            : filter === 'Agency'
-                ? booking.isAgency
-                : booking.status === filter.toLowerCase();
+            : booking.status === filter.toLowerCase();
 
         const matchesSearch =
             booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -279,7 +252,6 @@ export default function BookingsPage() {
                 'Passengers': b.passengers || 0,
                 'Status': b.status,
                 'Price': b.finalPrice || b.originalPrice || '',
-                'Driver Status': b.driverStatus || 'N/A',
                 'Flight': b.flightNumber || '',
                 'Arrival': b.arrivalDate || ''
             };
@@ -385,7 +357,7 @@ export default function BookingsPage() {
                 </div>
 
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 border-t border-border pt-4">
-                    {['All', 'Agency', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
+                    {['All', 'Pending', 'Confirmed', 'Completed', 'Cancelled'].map((status) => (
                         <button
                             key={status}
                             onClick={() => setFilter(status)}
@@ -448,11 +420,6 @@ export default function BookingsPage() {
                                                         <span className="font-mono text-xs text-muted-foreground">#{booking.id.slice(0, 8)}</span>
                                                         <div className="flex items-center gap-2">
                                                             <span className="font-medium">{booking.name}</span>
-                                                            {booking.isAgency && (
-                                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 flex items-center gap-1" title="Agency Booking">
-                                                                    <Building2 size={10} /> B2B
-                                                                </span>
-                                                            )}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                                             <Mail size={12} /> {booking.email}
@@ -520,12 +487,6 @@ export default function BookingsPage() {
                                                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusBadge(booking.status)}`}>
                                                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                                                     </span>
-                                                    {booking.assignedDriverId && (
-                                                        <div className="mt-1 flex items-center gap-1 text-[10px] text-emerald-600 font-medium">
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                                            Driver Assigned
-                                                        </div>
-                                                    )}
                                                     {booking.rating && (
                                                         <div className="mt-1 flex items-center gap-1 text-[10px] text-amber-500 font-bold">
                                                             <span>⭐ {booking.rating}/5</span>

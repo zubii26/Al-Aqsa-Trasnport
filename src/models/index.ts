@@ -34,7 +34,7 @@ export interface IBooking extends Document {
     notes?: string;
     status: string;
     paymentStatus: 'paid' | 'unpaid' | 'refunded';
-    paymentMethod?: string; // 'cash', 'credit_card', 'agency_wallet', etc.
+    paymentMethod?: string; // 'cash', 'credit_card', etc.
     userId?: string;
     price?: string;
     originalPrice?: number;
@@ -49,12 +49,9 @@ export interface IBooking extends Document {
     flightNumber?: string;
     arrivalDate?: string;
 
-    assignedDriverId?: string;
-    driverStatus?: 'pending' | 'accepted' | 'en_route' | 'arrived' | 'completed' | 'cancelled';
-
-    rating?: number;
-    review?: string;
-    reviewEmailSent?: boolean;
+    rating?: number,
+    review?: string,
+    reviewEmailSent?: boolean,
 
     createdAt: Date;
     updatedAt: Date;
@@ -66,9 +63,7 @@ export interface IUser extends Document {
     id?: string;
     email: string;
     name?: string;
-    role: 'user' | 'admin' | 'manager' | 'operational_manager' | 'driver' | 'agency';
-    activeContracts?: number;
-    creditLimit?: number;
+    role: 'user' | 'admin' | 'manager' | 'operational_manager';
     isOnline?: boolean;
     location?: {
         lat: number;
@@ -92,15 +87,9 @@ export interface IUser extends Document {
         logo: string;
         primaryColor: string;
     };
-    paymentTerms?: 'Net15' | 'Net30' | 'Prepaid';
-    parentId?: string; // For sub-accounts (Employee of Agency)
+    parentId?: string; // For sub-accounts
     permissions?: string[]; // ['BOOKING', 'FINANCE', 'ADMIN']
 
-    // Driver Compliance
-    licenseExpiry?: Date;
-    iqamaExpiry?: Date;
-    insuranceExpiry?: Date;
-    vehicleRegistrationExpiry?: Date;
 }
 
 export interface IReview extends Document {
@@ -153,20 +142,6 @@ export interface IGalleryItem extends Document {
 
 
 
-export interface IDriver extends Document {
-    name: string;
-    photo: string;
-    experience: string;
-    languages: string[];
-    certifications: string[];
-    rating: number;
-    trips: string;
-    quote: string;
-    badges: string[];
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-}
 
 export interface ISection extends Document {
     name: string; // Unique key
@@ -206,18 +181,6 @@ export interface ISubscriber extends Document {
 
 // --- Schemas ---
 
-const DriverSchema = new Schema<IDriver>({
-    name: { type: String, required: true },
-    photo: { type: String, required: true },
-    experience: { type: String, required: true },
-    languages: { type: [String], required: true },
-    certifications: { type: [String], default: [] },
-    rating: { type: Number, default: 5 },
-    trips: { type: String, default: '0' },
-    quote: { type: String },
-    badges: { type: [String], default: [] },
-    isActive: { type: Boolean, default: true },
-}, { timestamps: true });
 
 const SectionSchema = new Schema<ISection>({
     name: { type: String, required: true, unique: true },
@@ -296,9 +259,6 @@ const BookingSchema = new Schema<IBooking>({
     flightNumber: { type: String },
     arrivalDate: { type: String },
 
-    // Driver Assignment
-    assignedDriverId: { type: String }, // Links to User._id (role: driver)
-    driverStatus: { type: String, enum: ['pending', 'accepted', 'en_route', 'arrived', 'completed', 'cancelled', 'rejected'], default: 'pending' },
 
     // Rating & Review
     rating: { type: Number, min: 1, max: 5 },
@@ -311,9 +271,7 @@ const BookingSchema = new Schema<IBooking>({
 const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     name: { type: String },
-    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager', 'driver', 'agency'], default: 'user' },
-    activeContracts: { type: Number, default: 0 },
-    creditLimit: { type: Number, default: 0 },
+    role: { type: String, enum: ['user', 'admin', 'manager', 'operational_manager'], default: 'user' },
     isOnline: { type: Boolean, default: false },
     location: {
         lat: { type: Number },
@@ -335,15 +293,9 @@ const UserSchema = new Schema<IUser>({
         logo: { type: String },
         primaryColor: { type: String }
     },
-    paymentTerms: { type: String, enum: ['Net15', 'Net30', 'Prepaid'], default: 'Net30' },
     parentId: { type: String, index: true },
     permissions: { type: [String], default: [] },
 
-    // Driver Compliance
-    licenseExpiry: { type: Date },
-    iqamaExpiry: { type: Date },
-    insuranceExpiry: { type: Date },
-    vehicleRegistrationExpiry: { type: Date }
 }, { timestamps: true });
 
 const ReviewSchema = new Schema<IReview>({
@@ -478,7 +430,6 @@ const DraftBookingSchema = new Schema<IDraftBooking>({
 
 // Revert hack
 // Revert hack
-export const Driver: Model<IDriver> = mongoose.models.Driver || mongoose.model<IDriver>('Driver', DriverSchema);
 export const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>('Section', SectionSchema);
 export const Subscriber = mongoose.models.Subscriber || mongoose.model<ISubscriber>('Subscriber', SubscriberSchema);
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
@@ -497,10 +448,10 @@ export const GalleryItem: Model<IGalleryItem> = mongoose.models.GalleryItem || m
 export interface IMessage extends Document {
     senderId: string;
     receiverId?: string; // If 1:1 chat (optional if group)
-    senderRole: 'admin' | 'driver' | 'user';
+    senderRole: 'admin' | 'user';
     content: string;
     isRead: boolean;
-    channelId: string; // Helper to group conversations (e.g. `chat_${driverId}`)
+    channelId: string; // Helper to group conversations (e.g. `chat_${userId}`)
     createdAt: Date;
     updatedAt: Date;
 }
@@ -508,7 +459,7 @@ export interface IMessage extends Document {
 const MessageSchema = new Schema<IMessage>({
     senderId: { type: String, required: true },
     receiverId: { type: String },
-    senderRole: { type: String, enum: ['admin', 'driver', 'user', 'agency'], required: true },
+    senderRole: { type: String, enum: ['admin', 'user'], required: true },
     content: { type: String, required: true },
     isRead: { type: Boolean, default: false },
     channelId: { type: String, required: true, index: true },
@@ -517,7 +468,7 @@ const MessageSchema = new Schema<IMessage>({
 export const Message: Model<IMessage> = mongoose.models.Message || mongoose.model<IMessage>('Message', MessageSchema);
 
 export interface IPayment extends Document {
-    userId: string; // The Agency or User who paid
+    userId: string; // The User who paid
     amount: number;
     currency: string;
     method: 'bank_transfer' | 'cash' | 'credit_card' | 'other';
@@ -542,129 +493,5 @@ const PaymentSchema = new Schema<IPayment>({
 
 export const Payment: Model<IPayment> = mongoose.models.Payment || mongoose.model<IPayment>('Payment', PaymentSchema);
 
-// --- Agency Wallet System ---
 
-export interface IAgencyWallet extends Document {
-    agencyId: string; // Links to User._id (role: agency)
-    // Example: Agency given 10k Limit. Balance 0. Available 10k.
-    // Book 1k ride -> Balance -1k. Available 9k.
-    // Pay 1k -> Balance 0.
-
-
-    balance: number;
-    creditLimit: number;
-    currency: string;
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-const AgencyWalletSchema = new Schema<IAgencyWallet>({
-    agencyId: { type: String, required: true, unique: true, index: true },
-    balance: { type: Number, default: 0 }, // Negative means debt, Positive means prepaid credit
-    creditLimit: { type: Number, default: 0 },
-    currency: { type: String, default: 'SAR' },
-    isActive: { type: Boolean, default: true },
-}, { timestamps: true });
-
-export interface IWalletTransaction extends Document {
-    walletId: string;
-    amount: number;
-    type: 'DEBIT' | 'CREDIT'; // DEBIT = Booking (Increases debt/Lowers balance), CREDIT = Payment (Reduces debt/increases balance)
-    referenceType: 'BOOKING' | 'PAYMENT' | 'ADJUSTMENT' | 'REFUND';
-    referenceId: string;
-    description: string;
-    status: 'PENDING' | 'COMPLETED' | 'FAILED';
-    performedBy: string; // User ID
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-const WalletTransactionSchema = new Schema<IWalletTransaction>({
-    walletId: { type: String, required: true, index: true },
-    amount: { type: Number, required: true }, // Always positive magnitude
-    type: { type: String, enum: ['DEBIT', 'CREDIT'], required: true },
-    referenceType: { type: String, enum: ['BOOKING', 'PAYMENT', 'ADJUSTMENT', 'REFUND'], required: true },
-    referenceId: { type: String, required: true },
-    description: { type: String },
-    status: { type: String, enum: ['PENDING', 'COMPLETED', 'FAILED'], default: 'COMPLETED' },
-    performedBy: { type: String, required: true },
-}, { timestamps: true });
-
-export const AgencyWallet: Model<IAgencyWallet> = mongoose.models.AgencyWallet || mongoose.model<IAgencyWallet>('AgencyWallet', AgencyWalletSchema);
-export const WalletTransaction: Model<IWalletTransaction> = mongoose.models.WalletTransaction || mongoose.model<IWalletTransaction>('WalletTransaction', WalletTransactionSchema);
-
-export interface IInvoice extends Document {
-    agencyId: string;
-    invoiceNumber: string;
-    periodStart: Date;
-    periodEnd: Date;
-    dueDate: Date;
-    totalAmount: number;
-    status: 'DRAFT' | 'ISSUED' | 'PAID' | 'PARTIAL' | 'OVERDUE';
-    items: {
-        description: string;
-        amount: number;
-        referenceId?: string; // Booking ID or Transaction ID
-        date: Date;
-    }[];
-    paidAmount: number;
-    pdfUrl?: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-const InvoiceSchema = new Schema<IInvoice>({
-    agencyId: { type: String, required: true, index: true },
-    invoiceNumber: { type: String, required: true, unique: true },
-    periodStart: { type: Date, required: true },
-    periodEnd: { type: Date, required: true },
-    dueDate: { type: Date, required: true },
-    totalAmount: { type: Number, required: true },
-    status: { type: String, enum: ['DRAFT', 'ISSUED', 'PAID', 'PARTIAL', 'OVERDUE'], default: 'DRAFT' },
-    items: [{
-        description: { type: String, required: true },
-        amount: { type: Number, required: true },
-        referenceId: { type: String },
-        date: { type: Date, required: true }
-    }],
-    paidAmount: { type: Number, default: 0 },
-    pdfUrl: { type: String }
-}, { timestamps: true });
-
-export const Invoice: Model<IInvoice> = mongoose.models.Invoice || mongoose.model<IInvoice>('Invoice', InvoiceSchema);
-
-// --- Shift Logging ---
-
-export interface IShift extends Document {
-    driverId: string; // User._id
-    startTime: Date;
-    endTime?: Date;
-    duration?: number; // minutes
-    initialLocation?: { lat: number; lng: number };
-    endLocation?: { lat: number; lng: number };
-    status: 'active' | 'completed';
-    earnings?: number; // cache earnings for this shift
-    tripsCompleted?: number;
-}
-
-const ShiftSchema = new Schema<IShift>({
-    driverId: { type: String, required: true, index: true },
-    startTime: { type: Date, required: true, default: Date.now },
-    endTime: { type: Date },
-    duration: { type: Number }, // minutes
-    initialLocation: {
-        lat: Number,
-        lng: Number
-    },
-    endLocation: {
-        lat: Number,
-        lng: Number
-    },
-    status: { type: String, enum: ['active', 'completed'], default: 'active' },
-    earnings: { type: Number, default: 0 },
-    tripsCompleted: { type: Number, default: 0 }
-}, { timestamps: true });
-
-export const Shift: Model<IShift> = mongoose.models.Shift || mongoose.model<IShift>('Shift', ShiftSchema);
 

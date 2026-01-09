@@ -14,18 +14,21 @@ export async function validateRequest(): Promise<IUser | null> {
         const { verifyToken } = await import('@/lib/auth-utils');
         const payload = await verifyToken(token.value);
 
-        if (!payload || !payload.userId) return null;
+        if (!payload || !payload.userId) {
+            return null;
+        }
 
-        // We can either trust the token payload or fetch fresh user data
-        // Fetching fresh data is safer for role changes/bans
         await dbConnect();
         const user = await User.findById(payload.userId).lean();
-        if (!user) return null;
+
+        if (!user) {
+            return null;
+        }
 
         // Cast to IUser and ensure string ID
         return { ...user, id: user._id.toString() } as unknown as IUser;
     } catch (error) {
-        console.error('Auth error:', error);
+        console.error('[validateRequest] Auth error:', error);
         return null;
     }
 }

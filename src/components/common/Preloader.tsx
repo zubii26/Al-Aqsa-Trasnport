@@ -10,9 +10,11 @@ export default function Preloader() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        console.log('[Preloader] Mounting...');
         // Check if preloader has already been shown in this session
         const hasShown = sessionStorage.getItem('preloader_shown');
         if (hasShown) {
+            console.log('[Preloader] Already shown, skipping...');
             setIsLoading(false);
             return;
         }
@@ -31,8 +33,10 @@ export default function Preloader() {
         }, 30);
 
         const handleLoad = () => {
+            console.log('[Preloader] handleLoad triggered, setting progress to 100');
             setProgress(100);
             setTimeout(() => {
+                console.log('[Preloader] Setting isLoading to false');
                 setIsLoading(false);
                 sessionStorage.setItem('preloader_shown', 'true');
                 window.dispatchEvent(new Event('preloader-complete'));
@@ -48,7 +52,7 @@ export default function Preloader() {
         // Safety fallback: Force remove preloader after 4 seconds max
         const safetyTimeout = setTimeout(() => {
             if (isLoading) {
-                console.warn('Preloader safety timeout triggered');
+                console.warn('[Preloader] Safety timeout triggered');
                 handleLoad();
             }
         }, 4000);

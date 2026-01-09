@@ -7,7 +7,7 @@ import AnnouncementBanner from "@/components/ui/AnnouncementBanner";
 import GlobalClientComponents from "@/components/common/GlobalClientComponents";
 import { getSettings } from "@/lib/settings-storage";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
-import UmrahPWA from "@/components/umrah/UmrahPWA";
+import UmrahPWA from "@/components/common/UmrahPWA";
 
 export const viewport: Viewport = {
     themeColor: '#D4AF37', // Gold theme

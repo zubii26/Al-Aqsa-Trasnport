@@ -7,7 +7,7 @@ interface jsPDFWithAutoTable extends jsPDF {
     autoTable: (options: any) => void;
 }
 
-export const generateInvoice = async (booking: any, agencyData: any) => {
+export const generateInvoice = async (booking: any) => {
     const doc = new jsPDF() as jsPDFWithAutoTable;
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
@@ -53,17 +53,17 @@ export const generateInvoice = async (booking: any, agencyData: any) => {
     doc.text("Jeddah, Saudi Arabia", 15, yPos + 11);
     doc.text("support@alaqsa.com", 15, yPos + 16);
 
-    // To (Agency)
+    // To (Customer)
     doc.setFontSize(10);
     doc.setTextColor(148, 163, 184); // Slate-400
     doc.text("BILLED TO", pageWidth / 2, yPos);
 
     doc.setTextColor(51, 65, 85); // Slate-700
     doc.setFont("helvetica", "bold");
-    doc.text(agencyData?.name || "Agency Partner", pageWidth / 2, yPos + 6);
+    doc.text(booking.name || "Customer", pageWidth / 2, yPos + 6);
     doc.setFont("helvetica", "normal");
-    doc.text(agencyData?.email || "", pageWidth / 2, yPos + 11);
-    doc.text(agencyData?.phone || "", pageWidth / 2, yPos + 16);
+    doc.text(booking.email || "", pageWidth / 2, yPos + 11);
+    doc.text(booking.phone || "", pageWidth / 2, yPos + 16);
 
 
     // Meta Data (Date, Invoice #)

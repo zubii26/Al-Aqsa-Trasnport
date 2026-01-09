@@ -10,7 +10,7 @@ export default function FeatureHighlights() {
         { id: 'safety', icon: Shield, title: 'Safety First', desc: 'Our vehicles are regularly inspected and maintained to ensure your safety.' },
         { id: 'comfort', icon: Star, title: 'Premium Comfort', desc: 'Enjoy a relaxing journey with spacious seating and climate control.' },
         { id: 'reliability', icon: Clock, title: 'Always On Time', desc: 'We value your time and guarantee punctual pickups and drop-offs.' },
-        { id: 'hospitality', icon: HeartHandshake, title: 'Warm Hospitality', desc: 'Our drivers are trained to serve you with respect and courtesy.' },
+        { id: 'hospitality', icon: HeartHandshake, title: 'Warm Hospitality', desc: 'Our dedicated team is trained to serve you with respect and courtesy.' },
     ];
 
     return (

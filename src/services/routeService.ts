@@ -10,6 +10,8 @@ export interface RouteWithPrices extends IRoute {
 
 export const routeService = {
     getRoutes: unstable_cache(async () => {
+        console.log('[routeService] getRoutes starting...');
+        const start = Date.now();
         try {
             await dbConnect();
             const routes = await Route.aggregate([

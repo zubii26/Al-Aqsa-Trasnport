@@ -14,8 +14,10 @@ export default function Navbar() {
     const pathname = usePathname();
     const { isMenuOpen, setIsMenuOpen, toggleMenu } = useMenu();
     const [scrolled, setScrolled] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
         };
@@ -83,7 +85,6 @@ export default function Navbar() {
             label: 'About Us',
             children: [
                 { href: '/about', label: 'Company Profile' },
-                { href: '/about/meet-our-drivers', label: 'Meet Our Drivers' },
             ]
         },
         { href: '/blog', label: 'Blog' },
@@ -138,12 +139,12 @@ export default function Navbar() {
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 ${pathname === link.href ? 'text-secondary' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
+                                    className={`relative text-sm transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
                                         }`}
                                 >
                                     {link.label}
                                     {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
-                                    <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                    <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${mounted && pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                                         }`} />
                                 </Link>
                             )}
@@ -234,8 +235,8 @@ export default function Navbar() {
                         <div key={link.href} className="flex flex-col">
                             <Link
                                 href={link.href}
-                                className={`p-4 rounded-xl text-lg font-medium transition-all duration-200 flex items-center justify-between group ${pathname === link.href
-                                    ? 'bg-secondary/10 text-secondary'
+                                className={`p-4 rounded-xl text-lg transition-all duration-200 flex items-center justify-between group font-playfair tracking-normal ${mounted && pathname === link.href
+                                    ? 'bg-secondary/10 text-secondary font-bold'
                                     : 'text-foreground/80 hover:bg-muted hover:text-foreground'
                                     }`}
                                 onClick={() => !link.children && setIsMenuOpen(false)}
@@ -243,7 +244,7 @@ export default function Navbar() {
                                 <span className="flex items-center gap-2">
                                     {link.label}
                                 </span>
-                                {pathname === link.href && !link.children && (
+                                {mounted && pathname === link.href && !link.children && (
                                     <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
                                 )}
                             </Link>
@@ -255,8 +256,8 @@ export default function Navbar() {
                                         <Link
                                             key={child.href}
                                             href={child.href}
-                                            className={`p-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center justify-between ${pathname === child.href
-                                                ? 'text-secondary bg-secondary/5'
+                                            className={`p-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center justify-between ${mounted && pathname === child.href
+                                                ? 'text-secondary bg-secondary/5 font-bold'
                                                 : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
                                                 }`}
                                             onClick={() => setIsMenuOpen(false)}

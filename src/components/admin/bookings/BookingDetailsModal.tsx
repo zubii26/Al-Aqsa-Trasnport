@@ -12,9 +12,6 @@ interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     vehicleCount?: number;
     createdAt?: string;
 
-    // Driver Details
-    assignedDriverId?: string;
-    driverStatus?: string;
 
     // Rating
     rating?: number;
@@ -37,51 +34,6 @@ interface BookingDetailsModalProps {
 }
 
 export default function BookingDetailsModal({ booking, isOpen, onClose, onStatusUpdate, onUpdate }: BookingDetailsModalProps) {
-    const [drivers, setDrivers] = useState<User[]>([]);
-    const [assigning, setAssigning] = useState(false);
-
-    useEffect(() => {
-        if (isOpen) {
-            fetchDrivers();
-        }
-    }, [isOpen]);
-
-    const fetchDrivers = async () => {
-        try {
-            const res = await fetch('/api/admin/users?role=driver');
-            if (res.ok) {
-                const data = await res.json();
-                setDrivers(data);
-            }
-        } catch (error) {
-            console.error('Failed to fetch drivers', error);
-        }
-    };
-
-    const handleAssignDriver = async (driverId: string) => {
-        if (!booking) return;
-        setAssigning(true);
-        try {
-            const res = await fetch(`/api/bookings/${booking.id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    assignedDriverId: driverId,
-                    driverStatus: driverId ? 'pending' : undefined // Reset status if assigning new, or clear if unassigning
-                }),
-            });
-
-            if (res.ok) {
-                const updatedBooking = await res.json();
-                if (onUpdate) onUpdate(booking.id, updatedBooking);
-                // Optionally show toast
-            }
-        } catch (error) {
-            console.error('Failed to assign driver', error);
-        } finally {
-            setAssigning(false);
-        }
-    };
 
     if (!isOpen || !booking) return null;
 
@@ -111,34 +63,6 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                 </div>
 
                 <div className="p-6 space-y-8">
-                    {/* Driver Assignment Section */}
-                    {booking.status !== 'cancelled' && (
-                        <div className="bg-slate-50 dark:bg-slate-800/30 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
-                            <div className="flex items-center justify-between mb-3">
-                                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                                    <CarFront size={16} /> Driver Assignment
-                                </h3>
-                                {booking.driverStatus && (
-                                    <span className="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium capitalize">
-                                        Status: {booking.driverStatus.replace('_', ' ')}
-                                    </span>
-                                )}
-                            </div>
-                            <select
-                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none"
-                                value={booking.assignedDriverId || ''}
-                                onChange={(e) => handleAssignDriver(e.target.value)}
-                                disabled={assigning}
-                            >
-                                <option value="">-- Select Driver --</option>
-                                {drivers.map(driver => (
-                                    <option key={driver.id} value={driver.id}>
-                                        {driver.name} ({driver.email})
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
 
                     {/* Journey Section */}
                     <section>

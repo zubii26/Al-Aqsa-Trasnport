@@ -12,10 +12,9 @@ const PRIMARY_COLOR = "#0f172a"; // slate-900
 interface InvoiceData {
     invoiceAllowed: boolean;
     booking: any;
-    agency: any;
 }
 
-export const generateBookingInvoice = (booking: any, agency: any) => {
+export const generateBookingInvoice = (booking: any) => {
     const doc = new jsPDF();
 
     // --- Header ---
@@ -52,12 +51,12 @@ export const generateBookingInvoice = (booking: any, agency: any) => {
     doc.setFontSize(11);
     doc.setTextColor(0, 0, 0);
     doc.setFont("helvetica", "bold");
-    doc.text(agency.name || "Agency Name", 20, 71);
+    doc.text(booking.name || "Customer Name", 20, 71);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    if (agency.email) doc.text(agency.email, 20, 76);
-    if (agency.phone) doc.text(agency.phone, 20, 81);
+    if (booking.email) doc.text(booking.email, 20, 76);
+    if (booking.phone) doc.text(booking.phone, 20, 81);
 
     // --- Invoice Details ---
     const startY = 65;

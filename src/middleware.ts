@@ -40,7 +40,6 @@ export async function middleware(request: NextRequest) {
                 if (pathname.startsWith('/api/')) {
                     return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 });
                 }
-                // For pages, redirect to login with error (or a 403 page if we had one)
                 const loginUrl = new URL('/admin/login', request.url);
                 loginUrl.searchParams.set('error', 'Unauthorized access');
                 return NextResponse.redirect(loginUrl);
@@ -57,81 +56,12 @@ export async function middleware(request: NextRequest) {
             return response;
         }
     }
-    // Check if the request is for the agency portal
-    if (pathname.startsWith('/agency')) {
-        // Exclude the login/register pages
-        if (pathname === '/agency/login' || pathname === '/agency/register') {
-            return NextResponse.next();
-        }
-
-        const token = request.cookies.get('token'); // Assuming 'token' is used for non-admin users
-
-        if (!token) {
-            const loginUrl = new URL('/agency/login', request.url);
-            return NextResponse.redirect(loginUrl);
-        }
-
-        try {
-            const { verifyToken } = await import('@/lib/auth-utils');
-            const payload = await verifyToken(token.value);
-
-            if (!payload || payload.role !== 'agency') {
-                // If logged in but not an agency, redirect to appropriate dashboard or error
-                if (payload && payload.role === 'user') {
-                    return NextResponse.redirect(new URL('/dashboard', request.url));
-                }
-                const loginUrl = new URL('/agency/login', request.url);
-                loginUrl.searchParams.set('error', 'Unauthorized access');
-                return NextResponse.redirect(loginUrl);
-            }
-        } catch {
-            const loginUrl = new URL('/agency/login', request.url);
-            const response = NextResponse.redirect(loginUrl);
-            response.cookies.delete('token');
-            return response;
-        }
-    }
-
-    // Check if the request is for the driver app
-    if (pathname.startsWith('/driver')) {
-        if (pathname === '/driver/login') {
-            return NextResponse.next();
-        }
-
-        const token = request.cookies.get('token');
-
-        if (!token) {
-            return NextResponse.redirect(new URL('/driver/login', request.url));
-        }
-
-        try {
-            const { verifyToken } = await import('@/lib/auth-utils');
-            const payload = await verifyToken(token.value);
-
-            if (!payload || payload.role !== 'driver') {
-                const loginUrl = new URL('/driver/login', request.url);
-                loginUrl.searchParams.set('error', 'Unauthorized access');
-                return NextResponse.redirect(loginUrl);
-            }
-        } catch {
-            const loginUrl = new URL('/driver/login', request.url);
-            const response = NextResponse.redirect(loginUrl);
-            response.cookies.delete('token');
-            return response;
-        }
-    }
-
     return NextResponse.next();
 }
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         */
-        '/((?!_next/static|_next/image|favicon.ico|.*\\.html).*)',
+        '/admin/:path*',
+        '/api/admin/:path*',
     ],
 };

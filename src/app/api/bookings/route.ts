@@ -7,7 +7,7 @@ import { getSettings } from '@/lib/settings-storage';
 import { routeService, RouteWithPrices } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
 import { calculateFinalPrice } from '@/lib/pricing';
-import { AgencyWallet, WalletTransaction } from '@/models';
+
 
 export async function GET() {
     try {
@@ -127,53 +127,7 @@ export async function POST(request: Request) {
             console.log('Booking created as guest (no valid token found)');
         }
 
-        // --- Agency Wallet Payment Logic ---
-        if (bookingData.paymentMethod === 'agency_wallet') {
-            if (!userId) {
-                return NextResponse.json({ success: false, message: 'Agency authentication required for wallet payment' }, { status: 401 });
-            }
 
-            const totalPrice = Number(priceDetails.finalPrice || bookingData.price || 0);
-            if (totalPrice <= 0) {
-                return NextResponse.json({ success: false, message: 'Invalid price for wallet payment' }, { status: 400 });
-            }
-
-            const wallet = await AgencyWallet.findOne({ agencyId: userId });
-            if (!wallet) {
-                return NextResponse.json({ success: false, message: 'Agency wallet not found' }, { status: 404 });
-            }
-
-            // Validation: Ensure Balance - Price >= -CreditLimit
-            // Equivalent to: Balance + CreditLimit >= Price
-            // (Assuming balance is current funds (0) - debt (negative). Wait, standard model:
-            // Credit Limit: 1000. Balance Starts 0.
-            // Balance becomes -100 after 100 spend.
-            // Condition: -100 + 1000 = 900 Available.
-            // Formula: (wallet.balance + wallet.creditLimit) >= totalPrice
-
-            if ((wallet.balance + wallet.creditLimit) < totalPrice) {
-                return NextResponse.json({ success: false, message: 'Insufficient credit limit' }, { status: 402 });
-            }
-
-            // Deduct from Balance
-            wallet.balance -= totalPrice;
-            await wallet.save();
-
-            // Record Transaction
-            await WalletTransaction.create({
-                walletId: wallet._id.toString(),
-                amount: totalPrice,
-                type: 'DEBIT',
-                referenceType: 'BOOKING',
-                referenceId: `PENDING-BOOKING`,
-                description: `Booking Charge: ${bookingData.vehicle}`,
-                status: 'COMPLETED',
-                performedBy: userId
-            } as any);
-
-            // Mark as Paid
-            bookingData.paymentStatus = 'paid';
-        }
 
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -187,16 +141,7 @@ export async function POST(request: Request) {
             selectedVehicles: selectedVehiclesList
         } as any);
 
-        // Update Transaction Reference if it was a wallet payment
-        if (bookingData.paymentMethod === 'agency_wallet' && booking) {
-            // Find the recent transaction and update ref
-            // Or just simpler:
-            await WalletTransaction.findOneAndUpdate(
-                { referenceId: 'PENDING-BOOKING', performedBy: userId, type: 'DEBIT' },
-                { referenceId: booking._id.toString() },
-                { sort: { createdAt: -1 } }
-            );
-        }
+
 
         // Send standardized confirmation email to customer
         console.log('[Booking API] Processing customer email...');

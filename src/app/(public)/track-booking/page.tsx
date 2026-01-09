@@ -204,28 +204,16 @@ export default function TrackBookingPage() {
                                         </div>
                                     </div>
 
-                                    {/* Driver / Vehicle Info */}
+                                    {/* Vehicle Info */}
                                     <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 flex items-center gap-4">
                                         <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm text-slate-400">
                                             <Car size={24} />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">Vehicle</p>
+                                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">Vehicle Type</p>
                                             <p className="font-bold text-slate-900 dark:text-white">{booking.vehicle}</p>
-                                            <p className="text-xs text-slate-500">{booking.passengers} Passengers</p>
+                                            <p className="text-xs text-slate-500">{booking.passengers} Passengers · {booking.luggage || 0} Luggage</p>
                                         </div>
-                                        {booking.valet && (
-                                            <div className="ml-auto text-right">
-                                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">Driver</p>
-                                                <p className="font-bold text-green-600 dark:text-green-400">{booking.valet.name}</p>
-                                                <p className="text-xs text-slate-500">{booking.valet.phone}</p>
-                                            </div>
-                                        )}
-                                        {(!booking.valet && booking.status !== 'cancelled') && (
-                                            <div className="ml-auto text-right">
-                                                <span className="text-xs font-medium text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-lg">Driver Assigning...</span>
-                                            </div>
-                                        )}
                                     </div>
                                 </div>
                             </motion.div>

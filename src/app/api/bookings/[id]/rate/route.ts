@@ -25,7 +25,7 @@ export async function POST(
         }
 
         // 2. Ideally check status is 'completed'. Disabled for testing flexibility if needed.
-        if (booking.status !== 'completed' && booking.driverStatus !== 'completed') {
+        if (booking.status !== 'completed') {
             // Optional: Enforce only completed trips can be rated
             // return NextResponse.json({ error: 'Trip not completed yet' }, { status: 400 });
         }

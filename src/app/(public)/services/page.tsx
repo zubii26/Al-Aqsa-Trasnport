@@ -50,7 +50,7 @@ export default function ServicesPage() {
             title: 'Makkah to Madinah Taxi & Private Car',
             description: 'Premium intercity transfers between the Holy Cities. Enjoy a comfortable 450km journey in our wide range of fleets including GMC Yukon XL and Hyundai H1.',
             image: '/images/routes/makkah-madinah-route-hero.png',
-            link: '/umrah/services/makkah-madinah-taxi',
+            link: '/services/makkah-madinah-taxi',
             features: ['Door-to-Door Service', 'Luxury Fleet Options', '4.5 Hour Average Time'],
             alt: 'Makkah to Madinah Intercity Private Taxi App Map'
         },
@@ -58,7 +58,7 @@ export default function ServicesPage() {
             title: 'Jeddah Airport (KAIA) to Makkah Taxi',
             description: 'Hassle-free airport authorities approved pickup. Our driver will welcome you at Jeddah Airport arrivals for a seamless transfer to your Makkah hotel or Haram.',
             image: '/images/routes/jeddah-airport-hero-professional.png',
-            link: '/umrah/services/jeddah-airport-transfer',
+            link: '/services/jeddah-airport-transfer',
             features: ['Flight Tracking', 'Free Meet & Greet', 'Luggage Assistance'],
             alt: 'Jeddah Airport (KAIA) to Makkah Hotel Transfer Driver Chauffeur'
         },
@@ -66,7 +66,7 @@ export default function ServicesPage() {
             title: 'VIP Luxury GMC Yukon Umrah Transport',
             description: 'Travel in style with our VIP service. Top-of-the-line vehicles (GMC Yukon XL) and private chauffeurs for maximum privacy and ease.',
             image: '/images/fleet/gmc-yukon-hero-professional.png',
-            link: '/umrah/booking?service=luxury',
+            link: '/booking?service=luxury',
             features: ['Private Chauffeur', 'Latest Model Vehicles', 'Privacy Partition'],
             alt: 'GMC Yukon XL 2025 VIP Black SUV for Umrah Transport'
         },
@@ -74,7 +74,7 @@ export default function ServicesPage() {
             title: 'Makkah & Madinah Ziyarat Tours',
             description: 'Comprehensive Ziyarat packages to holy sites. Visit Masjid Quba, Mount Uhud, Jabal Al-Nour, and other historical Islamic landmarks with knowledgeable drivers.',
             image: '/images/routes/makkah-ziyarat-hero.png',
-            link: '/umrah/services/ziyarat-tours',
+            link: '/services/ziyarat-tours',
             features: ['Custom Itinerary', 'Expert Local Knowledge', 'Flexible Hours'],
             alt: 'Makkah and Madinah Historical Ziyarat Tour Mountains and Mosques'
         }
@@ -83,15 +83,15 @@ export default function ServicesPage() {
     const serviceFAQs = [
         {
             question: "How do I book a taxi from Jeddah Airport to Makkah?",
-            answer: <span>Booking is simple. You can reserve your <Link href="/umrah/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport to Makkah taxi</Link> online in advance. We monitor your flight arrival and our driver meets you at the terminal with a name sign.</span>
+            answer: <span>Booking is simple. You can reserve your <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport to Makkah taxi</Link> online in advance. We monitor your flight arrival and our driver meets you at the terminal with a name sign.</span>
         },
         {
             question: "What is the best transport for Umrah families?",
-            answer: <span>For families, we highly recommend our <Link href="/umrah/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon XL</Link> or <Link href="/umrah/fleet/hyundai-staria" className="text-amber-600 hover:underline">Hyundai Staria</Link>. These spacious vehicles offer ample luggage space and AC comfort for the 1-hour journey to Makkah.</span>
+            answer: <span>For families, we highly recommend our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon XL</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Hyundai Staria</Link>. These spacious vehicles offer ample luggage space and AC comfort for the 1-hour journey to Makkah.</span>
         },
         {
             question: "Do you offer direct Makkah to Madinah taxi services?",
-            answer: <span>Yes, our <Link href="/umrah/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah private taxi</Link> service is the most convenient option. Unlike the train or bus, we offer door-to-door service from your Makkah hotel lobby directly to your Madinah hotel.</span>
+            answer: <span>Yes, our <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah private taxi</Link> service is the most convenient option. Unlike the train or bus, we offer door-to-door service from your Makkah hotel lobby directly to your Madinah hotel.</span>
         },
         {
             question: "Can I stop at Miqat on the way to Makkah?",
@@ -99,11 +99,11 @@ export default function ServicesPage() {
         },
         {
             question: "Is the taxi fare fixed or metered?",
-            answer: <span>Our prices are fixed and transparent. You will know the exact cost of your <Link href="/umrah/booking" className="text-amber-600 hover:underline">Umrah transport booking</Link> upfront, with no hidden fees or toll charges.</span>
+            answer: <span>Our prices are fixed and transparent. You will know the exact cost of your <Link href="/booking" className="text-amber-600 hover:underline">Umrah transport booking</Link> upfront, with no hidden fees or toll charges.</span>
         },
         {
             question: "Do you provide Ziyarat tours in Makkah and Madinah?",
-            answer: <span>Yes, we offer comprehensive <Link href="/umrah/services/ziyarat-tours" className="text-amber-600 hover:underline">Ziyarat packages</Link>. Visit historical sites like Jabal Al-Nour, Masjid Quba, and Mount Uhud in the comfort of a private vehicle with a knowledgeable driver.</span>
+            answer: <span>Yes, we offer comprehensive <Link href="/services/ziyarat-tours" className="text-amber-600 hover:underline">Ziyarat packages</Link>. Visit historical sites like Jabal Al-Nour, Masjid Quba, and Mount Uhud in the comfort of a private vehicle with a knowledgeable driver.</span>
         }
     ];
 
@@ -115,9 +115,9 @@ export default function ServicesPage() {
                 subtitle="From Jeddah Airport pickup to Ziyarat tours, we provide safe, affordable, and comfortable taxi services for pilgrims."
                 bgImage="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000&auto=format&fit=crop"
                 ctaText="Book Your Ride"
-                ctaLink="/umrah/booking"
+                ctaLink="/booking"
                 secondaryCtaText="Contact Us"
-                secondaryCtaLink="/umrah/contact"
+                secondaryCtaLink="/contact"
                 breadcrumbs={<Breadcrumbs />}
                 alt="Jeddah Airport to Makkah & Madinah Umrah Taxi Services Fleet"
             />
@@ -235,7 +235,7 @@ export default function ServicesPage() {
                         <blockquote className={styles.quote}>
                             &ldquo;Your journey of faith deserves comfort and care.&rdquo;
                         </blockquote>
-                        <Link href="/umrah/booking" className={styles.ctaButton}>
+                        <Link href="/booking" className={styles.ctaButton}>
                             Book Your Ride Now <ArrowRight size={20} />
                         </Link>
                     </FadeIn>

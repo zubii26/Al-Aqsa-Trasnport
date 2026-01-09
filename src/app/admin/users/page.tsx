@@ -12,18 +12,16 @@ interface User {
     id: string;
     name: string;
     email: string;
-    role: 'admin' | 'manager' | 'operational_manager' | 'driver' | 'agency';
+    role: 'admin' | 'manager' | 'operational_manager';
     createdAt: string;
     isOnline?: boolean;
-    activeContracts?: number;
-    creditLimit?: number;
 }
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'manager' });
     const [submitting, setSubmitting] = useState(false);
 
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -65,13 +63,13 @@ export default function UsersPage() {
     }, [fetchUsers]);
 
     const handleEdit = (user: User) => {
-        setFormData({ name: user.name, email: user.email, password: '', role: user.role, activeContracts: user.activeContracts || 0, creditLimit: user.creditLimit || 0 });
+        setFormData({ name: user.name, email: user.email, password: '', role: user.role });
         setEditingId(user.id);
         setIsModalOpen(true);
     };
 
     const openCreateModal = () => {
-        setFormData({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
+        setFormData({ name: '', email: '', password: '', role: 'manager' });
         setEditingId(null);
         setIsModalOpen(true);
     };
@@ -92,7 +90,7 @@ export default function UsersPage() {
 
             if (res.ok) {
                 setIsModalOpen(false);
-                setFormData({ name: '', email: '', password: '', role: 'manager', activeContracts: 0, creditLimit: 0 });
+                setFormData({ name: '', email: '', password: '', role: 'manager' });
                 setEditingId(null);
                 fetchUsers();
                 showToast(editingId ? 'User updated successfully' : 'User created successfully', 'success');
@@ -178,8 +176,6 @@ export default function UsersPage() {
                         className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer"
                     >
                         <option value="all">All Roles</option>
-                        <option value="driver">Drivers Only</option>
-                        <option value="agency">Agencies</option>
                         <option value="manager">Managers</option>
                         <option value="operational_manager">Ops Managers</option>
                         <option value="admin">Admins</option>
@@ -223,23 +219,12 @@ export default function UsersPage() {
                             >
                                 <div className="flex justify-between items-start mb-4">
                                     <div className={`p-3 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400' :
-                                        user.role === 'driver' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' :
-                                            user.role === 'agency' ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' :
-                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
-                                                    'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                                        user.role === 'operational_manager' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' :
+                                            'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
                                         }`}>
                                         {user.role === 'admin' ? <Shield size={24} /> :
-                                            user.role === 'driver' ? (
-                                                <div className="relative">
-                                                    <Car size={24} />
-                                                    {user.isOnline && (
-                                                        <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full animate-pulse" />
-                                                    )}
-                                                </div>
-                                            ) :
-                                                user.role === 'agency' ? <Building2 size={24} /> :
-                                                    user.role === 'operational_manager' ? <HardHat size={24} /> :
-                                                        <UserIcon size={24} />}
+                                            user.role === 'operational_manager' ? <HardHat size={24} /> :
+                                                <UserIcon size={24} />}
                                     </div>
                                     <div className="flex gap-2">
                                         <Link
@@ -266,10 +251,8 @@ export default function UsersPage() {
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{user.email}</p>
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' :
-                                        user.role === 'driver' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
-                                            user.role === 'agency' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' :
-                                                user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
-                                                    'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                        user.role === 'operational_manager' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' :
+                                            'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                                         }`}>
                                         {user.role}
                                     </span>
@@ -283,124 +266,92 @@ export default function UsersPage() {
                 </div>
             )}
 
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                        onClick={() => setIsModalOpen(false)}
-                    />
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        className="relative bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-200 dark:border-slate-800"
-                    >
-                        <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">
-                            {editingId ? 'Edit User' : 'Add New User'}
-                        </h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
-                                <input
-                                    type="email"
-                                    required
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                    {editingId ? 'New Password (leave blank to keep current)' : 'Password'}
-                                </label>
-                                <input
-                                    type="password"
-                                    required={!editingId}
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                    placeholder={editingId ? "••••••••" : ""}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Role</label>
-                                <select
-                                    value={formData.role}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                >
-                                    <option value="manager">Manager</option>
-                                    <option value="operational_manager">Operational Manager</option>
-                                    <option value="driver">Driver</option>
-                                    <option value="agency">Agency Partner</option>
-                                    <option value="admin">Boss Admin</option>
-                                </select>
-                            </div>
+            {
+                isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            className="relative bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-200 dark:border-slate-800"
+                        >
+                            <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">
+                                {editingId ? 'Edit User' : 'Add New User'}
+                            </h2>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                                    <input
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                        {editingId ? 'New Password (leave blank to keep current)' : 'Password'}
+                                    </label>
+                                    <input
+                                        type="password"
+                                        required={!editingId}
+                                        value={formData.password}
+                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                        placeholder={editingId ? "••••••••" : ""}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Role</label>
+                                    <select
+                                        value={formData.role}
+                                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                                    >
+                                        <option value="manager">Manager</option>
+                                        <option value="operational_manager">Operational Manager</option>
+                                        <option value="admin">Boss Admin</option>
+                                    </select>
+                                </div>
 
-                            {formData.role === 'agency' && (
-                                <>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                            <div className="flex items-center gap-2">
-                                                <Building2 size={16} />
-                                                Active Contracts
-                                            </div>
-                                        </label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            value={formData.activeContracts}
-                                            onChange={(e) => setFormData({ ...formData, activeContracts: parseInt(e.target.value) || 0 })}
-                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                            placeholder="0"
-                                        />
-                                        <p className="text-xs text-slate-500 mt-1">Number of active agreements displayed on their dashboard</p>
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Credit Limit (SAR)</label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-amber-500 outline-none transition-all"
-                                            value={formData.creditLimit}
-                                            onChange={(e) => setFormData({ ...formData, creditLimit: parseInt(e.target.value) || 0 })}
-                                        />
-                                        <p className="text-xs text-slate-500 mt-1">Maximum allowed outstanding balance</p>
-                                    </div>
-                                </>
-                            )}
-                            <div className="flex gap-3 mt-6">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="flex-1 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="flex-1 px-4 py-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-70 transition-colors shadow-lg shadow-amber-500/20"
-                                >
-                                    {submitting ? 'Saving...' : (editingId ? 'Update User' : 'Create User')}
-                                </button>
-                            </div>
-                        </form>
-                    </motion.div>
-                </div>
-            )}
+                                <div className="flex gap-3 mt-6">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="flex-1 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={submitting}
+                                        className="flex-1 px-4 py-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-70 transition-colors shadow-lg shadow-amber-500/20"
+                                    >
+                                        {submitting ? 'Saving...' : (editingId ? 'Update User' : 'Create User')}
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </div>
+                )
+            }
 
             <AdminConfirmDialog
                 isOpen={confirmDialog.isOpen}
@@ -417,6 +368,6 @@ export default function UsersPage() {
                 isVisible={toast.isVisible}
                 onClose={() => setToast(prev => ({ ...prev, isVisible: false }))}
             />
-        </div>
+        </div >
     );
 }

@@ -8,11 +8,9 @@ import CoreValues from '@/components/about/CoreValues';
 import TrustSection from '@/components/about/TrustSection';
 import SEOContent from '@/components/about/SEOContent';
 import ImpactStats from '@/components/about/ImpactStats';
-import PilgrimVoices from '@/components/about/PilgrimVoices';
 import TeamTeaser from '@/components/about/TeamTeaser';
+import PilgrimVoices from '@/components/about/PilgrimVoices';
 import { getSectionContent, getSectionImage } from '@/lib/content-service';
-import dbConnect from '@/lib/mongodb';
-import { Driver } from '@/models';
 
 
 
@@ -55,18 +53,6 @@ export default async function AboutPage() {
     const subtitle = section?.subtitle || "Serving Guests of Allah with VIP Transport & Reliable Airport Transfers";
     const bgImage = getSectionImage(section, 'desktop') || "https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop";
 
-    await dbConnect();
-    let drivers = await Driver.find({ isActive: true }).sort({ rating: -1 }).limit(2).lean();
-
-    if (!drivers || drivers.length === 0) {
-        // Fallback to static if DB empty
-        const { drivers: staticDrivers } = await import('@/data/drivers');
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        drivers = staticDrivers.slice(0, 2) as any;
-    }
-
-    const serializedDrivers = JSON.parse(JSON.stringify(drivers));
-
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "AboutPage",
@@ -99,7 +85,7 @@ export default async function AboutPage() {
                 <MissionVision />
                 <CoreValues />
                 <TrustSection />
-                <TeamTeaser drivers={serializedDrivers} />
+                <TeamTeaser />
                 <PilgrimVoices />
                 <SEOContent />
             </div>

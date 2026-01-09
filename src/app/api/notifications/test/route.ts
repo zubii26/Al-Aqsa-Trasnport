@@ -11,8 +11,8 @@ export async function POST(request: Request) {
 
         await sendPushNotification(user.id as string, {
             title: 'Test Notification',
-            body: 'This is a test notification from Al Aqsa Transport Agency Portal!',
-            url: '/agency/dashboard'
+            body: 'This is a test notification from Al Aqsa Transport!',
+            url: '/admin/dashboard'
         });
 
         return NextResponse.json({ success: true });

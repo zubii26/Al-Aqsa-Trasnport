@@ -103,7 +103,7 @@ export const getSettings = async (): Promise<Settings> => {
             }
         };
 
-        console.log('[Settings] Retrieved discount settings:', mergedSettings.discount);
+        console.log(`[getSettings] Settings merged`);
         return mergedSettings;
     } catch (error) {
         console.error('Failed to fetch settings:', error);

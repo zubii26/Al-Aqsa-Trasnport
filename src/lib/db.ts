@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/mongodb';
-import { Booking, Vehicle, IBooking, IVehicle } from '@/models';
+import { Booking, Vehicle, IBooking, IVehicle, Route } from '@/models';
 import { unstable_cache, revalidateTag } from 'next/cache';
 
 // Ensure connection is established
@@ -9,14 +9,117 @@ export type { IBooking as Booking, IVehicle as Vehicle };
 
 // --- Booking Functions ---
 
-export async function getBookings(): Promise<IBooking[]> {
+export async function getBookings(limit?: number, skip?: number): Promise<IBooking[]> {
     await dbConnect();
-    const bookings = await Booking.find({}).sort({ createdAt: -1 }).lean();
+    let query = Booking.find({}).sort({ createdAt: -1 });
+    if (skip) query = query.skip(skip);
+    if (limit) query = query.limit(limit);
+
+    const bookings = await query.lean();
     return bookings.map(b => ({
         ...b,
         _id: b._id.toString(),
         id: b._id.toString(),
     })) as unknown as IBooking[];
+}
+
+export async function getDashboardStats() {
+    await dbConnect();
+
+    // Aggregation for stats
+    const [stats] = await Booking.aggregate([
+        {
+            $facet: {
+                counts: [
+                    {
+                        $group: {
+                            _id: null,
+                            total: { $sum: 1 },
+                            pending: { $sum: { $cond: [{ $eq: ["$status", "pending"] }, 1, 0] } },
+                            confirmed: { $sum: { $cond: [{ $eq: ["$status", "confirmed"] }, 1, 0] } },
+                            revenue: { $sum: { $convert: { input: { $ifNull: ["$finalPrice", { $ifNull: ["$price", 0] }] }, to: "double", onError: 0 } } }
+                        }
+                    }
+                ],
+                statusStats: [
+                    { $group: { _id: "$status", value: { $sum: 1 } } }
+                ],
+                revenueChart: [
+                    { $sort: { createdAt: -1 } },
+                    {
+                        $group: {
+                            _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                            revenue: {
+                                $sum: {
+                                    $convert: {
+                                        input: { $ifNull: ["$finalPrice", { $ifNull: ["$price", 0] }] },
+                                        to: "double",
+                                        onError: 0,
+                                        onNull: 0
+                                    }
+                                }
+                            },
+                            bookings: { $sum: 1 },
+                            actualDate: { $first: "$createdAt" }
+                        }
+                    },
+                    { $sort: { _id: 1 } },
+                    { $limit: 7 }
+                ],
+                vehicleStats: [
+                    { $group: { _id: "$vehicle", value: { $sum: 1 } } },
+                    { $sort: { value: -1 } },
+                    { $limit: 5 }
+                ],
+                routeStats: [
+                    { $group: { _id: { $concat: ["$pickup", " ⇄ ", "$dropoff"] }, value: { $sum: 1 } } },
+                    { $sort: { value: -1 } },
+                    { $limit: 5 }
+                ]
+            }
+        }
+    ]);
+
+    const activeFleetCount = await Vehicle.countDocuments({ isActive: true });
+    const totalFleetCount = await Vehicle.countDocuments({});
+    const routesCount = await Route.countDocuments({});
+
+    const statusMap: Record<string, string> = {
+        confirmed: '#10b981',
+        pending: '#f59e0b',
+        completed: '#3b82f6',
+        cancelled: '#ef4444'
+    };
+
+    return {
+        totalBookings: stats.counts[0]?.total || 0,
+        pendingBookings: stats.counts[0]?.pending || 0,
+        confirmedBookings: stats.counts[0]?.confirmed || 0,
+        totalRevenue: stats.counts[0]?.revenue || 0,
+        activeFleet: activeFleetCount,
+        totalFleet: totalFleetCount,
+        routesCount: routesCount,
+        analyticsData: {
+            revenueChart: stats.revenueChart.map((item: any) => ({
+                name: item._id,
+                revenue: item.revenue,
+                bookings: item.bookings
+            })),
+            statusPie: stats.statusStats.map((item: any) => ({
+                name: item._id.charAt(0).toUpperCase() + item._id.slice(1),
+                value: item.value,
+                color: statusMap[item._id] || '#cbd5e1'
+            })).filter((i: any) => i.value > 0),
+            vehicleBar: stats.vehicleStats.map((item: any) => ({
+                name: item._id || 'Unknown',
+                value: item.value
+            })),
+            routeBar: stats.routeStats.map((item: any) => ({
+                name: item._id || 'Custom Route',
+                value: item.value
+            }))
+        }
+    };
 }
 
 export async function getBooking(id: string): Promise<IBooking | null> {
@@ -66,36 +169,6 @@ export async function deleteBooking(id: string): Promise<boolean> {
     return !!result;
 }
 
-export async function getDriverBookings(driverId: string): Promise<IBooking[]> {
-    await dbConnect();
-    const bookings = await Booking.find({
-        assignedDriverId: driverId,
-        // Optional: Filter by specific statuses if needed, e.g., not 'cancelled' unless recent
-        // For now, return all assigned
-    }).sort({ date: 1, time: 1 }).lean(); // Sort by upcoming
-
-    return bookings.map(b => ({
-        ...b,
-        _id: b._id.toString(),
-        id: b._id.toString(),
-    })) as unknown as IBooking[];
-}
-
-export async function updateDriverBookingStatus(bookingId: string, status: string): Promise<IBooking | null> {
-    await dbConnect();
-    const updatedBooking = await Booking.findByIdAndUpdate(
-        bookingId,
-        { driverStatus: status },
-        { new: true }
-    ).lean();
-
-    if (!updatedBooking) return null;
-    return {
-        ...updatedBooking,
-        _id: updatedBooking._id.toString(),
-        id: updatedBooking._id.toString()
-    } as unknown as IBooking;
-}
 
 // --- Fleet/Vehicle Functions ---
 

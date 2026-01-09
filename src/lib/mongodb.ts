@@ -2,9 +2,7 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-
 if (!MONGODB_URI) {
-    // Warn only in development, or do nothing until connection is attempted
     if (process.env.NODE_ENV === 'development') {
         console.warn('MONGODB_URI is not defined in environment variables');
     }
@@ -34,17 +32,24 @@ async function dbConnect() {
     if (!cached!.promise) {
         const opts = {
             bufferCommands: false,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
         };
 
         cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
             return mongoose;
+        }).catch(err => {
+            console.error('Mongoose connection error:', err);
+            throw err;
         });
     }
 
     try {
         cached!.conn = await cached!.promise;
     } catch (e) {
-        cached!.promise = null;
+        console.error('Database connection failed:', e);
+        cached!.promise = null; // Clear failing promise to allow retry
+        cached!.conn = null;
         throw e;
     }
 

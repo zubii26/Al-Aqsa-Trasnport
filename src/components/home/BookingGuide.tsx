@@ -23,7 +23,7 @@ const STEPS = [
     {
         id: 3,
         title: "Instant Confirmation",
-        description: "Receive immediate booking confirmation. Pay securely upon arrival with our trusted drivers.",
+        description: "Receive immediate booking confirmation. Pay securely upon arrival with our trusted service.",
         icon: ShieldCheck,
         delay: 0.3
     }

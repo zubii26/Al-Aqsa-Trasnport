@@ -60,11 +60,6 @@ export default function UserDetailsPage() {
                 const data = await res.json();
                 setUser(data.user);
 
-                if (data.user.role === 'driver') {
-                    setStats(data.stats);
-                    setActiveAssignments(data.activeAssignments);
-                    setHistory(data.history);
-                }
             } else {
                 // Fallback for non-drivers if stats endpoint fails strictly? 
                 // Currently our API returns 404 if user not found, 200 with user info.
@@ -89,7 +84,6 @@ export default function UserDetailsPage() {
         return <div className="p-8 text-center text-red-500">User not found</div>;
     }
 
-    const isDriver = user.role === 'driver';
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-8">
@@ -131,175 +125,6 @@ export default function UserDetailsPage() {
                 </div>
             </div>
 
-            {/* Driver Financials & Stats */}
-            {isDriver && stats && (
-                <div className="space-y-6">
-                    <h3 className="text-lg font-bold flex items-center gap-2">
-                        <TrendingUp className="text-emerald-500" /> Financial Overview & Performance
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* Total Revenue */}
-                        <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-                            <div className="relative z-10">
-                                <p className="text-emerald-100 font-medium mb-1">Total Revenue Generated</p>
-                                <h4 className="text-3xl font-bold flex items-baseline gap-1">
-                                    <span className="text-lg opacity-80">SAR</span>
-                                    {stats.totalEarnings.toLocaleString()}
-                                </h4>
-                            </div>
-                            <DollarSign className="absolute -bottom-4 -right-4 w-32 h-32 text-emerald-400/20 rotate-12" />
-                        </div>
-
-                        {/* Completed Trips */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-                            <div className="relative z-10">
-                                <p className="text-slate-500 dark:text-slate-400 font-medium mb-1">Completed Trips</p>
-                                <h4 className="text-3xl font-bold text-slate-900 dark:text-white">
-                                    {stats.completedTrips}
-                                </h4>
-                                <p className="text-xs text-slate-400 mt-2">Lifetime successful bookings</p>
-                            </div>
-                            <CheckCircle className="absolute -bottom-4 -right-4 w-32 h-32 text-slate-100 dark:text-slate-800 rotate-12" />
-                        </div>
-
-                        {/* Active Assignments */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-                            <div className="relative z-10">
-                                <p className="text-slate-500 dark:text-slate-400 font-medium mb-1">Active Assignments</p>
-                                <h4 className="text-3xl font-bold text-slate-900 dark:text-white">
-                                    {activeAssignments.length}
-                                </h4>
-                                <p className="text-xs text-slate-400 mt-2">Currently in progress or pending</p>
-                            </div>
-                            <Briefcase className="absolute -bottom-4 -right-4 w-32 h-32 text-slate-100 dark:text-slate-800 rotate-12" />
-                        </div>
-                    </div>
-
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        {/* Active Assignments List */}
-                        <div className="space-y-4">
-                            <h3 className="text-sm font-bold uppercase text-slate-500 tracking-wider">Current Assignments</h3>
-                            {activeAssignments.length > 0 ? (
-                                <div className="space-y-3">
-                                    {activeAssignments.map(booking => (
-                                        <div key={booking.id} className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex justify-between items-center group hover:border-amber-400 transition-colors">
-                                            <div className="flex gap-4">
-                                                <div className="p-2 bg-amber-50 dark:bg-amber-900/10 rounded-lg text-amber-600">
-                                                    <Clock size={20} />
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-sm text-slate-800 dark:text-slate-200 mb-1">
-                                                        {booking.pickup} <span className="text-slate-400 px-1">→</span> {booking.dropoff}
-                                                    </div>
-                                                    <div className="text-xs text-slate-500 flex gap-3">
-                                                        <span>{booking.date} at {booking.time}</span>
-                                                        <span className="capitalize px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600">{booking.status.replace('_', ' ')}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {booking.price && (
-                                                <div className="font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10 px-3 py-1 rounded-lg">
-                                                    SAR {booking.price}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="p-8 text-center bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-400">
-                                    No active jobs right now.
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Recent History */}
-                        <div className="space-y-4">
-                            <h3 className="text-sm font-bold uppercase text-slate-500 tracking-wider">Recent History</h3>
-                            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-                                {history.length > 0 ? (
-                                    <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                                        {history.map(booking => (
-                                            <div key={booking.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                                <div className="flex justify-between items-start mb-1">
-                                                    <span className="text-xs font-mono text-slate-400">#{booking.id.slice(-6)}</span>
-                                                    <span className="text-xs font-medium text-emerald-600">Completed</span>
-                                                </div>
-                                                <div className="font-medium text-sm text-slate-800 dark:text-slate-200 mb-1 line-clamp-1">
-                                                    {booking.pickup} → {booking.dropoff}
-                                                </div>
-                                                <div className="flex justify-between items-center text-xs text-slate-500">
-                                                    <span>{booking.date}</span>
-                                                    <span className="font-bold text-slate-700 dark:text-slate-300">
-                                                        {booking.price ? `SAR ${booking.price}` : '-'}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="p-8 text-center text-slate-400">
-                                        No history available.
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Agency Financials */}
-            {user.role === 'agency' && (user as any).wallet && (
-                <div className="space-y-6">
-                    <h3 className="text-lg font-bold flex items-center gap-2">
-                        <Building2 className="text-blue-600" /> Agency Financials
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Wallet Card */}
-                        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-                            <div className="relative z-10">
-                                <p className="text-slate-400 font-medium mb-1 uppercase text-xs tracking-wider">Credit Limit</p>
-                                <h4 className="text-3xl font-bold mb-4">
-                                    SAR {(user as any).wallet.creditLimit?.toLocaleString() || '0'}
-                                </h4>
-                                <div className="flex justify-between items-end border-t border-slate-700 pt-4">
-                                    <div>
-                                        <p className="text-slate-400 text-xs">Current Balance (Debt)</p>
-                                        <p className={`text-xl font-bold ${(user as any).wallet.balance > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
-                                            SAR {(user as any).wallet.balance?.toLocaleString() || '0'}
-                                        </p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-slate-400 text-xs">Payment Terms</p>
-                                        <p className="font-bold">{(user as any).paymentTerms || 'Prepaid'}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Branding Card */}
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <h4 className="font-bold text-slate-900 dark:text-white mb-4">Agency Branding</h4>
-                            <div className="flex items-center gap-4">
-                                {(user as any).branding?.logo ? (
-                                    <img src={(user as any).branding.logo} alt="Logo" className="w-16 h-16 object-contain rounded-lg border border-slate-100" />
-                                ) : (
-                                    <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-xs text-center">No Logo</div>
-                                )}
-                                <div>
-                                    <p className="text-sm text-slate-500">Primary Color</p>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <div
-                                            className="w-8 h-8 rounded-full border border-slate-200 shadow-inner"
-                                            style={{ backgroundColor: (user as any).branding?.primaryColor || '#000000' }}
-                                        />
-                                        <span className="font-mono text-xs">{(user as any).branding?.primaryColor || 'N/A'}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
