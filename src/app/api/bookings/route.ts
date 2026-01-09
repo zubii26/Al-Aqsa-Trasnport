@@ -167,7 +167,8 @@ export async function POST(request: Request) {
                     selectedVehicles: selectedVehiclesList,
                     country: booking.country,
                     flightNumber: booking.flightNumber,
-                    arrivalDate: booking.arrivalDate
+                    arrivalDate: booking.arrivalDate,
+                    phone: booking.phone,
                 };
 
                 await sendBookingConfirmationEmail(emailData);

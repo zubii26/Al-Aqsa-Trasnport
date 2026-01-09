@@ -59,6 +59,7 @@ interface BookingData {
     country?: string;
     flightNumber?: string;
     arrivalDate?: string;
+    phone?: string; // Added phone field
 }
 
 import { replaceTemplateVariables } from './email-templates';
@@ -109,6 +110,7 @@ const prepareBookingVariables = (booking: BookingData) => {
         flight_row: booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : '',
         arrival_date_row: booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : '',
         notes_row: booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : '',
+        phone_row: booking.phone ? `<p><strong>Phone:</strong> ${booking.phone}</p>` : '',
     };
 };
 

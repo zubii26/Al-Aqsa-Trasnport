@@ -114,6 +114,7 @@ export const DEFAULT_ADMIN_NOTIFICATION_TEMPLATE = `
         <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">Customer Details</h3>
         <p><strong>Name:</strong> {{name}}</p>
         <p><strong>Status:</strong> {{status}}</p>
+        {{phone_row}}
         {{country_row}}
         {{flight_row}}
         {{arrival_date_row}}
