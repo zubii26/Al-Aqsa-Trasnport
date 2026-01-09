@@ -93,7 +93,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`relative lg:sticky lg:top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+            className={`relative lg:sticky lg:top-0 left-0 right-0 z-50 transition-all duration-300 ${mounted && scrolled
                 ? 'glass py-2 lg:py-3'
                 : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-4 lg:py-6 2xl:py-8'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
@@ -139,7 +139,7 @@ export default function Navbar() {
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`relative text-sm transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold' : (scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
+                                    className={`relative text-sm transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold' : ((mounted && scrolled) ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
                                         }`}
                                 >
                                     {link.label}
