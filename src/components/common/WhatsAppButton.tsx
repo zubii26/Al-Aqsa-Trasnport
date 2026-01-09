@@ -12,7 +12,7 @@ const WhatsAppButton = () => {
 
     if (isMenuOpen) return null;
 
-    const phoneNumber = settings?.contact.phone || '+966500000000';
+    const phoneNumber = settings?.contact.phone || '+966545494921';
     const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\D/g, '')}`;
 
     return (

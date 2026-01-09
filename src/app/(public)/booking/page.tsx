@@ -1126,7 +1126,7 @@ export default function BookingPage() {
                                 className="w-full premium-input rounded-xl pl-11 pr-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 font-medium placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all focus:ring-2 focus:ring-secondary/20"
                                 value={bookingData.phone}
                                 onChange={(e) => updateData('phone', e.target.value)}
-                                placeholder="+966 50 000 0000"
+                                placeholder="+966 54 549 4921"
                             />
                         </div>
                         {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.phone}</p>}

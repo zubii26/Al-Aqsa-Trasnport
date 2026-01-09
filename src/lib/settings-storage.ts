@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: Settings = {
     },
     contact: {
         email: 'info@alaqsatransport.com',
-        phone: '+966 50 000 0000',
+        phone: '+966 54 549 4921',
         phone2: '',
         address: 'Makkah, Saudi Arabia',
         social: {

@@ -42,7 +42,7 @@ export default async function ContactPage() {
     const settings = await getSettings();
 
     // Fallback values
-    const phone1 = settings?.contact.phone || '+966 50 000 0000';
+    const phone1 = settings?.contact.phone || '+966 54 549 4921';
     const email = settings?.contact.email || 'info@alaqsaumrahtransport.com';
     const address = settings?.contact.address || 'Al Aziziyah, Makkah, Saudi Arabia';
     const whatsapp = phone1;
