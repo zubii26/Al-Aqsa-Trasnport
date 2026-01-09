@@ -153,7 +153,7 @@ export async function POST(request: Request) {
                     name: booking.name,
                     email: booking.email,
                     status: booking.status,
-                    id: booking._id.toString(),
+                    id: booking._id.toString().slice(-8).toUpperCase(),
                     vehicle: booking.vehicle,
                     pickup: booking.pickup,
                     dropoff: booking.dropoff,
