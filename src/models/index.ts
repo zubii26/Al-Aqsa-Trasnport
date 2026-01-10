@@ -225,6 +225,10 @@ const VehicleSchema = new Schema<IVehicle>({
     unavailableDates: { type: [String], default: [] },
 }, { timestamps: true });
 
+// Add indexes for performance
+VehicleSchema.index({ isActive: 1, createdAt: -1 });
+VehicleSchema.index({ isActive: 1 });
+
 const BookingSchema = new Schema<IBooking>({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -323,6 +327,10 @@ const RouteSchema = new Schema<IRoute>({
     category: { type: String, default: 'Intercity' },
     isActive: { type: Boolean, default: true },
 }, { timestamps: true });
+
+// Add indexes for performance
+RouteSchema.index({ isActive: 1, createdAt: -1 });
+RouteSchema.index({ isActive: 1 });
 
 const RoutePriceSchema = new Schema<IRoutePrice>({
     route: { type: String, required: true }, // Storing ID as string for now, or ObjectId if we migrate IDs
