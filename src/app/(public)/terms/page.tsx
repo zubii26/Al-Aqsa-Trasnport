@@ -1,8 +1,14 @@
 import styles from './terms.module.css';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
+import { getSettings } from '@/lib/settings-storage';
 
-export default function TermsPage() {
+export default async function TermsPage() {
+    const settings = await getSettings();
+    const phone = settings.contact.phone || '+966 54 549 4921';
+    const email = settings.contact.email || 'info@alaqsaumrahtransport.com';
+    const address = settings.contact.address || 'Al Aziziyah, Makkah, Saudi Arabia';
+
     return (
         <div className={styles.container}>
             <FadeIn>
@@ -69,17 +75,17 @@ export default function TermsPage() {
                             If you have any questions about these Terms and Conditions, please contact us:
                         </p>
                         <div className={styles.contactInfo}>
-                            <div className={styles.contactItem}>
-                                <MapPin size={20} className="text-amber-500" />
-                                <span>Jeddah, Saudi Arabia</span>
+                            <div className={styles.contactItem} dir="ltr">
+                                <MapPin size={20} className="text-amber-500 shrink-0" />
+                                <span>{address}</span>
                             </div>
-                            <div className={styles.contactItem}>
-                                <Phone size={20} className="text-amber-500" />
-                                <span>+92 326 060 0676</span>
+                            <div className={styles.contactItem} dir="ltr">
+                                <Phone size={20} className="text-amber-500 shrink-0" />
+                                <span>{phone}</span>
                             </div>
-                            <div className={styles.contactItem}>
-                                <Mail size={20} className="text-amber-500" />
-                                <span>meharzubair703@gmail.com</span>
+                            <div className={styles.contactItem} dir="ltr">
+                                <Mail size={20} className="text-amber-500 shrink-0" />
+                                <span>{email}</span>
                             </div>
                         </div>
                     </section>
