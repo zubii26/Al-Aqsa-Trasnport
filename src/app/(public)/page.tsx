@@ -3,10 +3,11 @@ import Link from 'next/link';
 import styles from './page.module.css';
 import FadeIn from '@/components/common/FadeIn';
 import Hero from '@/components/common/Hero';
-import BookingFormWrapper from '@/components/home/BookingFormWrapper';
+
 import { ArrowRight } from 'lucide-react';
 
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
 
@@ -66,8 +67,8 @@ export default async function Home() {
   );
 
   const heroImage = getSectionImage(heroSection, 'desktop') || "/images/blog/makkah-haram-view.jpg";
-  const ctaText = getCustomField(heroSection, 'cta_text') || "Book Your Ride / احجز الآن";
-  const ctaLink = getCustomField(heroSection, 'cta_link') || "/booking";
+  const ctaText = getCustomField(heroSection, 'cta_text') || "Book Now / احجز الآن";
+  const ctaLink = "/booking";
 
   return (
     <main className="overflow-x-hidden">
@@ -80,9 +81,7 @@ export default async function Home() {
         ctaText={ctaText}
         ctaLink={ctaLink}
         backgroundChildren={<AnimatedBackground />}
-      >
-        <BookingFormWrapper />
-      </Hero>
+      />
 
       {/* Transport Services Section - NEW */}
       <TransportServices />
@@ -134,9 +133,14 @@ export default async function Home() {
             <p className={styles.ctaText}>
               Book your VIP transport now and let us take care of the logistics while you focus on your worship.
             </p>
-            <Link href="/booking" className={styles.ctaButton}>
-              Book Your Ride Now <ArrowRight size={20} />
-            </Link>
+            <a
+              href={getWhatsAppLink("Salam Al Aqsa, I am ready to book my journey.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.ctaButton}
+            >
+              Book Your Ride via WhatsApp <ArrowRight size={20} />
+            </a>
           </FadeIn>
         </div>
       </section>

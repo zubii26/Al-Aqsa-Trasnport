@@ -60,6 +60,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/umrah/blog',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/umrah/blog/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+    ];
+  },
   compress: true,
 };
 

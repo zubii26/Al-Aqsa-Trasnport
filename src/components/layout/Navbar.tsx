@@ -12,6 +12,7 @@ import GlassButton from '@/components/ui/GlassButton';
 
 export default function Navbar() {
     const pathname = usePathname();
+    // Force rebuild
     const { isMenuOpen, setIsMenuOpen, toggleMenu } = useMenu();
     const [scrolled, setScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
@@ -175,7 +176,12 @@ export default function Navbar() {
 
 
 
-                    <GlassButton href="/booking" variant="secondary" size="md" className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
+                    <GlassButton
+                        href="/booking"
+                        variant="secondary"
+                        size="md"
+                        className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
+                    >
                         Book Now
                     </GlassButton>
                 </div>

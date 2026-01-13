@@ -9,6 +9,7 @@ const AIChatBox = dynamic(() => import('@/components/home/AIChatBox'), { ssr: fa
 const CookieConsent = dynamic(() => import('@/components/privacy/CookieConsent'), { ssr: false });
 const BookingNotification = dynamic(() => import('@/components/common/BookingNotification'), { ssr: false });
 const PWAInstallPrompt = dynamic(() => import('@/components/common/PWAInstallPrompt'), { ssr: false });
+const FloatingHelpBtn = dynamic(() => import('@/components/common/FloatingHelpBtn'), { ssr: false });
 
 interface GlobalClientComponentsProps {
     contactSettings?: {
@@ -27,13 +28,14 @@ export default function GlobalClientComponents({ contactSettings }: GlobalClient
 
     return (
         <>
-            <WhatsAppButton />
+
             <ScrollToTop />
             <AIChatBox
                 contactPhone={contactSettings?.phone}
                 contactEmail={contactSettings?.email}
             />
             <BookingNotification />
+            <FloatingHelpBtn />
             <CookieConsent />
             <PWAInstallPrompt />
         </>

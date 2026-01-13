@@ -68,6 +68,7 @@
     padding: 0.6rem 1.2rem;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(251, 191, 36, 0.3);
     border-radius: 9999px;
     color: #d97706;
@@ -420,7 +421,7 @@
     }
 
     /* Hide heavy animated background blobs on mobile */
-    .hero>div:nth-child(3) {
+    .backgroundLayer {
         display: none;
     }
 }

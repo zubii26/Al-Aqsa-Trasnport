@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Users, Briefcase, Check, ArrowRight, Tag } from 'lucide-react';
 import styles from './FleetCarousel.module.css';
 import GlassButton from '@/components/ui/GlassButton';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 export interface Vehicle {
     id: string;
@@ -156,8 +157,13 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                     </div>
 
                                     <div className="mt-auto">
-                                        <GlassButton href="/booking" variant="secondary" className="w-full justify-center gap-2 !bg-secondary !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300">
-                                            Book Now <ArrowRight size={16} />
+                                        <GlassButton
+                                            href={getWhatsAppLink(`Salam Al Aqsa, I am interested in booking the ${vehicle.name} (${vehicle.passengers} pax).`)}
+                                            target="_blank"
+                                            variant="secondary"
+                                            className="w-full justify-center gap-2 !bg-secondary !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
+                                        >
+                                            Book via WhatsApp <ArrowRight size={16} />
                                         </GlassButton>
                                     </div>
                                 </div>

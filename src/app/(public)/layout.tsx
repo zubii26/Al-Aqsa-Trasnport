@@ -41,6 +41,7 @@ export default async function UmrahLayout({
     const settings = await getSettings();
 
     return (
+        // Layout wrapper
         <>
             <ClientLayoutWrapper>
                 <UmrahPWA />

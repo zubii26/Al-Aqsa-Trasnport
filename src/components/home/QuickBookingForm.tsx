@@ -10,6 +10,7 @@ import styles from './QuickBookingForm.module.css';
 import { usePricing } from '@/context/PricingContext';
 
 import { Route, Vehicle } from '@/lib/pricing';
+import { getWhatsAppLink, createBookingMessage } from '@/lib/whatsapp';
 
 interface QuickBookingFormProps {
     title?: string;
@@ -308,6 +309,7 @@ const QuickBookingForm = ({
             // Corrected to use global vehicles array instead of route.vehicles
             const selectedVehicle = vehicles.find(v => v.id === formData.vehicleId);
 
+            // 1. Save to Database
             const res = await fetch('/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -330,19 +332,56 @@ const QuickBookingForm = ({
                 }),
             });
 
+            // 2. Redirect to WhatsApp regardless of API success (or maybe only on success? user said "maintain booking logic")
+            // Ideally we save, then redirect. If save fails, we still redirect so we don't lose the customer.
+
+            const message = createBookingMessage({
+                service: title || 'Quick Booking',
+                pickup: formData.pickup,
+                dropoff: formData.dropoff,
+                date: formData.date?.toLocaleDateString(),
+                time: formData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                vehicle: selectedVehicle ? selectedVehicle.name : 'Not Selected',
+                passengers: formData.passengers,
+                name: formData.name
+            });
+
+            const whatsappUrl = getWhatsAppLink(message);
+
             if (res.ok) {
                 setIsSubmitted(true);
+                // Delay slightly to show success state then redirect? Or just redirect immediately?
+                // Redirecting immediately is better for "Book Now" flow.
+                window.open(whatsappUrl, '_blank');
+
                 setFormData({
                     name: '', phone: '', email: '', date: null, time: null, routeId: '', vehicleId: '',
                     pickup: '', dropoff: '', vehicleCount: 1, passengers: 1, luggage: 0, notes: ''
                 });
                 setErrors({});
             } else {
-                throw new Error('Booking failed');
+                console.error('Booking API failed, but proceeding to WhatsApp');
+                // Fallback: Still open WhatsApp so the lead isn't lost
+                window.open(whatsappUrl, '_blank');
+                setIsSubmitted(true); // Show success UI anyway
             }
+
         } catch (error) {
             console.error('Booking error:', error);
-            alert('Failed to submit booking. Please try again.');
+            // Fallback: Open WhatsApp
+            const selectedVehicle = vehicles.find(v => v.id === formData.vehicleId);
+            const message = createBookingMessage({
+                service: title || 'Quick Booking',
+                pickup: formData.pickup,
+                dropoff: formData.dropoff,
+                date: formData.date?.toLocaleDateString(),
+                time: formData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                vehicle: selectedVehicle ? selectedVehicle.name : 'Not Selected',
+                passengers: formData.passengers,
+                name: formData.name
+            });
+            window.open(getWhatsAppLink(message), '_blank');
+            setIsSubmitted(true);
         } finally {
             setIsSubmitting(false);
         }
@@ -439,9 +478,9 @@ const QuickBookingForm = ({
                         <div className={styles.successIconWrapper}>
                             <CheckCircle size={64} className={styles.successIcon} />
                         </div>
-                        <h3 className={styles.successTitle}>Booking Received!</h3>
+                        <h3 className={styles.successTitle}>Opening WhatsApp...</h3>
                         <p className={styles.successMessage}>
-                            Thank you for choosing Al Aqsa Transport. We have received your request and will contact you shortly to confirm your trip.
+                            PLEASE HIT SEND inside WhatsApp to complete your booking. We will reply instantly.
                         </p>
                         <button onClick={resetForm} className={styles.submitBtn}>
                             Book Another Trip
@@ -745,7 +784,7 @@ const QuickBookingForm = ({
                                             <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                         ) : (
                                             <>
-                                                Book Now <ArrowRight size={18} />
+                                                Book via WhatsApp <ArrowRight size={18} />
                                             </>
                                         )}
                                     </button>

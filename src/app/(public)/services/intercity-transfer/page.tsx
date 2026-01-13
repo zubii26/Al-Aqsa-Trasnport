@@ -2,7 +2,7 @@ import React from 'react';
 import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FadeIn from '@/components/common/FadeIn';
-import BookingFormWrapper from '@/components/home/BookingFormWrapper';
+import Link from 'next/link';
 import InteractiveMapSection from '@/components/services/intercity/InteractiveMapSection';
 import AnimatedMapBackground from '@/components/ui/AnimatedMapBackground';
 import { routeService } from '@/services/routeService';
@@ -179,7 +179,26 @@ export default async function IntercityTransferPage() {
                         <div className="relative sticky top-32">
                             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-blue-600/20 rounded-full blur-3xl transform scale-90 opacity-40 translate-y-10" />
                             <div className="relative">
-                                <BookingFormWrapper title="Book Your Transfer" subtitle="Best Rates & Immediate Confirmation" />
+                                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-xl text-center">
+                                    <h3 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white mb-4">Book Your Transfer</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 mb-8">Best Rates & Immediate Confirmation</p>
+                                    <Link
+                                        href="/booking"
+                                        className="inline-block w-full py-4 px-6 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                                    >
+                                        Book Now
+                                    </Link>
+                                    <div className="mt-6 flex flex-col gap-3 text-sm text-slate-500">
+                                        <div className="flex items-center justify-center gap-2">
+                                            <ShieldCheck size={16} className="text-green-500" />
+                                            <span>No Hidden Fees</span>
+                                        </div>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Star size={16} className="text-amber-500" />
+                                            <span>4.9/5 Customer Rating</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

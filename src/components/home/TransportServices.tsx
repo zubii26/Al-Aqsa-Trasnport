@@ -7,6 +7,7 @@ import { ArrowRight, Car, Plane, Building2 } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import ParticleBackground from '@/components/ui/ParticleBackground';
 import GoldenWaveDivider from '@/components/ui/GoldenWaveDivider';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 /*
   Transport Services Section
@@ -25,6 +26,7 @@ const services = [
         image: '/images/services/intercity-transport.png',
         icon: <Car size={32} />,
         link: '/services/intercity-transfer',
+        whatsappMessage: 'Salam Al Aqsa, I am interested in Intercity Transport (Makkah-Madinah).',
         keywords: ['intercity transport Saudi Arabia', 'Makkah to Madinah transport', 'long-distance travel for pilgrims']
     },
     {
@@ -35,6 +37,7 @@ const services = [
         icon: <Plane size={32} />,
         image: '/images/services/airport-transfer-real.jpg',
         link: '/services/airport-transfers',
+        whatsappMessage: 'Salam Al Aqsa, I need an Airport Transfer (Jeddah/Madinah).',
         keywords: ['Jeddah Airport pickup', 'Madinah Airport transfer', 'Umrah airport transport']
     },
     {
@@ -45,6 +48,7 @@ const services = [
         icon: <Building2 size={32} />,
         image: '/images/services/hotel-transfer-real.jpg',
         link: '/services/hotel-transfers', // Updated link to new dedicated page
+        whatsappMessage: 'Salam Al Aqsa, I need a Hotel Transfer in Makkah/Madinah.',
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
     }
 ];
@@ -106,9 +110,9 @@ export default function TransportServices() {
                                     <div className="pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
                                         <Link
                                             href={service.link}
-                                            className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-500 font-semibold group-hover:gap-3 transition-all"
+                                            className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-500 font-semibold group-hover:gap-3 transition-all cursor-pointer"
                                         >
-                                            Book Now <ArrowRight size={18} />
+                                            Read More <ArrowRight size={18} />
                                         </Link>
                                     </div>
                                 </div>

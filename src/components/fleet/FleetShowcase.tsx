@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FadeIn from '@/components/common/FadeIn';
 import { useSettings } from '@/context/SettingsContext';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 export interface Vehicle {
     id: string;
@@ -132,9 +133,14 @@ export default function FleetShowcase({ vehicles }: FleetShowcaseProps) {
                                             ))}
                                         </div>
 
-                                        <Link href="/booking" className={`${styles.bookBtn} btn-primary`}>
-                                            Book Now
-                                        </Link>
+                                        <a
+                                            href={getWhatsAppLink(`Salam Al Aqsa, I would like to book the ${vehicle.name}.`)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`${styles.bookBtn} btn-primary cursor-pointer flex items-center justify-center`}
+                                        >
+                                            Book via WhatsApp
+                                        </a>
                                     </div>
 
                                 </div>

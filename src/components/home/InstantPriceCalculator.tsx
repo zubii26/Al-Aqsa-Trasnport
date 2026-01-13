@@ -9,6 +9,7 @@ import FadeIn from '@/components/common/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
 import VehicleSelector from './VehicleSelector';
 import RouteSelector from './RouteSelector';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 export default function InstantPriceCalculator() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
@@ -146,10 +147,15 @@ export default function InstantPriceCalculator() {
                                 </div>
                             </div>
 
-                            <Link href={`/booking?route=${selectedRoute}&vehicle=${selectedVehicle}`} className={styles.bookBtn}>
-                                <span>Reserve Now</span>
+                            <a
+                                href={getWhatsAppLink(`Salam Al Aqsa, I am interested in the route: ${currentRoute?.name} with ${currentVehicle?.name}. Estimated Price: ${priceDetails?.price} SAR.`)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.bookBtn}
+                            >
+                                <span>Reserve via WhatsApp</span>
                                 <ArrowRight size={20} />
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </FadeIn>

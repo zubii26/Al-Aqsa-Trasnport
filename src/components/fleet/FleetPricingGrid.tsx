@@ -7,6 +7,7 @@ import { Plus, Minus } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import pricingData from '@/data/pricing.json';
 import { trackConversion } from '@/lib/analytics';
+import { getWhatsAppLink } from '@/lib/whatsapp';
 
 interface RouteProduct {
     id: string;
@@ -74,13 +75,15 @@ const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId:
                     </button>
                 </div>
 
-                <Link
-                    href={`/booking?vehicle=${dbVehicleId}`}
+                <a
+                    href={getWhatsAppLink(`Salam Al Aqsa, I would like to book a ${route.title} trip.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => trackConversion('other', `pricing_grid_${route.id}_${dbVehicleId}`)}
-                    className="block w-full bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground font-bold py-1.5 px-1 sm:py-2 sm:px-4 rounded text-[10px] sm:text-xs transition-all duration-300 shadow-sm hover:shadow-secondary/25 text-center whitespace-nowrap"
+                    className="block w-full bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground font-bold py-1.5 px-1 sm:py-2 sm:px-4 rounded text-[10px] sm:text-xs transition-all duration-300 shadow-sm hover:shadow-secondary/25 text-center whitespace-nowrap cursor-pointer"
                 >
                     Book Now
-                </Link>
+                </a>
             </div>
         </div>
     );

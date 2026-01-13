@@ -102,7 +102,7 @@ const Hero: React.FC<HeroProps> = ({
 
             {/* Custom Background Elements (e.g. animated maps) - Rendered above overlay but below content */}
             {backgroundChildren && (
-                <div className="absolute inset-0 z-[1] pointer-events-none">
+                <div className={`${styles.backgroundLayer} absolute inset-0 z-[1] pointer-events-none`}>
                     {backgroundChildren}
                 </div>
             )}
