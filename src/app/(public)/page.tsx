@@ -25,6 +25,7 @@ const TransportServices = dynamic(() => import('@/components/home/TransportServi
 const Testimonials = dynamic(() => import('@/components/home/Testimonials'));
 const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
 const BookingGuide = dynamic(() => import('@/components/home/BookingGuide'));
+const QuickBookingForm = dynamic(() => import('@/components/home/QuickBookingForm'));
 
 export async function generateMetadata() {
   return {
@@ -81,7 +82,15 @@ export default async function Home() {
         ctaText={ctaText}
         ctaLink={ctaLink}
         backgroundChildren={<AnimatedBackground />}
-      />
+      >
+        <div className="hidden md:block w-full max-w-md ml-auto">
+          <QuickBookingForm
+            title="Book Your Ride"
+            subtitle="Instant Confirmation"
+            className="shadow-2xl"
+          />
+        </div>
+      </Hero>
 
       {/* Transport Services Section - NEW */}
       <TransportServices />
