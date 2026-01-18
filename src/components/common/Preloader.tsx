@@ -19,28 +19,17 @@ export default function Preloader() {
             return;
         }
 
-        // Simulate loading progress - Smoother animation (30ms)
-        const interval = setInterval(() => {
-            setProgress((prev) => {
-                if (prev >= 100) {
-                    clearInterval(interval);
-                    return 100;
-                }
-                // Smoother, consistent increments
-                const increment = Math.random() * 0.8 + 0.2;
-                return Math.min(prev + increment, 100);
-            });
-        }, 30);
-
         const handleLoad = () => {
             console.log('[Preloader] handleLoad triggered, setting progress to 100');
             setProgress(100);
+            // Short timeout to allow the browser to paint the 100% state briefly if needed, 
+            // but effectively we want to go away fast.
             setTimeout(() => {
                 console.log('[Preloader] Setting isLoading to false');
                 setIsLoading(false);
                 sessionStorage.setItem('preloader_shown', 'true');
                 window.dispatchEvent(new Event('preloader-complete'));
-            }, 800); // Wait for progress bar to complete visual fill
+            }, 200);
         };
 
         if (document.readyState === 'complete') {
@@ -49,17 +38,16 @@ export default function Preloader() {
             window.addEventListener('load', handleLoad);
         }
 
-        // Safety fallback: Force remove preloader after 4 seconds max
+        // reduced safety timeout
         const safetyTimeout = setTimeout(() => {
             if (isLoading) {
                 console.warn('[Preloader] Safety timeout triggered');
                 handleLoad();
             }
-        }, 4000);
+        }, 2000);
 
         return () => {
             window.removeEventListener('load', handleLoad);
-            clearInterval(interval);
             clearTimeout(safetyTimeout);
         };
     }, []);

@@ -118,7 +118,7 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                         fill
                                         className={styles.vehicleImage}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        priority={index < 2}
+                                        loading="lazy"
                                         draggable={false}
                                     />
                                     {isDiscountActive && (

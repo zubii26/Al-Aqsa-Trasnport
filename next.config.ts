@@ -7,7 +7,15 @@ const nextConfig: NextConfig = {
     // Trigger Restart
   },
 
+
+
   images: {
+    formats: ['image/avif', 'image/webp'],
+    // Optimization: Don't generate super large images for smaller devices
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Aggressive caching for optimized images (1 year)
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
@@ -17,7 +25,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 's7g10.scene7.com',
       },
-
       {
         protocol: 'https',
         hostname: 'ibb.co',

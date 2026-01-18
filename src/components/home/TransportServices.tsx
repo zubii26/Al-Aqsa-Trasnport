@@ -83,6 +83,8 @@ export default function TransportServices() {
                                         src={service.image}
                                         alt={service.title + " - " + service.keywords[0]}
                                         fill
+                                        loading="lazy"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                         className="object-cover transform group-hover:scale-110 transition-transform duration-700"
                                     />
                                     <div className="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur p-2 rounded-lg shadow-sm text-amber-500">

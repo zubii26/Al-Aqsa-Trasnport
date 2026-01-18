@@ -55,12 +55,12 @@ const Hero: React.FC<HeroProps> = ({
     const opacity = useSpring(opacityRange, springConfig);
 
     const containerVariants: Variants = {
-        hidden: { opacity: 0 },
+        hidden: { opacity: 1 }, // Changed from 0 to 1 for immediate visibility
         visible: {
             opacity: 1,
             transition: {
                 staggerChildren: 0.15,
-                delayChildren: 0.2
+                delayChildren: 0.1
             }
         }
     };
@@ -83,6 +83,8 @@ const Hero: React.FC<HeroProps> = ({
             <motion.div
                 className="absolute inset-0 z-0 will-change-transform"
                 style={{ y, opacity }}
+                initial={{ opacity: 1 }} // Force immediate visibility
+                animate={{ opacity: 1 }}
             >
                 {/* Ken Burns Wrapper - Controls Scale Animation */}
                 <div className={styles.bgImage}>
@@ -91,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({
                         alt={alt || "Umrah Transport Saudi Arabia Hero"}
                         fill
                         priority
-                        quality={90}
+                        quality={65} // Reduced quality for background optimization (was 85)
                         className="object-cover"
                         sizes="100vw"
                     />
@@ -124,9 +126,10 @@ const Hero: React.FC<HeroProps> = ({
                             <span className={styles.badge}>{badge}</span>
                         </motion.div>
                     )}
-                    <motion.h1 className={styles.title} variants={itemVariants}>
+                    {/* Main Title - Rendered statically first, then animated if needed, or just static for LCP */}
+                    <div className={styles.title}>
                         {title}
-                    </motion.h1>
+                    </div>
 
                     <motion.div className={styles.subtitle} variants={itemVariants}>
                         {subtitle}

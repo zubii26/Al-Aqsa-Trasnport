@@ -109,6 +109,7 @@ export default function Navbar() {
                                 fill
                                 className="object-contain"
                                 priority
+                                sizes="(max-width: 1024px) 80px, 100px"
                             />
                         </div>
                         <div className={`flex items-center gap-3 transition-all duration-300 ${scrolled ? 'ml-[70px] lg:ml-[90px]' : 'ml-[90px] lg:ml-[120px]'}`}>
@@ -221,6 +222,7 @@ export default function Navbar() {
                                 alt="Al Aqsa Transport"
                                 fill
                                 className="object-contain"
+                                sizes="80px"
                             />
                         </div>
                         <div className="flex items-center gap-3">

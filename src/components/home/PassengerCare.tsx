@@ -34,6 +34,8 @@ export default function PassengerCare() {
                                         src="/images/blog/solo-sister-travel.jpg"
                                         alt="Safe transport for female travelers"
                                         fill
+                                        loading="lazy"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         className="object-cover hover:scale-105 transition-transform duration-700"
                                     />
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -94,6 +96,8 @@ export default function PassengerCare() {
                                         src="/images/blog/family-umrah-transport.png"
                                         alt="Spacious family transport for Umrah"
                                         fill
+                                        loading="lazy"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         className="object-cover hover:scale-105 transition-transform duration-700"
                                     />
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
@@ -154,6 +158,8 @@ export default function PassengerCare() {
                                         src="/images/blog/elderly-care-gmc.jpg"
                                         alt="Assisted transport for elderly pilgrims"
                                         fill
+                                        loading="lazy"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         className="object-cover hover:scale-105 transition-transform duration-700"
                                     />
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
