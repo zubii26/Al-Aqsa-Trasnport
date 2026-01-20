@@ -15,6 +15,7 @@ const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   display: 'swap',
+  preload: true,
 });
 
 const interMono = Inter({
@@ -28,6 +29,7 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["700"],
   display: 'swap',
+  preload: true,
 });
 
 const openSans = Open_Sans({
