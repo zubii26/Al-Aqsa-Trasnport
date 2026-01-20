@@ -8,7 +8,11 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-import Interior360Viewer from '@/components/fleet/Interior360Viewer';
+import dynamic from 'next/dynamic';
+
+const Interior360Viewer = dynamic(() => import('@/components/fleet/Interior360Viewer'), {
+    loading: () => <div className="h-[500px] w-full bg-slate-900 rounded-3xl animate-pulse flex items-center justify-center text-slate-500">Loading 3D View...</div>
+});
 
 import pricingData from '@/data/pricing.json';
 
@@ -37,7 +41,12 @@ export const metadata: Metadata = {
         "تاكسي عائلي جدة",
         "سيارة عائلية للعمرة"
     ],
-    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-staria' },
+    openGraph: {
+        title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
+        description: "Rent Hyundai Staria 2025 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
+        images: [{ url: '/images/fleet/staria-hero-professional.png', width: 1200, height: 630, alt: 'Hyundai Staria VIP Van' }]
+    }
 };
 
 const stariaFAQs = [

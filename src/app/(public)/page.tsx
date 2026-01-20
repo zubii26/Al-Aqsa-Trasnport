@@ -71,8 +71,45 @@ export default async function Home() {
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Now / احجز الآن";
   const ctaLink = "/booking";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Al Aqsa Umrah Transport",
+        "url": "https://alaqsaumrahtransport.com",
+        "logo": "https://alaqsaumrahtransport.com/logo.png",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+966-54-549-4921",
+          "contactType": "customer service",
+          "areaServed": "SA",
+          "availableLanguage": ["en", "ar"]
+        },
+        "sameAs": [
+          "https://www.facebook.com/alaqsaumrahtransport",
+          "https://www.instagram.com/alaqsaumrahtransport"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "Al Aqsa Umrah Transport Services",
+        "url": "https://alaqsaumrahtransport.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://alaqsaumrahtransport.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  };
+
   return (
     <main className="overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <Hero
         title={heroTitle}

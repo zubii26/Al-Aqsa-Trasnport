@@ -9,7 +9,12 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FAQSection from '@/components/services/FAQSection';
 import GlassCard from '@/components/ui/GlassCard';
 import TrustAmenities from '@/components/services/TrustAmenities';
-import ReviewsSection from '@/components/reviews/ReviewsSection';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'), {
+    loading: () => <div className="h-[400px] w-full bg-slate-100 dark:bg-slate-900 animate-pulse" />
+});
 
 export async function generateMetadata() {
     return {
@@ -143,10 +148,13 @@ export default function ServicesPage() {
                                     {/* Image Side */}
                                     <div className={`w-full lg:w-1/2 relative h-[400px] lg:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl ${isImageRight ? 'lg:order-2' : 'lg:order-1'}`}>
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 z-10" />
-                                        <img
+
+                                        <Image
                                             src={service.image}
                                             alt={service.alt}
-                                            className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-700 ease-in-out hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
 

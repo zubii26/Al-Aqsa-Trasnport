@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -48,14 +47,11 @@ export default function GlassButton({
     }
 
     return (
-        <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={baseStyles}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {...props as any}
+        <button
+            className={cn(baseStyles, "hover:scale-[1.02] active:scale-[0.98]")}
+            {...props}
         >
             {children}
-        </motion.button>
+        </button>
     );
 }

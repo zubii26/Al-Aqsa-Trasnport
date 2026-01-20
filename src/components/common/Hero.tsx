@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import styles from './Hero.module.css';
 import GlassButton from '@/components/ui/GlassButton';
+import FadeIn from '@/components/common/FadeIn';
 import { trackConversion } from '@/lib/analytics';
 
 interface HeroProps {
@@ -41,52 +41,12 @@ const Hero: React.FC<HeroProps> = ({
     breadcrumbs,
     alt
 }) => {
-    const ref = useRef<HTMLElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"]
-    });
-
-    // Smooth spring physics for parallax
-    const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
-    const yRange = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-    const y = useSpring(yRange, springConfig);
-    const opacityRange = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-    const opacity = useSpring(opacityRange, springConfig);
-
-    const containerVariants: Variants = {
-        hidden: { opacity: 1 }, // Changed from 0 to 1 for immediate visibility
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 1,
-                ease: [0.22, 1, 0.36, 1]
-            }
-        }
-    };
+    // Simplified Hero component without heavy animation hooks
 
     return (
-        <section ref={ref} className={styles.hero}>
-            {/* Parallax Wrapper - Controls Scroll Movement */}
-            <motion.div
-                className="absolute inset-0 z-0 will-change-transform"
-                style={{ y, opacity }}
-                initial={{ opacity: 1 }} // Force immediate visibility
-                animate={{ opacity: 1 }}
-            >
-                {/* Ken Burns Wrapper - Controls Scale Animation */}
+        <section className={styles.hero}>
+            {/* Background Layer */}
+            <div className="absolute inset-0 z-0">
                 <div className={styles.bgImage}>
                     <Image
                         src={bgImage}
@@ -98,76 +58,76 @@ const Hero: React.FC<HeroProps> = ({
                         sizes="100vw"
                     />
                 </div>
-            </motion.div>
+            </div>
 
             <div className={styles.overlay} />
 
-            {/* Custom Background Elements (e.g. animated maps) - Rendered above overlay but below content */}
+            {/* Custom Background Elements */}
             {backgroundChildren && (
                 <div className={`${styles.backgroundLayer} absolute inset-0 z-[1] pointer-events-none`}>
                     {backgroundChildren}
                 </div>
             )}
 
-            <div className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''}`}>
-                <motion.div
-                    className={styles.textContent}
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                >
+            <div className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} relative z-10`}>
+                <div className={styles.textContent}>
                     {breadcrumbs && (
-                        <motion.div variants={itemVariants} className="mb-4">
+                        <FadeIn delay={0.1} direction="down" className="mb-4">
                             {breadcrumbs}
-                        </motion.div>
+                        </FadeIn>
                     )}
                     {badge && (
-                        <motion.div variants={itemVariants}>
+                        <FadeIn delay={0.2} direction="down">
                             <span className={styles.badge}>{badge}</span>
-                        </motion.div>
+                        </FadeIn>
                     )}
-                    {/* Main Title - Rendered statically first, then animated if needed, or just static for LCP */}
-                    <div className={styles.title}>
-                        {title}
-                    </div>
+                    {/* Main Title */}
+                    <FadeIn delay={0.3} direction="up">
+                        <div className={styles.title}>
+                            {title}
+                        </div>
+                    </FadeIn>
 
-                    <motion.div className={styles.subtitle} variants={itemVariants}>
-                        {subtitle}
-                    </motion.div>
+                    <FadeIn delay={0.4} direction="up">
+                        <div className={styles.subtitle}>
+                            {subtitle}
+                        </div>
+                    </FadeIn>
 
-                    <motion.div className={styles.buttons} variants={itemVariants}>
-                        {ctaText && ctaLink && (
-                            <GlassButton
-                                href={ctaLink}
-                                variant="secondary"
-                                size="lg"
-                                className="gap-2 text-white"
-                                onClick={() => trackConversion('whatsapp', `hero_${title.substring(0, 10)}`)}
-                            >
-                                {ctaText}
-                                <ArrowRight size={20} />
-                            </GlassButton>
-                        )}
+                    <FadeIn delay={0.5} direction="up">
+                        <div className={styles.buttons}>
+                            {ctaText && ctaLink && (
+                                <GlassButton
+                                    href={ctaLink}
+                                    variant="secondary"
+                                    size="lg"
+                                    className="gap-2 text-white"
+                                    onClick={() => trackConversion('whatsapp', `hero_${title.substring(0, 10)}`)}
+                                >
+                                    {ctaText}
+                                    <ArrowRight size={20} />
+                                </GlassButton>
+                            )}
 
-                        {secondaryCtaText && secondaryCtaLink && (
-                            <GlassButton href={secondaryCtaLink} variant="outline" size="lg" className="text-white">
-                                {secondaryCtaText}
-                            </GlassButton>
-                        )}
-                    </motion.div>
-                </motion.div>
+                            {secondaryCtaText && secondaryCtaLink && (
+                                <GlassButton href={secondaryCtaLink} variant="outline" size="lg" className="text-white">
+                                    {secondaryCtaText}
+                                </GlassButton>
+                            )}
+                        </div>
+                    </FadeIn>
+                </div>
 
                 {children && (
-                    <motion.div
+                    <FadeIn
+                        delay={0.6}
+                        direction="up"
                         className={styles.childrenContainer}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
                     >
                         <div className={styles.childrenWrapper}>
                             {children}
                         </div>
-                    </motion.div>
+                    </FadeIn>
                 )}
             </div>
 

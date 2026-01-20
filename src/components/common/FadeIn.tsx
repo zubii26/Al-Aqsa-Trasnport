@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface FadeInProps {
     children: React.ReactNode;
@@ -12,28 +12,50 @@ interface FadeInProps {
 }
 
 export default function FadeIn({ children, delay = 0, className = '', direction = 'up', scale = false }: FadeInProps) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-10%" });
+    const ref = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
-    const directionOffset = {
-        up: { y: 40, x: 0 },
-        down: { y: -40, x: 0 },
-        left: { x: 40, y: 0 },
-        right: { x: -40, y: 0 },
-        none: { x: 0, y: 0 },
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1, rootMargin: "-10%" }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    const getDirectionStyles = () => {
+        switch (direction) {
+            case 'up': return 'translate-y-10';
+            case 'down': return '-translate-y-10';
+            case 'left': return 'translate-x-10';
+            case 'right': return '-translate-x-10';
+            default: return '';
+        }
     };
 
-    const initialScale = scale ? 0.95 : 1;
+    const initialScale = scale ? 'scale-95' : 'scale-100';
 
     return (
         <div ref={ref} className={className}>
-            <motion.div
-                initial={{ opacity: 0, ...directionOffset[direction], scale: initialScale }}
-                animate={isInView ? { opacity: 1, x: 0, y: 0, scale: 1 } : { opacity: 0, ...directionOffset[direction], scale: initialScale }}
-                transition={{ duration: 0.8, delay: delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+            <div
+                className={cn(
+                    "transition-all duration-1000 ease-out",
+                    isVisible ? "opacity-100 translate-x-0 translate-y-0 scale-100" : `opacity-0 ${getDirectionStyles()} ${initialScale}`
+                )}
+                style={{ transitionDelay: `${delay}s` }}
             >
                 {children}
-            </motion.div>
+            </div>
         </div>
     );
 }

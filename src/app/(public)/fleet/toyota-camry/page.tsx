@@ -8,7 +8,11 @@ import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
 import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-import Interior360Viewer from '@/components/fleet/Interior360Viewer';
+import dynamic from 'next/dynamic';
+
+const Interior360Viewer = dynamic(() => import('@/components/fleet/Interior360Viewer'), {
+    loading: () => <div className="h-[500px] w-full bg-slate-900 rounded-3xl animate-pulse flex items-center justify-center text-slate-500">Loading 3D View...</div>
+});
 
 import pricingData from '@/data/pricing.json';
 
@@ -28,7 +32,12 @@ export const metadata: Metadata = {
     title: vehicleData?.seo?.title,
     description: vehicleData?.seo?.description,
     keywords: vehicleData?.seo?.keywords,
-    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry' }
+    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/toyota-camry' },
+    openGraph: {
+        title: vehicleData?.seo?.title,
+        description: vehicleData?.seo?.description,
+        images: [{ url: '/images/fleet/camry-hero-professional.png', width: 1200, height: 630, alt: 'Toyota Camry Taxi' }]
+    }
 };
 
 const camryFAQs = [

@@ -113,6 +113,7 @@ export default function TransportServices() {
                                         <Link
                                             href={service.link}
                                             className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-500 font-semibold group-hover:gap-3 transition-all cursor-pointer"
+                                            aria-label={`Read more about ${service.title}`}
                                         >
                                             Read More <ArrowRight size={18} />
                                         </Link>

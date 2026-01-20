@@ -43,7 +43,7 @@ export default async function LatestArticles() {
                                             <Clock size={14} />
                                             {post.readTime}
                                         </span>
-                                        <span className={styles.readMore}>
+                                        <span className={styles.readMore} aria-label={`Read more about ${post.title}`}>
                                             Read More <ArrowRight size={16} />
                                         </span>
                                     </div>
