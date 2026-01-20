@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Script from 'next/script';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, ShieldCheck, Headphones, CreditCard } from 'lucide-react';
 import { usePricing } from '@/context/PricingContext';
@@ -111,10 +112,10 @@ export default function BookingWizard() {
                 </div>
             </div>
 
-            {/* Google Maps Script (Assuming it needs to be loaded if not global) */}
-            <script
-                async
+            {/* Google Maps Script */}
+            <Script
                 src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || ''}&libraries=places`}
+                strategy="afterInteractive"
             />
         </div>
     );

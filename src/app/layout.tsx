@@ -26,7 +26,7 @@ const interMono = Inter({
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["700"],
   display: 'swap',
 });
 
