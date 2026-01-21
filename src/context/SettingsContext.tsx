@@ -10,11 +10,13 @@ interface SettingsContextType {
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
-export function SettingsProvider({ children }: { children: React.ReactNode }) {
-    const [settings, setSettings] = useState<Settings | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+export function SettingsProvider({ children, initialSettings = null }: { children: React.ReactNode; initialSettings?: Settings | null }) {
+    const [settings, setSettings] = useState<Settings | null>(initialSettings);
+    const [isLoading, setIsLoading] = useState(!initialSettings);
 
     useEffect(() => {
+        if (initialSettings) return; // Skip fetch if we have initial settings
+
         const fetchSettings = async () => {
             try {
                 const res = await fetch('/api/settings');
@@ -28,7 +30,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         };
 
         fetchSettings();
-    }, []);
+    }, [initialSettings]);
 
     return (
         <SettingsContext.Provider value={{ settings, isLoading }}>

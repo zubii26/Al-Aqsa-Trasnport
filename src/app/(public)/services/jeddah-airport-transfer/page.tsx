@@ -128,7 +128,7 @@ export default async function JeddahAirportTransferPage() {
                 ctaText="Book Arrival Transfer"
                 ctaLink={whatsappLink}
                 layout="center"
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
             {/* Arrival Guide Section */}

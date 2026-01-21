@@ -105,6 +105,7 @@ export default function Footer() {
                     <div className={styles.column}>
                         <h3 className={styles.heading}>Services</h3>
                         <ul className={styles.links}>
+                            <li><Link href="/services/ramadan-transport">Ramadan 2026 Transport</Link></li>
                             <li><Link href="/services/jeddah-airport-transfer">Jeddah Airport Transfer</Link></li>
                             <li><Link href="/services/makkah-madinah-taxi">Makkah ⇄ Madinah Taxi</Link></li>
                             <li><Link href="/services/madinah-airport-transfer">Madinah Airport Transfer</Link></li>

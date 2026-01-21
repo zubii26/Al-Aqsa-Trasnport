@@ -89,7 +89,7 @@ export default async function MadinahAirportPage() {
                 ctaText="Book Airport Pickup"
                 ctaLink={whatsappLink}
                 layout="center"
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
             {/* Service Highlights */}

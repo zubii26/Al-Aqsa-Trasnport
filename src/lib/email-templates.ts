@@ -1,3 +1,5 @@
+import { WHATSAPP_NUMBER } from '@/lib/whatsapp';
+
 export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto; direction: ltr;">
     <!-- Modern Header with Gold Accent -->
@@ -93,7 +95,7 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
     <!-- Need Help -->
     <div style="text-align: center; color: #666; font-size: 14px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
         <p>Need to make changes? Call/WhatsApp us anytime.</p>
-        <a href="https://wa.me/966545494921" style="display: inline-block; background-color: #25D366; color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; margin-top: 10px;">
+        <a href="https://wa.me/${WHATSAPP_NUMBER}" style="display: inline-block; background-color: #25D366; color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; margin-top: 10px;">
             WhatsApp Support
         </a>
     </div>

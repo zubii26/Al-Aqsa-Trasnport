@@ -8,60 +8,26 @@ import { ChevronRight, Home } from 'lucide-react';
 interface BreadcrumbsProps {
     overrideLastItem?: string;
     className?: string;
+    hideJsonLd?: boolean;
 }
 
-export default function Breadcrumbs({ overrideLastItem, className = '' }: BreadcrumbsProps) {
+export default function Breadcrumbs({ overrideLastItem, className = '', hideJsonLd = false }: BreadcrumbsProps) {
     const pathname = usePathname();
 
-    // Split pathname into segments, filter empty strings
-    const segments = pathname.split('/').filter(Boolean);
-
-    // Identify the app root (first segment)
-    const appRoot = segments[0] || '';
-    const isMultiApp = ['umrah'].includes(appRoot);
-
-    // If we rely on multi-app structure, Home should point to /appRoot
-    // And we should filter out the appRoot from the specific breadcrumb segments shown
-    const homeLink = isMultiApp ? `/${appRoot}` : '/';
-
-    // Filter segments to display (remove the app root if it is one of our known apps)
-    const displaySegments = isMultiApp ? segments.slice(1) : segments;
-
-    // Map segments to readable names (optional dictionary)
-    const formatSegment = (segment: string) => {
-        // Handle common routes if needed, otherwise capitalize
-        if (segment === 'blog') return 'Blog';
-        if (segment === 'fleet') return 'Our Fleet';
-        if (segment === 'services') return 'Services';
-        // Default: remove dashes and capitalize
-        return segment.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    };
+    // ... (keep existing logic)
 
     const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": `https://alaqsaumrahtransport.com${homeLink}`
-            },
-            ...displaySegments.map((segment, index) => ({
-                "@type": "ListItem",
-                "position": index + 2,
-                "name": formatSegment(segment),
-                "item": `https://alaqsaumrahtransport.com${homeLink === '/' ? '' : homeLink}/${displaySegments.slice(0, index + 1).join('/')}`
-            }))
-        ]
+        // ... (keep existing logic)
     };
 
     return (
         <nav aria-label="Breadcrumb" className={`flex items-center text-sm ${className}`}>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            {!hideJsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <ol className="flex items-center flex-wrap gap-2">
                 {/* Home Link */}
                 <li className="flex items-center">

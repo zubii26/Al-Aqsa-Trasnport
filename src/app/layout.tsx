@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia",
       template: `%s | ${siteName}`
     },
-    description: "Book trusted Umrah transport services in Saudi Arabia. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah. 24/7 reliable service.",
+    description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
     // Global Manifest (Optional, or handled by sub-layouts)
     // We remove the global manifest link to enforce sub-route manifests
     // manifest: '/manifest.json', 
@@ -94,7 +94,7 @@ export default async function RootLayout({
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}
         <MenuProvider>
-          <SettingsProvider>
+          <SettingsProvider initialSettings={settings}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"

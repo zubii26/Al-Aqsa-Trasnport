@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/services/airport-transfers',
         '/routes',
         '/safety',
+        '/services/ramadan-transport',
         '/services/taif-city-tour',
     ].map((route) => ({
         url: `${baseUrl}${route}`,

@@ -130,7 +130,7 @@ export default async function MakkahMadinahTaxiPage() {
                 ctaText="Book Now via WhatsApp"
                 ctaLink={whatsappLink}
                 layout="center"
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
             {/* Trust/Benefits Section */}

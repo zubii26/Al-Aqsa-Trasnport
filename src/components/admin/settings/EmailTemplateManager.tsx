@@ -1,25 +1,46 @@
 import { useState } from 'react';
 import { Settings } from '@/lib/validations'; // Your settings type
-import { Save, Info, Eye, X } from 'lucide-react';
+import { Save, Info, Eye, X, RefreshCw } from 'lucide-react';
 
 interface EmailTemplateManagerProps {
     settings: Settings;
     onChange: (key: 'emailTemplates', value: any) => void;
 }
 
+import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from '@/lib/email-templates';
+
 export default function EmailTemplateManager({ settings, onChange }: EmailTemplateManagerProps) {
     const [activeTab, setActiveTab] = useState<'customer' | 'admin'>('customer');
     const [previewOpen, setPreviewOpen] = useState(false);
 
     // Local state for editing to prevent lag on every keystroke if parent state is heavy
-    const [bookingTemplate, setBookingTemplate] = useState(settings.emailTemplates?.bookingConfirmation || '');
-    const [adminTemplate, setAdminTemplate] = useState(settings.emailTemplates?.adminNotification || '');
+    const [bookingTemplate, setBookingTemplate] = useState(settings.emailTemplates?.bookingConfirmation || DEFAULT_BOOKING_CONFIRMATION_TEMPLATE);
+    const [adminTemplate, setAdminTemplate] = useState(settings.emailTemplates?.adminNotification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE);
 
     const handleBlur = () => {
         onChange('emailTemplates', {
             bookingConfirmation: bookingTemplate,
             adminNotification: adminTemplate
         });
+    };
+
+    const handleReset = () => {
+        if (confirm('Are you sure you want to reset this template to the default version? Any custom changes will be lost.')) {
+            if (activeTab === 'customer') {
+                setBookingTemplate(DEFAULT_BOOKING_CONFIRMATION_TEMPLATE);
+                // Trigger save immediately or let blur handle it? Better to trigger update to parent
+                onChange('emailTemplates', {
+                    bookingConfirmation: DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
+                    adminNotification: adminTemplate
+                });
+            } else {
+                setAdminTemplate(DEFAULT_ADMIN_NOTIFICATION_TEMPLATE);
+                onChange('emailTemplates', {
+                    bookingConfirmation: bookingTemplate,
+                    adminNotification: DEFAULT_ADMIN_NOTIFICATION_TEMPLATE
+                });
+            }
+        }
     };
 
     const variables = [
@@ -90,6 +111,14 @@ export default function EmailTemplateManager({ settings, onChange }: EmailTempla
                 >
                     <Eye size={16} />
                     Preview
+                </button>
+                <button
+                    onClick={handleReset}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-medium transition-colors border border-red-200"
+                    title="Reset to default template"
+                >
+                    <RefreshCw size={16} />
+                    Reset
                 </button>
             </div>
 

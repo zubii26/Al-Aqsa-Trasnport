@@ -83,9 +83,9 @@ const Hero: React.FC<HeroProps> = ({
                     )}
                     {/* Main Title */}
                     <FadeIn delay={0.3} direction="up">
-                        <div className={styles.title}>
+                        <h1 className={styles.title}>
                             {title}
-                        </div>
+                        </h1>
                     </FadeIn>
 
                     <FadeIn delay={0.4} direction="up">
