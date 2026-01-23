@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { MobileMenuProvider } from "@/context/MobileMenuContext";
 import { PricingProvider } from '@/context/PricingContext';
 import { SettingsProvider } from '@/context/SettingsContext';
-import Preloader from "@/components/common/Preloader";
-import NextTopLoader from 'nextjs-toploader';
+// import Preloader from "@/components/common/Preloader"; 
+// import NextTopLoader from 'nextjs-toploader';
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { getSettings } from "@/lib/settings-storage";
 import "./globals.css";
@@ -92,7 +92,7 @@ export default async function RootLayout({
         )}
 
         <MobileMenuProvider>
-          {/* <SettingsProvider initialSettings={settings}>
+          <SettingsProvider initialSettings={settings}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -100,8 +100,12 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <PricingProvider>
-                <Preloader />
-                <NextTopLoader
+                {/* 
+                   DISABLED PRELOADER & TOPLOADER 
+                   These often cause hydration mismatches or window-not-defined errors
+                */}
+                {/* <Preloader /> */}
+                {/* <NextTopLoader
                   color="#D4AF37"
                   initialPosition={0.08}
                   crawlSpeed={200}
@@ -113,11 +117,11 @@ export default async function RootLayout({
                   shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
                 /> */}
 
-          {children}
+                {children}
 
-          {/* </PricingProvider>
+              </PricingProvider>
             </ThemeProvider>
-          </SettingsProvider> */}
+          </SettingsProvider>
         </MobileMenuProvider>
 
         <div id="datepicker-portal" />
