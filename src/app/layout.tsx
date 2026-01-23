@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { MenuProvider } from "@/context/MenuContext";
+import { MobileMenuProvider } from "@/context/MobileMenuContext";
 import { PricingProvider } from '@/context/PricingContext';
 import { SettingsProvider } from '@/context/SettingsContext';
 import Preloader from "@/components/common/Preloader";
@@ -93,7 +93,7 @@ export default async function RootLayout({
         {settings.general.googleAnalyticsId && (
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}
-        <MenuProvider>
+        <MobileMenuProvider>
           <SettingsProvider initialSettings={settings}>
             <ThemeProvider
               attribute="class"
@@ -124,7 +124,7 @@ export default async function RootLayout({
               </PricingProvider>
             </ThemeProvider>
           </SettingsProvider>
-        </MenuProvider>
+        </MobileMenuProvider>
 
         <div id="datepicker-portal" />
       </body>

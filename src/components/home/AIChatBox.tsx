@@ -17,7 +17,7 @@ interface Message {
     };
 }
 
-import { useMenu } from '@/context/MenuContext';
+import { useMobileMenu } from '@/context/MobileMenuContext';
 
 interface AIChatBoxProps {
     contactPhone?: string;
@@ -25,7 +25,7 @@ interface AIChatBoxProps {
 }
 
 export default function AIChatBox({ contactPhone, contactEmail }: AIChatBoxProps) {
-    const { isMenuOpen } = useMenu();
+    const { isMenuOpen } = useMobileMenu();
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');

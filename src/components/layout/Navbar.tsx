@@ -7,13 +7,13 @@ import { usePathname } from 'next/navigation';
 
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
-import { useMenu } from '@/context/MenuContext';
+import { useMobileMenu } from '@/context/MobileMenuContext';
 import GlassButton from '@/components/ui/GlassButton';
 
 export default function Navbar() {
     const pathname = usePathname();
     // Force rebuild
-    const { isMenuOpen, setIsMenuOpen, toggleMenu } = useMenu();
+    const { isMenuOpen, setIsMenuOpen, toggleMenu } = useMobileMenu();
     const [scrolled, setScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
 

@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation';
 import { ArrowUp } from 'lucide-react';
 import styles from './ScrollToTop.module.css';
 
-import { useMenu } from '@/context/MenuContext';
+import { useMobileMenu } from '@/context/MobileMenuContext';
 
 export default function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false);
     const pathname = usePathname();
-    const { isMenuOpen } = useMenu();
+    const { isMenuOpen } = useMobileMenu();
 
     // Automatically scroll to top on route change
     useEffect(() => {
