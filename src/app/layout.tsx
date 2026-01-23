@@ -93,17 +93,17 @@ export default async function RootLayout({
         {settings.general.googleAnalyticsId && (
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}
-        <MobileMenuProvider>
-          <SettingsProvider initialSettings={settings}>
-            <ThemeProvider
+        {/* <MobileMenuProvider> */}
+        {/* <SettingsProvider initialSettings={settings}> */}
+        {/* <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
-            >
-              <PricingProvider>
-                <Preloader />
-                <NextTopLoader
+            > */}
+        {/* <PricingProvider> */}
+        {/* <Preloader /> */}
+        {/* <NextTopLoader
                   color="#D4AF37"
                   initialPosition={0.08}
                   crawlSpeed={200}
@@ -113,18 +113,18 @@ export default async function RootLayout({
                   easing="ease"
                   speed={200}
                   shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
-                />
+                /> */}
 
-                {/* Main Content Area - Layouts downstream will inject Nav/Footer */}
-                {children}
+        {/* Main Content Area - Layouts downstream will inject Nav/Footer */}
+        {children}
 
-                {/* Admin Session Guard - keep global for admin routes */}
-                {/* <AdminSessionGuard />  Moved to specific layouts if needed or kept here if it only triggers on /admin */}
+        {/* Admin Session Guard - keep global for admin routes */}
+        {/* <AdminSessionGuard />  Moved to specific layouts if needed or kept here if it only triggers on /admin */}
 
-              </PricingProvider>
-            </ThemeProvider>
-          </SettingsProvider>
-        </MobileMenuProvider>
+        {/* </PricingProvider> */}
+        {/* </ThemeProvider> */}
+        {/* </SettingsProvider> */}
+        {/* </MobileMenuProvider> */}
 
         <div id="datepicker-portal" />
       </body>
