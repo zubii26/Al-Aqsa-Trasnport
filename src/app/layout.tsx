@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { MobileMenuProvider } from "@/context/MobileMenuContext";
-import { PricingProvider } from '@/context/PricingContext';
-import { SettingsProvider } from '@/context/SettingsContext';
+// import { ThemeProvider } from "@/components/providers/ThemeProvider";
+// import { MobileMenuProvider } from "@/context/MobileMenuContext";
+// import { PricingProvider } from '@/context/PricingContext';
+// import { SettingsProvider } from '@/context/SettingsContext';
 import Preloader from "@/components/common/Preloader";
 import NextTopLoader from 'nextjs-toploader';
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
@@ -64,9 +64,6 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${siteName}`
     },
     description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
-    // Global Manifest (Optional, or handled by sub-layouts)
-    // We remove the global manifest link to enforce sub-route manifests
-    // manifest: '/manifest.json', 
     icons: {
       icon: [
         { url: '/favicon.png', sizes: '32x32' },
@@ -93,38 +90,18 @@ export default async function RootLayout({
         {settings.general.googleAnalyticsId && (
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}
-        {/* <MobileMenuProvider> */}
-        {/* <SettingsProvider initialSettings={settings}> */}
-        {/* <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            > */}
-        {/* <PricingProvider> */}
-        {/* <Preloader /> */}
-        {/* <NextTopLoader
-                  color="#D4AF37"
-                  initialPosition={0.08}
-                  crawlSpeed={200}
-                  height={4}
-                  crawl={true}
-                  showSpinner={false}
-                  easing="ease"
-                  speed={200}
-                  shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
-                /> */}
 
-        {/* Main Content Area - Layouts downstream will inject Nav/Footer */}
+        {/* TEMPORARILY DISABLED PROVIDERS FOR DEBUGGING */}
+        {/* 
+            - MobileMenuProvider
+            - SettingsProvider
+            - ThemeProvider
+            - PricingProvider
+            - Preloader
+            - NextTopLoader
+        */}
+
         {children}
-
-        {/* Admin Session Guard - keep global for admin routes */}
-        {/* <AdminSessionGuard />  Moved to specific layouts if needed or kept here if it only triggers on /admin */}
-
-        {/* </PricingProvider> */}
-        {/* </ThemeProvider> */}
-        {/* </SettingsProvider> */}
-        {/* </MobileMenuProvider> */}
 
         <div id="datepicker-portal" />
       </body>
