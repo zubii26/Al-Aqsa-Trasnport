@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
-// import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { MobileMenuProvider } from "@/context/MobileMenuContext";
-// import { PricingProvider } from '@/context/PricingContext';
-// import { SettingsProvider } from '@/context/SettingsContext';
+import { PricingProvider } from '@/context/PricingContext';
+import { SettingsProvider } from '@/context/SettingsContext';
 import Preloader from "@/components/common/Preloader";
 import NextTopLoader from 'nextjs-toploader';
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
