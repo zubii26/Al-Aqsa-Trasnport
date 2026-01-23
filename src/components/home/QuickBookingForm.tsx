@@ -97,6 +97,11 @@ const QuickBookingForm = ({
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [minDate, setMinDate] = useState('');
+
+    useEffect(() => {
+        setMinDate(new Date().toISOString().split('T')[0]);
+    }, []);
 
     // Auto-detect route based on Pickup and Dropoff
     useEffect(() => {
@@ -581,7 +586,7 @@ const QuickBookingForm = ({
                                                 if (!e.target.value) { handleDateChange(null); return; }
                                                 handleDateChange(new Date(e.target.value));
                                             }}
-                                            min={new Date().toISOString().split('T')[0]}
+                                            min={minDate}
                                             className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
                                         />
                                     </div>
