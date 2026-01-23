@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
 // import { ThemeProvider } from "@/components/providers/ThemeProvider";
-// import { MobileMenuProvider } from "@/context/MobileMenuContext";
+import { MobileMenuProvider } from "@/context/MobileMenuContext";
 // import { PricingProvider } from '@/context/PricingContext';
 // import { SettingsProvider } from '@/context/SettingsContext';
 import Preloader from "@/components/common/Preloader";
@@ -91,17 +91,34 @@ export default async function RootLayout({
           <GoogleAnalytics gaId={settings.general.googleAnalyticsId} />
         )}
 
-        {/* TEMPORARILY DISABLED PROVIDERS FOR DEBUGGING */}
-        {/* 
-            - MobileMenuProvider
-            - SettingsProvider
-            - ThemeProvider
-            - PricingProvider
-            - Preloader
-            - NextTopLoader
-        */}
+        <MobileMenuProvider>
+          {/* <SettingsProvider initialSettings={settings}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <PricingProvider>
+                <Preloader />
+                <NextTopLoader
+                  color="#D4AF37"
+                  initialPosition={0.08}
+                  crawlSpeed={200}
+                  height={4}
+                  crawl={true}
+                  showSpinner={false}
+                  easing="ease"
+                  speed={200}
+                  shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
+                /> */}
 
-        {children}
+          {children}
+
+          {/* </PricingProvider>
+            </ThemeProvider>
+          </SettingsProvider> */}
+        </MobileMenuProvider>
 
         <div id="datepicker-portal" />
       </body>
