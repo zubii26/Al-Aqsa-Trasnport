@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         title: post.metaTitle || post.title,
         description: post.metaDescription || post.excerpt,
         keywords: post.tags,
+        alternates: {
+            canonical: `https://alaqsaumrahtransport.com/blog/${slug}`,
+        },
         openGraph: {
             title: post.metaTitle || post.title,
             description: post.metaDescription || post.excerpt,

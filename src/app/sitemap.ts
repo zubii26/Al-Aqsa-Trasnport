@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/fleet/hyundai-starex',
         '/fleet/hyundai-staria',
         '/fleet/toyota-hiace',
+        '/fleet/toyota-coaster',
         '/blog',
         '/contact',
         '/booking',
@@ -31,6 +32,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/safety',
         '/services/ramadan-transport',
         '/services/taif-city-tour',
+        '/privacy',
+        '/terms',
+        '/cookie-preferences',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),

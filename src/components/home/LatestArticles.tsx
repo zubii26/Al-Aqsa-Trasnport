@@ -18,7 +18,7 @@ export default async function LatestArticles() {
 
     return (
         <section className={styles.section}>
-            <div className="container">
+            <div className="container relative z-10 mx-auto px-4">
                 <FadeIn>
                     <h2 className={styles.sectionTitle}>Latest from Our Blog</h2>
                 </FadeIn>

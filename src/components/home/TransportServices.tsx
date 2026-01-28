@@ -50,6 +50,28 @@ const services = [
         link: '/services/hotel-transfers', // Updated link to new dedicated page
         whatsappMessage: 'Salam Al Aqsa, I need a Hotel Transfer in Makkah/Madinah.',
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
+    },
+    {
+        id: 'ziyarat-tours',
+        title: 'Ziyarat Tours',
+        subtitle: 'Historical Sites • Guided Tours',
+        description: 'Enrich your Umrah with visits to sacred sites like Masjid Quba, Mount Uhud, and Cave Hira. Our knowledgeable drivers ensure you experience the history of Islam with comfort and convenience.',
+        icon: <Building2 size={32} />, // Using Building2 as placeholder, ideally 'Landmark' or similar if available
+        image: '/images/blog/makkah-haram-view.jpg', // Fixed broken path
+        link: '/services/ziyarat-tours',
+        whatsappMessage: 'Salam Al Aqsa, I am interested in a Ziyarat Tour.',
+        keywords: ['Makkah Ziyarat', 'Madinah Ziyarat', 'Islamic historical sites']
+    },
+    {
+        id: 'ramadan-transport',
+        title: 'Ramadan Transport',
+        subtitle: '24/7 Availability • Tarawih & Qiyam',
+        description: 'Specialized transport services for the Holy Month. We handle the heavy traffic during peak times so you can focus on your fasting and prayers. Pre-book to guarantee your ride.',
+        icon: <Car size={32} />,
+        image: '/images/hero/ramadan-transport-hero.png',
+        link: '/services/ramadan-transport',
+        whatsappMessage: 'Salam Al Aqsa, I need transport during Ramadan.',
+        keywords: ['Ramadan transport Makkah', 'Tarawih taxi', 'Ramadan 2026 transport']
     }
 ];
 
@@ -59,7 +81,7 @@ export default function TransportServices() {
             <GoldenWaveDivider position="top" />
             <ParticleBackground />
 
-            <div className="container relative z-10">
+            <div className="container relative z-10 mx-auto px-4" suppressHydrationWarning>
                 <FadeIn>
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Our Core Services</span>

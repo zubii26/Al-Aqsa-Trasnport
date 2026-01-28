@@ -11,7 +11,7 @@ export default function SEOContentSection() {
             <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
             <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
 
-            <div className="container relative z-10 px-4 md:px-6">
+            <div className="container relative z-10 px-4 md:px-6 mx-auto">
                 <FadeIn>
                     <div className="max-w-4xl mx-auto space-y-10">
 
@@ -22,7 +22,7 @@ export default function SEOContentSection() {
                                     Your Trusted Companion on the Sacred Journey to Al Aqsa
                                 </h2>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Embarking on Umrah is one of life's most blessed moments—a call from Allah that touches the soul. At Al Aqsa Umrah Transport, we don't just provide transportation; we become part of your spiritual journey, ensuring every moment of travel brings you peace and comfort as you answer this divine invitation.
+                                    Embarking on <Link href="/services" className="text-secondary font-medium hover:underline">Umrah</Link> is one of life's most blessed moments—a call from Allah that touches the soul. At Al Aqsa Umrah Transport, we don't just provide transportation; we become part of your spiritual journey, ensuring every moment of travel brings you peace and comfort as you answer this divine invitation.
                                 </p>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
                                     We understand that your heart is already in the holy cities, filled with anticipation to walk where the Prophet Muhammad (peace be upon him) walked. Your mind is preparing for prayers, du'as, and spiritual reflection. The last thing you need is worry about logistics and transportation. That's where we step in—as your dedicated travel companions who care deeply about your sacred experience.
@@ -35,7 +35,7 @@ export default function SEOContentSection() {
                                     Every member of our Al Aqsa family treats each pilgrim with the respect and warmth they deserve. Our drivers aren't just professionals—they're fellow believers who understand the sanctity of your journey. Many have performed Umrah themselves and know the emotions you're experiencing: the excitement, the nervousness, the overwhelming gratitude to Allah for this opportunity.
                                 </p>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    When you step into our vehicles, you'll feel the difference. Whether you're traveling from the airport with your luggage and tired from your flight, or journeying between Makkah and Madinah with your heart full of spiritual blessings, we ensure your comfort so you can focus entirely on your worship and connection with Allah.
+                                    When you step into our vehicles, you'll feel the difference. Whether you're traveling from the <Link href="/services/jeddah-airport-transfer" className="text-secondary font-medium hover:underline">airport</Link> with your luggage and tired from your flight, or journeying between <Link href="/services/makkah-madinah-taxi" className="text-secondary font-medium hover:underline">Makkah and Madinah</Link> with your heart full of spiritual blessings, we ensure your comfort so you can focus entirely on your worship and connection with Allah.
                                 </p>
                             </div>
 
@@ -45,7 +45,7 @@ export default function SEOContentSection() {
                                     We believe that facilitating your Umrah journey is our own form of worship. Getting you safely to Masjid al-Haram for Tawaf, ensuring elderly family members travel comfortably, making sure you arrive on time for your prayers—this is our honor and responsibility. Your spiritual journey is precious, and we treat it as such.
                                 </p>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Our services extend throughout your blessed stay in Saudi Arabia. Whether you need early morning transportation for Fajr prayers, comfortable rides for Ziyarat to historical Islamic sites, or reliable transfers between the two holy cities, we're available around the clock. Your call is never an inconvenience; it's an opportunity for us to serve.
+                                    Our services extend throughout your blessed stay in Saudi Arabia. Whether you need early morning transportation for Fajr prayers, comfortable rides for <Link href="/services/ziyarat-tours" className="text-secondary font-medium hover:underline">Ziyarat</Link> to historical Islamic sites, or reliable transfers between the two holy cities, we're available around the clock. Your call is never an inconvenience; it's an opportunity for us to serve.
                                 </p>
                             </div>
 
@@ -128,19 +128,27 @@ export default function SEOContentSection() {
                                 <ul className="space-y-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        Jeddah Airport (KAIA) to Makkah Hotel
+                                        <Link href="/services/jeddah-airport-transfer" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                            Jeddah Airport (KAIA) to Makkah Hotel
+                                        </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        Makkah Hotel to Madinah Munawwarah
+                                        <Link href="/services/makkah-madinah-taxi" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                            Makkah Hotel to Madinah Munawwarah
+                                        </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        Madinah Airport to Masjid Nabawi
+                                        <Link href="/services/madinah-airport-transfer" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                            Madinah Airport to Masjid Nabawi
+                                        </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        VIP Ziarah & Haram Shuttle Services
+                                        <Link href="/services/ziyarat-tours" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                            VIP Ziarah & Haram Shuttle Services
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>

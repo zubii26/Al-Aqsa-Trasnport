@@ -57,6 +57,16 @@ const FLEET_IMAGES = [
         url: '/fleet/hyundai-starex',
         gradient: 'from-purple-500/20 to-slate-900/40'
     },
+    {
+        src: '/images/fleet/coaster-hero-professional.png',
+        alt: 'Toyota Coaster 21 Seater Bus',
+        name: 'Toyota Coaster',
+        badge: 'Group Travel',
+        capacity: '21 Pax',
+        luggage: '15 Bags',
+        url: '/fleet/toyota-coaster',
+        gradient: 'from-blue-600/20 to-slate-900/40'
+    }
 ];
 
 export default function FleetGallery() {

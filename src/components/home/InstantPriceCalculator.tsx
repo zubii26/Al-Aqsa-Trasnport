@@ -42,7 +42,7 @@ export default function InstantPriceCalculator() {
 
     return (
         <section className={styles.section}>
-            <div className="container">
+            <div className="container relative z-10 mx-auto px-4">
                 <FadeIn>
                     <div className={styles.header}>
                         <h2 className={styles.title}>Instant Price Calculator</h2>

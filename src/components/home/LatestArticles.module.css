@@ -1,6 +1,8 @@
 .section {
-    padding: 4rem 0;
+    padding: 6rem 0;
     background-color: hsl(var(--background));
+    position: relative;
+    z-index: 10;
 }
 
 .sectionTitle {
@@ -8,14 +10,15 @@
     font-weight: 700;
     color: hsl(var(--foreground));
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     letter-spacing: -0.02em;
+    font-family: var(--font-playfair);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
 .card {
