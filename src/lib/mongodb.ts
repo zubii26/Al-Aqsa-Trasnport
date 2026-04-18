@@ -14,7 +14,6 @@ interface MongooseCache {
 }
 
 declare global {
-
     var mongoose: MongooseCache | undefined;
 }
 
@@ -30,16 +29,27 @@ async function dbConnect() {
     }
 
     if (!cached!.promise) {
+        // Enforce strict setting for Mongoose 7/8
+        mongoose.set('strictQuery', true);
+
         const opts = {
             bufferCommands: false,
-            serverSelectionTimeoutMS: 5000,
+            // Increase timeout slightly for cloud connections
+            serverSelectionTimeoutMS: 10000,
             socketTimeoutMS: 45000,
+            family: 4, // Force IPv4 to prevent local IPv6 timeout issues
         };
 
+        console.log(`[dbConnect] Connecting to MongoDB Atlas cluster...`);
+
         cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+            console.log(`[dbConnect] connection successful!`);
             return mongoose;
         }).catch(err => {
-            console.error('Mongoose connection error:', err);
+            console.error('[dbConnect] Initial connection error:', err.message);
+            if (err.message.includes('ECONNREFUSED')) {
+                 console.error('>> DIAGNOSTIC: ECONNREFUSED usually indicates that your current IP address is NOT whitelisted in the MongoDB Atlas Network Access panel.');
+            }
             throw err;
         });
     }
@@ -47,8 +57,9 @@ async function dbConnect() {
     try {
         cached!.conn = await cached!.promise;
     } catch (e) {
-        console.error('Database connection failed:', e);
-        cached!.promise = null; // Clear failing promise to allow retry
+        // Log detailed error but clear the cache so the server doesn't get stuck
+        console.error('[dbConnect] Database connection failed:', (e as Error).message);
+        cached!.promise = null;
         cached!.conn = null;
         throw e;
     }

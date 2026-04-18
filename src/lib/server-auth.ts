@@ -43,8 +43,8 @@ export async function requireRole(allowedRoles: string[]) {
     const normalizedAllowedRoles = allowedRoles.map(r => r.toLowerCase());
 
     // Map 'manager' to 'admin' or 'user' if needed, or just check inclusion
-    // If user is admin, they should generally have access to everything
-    if (normalizedUserRole === 'admin') return user;
+    // If user is admin or manager, they should generally have access to everything (Equalization)
+    if (normalizedUserRole === 'admin' || normalizedUserRole === 'manager') return user;
 
     // Check if allowed roles include 'manager' and user role includes 'manager'
     if (normalizedAllowedRoles.includes('manager') && normalizedUserRole.includes('manager')) {

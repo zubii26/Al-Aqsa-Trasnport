@@ -90,14 +90,14 @@ export default function AdminLayout({
         { href: '/admin/bookings', label: 'Bookings', icon: Calendar, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/routes', label: 'Routes', icon: MapPin, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/fleet', label: 'Fleet', icon: Car, roles: ['admin', 'manager', 'operational_manager'] },
-        { href: '/admin/pricing', label: 'Pricing', icon: DollarSign, roles: ['admin'] },
+        { href: '/admin/pricing', label: 'Pricing', icon: DollarSign, roles: ['admin', 'manager'] },
         { href: '/admin/reviews', label: 'Reviews', icon: MessageSquare, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/blog', label: 'Blog', icon: FileText, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/content', label: 'Content', icon: PenTool, roles: ['admin', 'manager', 'operational_manager'] },
         { href: '/admin/marketing', label: 'Marketing', icon: MessageSquare, roles: ['admin', 'manager'] },
-        { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin'] },
-        { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
+        { href: '/admin/users', label: 'Users', icon: Users, roles: ['admin', 'manager'] },
+        { href: '/admin/settings', label: 'Settings', icon: Settings, roles: ['admin', 'manager'] },
     ];
 
     const userRole = user.role.toLowerCase();
