@@ -4,7 +4,7 @@ import { User } from '@/models';
 import { requireRole } from '@/lib/server-auth';
 
 export async function GET(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
@@ -42,11 +42,17 @@ export async function POST(request: Request) {
         if (existingUser) {
             return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
         }
+        
+        let finalPassword = password;
+        if (password && password.trim() !== '') {
+             const { hashPassword } = await import('@/lib/password-utils');
+             finalPassword = await hashPassword(password);
+        }
 
         const newUser = await User.create({
             name,
             email,
-            password,
+            password: finalPassword,
             role: role.toLowerCase(), // Ensure role is lowercase
             activeContracts: activeContracts || 0,
             creditLimit: creditLimit || 0
@@ -62,7 +68,7 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
@@ -82,7 +88,8 @@ export async function PUT(request: Request) {
         if (creditLimit !== undefined) updateData.creditLimit = creditLimit;
 
         if (password && password.trim() !== '') {
-            updateData.password = password;
+            const { hashPassword } = await import('@/lib/password-utils');
+            updateData.password = await hashPassword(password);
         }
 
         const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true }).lean();
@@ -101,7 +108,7 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }

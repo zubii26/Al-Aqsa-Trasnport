@@ -28,7 +28,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const user = await requireRole(['ADMIN']);
+    const user = await requireRole(['ADMIN', 'MANAGER']);
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403 });
     }

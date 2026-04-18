@@ -34,10 +34,9 @@ async function dbConnect() {
 
         const opts = {
             bufferCommands: false,
-            // Increase timeout slightly for cloud connections
-            serverSelectionTimeoutMS: 10000,
+            // Increase timeout for cloud connections significantly to avoid selection errors
+            serverSelectionTimeoutMS: 30000,
             socketTimeoutMS: 45000,
-            family: 4, // Force IPv4 to prevent local IPv6 timeout issues
         };
 
         console.log(`[dbConnect] Connecting to MongoDB Atlas cluster...`);
@@ -47,8 +46,12 @@ async function dbConnect() {
             return mongoose;
         }).catch(err => {
             console.error('[dbConnect] Initial connection error:', err.message);
-            if (err.message.includes('ECONNREFUSED')) {
-                 console.error('>> DIAGNOSTIC: ECONNREFUSED usually indicates that your current IP address is NOT whitelisted in the MongoDB Atlas Network Access panel.');
+            if (err.message.includes('ECONNREFUSED') || err.message.includes('Server selection timed out')) {
+                 console.error('\n======================================================');
+                 console.error('>> DIAGNOSTIC: MongooseServerSelectionError / ECONNREFUSED');
+                 console.error('>> This usually indicates that your current IP address is NOT whitelisted.');
+                 console.error('>> Please go to MongoDB Atlas -> Network Access -> Add your current IP Address.');
+                 console.error('======================================================\n');
             }
             throw err;
         });
