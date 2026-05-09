@@ -14,7 +14,7 @@ export const metadata = {
     description: "Comfortable Makkah to Madinah transport. Reliable intercity taxi transfers between Jeddah, Makkah & Madinah. Enjoy a seamless, spiritual travel experience.",
     keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/intercity-transfer',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/intercity-transfer',
     },
     openGraph: {
         title: "Makkah to Madinah Taxi & Intercity Transport | VIP Fleet",

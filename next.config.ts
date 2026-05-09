@@ -70,6 +70,19 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // ── Canonical enforcement ──────────────────────────────────────────
+      // Permanently redirect the bare (non-www) domain to the www version.
+      // This prevents Google from indexing two copies of the site and ensures
+      // all canonical tags (set via metadataBase in layout.tsx) match the
+      // URL actually served.  Vercel will honour this at the edge before
+      // Next.js even runs, so it is fast and incurs no SSR cost.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'alaqsaumrahtransport.com' }],
+        destination: 'https://www.alaqsaumrahtransport.com/:path*',
+        permanent: true,  // 301 — tells Google to update its index
+      },
+      // ── Legacy blog URL rewrites ───────────────────────────────────────
       {
         source: '/umrah/blog',
         destination: '/blog',

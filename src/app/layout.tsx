@@ -49,7 +49,9 @@ const reemKufi = Reem_Kufi({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  // NOTE: maximumScale / userScalable intentionally omitted.
+  // Setting maximumScale=1 / user-scalable=no triggers Google's mobile
+  // usability penalty and is an accessibility violation (WCAG 1.4.4).
   themeColor: '#D4AF37',
 };
 
@@ -58,7 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteName = settings.general.siteName || "Al Aqsa Umrah Transport";
 
   return {
-    metadataBase: new URL('https://alaqsaumrahtransport.com'),
+    // metadataBase must use the canonical www origin so that all
+    // auto-generated canonicals, OG URLs, and sitemap entries align
+    // with the www redirect enforced in next.config.ts.
+    metadataBase: new URL('https://www.alaqsaumrahtransport.com'),
     title: {
       default: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia",
       template: `%s | ${siteName}`

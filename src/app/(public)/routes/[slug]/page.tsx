@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: route.seo.description,
         keywords: route.seo.keywords,
         alternates: {
-            canonical: `https://alaqsaumrahtransport.com/routes/${params.slug}`,
+            canonical: `https://www.alaqsaumrahtransport.com/routes/${params.slug}`,
         },
         openGraph: {
             title: route.seo.title,

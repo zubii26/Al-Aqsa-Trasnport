@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         description: post.metaDescription || post.excerpt,
         keywords: post.tags,
         alternates: {
-            canonical: `https://alaqsaumrahtransport.com/blog/${slug}`,
+            canonical: `https://www.alaqsaumrahtransport.com/blog/${slug}`,
         },
         openGraph: {
             title: post.metaTitle || post.title,
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             authors: [post.author],
             images: [
                 {
-                    url: post.image.startsWith('http') ? post.image : `https://alaqsaumrahtransport.com${post.image.startsWith('/') ? '' : '/'}${post.image}`,
+                    url: post.image.startsWith('http') ? post.image : `https://www.alaqsaumrahtransport.com${post.image.startsWith('/') ? '' : '/'}${post.image}`,
                     alt: post.alt || post.title,
                     width: 1200,
                     height: 630,
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             "name": "Al Aqsa Umrah Transport",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://alaqsaumrahtransport.com/logo.png" // Update with actual logo URL
+                "url": "https://www.alaqsaumrahtransport.com/logo.png" // Update with actual logo URL
             }
         },
         "description": post.excerpt,

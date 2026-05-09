@@ -13,8 +13,9 @@ export const viewport: Viewport = {
     themeColor: '#D4AF37', // Gold theme
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
+    // NOTE: maximumScale / userScalable intentionally omitted.
+    // Setting maximumScale=1 / user-scalable=no triggers Google's mobile
+    // usability penalty and is an accessibility violation (WCAG 1.4.4).
 };
 
 export const metadata: Metadata = {

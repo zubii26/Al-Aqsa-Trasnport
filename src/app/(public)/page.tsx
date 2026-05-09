@@ -33,7 +33,7 @@ export async function generateMetadata() {
     title: "Al Aqsa Umrah Transport – Trusted Global Umrah Travel Partner",
     description: "Al Aqsa Umrah Transport offers trusted, affordable, and safe Umrah travel services worldwide. Serving pilgrims with comfort and care with our luxury fleet.",
     alternates: {
-      canonical: 'https://alaqsaumrahtransport.com',
+      canonical: 'https://www.alaqsaumrahtransport.com',
     },
     keywords: [
       "Umrah transport services", "Umrah travel agency", "Umrah packages worldwide",
@@ -78,8 +78,8 @@ export default async function Home() {
       {
         "@type": "Organization",
         "name": "Al Aqsa Umrah Transport",
-        "url": "https://alaqsaumrahtransport.com",
-        "logo": "https://alaqsaumrahtransport.com/logo.png",
+        "url": "https://www.alaqsaumrahtransport.com",
+        "logo": "https://www.alaqsaumrahtransport.com/logo.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+966-54-549-4921",
@@ -95,10 +95,10 @@ export default async function Home() {
       {
         "@type": "WebSite",
         "name": "Al Aqsa Umrah Transport Services",
-        "url": "https://alaqsaumrahtransport.com",
+        "url": "https://www.alaqsaumrahtransport.com",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://alaqsaumrahtransport.com/search?q={search_term_string}",
+          "target": "https://www.alaqsaumrahtransport.com/search?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }

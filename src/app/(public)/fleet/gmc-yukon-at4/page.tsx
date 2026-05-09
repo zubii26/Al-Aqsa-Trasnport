@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": vehicleData?.seo?.title || "GMC Yukon XL 2024 Rental Makkah",
-    "image": "https://alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
     "brand": {
         "@type": "Brand",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         "توصيل كبار الشخصيات"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
+        canonical: 'https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
     },
     openGraph: {
         title: "GMC Yukon Rental Makkah | VIP Umrah Taxi Cost",

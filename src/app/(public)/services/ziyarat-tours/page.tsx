@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         "زيارة غار حراء"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/ziyarat-tours',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/ziyarat-tours',
     },
     openGraph: {
         title: "Ziyarat Makkah Madinah Tours | Historical Site Visits",

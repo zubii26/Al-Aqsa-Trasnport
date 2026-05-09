@@ -38,7 +38,7 @@ const jsonLd = {
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport",
-        "image": "https://alaqsaumrahtransport.com/logo.png"
+        "image": "https://www.alaqsaumrahtransport.com/logo.png"
     },
     "serviceType": "Religious Tourism Transport",
     "areaServed": ["Makkah", "Madinah", "Jeddah"],
@@ -56,19 +56,19 @@ const jsonLd = {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://alaqsaumrahtransport.com"
+                "item": "https://www.alaqsaumrahtransport.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
-                "item": "https://alaqsaumrahtransport.com/services"
+                "item": "https://www.alaqsaumrahtransport.com/services"
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": "Ramadan Transport",
-                "item": "https://alaqsaumrahtransport.com/services/ramadan-transport"
+                "item": "https://www.alaqsaumrahtransport.com/services/ramadan-transport"
             }
         ]
     }

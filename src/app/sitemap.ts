@@ -4,7 +4,7 @@ import { blogService } from '@/services/blogService';
 import pricingData from '@/data/pricing.json';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://alaqsaumrahtransport.com';
+    const baseUrl = 'https://www.alaqsaumrahtransport.com';
 
     // Static Routes
     const routes = [

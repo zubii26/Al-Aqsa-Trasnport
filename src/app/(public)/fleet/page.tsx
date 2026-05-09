@@ -21,7 +21,7 @@ export async function generateMetadata() {
             "أسطول نقل المعتمرين", "حجز جمس يوكن", "تأجير باص هيونداي"
         ],
         alternates: {
-            canonical: 'https://alaqsaumrahtransport.com/fleet',
+            canonical: 'https://www.alaqsaumrahtransport.com/fleet',
         },
     };
 }

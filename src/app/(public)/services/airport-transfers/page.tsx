@@ -17,7 +17,7 @@ export const metadata: Metadata = {
         "نقل من مطار الملك عبدالعزيز", "حجز تاكسي الحرم", "خدمات المعتمرين"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/airport-transfers',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/airport-transfers',
     },
     openGraph: {
         title: "Jeddah & Madinah Airport Transfers | Al Aqsa Transport",

@@ -21,7 +21,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": vehicleData?.seo?.title || "Hyundai H1 Starex Van Rental",
-    "image": "https://alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: vehicleData?.seo?.title,
     description: vehicleData?.seo?.description,
     keywords: vehicleData?.seo?.keywords,
-    alternates: { canonical: 'https://alaqsaumrahtransport.com/fleet/hyundai-starex' },
+    alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/hyundai-starex' },
     openGraph: {
         title: vehicleData?.seo?.title,
         description: vehicleData?.seo?.description,

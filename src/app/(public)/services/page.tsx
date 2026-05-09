@@ -26,7 +26,7 @@ export async function generateMetadata() {
             "خدمات نقل المعتمرين", "زيارات المدينة المنورة", "توصيل مطار جدة"
         ],
         alternates: {
-            canonical: 'https://alaqsaumrahtransport.com/services',
+            canonical: 'https://www.alaqsaumrahtransport.com/services',
         },
     };
 }

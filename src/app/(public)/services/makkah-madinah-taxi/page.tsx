@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         "مشوار مكة المدينة"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/makkah-madinah-taxi',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi',
     },
     openGraph: {
         title: "Taxi Makkah to Madinah Price 2025 | VIP Private Transport",
@@ -42,7 +42,7 @@ const jsonLd = {
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport",
-        "image": "https://alaqsaumrahtransport.com/logo.png"
+        "image": "https://www.alaqsaumrahtransport.com/logo.png"
     },
     "serviceType": "Intercity Transfer",
     "areaServed": {
@@ -63,19 +63,19 @@ const jsonLd = {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://alaqsaumrahtransport.com"
+                "item": "https://www.alaqsaumrahtransport.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
-                "item": "https://alaqsaumrahtransport.com/services"
+                "item": "https://www.alaqsaumrahtransport.com/services"
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": "Makkah to Madinah Taxi",
-                "item": "https://alaqsaumrahtransport.com/services/makkah-madinah-taxi"
+                "item": "https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi"
             }
         ]
     }

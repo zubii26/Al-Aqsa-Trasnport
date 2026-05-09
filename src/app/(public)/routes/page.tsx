@@ -17,7 +17,7 @@ export const metadata: Metadata = {
         "شبكة مواصلات العمرة", "نقل من جدة الى مكة"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/routes',
+        canonical: 'https://www.alaqsaumrahtransport.com/routes',
     },
     openGraph: {
         title: "Umrah Transport Routes Network | Al Aqsa Transport",
@@ -36,25 +36,25 @@ const jsonLd = {
             "@type": "ListItem",
             "position": 1,
             "name": "Jeddah Airport to Makkah",
-            "url": "https://alaqsaumrahtransport.com/services/jeddah-airport-transfer"
+            "url": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer"
         },
         {
             "@type": "ListItem",
             "position": 2,
             "name": "Makkah to Madinah",
-            "url": "https://alaqsaumrahtransport.com/services/makkah-madinah-taxi"
+            "url": "https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi"
         },
         {
             "@type": "ListItem",
             "position": 3,
             "name": "Madinah Airport Transfer",
-            "url": "https://alaqsaumrahtransport.com/services/madinah-airport-transfer"
+            "url": "https://www.alaqsaumrahtransport.com/services/madinah-airport-transfer"
         },
         {
             "@type": "ListItem",
             "position": 4,
             "name": "Makkah to Jeddah Airport",
-            "url": "https://alaqsaumrahtransport.com/services/makkah-jeddah-taxi"
+            "url": "https://www.alaqsaumrahtransport.com/services/makkah-jeddah-taxi"
         }
     ]
 };

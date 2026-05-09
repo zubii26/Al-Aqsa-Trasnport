@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         "حجز سيارة من مطار جدة"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/jeddah-airport-transfer',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer',
     },
     openGraph: {
         title: "Taxi Jeddah Airport to Makkah | Private Transfer Price",
@@ -44,7 +44,7 @@ const jsonLd = {
     "provider": {
         "@type": "LocalBusiness",
         "name": "Al Aqsa Transport",
-        "image": "https://alaqsaumrahtransport.com/logo.png"
+        "image": "https://www.alaqsaumrahtransport.com/logo.png"
     },
     "serviceType": "Airport Transfer",
     "areaServed": {
@@ -65,19 +65,19 @@ const jsonLd = {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://alaqsaumrahtransport.com"
+                "item": "https://www.alaqsaumrahtransport.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
-                "item": "https://alaqsaumrahtransport.com/services"
+                "item": "https://www.alaqsaumrahtransport.com/services"
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": "Jeddah Airport to Makkah",
-                "item": "https://alaqsaumrahtransport.com/services/jeddah-airport-transfer"
+                "item": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer"
             }
         ]
     }

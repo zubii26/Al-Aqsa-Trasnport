@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         "سعر مشوار مطار المدينة"
     ],
     alternates: {
-        canonical: 'https://alaqsaumrahtransport.com/services/madinah-airport-transfer',
+        canonical: 'https://www.alaqsaumrahtransport.com/services/madinah-airport-transfer',
     },
     openGraph: {
         title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",

@@ -29,7 +29,7 @@ export async function generateMetadata() {
         openGraph: {
             title: "About Al Aqsa Umrah Transport | Leading Pilgrim Service",
             description: "Trusted by thousands for safe and comfortable Umrah transport. From Jeddah Airport to Makkah hotels and Ziyarat tours, we travel with you.",
-            url: "https://alaqsaumrahtransport.com/about",
+            url: "https://www.alaqsaumrahtransport.com/about",
             siteName: "Al Aqsa Umrah Transport",
             images: [
                 {
@@ -42,7 +42,7 @@ export async function generateMetadata() {
             type: "website",
         },
         alternates: {
-            canonical: 'https://alaqsaumrahtransport.com/about',
+            canonical: 'https://www.alaqsaumrahtransport.com/about',
         },
     };
 }
@@ -58,11 +58,11 @@ export default async function AboutPage() {
         "@type": "AboutPage",
         "name": "About Al Aqsa Umrah Transport",
         "description": "Information about Al Aqsa Umrah Transport, a leading provider of pilgrim transport services in Saudi Arabia.",
-        "url": "https://alaqsaumrahtransport.com/about",
+        "url": "https://www.alaqsaumrahtransport.com/about",
         "mainEntity": {
             "@type": "TransportationService",
             "name": "Al Aqsa Umrah Transport",
-            "sameAs": "https://alaqsaumrahtransport.com"
+            "sameAs": "https://www.alaqsaumrahtransport.com"
         }
     };
 

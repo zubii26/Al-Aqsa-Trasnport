@@ -27,7 +27,7 @@ export async function generateMetadata() {
             "واتساب تاكسي مكة", "رقم سائق في مكة", "حجز موصلات الحرم"
         ],
         alternates: {
-            canonical: 'https://alaqsaumrahtransport.com/contact',
+            canonical: 'https://www.alaqsaumrahtransport.com/contact',
         },
         openGraph: {
             title: title,
@@ -55,9 +55,9 @@ export default async function ContactPage() {
         "@type": "TransportationService",
         "name": "Al Aqsa Umrah Transport",
         "alternateName": "الأقصى لنقل المعتمرين",
-        "image": "https://alaqsaumrahtransport.com/images/logo.png",
-        "@id": "https://alaqsaumrahtransport.com",
-        "url": "https://alaqsaumrahtransport.com",
+        "image": "https://www.alaqsaumrahtransport.com/images/logo.png",
+        "@id": "https://www.alaqsaumrahtransport.com",
+        "url": "https://www.alaqsaumrahtransport.com",
         "telephone": phone1,
         "address": {
             "@type": "PostalAddress",

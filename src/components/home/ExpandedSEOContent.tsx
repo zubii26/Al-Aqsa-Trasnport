@@ -20,8 +20,8 @@ export default function ExpandedSEOContent() {
         "@context": "https://schema.org",
         "@type": "TransportationService",
         "name": "Al Aqsa Umrah Transport Services",
-        "url": "https://alaqsaumrahtransport.com",
-        "logo": "https://alaqsaumrahtransport.com/logo.png",
+        "url": "https://www.alaqsaumrahtransport.com",
+        "logo": "https://www.alaqsaumrahtransport.com/logo.png",
         "areaServed": [
             { "@type": "City", "name": "Makkah" },
             { "@type": "City", "name": "Madinah" },
