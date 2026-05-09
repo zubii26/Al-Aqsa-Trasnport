@@ -30,8 +30,8 @@ const QuickBookingForm = dynamic(() => import('@/components/home/QuickBookingFor
 
 export async function generateMetadata() {
   return {
-    title: "Al Aqsa Umrah Transport – Trusted Global Umrah Travel Partner",
-    description: "Al Aqsa Umrah Transport offers trusted, affordable, and safe Umrah travel services worldwide. Serving pilgrims with comfort and care with our luxury fleet.",
+    title: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport",
+    description: "Book reliable Jeddah Airport to Makkah taxi services. We offer VIP, safe, and affordable 24/7 pilgrim travel across Saudi Arabia with our luxury fleet.",
     alternates: {
       canonical: 'https://www.alaqsaumrahtransport.com',
     },
@@ -42,8 +42,8 @@ export async function generateMetadata() {
       "Taxi Jeddah Airport to Makkah", "GMC Yukon Makkah"
     ],
     openGraph: {
-      title: "Al Aqsa Umrah Transport – Trusted Global Umrah Travel Partner",
-      description: "Al Aqsa Umrah Transport offers trusted, affordable, and safe Umrah travel services worldwide. Serving pilgrims with comfort and care.",
+      title: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport",
+      description: "Book reliable Jeddah Airport to Makkah taxi services. We offer VIP, safe, and affordable 24/7 pilgrim travel across Saudi Arabia with our luxury fleet.",
     }
   };
 }
@@ -72,38 +72,120 @@ export default async function Home() {
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Now / احجز الآن";
   const ctaLink = "/booking";
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "name": "Al Aqsa Umrah Transport",
-        "url": "https://www.alaqsaumrahtransport.com",
-        "logo": "https://www.alaqsaumrahtransport.com/logo.png",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+966-54-549-4921",
-          "contactType": "customer service",
-          "areaServed": "SA",
-          "availableLanguage": ["en", "ar"]
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Al Aqsa Umrah Transport",
+          "url": "https://www.alaqsaumrahtransport.com",
+          "logo": "https://www.alaqsaumrahtransport.com/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+966-54-549-4921",
+            "contactType": "customer service",
+            "areaServed": "SA",
+            "availableLanguage": ["en", "ar"]
+          },
+          "sameAs": [
+            "https://www.facebook.com/alaqsaumrahtransport",
+            "https://www.instagram.com/alaqsaumrahtransport"
+          ]
         },
-        "sameAs": [
-          "https://www.facebook.com/alaqsaumrahtransport",
-          "https://www.instagram.com/alaqsaumrahtransport"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "name": "Al Aqsa Umrah Transport Services",
-        "url": "https://www.alaqsaumrahtransport.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://www.alaqsaumrahtransport.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
+        {
+          "@type": "WebSite",
+          "name": "Al Aqsa Umrah Transport Services",
+          "url": "https://www.alaqsaumrahtransport.com",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.alaqsaumrahtransport.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
         }
-      }
-    ]
-  };
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "TaxiService",
+      "name": "Al Aqsa Umrah Transport",
+      "url": "https://www.alaqsaumrahtransport.com",
+      "telephone": "+966548707332",
+      "email": "alaqsaumrahtransport@gmail.com",
+      "description": "Private Umrah taxi in Saudi Arabia. Jeddah Airport to Makkah, Makkah to Madinah, Ziyarat tours. GMC Yukon, Hiace, Staria fleet. 24/7 service.",
+      "areaServed": [
+        { "@type": "City", "name": "Makkah" },
+        { "@type": "City", "name": "Madinah" },
+        { "@type": "City", "name": "Jeddah" }
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Makkah",
+        "addressRegion": "Makkah Province",
+        "addressCountry": "SA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 21.3891,
+        "longitude": 39.8579
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "priceRange": "SAR 200–1100",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "87",
+        "bestRating": "5"
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61586281396171",
+        "https://www.instagram.com/al_aqsa_umrah_transport"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much is a taxi from Jeddah Airport to Makkah?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A private taxi from Jeddah Airport (KAIA) to Makkah starts from SAR 200 for a Toyota Camry (4 passengers) and SAR 500 for a GMC Yukon XL (7 passengers). All prices are fixed with no hidden fees. Pay on arrival."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does the journey from Makkah to Madinah take by taxi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The journey from Makkah to Madinah is approximately 450km and takes 4 to 4.5 hours. We can stop at the Miqat (Bir Ali) for Ihram at no extra charge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer Ziyarat tours in Makkah and Madinah?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Private Ziyarat tours in Makkah (Jabal Al-Nour, Arafat, Jannat al-Mu'alla) and Madinah (Masjid Quba, Mount Uhud). Tours start from SAR 400 per vehicle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is transport available for elderly or wheelchair users?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Drivers are trained to assist elderly pilgrims. GMC Yukon XL and Hyundai Staria provide the most comfortable seating with easy boarding for elderly and mobility-impaired passengers."
+          }
+        }
+      ]
+    }
+  ];
 
   return (
     <main className="overflow-x-hidden">

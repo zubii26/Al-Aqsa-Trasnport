@@ -34,57 +34,11 @@ export const metadata: Metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Makkah to Madinah Taxi Service",
-    "alternateName": "تاكسي مكة المدينة",
-    "provider": {
-        "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport",
-        "image": "https://www.alaqsaumrahtransport.com/logo.png"
-    },
-    "serviceType": "Intercity Transfer",
-    "areaServed": {
-        "@type": "Country",
-        "name": "Saudi Arabia"
-    },
-    "description": "Premium private transport between Makkah and Madinah in GMC Yukon or Staria.",
-    "offers": {
-        "@type": "Offer",
-        "price": "400",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock"
-    },
-    "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://www.alaqsaumrahtransport.com"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Services",
-                "item": "https://www.alaqsaumrahtransport.com/services"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Makkah to Madinah Taxi",
-                "item": "https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi"
-            }
-        ]
-    }
-};
-
 const makkahMadinahFAQs = [
     {
         question: "How long is the journey from Makkah to Madinah?",
-        answer: <span>The distance is approximately 450 km. By private taxi (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/<Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Staria</Link>), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah.</span>
+        answer: <span>The distance is approximately 450 km. By private taxi (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/<Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Staria</Link>), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah.</span>,
+        plainTextAnswer: "The distance is approximately 450 km. By private taxi (GMC/Staria), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah."
     },
     {
         question: "What is the price of a taxi from Makkah to Madinah?",
@@ -92,7 +46,8 @@ const makkahMadinahFAQs = [
     },
     {
         question: "Do you offer transport from Jeddah Airport to Makkah?",
-        answer: <span>Yes, we specialize in <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport transfers</Link>. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram.</span>
+        answer: <span>Yes, we specialize in <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport transfers</Link>. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram.</span>,
+        plainTextAnswer: "Yes, we specialize in Jeddah Airport transfers. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram."
     },
     {
         question: "Is it better than the Haramain Train?",
@@ -101,6 +56,44 @@ const makkahMadinahFAQs = [
     {
         question: "Can we stop for Ziyarat on the way?",
         answer: "Yes! Unlike buses or trains, a private taxi allows for flexibility. We can stop at historical sites like Badr or key Ziyarat spots within Madinah upon arrival (additional charges may apply depending on time)."
+    }
+];
+
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Makkah to Madinah Taxi Service",
+        "alternateName": "تاكسي مكة المدينة",
+        "provider": {
+            "@type": "LocalBusiness",
+            "name": "Al Aqsa Transport",
+            "image": "https://www.alaqsaumrahtransport.com/logo.png"
+        },
+        "serviceType": "Intercity Transfer",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Saudi Arabia"
+        },
+        "description": "Premium private transport between Makkah and Madinah in GMC Yukon or Staria.",
+        "offers": {
+            "@type": "Offer",
+            "price": "400",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock"
+        }
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": makkahMadinahFAQs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.plainTextAnswer || faq.answer
+            }
+        }))
     }
 ];
 

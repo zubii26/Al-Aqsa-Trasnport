@@ -10,8 +10,8 @@ import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 
 export const metadata: Metadata = {
-    title: "Ramadan 2026 Umrah Transport Services | Makkah & Madinah Taxi",
-    description: "Book reliable Ramadan transport in Makkah & Madinah. Avoid the rush with VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",
+    title: "Ramadan 2026 Umrah Transport | Makkah Taxi",
+    description: "Book reliable Ramadan 2026 transport in Makkah & Madinah. VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",
     keywords: [
         "Ramadan Umrah Transport",
         "Makkah Taxi Ramadan 2026",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
         "تاكسي الحرم رمضان"
     ],
     openGraph: {
-        title: "Ramadan 2026 Umrah Transport | VIP Makkah Services",
-        description: "Experience spiritual peace with our stress-free Ramadan transport services. Reliable transfers during rush hours.",
+        title: "Ramadan 2026 Umrah Transport | Makkah Taxi",
+        description: "Book reliable Ramadan 2026 transport in Makkah & Madinah. VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",
         images: [{ url: '/images/hero/masjid-nabawi-dusk.jpg', width: 1200, height: 630, alt: 'Ramadan Umrah Services' }]
     }
 };

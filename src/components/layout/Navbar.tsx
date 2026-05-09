@@ -95,9 +95,9 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`relative lg:sticky lg:top-0 left-0 right-0 z-50 transition-all duration-300 ${mounted && scrolled
-                ? 'glass py-2 lg:py-3'
-                : 'bg-white/75 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/10 py-4 lg:py-6 2xl:py-8'
+            className={`relative lg:sticky lg:top-0 left-0 right-0 z-50 transition-all duration-500 ${mounted && scrolled
+                ? 'glass py-2 lg:py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)]'
+                : 'bg-white/50 dark:bg-black/20 backdrop-blur-xl border-b border-white/20 dark:border-white/10 py-4 lg:py-6 2xl:py-8 shadow-sm'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
@@ -142,7 +142,7 @@ export default function Navbar() {
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`relative text-sm transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold' : ((mounted && scrolled) ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90')
+                                    className={`relative text-sm transition-all duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : ((mounted && scrolled) ? 'text-foreground/80 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : 'text-foreground/90 dark:text-white/90 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]')
                                         }`}
                                 >
                                     {link.label}
@@ -182,7 +182,7 @@ export default function Navbar() {
                         href="/booking"
                         variant="secondary"
                         size="md"
-                        className="font-bold shadow-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
+                        className="font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] !bg-gradient-to-r !from-[#D4AF37] !to-[#B49126] !text-[#0A1F44] !border-none transition-all duration-300 hover:scale-105"
                     >
                         Book Now
                     </GlassButton>

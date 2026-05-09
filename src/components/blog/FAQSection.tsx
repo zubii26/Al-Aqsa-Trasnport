@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 import styles from './FAQSection.module.css';
 import FadeIn from '@/components/common/FadeIn';
 
-const faqs = [
+export const faqs = [
     {
         question: "How to book a taxi for Umrah in Saudi Arabia?",
         answer: "Booking is simple with Al Aqsa Umrah Transport. You can book online through our website for instant confirmation. We offer reliable Umrah Taxi Services from Jeddah Airport, Makkah, and Madinah with 24/7 support."

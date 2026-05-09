@@ -18,28 +18,24 @@ import pricingData from '@/data/pricing.json';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'gmc');
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": vehicleData?.seo?.title || "GMC Yukon XL 2024 Rental Makkah",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
-    "description": vehicleData?.seo?.description || "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
-    "brand": {
-        "@type": "Brand",
-        "name": "GMC"
+const gmcFAQs = [
+    {
+        question: "How many passengers can fit in the GMC Yukon?",
+        answer: "The GMC Yukon XL comfortably seats up to 7 passengers (including children). However, for maximum comfort with luggage, we recommend it for 4-5 adults + 5 large suitcases."
     },
-    "offers": {
-        "@type": "Offer",
-        "price": "600",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2025-12-31"
-    }
-};
+    {
+        question: "Is the GMC Yukon suitable for Makkah to Madinah travel?",
+        answer: "Absolutely. It is the most popular choice for the 4.5-hour journey between Holy Cities. With its premium suspension, leather seats, and dual AC, it ensures a fatigue-free journey for pilgrims."
+    },
+    {
+        question: "What is the price for GMC Yukon from Jeddah Airport to Makkah?",
+        answer: "Our rates are competitive for VIP service. Please use the booking grid to get an instant quote or contact us via WhatsApp for the best seasonal offers."
+    },
+];
 
 export const metadata: Metadata = {
-    title: "GMC Yukon Rental Makkah | VIP Umrah Taxi Cost",
-    description: "Book new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel. VIP private chauffeur.",
+    title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",
+    description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel with VIP private chauffeur.",
     keywords: [
         "GMC Yukon Rental Makkah",
         "GMC Yukon XL Saudi Arabia",
@@ -54,25 +50,43 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4',
     },
     openGraph: {
-        title: "GMC Yukon Rental Makkah | VIP Umrah Taxi Cost",
-        description: "Book new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel. VIP private chauffeur.",
+        title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",
+        description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel with VIP private chauffeur.",
         images: [{ url: '/images/fleet/gmc-yukon-hero-professional.png', width: 1200, height: 630, alt: 'GMC Yukon XL VIP Transport' }]
     }
 };
 
-const gmcFAQs = [
+const jsonLd = [
     {
-        question: "How many passengers can fit in the GMC Yukon?",
-        answer: "The GMC Yukon XL comfortably seats up to 7 passengers (including children). However, for maximum comfort with luggage, we recommend it for 4-5 adults + 5 large suitcases."
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": vehicleData?.seo?.title || "GMC Yukon XL 2024 Rental Makkah",
+        "image": "https://www.alaqsaumrahtransport.com/images/fleet/gmc-yukon-hero-professional.png",
+        "description": vehicleData?.seo?.description || "Rent luxury GMC Yukon XL in Makkah & Madinah. 7 Seater SUV for VIP Umrah transport.",
+        "brand": {
+            "@type": "Brand",
+            "name": "GMC"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "600",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock",
+            "priceValidUntil": "2025-12-31"
+        }
     },
     {
-        question: "Is the GMC Yukon suitable for Makkah to Madinah travel?",
-        answer: "Absolutely. It is the most popular choice for the 4.5-hour journey between Holy Cities. With its premium suspension, leather seats, and dual AC, it ensures a fatigue-free journey for pilgrims."
-    },
-    {
-        question: "What is the price for GMC Yukon from Jeddah Airport to Makkah?",
-        answer: "Our rates are competitive for VIP service. Please use the booking grid to get an instant quote or contact us via WhatsApp for the best seasonal offers."
-    },
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": gmcFAQs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    }
 ];
 
 export default async function GmcYukonPage() {

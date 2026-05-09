@@ -36,53 +36,6 @@ export const metadata: Metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Jeddah Airport to Makkah Transfer",
-    "alternateName": "توصيل من مطار جدة الى مكة",
-    "provider": {
-        "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport",
-        "image": "https://www.alaqsaumrahtransport.com/logo.png"
-    },
-    "serviceType": "Airport Transfer",
-    "areaServed": {
-        "@type": "Airport",
-        "name": "King Abdulaziz International Airport (JED)"
-    },
-    "description": "Private VIP transfer from Jeddah Airport to Makkah hotels. 24/7 Meet & Greet. خدمة توصيل vip من المطار.",
-    "offers": {
-        "@type": "Offer",
-        "price": "200",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock"
-    },
-    "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://www.alaqsaumrahtransport.com"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Services",
-                "item": "https://www.alaqsaumrahtransport.com/services"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Jeddah Airport to Makkah",
-                "item": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer"
-            }
-        ]
-    }
-};
-
 const jeddahAirportFAQs = [
     {
         question: "Where will the driver meet me?",
@@ -99,6 +52,38 @@ const jeddahAirportFAQs = [
     {
         question: "Can I pay in cash?",
         answer: "Yes, you can pay the driver in cash (SAR) upon arrival. However, we recommend booking online to secure your rate and vehicle."
+    }
+];
+
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Jeddah Airport to Makkah Private Transfer",
+        "serviceType": "Airport Transfer",
+        "provider": {
+            "@type": "LocalBusiness",
+            "name": "Al Aqsa Umrah Transport",
+            "telephone": "+966548707332"
+        },
+        "areaServed": { "@type": "City", "name": "Makkah" },
+        "offers": [
+            { "@type": "Offer", "name": "Toyota Camry (4 pax)", "price": "200", "priceCurrency": "SAR" },
+            { "@type": "Offer", "name": "GMC Yukon XL (7 pax)", "price": "500", "priceCurrency": "SAR" },
+            { "@type": "Offer", "name": "Toyota Hiace (10 pax)", "price": "350", "priceCurrency": "SAR" }
+        ]
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": jeddahAirportFAQs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
     }
 ];
 

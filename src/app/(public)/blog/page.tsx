@@ -9,11 +9,12 @@ import TravelTips from '@/components/blog/TravelTips';
 import FAQSection from '@/components/blog/FAQSection';
 import NewsletterSignup from '@/components/blog/NewsletterSignup';
 import { blogService } from '@/services/blogService';
+import { faqs } from '@/components/blog/FAQSection';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Umrah Travel Blog | Tips & Guides | مدونة العمرة',
-    description: 'Read our latest articles on Umrah travel tips, transport advice, and spiritual guides. نصائح وارشادات للمعتمرين. دليل المواصلات في مكة والمدينة.',
+    title: "Umrah Travel Blog | Tips, Guides & Transport Advice",
+    description: "Read our latest articles on Umrah travel tips, transport advice, and spiritual guides. Expert advice for your Makkah and Madinah journey.",
     alternates: {
         canonical: 'https://www.alaqsaumrahtransport.com/blog',
     },
@@ -50,8 +51,25 @@ export default async function BlogPage() {
     const featuredPost = posts[0];
 
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    };
+
     return (
         <main>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Hero
                 title="Pilgrim Resources & Insights"
                 subtitle="Expert guides, travel tips, and answers to your questions for a blessed and hassle-free Umrah journey."

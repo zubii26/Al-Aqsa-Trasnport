@@ -33,35 +33,6 @@ export const metadata: Metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "TouristTrip",
-    "name": "Makkah and Madinah Ziyarat Tour",
-    "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
-    "provider": {
-        "@type": "TransportationService",
-        "name": "Al Aqsa Transport"
-    },
-    "itinerary": [
-        {
-            "@type": "City",
-            "name": "Makkah",
-            "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat. زيارة جبل النور وغار ثور."
-        },
-        {
-            "@type": "City",
-            "name": "Madinah",
-            "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn. زيارة مسجد قباء وجبل أحد."
-        }
-    ],
-    "offers": {
-        "@type": "Offer",
-        "price": "300",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock"
-    }
-};
-
 const ziyaratFAQs = [
     {
         question: "How long is a typical Ziyarat tour?",
@@ -75,6 +46,49 @@ const ziyaratFAQs = [
         question: "Can we customize the places we visit?",
         answer: "Absolutely. It is a private tour. You can choose which sites to visit and how long to stay at each. We are here to serve your schedule."
     },
+];
+
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "TouristTrip",
+        "name": "Makkah and Madinah Ziyarat Tour",
+        "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
+        "provider": {
+            "@type": "TransportationService",
+            "name": "Al Aqsa Transport"
+        },
+        "itinerary": [
+            {
+                "@type": "City",
+                "name": "Makkah",
+                "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat. زيارة جبل النور وغار ثور."
+            },
+            {
+                "@type": "City",
+                "name": "Madinah",
+                "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn. زيارة مسجد قباء وجبل أحد."
+            }
+        ],
+        "offers": {
+            "@type": "Offer",
+            "price": "300",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock"
+        }
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": ziyaratFAQs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    }
 ];
 
 export default async function ZiyaratToursPage() {

@@ -100,8 +100,7 @@ export default async function RootLayout({
           <SettingsProvider initialSettings={settings}>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
-              enableSystem
+              defaultTheme="light"
               disableTransitionOnChange
             >
               <PricingProvider>
