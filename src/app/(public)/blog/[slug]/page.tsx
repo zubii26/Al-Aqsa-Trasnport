@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
 import { blogService } from '@/services/blogService';
+import { staticBlogPosts } from '@/data/blog-posts';
 import FadeIn from '@/components/common/FadeIn';
 import GlassCard from '@/components/ui/GlassCard';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
@@ -16,18 +17,25 @@ interface BlogPostPageProps {
     }>;
 }
 
-// Generate static params for all blog posts
+// ✅ Only pre-render known static posts at build time — zero DB calls.
+// DB-only posts (e.g. created via admin) will be served on-demand thanks to dynamicParams = true.
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-    const posts = await blogService.getPosts();
-    return posts.map((post) => ({
-        slug: post.id,
-    }));
+    return staticBlogPosts.map((post) => ({ slug: post.slug }));
+}
+
+// ✅ Checks static data first (no DB), falls back to DB only at runtime for dynamic slugs.
+async function getPost(slug: string) {
+    const staticPost = staticBlogPosts.find((p) => p.slug === slug);
+    if (staticPost) return { ...staticPost, id: staticPost.slug };
+    return blogService.getPostBySlug(slug);
 }
 
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
     const { slug } = await params;
-    const post = await blogService.getPostBySlug(slug);
+    const post = await getPost(slug);
 
     if (!post) {
         return {
@@ -68,7 +76,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { slug } = await params;
-    const post = await blogService.getPostBySlug(slug);
+    const post = await getPost(slug);
 
     if (!post) {
         notFound();
@@ -97,11 +105,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         "articleBody": post.content.replace(/<[^>]*>?/gm, '') // Strip HTML for plain text body
     };
 
-    // Find related posts (exclude current post, limit to 3)
-    const allPosts = await blogService.getPosts();
-    const relatedPosts = allPosts
-        .filter((p) => p.id !== slug)
-        .slice(0, 3);
+    // ✅ Use static posts only for related articles — no DB call during build.
+    const relatedPosts = staticBlogPosts
+        .filter((p) => p.slug !== slug)
+        .slice(0, 3)
+        .map(p => ({ ...p, id: p.slug }));
 
     return (
         <main>

@@ -1,5 +1,5 @@
+export const dynamic = 'force-dynamic';
 
-import dynamic from 'next/dynamic';
 import dbConnect from '@/lib/mongodb';
 import { Booking } from '@/models';
 import { requireRole } from '@/lib/server-auth';

@@ -8,8 +8,8 @@ import RespectSection from '@/components/blog/RespectSection';
 import TravelTips from '@/components/blog/TravelTips';
 import FAQSection from '@/components/blog/FAQSection';
 import NewsletterSignup from '@/components/blog/NewsletterSignup';
-import { blogService } from '@/services/blogService';
-import { faqs } from '@/components/blog/FAQSection';
+import { staticBlogPosts } from '@/data/blog-posts';
+import { blogFaqs as faqs } from '@/data/blog-faqs';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -23,7 +23,8 @@ export const metadata: Metadata = {
 const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Safety', 'Accessibility', 'Experience', 'Value', 'Spiritual', 'News', 'FAQ'];
 
 export default async function BlogPage() {
-    const dbPosts = await blogService.getPosts();
+    // ✅ Use static posts for build stability.
+    const dbPosts = staticBlogPosts;
 
     // Map to match component interface (convert Date to string) and ensure serializable data
     const posts = dbPosts.map((post: any) => ({

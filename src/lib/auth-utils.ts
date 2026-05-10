@@ -1,7 +1,9 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-// ✅ Fail fast at runtime if the JWT secret is missing.
-// Never fall back to a hardcoded string — that would allow token forgery.
+// ✅ Deferred secret key access — do NOT throw at module-evaluation time.
+// Next.js static generation workers evaluate all imported modules during build,
+// and a top-level throw here crashes the entire build even for routes that never
+// use JWT. The secret is only required at runtime (during an actual HTTP request).
 function getSecretKey() {
     const SECRET_KEY = process.env.JWT_SECRET_KEY;
     if (!SECRET_KEY) {
@@ -16,18 +18,16 @@ function getSecretKey() {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function signToken(payload: any, expiresIn: string = '24h') {
-    const key = getSecretKey();
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime(expiresIn) // Default: 24-hour admin sessions
-        .sign(key);
+        .setExpirationTime(expiresIn)
+        .sign(getSecretKey());
 }
 
 export async function verifyToken(token: string) {
     try {
-        const key = getSecretKey();
-        const { payload } = await jwtVerify(token, key);
+        const { payload } = await jwtVerify(token, getSecretKey());
         return payload;
     } catch {
         return null;

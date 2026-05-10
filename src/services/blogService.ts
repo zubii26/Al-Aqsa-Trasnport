@@ -35,6 +35,13 @@ export const blogService = {
     },
 
     async getPostBySlug(slug: string) {
+        // ✅ Check static posts FIRST — zero DB calls for known static slugs.
+        const staticPost = staticBlogPosts.find(p => p.slug === slug);
+        if (staticPost) {
+            return { ...staticPost, id: staticPost.slug };
+        }
+
+        // Fall back to DB only for slugs that aren't in the static data (e.g. admin-created posts).
         await dbConnect();
         const post = await BlogPost.findOne({ slug }).lean();
 
@@ -45,15 +52,6 @@ export const blogService = {
                 date: post.date,
                 createdAt: post.createdAt,
                 updatedAt: post.updatedAt,
-            };
-        }
-
-        // Check static posts if not found in DB
-        const staticPost = staticBlogPosts.find(p => p.slug === slug);
-        if (staticPost) {
-            return {
-                ...staticPost,
-                id: staticPost.slug,
             };
         }
 

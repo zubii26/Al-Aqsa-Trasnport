@@ -1,0 +1,65 @@
+﻿
+> transport@0.1.0 build
+> next build
+
+npm : [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, 
+please update: `npm i baseline-browser-mapping@latest -D`
+At line:1 char:1
++ npm run build 2>&1 | Out-File -Encoding UTF8 build_full.log; Get-Cont ...
++ ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([baseline-brows...ping@latest -D`:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local, .env
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: 
+https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ Compiled successfully in 21.0s
+   Running TypeScript ...
+   Collecting page data using 7 workers ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please 
+update: `npm i baseline-browser-mapping@latest -D`
+[dbConnect] Connecting to MongoDB Atlas cluster...
+[dbConnect] Initial connection error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.aheobsa.mongodb.net
+
+======================================================
+>> DIAGNOSTIC: MongooseServerSelectionError / ECONNREFUSED
+>> This usually indicates that your current IP address is NOT whitelisted.
+>> Please go to MongoDB Atlas -> Network Access -> Add your current IP Address.
+======================================================
+
+[dbConnect] Database connection failed: querySrv ECONNREFUSED _mongodb._tcp.cluster0.aheobsa.mongodb.net
+Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.aheobsa.mongodb.net
+    at ignore-listed frames {
+  errno: undefined,
+  code: 'ECONNREFUSED',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.cluster0.aheobsa.mongodb.net'
+}
+
+> Build error occurred
+Error: Failed to collect page data for /blog/[slug]
+    at ignore-listed frames {
+  type: 'Error'
+}

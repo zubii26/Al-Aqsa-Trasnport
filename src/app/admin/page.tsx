@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getBookings, getFleet, getDashboardStats } from '@/lib/db';
 import { getLogs } from '@/lib/logger';
 import { routeService } from '@/services/routeService';
