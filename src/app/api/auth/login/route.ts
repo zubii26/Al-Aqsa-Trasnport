@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { rateLimit, authLimiter } from '@/lib/rate-limit';
 import { logAction } from '@/lib/logger';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
     // ─── Rate Limiting ──────────────────────────────────────────────────────
     const ip =

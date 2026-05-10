@@ -5,6 +5,8 @@ import { User } from '@/models';
 import { verifyToken } from '@/lib/auth-utils';
 import { verifyPassword } from '@/lib/password-utils';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
     try {
         const cookieStore = await cookies();

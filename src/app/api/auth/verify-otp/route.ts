@@ -4,6 +4,8 @@ import { otpStore } from '@/lib/otp';
 import { rateLimit, authLimiter } from '@/lib/rate-limit';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const VerifyOtpSchema = z.object({
     username: z.string().min(1).max(254).trim(),
     otp: z.string().length(6).trim(), // Assuming 6-digit OTP

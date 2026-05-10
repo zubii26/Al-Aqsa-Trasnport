@@ -2,9 +2,6 @@ import dbConnect from '@/lib/mongodb';
 import { Booking, Vehicle, IBooking, IVehicle, Route } from '@/models';
 import { unstable_cache, revalidateTag } from 'next/cache';
 
-// Ensure connection is established
-dbConnect();
-
 export type { IBooking as Booking, IVehicle as Vehicle };
 
 // --- Booking Functions ---

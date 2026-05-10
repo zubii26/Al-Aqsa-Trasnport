@@ -1,21 +1,22 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-// ✅ Fail fast at startup if the JWT secret is missing.
+// ✅ Fail fast at runtime if the JWT secret is missing.
 // Never fall back to a hardcoded string — that would allow token forgery.
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
-
-if (!SECRET_KEY) {
-    throw new Error(
-        '[auth-utils] JWT_SECRET_KEY is not set. ' +
-        'Add it to your .env.local (development) or hosting environment variables (production). ' +
-        'It must be a random string of at least 32 characters.'
-    );
+function getSecretKey() {
+    const SECRET_KEY = process.env.JWT_SECRET_KEY;
+    if (!SECRET_KEY) {
+        throw new Error(
+            '[auth-utils] JWT_SECRET_KEY is not set. ' +
+            'Add it to your .env.local (development) or hosting environment variables (production). ' +
+            'It must be a random string of at least 32 characters.'
+        );
+    }
+    return new TextEncoder().encode(SECRET_KEY);
 }
-
-const key = new TextEncoder().encode(SECRET_KEY);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function signToken(payload: any, expiresIn: string = '24h') {
+    const key = getSecretKey();
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -25,6 +26,7 @@ export async function signToken(payload: any, expiresIn: string = '24h') {
 
 export async function verifyToken(token: string) {
     try {
+        const key = getSecretKey();
         const { payload } = await jwtVerify(token, key);
         return payload;
     } catch {
