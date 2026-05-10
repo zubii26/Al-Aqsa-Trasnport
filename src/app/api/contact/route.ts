@@ -1,8 +1,27 @@
 import { NextResponse } from 'next/server';
 import { sendEmail, getContactFeedbackTemplate } from '@/lib/email';
 import { ContactSchema } from '@/lib/validations';
+import { rateLimit, formLimiter } from '@/lib/rate-limit';
 
 export async function POST(request: Request) {
+    // ─── Rate Limiting ──────────────────────────────────────────────────────
+    const ip =
+        request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+        request.headers.get('x-real-ip') ||
+        'unknown';
+
+    const limiter = rateLimit(ip, formLimiter);
+
+    if (!limiter.success) {
+        return NextResponse.json(
+            { success: false, message: 'Too many messages sent. Please try again later.' },
+            {
+                status: 429,
+                headers: { 'Retry-After': String(limiter.retryAfter) },
+            }
+        );
+    }
+
     try {
         const body = await request.json();
 
@@ -41,7 +60,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ success: true, emailSent });
     } catch (error) {
-        console.error('Contact form error:', error);
+        console.error('[api/contact] Contact form error:', error);
         return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }

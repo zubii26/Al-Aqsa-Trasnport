@@ -21,7 +21,7 @@ export async function validateRequest(): Promise<IUser | null> {
         await dbConnect();
         const user = await User.findById(payload.userId).lean();
 
-        if (!user) {
+        if (!user || user.isActive === false) {
             return null;
         }
 

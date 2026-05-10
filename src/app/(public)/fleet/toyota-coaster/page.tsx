@@ -24,7 +24,8 @@ const jsonLd = {
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent Toyota Coaster minibus in Makkah. Comfortable 21-seater transport for large Umrah groups.",
     "brand": { "@type": "Brand", "name": "Toyota" },
-    "offers": { "@type": "Offer", "price": "550", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+    "offers": { "@type": "Offer", "price": "550", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {

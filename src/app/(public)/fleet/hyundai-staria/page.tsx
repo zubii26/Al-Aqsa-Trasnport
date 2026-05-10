@@ -25,7 +25,8 @@ const jsonLd = {
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/staria-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent premium Hyundai Staria 2024 in Makkah. Luxury 7-seater van with panoramic views for VIP families.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
-    "offers": { "@type": "Offer", "price": "450", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+    "offers": { "@type": "Offer", "price": "450", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {

@@ -24,7 +24,8 @@ const jsonLd = {
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/hiace-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent Toyota Hiace bus in Makkah. Reliable 12-seater transport for Umrah groups and large families.",
     "brand": { "@type": "Brand", "name": "Toyota" },
-    "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+    "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {

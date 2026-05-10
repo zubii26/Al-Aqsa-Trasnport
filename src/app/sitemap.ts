@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { MetadataRoute } from 'next';
 import { blogService } from '@/services/blogService';
 import pricingData from '@/data/pricing.json';

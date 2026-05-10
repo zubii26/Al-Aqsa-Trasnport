@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
     manifest: '/manifest.json',
     title: {
-        default: "Umrah Transport Services Saudi Arabia | Jeddah to Makkah Taxi",
+        default: "Nusuk Registered Umrah Transport Services | Jeddah to Makkah Taxi",
         template: `%s | Al Aqsa Umrah Transport`
     },
     appleWebApp: {

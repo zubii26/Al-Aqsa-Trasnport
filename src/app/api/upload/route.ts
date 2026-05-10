@@ -1,8 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import cloudinary from '@/lib/cloudinary';
 import { validateRequest } from '@/lib/server-auth';
+import { rateLimit, uploadLimiter } from '@/lib/rate-limit';
+
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest) {
+    // ─── Rate Limiting ──────────────────────────────────────────────────────
+    const ip =
+        request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+        request.headers.get('x-real-ip') ||
+        'unknown';
+
+    const limiter = rateLimit(ip, uploadLimiter);
+
+    if (!limiter.success) {
+        return NextResponse.json(
+            { error: 'Too many upload requests. Please try again later.' },
+            {
+                status: 429,
+                headers: { 'Retry-After': String(limiter.retryAfter) },
+            }
+        );
+    }
+
     const user = await validateRequest();
     if (!user || (user.role !== 'admin' && !user.role.toLowerCase().includes('manager'))) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -56,6 +78,14 @@ export async function POST(request: NextRequest) {
         const file = formData.get('file') as File;
 
         if (!file) return NextResponse.json({ error: 'No file received' }, { status: 400 });
+
+        if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+            return NextResponse.json({ error: 'Invalid file type. Only JPG, PNG, and WebP are allowed.' }, { status: 400 });
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            return NextResponse.json({ error: 'File too large. Maximum size is 5MB.' }, { status: 400 });
+        }
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);

@@ -11,6 +11,11 @@ import { calculateFinalPrice } from '@/lib/pricing';
 
 export async function GET() {
     try {
+        const user = await validateRequest();
+        if (!user || (user.role !== 'admin' && user.role !== 'manager' && user.role !== 'operational_manager')) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const bookings = await getBookings();
         return NextResponse.json(bookings);
     } catch (error) {
@@ -19,7 +24,27 @@ export async function GET() {
     }
 }
 
+import { rateLimit, bookingLimiter } from '@/lib/rate-limit';
+
 export async function POST(request: Request) {
+
+    // ─── Rate Limiting ──────────────────────────────────────────────────────
+    const ip =
+        request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+        request.headers.get('x-real-ip') ||
+        'unknown';
+
+    const limiter = rateLimit(ip, bookingLimiter);
+
+    if (!limiter.success) {
+        return NextResponse.json(
+            { success: false, message: 'Too many booking requests. Please try again later.' },
+            {
+                status: 429,
+                headers: { 'Retry-After': String(limiter.retryAfter) },
+            }
+        );
+    }
 
     try {
         console.log('[Booking API] Received new booking request');

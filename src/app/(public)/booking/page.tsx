@@ -12,6 +12,7 @@ import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
+import NusukBadge from '@/components/common/NusukBadge';
 
 const splitRouteName = (name: string): [string, string] => {
     if (!name) return ['', ''];
@@ -472,7 +473,8 @@ export default function BookingPage() {
                 >
                     <div className="mb-8 text-center md:text-left">
                         <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Begin Your Journey</h2>
-                        <p className="text-slate-500 text-xl font-light">Experience premium transport with our gold-standard service.</p>
+                        <p className="text-slate-500 text-xl font-light mb-4">Experience premium transport with our gold-standard service.</p>
+                        <NusukBadge variant="gold" />
                     </div>
 
                     <div className="max-w-xl mx-auto md:mx-0 glass-card p-6 md:p-10 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-2xl relative">

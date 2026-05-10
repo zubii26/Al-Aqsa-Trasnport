@@ -1,14 +1,14 @@
 import React from 'react';
-import { Shield, Sparkles, UserCheck, CheckCircle, Clock, Search, Heart, AlertTriangle, Phone, Activity, Wrench, FileCheck, Award } from 'lucide-react';
+import { Shield, Sparkles, UserCheck, CheckCircle, Clock, Search, Heart, AlertTriangle, Phone, Activity, Wrench, FileCheck, Award, MapPin } from 'lucide-react';
 import Hero from '@/components/common/Hero';
 import Link from 'next/link';
 import FadeIn from '@/components/common/FadeIn';
 
 export const metadata = {
-    title: "Safety Standards & Protocols | Al Aqsa Transport | معايير السلامة",
-    description: "Your safety is our sacred duty. Comprehensive vehicle sanitation, driver checks, & 24/7 support. معايير سلامة عالية لخدمة المعتمرين. تعقيم شامل وسائقين محترفين.",
+    title: "Safety Standards & Nusuk Registered Cabs | Al Aqsa Transport | معايير السلامة",
+    description: "Book a government-verified, Nusuk Registered cab. Comprehensive vehicle sanitation, driver checks, & 24/7 support for a safe Umrah.",
     keywords: [
-        "Umrah safety", "safe taxi Makkah", "sanitized transport Saudi",
+        "Nusuk Registered Cab", "Umrah safety", "safe taxi Makkah", "sanitized transport Saudi",
         "female solo travel Umrah", "licensed drivers Jeddah", "family transport safety",
         "معايير السلامة", "نقل معتمرين آمن", "تاكسي عائلي مكة",
         "أمان المعتمرين", "توصيل آمن للنساء", "سائقين مرخصين"
@@ -64,6 +64,50 @@ export default function SafetyPage() {
                         At Al Aqsa Umrah Transport, we understand that strict safety measures are essential for you to focus on your Ibadah.
                         We go beyond the industry standards to ensure every aspect of your journey—from the driver's conduct to the vehicle's hygiene—is perfect.
                     </p>
+                </div>
+            </section>
+
+            {/* Nusuk Registered Section */}
+            <section className="py-16 md:py-24 bg-gradient-to-br from-teal-900 to-teal-800 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-16">
+                        <span className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Official Verification</span>
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-playfair">What Does "Nusuk Registered" Mean?</h2>
+                        <p className="text-teal-100 max-w-2xl mx-auto text-lg leading-relaxed">
+                            We don't just promise safety; we are officially verified by the government. Booking a Nusuk Registered cab means choosing the highest standard of accountability.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <FadeIn delay={0.1}>
+                            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 h-full text-center hover:bg-white/20 transition-colors">
+                                <div className="w-16 h-16 bg-white text-teal-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                                    <Shield size={32} />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">Government Verified Fleet</h3>
+                                <p className="text-teal-100 text-sm leading-relaxed">Every vehicle in our fleet is officially registered with the Ministry of Hajj and Umrah, ensuring strict legal compliance and safety standards.</p>
+                            </div>
+                        </FadeIn>
+                        <FadeIn delay={0.2}>
+                            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 h-full text-center hover:bg-white/20 transition-colors">
+                                <div className="w-16 h-16 bg-white text-teal-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                                    <FileCheck size={32} />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">Ministry Licensed Drivers</h3>
+                                <p className="text-teal-100 text-sm leading-relaxed">Our drivers aren't just experienced; they hold official permits, have passed extensive background checks, and are trained in Pilgrim Adab.</p>
+                            </div>
+                        </FadeIn>
+                        <FadeIn delay={0.3}>
+                            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 h-full text-center hover:bg-white/20 transition-colors">
+                                <div className="w-16 h-16 bg-white text-teal-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                                    <MapPin size={32} />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-3">Tracked on Nusuk</h3>
+                                <p className="text-teal-100 text-sm leading-relaxed">Your journey is officially logged and monitored. We ensure your safety by maintaining a transparent, GPS-tracked connection with the authorities.</p>
+                            </div>
+                        </FadeIn>
+                    </div>
                 </div>
             </section>
 
@@ -338,6 +382,16 @@ export default function SafetyPage() {
                     </div>
 
                     <div className="space-y-4">
+                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
+                            <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
+                                <span>Why should I book a Nusuk Registered cab instead of a regular taxi?</span>
+                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-amber-500">▼</span>
+                            </summary>
+                            <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
+                                <p>Booking a Nusuk Registered cab provides an official layer of security. Regular taxis may lack verified documentation or comprehensive insurance for pilgrims. Nusuk registration means our vehicles, drivers, and operational standards are heavily regulated and continuously monitored by the Ministry of Hajj and Umrah.</p>
+                            </div>
+                        </details>
+
                         <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
                             <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
                                 <span>Is it safe for solo female travelers?</span>

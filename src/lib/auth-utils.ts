@@ -1,14 +1,25 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY || 'your-secret-key-change-this-in-prod';
+// ✅ Fail fast at startup if the JWT secret is missing.
+// Never fall back to a hardcoded string — that would allow token forgery.
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+if (!SECRET_KEY) {
+    throw new Error(
+        '[auth-utils] JWT_SECRET_KEY is not set. ' +
+        'Add it to your .env.local (development) or hosting environment variables (production). ' +
+        'It must be a random string of at least 32 characters.'
+    );
+}
+
 const key = new TextEncoder().encode(SECRET_KEY);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function signToken(payload: any) {
+export async function signToken(payload: any, expiresIn: string = '24h') {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('7d') // 1 week session
+        .setExpirationTime(expiresIn) // Default: 24-hour admin sessions
         .sign(key);
 }
 

@@ -24,7 +24,8 @@ const jsonLd = {
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
     "description": vehicleData?.seo?.description || "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
-    "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+    "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {

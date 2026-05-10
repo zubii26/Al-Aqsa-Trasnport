@@ -2,7 +2,7 @@ import React from 'react';
 import { Phone, Facebook, Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
 
 import { getSettings } from '@/lib/settings-storage';
-
+import NusukBadge from '@/components/common/NusukBadge';
 
 const TopBar = async () => {
     const settings = await getSettings();
@@ -69,6 +69,8 @@ const TopBar = async () => {
 
                 {/* Right Side: Socials & Extras */}
                 <div className="flex items-center gap-4">
+                    <NusukBadge variant="light" className="mr-2 border-none bg-transparent hover:bg-white/5 shadow-none" />
+                    <div className="h-4 w-px bg-white/10" />
                     <span className="text-slate-500">Follow us:</span>
                     <div className="flex items-center gap-2">
                         {[

@@ -25,7 +25,8 @@ const jsonLd = {
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/camry-hero-professional.png",
     "description": vehicleData?.seo?.description || "Affordable Toyota Camry taxi for Umrah. Reliable 4-seater sedan for Jeddah to Makkah transfers.",
     "brand": { "@type": "Brand", "name": "Toyota" },
-    "offers": { "@type": "Offer", "price": "200", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" }
+    "offers": { "@type": "Offer", "price": "200", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {

@@ -6,6 +6,7 @@ import styles from './Footer.module.css';
 import { Mail, MapPin, Phone, Facebook, Instagram, Twitter, Linkedin, Send } from 'lucide-react';
 import { useSettings } from '@/context/SettingsContext';
 import GlassButton from '@/components/ui/GlassButton';
+import NusukBadge from '@/components/common/NusukBadge';
 
 export default function Footer() {
     const { settings } = useSettings();
@@ -39,6 +40,9 @@ export default function Footer() {
                                 </div>
                             </Link>
                             <p className={styles.tagline}>{general.description}</p>
+                            <div className="mt-6">
+                                <NusukBadge variant="dark" />
+                            </div>
                         </div>
 
                         <div className={styles.socials}>

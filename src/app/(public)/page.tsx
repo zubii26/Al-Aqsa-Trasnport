@@ -142,6 +142,7 @@ export default async function Home() {
         "reviewCount": "87",
         "bestRating": "5"
       },
+      "hasCertification": "Nusuk Registered Vehicle",
       "sameAs": [
         "https://www.facebook.com/profile.php?id=61586281396171",
         "https://www.instagram.com/al_aqsa_umrah_transport"
