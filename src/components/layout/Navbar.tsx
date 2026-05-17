@@ -75,11 +75,16 @@ export default function Navbar() {
             href: '/fleet',
             label: 'Fleet',
             children: [
+                { href: '/fleet/mercedes-s-class', label: 'Mercedes-Benz S-Class' },
                 { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
+                { href: '/fleet/kia-k5', label: 'Kia K5' },
+                { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
+                { href: '/fleet/mitsubishi-xpander', label: 'Mitsubishi Xpander' },
                 { href: '/fleet/hyundai-staria', label: 'Hyundai Staria' },
                 { href: '/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
                 { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
-                { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
+                { href: '/fleet/toyota-coaster', label: 'Toyota Coaster' },
+                { href: '/fleet/large-bus-50-seater', label: '50-Seater Large Bus' },
             ]
         },
         {

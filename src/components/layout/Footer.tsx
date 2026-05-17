@@ -123,11 +123,16 @@ export default function Footer() {
                     <div className={styles.column}>
                         <h3 className={styles.heading}>Our Fleet</h3>
                         <ul className={styles.links}>
+                            <li><Link href="/fleet/mercedes-s-class">Mercedes S-Class (VIP)</Link></li>
                             <li><Link href="/fleet/gmc-yukon-at4">GMC Yukon XL (VIP)</Link></li>
                             <li><Link href="/fleet/toyota-camry">Toyota Camry</Link></li>
+                            <li><Link href="/fleet/kia-k5">Kia K5</Link></li>
+                            <li><Link href="/fleet/mitsubishi-xpander">Mitsubishi Xpander</Link></li>
                             <li><Link href="/fleet/hyundai-staria">Hyundai Staria</Link></li>
                             <li><Link href="/fleet/hyundai-starex">Hyundai Starex</Link></li>
                             <li><Link href="/fleet/toyota-hiace">Toyota Hiace</Link></li>
+                            <li><Link href="/fleet/toyota-coaster">Toyota Coaster</Link></li>
+                            <li><Link href="/fleet/large-bus-50-seater">50-Seater Large Bus</Link></li>
                         </ul>
 
                         <div className={styles.newsletter}>

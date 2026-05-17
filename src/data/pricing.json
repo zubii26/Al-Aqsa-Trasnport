@@ -23,7 +23,11 @@
                 "gmc": 900,
                 "starex": 450,
                 "staria": 450,
-                "coaster": 900
+                "coaster": 900,
+                "mercedes": 1580,
+                "kia": 500,
+                "xpander": 630,
+                "large-bus": 2250
             }
         },
         {
@@ -51,7 +55,11 @@
                 "gmc": 500,
                 "starex": 300,
                 "staria": 300,
-                "coaster": 550
+                "coaster": 550,
+                "mercedes": 880,
+                "kia": 280,
+                "xpander": 350,
+                "large-bus": 1250
             }
         },
         {
@@ -79,7 +87,11 @@
                 "gmc": 500,
                 "starex": 350,
                 "staria": 350,
-                "coaster": 600
+                "coaster": 600,
+                "mercedes": 1050,
+                "kia": 330,
+                "xpander": 420,
+                "large-bus": 1500
             }
         },
         {
@@ -106,7 +118,11 @@
                 "gmc": 500,
                 "starex": 300,
                 "staria": 300,
-                "coaster": 550
+                "coaster": 550,
+                "mercedes": 700,
+                "kia": 220,
+                "xpander": 280,
+                "large-bus": 1000
             }
         },
         {
@@ -134,7 +150,11 @@
                 "gmc": 900,
                 "starex": 450,
                 "staria": 450,
-                "coaster": 900
+                "coaster": 900,
+                "mercedes": 1580,
+                "kia": 500,
+                "xpander": 630,
+                "large-bus": 2250
             }
         },
         {
@@ -160,7 +180,11 @@
                 "gmc": 140,
                 "starex": 100,
                 "staria": 100,
-                "coaster": 250
+                "coaster": 250,
+                "mercedes": 280,
+                "kia": 90,
+                "xpander": 110,
+                "large-bus": 400
             }
         },
         {
@@ -188,7 +212,11 @@
                 "gmc": 800,
                 "starex": 450,
                 "staria": 450,
-                "coaster": 900
+                "coaster": 900,
+                "mercedes": 1750,
+                "kia": 550,
+                "xpander": 700,
+                "large-bus": 2500
             }
         },
         {
@@ -213,7 +241,11 @@
                 "gmc": 1000,
                 "starex": 600,
                 "staria": 600,
-                "coaster": 1000
+                "coaster": 1000,
+                "mercedes": 2450,
+                "kia": 770,
+                "xpander": 980,
+                "large-bus": 3500
             }
         },
         {
@@ -241,7 +273,11 @@
                 "gmc": 400,
                 "starex": 200,
                 "staria": 200,
-                "coaster": 500
+                "coaster": 500,
+                "mercedes": 880,
+                "kia": 280,
+                "xpander": 350,
+                "large-bus": 1250
             }
         },
         {
@@ -270,7 +306,11 @@
                 "gmc": 400,
                 "starex": 250,
                 "staria": 250,
-                "coaster": 500
+                "coaster": 500,
+                "mercedes": 880,
+                "kia": 280,
+                "xpander": 350,
+                "large-bus": 1250
             }
         },
         {
@@ -295,7 +335,11 @@
                 "gmc": 300,
                 "starex": 200,
                 "staria": 250,
-                "coaster": 400
+                "coaster": 400,
+                "mercedes": 530,
+                "kia": 170,
+                "xpander": 210,
+                "large-bus": 750
             }
         },
         {
@@ -321,7 +365,11 @@
                 "gmc": 300,
                 "starex": 200,
                 "staria": 250,
-                "coaster": 400
+                "coaster": 400,
+                "mercedes": 420,
+                "kia": 130,
+                "xpander": 170,
+                "large-bus": 600
             }
         },
         {
@@ -347,7 +395,11 @@
                 "gmc": 900,
                 "starex": 450,
                 "staria": 450,
-                "coaster": 900
+                "coaster": 900,
+                "mercedes": 1580,
+                "kia": 500,
+                "xpander": 630,
+                "large-bus": 2250
             }
         },
         {
@@ -372,7 +424,11 @@
                 "gmc": 1000,
                 "starex": 500,
                 "staria": 550,
-                "coaster": 1100
+                "coaster": 1100,
+                "mercedes": 1750,
+                "kia": 550,
+                "xpander": 700,
+                "large-bus": 2500
             }
         },
         {
@@ -397,7 +453,11 @@
                 "gmc": 350,
                 "starex": 250,
                 "staria": 250,
-                "coaster": 450
+                "coaster": 450,
+                "mercedes": 700,
+                "kia": 220,
+                "xpander": 280,
+                "large-bus": 1000
             }
         },
         {
@@ -421,7 +481,11 @@
                 "gmc": 1100,
                 "starex": 650,
                 "staria": 650,
-                "coaster": 1200
+                "coaster": 1200,
+                "mercedes": 2100,
+                "kia": 660,
+                "xpander": 840,
+                "large-bus": 3000
             }
         },
         {
@@ -446,7 +510,11 @@
                 "gmc": 1000,
                 "starex": 500,
                 "staria": 550,
-                "coaster": 1100
+                "coaster": 1100,
+                "mercedes": 1750,
+                "kia": 550,
+                "xpander": 700,
+                "large-bus": 2500
             }
         }
     ],
@@ -597,6 +665,104 @@
                 "Large Windows"
             ],
             "luggage": "15 Large Suitcases"
+        },
+        {
+            "id": "mercedes",
+            "name": "Mercedes-Benz S-Class",
+            "slug": "mercedes-s-class",
+            "seo": {
+                "title": "Mercedes S-Class VIP Rental Makkah & Jeddah | Luxury Umrah",
+                "description": "Book Mercedes-Benz S-Class for VIP Umrah. Ultimate luxury, silent cabin, executive transport from Jeddah Airport to Makkah/Madinah.",
+                "keywords": [
+                    "Mercedes S-Class Makkah",
+                    "VIP car rental Jeddah",
+                    "luxury Umrah transport",
+                    "مرسيدس يخت توصيل"
+                ]
+            },
+            "capacity": "3 Seater",
+            "multiplier": 3.5,
+            "features": [
+                "VIP Executive Comfort",
+                "Luxury Leather Interior",
+                "Silent Cabin",
+                "Advanced Safety",
+                "Smooth Air Suspension"
+            ],
+            "luggage": "2-3 Large Suitcases"
+        },
+        {
+            "id": "kia",
+            "name": "Kia K5",
+            "slug": "kia-k5",
+            "seo": {
+                "title": "Kia K5 Sedan Rental Makkah | Modern Transport",
+                "description": "Rent Kia K5 sedan for comfortable, efficient Umrah travel. Ideal for small families and couples. Clean, modern design.",
+                "keywords": [
+                    "Kia K5 Makkah",
+                    "modern sedan Jeddah",
+                    "comfortable umrah taxi",
+                    "كيا K5 توصيل"
+                ]
+            },
+            "capacity": "3-4 Seater",
+            "multiplier": 1.1,
+            "features": [
+                "Modern Stylish Design",
+                "Excellent Fuel Efficiency",
+                "Comfortable Suspension",
+                "Advanced Safety Systems"
+            ],
+            "luggage": "2-3 Large Suitcases"
+        },
+        {
+            "id": "xpander",
+            "name": "Mitsubishi Xpander",
+            "slug": "mitsubishi-xpander",
+            "seo": {
+                "title": "Mitsubishi Xpander 7-Seater Makkah | Family Van",
+                "description": "Spacious Mitsubishi Xpander for rent. 7-seater family car for comfortable Umrah trips and Makkah-Madinah transport.",
+                "keywords": [
+                    "Mitsubishi Xpander Makkah",
+                    "7 seater family car",
+                    "affordable umrah van",
+                    "ميتسوبيشي اكسباندر توصيل"
+                ]
+            },
+            "capacity": "6-7 Seater",
+            "multiplier": 1.4,
+            "features": [
+                "Family-Friendly Space",
+                "Smooth Suspension",
+                "Flexible Seating",
+                "Modern Air Conditioning"
+            ],
+            "luggage": "3-4 Large Suitcases"
+        },
+        {
+            "id": "large-bus",
+            "name": "50-Seater Luxury Bus",
+            "slug": "large-bus-50-seater",
+            "seo": {
+                "title": "50 Seater Luxury Bus Rental Makkah | Large Group Umrah",
+                "description": "Rent a 50-seater luxury bus for Hajj and Umrah groups. Wide windows, AC vents, large luggage compartments for Ziyarat and intercity travel.",
+                "keywords": [
+                    "50 seater bus Makkah",
+                    "large group umrah transport",
+                    "luxury bus Jeddah",
+                    "باص 50 راكب مكة"
+                ]
+            },
+            "capacity": "50 Seater",
+            "multiplier": 5,
+            "features": [
+                "AC Vents for All Seats",
+                "Wide Viewing Windows",
+                "Massive Luggage Compartments",
+                "PA System for Guide",
+                "Restroom (Optional)"
+            ],
+            "luggage": "50+ Large Suitcases"
         }
     ]
 }
