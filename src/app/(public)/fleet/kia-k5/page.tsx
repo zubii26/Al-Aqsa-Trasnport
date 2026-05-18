@@ -1,17 +1,39 @@
 import type { Metadata } from "next";
-import Hero from '@/components/common/Hero';
-import Breadcrumbs from '@/components/common/Breadcrumbs';
-import Link from 'next/link';
-import { ArrowRight, Shield, Star, Briefcase, Users, MapPin, CheckCircle2, Award, Zap } from 'lucide-react';
-import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
+import FAQSection from '@/components/services/FAQSection';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
-import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-
+import { Users, Briefcase, Star, MapPin, CheckCircle, Zap } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 
+// Master Components
+import VehicleHero from '@/components/fleet/vehicle/VehicleHero';
+import VehicleOverview from '@/components/fleet/vehicle/VehicleOverview';
+import VehicleGallery from '@/components/fleet/vehicle/VehicleGallery';
+import VehicleSpecs from '@/components/fleet/vehicle/VehicleSpecs';
+import VehicleFeatures from '@/components/fleet/vehicle/VehicleFeatures';
+import VehicleUseCases from '@/components/fleet/vehicle/VehicleUseCases';
+import VehicleReviews from '@/components/fleet/vehicle/VehicleReviews';
+import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
+
 const vehicleData = pricingData.vehicles.find(v => v.id === 'kia');
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Kia K5 Modern Sedan Rental",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/kia-k5-hero.png",
+    "description": "Rent a modern Kia K5 in Makkah & Madinah for comfortable and efficient Umrah transport.",
+    "brand": { "@type": "Brand", "name": "Kia" },
+    "offers": { 
+        "@type": "Offer", 
+        "price": "300", 
+        "priceCurrency": "SAR", 
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.alaqsaumrahtransport.com/fleet/kia-k5"
+    },
+    "hasCertification": "Nusuk Registered Vehicle"
+};
 
 export const metadata: Metadata = {
     title: vehicleData?.seo?.title || "Kia K5 Sedan Rental Makkah | Modern Transport",
@@ -33,15 +55,79 @@ export const metadata: Metadata = {
         "affordable Umrah taxi",
         "modern Umrah transport"
     ],
-    alternates: {
-        canonical: 'https://www.alaqsaumrahtransport.com/fleet/kia-k5',
-    },
+    alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/kia-k5' },
     openGraph: {
         title: "Kia K5 Sedan | Comfortable Umrah Transport",
         description: "Experience modern, smooth, and fuel-efficient travel across Saudi Arabia with our Kia K5 fleet, ideal for small families and couples.",
         images: [{ url: '/images/fleet/kia-k5-hero.png', width: 1200, height: 630, alt: 'Kia K5 Modern Sedan' }]
     }
 };
+
+const galleryImages = [
+    { src: '/images/fleet/kia-k5-hero.png', alt: 'Kia K5 Exterior' },
+    // If more Kia K5 images are obtained, they can be added here. Currently relying on the main asset.
+];
+
+const specs = [
+    { label: "Engine & Power", value: "2.5L 4-Cyl", subValue: "Highly Efficient" },
+    { label: "Seating Capacity", value: "3-4 Seats", subValue: "Comfortable Sedan" },
+    { label: "Luggage Capacity", value: "Generous Trunk", subValue: "2-3 Large Bags" },
+    { label: "Comfort Control", value: "Dual-Zone AC", subValue: "Automatic Climate" },
+    { label: "Suspension", value: "Multi-link Rear", subValue: "MacPherson Strut" },
+    { label: "Safety", value: "Advanced Assist", subValue: "Forward Collision-Avoidance" },
+    { label: "Entertainment", value: "Touchscreen", subValue: "Bluetooth & USB" },
+    { label: "Interior", value: "Premium Cloth", subValue: "Ergonomic Seats" },
+];
+
+const features = [
+    "Modern, sleek sedan design that stands out while providing reliable transport.",
+    "Dual-Zone Automatic Climate Control to keep the cabin perfectly cooled.",
+    "Spacious rear seating ensuring comfort for couples and small families.",
+    "Advanced driver assistance systems including lane keeping and collision avoidance.",
+    "Highly efficient 2.5L engine perfect for long-distance Saudi highway routes.",
+    "Large trunk easily accommodating 2-3 full-sized suitcases.",
+    "Smooth and stable suspension making the Makkah to Madinah journey relaxing.",
+    "Modern infotainment system with USB ports to keep your devices charged."
+];
+
+const useCases = [
+    {
+        title: "Couples & Individuals",
+        description: "A sleek, modern, and private ride for two, offering the perfect blend of comfort and cost-effectiveness.",
+        icon: Users
+    },
+    {
+        title: "Jeddah Airport Pickup",
+        description: "Efficient and prompt transfers from the terminal directly to your Makkah or Madinah hotel.",
+        icon: MapPin
+    },
+    {
+        title: "City Hotel Transfers",
+        description: "Navigate Makkah and Madinah city traffic with ease, style, and complete privacy.",
+        icon: Zap
+    }
+];
+
+const kiaReviews = [
+    {
+        name: "Yousef A.",
+        rating: 5,
+        text: "My wife and I booked the Kia K5 from Jeddah to our hotel in Makkah. Very clean, quiet ride, and the driver was extremely polite.",
+        location: "UAE"
+    },
+    {
+        name: "Fatima R.",
+        rating: 5,
+        text: "Perfect size for three of us. The AC was strong, the seats were comfortable, and it felt very safe on the highway to Madinah.",
+        location: "Oman"
+    },
+    {
+        name: "Ibrahim S.",
+        rating: 4,
+        text: "A very smooth ride. The trunk easily held our two large suitcases and a couple of carry-on bags. Excellent value for money.",
+        location: "Turkey"
+    }
+];
 
 const kiaFAQs = [
     {
@@ -58,211 +144,69 @@ const kiaFAQs = [
     },
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Kia K5 Modern Sedan Rental",
-        "image": "https://www.alaqsaumrahtransport.com/images/fleet/kia-k5-hero.png",
-        "description": "Rent a modern Kia K5 in Makkah & Madinah for comfortable and efficient Umrah transport.",
-        "brand": {
-            "@type": "Brand",
-            "name": "Kia"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "300",
-            "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.alaqsaumrahtransport.com/fleet/kia-k5"
-        },
-        "hasCertification": "Nusuk Registered Vehicle"
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": kiaFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    }
-];
-
 export default async function KiaK5Page() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Kia%20K5%20for%20Umrah`;
-
+    
     const kiaId = 'kia';
-    const kiaImage = '/images/fleet/kia-k5-hero.png';
 
     return (
-        <main className="overflow-x-hidden bg-slate-50 dark:bg-slate-950">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-
-            {/* SECTION 1: HERO OVERVIEW */}
-            <Hero
-                title="Kia K5 Sedan – Comfortable Umrah Transport"
+        <main className="overflow-x-hidden bg-slate-50">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            
+            <VehicleHero
+                title="Kia K5 Sedan | Comfortable Umrah Transport"
                 subtitle="A perfect blend of modern design, smooth ride quality, and excellent fuel efficiency. Ensuring a reliable and peaceful journey for you and your family."
-                bgImage={kiaImage}
+                bgImage="/images/fleet/kia-k5-hero.png"
                 badge="Modern & Efficient"
-                ctaText="Book via WhatsApp"
-                ctaLink={whatsappLink}
-                layout="center"
+                whatsappLink={whatsappLink}
+                quickSpecs={["3-4 Passengers", "2-3 Suitcases", "Dual-Zone AC", "Smooth Ride"]}
                 breadcrumbs={<Breadcrumbs />}
             />
 
-            {/* SECTION 5: PRICING STRUCTURE (Moved up for conversion optimization) */}
-            <FleetPricingGrid
-                vehicleId={kiaId}
-                vehicleImage="/images/fleet/kia.png"
-                vehicleType="kia"
-                title="Transparent Kia K5 Pricing"
-                subtitle="Affordable, modern transportation with fixed rates for per trip and per route transfers."
+            <VehicleOverview
+                title="Engineered for Comfort & Efficiency"
+                description="The Kia K5 redefines the modern sedan experience, offering advanced technology and a spacious interior that makes every spiritual journey across Saudi Arabia completely stress-free. It strikes the perfect balance between affordability and reliability."
+                modelYear="Latest"
+                passengers={4}
+                luggage="2-3 Large Bags"
+                tech="Touchscreen & USB"
+                fuel="2.5L Efficient"
+                bookLink={whatsappLink}
+                mainImage="/images/fleet/kia-k5-hero.png"
+                fallbackImage="/images/fleet/kia-k5-hero.png"
             />
 
-            {/* SECTION 2: VEHICLE HIGHLIGHTS */}
-            <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
-                <div className="container mx-auto px-4">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                            Engineered for Comfort & Efficiency
-                        </h2>
-                        <p className="text-slate-600 dark:text-slate-400 text-lg">
-                            The Kia K5 redefines the modern sedan experience, offering advanced technology and a spacious interior that makes every spiritual journey across Saudi Arabia completely stress-free.
-                        </p>
-                    </div>
+            <VehicleGallery 
+                title="Explore the Vehicle"
+                images={galleryImages} 
+            />
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {[
-                            { icon: Users, title: "Seating Capacity", desc: "3-4 Passengers" },
-                            { icon: Briefcase, title: "Luggage Capacity", desc: "2-3 Large Bags" },
-                            { icon: Star, title: "Comfort Features", desc: "Ergonomic Seats, Ample Legroom" },
-                            { icon: Shield, title: "Safety Features", desc: "Advanced Driver Assistance" },
-                            { icon: Zap, title: "Technology", desc: "Modern Infotainment System" },
-                            { icon: Award, title: "Ride Quality", desc: "Smooth & Stable Suspension" },
-                            { icon: MapPin, title: "Fuel Efficiency", desc: "Excellent MPG for Long Routes" },
-                            { icon: CheckCircle2, title: "Climate Control", desc: "Dual-Zone AC" },
-                        ].map((feature, idx) => (
-                            <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-                                <feature.icon className="text-blue-500 mb-4" size={32} />
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400">{feature.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <VehicleSpecs specs={specs} />
 
-            {/* SECTION 3: IDEAL USE CASES */}
-            <section className="py-20 bg-slate-100 dark:bg-slate-950">
-                <div className="container mx-auto px-4">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-8 font-playfair text-slate-800 dark:text-white">
-                                Ideal For Couples & Small Families
-                            </h2>
-                            <ul className="space-y-6">
-                                {[
-                                    { title: "Small Families", desc: "Spacious enough to keep the family comfortable during transfers." },
-                                    { title: "Couples & Individuals", desc: "A sleek, modern, and private ride for two." },
-                                    { title: "Jeddah Airport Pickup", desc: "Efficient and prompt transfers from the terminal directly to your Makkah hotel." },
-                                    { title: "Makkah ↔ Madinah Routes", desc: "Smooth highway cruising ensuring you arrive rested for your prayers." },
-                                    { title: "Hotel Transfers", desc: "Navigate Makkah and Madinah city traffic with ease and style." },
-                                ].map((useCase, idx) => (
-                                    <li key={idx} className="flex gap-4 items-start">
-                                        <div className="bg-blue-500/20 p-2 rounded-full mt-1 shrink-0">
-                                            <CheckCircle2 className="text-blue-600 dark:text-blue-400" size={20} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-lg text-slate-900 dark:text-slate-100">{useCase.title}</h4>
-                                            <p className="text-slate-600 dark:text-slate-400">{useCase.desc}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="order-1 lg:order-2 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                            <FleetFeatureImage
-                                src="/images/fleet/kia-k5-hero.png"
-                                alt="Kia K5 Exterior"
-                                fallbackSrc={kiaImage}
-                                className="object-cover w-full h-full"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <VehicleFeatures features={features} />
 
-            {/* SECTION 4: DETAILED SPECIFICATIONS TABLE */}
-            <section className="py-20 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-800 dark:text-white">Detailed Specifications</h2>
-                    <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">
-                        <table className="w-full text-left border-collapse">
-                            <tbody>
-                                {[
-                                    ['Engine', '2.5L 4-Cylinder (Highly Efficient)'],
-                                    ['Transmission', '8-Speed Automatic'],
-                                    ['Seating', '3-4 Passengers'],
-                                    ['Luggage', '2-3 Large Bags (Generous Trunk Space)'],
-                                    ['AC System', 'Dual-Zone Automatic Climate Control'],
-                                    ['Safety', 'Forward Collision-Avoidance, Lane Keeping Assist'],
-                                    ['Entertainment', 'Touchscreen Display, Bluetooth, USB Ports'],
-                                    ['Suspension', 'MacPherson Strut (Front) / Multi-link (Rear)'],
-                                    ['Doors', '4 Doors'],
-                                    ['Interior Type', 'Premium Cloth / Synthetic Leather Options'],
-                                ].map((row, idx) => (
-                                    <tr key={idx} className="border-b border-slate-200 dark:border-slate-700 last:border-0 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors">
-                                        <th className="p-4 font-bold text-slate-700 dark:text-slate-300 w-1/3 bg-slate-100/50 dark:bg-slate-800/50">{row[0]}</th>
-                                        <td className="p-4 text-slate-600 dark:text-slate-400">{row[1]}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+            <VehicleUseCases cases={useCases} />
 
-            {/* SECTION 6: WHY CHOOSE THIS VEHICLE */}
-            <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern-islamic.png')] bg-repeat"></div>
-                <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-blue-500">
-                        Why Choose the Kia K5 for Umrah?
-                    </h2>
-                    <p className="text-xl leading-relaxed text-slate-300 mb-10">
-                        The Kia K5 represents the smart choice for modern pilgrims. It strikes the perfect balance between affordability, striking modern design, and robust reliability. Its exceptional fuel efficiency makes it cost-effective, while its spacious cabin and smooth suspension ensure your family remains comfortable and relaxed during the long, spiritual routes across the Kingdom.
-                    </p>
-                </div>
-            </section>
+            <div className="py-16 bg-white dark:bg-slate-900">
+                <FleetPricingGrid
+                    vehicleId={kiaId}
+                    vehicleImage="/images/fleet/kia.png"
+                    vehicleType="kia"
+                    title="Transparent Kia K5 Pricing"
+                    subtitle="Affordable, modern transportation with fixed rates for per trip and per route transfers."
+                />
+            </div>
 
-            {/* SECTION 7: BOOKING CTA */}
-            <section className="py-16 bg-blue-600 text-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 font-playfair">Reserve Your Kia K5 Today</h2>
-                    <p className="mb-8 font-medium max-w-2xl mx-auto text-blue-100">Book the Kia K5 now for your upcoming Umrah journey. Reliable, modern, and perfectly suited for your transport needs.</p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all shadow-xl hover:scale-105">
-                            Book via WhatsApp <ArrowRight size={20} />
-                        </a>
-                        <Link href="/booking" className="inline-flex items-center justify-center gap-2 bg-white text-blue-900 px-8 py-4 rounded-full font-bold hover:bg-slate-100 transition-all shadow-xl hover:scale-105">
-                            Book Online Now
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            <FleetCarouselWrapper />
+            <VehicleReviews reviews={kiaReviews} />
 
             <FAQSection items={kiaFAQs} title="Kia K5 Sedan Rental - Frequently Asked Questions" />
+
+            <VehicleCTA 
+                whatsappLink={whatsappLink}
+                phoneNumber={phoneNumber}
+            />
         </main>
     );
 }

@@ -5,7 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { 
+    Menu, X, ChevronDown, ChevronRight, 
+    Car, Plane, MapPin, Building,
+    Calendar, Compass, Navigation, Bus, Search, Users, Shield
+} from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { useMobileMenu } from '@/context/MobileMenuContext';
 import GlassButton from '@/components/ui/GlassButton';
@@ -52,48 +56,63 @@ export default function Navbar() {
         {
             href: '/routes',
             label: 'Routes',
-            children: [
-                { href: '/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah' },
-                { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah' },
-                { href: '/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel' },
-                { href: '/services/intercity-transfer', label: 'Jeddah Airport ⇄ Madinah' },
-                { href: '/services/ziyarat-tours', label: 'Ziyarat Tours (City Tours)' },
-            ]
+            megaMenu: {
+                main: [
+                    { href: '/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah', description: 'Direct express transport between the two holy cities', icon: Navigation },
+                    { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah', description: 'Comfortable arrivals from King Abdulaziz Airport', icon: Plane },
+                    { href: '/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel', description: 'Quick and easy transfers directly to your hotel', icon: Plane },
+                ],
+                sidebar: {
+                    title: 'More Options',
+                    items: [
+                        { href: '/services/intercity-transfer', label: 'Intercity Transfers', icon: Car },
+                        { href: '/services/ziyarat-tours', label: 'Ziyarat Tours', icon: Compass },
+                    ]
+                }
+            }
         },
         {
             href: '/services',
             label: 'Services',
-            children: [
-                { href: '/services/ramadan-transport', label: 'Ramadan 2026 Transport' },
-                { href: '/services/airport-transfers', label: 'Airport Transfer (General)' },
-                { href: '/services/intercity-transfer', label: 'Intercity Transfer' },
-                { href: '/services/hotel-transfers', label: 'Hotel Transfer' },
-                { href: '/track-booking', label: 'Track Booking' },
-            ]
+            megaMenu: {
+                main: [
+                    { href: '/services/ramadan-transport', label: 'Ramadan 2026 Transport', description: 'Dedicated VIP services for the holy month', icon: Calendar },
+                    { href: '/services/airport-transfers', label: 'Airport Transfers', description: 'Meet & greet services at all major terminals', icon: Plane },
+                    { href: '/services/hotel-transfers', label: 'Hotel Transfers', description: 'Door-to-door convenience for your stay', icon: Building },
+                ],
+                sidebar: {
+                    title: 'Resources',
+                    items: [
+                        { href: '/services/intercity-transfer', label: 'City to City', icon: MapPin },
+                        { href: '/track-booking', label: 'Track Booking', icon: Search },
+                    ]
+                }
+            }
         },
         {
             href: '/fleet',
             label: 'Fleet',
-            children: [
-                { href: '/fleet/mercedes-s-class', label: 'Mercedes-Benz S-Class' },
-                { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL' },
-                { href: '/fleet/kia-k5', label: 'Kia K5' },
-                { href: '/fleet/toyota-camry', label: 'Toyota Camry' },
-                { href: '/fleet/mitsubishi-xpander', label: 'Mitsubishi Xpander' },
-                { href: '/fleet/hyundai-staria', label: 'Hyundai Staria' },
-                { href: '/fleet/hyundai-starex', label: 'Hyundai H1 Starex' },
-                { href: '/fleet/toyota-hiace', label: 'Toyota Hiace' },
-                { href: '/fleet/toyota-coaster', label: 'Toyota Coaster' },
-                { href: '/fleet/large-bus-50-seater', label: '50-Seater Large Bus' },
-            ]
+            megaMenu: {
+                main: [
+                    { href: '/fleet/mercedes-s-class', label: 'Mercedes-Benz S-Class', description: 'The pinnacle of luxury and VIP comfort', icon: Shield },
+                    { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL', description: 'Premium 7-seater for family travel', icon: Users },
+                    { href: '/fleet/hyundai-staria', label: 'Hyundai Staria', description: 'Futuristic and spacious group van', icon: Car },
+                    { href: '/fleet/kia-k5', label: 'Kia K5', description: 'Modern and highly efficient sedan', icon: Car },
+                ],
+                sidebar: {
+                    title: 'Standard & Large',
+                    items: [
+                        { href: '/fleet/toyota-camry', label: 'Toyota Camry', icon: Car },
+                        { href: '/fleet/mitsubishi-xpander', label: 'Mitsubishi Xpander', icon: Car },
+                        { href: '/fleet/hyundai-starex', label: 'Hyundai H1', icon: Car },
+                        { href: '/fleet/toyota-hiace', label: 'Toyota Hiace', icon: Bus },
+                        { href: '/fleet/toyota-coaster', label: 'Toyota Coaster', icon: Bus },
+                        { href: '/fleet/large-bus-50-seater', label: '50-Seater Bus', icon: Bus },
+                    ]
+                }
+            }
         },
-        {
-            href: '/about',
-            label: 'About Us',
-            children: [
-                { href: '/about', label: 'Company Profile' },
-            ]
-        },
+        { href: '/about', label: 'About Us' },
         { href: '/blog', label: 'Blog' },
         { href: '/contact', label: 'Contact us' },
     ];
@@ -142,7 +161,7 @@ export default function Navbar() {
                                     className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 cursor-default ${scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90'}`}
                                 >
                                     {link.label}
-                                    {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                    {link.megaMenu && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                 </span>
                             ) : (
                                 <Link
@@ -151,25 +170,64 @@ export default function Navbar() {
                                         }`}
                                 >
                                     {link.label}
-                                    {link.children && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                    {link.megaMenu && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                     <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${mounted && pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                                         }`} />
                                 </Link>
                             )}
 
-                            {/* Dropdown Menu */}
-                            {link.children && (
-                                <div className="absolute top-full left-0 w-56 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-black/5 dark:border-white/10 overflow-hidden p-2">
-                                        {link.children.map((child) => (
-                                            <Link
-                                                key={child.href}
-                                                href={child.href}
-                                                className="block px-4 py-3 text-sm font-medium text-foreground/80 hover:text-secondary hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                                            >
-                                                {child.label}
-                                            </Link>
-                                        ))}
+                            {/* Mega Menu Dropdown (Wrangle Style) */}
+                            {link.megaMenu && (
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-3 group-hover:translate-y-0 w-[580px]">
+                                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-slate-800 flex overflow-hidden">
+                                        
+                                        {/* Main Column */}
+                                        <div className="w-[340px] p-3 flex flex-col gap-1 bg-white dark:bg-slate-900">
+                                            {link.megaMenu.main.map((item) => (
+                                                <Link
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    className="group/item flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                                                >
+                                                    <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-500 p-2.5 rounded-lg shrink-0 mt-0.5 transition-colors group-hover/item:bg-emerald-100 dark:group-hover/item:bg-emerald-900/40">
+                                                        <item.icon size={20} strokeWidth={1.5} />
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-sm font-semibold text-slate-900 dark:text-white mb-0.5">
+                                                            {item.label}
+                                                        </div>
+                                                        <div className="text-[13px] text-slate-500 dark:text-slate-400 leading-snug">
+                                                            {item.description}
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                        </div>
+
+                                        {/* Sidebar Column */}
+                                        <div className="w-[240px] bg-slate-50 dark:bg-slate-900/50 p-5 border-l border-slate-100 dark:border-slate-800">
+                                            {link.megaMenu.sidebar.title && (
+                                                <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4 px-2 flex items-center gap-2">
+                                                    <div className="w-3 h-[1px] bg-slate-300 dark:bg-slate-700"></div>
+                                                    {link.megaMenu.sidebar.title}
+                                                </div>
+                                            )}
+                                            <div className="flex flex-col gap-1">
+                                                {link.megaMenu.sidebar.items.map((item) => (
+                                                    <Link
+                                                        key={item.href}
+                                                        href={item.href}
+                                                        className="group/sub flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors"
+                                                    >
+                                                        <item.icon size={16} className="text-slate-400 dark:text-slate-500 group-hover/sub:text-slate-700 dark:group-hover/sub:text-slate-300 transition-colors" />
+                                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-300 group-hover/sub:text-slate-900 dark:group-hover/sub:text-white transition-colors">
+                                                            {item.label}
+                                                        </span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             )}
@@ -257,7 +315,7 @@ export default function Navbar() {
                                     : 'text-foreground/80 hover:bg-muted hover:text-foreground'
                                     }`}
                                 onClick={() => {
-                                    if (!link.children) {
+                                    if (!link.megaMenu) {
                                         // Allow navigation to start before closing menu (smoother feel)
                                         setTimeout(() => setIsMenuOpen(false), 150);
                                     }
@@ -266,15 +324,15 @@ export default function Navbar() {
                                 <span className="flex items-center gap-2">
                                     {link.label}
                                 </span>
-                                {mounted && pathname === link.href && !link.children && (
+                                {mounted && pathname === link.href && !link.megaMenu && (
                                     <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
                                 )}
                             </Link>
 
                             {/* Mobile Submenu - Always indent for simplicity */}
-                            {link.children && (
+                            {link.megaMenu && (
                                 <div className="pl-4 flex flex-col gap-1 mt-1 border-l-2 border-secondary/10 ml-4">
-                                    {link.children.map((child) => (
+                                    {[...link.megaMenu.main, ...link.megaMenu.sidebar.items].map((child) => (
                                         <Link
                                             key={child.href}
                                             href={child.href}

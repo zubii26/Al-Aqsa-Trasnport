@@ -1,17 +1,39 @@
 import type { Metadata } from "next";
-import Hero from '@/components/common/Hero';
-import Breadcrumbs from '@/components/common/Breadcrumbs';
-import Link from 'next/link';
-import { ArrowRight, Shield, Star, Briefcase, Users, MapPin, CheckCircle2, Award, Zap } from 'lucide-react';
-import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
+import FAQSection from '@/components/services/FAQSection';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
-import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-
+import { Users, Briefcase, Star, MapPin, CheckCircle, Zap } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 
+// Master Components
+import VehicleHero from '@/components/fleet/vehicle/VehicleHero';
+import VehicleOverview from '@/components/fleet/vehicle/VehicleOverview';
+import VehicleGallery from '@/components/fleet/vehicle/VehicleGallery';
+import VehicleSpecs from '@/components/fleet/vehicle/VehicleSpecs';
+import VehicleFeatures from '@/components/fleet/vehicle/VehicleFeatures';
+import VehicleUseCases from '@/components/fleet/vehicle/VehicleUseCases';
+import VehicleReviews from '@/components/fleet/vehicle/VehicleReviews';
+import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
+
 const vehicleData = pricingData.vehicles.find(v => v.id === 'coaster');
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Toyota Coaster Group Rental",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster.png",
+    "description": "Rent a Toyota Coaster in Makkah & Madinah for comfortable and spacious group Umrah transport.",
+    "brand": { "@type": "Brand", "name": "Toyota" },
+    "offers": { 
+        "@type": "Offer", 
+        "price": "650", 
+        "priceCurrency": "SAR", 
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.alaqsaumrahtransport.com/fleet/toyota-coaster"
+    },
+    "hasCertification": "Nusuk Registered Vehicle"
+};
 
 export const metadata: Metadata = {
     title: vehicleData?.seo?.title || "Toyota Coaster Rental Makkah | 22-30 Seater Bus",
@@ -32,15 +54,79 @@ export const metadata: Metadata = {
         "large family Umrah transport",
         "group travel Saudi Arabia"
     ],
-    alternates: {
-        canonical: 'https://www.alaqsaumrahtransport.com/fleet/toyota-coaster',
-    },
+    alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/toyota-coaster' },
     openGraph: {
         title: "Toyota Coaster | 22-30 Seater Group Transport",
         description: "Reliable, comfortable, and spacious group travel across Saudi Arabia with our Toyota Coaster fleet.",
         images: [{ url: '/images/fleet/coaster.png', width: 1200, height: 630, alt: 'Toyota Coaster 30 Seater Bus' }]
     }
 };
+
+const galleryImages = [
+    { src: '/images/fleet/coaster.png', alt: 'Toyota Coaster Exterior' },
+    // If more coaster images are obtained, they can be added here. Currently relying on the main asset.
+];
+
+const specs = [
+    { label: "Engine & Power", value: "4.2L Diesel", subValue: "High Durability" },
+    { label: "Seating Capacity", value: "22-30 Seats", subValue: "Group Configurations" },
+    { label: "Luggage Capacity", value: "Large Compartment", subValue: "Dedicated Storage" },
+    { label: "Comfort Control", value: "Heavy-Duty AC", subValue: "Individual Vents" },
+    { label: "Suspension", value: "Double Wishbone", subValue: "Leaf Spring Rear" },
+    { label: "Safety", value: "ABS", subValue: "Seatbelts for All" },
+    { label: "Entertainment", value: "PA System", subValue: "Microphone for Guide" },
+    { label: "Doors", value: "Auto Folding", subValue: "Passenger Door" },
+];
+
+const features = [
+    "Versatile seating configurations accommodating 22 to 30 passengers.",
+    "Powerful central AC system with individual roof vents for every seat.",
+    "Built-in PA System with microphone, perfect for tour guides reciting Talbiyah.",
+    "Wide panoramic windows providing excellent visibility for Ziyarat sightseeing.",
+    "Heavy-duty suspension engineered for smooth rides with maximum payload.",
+    "Automatic folding passenger door for easy and quick group boarding.",
+    "Dedicated large group luggage compartments for all passenger belongings.",
+    "Legendary Toyota reliability ensuring peace of mind across long highway stretches."
+];
+
+const useCases = [
+    {
+        title: "Tour Agencies & Groups",
+        description: "Keep large congregations united. Perfect for Umrah operators moving 20-30 pilgrims together without splitting groups.",
+        icon: Users
+    },
+    {
+        title: "City Ziyarat Tours",
+        description: "Wide windows and an onboard PA system make the Coaster ideal for guided tours of Islamic historical sites.",
+        icon: Zap
+    },
+    {
+        title: "Makkah ↔ Madinah Routes",
+        description: "High-backed comfortable seats ensure the group can rest during the long intercity drive between the Holy Cities.",
+        icon: MapPin
+    }
+];
+
+const coasterReviews = [
+    {
+        name: "Usman Ali",
+        rating: 5,
+        text: "We booked the Coaster for our extended family of 24. The driver was excellent, the AC was very cold, and the PA system helped us recite together.",
+        location: "Pakistan"
+    },
+    {
+        name: "Hassan M. (Tour Operator)",
+        rating: 5,
+        text: "As an agency, we rely entirely on Al Aqsa's Coasters. They are always on time at Jeddah Airport and the buses are in pristine condition.",
+        location: "UK"
+    },
+    {
+        name: "Nour F.",
+        rating: 4,
+        text: "Very spacious and clean. The luggage capacity was surprising; it easily fit all 30 of our suitcases. Great service overall.",
+        location: "Egypt"
+    }
+];
 
 const coasterFAQs = [
     {
@@ -57,211 +143,69 @@ const coasterFAQs = [
     },
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Toyota Coaster Group Rental",
-        "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster.png",
-        "description": "Rent a Toyota Coaster in Makkah & Madinah for comfortable and spacious group Umrah transport.",
-        "brand": {
-            "@type": "Brand",
-            "name": "Toyota"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "650",
-            "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.alaqsaumrahtransport.com/fleet/toyota-coaster"
-        },
-        "hasCertification": "Nusuk Registered Vehicle"
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": coasterFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    }
-];
-
 export default async function ToyotaCoasterPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Toyota%20Coaster%20for%20Group`;
-
+    
     const coasterId = 'coaster';
-    const coasterImage = '/images/fleet/coaster-hero.png';
 
     return (
-        <main className="overflow-x-hidden bg-slate-50 dark:bg-slate-950">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-
-            {/* SECTION 1: HERO OVERVIEW */}
-            <Hero
-                title="Toyota Coaster – Group Umrah Transport"
+        <main className="overflow-x-hidden bg-slate-50">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            
+            <VehicleHero
+                title="Toyota Coaster | 22-30 Seater Group Transport"
                 subtitle="The benchmark for reliable group travel. Keep your entire congregation together with wide windows, individual AC vents, and comfortable long-route seating."
-                bgImage={coasterImage}
+                bgImage="/images/fleet/coaster.png"
                 badge="Group Choice"
-                ctaText="Book via WhatsApp"
-                ctaLink={whatsappLink}
-                layout="center"
+                whatsappLink={whatsappLink}
+                quickSpecs={["22-30 Passengers", "Group Luggage", "Individual AC", "PA System"]}
                 breadcrumbs={<Breadcrumbs />}
             />
 
-            {/* SECTION 5: PRICING STRUCTURE (Moved up for conversion optimization) */}
-            <FleetPricingGrid
-                vehicleId={coasterId}
-                vehicleImage="/images/fleet/coaster.png"
-                vehicleType="coaster"
-                title="Transparent Group Pricing"
-                subtitle="Cost-effective, reliable minibus transportation with fixed rates for group transfers."
+            <VehicleOverview
+                title="Engineered for Group Comfort"
+                description="The Toyota Coaster is designed specifically for large groups, ensuring that every pilgrim travels together safely and comfortably without feeling cramped. It simplifies logistics for tour operators and extended families."
+                modelYear="Latest"
+                passengers={30}
+                luggage="Large Group Storage"
+                tech="PA System & Audio"
+                fuel="4.2L Diesel"
+                bookLink={whatsappLink}
+                mainImage="/images/fleet/coaster.png"
+                fallbackImage="/images/fleet/coaster.png"
             />
 
-            {/* SECTION 2: VEHICLE HIGHLIGHTS */}
-            <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
-                <div className="container mx-auto px-4">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                            Engineered for Group Comfort
-                        </h2>
-                        <p className="text-slate-600 dark:text-slate-400 text-lg">
-                            The Toyota Coaster is designed specifically for large groups, ensuring that every pilgrim travels together safely and comfortably without feeling cramped.
-                        </p>
-                    </div>
+            <VehicleGallery 
+                title="Explore the Vehicle"
+                images={galleryImages} 
+            />
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {[
-                            { icon: Users, title: "Seating Capacity", desc: "22-30 Passengers" },
-                            { icon: Briefcase, title: "Luggage Capacity", desc: "Large Compartments" },
-                            { icon: Star, title: "Comfort Features", desc: "High-back Comfortable Seats" },
-                            { icon: Shield, title: "Safety Features", desc: "ABS, Dual Airbags" },
-                            { icon: Zap, title: "Visibility", desc: "Wide Panoramic Windows" },
-                            { icon: Award, title: "Ride Quality", desc: "Heavy-duty Suspension" },
-                            { icon: MapPin, title: "Engine Power", desc: "Reliable Toyota Diesel" },
-                            { icon: CheckCircle2, title: "Climate Control", desc: "Individual AC Vents" },
-                        ].map((feature, idx) => (
-                            <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-                                <feature.icon className="text-red-600 mb-4" size={32} />
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400">{feature.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <VehicleSpecs specs={specs} />
 
-            {/* SECTION 3: IDEAL USE CASES */}
-            <section className="py-20 bg-slate-100 dark:bg-slate-950">
-                <div className="container mx-auto px-4">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-8 font-playfair text-slate-800 dark:text-white">
-                                Ideal For Large Umrah Groups
-                            </h2>
-                            <ul className="space-y-6">
-                                {[
-                                    { title: "Tour Agencies & Groups", desc: "Keep groups of 20-30 people united in one high-capacity vehicle." },
-                                    { title: "Extended Families", desc: "Perfect for large, multi-generational families traveling together." },
-                                    { title: "City Ziyarat Tours", desc: "Wide windows provide excellent visibility for sightseeing in Makkah and Madinah." },
-                                    { title: "Jeddah Airport Arrival", desc: "Efficiently transport large groups directly from the terminal with all luggage." },
-                                    { title: "Makkah ↔ Madinah Routes", desc: "Comfortable high-backed seats ensure rest during the long intercity drive." },
-                                ].map((useCase, idx) => (
-                                    <li key={idx} className="flex gap-4 items-start">
-                                        <div className="bg-red-600/20 p-2 rounded-full mt-1 shrink-0">
-                                            <CheckCircle2 className="text-red-600 dark:text-red-400" size={20} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-lg text-slate-900 dark:text-slate-100">{useCase.title}</h4>
-                                            <p className="text-slate-600 dark:text-slate-400">{useCase.desc}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="order-1 lg:order-2 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                            <FleetFeatureImage
-                                src="/images/fleet/coaster.png"
-                                alt="Toyota Coaster Exterior"
-                                fallbackSrc={coasterImage}
-                                className="object-contain bg-white w-full h-full p-4"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <VehicleFeatures features={features} />
 
-            {/* SECTION 4: DETAILED SPECIFICATIONS TABLE */}
-            <section className="py-20 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-800 dark:text-white">Detailed Specifications</h2>
-                    <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">
-                        <table className="w-full text-left border-collapse">
-                            <tbody>
-                                {[
-                                    ['Engine', '4.2L Diesel Engine (High Durability)'],
-                                    ['Transmission', '5-Speed Manual / Automatic Options'],
-                                    ['Seating', '22 - 30 Passenger Configurations'],
-                                    ['Luggage', 'Dedicated Group Luggage Compartments'],
-                                    ['AC System', 'Heavy-Duty AC with Individual Roof Vents'],
-                                    ['Safety', 'Anti-lock Braking System (ABS), Seatbelts for all'],
-                                    ['Entertainment', 'PA System (Microphone for Guide), Radio/CD'],
-                                    ['Suspension', 'Double Wishbone (Front) / Leaf Spring (Rear)'],
-                                    ['Doors', 'Automatic Folding Passenger Door'],
-                                    ['Interior Type', 'Durable Fabric / Vinyl combination'],
-                                ].map((row, idx) => (
-                                    <tr key={idx} className="border-b border-slate-200 dark:border-slate-700 last:border-0 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors">
-                                        <th className="p-4 font-bold text-slate-700 dark:text-slate-300 w-1/3 bg-slate-100/50 dark:bg-slate-800/50">{row[0]}</th>
-                                        <td className="p-4 text-slate-600 dark:text-slate-400">{row[1]}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+            <VehicleUseCases cases={useCases} />
 
-            {/* SECTION 6: WHY CHOOSE THIS VEHICLE */}
-            <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern-islamic.png')] bg-repeat"></div>
-                <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-red-500">
-                        Why Choose the Toyota Coaster for Umrah?
-                    </h2>
-                    <p className="text-xl leading-relaxed text-slate-300 mb-10">
-                        When organizing an Umrah tour, logistics can be challenging. The Toyota Coaster simplifies group travel by offering unparalleled reliability and massive capacity. Instead of coordinating multiple vans, your entire group stays together, allowing guides to use the onboard PA system to recite Talbiyah and provide spiritual guidance collectively.
-                    </p>
-                </div>
-            </section>
+            <div className="py-16 bg-white dark:bg-slate-900">
+                <FleetPricingGrid
+                    vehicleId={coasterId}
+                    vehicleImage="/images/fleet/coaster.png"
+                    vehicleType="coaster"
+                    title="Transparent Group Pricing"
+                    subtitle="Cost-effective, reliable minibus transportation with fixed rates for group transfers."
+                />
+            </div>
 
-            {/* SECTION 7: BOOKING CTA */}
-            <section className="py-16 bg-red-600 text-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 font-playfair">Reserve Your Group Minibus Today</h2>
-                    <p className="mb-8 font-medium max-w-2xl mx-auto text-red-50">Book the Toyota Coaster now to ensure your Umrah group travels comfortably, safely, and securely across Saudi Arabia.</p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all shadow-xl hover:scale-105">
-                            Book via WhatsApp <ArrowRight size={20} />
-                        </a>
-                        <Link href="/booking" className="inline-flex items-center justify-center gap-2 bg-white text-red-900 px-8 py-4 rounded-full font-bold hover:bg-slate-100 transition-all shadow-xl hover:scale-105">
-                            Book Online Now
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            <FleetCarouselWrapper />
+            <VehicleReviews reviews={coasterReviews} />
 
             <FAQSection items={coasterFAQs} title="Toyota Coaster Rental - Frequently Asked Questions" />
+
+            <VehicleCTA 
+                whatsappLink={whatsappLink}
+                phoneNumber={phoneNumber}
+            />
         </main>
     );
 }

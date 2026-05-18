@@ -1,17 +1,39 @@
 import type { Metadata } from "next";
-import Hero from '@/components/common/Hero';
-import Breadcrumbs from '@/components/common/Breadcrumbs';
-import Link from 'next/link';
-import { ArrowRight, Shield, Star, Briefcase, Users, MapPin, CheckCircle2, Award, Zap } from 'lucide-react';
-import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
+import FAQSection from '@/components/services/FAQSection';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
-import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-
+import { Star, Shield, Map, Clock, CheckCircle } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
 
+// Master Components
+import VehicleHero from '@/components/fleet/vehicle/VehicleHero';
+import VehicleOverview from '@/components/fleet/vehicle/VehicleOverview';
+import VehicleGallery from '@/components/fleet/vehicle/VehicleGallery';
+import VehicleSpecs from '@/components/fleet/vehicle/VehicleSpecs';
+import VehicleFeatures from '@/components/fleet/vehicle/VehicleFeatures';
+import VehicleUseCases from '@/components/fleet/vehicle/VehicleUseCases';
+import VehicleReviews from '@/components/fleet/vehicle/VehicleReviews';
+import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
+
 const vehicleData = pricingData.vehicles.find(v => v.id === 'mercedes');
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Mercedes-Benz S-Class VIP Rental Makkah",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/mercedes-s-class/mercedes-s-class-hero-main.jpeg",
+    "description": "Rent luxury Mercedes S-Class in Makkah & Madinah. Ultimate executive transport for VIP pilgrims and airport transfers.",
+    "brand": { "@type": "Brand", "name": "Mercedes-Benz" },
+    "offers": { 
+        "@type": "Offer", 
+        "price": "1200", 
+        "priceCurrency": "SAR", 
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.alaqsaumrahtransport.com/fleet/mercedes-s-class"
+    },
+    "hasCertification": "Nusuk Registered Vehicle"
+};
 
 export const metadata: Metadata = {
     title: vehicleData?.seo?.title || "Mercedes S-Class VIP Rental Makkah | Luxury Umrah",
@@ -25,23 +47,93 @@ export const metadata: Metadata = {
         "Umrah executive travel",
         "Premium Umrah transport service",
         "Mercedes Benz Umrah taxi",
-        "Chauffeur service Makkah",
-        "مرسيدس يخت توصيل",
-        "توصيل VIP مكة",
-        "VIP Ziyarat tour Makkah",
-        "Madinah airport VIP transport",
-        "luxury family travel Umrah",
-        "VIP pilgrims transport"
+        "Chauffeur service Makkah"
     ],
-    alternates: {
-        canonical: 'https://www.alaqsaumrahtransport.com/fleet/mercedes-s-class',
-    },
+    alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/mercedes-s-class' },
     openGraph: {
         title: "Mercedes-Benz S-Class | Premium Umrah Transport Service",
-        description: "Experience the ultimate VIP transport in Saudi Arabia with our Mercedes-Benz S-Class chauffeur service for Makkah, Madinah, and Jeddah Airport.",
-        images: [{ url: '/images/fleet/mercedes-s-class-hero.png', width: 1200, height: 630, alt: 'Mercedes-Benz S-Class VIP Transport' }]
+        description: "Experience the ultimate VIP transport in Saudi Arabia with our Mercedes-Benz S-Class chauffeur service.",
+        images: [{ url: '/images/fleet/mercedes-s-class/mercedes-s-class-hero-main.jpeg', width: 1200, height: 630, alt: 'Mercedes-Benz S-Class VIP Transport' }]
     }
 };
+
+const galleryImages = [
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg', alt: 'Mercedes S-Class Front View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.jpeg', alt: 'Elegant Side Profile' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-hero-view.jpeg', alt: 'S-Class Rear Hero View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-amg-wheels-umrah-taxi.jpeg', alt: '20-inch AMG Wheels' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-chrome-door-handle.jpeg', alt: 'Chrome Door Handle Details' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-front-grille-jeddah-airport.jpeg', alt: 'Iconic Front Grille' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-led-taillights.jpeg', alt: 'LED Taillights' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-panoramic-sunroof.jpeg', alt: 'Panoramic Sunroof' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-sunroof-interior-view.jpeg', alt: 'Sunroof Interior View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-elevation.jpeg', alt: 'S-Class Rear Elevation' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-vip-transport-makkah-madinah.jpeg', alt: 'VIP Transport on Highway' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-three-quarter-front.jpeg', alt: 'Three Quarter Front Angle' },
+];
+
+const specs = [
+    { label: "Engine & Power", value: "3.0L V6 Turbocharged", subValue: "Or V8 Options" },
+    { label: "Comfort Control", value: "Thermotronic", subValue: "4-Zone Climate" },
+    { label: "Luggage Capacity", value: "500L Trunk", subValue: "2-3 Large Bags" },
+    { label: "Entertainment", value: "Burmester® 3D", subValue: "Surround Sound" },
+    { label: "Seating Capacity", value: "3 Passengers", subValue: "Executive Seating" },
+    { label: "Suspension", value: "AIRMATIC Air", subValue: "Adaptive Damping" },
+    { label: "Interior", value: "Exclusive Nappa", subValue: "Ambient Lighting" },
+    { label: "Safety", value: "Pre-Safe® Tech", subValue: "9 Airbags" },
+];
+
+const features = [
+    "Exclusive Nappa leather seating with optional massage functionality.",
+    "Burmester® 3D Surround Sound system for unparalleled acoustic purity.",
+    "Active Distance Assist and Pre-Safe® technology for maximum safety.",
+    "Thermotronic 4-zone automatic climate control for personalized comfort.",
+    "AIRMATIC air suspension absorbing road imperfections seamlessly.",
+    "Legendary silent cabin designed to minimize all exterior noise.",
+    "Rear executive seating configuration offering supreme legroom.",
+    "MBUX tablet interface for complete passenger control.",
+    "Panoramic sunroof illuminating the cabin naturally.",
+    "Soft-close doors ensuring a serene entry and exit."
+];
+
+const useCases = [
+    {
+        title: "VIP Meet & Greet",
+        description: "Arrive at Jeddah Airport and step directly into an oasis of tranquility. Perfect for executives, scholars, and VIP pilgrims requiring utmost privacy.",
+        icon: Map
+    },
+    {
+        title: "Makkah ↔ Madinah Travel",
+        description: "The 4.5-hour highway drive transforms into a restorative retreat, allowing you to prepare spiritually for your arrival in the Holy Cities.",
+        icon: Clock
+    },
+    {
+        title: "Exclusive Ziyarat",
+        description: "Visit historical Islamic sites across Makkah and Madinah with a professional, discreet chauffeur in the pinnacle of automotive luxury.",
+        icon: Shield
+    }
+];
+
+const mercedesReviews = [
+    {
+        name: "Dr. Khalid A.",
+        rating: 5,
+        text: "The S-Class was immaculate. The silence of the cabin during our trip from Jeddah to Makkah was exactly what we needed to focus on our prayers. Exceptional VIP service.",
+        location: "UK"
+    },
+    {
+        name: "Fatimah S.",
+        rating: 5,
+        text: "My husband and I booked this for our anniversary Umrah. The driver was highly professional, and the car's comfort is unmatched. True 5-star experience.",
+        location: "UAE"
+    },
+    {
+        name: "Ahmed R.",
+        rating: 5,
+        text: "I travel frequently for business, but the level of service provided here was outstanding. The ride to Madinah felt completely effortless.",
+        location: "USA"
+    }
+];
 
 const mercedesFAQs = [
     {
@@ -58,211 +150,70 @@ const mercedesFAQs = [
     },
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Mercedes-Benz S-Class VIP Rental",
-        "image": "https://www.alaqsaumrahtransport.com/images/fleet/mercedes-s-class-hero.png",
-        "description": "Rent a luxury Mercedes S-Class in Makkah & Madinah for VIP Umrah transport. Ultimate comfort for your spiritual journey.",
-        "brand": {
-            "@type": "Brand",
-            "name": "Mercedes-Benz"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "1200",
-            "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.alaqsaumrahtransport.com/fleet/mercedes-s-class"
-        },
-        "hasCertification": "Nusuk Registered Vehicle"
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": mercedesFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    }
-];
-
 export default async function MercedesSClassPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Mercedes%20S-Class%20for%20VIP%20Umrah`;
-
+    
     const mercedesId = 'mercedes';
-    const mercedesImage = '/images/fleet/mercedes-s-class-hero.png';
 
     return (
-        <main className="overflow-x-hidden bg-slate-50 dark:bg-slate-950">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-
-            {/* SECTION 1: HERO OVERVIEW */}
-            <Hero
-                title="Mercedes-Benz S-Class – Premium Umrah Transport Service"
-                subtitle="Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury as you travel between the Holy Cities."
-                bgImage={mercedesImage}
+        <main className="overflow-x-hidden bg-slate-50">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            
+            <VehicleHero
+                title="Mercedes-Benz S-Class | VIP Umrah Transport"
+                subtitle="Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury."
+                bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg"
                 badge="VIP Luxury Choice"
-                ctaText="Book via WhatsApp"
-                ctaLink={whatsappLink}
-                layout="center"
+                whatsappLink={whatsappLink}
+                quickSpecs={["3 Passengers", "2-3 Suitcases", "Thermotronic AC", "Executive Luxury"]}
                 breadcrumbs={<Breadcrumbs />}
             />
 
-            {/* SECTION 5: PRICING STRUCTURE (Moved up for conversion optimization) */}
-            <FleetPricingGrid
-                vehicleId={mercedesId}
-                vehicleImage="/images/fleet/mercedes.png"
-                vehicleType="mercedes"
-                title="Transparent VIP Pricing"
-                subtitle="Executive class transportation with fixed rates for per trip and per route transfers."
+            <VehicleOverview
+                title="Uncompromising Luxury & Technology"
+                description="The Mercedes-Benz S-Class sets the global standard for VIP transport, ensuring that your Umrah pilgrimage is physically effortless and spiritually focused. The physical demands of Umrah require periods of profound rest, and the S-Class provides an unmatched sanctuary of peace with its legendary silent cabin and AIRMATIC suspension."
+                modelYear="Latest"
+                passengers={3}
+                luggage="2-3 Large Bags"
+                tech="Burmester® 3D & MBUX"
+                fuel="Hybrid & V6 Options"
+                bookLink={whatsappLink}
+                mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.jpeg"
+                fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg"
             />
 
-            {/* SECTION 2: VEHICLE HIGHLIGHTS */}
-            <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
-                <div className="container mx-auto px-4">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                            Uncompromising Luxury & Technology
-                        </h2>
-                        <p className="text-slate-600 dark:text-slate-400 text-lg">
-                            The Mercedes-Benz S-Class sets the global standard for VIP transport, ensuring that your Umrah pilgrimage is physically effortless and spiritually focused.
-                        </p>
-                    </div>
+            <VehicleGallery 
+                title="Explore the Vehicle"
+                images={galleryImages} 
+            />
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {[
-                            { icon: Users, title: "Seating Capacity", desc: "3 Passengers" },
-                            { icon: Briefcase, title: "Luggage Capacity", desc: "2-3 Large Bags" },
-                            { icon: Star, title: "Comfort Features", desc: "Nappa Leather, Massage Seats" },
-                            { icon: Shield, title: "Safety Features", desc: "Pre-Safe® Technology" },
-                            { icon: Zap, title: "Technology", desc: "MBUX, 3D Surround Sound" },
-                            { icon: Award, title: "Ride Quality", desc: "Silent Cabin, AIRMATIC Suspension" },
-                            { icon: MapPin, title: "Fuel Efficiency", desc: "Hybrid & V6 Options" },
-                            { icon: CheckCircle2, title: "Climate Control", desc: "4-Zone Thermotronic" },
-                        ].map((feature, idx) => (
-                            <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-700">
-                                <feature.icon className="text-amber-500 mb-4" size={32} />
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400">{feature.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <VehicleSpecs specs={specs} />
 
-            {/* SECTION 3: IDEAL USE CASES */}
-            <section className="py-20 bg-slate-100 dark:bg-slate-950">
-                <div className="container mx-auto px-4">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-8 font-playfair text-slate-800 dark:text-white">
-                                Ideal For VIP Pilgrims & Executives
-                            </h2>
-                            <ul className="space-y-6">
-                                {[
-                                    { title: "VIP Pilgrims & Scholars", desc: "Ensure absolute privacy and dignity during spiritual travel." },
-                                    { title: "Couples & Small Families", desc: "Perfect for a husband and wife seeking an intimate, luxurious journey." },
-                                    { title: "Jeddah Airport Pickup", desc: "Start your Umrah with a premium meet-and-greet executive transfer." },
-                                    { title: "Makkah ↔ Madinah Routes", desc: "Transform a 4.5-hour highway drive into a restful, silent retreat." },
-                                    { title: "Exclusive Ziyarat Tours", desc: "Visit historical Islamic sites in Makkah and Madinah with ultimate prestige." },
-                                ].map((useCase, idx) => (
-                                    <li key={idx} className="flex gap-4 items-start">
-                                        <div className="bg-amber-500/20 p-2 rounded-full mt-1 shrink-0">
-                                            <CheckCircle2 className="text-amber-600 dark:text-amber-400" size={20} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-lg text-slate-900 dark:text-slate-100">{useCase.title}</h4>
-                                            <p className="text-slate-600 dark:text-slate-400">{useCase.desc}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="order-1 lg:order-2 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                            <FleetFeatureImage
-                                src="/images/fleet/mercedes-s-class-hero.png"
-                                alt="Mercedes S-Class VIP Interior"
-                                fallbackSrc={mercedesImage}
-                                className="object-cover w-full h-full"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <VehicleFeatures features={features} />
 
-            {/* SECTION 4: DETAILED SPECIFICATIONS TABLE */}
-            <section className="py-20 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-800 dark:text-white">Detailed Specifications</h2>
-                    <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">
-                        <table className="w-full text-left border-collapse">
-                            <tbody>
-                                {[
-                                    ['Engine', '3.0L V6 Turbocharged / V8 Options'],
-                                    ['Transmission', '9G-TRONIC 9-Speed Automatic'],
-                                    ['Seating', '3 Adult Passengers (Executive Configuration)'],
-                                    ['Luggage', '2-3 Large Bags (500L Trunk Space)'],
-                                    ['AC System', '4-Zone Automatic Climate Control (Thermotronic)'],
-                                    ['Safety', 'Pre-Safe®, Active Distance Assist, 9 Airbags'],
-                                    ['Entertainment', 'MBUX Tablet, Burmester® 3D Surround Sound'],
-                                    ['Suspension', 'AIRMATIC Air Suspension with Adaptive Damping'],
-                                    ['Doors', '4 Doors with Soft-Close Function'],
-                                    ['Interior Type', 'Exclusive Nappa Leather with Ambient Lighting'],
-                                ].map((row, idx) => (
-                                    <tr key={idx} className="border-b border-slate-200 dark:border-slate-700 last:border-0 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors">
-                                        <th className="p-4 font-bold text-slate-700 dark:text-slate-300 w-1/3 bg-slate-100/50 dark:bg-slate-800/50">{row[0]}</th>
-                                        <td className="p-4 text-slate-600 dark:text-slate-400">{row[1]}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+            <VehicleUseCases cases={useCases} />
 
-            {/* SECTION 6: WHY CHOOSE THIS VEHICLE */}
-            <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern-islamic.png')] bg-repeat"></div>
-                <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-amber-500">
-                        Why Choose the S-Class for Umrah?
-                    </h2>
-                    <p className="text-xl leading-relaxed text-slate-300 mb-10">
-                        The physical demands of Umrah require periods of profound rest. The Mercedes-Benz S-Class provides an unmatched sanctuary of peace. Its legendary silent cabin blocks out highway noise, while the advanced air suspension glides over road imperfections. For VIPs and families seeking ultimate reliability, comfort, and a smooth long-route performance across Saudi Arabia, there is simply no alternative.
-                    </p>
-                </div>
-            </section>
+            <div className="py-16 bg-white dark:bg-slate-900">
+                <FleetPricingGrid
+                    vehicleId={mercedesId}
+                    vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-vip-transport.jpeg"
+                    vehicleType="mercedes"
+                    title="Transparent VIP Pricing"
+                    subtitle="Executive class transportation with fixed rates for all transfers."
+                />
+            </div>
 
-            {/* SECTION 7: BOOKING CTA */}
-            <section className="py-16 bg-amber-500 text-slate-900">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 font-playfair">Reserve Your VIP Experience Today</h2>
-                    <p className="mb-8 font-medium max-w-2xl mx-auto">Book the Mercedes-Benz S-Class now for your upcoming Umrah journey. Available for Jeddah airport pickups and intercity transfers.</p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all shadow-xl hover:scale-105">
-                            Book via WhatsApp <ArrowRight size={20} />
-                        </a>
-                        <Link href="/booking" className="inline-flex items-center justify-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-bold hover:bg-slate-100 transition-all shadow-xl hover:scale-105">
-                            Book Online Now
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            <FleetCarouselWrapper />
+            <VehicleReviews reviews={mercedesReviews} />
 
             <FAQSection items={mercedesFAQs} title="Mercedes S-Class VIP Rental - Frequently Asked Questions" />
+
+            <VehicleCTA 
+                whatsappLink={whatsappLink}
+                phoneNumber={phoneNumber}
+            />
         </main>
     );
 }
+

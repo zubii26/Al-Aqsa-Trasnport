@@ -1,54 +1,135 @@
 import type { Metadata } from "next";
-import Hero from '@/components/common/Hero';
-import Breadcrumbs from '@/components/common/Breadcrumbs';
-import Link from 'next/link';
-import { ArrowRight, Shield, Star, Briefcase, Users, Wifi, Fuel } from 'lucide-react';
-import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
+import FAQSection from '@/components/services/FAQSection';
 import FleetPricingGrid from '@/components/fleet/FleetPricingGrid';
-import FleetFeatureImage from '@/components/fleet/FleetFeatureImage';
-import dynamic from 'next/dynamic';
-
-const Interior360Viewer = dynamic(() => import('@/components/fleet/Interior360Viewer'), {
-    loading: () => <div className="h-[500px] w-full bg-slate-900 rounded-3xl animate-pulse flex items-center justify-center text-slate-500">Loading 3D View...</div>
-});
-
+import { Star, Shield, Map, Clock, Users, UserCheck } from 'lucide-react';
 import pricingData from '@/data/pricing.json';
+
+// Master Components
+import VehicleHero from '@/components/fleet/vehicle/VehicleHero';
+import VehicleOverview from '@/components/fleet/vehicle/VehicleOverview';
+import VehicleGallery from '@/components/fleet/vehicle/VehicleGallery';
+import VehicleSpecs from '@/components/fleet/vehicle/VehicleSpecs';
+import VehicleFeatures from '@/components/fleet/vehicle/VehicleFeatures';
+import VehicleUseCases from '@/components/fleet/vehicle/VehicleUseCases';
+import VehicleReviews from '@/components/fleet/vehicle/VehicleReviews';
+import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'staria');
 
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": vehicleData?.seo?.title || "Hyundai Staria 2024 Luxury Van",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/staria-hero-professional.png",
-    "description": vehicleData?.seo?.description || "Rent premium Hyundai Staria 2024 in Makkah. Luxury 7-seater van with panoramic views for VIP families.",
+    "name": "Hyundai Staria 2024 Luxury Van Makkah",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg",
+    "description": "Premium Hyundai Staria VIP 7-Seater Van for Umrah. Reliable, comfortable luxury transport for families from Jeddah Airport to Makkah and Madinah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
-    "offers": { "@type": "Offer", "price": "450", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
+    "offers": { 
+        "@type": "Offer", 
+        "price": "450", 
+        "priceCurrency": "SAR", 
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.alaqsaumrahtransport.com/fleet/hyundai-staria"
+    },
     "hasCertification": "Nusuk Registered Vehicle"
 };
 
 export const metadata: Metadata = {
     title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
-    description: "Rent Hyundai Staria 2025 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
-    keywords: [
-        "Hyundai Staria Rental Makkah",
-        "Family Van for Umrah",
-        "Hyundai Staria Jeddah Airport",
-        "7 Seater Taxi Makkah",
-        "Luxury Van Rental Saudi Arabia",
-        "هيونداي ستاريا مكة",
-        "تاكسي عائلي جدة",
-        "سيارة عائلية للعمرة"
-    ],
+    description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
+    keywords: ["Hyundai Staria Rental Makkah", "Family Van for Umrah", "Hyundai Staria Jeddah Airport", "7 Seater Taxi Makkah", "Luxury Van Rental Saudi Arabia"],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/hyundai-staria' },
     openGraph: {
         title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
-        description: "Rent Hyundai Staria 2025 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
-        images: [{ url: '/images/fleet/staria-hero-professional.png', width: 1200, height: 630, alt: 'Hyundai Staria VIP Van' }]
+        description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families.",
+        images: [{ url: '/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg', width: 1200, height: 630, alt: 'Hyundai Staria Umrah Taxi' }]
     }
 };
+
+const galleryImages = [
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg', alt: 'Hyundai Staria Front View' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.jpeg', alt: 'Premium Interior Dashboard' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-profile.jpeg', alt: 'Staria Exterior Profile' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-rear-trunk-space.jpeg', alt: 'Spacious Luggage Capacity' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-vip-leather-seat.jpeg', alt: 'Passenger VIP Seats' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-led-headlight.jpeg', alt: 'LED Headlight Design' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-spacious-passenger-seating.jpeg', alt: 'Comfortable Passenger Seats' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-full-rear-view-taxi.jpeg', alt: 'Rear Design' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-back-door-umrah-taxi.jpeg', alt: 'Back Door Access' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-taillight-detail.jpeg', alt: 'Taillight Detail' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-alloy-wheel-design.jpeg', alt: 'Alloy Wheels' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-open-door-interior-access.jpeg', alt: 'Wide Door Access' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.jpeg', alt: 'Staria on the Highway' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-exterior-view.jpeg', alt: 'Wide Side Exterior' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-angle.jpeg', alt: 'Dashboard Angle Detail' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-desert-road-trip.jpeg', alt: 'Desert Road Journey' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-cinematic-night-view.jpeg', alt: 'Cinematic Night View' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-roof-view.jpeg', alt: 'Roof View' },
+];
+
+const specs = [
+    { label: "Engine & Power", value: "3.5L V6 MPi", subValue: "272 Horsepower" },
+    { label: "Transmission", value: "8-Speed Automatic", subValue: "Smooth Transitions" },
+    { label: "Seating Capacity", value: "7 Passengers", subValue: "Including Driver" },
+    { label: "Luggage Capacity", value: "6 Large Bags", subValue: "Flexible Space" },
+    { label: "Fuel Efficiency", value: "High Economy", subValue: "Smart Dynamics" },
+    { label: "Air Conditioning", value: "Diffused Air Vents", subValue: "Roof-mounted AC" },
+    { label: "Entertainment", value: "Premium Display", subValue: "Bluetooth Audio" },
+    { label: "Safety Rating", value: "Smart Sense", subValue: "ADAS Suite Included" },
+];
+
+const features = [
+    "Expansive panoramic windows for spectacular views.",
+    "Lounge-style VIP seating with generous legroom.",
+    "Diffused rear air conditioning ensuring comfort for all passengers.",
+    "Smart safety system including advanced collision detection.",
+    "Dual electronic sliding doors for effortless entry and exit.",
+    "Ultra-low floor design, perfect for elderly pilgrims.",
+    "Extensive vertical cargo space fitting multiple large suitcases.",
+    "USB charging ports available at every seat row.",
+    "Futuristic, aerodynamic profile offering a quiet ride.",
+    "Nusuk-approved and licensed for all Umrah and Ziyarat routes."
+];
+
+const useCases = [
+    {
+        title: "Family Jeddah Airport Pickups",
+        description: "A seamless transition from the airport for families or groups. Ample space for 7 passengers and heavy luggage without feeling cramped.",
+        icon: Map
+    },
+    {
+        title: "Comfortable Intercity Travel",
+        description: "The 4-5 hour journey between Makkah and Madinah feels like a breeze in this lounge-like environment with panoramic views.",
+        icon: Clock
+    },
+    {
+        title: "VIP Ziyarat Tours",
+        description: "Experience the historical sites with unmatched visibility through the expansive windows, while enjoying supreme air-conditioned comfort.",
+        icon: Shield
+    }
+];
+
+const stariaReviews = [
+    {
+        name: "Usman A.",
+        rating: 5,
+        text: "The Staria looks like a spaceship and rides incredibly smoothly. Our family of 6 had so much room, and the driver was exceptional during our Makkah-Madinah trip.",
+        location: "UK"
+    },
+    {
+        name: "Hassan T.",
+        rating: 5,
+        text: "Perfect for our group! We had a lot of luggage arriving at Jeddah airport, and the Staria fit everything effortlessly. The seats are very comfortable.",
+        location: "Egypt"
+    },
+    {
+        name: "Aisha M.",
+        rating: 5,
+        text: "My elderly parents found it very easy to get in and out because of the sliding doors and low floor. Highly recommend for families traveling with seniors.",
+        location: "South Africa"
+    }
+];
 
 const stariaFAQs = [
     {
@@ -63,182 +144,81 @@ const stariaFAQs = [
         question: "What is the difference between Staria and H1?",
         answer: "The Staria is the modern successor to the H1. It features better safety tech, more comfortable seating, and a more spacious futuristic interior."
     },
+    {
+        question: "Does the vehicle have air conditioning for the back rows?",
+        answer: "Yes, the Hyundai Staria features diffused roof-mounted air conditioning vents that ensure cool, comfortable air reaches every row of passengers."
+    },
+    {
+        question: "Can it accommodate a wheelchair?",
+        answer: "Yes, the Staria's low floor height and wide sliding doors make it relatively easy to store a folded wheelchair in the luggage area."
+    }
 ];
 
 export default async function HyundaiStariaPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Hyundai%20Staria%20for%20Umrah`;
-
-    // Hyundai Staria ID: 692db09834f15bc89b45a5f9
+    
     const stariaId = '692db09834f15bc89b45a5f9';
-    const stariaImage = '/images/fleet/staria-hero-professional.png';
 
     return (
-        <main className="overflow-x-hidden">
+        <main className="overflow-x-hidden bg-slate-50">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-            <Hero
-                title="Hyundai Staria 2024 | Premium Umrah Transport"
+            
+            <VehicleHero
+                title="Hyundai Staria VIP Transport"
                 subtitle="The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."
-                bgImage={stariaImage}
+                bgImage="/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.jpeg"
                 badge="Futuristic Choice"
-                ctaText="Book via WhatsApp"
-                ctaLink={whatsappLink}
-                layout="center"
+                whatsappLink={whatsappLink}
+                quickSpecs={["7 Passengers", "6-7 Bags", "Panoramic Views", "Smart Safety"]}
                 breadcrumbs={<Breadcrumbs />}
             />
 
-            <FleetPricingGrid
-                vehicleId={stariaId}
-                vehicleImage="/images/fleet/staria.png"
-                vehicleType="staria"
-                title="Hyundai Staria Rates | Jeddah, Makkah, Madinah"
-                subtitle="The perfect balance of modern luxury and group capacity. Ideal for families and small groups."
+            <VehicleOverview
+                title="Next-Generation Comfort for Umrah Families"
+                description="Enjoy panoramic views of the Holy Lands with the Hyundai Staria. Its lounge-style seating and cutting-edge safety features make the journey between Jeddah, Makkah, and Madinah incredibly relaxing for pilgrims seeking a premium group travel experience. It combines exceptional cargo space with unparalleled aesthetic appeal."
+                modelYear="2024"
+                passengers={7}
+                luggage="6-7 Bags"
+                tech="Premium Display"
+                fuel="High Economy"
+                bookLink={whatsappLink}
+                mainImage="/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.jpeg"
+                fallbackImage="/images/fleet/staria.png"
             />
 
-            {/* Vehicle Highlights */}
-            <section className="py-16 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
-                            <FleetFeatureImage
-                                src="/images/fleet/staria-feature.png"
-                                alt="Hyundai Staria Exterior"
-                                fallbackSrc={stariaImage}
-                                className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
-                            />
-                            <div className="absolute bottom-4 left-4 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold">
-                                Next-Gen Van
-                            </div>
-                        </div>
-                        <div>
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
-                                Experience Luxury: Hyundai Staria in Makkah
-                            </h2>
-                            <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                                Enjoy panoramic views of the Holy Lands with the Hyundai Staria. Its lounge-style seating makes the journey between Jeddah, Makkah, and Madinah
-                                incredibly relaxing for pilgrims seeking a premium travel experience.
-                            </p>
+            <VehicleGallery 
+                title="Explore the Vehicle"
+                images={galleryImages} 
+            />
 
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                        <Users className="text-blue-500" size={20} /> 7 Passengers
-                                    </div>
-                                    <p className="text-sm text-slate-500">Ample legroom for all rows</p>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                        <Briefcase className="text-blue-500" size={20} /> 6 Suitcases
-                                    </div>
-                                    <p className="text-sm text-slate-500">Expansive vertical cargo space</p>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                        <Wifi className="text-blue-500" size={20} /> USB Chargers
-                                    </div>
-                                    <p className="text-sm text-slate-500">Available at every seat</p>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                        <Shield className="text-blue-500" size={20} /> Smart Safety
-                                    </div>
-                                    <p className="text-sm text-slate-500">Advanced 360 collision detection</p>
-                                </div>
-                            </div>
+            <VehicleSpecs specs={specs} />
 
-                            <div className="mt-10">
-                                <Link href="/booking" className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 px-8 py-3 rounded-full font-bold transition-all border border-blue-500/20 shadow-lg shadow-blue-500/10">
-                                    Book Hyundai Staria <ArrowRight size={20} />
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <VehicleFeatures features={features} />
 
-            {/* Detailed Specifications */}
-            <section className="py-12 bg-slate-50 dark:bg-slate-950">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-900 dark:text-white">Technical Specifications</h2>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Engine & Power</h3>
-                            <p className="font-bold text-xl text-slate-900 dark:text-white">3.5L V6 MPi</p>
-                            <p className="text-sm text-slate-400">272 Horsepower</p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Comfort Control</h3>
-                            <p className="font-bold text-xl text-slate-900 dark:text-white">Diffused Air Vents</p>
-                            <p className="text-sm text-slate-400">Roof-mounted AC</p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Luggage Capacity</h3>
-                            <p className="font-bold text-xl text-slate-900 dark:text-white">Flexible Space</p>
-                            <p className="text-sm text-slate-400">Foldable Rear Seats</p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Safety Tech</h3>
-                            <p className="font-bold text-xl text-slate-900 dark:text-white">Smart Sense</p>
-                            <p className="text-sm text-slate-400">ADAS Suite Included</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <VehicleUseCases cases={useCases} />
 
-            {/* 360 Interior Preview (Placeholder) */}
-            <section className="py-16 bg-slate-900 text-white overflow-hidden relative">
-                <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    <span className="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4 block">Future of Travel</span>
-                    <h2 className="text-3xl md:text-5xl font-bold font-playfair mb-8">Step Inside</h2>
+            <div className="py-16 bg-white dark:bg-slate-900">
+                <FleetPricingGrid
+                    vehicleId={stariaId}
+                    vehicleImage="/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg"
+                    vehicleType="staria"
+                    title="Hyundai Staria Rates | Jeddah, Makkah, Madinah"
+                    subtitle="The perfect balance of modern luxury and group capacity. Ideal for families and small groups."
+                />
+            </div>
 
-                    <div className="max-w-6xl mx-auto">
-                        <Interior360Viewer
-                            imageUrl="/images/fleet/staria-interior-360.jpg"
-                            title="Hyundai Staria Premium Interior"
-                        />
-                    </div>
-                    <p className="text-slate-400 mt-6 text-sm">Interactive 360° Interior View not available on mobile devices in low-data mode.</p>
-                </div>
-            </section>
-
-            {/* Use Cases */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-950">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Why Families Love The Staria</h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                title: "Panoramic Views",
-                                desc: "Large windows let you enjoy the scenic mountains and desert landscapes between Makkah and Madinah.",
-                                icon: Star
-                            },
-                            {
-                                title: "Easy Entry/Exit",
-                                desc: "Dual electronic sliding doors and lower floor height make it perfect for elderly pilgrims.",
-                                icon: Users
-                            },
-                            {
-                                title: "Futuristic Design",
-                                desc: "Arrive at your hotel in style with the most eye-catching van on the Saudi highways.",
-                                icon: Shield
-                            }
-                        ].map((item, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border-t-4 border-blue-500 transition-transform hover:-translate-y-1">
-                                <item.icon className="w-10 h-10 text-blue-500 mb-4" />
-                                <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">{item.title}</h3>
-                                <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <FleetCarouselWrapper />
+            <VehicleReviews reviews={stariaReviews} />
 
             <FAQSection items={stariaFAQs} title="Hyundai Staria - Frequently Asked Questions" />
+
+            <VehicleCTA 
+                whatsappLink={whatsappLink}
+                phoneNumber={phoneNumber}
+            />
         </main>
     );
 }
+
 
