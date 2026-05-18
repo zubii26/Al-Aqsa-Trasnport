@@ -68,7 +68,7 @@ export default function LoginPage() {
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/images/contact-hero.jpg"
+                    src="/images/contact-hero.webp"
                     alt="Background"
                     fill
                     className="object-cover opacity-40"

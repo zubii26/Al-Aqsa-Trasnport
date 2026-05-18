@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",
         description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup, meet & greet service.",
-        images: [{ url: '/images/routes/madinah-airport-hero.png', width: 1200, height: 630, alt: 'Madinah Airport Transfer Service' }]
+        images: [{ url: '/images/routes/madinah-airport-hero.webp', width: 1200, height: 630, alt: 'Madinah Airport Transfer Service' }]
     }
 };
 
@@ -85,7 +85,7 @@ export default async function MadinahAirportPage() {
             <Hero
                 title="Madinah Airport (MED) Transfers"
                 subtitle="Start your visit to the Prophet's City with peace of mind. Reliable meet & greet service from Prince Mohammad Bin Abdulaziz Airport."
-                bgImage="/images/routes/madinah-airport-hero.png"
+                bgImage="/images/routes/madinah-airport-hero.webp"
                 ctaText="Book Airport Pickup"
                 ctaLink={whatsappLink}
                 layout="center"

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Umrah Transport Routes Network | Al Aqsa Transport",
         description: "Connect seamlessly between Holy Cities. VIP Jeddah to Makkah, Makkah to Madinah. تنقل بسهولة بين المدن المقدسة.",
-        images: [{ url: '/images/routes/routes-network-hero.png', width: 1200, height: 630, alt: 'Saudi Arabia Transport Network Map' }]
+        images: [{ url: '/images/routes/routes-network-hero.webp', width: 1200, height: 630, alt: 'Saudi Arabia Transport Network Map' }]
     }
 };
 
@@ -72,7 +72,7 @@ const ROUTES = [
         features: ['Meet & Greet', 'Flight Monitoring', 'Luggage Assistance'],
         featuresAr: ['خدمة استقبال', 'متابعة الرحلات', 'مساعدة في الحقائب'],
         link: '/services/jeddah-airport-transfer',
-        image: '/images/routes/jeddah-airport-hero-professional.png'
+        image: '/images/routes/jeddah-airport-hero-professional.webp'
     },
     {
         id: 'makkah-madinah',
@@ -86,7 +86,7 @@ const ROUTES = [
         features: ['Miqat Stop', 'Premium Comfort', 'Rest Stops Available'],
         featuresAr: ['توقف للميقات', 'سيارات فارهة', 'استراحات طريق'],
         link: '/services/makkah-madinah-taxi',
-        image: '/images/routes/makkah-madinah-route-hero.png'
+        image: '/images/routes/makkah-madinah-route-hero.webp'
     },
     {
         id: 'madinah-airport',
@@ -100,7 +100,7 @@ const ROUTES = [
         features: ['24/7 Service', 'Door-to-Door', 'Family Friendly'],
         featuresAr: ['خدمة 24/7', 'توصيل لباب الفندق', 'مناسب للعوائل'],
         link: '/services/madinah-airport-transfer',
-        image: '/images/routes/madinah-airport-hero.png'
+        image: '/images/routes/madinah-airport-hero.webp'
     },
     {
         id: 'ziyarat-makkah',
@@ -114,7 +114,7 @@ const ROUTES = [
         features: ['Historical Insight', 'Flexible Timing', 'Private Vehicle'],
         featuresAr: ['معلومات تاريخية', 'وقت مرن', 'سيارة خاصة'],
         link: '/services/ziyarat-tours',
-        image: '/images/routes/makkah-ziyarat-hero.png'
+        image: '/images/routes/makkah-ziyarat-hero.webp'
     },
     {
         id: 'jeddah-madinah',
@@ -128,7 +128,7 @@ const ROUTES = [
         features: ['Direct Route', 'Maximum Comfort', 'Refreshments'],
         featuresAr: ['طريق مباشر', 'راحة قصوى', 'مشروبات ضيافة'],
         link: '/services/intercity-transfer',
-        image: '/images/fleet/intercity-hero.png'
+        image: '/images/fleet/intercity-hero.webp'
     }
 ];
 
@@ -142,7 +142,7 @@ export default function RoutesPage() {
             <Hero
                 title="Our Transport Network"
                 subtitle="Connecting the Holy Cities with comfort. Your journey of faith deserves the best path. شبكة مواصلات شاملة لخدمة ضيوف الرحمن."
-                bgImage="/images/routes/routes-network-hero.png"
+                bgImage="/images/routes/routes-network-hero.webp"
                 breadcrumbs={<Breadcrumbs />}
             />
 

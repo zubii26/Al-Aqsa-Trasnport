@@ -146,7 +146,7 @@ export default function ExpandedSEOContent() {
                                 </div>
                                 <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden shadow-xl border border-border/50">
                                     <Image
-                                        src="/images/fleet/gmc-yukon-hero-professional.png"
+                                        src="/images/fleet/gmc-yukon-hero-professional.webp"
                                         alt="Luxury GMC Yukon for Umrah Transport"
                                         fill
                                         className="object-cover"

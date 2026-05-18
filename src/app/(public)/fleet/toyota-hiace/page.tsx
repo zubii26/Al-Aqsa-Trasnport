@@ -21,7 +21,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": vehicleData?.seo?.title || "Toyota Hiace 12-Seater Bus Rental",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/hiace-hero-professional.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/hiace-hero-professional.webp",
     "description": vehicleData?.seo?.description || "Rent Toyota Hiace bus in Makkah. Reliable 12-seater transport for Umrah groups and large families.",
     "brand": { "@type": "Brand", "name": "Toyota" },
     "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
         description: "Book Toyota Hiace 12-seater bus for Umrah groups. Affordable transport from Jeddah Airport to Makkah & Madinah. Reliable & spacious.",
-        images: [{ url: '/images/fleet/hiace-hero-professional.png', width: 1200, height: 630, alt: 'Toyota Hiace Bus' }]
+        images: [{ url: '/images/fleet/hiace-hero-professional.webp', width: 1200, height: 630, alt: 'Toyota Hiace Bus' }]
     }
 };
 
@@ -71,7 +71,7 @@ export default async function ToyotaHiacePage() {
 
     // Toyota Hiace ID: 692db09834f15bc89b45a5fb
     const hiaceId = '692db09834f15bc89b45a5fb';
-    const hiaceImage = '/images/fleet/hiace-hero-professional.png';
+    const hiaceImage = '/images/fleet/hiace-hero-professional.webp';
 
     return (
         <main className="overflow-x-hidden">
@@ -88,7 +88,7 @@ export default async function ToyotaHiacePage() {
 
             <FleetPricingGrid
                 vehicleId={hiaceId}
-                vehicleImage="/images/fleet/hiace.png"
+                vehicleImage="/images/fleet/hiace.webp"
                 vehicleType="hiace"
                 title="Toyota Hiace Rates | Jeddah, Makkah, Madinah"
                 subtitle="Spacious seating for up to 10 passengers. Perfect for large families and groups."
@@ -193,7 +193,7 @@ export default async function ToyotaHiacePage() {
 
                     <div className="max-w-6xl mx-auto">
                         <Interior360Viewer
-                            imageUrl="/images/fleet/hiace-interior-360.jpg"
+                            imageUrl="/images/fleet/hiace-interior-360.webp"
                             title="Toyota Hiace Interior"
                         />
                     </div>

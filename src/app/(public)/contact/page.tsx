@@ -104,7 +104,7 @@ export default async function ContactPage() {
             <Hero
                 title="Get in Touch | تواصل معنا"
                 subtitle="Reliable Booking & 24/7 Support for Your Umrah Journey. Premium Transport Services from Makkah to Madinah."
-                bgImage="/images/contact-hero.jpg"
+                bgImage="/images/contact-hero.webp"
                 breadcrumbs={<Breadcrumbs />}
             />
 

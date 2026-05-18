@@ -11,21 +11,21 @@ export default function Leadership() {
             id: 1,
             name: "Abdul Rahman",
             role: "Senior Chauffeur",
-            image: "/images/team/team-1.jpg",
+            image: "/images/team/team-1.webp",
             socials: { linkedin: "#", twitter: "#", email: "#" }
         },
         {
             id: 2,
             name: "Fatima Al-Zahra",
             role: "Customer Care Lead",
-            image: "/images/team/team-2.jpg",
+            image: "/images/team/team-2.webp",
             socials: { linkedin: "#", twitter: "#", email: "#" }
         },
         {
             id: 3,
             name: "Mohammed Ali",
             role: "Logistics Manager",
-            image: "/images/team/team-3.jpg",
+            image: "/images/team/team-3.webp",
             socials: { linkedin: "#", twitter: "#", email: "#" }
         }
     ];

@@ -31,7 +31,7 @@ export default function PassengerCare() {
                                 <div className="absolute inset-0 bg-pink-500/10 rounded-3xl transform rotate-3 scale-105" />
                                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/images/blog/solo-sister-travel.jpg"
+                                        src="/images/blog/solo-sister-travel.webp"
                                         alt="Safe transport for female travelers"
                                         fill
                                         loading="lazy"
@@ -93,7 +93,7 @@ export default function PassengerCare() {
                                 <div className="absolute inset-0 bg-blue-500/10 rounded-3xl transform -rotate-3 scale-105" />
                                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/images/blog/family-umrah-transport.png"
+                                        src="/images/blog/family-umrah-transport.webp"
                                         alt="Spacious family transport for Umrah"
                                         fill
                                         loading="lazy"
@@ -155,7 +155,7 @@ export default function PassengerCare() {
                                 <div className="absolute inset-0 bg-amber-500/10 rounded-3xl transform rotate-3 scale-105" />
                                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/images/blog/elderly-care-gmc.jpg"
+                                        src="/images/blog/elderly-care-gmc.webp"
                                         alt="Assisted transport for elderly pilgrims"
                                         fill
                                         loading="lazy"

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Ziyarat Makkah Madinah Tours | Historical Site Visits",
         description: "Guided private tours to Jabal Al-Nour, Masjid Quba, Mount Uhud, and more. deeply spiritual experience with knowledgeable drivers.",
-        images: [{ url: '/images/routes/makkah-ziyarat-hero.png', width: 1200, height: 630, alt: 'Jabal Al-Nour Makkah Ziyarat' }]
+        images: [{ url: '/images/routes/makkah-ziyarat-hero.webp', width: 1200, height: 630, alt: 'Jabal Al-Nour Makkah Ziyarat' }]
     }
 };
 
@@ -105,7 +105,7 @@ export default async function ZiyaratToursPage() {
             <Hero
                 title="Ziyarat Tours: Relive Islamic History"
                 subtitle="Walk in the footsteps of the Prophet (SAW). Comprehensive engaging tours of the holy sites in Makkah and Madinah."
-                bgImage="/images/routes/makkah-ziyarat-hero.png"
+                bgImage="/images/routes/makkah-ziyarat-hero.webp"
                 ctaText="Book Ziyarat Tour"
                 ctaLink={whatsappLink}
                 layout="center"

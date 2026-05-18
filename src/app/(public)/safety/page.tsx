@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "Safety Standards | Al Aqsa Umrah Transport | الأمان والراحة",
         description: "Verified drivers, sanitized vehicles, and 24/7 support. Travel with peace of mind. رحلة آمنة ومريحة مع الأقصى للنقل.",
-        images: ['/images/blog/comfort-safety-new.png'],
+        images: ['/images/blog/comfort-safety-new.webp'],
     }
 };
 
@@ -26,7 +26,7 @@ export default function SafetyPage() {
             <Hero
                 title="Your Safety, Our Sacred Duty"
                 subtitle="We view your safety not just as a standard, but as an Amanah (Trust) we carry for every pilgrim."
-                bgImage="/images/blog/comfort-safety-new.png"
+                bgImage="/images/blog/comfort-safety-new.webp"
             />
 
             {/* Trust Signals Bar */}

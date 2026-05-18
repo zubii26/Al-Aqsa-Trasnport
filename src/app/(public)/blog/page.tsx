@@ -74,7 +74,7 @@ export default async function BlogPage() {
             <Hero
                 title="Pilgrim Resources & Insights"
                 subtitle="Expert guides, travel tips, and answers to your questions for a blessed and hassle-free Umrah journey."
-                bgImage="/images/blog-hero-professional.png"
+                bgImage="/images/blog-hero-professional.webp"
                 breadcrumbs={<Breadcrumbs />}
             />
 

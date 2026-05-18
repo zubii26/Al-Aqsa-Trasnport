@@ -16,13 +16,13 @@ interface PricingContextType {
 const PricingContext = createContext<PricingContextType | undefined>(undefined);
 
 const VEHICLE_IMAGES: Record<string, string> = {
-    'camry': '/images/fleet/camry.png',
-    'gmc': '/images/fleet/gmc.png',
-    'staria': '/images/fleet/staria.png',
-    'starex': '/images/fleet/starex.png',
-    'hiace': '/images/fleet/hiace.png',
-    'coaster': '/images/fleet/coaster.png',
-    'default': '/images/fleet/camry.png'
+    'camry': '/images/fleet/camry.webp',
+    'gmc': '/images/fleet/gmc.webp',
+    'staria': '/images/fleet/staria.webp',
+    'starex': '/images/fleet/starex.webp',
+    'hiace': '/images/fleet/hiace.webp',
+    'coaster': '/images/fleet/coaster.webp',
+    'default': '/images/fleet/camry.webp'
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

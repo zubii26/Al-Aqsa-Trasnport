@@ -19,7 +19,7 @@ export const metadata = {
     openGraph: {
         title: "Makkah to Madinah Taxi & Intercity Transport | VIP Fleet",
         description: "Travel comfortably between Jeddah, Makkah, and Madinah. Premium private taxi service with experienced drivers.",
-        images: [{ url: '/images/routes/routes-network-hero.png', width: 1200, height: 630, alt: 'Saudi Arabia Intercity Transport Network' }]
+        images: [{ url: '/images/routes/routes-network-hero.webp', width: 1200, height: 630, alt: 'Saudi Arabia Intercity Transport Network' }]
     }
 };
 
@@ -111,7 +111,7 @@ export default async function IntercityTransferPage() {
             <Hero
                 title="Premium Intercity Travel"
                 subtitle="Journey between the Holy Cities via our interactive premium network. Explore routes and book your VIP transfer instantly."
-                bgImage="/images/routes/routes-network-hero.png"
+                bgImage="/images/routes/routes-network-hero.webp"
                 ctaText="Start Exploring"
                 ctaLink="#interactive-map"
                 backgroundChildren={<AnimatedMapBackground />}

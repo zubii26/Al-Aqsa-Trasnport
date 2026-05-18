@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Toyota Camry 2024 Taxi Makkah",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.jpg",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp",
     "description": "Premium Toyota Camry taxi for Umrah. Reliable, comfortable 4-seater sedan for Jeddah Airport to Makkah and Madinah transfers.",
     "brand": { "@type": "Brand", "name": "Toyota" },
     "offers": { 
@@ -43,29 +43,29 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Toyota Camry Umrah Taxi | Premium Transfers",
         description: "Premium Toyota Camry for your Umrah journey. Comfortable transfers between Jeddah, Makkah, and Madinah.",
-        images: [{ url: '/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.jpg', width: 1200, height: 630, alt: 'Toyota Camry Umrah Taxi' }]
+        images: [{ url: '/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp', width: 1200, height: 630, alt: 'Toyota Camry Umrah Taxi' }]
     }
 };
 
 const galleryImages = [
-    { src: '/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.jpg', alt: 'Toyota Camry Front View' },
-    { src: '/images/fleet/camry/toyota-camry-makkah-madinah-taxi-premium-interior.jpg', alt: 'Premium Interior View' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-car-exterior-profile.jpg', alt: 'Camry Exterior Profile' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-trunk-luggage-space.jpg', alt: 'Spacious Luggage Capacity' },
-    { src: '/images/fleet/camry/toyota-camry-jeddah-airport-taxi-legroom.jpg', alt: 'Passenger Legroom' },
-    { src: '/images/fleet/camry/toyota-camry-private-taxi-dashboard-interior.jpg', alt: 'Modern Dashboard' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-passenger-seats.jpg', alt: 'Comfortable Passenger Seats' },
-    { src: '/images/fleet/camry/toyota-camry-makkah-taxi-rear-design.jpg', alt: 'Rear Design' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-transport-rear-view.jpg', alt: 'Full Rear View' },
-    { src: '/images/fleet/camry/toyota-camry-vip-umrah-taxi-front-hood.jpg', alt: 'Front Hood Detail' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-cab-alloys.jpg', alt: 'Alloy Wheels' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-transport-side-door.jpg', alt: 'Side Door Aesthetics' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-on-road-makkah.jpg', alt: 'Camry on the Road' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-side-profile.jpg', alt: 'Wide Side Profile' },
-    { src: '/images/fleet/camry/toyota-camry-makkah-taxi-steering-wheel.jpg', alt: 'Steering Wheel Detail' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-taif-route.jpg', alt: 'Taif Route Journey' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-transport-top-angle.jpg', alt: 'Top Angle View' },
-    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-roof-view.jpg', alt: 'Roof View' },
+    { src: '/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp', alt: 'Toyota Camry Front View' },
+    { src: '/images/fleet/camry/toyota-camry-makkah-madinah-taxi-premium-interior.webp', alt: 'Premium Interior View' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-car-exterior-profile.webp', alt: 'Camry Exterior Profile' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-trunk-luggage-space.webp', alt: 'Spacious Luggage Capacity' },
+    { src: '/images/fleet/camry/toyota-camry-jeddah-airport-taxi-legroom.webp', alt: 'Passenger Legroom' },
+    { src: '/images/fleet/camry/toyota-camry-private-taxi-dashboard-interior.webp', alt: 'Modern Dashboard' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-passenger-seats.webp', alt: 'Comfortable Passenger Seats' },
+    { src: '/images/fleet/camry/toyota-camry-makkah-taxi-rear-design.webp', alt: 'Rear Design' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-transport-rear-view.webp', alt: 'Full Rear View' },
+    { src: '/images/fleet/camry/toyota-camry-vip-umrah-taxi-front-hood.webp', alt: 'Front Hood Detail' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-cab-alloys.webp', alt: 'Alloy Wheels' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-transport-side-door.webp', alt: 'Side Door Aesthetics' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-on-road-makkah.webp', alt: 'Camry on the Road' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-side-profile.webp', alt: 'Wide Side Profile' },
+    { src: '/images/fleet/camry/toyota-camry-makkah-taxi-steering-wheel.webp', alt: 'Steering Wheel Detail' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-taif-route.webp', alt: 'Taif Route Journey' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-transport-top-angle.webp', alt: 'Top Angle View' },
+    { src: '/images/fleet/camry/toyota-camry-umrah-taxi-roof-view.webp', alt: 'Roof View' },
 ];
 
 const specs = [
@@ -168,7 +168,7 @@ export default async function ToyotaCamryPage() {
             <VehicleHero
                 title="Toyota Camry Umrah Taxi"
                 subtitle="Premium 4-Seater Sedan for Umrah Families. Experience a quiet, smooth, and spiritually uplifting journey across Saudi Arabia."
-                bgImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.jpg"
+                bgImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                 badge="Most Popular Sedan"
                 whatsappLink={whatsappLink}
                 quickSpecs={["4 Passengers", "3-4 Bags", "Dual-Zone AC", "Premium Comfort"]}
@@ -184,8 +184,8 @@ export default async function ToyotaCamryPage() {
                 tech="Bluetooth & USB"
                 fuel="Highly Efficient"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/camry/toyota-camry-makkah-madinah-taxi-premium-interior.jpg"
-                fallbackImage="/images/fleet/camry-hero-professional.png"
+                mainImage="/images/fleet/camry/toyota-camry-makkah-madinah-taxi-premium-interior.webp"
+                fallbackImage="/images/fleet/camry-hero-professional.webp"
             />
 
             <VehicleGallery 
@@ -202,7 +202,7 @@ export default async function ToyotaCamryPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={camryId}
-                    vehicleImage="/images/fleet/camry/toyota-camry-umrah-car-exterior-profile.jpg"
+                    vehicleImage="/images/fleet/camry/toyota-camry-umrah-car-exterior-profile.webp"
                     vehicleType="camry"
                     title="Transparent Pricing"
                     subtitle="Competitive rates for premium service. Prices vary based on season and availability."

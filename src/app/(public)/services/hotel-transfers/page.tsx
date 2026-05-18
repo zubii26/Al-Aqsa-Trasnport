@@ -20,7 +20,7 @@ export default function HotelTransferPage() {
             <Hero
                 title="Premium Hotel Transfers"
                 subtitle="Seamless door-to-door transport between your hotel and the Holy Mosques in Makkah & Madinah."
-                bgImage="/images/services/hotel-transfer-real.jpg"
+                bgImage="/images/services/hotel-transfer-real.webp"
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
                 layout="center"
@@ -78,7 +78,7 @@ export default function HotelTransferPage() {
                     <div className="flex flex-col md:flex-row items-center gap-12">
                         <div className="flex-1 relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl">
                             <Image
-                                src="/images/services/intercity-transport.png" // Fallback/Shared image for context
+                                src="/images/services/intercity-transport.webp" // Fallback/Shared image for context
                                 alt="Makkah Hotel Transport"
                                 fill
                                 className="object-cover"

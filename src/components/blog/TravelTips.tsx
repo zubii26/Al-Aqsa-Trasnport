@@ -9,19 +9,19 @@ const tips = [
         title: "Book in Advance",
         description: "Especially during peak seasons like Ramadan and Hajj, booking your transport weeks ahead ensures availability and better rates.",
         icon: <Calendar size={28} />,
-        image: "/images/blog/tip-booking.png"
+        image: "/images/blog/tip-booking.webp"
     },
     {
         title: "Verify Licensing",
         description: "Always choose a licensed transport provider to ensure safety, insurance coverage, and professional service standards.",
         icon: <Shield size={28} />,
-        image: "/images/blog/tip-safety.png"
+        image: "/images/blog/tip-safety.webp"
     },
     {
         title: "Plan Ziyarat Routes",
         description: "Discuss your Ziyarat locations with your driver beforehand to optimize your route and save time for worship.",
         icon: <Map size={28} />,
-        image: "/images/blog/tip-route.png"
+        image: "/images/blog/tip-route.webp"
     }
 ];
 

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "50-Seater Luxury Bus | Large Group Umrah Transport",
         description: "The ultimate solution for large groups. Comfortable reclining seats, immense luggage capacity, and premium safety features for Hajj and Umrah travel.",
-        images: [{ url: '/images/fleet/large-bus-hero.png', width: 1200, height: 630, alt: '50-Seater Luxury Bus' }]
+        images: [{ url: '/images/fleet/large-bus-hero.webp', width: 1200, height: 630, alt: '50-Seater Luxury Bus' }]
     }
 };
 
@@ -62,7 +62,7 @@ const jsonLd = [
         "@context": "https://schema.org",
         "@type": "Product",
         "name": "50-Seater Luxury Bus Rental",
-        "image": "https://www.alaqsaumrahtransport.com/images/fleet/large-bus-hero.png",
+        "image": "https://www.alaqsaumrahtransport.com/images/fleet/large-bus-hero.webp",
         "description": "Rent a 50-seater luxury bus in Makkah & Madinah for comfortable and spacious large group Hajj & Umrah transport.",
         "brand": {
             "@type": "Brand",
@@ -97,7 +97,7 @@ export default async function LargeBusPage() {
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%2050%20Seater%20Bus`;
 
     const busId = 'large-bus';
-    const busImage = '/images/fleet/large-bus-hero.png';
+    const busImage = '/images/fleet/large-bus-hero.webp';
 
     return (
         <main className="overflow-x-hidden bg-slate-50 dark:bg-slate-950">
@@ -121,7 +121,7 @@ export default async function LargeBusPage() {
             {/* SECTION 5: PRICING STRUCTURE (Moved up for conversion optimization) */}
             <FleetPricingGrid
                 vehicleId={busId}
-                vehicleImage="/images/fleet/large-bus-hero.png"
+                vehicleImage="/images/fleet/large-bus-hero.webp"
                 vehicleType="large-bus"
                 title="Transparent Group Pricing"
                 subtitle="Highly cost-effective large scale transportation with fixed rates for group transfers."
@@ -190,7 +190,7 @@ export default async function LargeBusPage() {
                         </div>
                         <div className="order-1 lg:order-2 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                             <FleetFeatureImage
-                                src="/images/fleet/large-bus-hero.png"
+                                src="/images/fleet/large-bus-hero.webp"
                                 alt="50-Seater Luxury Bus Exterior"
                                 fallbackSrc={busImage}
                                 className="object-cover w-full h-full"

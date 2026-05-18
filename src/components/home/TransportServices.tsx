@@ -23,7 +23,7 @@ const services = [
         title: 'Intercity Transport',
         subtitle: 'Makkah • Madinah • Jeddah • Taif',
         description: 'Experience safe, comfortable travel between major Saudi cities. Our premium intercity transport ensures a smooth journey for pilgrims performing Umrah and Ziyarat. Punctual, reliable, and stress-free long-distance travel.',
-        image: '/images/services/intercity-transport.png',
+        image: '/images/services/intercity-transport.webp',
         icon: <Car size={32} />,
         link: '/services/intercity-transfer',
         whatsappMessage: 'Salam Al Aqsa, I am interested in Intercity Transport (Makkah-Madinah).',
@@ -35,7 +35,7 @@ const services = [
         subtitle: 'Jeddah (KAIA) • Madinah (Prince Mohammad)',
         description: 'Seamless pickup and drop-off from Jeddah and Madinah airports. We offer real-time flight tracking, professional meet-and-greet service, and luggage assistance for a stress-free arrival in the Holy Land.',
         icon: <Plane size={32} />,
-        image: '/images/services/airport-transfer-real.jpg',
+        image: '/images/services/airport-transfer-real.webp',
         link: '/services/airport-transfers',
         whatsappMessage: 'Salam Al Aqsa, I need an Airport Transfer (Jeddah/Madinah).',
         keywords: ['Jeddah Airport pickup', 'Madinah Airport transfer', 'Umrah airport transport']
@@ -46,7 +46,7 @@ const services = [
         subtitle: 'Door-to-Door • Makkah & Madinah Hotels',
         description: 'Quick and reliable transfers between your hotel and the Holy Mosques. Enjoy premium comfort and cleanliness, perfectly suitable for families, groups, and elderly pilgrims seeking ease of movement.',
         icon: <Building2 size={32} />,
-        image: '/images/services/hotel-transfer-real.jpg',
+        image: '/images/services/hotel-transfer-real.webp',
         link: '/services/hotel-transfers', // Updated link to new dedicated page
         whatsappMessage: 'Salam Al Aqsa, I need a Hotel Transfer in Makkah/Madinah.',
         keywords: ['hotel transfer Makkah', 'hotel shuttle Madinah', 'Umrah hotel transport']
@@ -57,7 +57,7 @@ const services = [
         subtitle: 'Historical Sites • Guided Tours',
         description: 'Enrich your Umrah with visits to sacred sites like Masjid Quba, Mount Uhud, and Cave Hira. Our knowledgeable drivers ensure you experience the history of Islam with comfort and convenience.',
         icon: <Building2 size={32} />, // Using Building2 as placeholder, ideally 'Landmark' or similar if available
-        image: '/images/blog/makkah-haram-view.jpg', // Fixed broken path
+        image: '/images/blog/makkah-haram-view.webp', // Fixed broken path
         link: '/services/ziyarat-tours',
         whatsappMessage: 'Salam Al Aqsa, I am interested in a Ziyarat Tour.',
         keywords: ['Makkah Ziyarat', 'Madinah Ziyarat', 'Islamic historical sites']
@@ -68,7 +68,7 @@ const services = [
         subtitle: '24/7 Availability • Tarawih & Qiyam',
         description: 'Specialized transport services for the Holy Month. We handle the heavy traffic during peak times so you can focus on your fasting and prayers. Pre-book to guarantee your ride.',
         icon: <Car size={32} />,
-        image: '/images/hero/ramadan-transport-hero.png',
+        image: '/images/hero/ramadan-transport-hero.webp',
         link: '/services/ramadan-transport',
         whatsappMessage: 'Salam Al Aqsa, I need transport during Ramadan.',
         keywords: ['Ramadan transport Makkah', 'Tarawih taxi', 'Ramadan 2026 transport']

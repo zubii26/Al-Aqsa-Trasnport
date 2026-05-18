@@ -88,7 +88,7 @@ export const blogPosts: BlogPost[] = [
         category: "دليل المعتمر",
         date: "Jan 01, 2025",
         readTime: "5 دقائق للقراءة",
-        image: "/images/routes/makkah-madinah-route-hero.png",
+        image: "/images/routes/makkah-madinah-route-hero.webp",
         alt: "Makkah to Madinah Transport - GMC Yukon on Highway",
         author: "فريق الأقصى",
         tags: ["نقل معتمرين", "مكة المدينة", "حجز تاكسي", "نصائح العمرة"]
@@ -128,7 +128,7 @@ export const blogPosts: BlogPost[] = [
         category: "Travel Guide",
         date: "Dec 30, 2024",
         readTime: "6 min read",
-        image: "/images/fleet/gmc-yukon-hero-professional.png",
+        image: "/images/fleet/gmc-yukon-hero-professional.webp",
         alt: "Private GMC Yukon Taxi vs Haramain Train for Umrah Transport",
         author: "Al Aqsa Team",
         tags: ["Haramain Train", "Private Taxi", "Makkah Transport", "Family Travel"]
@@ -157,7 +157,7 @@ export const blogPosts: BlogPost[] = [
         category: "Spiritual",
         date: "Nov 29, 2024",
         readTime: "8 min read",
-        image: "/images/blog/masjid-nabawi-view-new.png",
+        image: "/images/blog/masjid-nabawi-view-new.webp",
         alt: "Masjid an-Nabawi in Madinah - The Prophet's Mosque",
         author: "Sheikh Abdullah",
         tags: ["Prophet Muhammad", "Seerah", "Madinah", "Spirituality"]
@@ -195,7 +195,7 @@ export const blogPosts: BlogPost[] = [
         category: "Guide",
         date: "Nov 28, 2024",
         readTime: "6 min read",
-        image: "/images/blog/highway-journey-new.png",
+        image: "/images/blog/highway-journey-new.webp",
         alt: "Best Umrah transport service in Saudi Arabia - Luxury bus and taxi fleet",
         author: "Ahmed Al-Sayed",
         tags: ["Umrah Transport", "Saudi Arabia", "Travel Guide", "Safety"]
@@ -228,7 +228,7 @@ export const blogPosts: BlogPost[] = [
         category: "Travel Tips",
         date: "Nov 27, 2024",
         readTime: "5 min read",
-        image: "/images/blog/mobile-booking-new.png",
+        image: "/images/blog/mobile-booking-new.webp",
         alt: "Travel tips for pilgrims in Makkah and Madinah - Family Umrah transport",
         author: "Sarah Khan",
         tags: ["Travel Tips", "Makkah", "Madinah", "Family Travel"]
@@ -258,7 +258,7 @@ export const blogPosts: BlogPost[] = [
         category: "FAQ",
         date: "Nov 26, 2024",
         readTime: "4 min read",
-        image: "/images/blog/faq-new.png",
+        image: "/images/blog/faq-new.webp",
         alt: "FAQ about Umrah transport services - Booking and costs",
         author: "Support Team",
         tags: ["FAQ", "Booking", "Jeddah Airport", "Online Booking"]
@@ -287,7 +287,7 @@ export const blogPosts: BlogPost[] = [
         category: "Experience",
         date: "Nov 25, 2024",
         readTime: "5 min read",
-        image: "/images/blog/luxury-interior-new.png",
+        image: "/images/blog/luxury-interior-new.webp",
         alt: "Comfortable and safe Umrah transport - Luxury GMC Yukon interior",
         author: "Mohammed Ali",
         tags: ["Comfort", "Safety", "Luxury Transport", "Testimonials"]
@@ -314,7 +314,7 @@ export const blogPosts: BlogPost[] = [
         category: "Value",
         date: "Nov 24, 2024",
         readTime: "4 min read",
-        image: "/images/blog/makkah-haram-view-new.png",
+        image: "/images/blog/makkah-haram-view-new.webp",
         alt: "Affordable Umrah transport packages - Group travel bus",
         author: "Fatima Hassan",
         tags: ["Affordable", "Packages", "Deals", "Group Travel"]

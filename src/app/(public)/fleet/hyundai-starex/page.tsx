@@ -21,7 +21,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": vehicleData?.seo?.title || "Hyundai H1 Starex Van Rental",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/starex-hero-professional.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/starex-hero-professional.webp",
     "description": vehicleData?.seo?.description || "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" },
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: vehicleData?.seo?.title,
         description: vehicleData?.seo?.description,
-        images: [{ url: '/images/fleet/starex-hero-professional.png', width: 1200, height: 630, alt: 'Hyundai H1 Starex' }]
+        images: [{ url: '/images/fleet/starex-hero-professional.webp', width: 1200, height: 630, alt: 'Hyundai H1 Starex' }]
     }
 };
 
@@ -62,7 +62,7 @@ export default async function HyundaiStarexPage() {
 
     // Hyundai Starex ID: 692db09834f15bc89b45a5fa
     const starexId = '692db09834f15bc89b45a5fa';
-    const starexImage = '/images/fleet/starex-hero-professional.png';
+    const starexImage = '/images/fleet/starex-hero-professional.webp';
 
     return (
         <main className="overflow-x-hidden">
@@ -79,7 +79,7 @@ export default async function HyundaiStarexPage() {
 
             <FleetPricingGrid
                 vehicleId={starexId}
-                vehicleImage="/images/fleet/starex.png"
+                vehicleImage="/images/fleet/starex.webp"
                 vehicleType="starex"
                 title="Hyundai Starex Rates | Jeddah, Makkah, Madinah"
                 subtitle="Affordable comfort for up to 7 passengers. Great value for group travel."
@@ -184,7 +184,7 @@ export default async function HyundaiStarexPage() {
 
                     <div className="max-w-6xl mx-auto">
                         <Interior360Viewer
-                            imageUrl="/images/fleet/starex-interior-360.jpg"
+                            imageUrl="/images/fleet/starex-interior-360.webp"
                             title="Hyundai H1 Starex Interior"
                         />
                     </div>

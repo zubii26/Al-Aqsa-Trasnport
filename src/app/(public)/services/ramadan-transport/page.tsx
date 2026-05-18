@@ -107,7 +107,7 @@ export default async function RamadanTransportPage() {
             <Hero
                 title="Blessed Journeys in the Holy Month"
                 subtitle="Reliable, comfortable, and punctual transport services for your Ramadan Umrah. Focus on your worship; let us handle the roads."
-                bgImage="/images/hero/ramadan-transport-hero.png" // Updated to generated Ramadan hero image
+                bgImage="/images/hero/ramadan-transport-hero.webp" // Updated to generated Ramadan hero image
                 ctaText="Book Your Ramadan Ride"
                 ctaLink={whatsappLink}
                 layout="center"

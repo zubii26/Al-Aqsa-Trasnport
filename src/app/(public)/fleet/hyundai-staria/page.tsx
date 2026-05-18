@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Hyundai Staria 2024 Luxury Van Makkah",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/hyundai-staria/hyundai-staria-front-view.webp",
     "description": "Premium Hyundai Staria VIP 7-Seater Van for Umrah. Reliable, comfortable luxury transport for families from Jeddah Airport to Makkah and Madinah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { 
@@ -43,29 +43,29 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
         description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families.",
-        images: [{ url: '/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg', width: 1200, height: 630, alt: 'Hyundai Staria Umrah Taxi' }]
+        images: [{ url: '/images/fleet/hyundai-staria/hyundai-staria-front-view.webp', width: 1200, height: 630, alt: 'Hyundai Staria Umrah Taxi' }]
     }
 };
 
 const galleryImages = [
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg', alt: 'Hyundai Staria Front View' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.jpeg', alt: 'Premium Interior Dashboard' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-profile.jpeg', alt: 'Staria Exterior Profile' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-rear-trunk-space.jpeg', alt: 'Spacious Luggage Capacity' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-vip-leather-seat.jpeg', alt: 'Passenger VIP Seats' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-led-headlight.jpeg', alt: 'LED Headlight Design' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-spacious-passenger-seating.jpeg', alt: 'Comfortable Passenger Seats' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-full-rear-view-taxi.jpeg', alt: 'Rear Design' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-back-door-umrah-taxi.jpeg', alt: 'Back Door Access' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-taillight-detail.jpeg', alt: 'Taillight Detail' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-alloy-wheel-design.jpeg', alt: 'Alloy Wheels' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-open-door-interior-access.jpeg', alt: 'Wide Door Access' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.jpeg', alt: 'Staria on the Highway' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-exterior-view.jpeg', alt: 'Wide Side Exterior' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-angle.jpeg', alt: 'Dashboard Angle Detail' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-desert-road-trip.jpeg', alt: 'Desert Road Journey' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-cinematic-night-view.jpeg', alt: 'Cinematic Night View' },
-    { src: '/images/fleet/hyundai-staria/hyundai-staria-roof-view.jpeg', alt: 'Roof View' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-front-view.webp', alt: 'Hyundai Staria Front View' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.webp', alt: 'Premium Interior Dashboard' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-profile.webp', alt: 'Staria Exterior Profile' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-rear-trunk-space.webp', alt: 'Spacious Luggage Capacity' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-vip-leather-seat.webp', alt: 'Passenger VIP Seats' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-led-headlight.webp', alt: 'LED Headlight Design' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-spacious-passenger-seating.webp', alt: 'Comfortable Passenger Seats' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-full-rear-view-taxi.webp', alt: 'Rear Design' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-back-door-umrah-taxi.webp', alt: 'Back Door Access' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-taillight-detail.webp', alt: 'Taillight Detail' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-alloy-wheel-design.webp', alt: 'Alloy Wheels' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-open-door-interior-access.webp', alt: 'Wide Door Access' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.webp', alt: 'Staria on the Highway' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-side-exterior-view.webp', alt: 'Wide Side Exterior' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-dashboard-angle.webp', alt: 'Dashboard Angle Detail' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-desert-road-trip.webp', alt: 'Desert Road Journey' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-cinematic-night-view.webp', alt: 'Cinematic Night View' },
+    { src: '/images/fleet/hyundai-staria/hyundai-staria-roof-view.webp', alt: 'Roof View' },
 ];
 
 const specs = [
@@ -168,7 +168,7 @@ export default async function HyundaiStariaPage() {
             <VehicleHero
                 title="Hyundai Staria VIP Transport"
                 subtitle="The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."
-                bgImage="/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.jpeg"
+                bgImage="/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.webp"
                 badge="Futuristic Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["7 Passengers", "6-7 Bags", "Panoramic Views", "Smart Safety"]}
@@ -184,8 +184,8 @@ export default async function HyundaiStariaPage() {
                 tech="Premium Display"
                 fuel="High Economy"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.jpeg"
-                fallbackImage="/images/fleet/staria.png"
+                mainImage="/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.webp"
+                fallbackImage="/images/fleet/staria.webp"
             />
 
             <VehicleGallery 
@@ -202,7 +202,7 @@ export default async function HyundaiStariaPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={stariaId}
-                    vehicleImage="/images/fleet/hyundai-staria/hyundai-staria-front-view.jpeg"
+                    vehicleImage="/images/fleet/hyundai-staria/hyundai-staria-front-view.webp"
                     vehicleType="staria"
                     title="Hyundai Staria Rates | Jeddah, Makkah, Madinah"
                     subtitle="The perfect balance of modern luxury and group capacity. Ideal for families and small groups."

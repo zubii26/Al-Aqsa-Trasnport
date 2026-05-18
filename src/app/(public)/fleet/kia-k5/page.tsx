@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Kia K5 Modern Sedan Rental",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/kia-k5-hero.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/kia-k5-hero.webp",
     "description": "Rent a modern Kia K5 in Makkah & Madinah for comfortable and efficient Umrah transport.",
     "brand": { "@type": "Brand", "name": "Kia" },
     "offers": { 
@@ -59,12 +59,12 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Kia K5 Sedan | Comfortable Umrah Transport",
         description: "Experience modern, smooth, and fuel-efficient travel across Saudi Arabia with our Kia K5 fleet, ideal for small families and couples.",
-        images: [{ url: '/images/fleet/kia-k5-hero.png', width: 1200, height: 630, alt: 'Kia K5 Modern Sedan' }]
+        images: [{ url: '/images/fleet/kia-k5-hero.webp', width: 1200, height: 630, alt: 'Kia K5 Modern Sedan' }]
     }
 };
 
 const galleryImages = [
-    { src: '/images/fleet/kia-k5-hero.png', alt: 'Kia K5 Exterior' },
+    { src: '/images/fleet/kia-k5-hero.webp', alt: 'Kia K5 Exterior' },
     // If more Kia K5 images are obtained, they can be added here. Currently relying on the main asset.
 ];
 
@@ -158,7 +158,7 @@ export default async function KiaK5Page() {
             <VehicleHero
                 title="Kia K5 Sedan | Comfortable Umrah Transport"
                 subtitle="A perfect blend of modern design, smooth ride quality, and excellent fuel efficiency. Ensuring a reliable and peaceful journey for you and your family."
-                bgImage="/images/fleet/kia-k5-hero.png"
+                bgImage="/images/fleet/kia-k5-hero.webp"
                 badge="Modern & Efficient"
                 whatsappLink={whatsappLink}
                 quickSpecs={["3-4 Passengers", "2-3 Suitcases", "Dual-Zone AC", "Smooth Ride"]}
@@ -174,8 +174,8 @@ export default async function KiaK5Page() {
                 tech="Touchscreen & USB"
                 fuel="2.5L Efficient"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/kia-k5-hero.png"
-                fallbackImage="/images/fleet/kia-k5-hero.png"
+                mainImage="/images/fleet/kia-k5-hero.webp"
+                fallbackImage="/images/fleet/kia-k5-hero.webp"
             />
 
             <VehicleGallery 
@@ -192,7 +192,7 @@ export default async function KiaK5Page() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={kiaId}
-                    vehicleImage="/images/fleet/kia.png"
+                    vehicleImage="/images/fleet/kia.webp"
                     vehicleType="kia"
                     title="Transparent Kia K5 Pricing"
                     subtitle="Affordable, modern transportation with fixed rates for per trip and per route transfers."

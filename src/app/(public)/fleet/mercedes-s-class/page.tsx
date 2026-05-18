@@ -58,18 +58,18 @@ export const metadata: Metadata = {
 };
 
 const galleryImages = [
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg', alt: 'Mercedes S-Class Front View' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.jpeg', alt: 'Elegant Side Profile' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-hero-view.jpeg', alt: 'S-Class Rear Hero View' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-amg-wheels-umrah-taxi.jpeg', alt: '20-inch AMG Wheels' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-chrome-door-handle.jpeg', alt: 'Chrome Door Handle Details' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-front-grille-jeddah-airport.jpeg', alt: 'Iconic Front Grille' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-led-taillights.jpeg', alt: 'LED Taillights' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-panoramic-sunroof.jpeg', alt: 'Panoramic Sunroof' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-sunroof-interior-view.jpeg', alt: 'Sunroof Interior View' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-elevation.jpeg', alt: 'S-Class Rear Elevation' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-vip-transport-makkah-madinah.jpeg', alt: 'VIP Transport on Highway' },
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-three-quarter-front.jpeg', alt: 'Three Quarter Front Angle' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp', alt: 'Mercedes S-Class Front View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.webp', alt: 'Elegant Side Profile' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-hero-view.webp', alt: 'S-Class Rear Hero View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-amg-wheels-umrah-taxi.webp', alt: '20-inch AMG Wheels' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-chrome-door-handle.webp', alt: 'Chrome Door Handle Details' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-front-grille-jeddah-airport.webp', alt: 'Iconic Front Grille' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-led-taillights.webp', alt: 'LED Taillights' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-panoramic-sunroof.webp', alt: 'Panoramic Sunroof' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-sunroof-interior-view.webp', alt: 'Sunroof Interior View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-elevation.webp', alt: 'S-Class Rear Elevation' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-vip-transport-makkah-madinah.webp', alt: 'VIP Transport on Highway' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-three-quarter-front.webp', alt: 'Three Quarter Front Angle' },
 ];
 
 const specs = [
@@ -164,7 +164,7 @@ export default async function MercedesSClassPage() {
             <VehicleHero
                 title="Mercedes-Benz S-Class | VIP Umrah Transport"
                 subtitle="Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury."
-                bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg"
+                bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp"
                 badge="VIP Luxury Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["3 Passengers", "2-3 Suitcases", "Thermotronic AC", "Executive Luxury"]}
@@ -180,8 +180,8 @@ export default async function MercedesSClassPage() {
                 tech="Burmester® 3D & MBUX"
                 fuel="Hybrid & V6 Options"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.jpeg"
-                fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.jpeg"
+                mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.webp"
+                fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp"
             />
 
             <VehicleGallery 
@@ -198,7 +198,7 @@ export default async function MercedesSClassPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={mercedesId}
-                    vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-vip-transport.jpeg"
+                    vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-vip-transport.webp"
                     vehicleType="mercedes"
                     title="Transparent VIP Pricing"
                     subtitle="Executive class transportation with fixed rates for all transfers."

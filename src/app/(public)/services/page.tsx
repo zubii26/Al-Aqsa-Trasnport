@@ -54,7 +54,7 @@ export default function ServicesPage() {
         {
             title: 'Makkah to Madinah Taxi & Private Car',
             description: 'Premium intercity transfers between the Holy Cities. Enjoy a comfortable 450km journey in our wide range of fleets including GMC Yukon XL and Hyundai H1.',
-            image: '/images/routes/makkah-madinah-route-hero.png',
+            image: '/images/routes/makkah-madinah-route-hero.webp',
             link: '/services/makkah-madinah-taxi',
             features: ['Door-to-Door Service', 'Luxury Fleet Options', '4.5 Hour Average Time'],
             alt: 'Makkah to Madinah Intercity Private Taxi App Map'
@@ -62,7 +62,7 @@ export default function ServicesPage() {
         {
             title: 'Jeddah Airport (KAIA) to Makkah Taxi',
             description: 'Hassle-free airport authorities approved pickup. Our driver will welcome you at Jeddah Airport arrivals for a seamless transfer to your Makkah hotel or Haram.',
-            image: '/images/routes/jeddah-airport-hero-professional.png',
+            image: '/images/routes/jeddah-airport-hero-professional.webp',
             link: '/services/jeddah-airport-transfer',
             features: ['Flight Tracking', 'Free Meet & Greet', 'Luggage Assistance'],
             alt: 'Jeddah Airport (KAIA) to Makkah Hotel Transfer Driver Chauffeur'
@@ -70,7 +70,7 @@ export default function ServicesPage() {
         {
             title: 'VIP Luxury GMC Yukon Umrah Transport',
             description: 'Travel in style with our VIP service. Top-of-the-line vehicles (GMC Yukon XL) and private chauffeurs for maximum privacy and ease.',
-            image: '/images/fleet/gmc-yukon-hero-professional.png',
+            image: '/images/fleet/gmc-yukon-hero-professional.webp',
             link: '/booking?service=luxury',
             features: ['Private Chauffeur', 'Latest Model Vehicles', 'Privacy Partition'],
             alt: 'GMC Yukon XL 2025 VIP Black SUV for Umrah Transport'
@@ -78,7 +78,7 @@ export default function ServicesPage() {
         {
             title: 'Makkah & Madinah Ziyarat Tours',
             description: 'Comprehensive Ziyarat packages to holy sites. Visit Masjid Quba, Mount Uhud, Jabal Al-Nour, and other historical Islamic landmarks with knowledgeable drivers.',
-            image: '/images/routes/makkah-ziyarat-hero.png',
+            image: '/images/routes/makkah-ziyarat-hero.webp',
             link: '/services/ziyarat-tours',
             features: ['Custom Itinerary', 'Expert Local Knowledge', 'Flexible Hours'],
             alt: 'Makkah and Madinah Historical Ziyarat Tour Mountains and Mosques'

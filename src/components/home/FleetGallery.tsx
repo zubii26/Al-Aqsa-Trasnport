@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight, Users, Briefcase, Star, ArrowRight } from 'l
 
 const FLEET_IMAGES = [
     {
-        src: '/images/fleet/gmc-yukon-hero-professional.png',
+        src: '/images/fleet/gmc-yukon-hero-professional.webp',
         alt: 'GMC Yukon AT4 Black VIP SUV Front View',
         name: 'GMC Yukon 2025',
         badge: 'VIP Choice',
@@ -18,7 +18,7 @@ const FLEET_IMAGES = [
         gradient: 'from-amber-500/20 to-amber-900/40'
     },
     {
-        src: '/images/fleet/staria-hero-professional.png',
+        src: '/images/fleet/staria-hero-professional.webp',
         alt: 'Hyundai Staria Luxury Van for Families',
         name: 'Hyundai Staria',
         badge: 'Family Favorite',
@@ -28,7 +28,7 @@ const FLEET_IMAGES = [
         gradient: 'from-blue-500/20 to-slate-900/40'
     },
     {
-        src: '/images/fleet/camry-hero-professional.png',
+        src: '/images/fleet/camry-hero-professional.webp',
         alt: 'Toyota Camry Recent Model White Sedan',
         name: 'Toyota Camry',
         badge: 'Best Value',
@@ -38,7 +38,7 @@ const FLEET_IMAGES = [
         gradient: 'from-emerald-500/20 to-slate-900/40'
     },
     {
-        src: '/images/fleet/hiace-hero-professional.png',
+        src: '/images/fleet/hiace-hero-professional.webp',
         alt: 'Toyota Hiace Commuter Bus High Roof White',
         name: 'Toyota Hiace',
         badge: 'Large Groups',
@@ -48,7 +48,7 @@ const FLEET_IMAGES = [
         gradient: 'from-slate-500/20 to-slate-900/40'
     },
     {
-        src: '/images/fleet/starex-hero-professional.png',
+        src: '/images/fleet/starex-hero-professional.webp',
         alt: 'Hyundai H1 Starex Practical Family Van',
         name: 'Hyundai H1',
         badge: 'Comfort',

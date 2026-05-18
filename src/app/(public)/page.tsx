@@ -68,7 +68,7 @@ export default async function Home() {
     </>
   );
 
-  const heroImage = "/images/umrah-pilgrims-makkah-taxi-hero.jpg"; // getSectionImage(heroSection, 'desktop') || 
+  const heroImage = "/images/umrah-pilgrims-makkah-taxi-hero.webp"; // getSectionImage(heroSection, 'desktop') || 
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Now / احجز الآن";
   const ctaLink = "/booking";
 

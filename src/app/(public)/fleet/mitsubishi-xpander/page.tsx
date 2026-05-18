@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Mitsubishi Xpander 7-Seater Rental Makkah",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp",
     "description": "Rent a Mitsubishi Xpander 7-seater in Makkah & Madinah for affordable, comfortable family Umrah transport.",
     "brand": { "@type": "Brand", "name": "Mitsubishi" },
     "offers": { 
@@ -58,17 +58,17 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Mitsubishi Xpander | 7-Seater Family Transport",
         description: "Comfortable, spacious, and affordable 7-seater family transport across Saudi Arabia with our Mitsubishi Xpander fleet.",
-        images: [{ url: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg', width: 1200, height: 630, alt: 'Mitsubishi Xpander 7-Seater' }]
+        images: [{ url: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp', width: 1200, height: 630, alt: 'Mitsubishi Xpander 7-Seater' }]
     }
 };
 
 const galleryImages = [
-    { src: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg', alt: 'Mitsubishi Xpander Exterior' },
-    { src: '/images/fleet/mitsubishi-xpander/al-kiswah-cab-mitsubishi-xpander-7-seater-saudi-arabia.jpeg', alt: '7-Seater Umrah Transport' },
-    { src: '/images/fleet/mitsubishi-xpander/7-seater-cab-service-al-kiswah-xpander.jpeg', alt: 'Family Van Service' },
-    { src: '/images/fleet/mitsubishi-xpander/7-seater-car-rental-interior-al-kiswah-saudi.jpeg', alt: 'Spacious Cabin Interior' },
-    { src: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-7-seater-interior-legroom.jpeg', alt: 'Excellent Legroom' },
-    { src: '/images/fleet/mitsubishi-xpander/xpander-cabin-view-al-kiswah-cab-comfort.jpeg', alt: 'Comfortable Seating' },
+    { src: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp', alt: 'Mitsubishi Xpander Exterior' },
+    { src: '/images/fleet/mitsubishi-xpander/al-kiswah-cab-mitsubishi-xpander-7-seater-saudi-arabia.webp', alt: '7-Seater Umrah Transport' },
+    { src: '/images/fleet/mitsubishi-xpander/7-seater-cab-service-al-kiswah-xpander.webp', alt: 'Family Van Service' },
+    { src: '/images/fleet/mitsubishi-xpander/7-seater-car-rental-interior-al-kiswah-saudi.webp', alt: 'Spacious Cabin Interior' },
+    { src: '/images/fleet/mitsubishi-xpander/mitsubishi-xpander-7-seater-interior-legroom.webp', alt: 'Excellent Legroom' },
+    { src: '/images/fleet/mitsubishi-xpander/xpander-cabin-view-al-kiswah-cab-comfort.webp', alt: 'Comfortable Seating' },
 ];
 
 const specs = [
@@ -161,7 +161,7 @@ export default async function MitsubishiXpanderPage() {
             <VehicleHero
                 title="Mitsubishi Xpander | 7-Seater Family Transport"
                 subtitle="The ultimate family vehicle for your spiritual journey. Enjoy exceptional spaciousness, a smooth ride, and peace of mind."
-                bgImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg"
+                bgImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
                 badge="Family Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["7 Passengers", "3-4 Suitcases", "Rear AC Vents", "Comfort Ride"]}
@@ -177,8 +177,8 @@ export default async function MitsubishiXpanderPage() {
                 tech="7-inch Display & USB"
                 fuel="1.5L Efficient"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/mitsubishi-xpander/al-kiswah-cab-mitsubishi-xpander-7-seater-saudi-arabia.jpeg"
-                fallbackImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg"
+                mainImage="/images/fleet/mitsubishi-xpander/al-kiswah-cab-mitsubishi-xpander-7-seater-saudi-arabia.webp"
+                fallbackImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
             />
 
             <VehicleGallery 
@@ -195,7 +195,7 @@ export default async function MitsubishiXpanderPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={xpanderId}
-                    vehicleImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.jpeg"
+                    vehicleImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
                     vehicleType="xpander"
                     title="Transparent Family Pricing"
                     subtitle="Affordable, family-friendly transportation with fixed rates for all major Umrah routes."

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Taxi Jeddah Airport to Makkah | Private Transfer Price",
         description: "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall.",
-        images: [{ url: '/images/routes/jeddah-airport-hero-professional.png', width: 1200, height: 630, alt: 'Jeddah Airport VIP Transfer' }]
+        images: [{ url: '/images/routes/jeddah-airport-hero-professional.webp', width: 1200, height: 630, alt: 'Jeddah Airport VIP Transfer' }]
     }
 };
 
@@ -97,7 +97,7 @@ export default async function JeddahAirportTransferPage() {
     const content = {
         title: "Jeddah Airport to Makkah Transfers",
         subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service (استقبال خاص). Direct transfer to your Makkah hotel.",
-        heroImage: "/images/routes/jeddah-airport-hero-professional.png"
+        heroImage: "/images/routes/jeddah-airport-hero-professional.webp"
     };
 
     return (

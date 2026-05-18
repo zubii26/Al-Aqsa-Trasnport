@@ -22,7 +22,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Toyota Coaster Group Rental",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster.png",
+    "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster.webp",
     "description": "Rent a Toyota Coaster in Makkah & Madinah for comfortable and spacious group Umrah transport.",
     "brand": { "@type": "Brand", "name": "Toyota" },
     "offers": { 
@@ -58,12 +58,12 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Toyota Coaster | 22-30 Seater Group Transport",
         description: "Reliable, comfortable, and spacious group travel across Saudi Arabia with our Toyota Coaster fleet.",
-        images: [{ url: '/images/fleet/coaster.png', width: 1200, height: 630, alt: 'Toyota Coaster 30 Seater Bus' }]
+        images: [{ url: '/images/fleet/coaster.webp', width: 1200, height: 630, alt: 'Toyota Coaster 30 Seater Bus' }]
     }
 };
 
 const galleryImages = [
-    { src: '/images/fleet/coaster.png', alt: 'Toyota Coaster Exterior' },
+    { src: '/images/fleet/coaster.webp', alt: 'Toyota Coaster Exterior' },
     // If more coaster images are obtained, they can be added here. Currently relying on the main asset.
 ];
 
@@ -157,7 +157,7 @@ export default async function ToyotaCoasterPage() {
             <VehicleHero
                 title="Toyota Coaster | 22-30 Seater Group Transport"
                 subtitle="The benchmark for reliable group travel. Keep your entire congregation together with wide windows, individual AC vents, and comfortable long-route seating."
-                bgImage="/images/fleet/coaster.png"
+                bgImage="/images/fleet/coaster.webp"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["22-30 Passengers", "Group Luggage", "Individual AC", "PA System"]}
@@ -173,8 +173,8 @@ export default async function ToyotaCoasterPage() {
                 tech="PA System & Audio"
                 fuel="4.2L Diesel"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/coaster.png"
-                fallbackImage="/images/fleet/coaster.png"
+                mainImage="/images/fleet/coaster.webp"
+                fallbackImage="/images/fleet/coaster.webp"
             />
 
             <VehicleGallery 
@@ -191,7 +191,7 @@ export default async function ToyotaCoasterPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={coasterId}
-                    vehicleImage="/images/fleet/coaster.png"
+                    vehicleImage="/images/fleet/coaster.webp"
                     vehicleType="coaster"
                     title="Transparent Group Pricing"
                     subtitle="Cost-effective, reliable minibus transportation with fixed rates for group transfers."
