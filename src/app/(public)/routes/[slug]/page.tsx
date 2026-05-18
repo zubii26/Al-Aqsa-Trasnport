@@ -63,9 +63,14 @@ export default function RouteDetail({ params }: Props) {
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": "Product",
+                        "@type": "Service",
+                        "serviceType": "Taxi Service",
                         "name": route.name,
                         "description": route.seo?.description,
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "Al Aqsa Umrah Transport"
+                        },
                         "offers": {
                             "@type": "AggregateOffer",
                             "lowPrice": startingPrice,

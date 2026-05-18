@@ -34,28 +34,6 @@ export const metadata: Metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Madinah Airport Transfer",
-    "alternateName": "توصيل مطار المدينة المنورة",
-    "provider": {
-        "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport"
-    },
-    "serviceType": "Airport Transfer",
-    "areaServed": {
-        "@type": "Airport",
-        "name": "Prince Mohammad Bin Abdulaziz International Airport"
-    },
-    "description": "Private transfer from Madinah Airport to Masjid Nabawi hotels.",
-    "offers": {
-        "@type": "Offer",
-        "price": "150",
-        "priceCurrency": "SAR"
-    }
-};
-
 const madinahAirportFAQs = [
     {
         question: "How far is Madinah Airport from Masjid Nabawi?",
@@ -69,6 +47,42 @@ const madinahAirportFAQs = [
         question: "Can I book a taxi from Madinah Airport directly to Makkah?",
         answer: "Yes, we offer direct transfers from Madinah Airport (MED) to Makkah hotels. The journey takes about 4.5 hours via the Hijrah Highway."
     },
+];
+
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Madinah Airport Transfer",
+        "alternateName": "توصيل مطار المدينة المنورة",
+        "provider": {
+            "@type": "LocalBusiness",
+            "name": "Al Aqsa Transport"
+        },
+        "serviceType": "Airport Transfer",
+        "areaServed": {
+            "@type": "Airport",
+            "name": "Prince Mohammad Bin Abdulaziz International Airport"
+        },
+        "description": "Private transfer from Madinah Airport to Masjid Nabawi hotels.",
+        "offers": {
+            "@type": "Offer",
+            "price": "150",
+            "priceCurrency": "SAR"
+        }
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": madinahAirportFAQs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    }
 ];
 
 export default async function MadinahAirportPage() {
