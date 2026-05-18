@@ -62,16 +62,20 @@ const jsonLd = [
         "name": "Jeddah Airport to Makkah Private Transfer",
         "serviceType": "Airport Transfer",
         "provider": {
-            "@type": "LocalBusiness",
-            "name": "Al Aqsa Umrah Transport",
-            "telephone": "+966548707332"
+            "@type": "Organization",
+            "name": "Al Aqsa Umrah Transport"
         },
-        "areaServed": { "@type": "City", "name": "Makkah" },
-        "offers": [
-            { "@type": "Offer", "name": "Toyota Camry (4 pax)", "price": "200", "priceCurrency": "SAR" },
-            { "@type": "Offer", "name": "GMC Yukon XL (7 pax)", "price": "500", "priceCurrency": "SAR" },
-            { "@type": "Offer", "name": "Toyota Hiace (10 pax)", "price": "350", "priceCurrency": "SAR" }
-        ]
+        "description": "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall.",
+        "areaServed": [
+            { "@type": "City", "name": "Jeddah" },
+            { "@type": "City", "name": "Makkah" }
+        ],
+        "offers": {
+            "@type": "Offer",
+            "price": "200",
+            "priceCurrency": "SAR",
+            "url": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer"
+        }
     },
     {
         "@context": "https://schema.org",

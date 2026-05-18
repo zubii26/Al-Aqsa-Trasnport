@@ -8,6 +8,7 @@ import AnimatedMapBackground from '@/components/ui/AnimatedMapBackground';
 import { routeService } from '@/services/routeService';
 import { ShieldCheck, Star, UserCheck, Timer } from 'lucide-react';
 import { RouteWithPrices } from '@/services/routeService';
+import FAQSection from '@/components/services/FAQSection';
 
 export const metadata = {
     title: "Makkah to Madinah Taxi & Intercity Transport | Al Aqsa",
@@ -23,27 +24,11 @@ export const metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Intercity Transport Service",
-    "provider": {
-        "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport"
-    },
-    "serviceType": "Ground Transport",
-    "areaServed": {
-        "@type": "Country",
-        "name": "Saudi Arabia"
-    },
-    "description": "Luxury intercity transfers between Makkah, Madinah, and Jeddah.",
-    "offers": {
-        "@type": "Offer",
-        "price": "450",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock"
-    }
-};
+const intercityFAQs = [
+    { question: "How long is the journey between Makkah and Madinah?", answer: "Makkah to Madinah takes approximately 4.5 hours on the smooth Hijrah Highway. We adjust speed for your comfort and safety." },
+    { question: "Is the Miqat stop included?", answer: "Yes! If you are traveling from Madinah to Makkah, we will stop at Miqat Dhul Hulayfah (Abyar Ali) for 15-20 minutes for you to assume Ihram." },
+    { question: "Are there hidden fees?", answer: "No. The price quoted is per vehicle, all-inclusive of fuel, driver, and taxes. No per-person charges." }
+];
 
 // Fallback data
 const MOCK_ROUTES = [
@@ -101,6 +86,43 @@ export default async function IntercityTransferPage() {
     }
 
     const effectiveRoutes = routes.length > 0 ? routes : (process.env.NODE_ENV === 'development' || routes.length === 0 ? MOCK_ROUTES : []) as unknown as RouteWithPrices[];
+
+    const jsonLd = [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Intercity Transport Service",
+            "serviceType": "Ground Transport",
+            "provider": {
+                "@type": "Organization",
+                "name": "Al Aqsa Umrah Transport"
+            },
+            "description": "Luxury intercity transfers between Makkah, Madinah, and Jeddah.",
+            "areaServed": [
+                { "@type": "City", "name": "Makkah" },
+                { "@type": "City", "name": "Madinah" },
+                { "@type": "City", "name": "Jeddah" }
+            ],
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "SAR",
+                "price": "450",
+                "url": "https://www.alaqsaumrahtransport.com/services/intercity-transfer"
+            }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": intercityFAQs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        }
+    ];
 
     return (
         <main>
@@ -212,28 +234,7 @@ export default async function IntercityTransferPage() {
                 </div>
             </section>
 
-            {/* FAQ Section */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-950">
-                <div className="container max-w-3xl">
-                    <FadeIn>
-                        <h2 className="text-3xl font-bold text-center mb-12 font-playfair text-slate-900 dark:text-white">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
-                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">How long is the journey?</h3>
-                                <p className="text-slate-600 dark:text-slate-400">Makkah to Madinah takes approximately 4.5 hours on the smooth Hijrah Highway. We adjust speed for your comfort and safety.</p>
-                            </div>
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
-                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Is the Miqat stop included?</h3>
-                                <p className="text-slate-600 dark:text-slate-400">Yes! If you are traveling from Madinah to Makkah, we will stop at Miqat Dhul Hulayfah (Abyar Ali) for 15-20 minutes for you to assume Ihram.</p>
-                            </div>
-                            <div className="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-slate-900 transition-colors bg-white dark:bg-slate-900/50">
-                                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">Are there hidden fees?</h3>
-                                <p className="text-slate-600 dark:text-slate-400">No. The price quoted is per vehicle, all-inclusive of fuel, driver, and taxes. No per-person charges.</p>
-                            </div>
-                        </div>
-                    </FadeIn>
-                </div>
-            </section>
+            <FAQSection items={intercityFAQs} />
         </main>
     );
 }

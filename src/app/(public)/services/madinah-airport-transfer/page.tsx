@@ -56,19 +56,28 @@ const jsonLd = [
         "name": "Madinah Airport Transfer",
         "alternateName": "توصيل مطار المدينة المنورة",
         "provider": {
-            "@type": "LocalBusiness",
-            "name": "Al Aqsa Transport"
+            "@type": "Organization",
+            "name": "Al Aqsa Transport",
+            "url": "https://www.alaqsaumrahtransport.com"
         },
         "serviceType": "Airport Transfer",
-        "areaServed": {
-            "@type": "Airport",
-            "name": "Prince Mohammad Bin Abdulaziz International Airport"
-        },
+        "areaServed": [
+            {
+                "@type": "Airport",
+                "name": "Prince Mohammad Bin Abdulaziz International Airport",
+                "iataCode": "MED"
+            },
+            {
+                "@type": "City",
+                "name": "Madinah"
+            }
+        ],
         "description": "Private transfer from Madinah Airport to Masjid Nabawi hotels.",
         "offers": {
             "@type": "Offer",
             "price": "150",
-            "priceCurrency": "SAR"
+            "priceCurrency": "SAR",
+            "url": "https://www.alaqsaumrahtransport.com/services/madinah-airport-transfer"
         }
     },
     {

@@ -6,16 +6,68 @@ import { Building2, Clock, MapPin, ShieldCheck, Star, Users } from 'lucide-react
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
     title: 'Hotel Transfers Makkah & Madinah | Al Aqsa Umrah Transport',
     description: 'Reliable door-to-door hotel transfers in Makkah and Madinah. 24/7 comfortable transport between your hotel and the Holy Harams. Book your ride now.',
-    keywords: ['hotel transfer Makkah', 'hotel transfer Madinah', 'Umrah hotel shuttle', 'family transport Makkah', 'VIP hotel transfer Saudi Arabia']
+    keywords: ['hotel transfer Makkah', 'hotel transfer Madinah', 'Umrah hotel shuttle', 'family transport Makkah', 'VIP hotel transfer Saudi Arabia'],
+    alternates: {
+        canonical: 'https://www.alaqsaumrahtransport.com/services/hotel-transfers',
+    }
 };
 
+const hotelFAQs = [
+    { question: "Do you provide hotel-to-hotel transfers between Makkah and Madinah?", answer: "Yes, we offer direct hotel-to-hotel transfers between Makkah and Madinah for a seamless and comfortable journey." },
+    { question: "Can the driver pick us up directly from the hotel lobby?", answer: "Absolutely. Our driver will meet you at the hotel lobby or the designated pickup area of your hotel." },
+    { question: "Are the prices per vehicle or per person?", answer: "All our transfer prices are per vehicle, which makes it very cost-effective for families and groups." },
+    { question: "What types of vehicles do you offer for hotel transfers?", answer: "We offer a range of vehicles including standard sedans (Toyota Camry), VIP SUVs (GMC Yukon), and family vans (Toyota Hiace/Hyundai H1)." },
+    { question: "How far in advance should I book my hotel transfer?", answer: "We recommend booking at least 24 hours in advance to guarantee vehicle availability, especially during peak seasons like Ramadan." }
+];
+
 export default function HotelTransferPage() {
+    const jsonLd = [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Hotel Transfers Makkah & Madinah",
+            "serviceType": "Hotel Transfer",
+            "provider": {
+                "@type": "Organization",
+                "name": "Al Aqsa Umrah Transport"
+            },
+            "description": "Reliable door-to-door hotel transfers in Makkah and Madinah. 24/7 comfortable transport between your hotel and the Holy Harams.",
+            "areaServed": [
+                { "@type": "City", "name": "Makkah" },
+                { "@type": "City", "name": "Madinah" }
+            ],
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "SAR",
+                "price": "150",
+                "url": "https://www.alaqsaumrahtransport.com/services/hotel-transfers"
+            }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": hotelFAQs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        }
+    ];
+
     return (
         <main className="bg-slate-50 dark:bg-slate-950 min-h-screen">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
             <Hero
                 title="Premium Hotel Transfers"
@@ -73,7 +125,7 @@ export default function HotelTransferPage() {
             </section>
 
             {/* Service Areas */}
-            <section className="py-16 bg-white dark:bg-slate-900">
+            <section className="py-16 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row items-center gap-12">
                         <div className="flex-1 relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl">
@@ -138,6 +190,7 @@ export default function HotelTransferPage() {
                     </div>
                 </div>
             </section>
+            <FAQSection items={hotelFAQs} />
         </main>
     );
 }

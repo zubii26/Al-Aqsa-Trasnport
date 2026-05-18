@@ -33,6 +33,15 @@ export const metadata: Metadata = {
     }
 };
 
+const airportFAQs = [
+    { q: "Where will I meet the driver?", a: "Our driver will be waiting for you at the arrival terminal holding a sign with your name. We also share the driver's contact details via WhatsApp before you land." },
+    { q: "What if my flight is delayed?", a: "We monitor flight schedules in real-time. If your flight is delayed, our driver will adjust the pickup time accordingly, free of charge." },
+    { q: "Do you provide child seats?", a: "Yes, child seats are available upon request. Please mention this requirement in the booking notes so we can arrange it for you." },
+    { q: "How long does the journey take?", a: "The journey from Jeddah Airport to Makkah typically takes about 60-90 minutes, depending on traffic conditions." },
+    { q: "Can I pay in cash?", a: "Yes, you can pay the driver in cash (SAR) upon arrival. We also accept online payments if you prefer to prepay." },
+    { q: "Is the price per person or per vehicle?", a: "Our prices are per vehicle, not per person. The price you see is for the entire car including luggage spaces." }
+];
+
 export default async function AirportTransfersPage() {
     const allRoutes = await routeService.getActiveRoutes();
     const airportRoutes = allRoutes.filter(r =>
@@ -42,48 +51,43 @@ export default async function AirportTransfersPage() {
     );
 
     // Schema.org Structured Data
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Jeddah Airport Transfer to Makkah",
-        "alternateName": "توصيل من مطار جدة الى مكة",
-        "provider": {
-            "@type": "TransportationService",
-            "name": "Al Aqsa Umrah Transport"
+    const jsonLd = [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Jeddah Airport Transfer to Makkah",
+            "alternateName": "توصيل من مطار جدة الى مكة",
+            "serviceType": "Private VIP Transfer",
+            "provider": {
+                "@type": "Organization",
+                "name": "Al Aqsa Umrah Transport"
+            },
+            "description": "Premium airport transfer service from King Abdulaziz International Airport (KAIA) to Makkah. خدمة نقل فاخرة من مطار الملك عبدالعزيز الى مكة.",
+            "areaServed": [
+                { "@type": "City", "name": "Jeddah" },
+                { "@type": "City", "name": "Makkah" },
+                { "@type": "City", "name": "Madinah" }
+            ],
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "SAR",
+                "price": "250",
+                "url": "https://www.alaqsaumrahtransport.com/services/airport-transfers"
+            }
         },
-        "description": "Premium airport transfer service from King Abdulaziz International Airport (KAIA) to Makkah. خدمة نقل فاخرة من مطار الملك عبدالعزيز الى مكة.",
-        "areaServed": {
-            "@type": "City",
-            "name": "Makkah"
-        },
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Airport Transfer Services",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Standard Sedan Transfer"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "VIP GMC Yukon Transfer"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Family Hiace Van Transfer"
-                    }
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": airportFAQs.map(faq => ({
+                "@type": "Question",
+                "name": faq.q,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a
                 }
-            ]
+            }))
         }
-    };
+    ];
 
     return (
         <main className="bg-slate-50 dark:bg-slate-950">
@@ -278,14 +282,7 @@ export default async function AirportTransfersPage() {
                     <FadeIn>
                         <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Frequently Asked Questions</h2>
                         <div className="space-y-4">
-                            {[
-                                { q: "Where will I meet the driver?", a: "Our driver will be waiting for you at the arrival terminal holding a sign with your name. We also share the driver's contact details via WhatsApp before you land." },
-                                { q: "What if my flight is delayed?", a: "We monitor flight schedules in real-time. If your flight is delayed, our driver will adjust the pickup time accordingly, free of charge." },
-                                { q: "Do you provide child seats?", a: "Yes, child seats are available upon request. Please mention this requirement in the booking notes so we can arrange it for you." },
-                                { q: "How long does the journey take?", a: "The journey from Jeddah Airport to Makkah typically takes about 60-90 minutes, depending on traffic conditions." },
-                                { q: "Can I pay in cash?", a: "Yes, you can pay the driver in cash (SAR) upon arrival. We also accept online payments if you prefer to prepay." },
-                                { q: "Is the price per person or per vehicle?", a: "Our prices are per vehicle, not per person. The price you see is for the entire car including luggage spaces." }
-                            ].map((faq, i) => (
+                            {airportFAQs.map((faq, i) => (
                                 <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
                                     <h3 className="font-bold text-lg mb-2 text-slate-800 dark:text-slate-200">{faq.q}</h3>
                                     <p className="text-muted-foreground">{faq.a}</p>

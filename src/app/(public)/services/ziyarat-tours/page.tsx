@@ -55,8 +55,9 @@ const jsonLd = [
         "name": "Makkah and Madinah Ziyarat Tour",
         "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
         "provider": {
-            "@type": "TransportationService",
-            "name": "Al Aqsa Transport"
+            "@type": "Organization",
+            "name": "Al Aqsa Transport",
+            "url": "https://www.alaqsaumrahtransport.com"
         },
         "itinerary": [
             {
@@ -74,7 +75,8 @@ const jsonLd = [
             "@type": "Offer",
             "price": "300",
             "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "url": "https://www.alaqsaumrahtransport.com/services/ziyarat-tours"
         }
     },
     {

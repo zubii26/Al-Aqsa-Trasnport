@@ -30,49 +30,79 @@ export const metadata: Metadata = {
     }
 };
 
-const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Ramadan Umrah Transport Services",
-    "alternateName": "خدمات نقل المعتمرين في رمضان",
-    "provider": {
-        "@type": "LocalBusiness",
-        "name": "Al Aqsa Transport",
-        "image": "https://www.alaqsaumrahtransport.com/logo.png"
-    },
-    "serviceType": "Religious Tourism Transport",
-    "areaServed": ["Makkah", "Madinah", "Jeddah"],
-    "description": "Specialized transport services for Ramadan 2026, ensuring timely arrival for prayers and Iftar.",
-    "availability": "Ramadan 2026",
-    "offers": {
-        "@type": "Offer",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock"
-    },
-    "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
+const jsonLd = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Ramadan Umrah Transport Services",
+        "alternateName": "خدمات نقل المعتمرين في رمضان",
+        "provider": {
+            "@type": "Organization",
+            "name": "Al Aqsa Transport",
+            "url": "https://www.alaqsaumrahtransport.com"
+        },
+        "serviceType": "Religious Tourism Transport",
+        "areaServed": [
             {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://www.alaqsaumrahtransport.com"
+                "@type": "City",
+                "name": "Makkah"
             },
             {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Services",
-                "item": "https://www.alaqsaumrahtransport.com/services"
+                "@type": "City",
+                "name": "Madinah"
             },
             {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Ramadan Transport",
-                "item": "https://www.alaqsaumrahtransport.com/services/ramadan-transport"
+                "@type": "City",
+                "name": "Jeddah"
+            }
+        ],
+        "description": "Specialized transport services for Ramadan 2026, ensuring timely arrival for prayers and Iftar.",
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock",
+            "url": "https://www.alaqsaumrahtransport.com/services/ramadan-transport"
+        }
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is transport available 24/7 during Ramadan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we operate 24/7. However, during Maghrib and Isha/Tarawih times, traffic in Makkah is very heavy. We recommend booking at least 3 hours in advance."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you offer transport for Qiyam-ul-Layl?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely. We provide dedicated late-night transfers for Qiyam-ul-Layl prayers to and from the Haram."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are prices higher during Ramadan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ramadan is a peak season, and while market rates generally rise, we strive to offer competitive, fixed rates when you book in advance. No last-minute surge pricing if booked ahead."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can we stop for Iftar during the journey?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, our drivers are happy to accommodate a brief stop for Iftar. We recommend planning your trip to arrive before Maghrib to avoid road closures near the Haram."
+                }
             }
         ]
     }
-};
+];
 
 const ramadanFAQs = [
     {
