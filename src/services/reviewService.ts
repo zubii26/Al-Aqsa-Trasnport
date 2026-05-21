@@ -3,9 +3,14 @@ import { Review, IReview } from '@/models';
 
 export const reviewService = {
     async getReviews() {
-        await dbConnect();
-        const reviews = await Review.find({}).sort({ date: -1 }).lean();
-        return reviews.map(r => ({ ...r, id: r._id.toString() }));
+        try {
+            await dbConnect();
+            const reviews = await Review.find({}).sort({ date: -1 }).lean();
+            return reviews.map(r => ({ ...r, id: r._id.toString() }));
+        } catch (error) {
+            console.error('[ReviewService] Database connection failed in getReviews, returning empty array fallback:', error);
+            return [];
+        }
     },
 
     async createReview(data: Partial<IReview>) {

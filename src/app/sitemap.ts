@@ -30,7 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/routes',
         '/safety',
         '/services/ramadan-transport',
-        '/services/taif-city-tour',
         '/privacy',
         '/terms',
         '/cookie-preferences',

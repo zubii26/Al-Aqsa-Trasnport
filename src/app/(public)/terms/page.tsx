@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import styles from './terms.module.css';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import { getSettings } from '@/lib/settings-storage';
+
+export const metadata: Metadata = {
+    title: 'Terms and Conditions | Al Aqsa Umrah Transport',
+    description: 'Terms and conditions for Al Aqsa Umrah Transport. Review rules, requirements, and policies for booking transport in Saudi Arabia.',
+    alternates: {
+        canonical: 'https://www.alaqsaumrahtransport.com/terms',
+    },
+};
 
 export default async function TermsPage() {
     const settings = await getSettings();

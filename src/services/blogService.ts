@@ -4,34 +4,44 @@ import { staticBlogPosts } from '@/data/blog-posts';
 
 export const blogService = {
     async getPosts() {
-        await dbConnect();
-        const dbPosts = await BlogPost.find({}).sort({ date: -1 }).lean();
+        try {
+            await dbConnect();
+            const dbPosts = await BlogPost.find({}).sort({ date: -1 }).lean();
 
-        // Map DB posts to standard format
-        const mappedDbPosts = dbPosts.map(post => ({
-            ...post,
-            id: post.slug,
-            date: post.date,
-            createdAt: post.createdAt,
-            updatedAt: post.updatedAt,
-        }));
-
-        // Map static posts to match the interface
-        const dbSlugs = new Set(mappedDbPosts.map(p => p.slug));
-        const mappedStaticPosts = staticBlogPosts
-            .filter(post => !dbSlugs.has(post.slug))
-            .map(post => ({
+            // Map DB posts to standard format
+            const mappedDbPosts = dbPosts.map(post => ({
                 ...post,
                 id: post.slug,
-                // Ensure dates are Date objects if they aren't already (though they are in the file)
+                date: post.date,
+                createdAt: post.createdAt,
+                updatedAt: post.updatedAt,
             }));
 
-        // Merge and sort by date descending
-        const allPosts = [...mappedDbPosts, ...mappedStaticPosts].sort((a, b) =>
-            new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+            // Map static posts to match the interface
+            const dbSlugs = new Set(mappedDbPosts.map(p => p.slug));
+            const mappedStaticPosts = staticBlogPosts
+                .filter(post => !dbSlugs.has(post.slug))
+                .map(post => ({
+                    ...post,
+                    id: post.slug,
+                    // Ensure dates are Date objects if they aren't already (though they are in the file)
+                }));
 
-        return allPosts;
+            // Merge and sort by date descending
+            const allPosts = [...mappedDbPosts, ...mappedStaticPosts].sort((a, b) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
+
+            return allPosts;
+        } catch (error) {
+            console.error('[BlogService] Database connection failed in getPosts, returning static fallbacks:', error);
+            return staticBlogPosts.map(post => ({
+                ...post,
+                id: post.slug,
+            })).sort((a, b) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
+        }
     },
 
     async getPostBySlug(slug: string) {
@@ -41,18 +51,22 @@ export const blogService = {
             return { ...staticPost, id: staticPost.slug };
         }
 
-        // Fall back to DB only for slugs that aren't in the static data (e.g. admin-created posts).
-        await dbConnect();
-        const post = await BlogPost.findOne({ slug }).lean();
+        try {
+            // Fall back to DB only for slugs that aren't in the static data (e.g. admin-created posts).
+            await dbConnect();
+            const post = await BlogPost.findOne({ slug }).lean();
 
-        if (post) {
-            return {
-                ...post,
-                id: post.slug,
-                date: post.date,
-                createdAt: post.createdAt,
-                updatedAt: post.updatedAt,
-            };
+            if (post) {
+                return {
+                    ...post,
+                    id: post.slug,
+                    date: post.date,
+                    createdAt: post.createdAt,
+                    updatedAt: post.updatedAt,
+                };
+            }
+        } catch (error) {
+            console.error(`[BlogService] Database query failed in getPostBySlug for slug ${slug}:`, error);
         }
 
         return null;

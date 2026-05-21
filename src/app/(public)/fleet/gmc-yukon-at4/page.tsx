@@ -18,74 +18,83 @@ import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'gmc');
 
-const jsonLd = {
+const jsonLd = [
+  {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "GMC Yukon XL 2025 Rental Makkah",
+    "@type": "LocalBusiness",
+    "name": "Al Aqsa Umrah Transport - GMC Yukon XL VIP Service",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp",
     "description": "Rent luxury GMC Yukon XL in Makkah & Madinah. Premium 7-Seater SUV for VIP Umrah transport, airport transfers, and intercity travel.",
-    "brand": { "@type": "Brand", "name": "GMC" },
-    "offers": { 
-        "@type": "Offer", 
-        "price": "600", 
-        "priceCurrency": "SAR", 
-        "availability": "https://schema.org/InStock",
-        "url": "https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4"
-    ,
-        "hasMerchantReturnPolicy": {
-            "@type": "MerchantReturnPolicy",
-            "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
-            "description": "Due to the nature of pre-booked private transport services, returns or refunds are not permitted once the service has commenced or been completed. Please refer to our cancellation policy for pre-service modifications."
-        },
-        "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-                "@type": "MonetaryAmount",
-                "value": 0,
-                "currency": "SAR"
-            },
-            "deliveryTime": {
-                "@type": "ShippingDeliveryTime",
-                "handlingTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                },
-                "transitTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                }
-            },
-            "shippingDestination": {
-                "@type": "DefinedRegion",
-                "addressCountry": "SA"
-            }
-        }},
-    "hasCertification": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
+    "url": "https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4",
+    "telephone": "+966548707332",
+    "email": "alaqsaumrahtransport@gmail.com",
+    "priceRange": "SAR 600–1100",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Makkah",
+      "addressRegion": "Makkah Province",
+      "addressCountry": "SA"
     },
-    "review": {
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 21.3891,
+      "longitude": 39.8579
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "152",
+      "bestRating": "5"
+    },
+    "review": [
+      {
         "@type": "Review",
         "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
+          "@type": "Person",
+          "name": "Verified Customer"
         },
         "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "datePublished": "2024-01-01",
         "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
-};
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.alaqsaumrahtransport.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Fleet",
+        "item": "https://www.alaqsaumrahtransport.com/fleet"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "GMC Yukon XL",
+        "item": "https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4"
+      }
+    ]
+  }
+];
 
 export const metadata: Metadata = {
     title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",

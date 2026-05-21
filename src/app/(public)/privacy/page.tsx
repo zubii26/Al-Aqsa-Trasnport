@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import styles from './privacy.module.css';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import { getSettings } from '@/lib/settings-storage';
+
+export const metadata: Metadata = {
+    title: 'Privacy Policy | Al Aqsa Umrah Transport',
+    description: 'Privacy Policy for Al Aqsa Umrah Transport. Learn how we handle your personal data and respect your privacy.',
+    alternates: {
+        canonical: 'https://www.alaqsaumrahtransport.com/privacy',
+    },
+};
 
 export default async function PrivacyPage() {
     const settings = await getSettings();

@@ -13,6 +13,9 @@ export const metadata = {
         "معايير السلامة", "نقل معتمرين آمن", "تاكسي عائلي مكة",
         "أمان المعتمرين", "توصيل آمن للنساء", "سائقين مرخصين"
     ],
+    alternates: {
+        canonical: 'https://www.alaqsaumrahtransport.com/safety',
+    },
     openGraph: {
         title: "Safety Standards | Al Aqsa Umrah Transport | الأمان والراحة",
         description: "Verified drivers, sanitized vehicles, and 24/7 support. Travel with peace of mind. رحلة آمنة ومريحة مع الأقصى للنقل.",

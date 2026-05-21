@@ -88,6 +88,11 @@ const nextConfig: NextConfig = {
       },
       // ── Legacy blog URL rewrites ───────────────────────────────────────
       {
+        source: '/book',
+        destination: '/booking',
+        permanent: true,
+      },
+      {
         source: '/umrah/blog',
         destination: '/blog',
         permanent: true,

@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/mongodb';
 import { unstable_cache } from 'next/cache';
 import { Route, RoutePrice, IRoute } from '@/models';
+import pricingData from '@/data/pricing.json';
 
 // Helper interface for the frontend (combines Route and its Prices)
 export interface RouteWithPrices extends IRoute {
@@ -8,10 +9,68 @@ export interface RouteWithPrices extends IRoute {
     prices?: { vehicleId: string; price: number }[];
 }
 
+const VECHICLE_ID_MAP: Record<string, string> = {
+    'camry': '692db09834f15bc89b45a5f6',
+    'gmc': '692db09834f15bc89b45a5f8',
+    'staria': '692db09834f15bc89b45a5f9',
+    'starex': '692db09834f15bc89b45a5fa',
+    'hiace': '692db09834f15bc89b45a5fb',
+    'kia': 'kia',
+    'large-bus': 'large-bus',
+    'mercedes': 'mercedes',
+    'xpander': 'xpander',
+    'coaster': 'coaster'
+};
+
+const parseRouteName = (name: string) => {
+    if (name.toLowerCase().includes('ziyarat') || name.toLowerCase().includes('ziarat')) {
+        if (name.toLowerCase().includes('madinah') || name.toLowerCase().includes('madina')) {
+            return { origin: 'Madinah', destination: 'Madinah Ziyarat' };
+        }
+        return { origin: 'Makkah', destination: 'Makkah Ziyarat' };
+    }
+    const parts = name.split(/ to /i);
+    if (parts.length >= 2) {
+        return { origin: parts[0].trim(), destination: parts[1].trim() };
+    }
+    return { origin: name, destination: '' };
+};
+
+const getFallbackRoutes = (): RouteWithPrices[] => {
+    return pricingData.routes.map((r: any) => {
+        const prices = Object.entries(r.customRates || {}).map(([vId, price]) => ({
+            vehicleId: VECHICLE_ID_MAP[vId] || vId,
+            price: Number(price)
+        }));
+
+        const { origin, destination } = parseRouteName(r.name);
+
+        const category = r.category || (
+            r.slug.toLowerCase().includes('airport') ? 'Airport Departure' :
+            r.name.toLowerCase().includes('airport') ? 'Airport Arrival' :
+            (r.name.toLowerCase().includes('ziarat') || r.name.toLowerCase().includes('ziyarat')) ? 'Ziarat' :
+            'Intercity'
+        );
+
+        return {
+            _id: r.id,
+            id: r.id,
+            origin: origin,
+            destination: destination,
+            distance: r.distance || '',
+            duration: r.time || '',
+            category: category,
+            isActive: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            prices: prices
+        } as unknown as RouteWithPrices;
+    });
+};
+
 export const routeService = {
     getRoutes: unstable_cache(async () => {
         console.log('[routeService] getRoutes starting...');
-        const start = Date.now();
         try {
             await dbConnect();
             const routes = await Route.aggregate([
@@ -61,8 +120,8 @@ export const routeService = {
                 updatedAt: route.updatedAt ? new Date(route.updatedAt).toISOString() : null,
             })) as unknown as RouteWithPrices[];
         } catch (error) {
-            console.error('Error in routeService.getRoutes:', error);
-            throw error;
+            console.error('Error in routeService.getRoutes, using static fallback:', error);
+            return getFallbackRoutes();
         }
     }, ['routes-list'], { revalidate: 3600, tags: ['routes'] }),
 
@@ -121,25 +180,31 @@ export const routeService = {
             })) as unknown as RouteWithPrices[];
 
         } catch (error) {
-            console.error('Error in routeService.getActiveRoutes:', error);
-            throw error;
+            console.error('Error in routeService.getActiveRoutes, using static fallback:', error);
+            return getFallbackRoutes().filter(r => r.isActive);
         }
     }, ['routes-active'], { revalidate: 3600, tags: ['routes'] }),
 
     async getRouteById(id: string) {
-        await dbConnect();
-        const route = await Route.findById(id).lean();
-        if (!route) return null;
+        try {
+            await dbConnect();
+            const route = await Route.findById(id).lean();
+            if (!route) return null;
 
-        const prices = await RoutePrice.find({ route: id }).lean();
+            const prices = await RoutePrice.find({ route: id }).lean();
 
-        return {
-            ...route,
-            id: route._id.toString(),
-            createdAt: route.createdAt,
-            updatedAt: route.updatedAt,
-            prices: prices.map(p => ({ vehicleId: p.vehicle, price: p.price }))
-        } as unknown as RouteWithPrices;
+            return {
+                ...route,
+                id: route._id.toString(),
+                createdAt: route.createdAt,
+                updatedAt: route.updatedAt,
+                prices: prices.map(p => ({ vehicleId: p.vehicle, price: p.price }))
+            } as unknown as RouteWithPrices;
+        } catch (error) {
+            console.error(`Error in getRouteById for ${id}, using static fallback:`, error);
+            const fallbacks = getFallbackRoutes();
+            return fallbacks.find(r => r.id === id || r._id?.toString() === id) || null;
+        }
     },
 
     async createRoute(data: Partial<IRoute>) {

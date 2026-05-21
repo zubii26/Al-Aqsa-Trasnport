@@ -23,6 +23,9 @@ export const metadata: Metadata = {
         "توصيل مكة في رمضان",
         "تاكسي الحرم رمضان"
     ],
+    alternates: {
+        canonical: 'https://www.alaqsaumrahtransport.com/services/ramadan-transport',
+    },
     openGraph: {
         title: "Ramadan 2026 Umrah Transport | Makkah Taxi",
         description: "Book reliable Ramadan 2026 transport in Makkah & Madinah. VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",

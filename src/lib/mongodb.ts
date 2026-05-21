@@ -26,6 +26,10 @@ async function dbConnect() {
         return cached!.conn;
     }
 
+    if (MONGODB_URI && (MONGODB_URI.includes('localhost') || MONGODB_URI.includes('127.0.0.1'))) {
+        throw new Error('Localhost/Dummy MongoDB URI detected: Bypassing connection at build/prerender time.');
+    }
+
     if (!cached!.promise) {
         // Enforce strict setting for Mongoose 7/8
         mongoose.set('strictQuery', true);

@@ -17,68 +17,83 @@ import pricingData from '@/data/pricing.json';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'hiace');
 
-const jsonLd = {
+const jsonLd = [
+  {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": vehicleData?.seo?.title || "Toyota Hiace 12-Seater Bus Rental",
+    "@type": "LocalBusiness",
+    "name": "Al Aqsa Umrah Transport - Toyota Hiace Van Service",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/hiace-hero-professional.webp",
-    "description": vehicleData?.seo?.description || "Rent Toyota Hiace bus in Makkah. Reliable 12-seater transport for Umrah groups and large families.",
-    "brand": { "@type": "Brand", "name": "Toyota" },
-    "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" ,
-        "hasMerchantReturnPolicy": {
-            "@type": "MerchantReturnPolicy",
-            "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
-            "description": "Due to the nature of pre-booked private transport services, returns or refunds are not permitted once the service has commenced or been completed. Please refer to our cancellation policy for pre-service modifications."
-        },
-        "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-                "@type": "MonetaryAmount",
-                "value": 0,
-                "currency": "SAR"
-            },
-            "deliveryTime": {
-                "@type": "ShippingDeliveryTime",
-                "handlingTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                },
-                "transitTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                }
-            },
-            "shippingDestination": {
-                "@type": "DefinedRegion",
-                "addressCountry": "SA"
-            }
-        }},
-    "hasCertification": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
+    "description": "Rent a Toyota Hiace 12-seater bus in Makkah. Reliable and spacious group transport for family Umrah transfers.",
+    "url": "https://www.alaqsaumrahtransport.com/fleet/toyota-hiace",
+    "telephone": "+966548707332",
+    "email": "alaqsaumrahtransport@gmail.com",
+    "priceRange": "SAR 350–700",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Makkah",
+      "addressRegion": "Makkah Province",
+      "addressCountry": "SA"
     },
-    "review": {
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 21.3891,
+      "longitude": 39.8579
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "152",
+      "bestRating": "5"
+    },
+    "review": [
+      {
         "@type": "Review",
         "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
+          "@type": "Person",
+          "name": "Verified Customer"
         },
         "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "datePublished": "2024-01-01",
         "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
-};
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.alaqsaumrahtransport.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Fleet",
+        "item": "https://www.alaqsaumrahtransport.com/fleet"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Toyota Hiace",
+        "item": "https://www.alaqsaumrahtransport.com/fleet/toyota-hiace"
+      }
+    ]
+  }
+];
 
 export const metadata: Metadata = {
     title: "Toyota Hiace Bus Rental Makkah | Cheap Group Transport",

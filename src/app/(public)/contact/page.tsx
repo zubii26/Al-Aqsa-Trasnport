@@ -95,11 +95,70 @@ export default async function ContactPage() {
         }
     };
 
+    const faqJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I book my Umrah transport?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can book directly using our online Booking Wizard, which calculates pricing in real-time, or by contacting our 24/7 customer support via WhatsApp. We will confirm your ride within minutes and share your driver details."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is your flight delay policy?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We monitor all arrival flights at King Abdulaziz International Airport (Jeddah) and Prince Mohammad Bin Abdulaziz International Airport (Madinah). Your driver will wait for you even if your flight is delayed, at no extra cost."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I modify or cancel my booking?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, you can cancel or modify your booking up to 24 hours before your scheduled pickup time with no penalty. For last-minute changes, please contact us directly via WhatsApp or phone."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What types of vehicles are in your fleet?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our premium fleet includes luxury SUVs like the GMC Yukon AT4/Denali, spacious family minivans like the Hyundai Staria, comfortable multi-passenger vans like the Toyota Hiace, and larger buses like the Toyota Coaster. All vehicles are modern, air-conditioned, and Ministry-licensed."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you provide child seats?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! We prioritize the safety of your family. Infant, toddler, and booster seats are available upon request during the booking process."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do your drivers speak English?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we have a dedicated team of professional, multilingual drivers who speak English, Arabic, and Urdu/Hindi, ensuring clear communication throughout your holy journey."
+                }
+            }
+        ]
+    };
+
     return (
         <div className="bg-slate-50 dark:bg-slate-950 pb-20">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
             />
             <Hero
                 title="Get in Touch | تواصل معنا"
@@ -172,6 +231,75 @@ export default async function ContactPage() {
                     </div>
                 </div>
             </div>
-        </div >
+
+            {/* FAQ Section */}
+            <FadeIn direction="up" delay={0.2}>
+                <section className={styles.faqSection}>
+                    <div className="container mx-auto px-4">
+                        <div className="text-center max-w-3xl mx-auto mb-12">
+                            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 font-display">
+                                Frequently Asked Questions
+                                <span className="block text-2xl font-arabic font-normal text-amber-500 mt-2">الأسئلة الشائعة</span>
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-300">
+                                Everything you need to know about our VIP Umrah transport services, booking process, and policies.
+                            </p>
+                        </div>
+
+                        <div className={styles.faqGrid}>
+                            {[
+                                {
+                                    qEn: "How do I book my Umrah transport?",
+                                    qAr: "كيف يمكنني حجز مواصلات العمرة؟",
+                                    aEn: "You can book directly using our online Booking Wizard, which calculates pricing in real-time, or by contacting our 24/7 customer support via WhatsApp. We will confirm your ride within minutes and share your driver details.",
+                                    aAr: "يمكنك الحجز مباشرة عبر معالج الحجز الإلكتروني الذي يحتسب الأسعار في الوقت الفعلي، أو بالتواصل مع دعم العملاء المتاح 24/7 عبر الواتساب. سنؤكد رحلتك ونرسل تفاصيل السائق خلال دقائق."
+                                },
+                                {
+                                    qEn: "What is your flight delay policy?",
+                                    qAr: "ما هي سياستكم في حال تأخر الرحلة؟",
+                                    aEn: "We monitor all arrival flights at King Abdulaziz International Airport (Jeddah) and Prince Mohammad Bin Abdulaziz International Airport (Madinah). Your driver will wait for you even if your flight is delayed, at no extra cost.",
+                                    aAr: "نحن نتابع جميع الرحلات القادمة إلى مطار الملك عبد العزيز بجدة ومطار الأمير محمد بن عبد العزيز بالمدينة. سينتظرك السائق حتى لو تأخرت رحلتك دون أي تكاليف إضافية."
+                                },
+                                {
+                                    qEn: "Can I modify or cancel my booking?",
+                                    qAr: "هل يمكنني تعديل أو إلغاء الحجز؟",
+                                    aEn: "Yes, you can cancel or modify your booking up to 24 hours before your scheduled pickup time with no penalty. For last-minute changes, please contact us directly via WhatsApp or phone.",
+                                    aAr: "نعم، يمكنك إلغاء أو تعديل حجزك قبل 24 ساعة من موعد التوصيل المحدد دون أي رسوم. للتغييرات في اللحظة الأخيرة، يرجى التواصل معنا مباشرة عبر الواتساب أو الهاتف."
+                                },
+                                {
+                                    qEn: "What types of vehicles are in your fleet?",
+                                    qAr: "ما هي أنواع السيارات المتوفرة في أسطولكم؟",
+                                    aEn: "Our premium fleet includes luxury SUVs like the GMC Yukon AT4/Denali, spacious family minivans like the Hyundai Staria, comfortable multi-passenger vans like the Toyota Hiace, and larger buses like the Toyota Coaster. All vehicles are modern, air-conditioned, and Ministry-licensed.",
+                                    aAr: "يضم أسطولنا المتميز سيارات رياضية فاخرة مثل جمس يوكن AT4، وسيارات عائلية فسيحة مثل هيونداي ستاريا، وحافلات صغيرة مثل تويوتا هايس، وحافلات أكبر مثل تويوتا كوستر. جميع المركبات حديثة ومكيفة ومرخصة من وزارة النقل."
+                                },
+                                {
+                                    qEn: "Do you provide child seats?",
+                                    qAr: "هل توفرون مقاعد للأطفال؟",
+                                    aEn: "Yes! We prioritize the safety of your family. Infant, toddler, and booster seats are available upon request during the booking process.",
+                                    aAr: "نعم! نحن نولي الأولوية لسلامة عائلتك. تتوفر مقاعد الرضع والأطفال الصغار والمقاعد الداعمة عند الطلب أثناء عملية الحجز."
+                                },
+                                {
+                                    qEn: "Do your drivers speak English?",
+                                    qAr: "هل يتحدث السائقون اللغة الإنجليزية؟",
+                                    aEn: "Yes, we have a dedicated team of professional, multilingual drivers who speak English, Arabic, and Urdu/Hindi, ensuring clear communication throughout your holy journey.",
+                                    aAr: "نعم، لدينا فريق متخصص من السائقين المحترفين متعددي اللغات الذين يتحدثون الإنجليزية والعربية والأردية/الهندية، مما يضمن تواصلًا واضحًا طوال رحلتك الإيمانية."
+                                }
+                            ].map((faq, idx) => (
+                                <div key={idx} className={styles.faqItem}>
+                                    <h3 className={styles.faqQuestion}>
+                                        <span className="block text-slate-800 dark:text-slate-100 mb-1">{faq.qEn}</span>
+                                        <span className="block text-amber-500 font-arabic text-right text-base font-semibold">{faq.qAr}</span>
+                                    </h3>
+                                    <p className={styles.faqAnswer}>
+                                        <span className="block text-slate-600 dark:text-slate-400 text-sm mb-3 leading-relaxed">{faq.aEn}</span>
+                                        <span className="block text-slate-500 dark:text-slate-300 font-arabic text-right text-sm border-t border-slate-100 dark:border-slate-800/50 pt-2 leading-relaxed">{faq.aAr}</span>
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            </FadeIn>
+        </div>
     );
 }

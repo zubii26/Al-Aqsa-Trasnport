@@ -3,16 +3,26 @@ import { User, IUser } from '@/models';
 
 export const userService = {
     async getUsers() {
-        await dbConnect();
-        const users = await User.find({}).sort({ createdAt: -1 }).lean();
-        return users.map(u => ({ ...u, id: u._id.toString() }));
+        try {
+            await dbConnect();
+            const users = await User.find({}).sort({ createdAt: -1 }).lean();
+            return users.map(u => ({ ...u, id: u._id.toString() }));
+        } catch (error) {
+            console.error('[UserService] Database connection failed in getUsers, returning empty list:', error);
+            return [];
+        }
     },
 
     async getUser(id: string) {
-        await dbConnect();
-        const user = await User.findById(id).lean();
-        if (!user) return null;
-        return { ...user, id: user._id.toString() };
+        try {
+            await dbConnect();
+            const user = await User.findById(id).lean();
+            if (!user) return null;
+            return { ...user, id: user._id.toString() };
+        } catch (error) {
+            console.error(`[UserService] Database query failed in getUser for id ${id}:`, error);
+            return null;
+        }
     },
 
     async createUser(id: string, data: Partial<IUser>) {

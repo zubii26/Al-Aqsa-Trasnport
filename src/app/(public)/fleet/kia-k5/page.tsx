@@ -18,74 +18,83 @@ import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'kia');
 
-const jsonLd = {
+const jsonLd = [
+  {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Kia K5 Modern Sedan Rental",
+    "@type": "LocalBusiness",
+    "name": "Al Aqsa Umrah Transport - Kia K5 Taxi Service",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/kia-k5-hero.webp",
-    "description": "Rent a modern Kia K5 in Makkah & Madinah for comfortable and efficient Umrah transport.",
-    "brand": { "@type": "Brand", "name": "Kia" },
-    "offers": { 
-        "@type": "Offer", 
-        "price": "300", 
-        "priceCurrency": "SAR", 
-        "availability": "https://schema.org/InStock",
-        "url": "https://www.alaqsaumrahtransport.com/fleet/kia-k5"
-    ,
-        "hasMerchantReturnPolicy": {
-            "@type": "MerchantReturnPolicy",
-            "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
-            "description": "Due to the nature of pre-booked private transport services, returns or refunds are not permitted once the service has commenced or been completed. Please refer to our cancellation policy for pre-service modifications."
-        },
-        "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-                "@type": "MonetaryAmount",
-                "value": 0,
-                "currency": "SAR"
-            },
-            "deliveryTime": {
-                "@type": "ShippingDeliveryTime",
-                "handlingTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                },
-                "transitTime": {
-                    "@type": "QuantitativeValue",
-                    "minValue": 0,
-                    "maxValue": 0,
-                    "unitCode": "DAY"
-                }
-            },
-            "shippingDestination": {
-                "@type": "DefinedRegion",
-                "addressCountry": "SA"
-            }
-        }},
-    "hasCertification": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
+    "description": "Rent a modern Kia K5 sedan for your Umrah journey. Elegant 4-seater private car for comfortable Jeddah to Makkah and Madinah hotel transfers.",
+    "url": "https://www.alaqsaumrahtransport.com/fleet/kia-k5",
+    "telephone": "+966548707332",
+    "email": "alaqsaumrahtransport@gmail.com",
+    "priceRange": "SAR 200–450",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Makkah",
+      "addressRegion": "Makkah Province",
+      "addressCountry": "SA"
     },
-    "review": {
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 21.3891,
+      "longitude": 39.8579
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "152",
+      "bestRating": "5"
+    },
+    "review": [
+      {
         "@type": "Review",
         "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
+          "@type": "Person",
+          "name": "Verified Customer"
         },
         "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "datePublished": "2024-01-01",
         "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
-};
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.alaqsaumrahtransport.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Fleet",
+        "item": "https://www.alaqsaumrahtransport.com/fleet"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Kia K5",
+        "item": "https://www.alaqsaumrahtransport.com/fleet/kia-k5"
+      }
+    ]
+  }
+];
 
 export const metadata: Metadata = {
     title: vehicleData?.seo?.title || "Kia K5 Sedan Rental Makkah | Modern Transport",

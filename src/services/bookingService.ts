@@ -3,16 +3,26 @@ import { Booking, IBooking } from '@/models';
 
 export const bookingService = {
     async getBookings() {
-        await dbConnect();
-        const bookings = await Booking.find({}).sort({ createdAt: -1 }).lean();
-        return bookings.map(b => ({ ...b, id: b._id.toString() }));
+        try {
+            await dbConnect();
+            const bookings = await Booking.find({}).sort({ createdAt: -1 }).lean();
+            return bookings.map(b => ({ ...b, id: b._id.toString() }));
+        } catch (error) {
+            console.error('[BookingService] Database connection failed in getBookings, returning empty list:', error);
+            return [];
+        }
     },
 
     async getBookingById(id: string) {
-        await dbConnect();
-        const booking = await Booking.findById(id).lean();
-        if (!booking) return null;
-        return { ...booking, id: booking._id.toString() };
+        try {
+            await dbConnect();
+            const booking = await Booking.findById(id).lean();
+            if (!booking) return null;
+            return { ...booking, id: booking._id.toString() };
+        } catch (error) {
+            console.error(`[BookingService] Database query failed in getBookingById for id ${id}:`, error);
+            return null;
+        }
     },
 
     async createBooking(data: Partial<IBooking>) {
