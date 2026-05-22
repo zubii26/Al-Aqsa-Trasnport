@@ -60,17 +60,22 @@ export async function GET() {
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const formattedVehicles = activeVehicles.map((vehicle: any) => ({
-            id: vehicle.id,
-            name: vehicle.name,
-            capacity: vehicle.capacity || `${vehicle.passengers} Seater`,
-            passengers: vehicle.passengers,
-            multiplier: 1, // Not used
-            features: vehicle.features,
-            luggage: `${vehicle.luggage} Bags`,
-            category: vehicle.category,
-            isActive: vehicle.isActive
-        }));
+        const formattedVehicles = activeVehicles.map((vehicle: any) => {
+            const defaultVehicle = DEFAULT_VEHICLES.find(dv => dv.id === vehicle.id || dv.name.toLowerCase() === vehicle.name.toLowerCase());
+            const multiplier = defaultVehicle?.multiplier ?? 1;
+            
+            return {
+                id: vehicle.id,
+                name: vehicle.name,
+                capacity: vehicle.capacity || `${vehicle.passengers} Seater`,
+                passengers: vehicle.passengers,
+                multiplier,
+                features: vehicle.features,
+                luggage: `${vehicle.luggage} Bags`,
+                category: vehicle.category,
+                isActive: vehicle.isActive
+            };
+        });
 
         // Enforce specific sort order
         // Enforce specific sort order with robust matching

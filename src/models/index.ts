@@ -49,6 +49,17 @@ export interface IBooking extends Document {
     flightNumber?: string;
     arrivalDate?: string;
 
+    // Custom Route Details
+    customRoute?: {
+        pickupLat: number;
+        pickupLng: number;
+        dropoffLat: number;
+        dropoffLng: number;
+        distanceKm?: number;
+        durationMin?: number;
+        geometry?: string;
+    };
+
     rating?: number,
     review?: string,
     reviewEmailSent?: boolean,
@@ -262,7 +273,17 @@ const BookingSchema = new Schema<IBooking>({
     country: { type: String },
     flightNumber: { type: String },
     arrivalDate: { type: String },
-
+    
+    // Custom Route coordinates, distance, duration, polyline
+    customRoute: {
+        pickupLat: { type: Number },
+        pickupLng: { type: Number },
+        dropoffLat: { type: Number },
+        dropoffLng: { type: Number },
+        distanceKm: { type: Number },
+        durationMin: { type: Number },
+        geometry: { type: String }
+    },
 
     // Rating & Review
     rating: { type: Number, min: 1, max: 5 },

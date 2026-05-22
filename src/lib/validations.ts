@@ -30,6 +30,15 @@ export const BookingSchema = z.object({
     paymentMethod: z.string().max(50).trim().optional(),
     paymentStatus: z.enum(['paid', 'unpaid', 'refunded']).optional(),
     price: z.string().max(50).trim().optional(),
+    customRoute: z.object({
+        pickupLat: z.number(),
+        pickupLng: z.number(),
+        dropoffLat: z.number(),
+        dropoffLng: z.number(),
+        distanceKm: z.number().optional(),
+        durationMin: z.number().optional(),
+        geometry: z.string().optional(),
+    }).optional(),
 });
 
 export const VehicleSchema = z.object({
@@ -112,6 +121,11 @@ export const SettingsSchema = z.object({
     emailTemplates: z.object({
         bookingConfirmation: z.string().max(5000).optional(),
         adminNotification: z.string().max(5000).optional(),
+    }).optional(),
+    customRoute: z.object({
+        baseFare: z.number().min(0),
+        kmRate: z.number().min(0),
+        minFare: z.number().min(0),
     }).optional(),
 });
 

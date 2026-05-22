@@ -4,6 +4,8 @@ import pricingData from '@/data/pricing.json';
 export interface Route {
     id: string;
     name: string;
+    origin?: string;       // e.g. 'Makkah Hotel' — from admin panel
+    destination?: string;  // e.g. 'Jeddah Airport' — from admin panel
     distance: string;
     time: string;
     baseRate: number;

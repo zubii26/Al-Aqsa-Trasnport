@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,6 +13,11 @@ import { Route } from '@/lib/pricing';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import NusukBadge from '@/components/common/NusukBadge';
+import { useSettings } from '@/context/SettingsContext';
+import { calculateFinalPrice } from '@/lib/pricing';
+import dynamic from 'next/dynamic';
+
+const CustomRouteMap = dynamic(() => import('@/components/booking/CustomRouteMap'), { ssr: false });
 
 const splitRouteName = (name: string): [string, string] => {
     if (!name) return ['', ''];
@@ -20,8 +25,13 @@ const splitRouteName = (name: string): [string, string] => {
     return [parts[0]?.trim() || '', parts[1]?.trim() || ''];
 };
 
+// Helper: get origin (pickup) from a route — prefer explicit field, fall back to name parsing
+const getRouteOrigin = (r: Route): string => r.origin || splitRouteName(r.name)[0] || r.name;
+const getRouteDestination = (r: Route): string => r.destination || splitRouteName(r.name)[1] || '';
+
 export default function BookingPage() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
+    const { settings } = useSettings();
     const [step, setStep] = useState(1);
     const [isSearching, setIsSearching] = useState(false);
     const [accordionOpen, setAccordionOpen] = useState<string>('journey');
@@ -57,7 +67,16 @@ export default function BookingPage() {
         pickup: '',
         dropoff: '',
         passengers: 1,
-        luggage: 0
+        luggage: 0,
+        customRoute: null as {
+            pickupLat: number;
+            pickupLng: number;
+            dropoffLat: number;
+            dropoffLng: number;
+            distanceKm: number;
+            durationMin: number;
+            geometry: string;
+        } | null
     });
 
     const [bookingResponse, setBookingResponse] = useState<any>(null);
@@ -138,9 +157,8 @@ export default function BookingPage() {
                 initialRouteId = paramRouteId;
                 const selectedRoute = routes.find(r => r.id === paramRouteId);
                 if (selectedRoute) {
-                    const [p, d] = splitRouteName(selectedRoute.name);
-                    initialPickup = p;
-                    initialDropoff = d;
+                    initialPickup = getRouteOrigin(selectedRoute);
+                    initialDropoff = getRouteDestination(selectedRoute);
                 }
             } else if (paramNotes) {
                 // Formatting "Notes" to be route-like if we have notes but no ID
@@ -204,21 +222,35 @@ export default function BookingPage() {
         }
     }, [isLoading, routes, vehicles, searchParams]);
 
+    const getPriceDetails = useCallback((routeId: string, vehicleId: string) => {
+        if (routeId === 'custom') {
+            const distance = bookingData.customRoute?.distanceKm;
+            if (!distance) {
+                return { price: 0, originalPrice: 0, discountApplied: 0 };
+            }
+            const baseFare = settings?.customRoute?.baseFare ?? 50;
+            const kmRate = settings?.customRoute?.kmRate ?? 3;
+            const minFare = settings?.customRoute?.minFare ?? 50;
+            const vehicle = vehicles.find(v => v.id === vehicleId);
+            const multiplier = vehicle?.multiplier ?? 1;
+            
+            const rawCost = Math.max(minFare, baseFare + distance * kmRate);
+            return calculateFinalPrice(rawCost * multiplier, settings?.discount);
+        }
+        return calculatePrice(routeId, vehicleId);
+    }, [bookingData.customRoute, calculatePrice, vehicles, settings]);
+
     useEffect(() => {
         if (bookingData.routeId && bookingData.selectedVehicles.length > 0) {
-            if (bookingData.routeId === 'custom') {
-                setTotalPrice(0);
-                return;
-            }
             const total = bookingData.selectedVehicles.reduce((sum, v) => {
-                const priceDetails = calculatePrice(bookingData.routeId, v.vehicleId);
+                const priceDetails = getPriceDetails(bookingData.routeId, v.vehicleId);
                 return sum + (priceDetails.price * v.quantity);
             }, 0);
             setTotalPrice(total);
         } else {
             setTotalPrice(0);
         }
-    }, [bookingData.routeId, bookingData.selectedVehicles, calculatePrice]);
+    }, [bookingData.routeId, bookingData.selectedVehicles, getPriceDetails]);
 
     const handleVehicleQuantityChange = (vehicleId: string, delta: number) => {
         setBookingData(prev => {
@@ -267,12 +299,12 @@ export default function BookingPage() {
     const validateStep = () => {
         if (step === 1) {
             if (bookingData.routeId === 'custom') {
-                if (!bookingData.pickup) {
-                    setErrors(prev => ({ ...prev, pickup: 'Pickup is required' }));
+                if (!bookingData.pickup || !bookingData.customRoute?.pickupLat) {
+                    setErrors(prev => ({ ...prev, pickup: 'Pickup location must be pinned on the map' }));
                     return false;
                 }
-                if (!bookingData.dropoff) {
-                    setErrors(prev => ({ ...prev, dropoff: 'Dropoff is required' }));
+                if (!bookingData.dropoff || !bookingData.customRoute?.dropoffLat) {
+                    setErrors(prev => ({ ...prev, dropoff: 'Dropoff location must be pinned on the map' }));
                     return false;
                 }
             }
@@ -363,7 +395,8 @@ export default function BookingPage() {
                             // Sending selectedVehicles array instead of single vehicle details
                             selectedVehicles: bookingData.selectedVehicles,
                             status: 'pending',
-                            routeId: bookingData.routeId === 'custom' ? 'custom' : bookingData.routeId
+                            routeId: bookingData.routeId === 'custom' ? 'custom' : bookingData.routeId,
+                            customRoute: bookingData.routeId === 'custom' ? bookingData.customRoute : undefined
                         }),
                     });
 
@@ -400,7 +433,8 @@ export default function BookingPage() {
             setSelectedRoute(null); // Clear selected route for custom
         } else {
             const selectedRoute = routes.find(r => r.id === routeId);
-            const [pickup, dropoff] = selectedRoute ? splitRouteName(selectedRoute.name) : ['', ''];
+            const pickup = selectedRoute ? getRouteOrigin(selectedRoute) : '';
+            const dropoff = selectedRoute ? getRouteDestination(selectedRoute) : '';
 
             setBookingData(prev => ({
                 ...prev,
@@ -416,10 +450,7 @@ export default function BookingPage() {
 
     const filteredRoutes = routes;
 
-    const pickupLocations = Array.from(new Set(routes.map(r => {
-        const [p] = splitRouteName(r.name);
-        return p || r.name;
-    }))).sort();
+    const pickupLocations = Array.from(new Set(routes.map(r => getRouteOrigin(r)))).filter(Boolean).sort();
 
     if (isLoading) return <div className="min-h-screen flex items-center justify-center text-secondary">Loading...</div>;
 
@@ -510,10 +541,7 @@ export default function BookingPage() {
                                         }
                                     }}
                                     options={[
-                                        ...Array.from(new Set(filteredRoutes.map(r => {
-                                            const [p] = splitRouteName(r.name);
-                                            return p || r.name;
-                                        }))).sort().map(p => ({ value: p, label: p })),
+                                        ...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p })),
                                         { value: 'custom', label: 'Other / Custom Location' }
                                     ]}
                                     placeholder="Select Pickup"
@@ -535,20 +563,17 @@ export default function BookingPage() {
                                         setBookingData(prev => {
                                             const newData = { ...prev, dropoff: val };
 
-                                            // Try to find matching route
+                                            // Try to find matching route using origin/destination
                                             if (prev.pickup && val) {
-                                                const matchedRoute = filteredRoutes.find(r => {
-                                                    const [p, d] = splitRouteName(r.name);
-                                                    return p === prev.pickup && d === val;
-                                                });
+                                                const matchedRoute = filteredRoutes.find(r =>
+                                                    getRouteOrigin(r) === prev.pickup && getRouteDestination(r) === val
+                                                );
 
                                                 if (matchedRoute) {
                                                     newData.routeId = matchedRoute.id;
                                                     setSelectedRoute(matchedRoute);
                                                     setErrors(curr => ({ ...curr, pickup: '', dropoff: '' }));
                                                 } else {
-                                                    // Fallback or just keep routeId empty? 
-                                                    // Let's explicitly check if it's a known connection
                                                     newData.routeId = '';
                                                     setSelectedRoute(null);
                                                 }
@@ -559,14 +584,8 @@ export default function BookingPage() {
                                     options={
                                         bookingData.pickup && bookingData.pickup !== 'custom'
                                             ? Array.from(new Set(filteredRoutes
-                                                .filter(r => {
-                                                    const [p] = splitRouteName(r.name);
-                                                    return p === bookingData.pickup;
-                                                })
-                                                .map(r => {
-                                                    const [, d] = splitRouteName(r.name);
-                                                    return d;
-                                                })
+                                                .filter(r => getRouteOrigin(r) === bookingData.pickup)
+                                                .map(r => getRouteDestination(r))
                                                 .filter(Boolean)
                                             )).sort().map(d => ({ value: d, label: d }))
                                             : []
@@ -595,37 +614,41 @@ export default function BookingPage() {
                                                 <Info size={20} />
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">Custom Journey Selected</h4>
+                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">Custom Journey Map Routing</h4>
                                                 <p className="text-xs text-slate-500 mt-1">
-                                                    Please specify your exact locations below. Our team will calculate the best rate and contact you.
+                                                    Use the interactive map below to select your pickup and dropoff coordinates dynamically.
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 block">Precise Pickup Address</label>
-                                            <input
-                                                type="text"
-                                                value={bookingData.pickup === 'custom' ? '' : bookingData.pickup}
-                                                onChange={(e) => updateData('pickup', e.target.value)}
-                                                placeholder="Enter hotel name, airport terminal, etc."
-                                                className={inputClasses(!!errors.pickup)}
-                                            />
-                                            {errors.pickup && <p className="text-red-500 text-xs mt-1">{errors.pickup}</p>}
-                                        </div>
-                                        <div>
-                                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 block">Precise Dropoff Address</label>
-                                            <input
-                                                type="text"
-                                                value={bookingData.dropoff}
-                                                onChange={(e) => updateData('dropoff', e.target.value)}
-                                                placeholder="Enter destination address"
-                                                className={inputClasses(!!errors.dropoff)}
-                                            />
-                                            {errors.dropoff && <p className="text-red-500 text-xs mt-1">{errors.dropoff}</p>}
-                                        </div>
+                                    <div className="space-y-4">
+                                        <CustomRouteMap
+                                            onRouteCalculated={(data) => {
+                                                setBookingData(prev => ({
+                                                    ...prev,
+                                                    pickup: data.pickup.address,
+                                                    dropoff: data.dropoff.address,
+                                                    customRoute: {
+                                                        pickupLat: data.pickup.lat,
+                                                        pickupLng: data.pickup.lng,
+                                                        dropoffLat: data.dropoff.lat,
+                                                        dropoffLng: data.dropoff.lng,
+                                                        distanceKm: data.distanceKm,
+                                                        durationMin: data.durationMin,
+                                                        geometry: data.geometry
+                                                    }
+                                                }));
+                                                setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
+                                            }}
+                                            initialPickup={bookingData.customRoute ? { lat: bookingData.customRoute.pickupLat, lng: bookingData.customRoute.pickupLng, address: bookingData.pickup } : null}
+                                            initialDropoff={bookingData.customRoute ? { lat: bookingData.customRoute.dropoffLat, lng: bookingData.customRoute.dropoffLng, address: bookingData.dropoff } : null}
+                                        />
+                                        {(errors.pickup || errors.dropoff) && (
+                                            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-sm">
+                                                {errors.pickup || errors.dropoff}
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ) : (
@@ -776,7 +799,7 @@ export default function BookingPage() {
                                 className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl z-[100] max-h-[60vh] overflow-y-auto custom-scrollbar pb-4 ring-1 ring-black/5"
                             >
                                 {vehicles.map((vehicle, idx) => {
-                                    const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
+                                    const priceDetails = getPriceDetails(bookingData.routeId, vehicle.id);
                                     const selectedMatch = bookingData.selectedVehicles.find(v => v.vehicleId === vehicle.id);
                                     const quantity = selectedMatch ? selectedMatch.quantity : 0;
                                     const isSelected = quantity > 0;
@@ -808,7 +831,10 @@ export default function BookingPage() {
                                                         <div className="text-right shrink-0 ml-2">
 
                                                             <span className="text-sm font-bold text-slate-900 dark:text-white">
-                                                                {bookingData.routeId === 'custom' ? 'Quote' : `${priceDetails.price} SAR`}
+                                                                {bookingData.routeId === 'custom'
+                                                                    ? (priceDetails.price > 0 ? `${priceDetails.price} SAR` : 'Pin map for price')
+                                                                    : `${priceDetails.price} SAR`
+                                                                }
                                                             </span>
 
                                                         </div>
@@ -860,7 +886,7 @@ export default function BookingPage() {
                 <div className="hidden lg:grid grid-cols-2 gap-8">
                     {vehicles.map((vehicle) => {
                         const Icon = vehicle.icon;
-                        const priceDetails = calculatePrice(bookingData.routeId, vehicle.id);
+                        const priceDetails = getPriceDetails(bookingData.routeId, vehicle.id);
                         const selectedMatch = bookingData.selectedVehicles.find(v => v.vehicleId === vehicle.id);
                         const quantity = selectedMatch ? selectedMatch.quantity : 0;
                         const isSelected = quantity > 0;
@@ -914,8 +940,8 @@ export default function BookingPage() {
                                             : 'bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white border-white/20'
                                         }
                                     `}>
-                                        {bookingData.routeId === 'custom' ? (
-                                            <span className="text-sm font-bold">Quote</span>
+                                        {bookingData.routeId === 'custom' && priceDetails.price === 0 ? (
+                                            <span className="text-sm font-bold">Pin map for price</span>
                                         ) : (
                                             <div className="flex flex-col items-end leading-none">
                                                 {priceDetails.discountApplied > 0 && (
@@ -1260,8 +1286,7 @@ export default function BookingPage() {
 
         // Calculate total price details for all vehicles
         const priceDetails = bookingData.selectedVehicles.reduce((acc, sv) => {
-            if (bookingData.routeId === 'custom') return acc;
-            const details = calculatePrice(bookingData.routeId, sv.vehicleId);
+            const details = getPriceDetails(bookingData.routeId, sv.vehicleId);
             return {
                 originalPrice: acc.originalPrice + (details.originalPrice || 0) * sv.quantity,
                 discountApplied: acc.discountApplied + (details.discountApplied || 0) * sv.quantity,
@@ -1304,7 +1329,7 @@ export default function BookingPage() {
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
                                         <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-                                            {bookingData.pickup || (route ? splitRouteName(route.name)[0] : 'Unknown Pickup')}
+                                            {bookingData.pickup || (route ? getRouteOrigin(route) : 'Unknown Pickup')}
                                         </h3>
                                         <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
                                             <Calendar size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
@@ -1315,7 +1340,7 @@ export default function BookingPage() {
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</p>
                                         <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-                                            {bookingData.dropoff || (route ? splitRouteName(route.name)[1] : 'Unknown Dropoff')}
+                                            {bookingData.dropoff || (route ? getRouteDestination(route) : 'Unknown Dropoff')}
                                         </h3>
                                         {route && (
                                             <div className="flex items-center gap-2 mt-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-md w-fit">
@@ -1668,7 +1693,7 @@ export default function BookingPage() {
                             <div>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Origin</span>
                                 <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.pickup || (route ? splitRouteName(route.name)[0] : 'Select Pickup')}
+                                    {bookingData.pickup || (route ? getRouteOrigin(route) : 'Select Pickup')}
                                 </h4>
                                 {bookingData.date && (
                                     <p className="text-sm text-slate-500 mt-1">
@@ -1684,7 +1709,7 @@ export default function BookingPage() {
                             <div>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Destination</span>
                                 <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.dropoff || (route ? splitRouteName(route.name)[1] : 'Select Dropoff')}
+                                    {bookingData.dropoff || (route ? getRouteDestination(route) : 'Select Dropoff')}
                                 </h4>
                             </div>
                         </div>

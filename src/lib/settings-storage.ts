@@ -45,6 +45,11 @@ const DEFAULT_SETTINGS: Settings = {
     emailTemplates: {
         bookingConfirmation: DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
         adminNotification: DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
+    },
+    customRoute: {
+        baseFare: 50,
+        kmRate: 3,
+        minFare: 50,
     }
 };
 
@@ -100,6 +105,11 @@ export const getSettings = async (): Promise<Settings> => {
             emailTemplates: {
                 bookingConfirmation: settingsMap['email_template_booking_confirmation'] || DEFAULT_SETTINGS.emailTemplates?.bookingConfirmation || DEFAULT_BOOKING_CONFIRMATION_TEMPLATE,
                 adminNotification: settingsMap['email_template_admin_notification'] || DEFAULT_SETTINGS.emailTemplates?.adminNotification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
+            },
+            customRoute: {
+                baseFare: Number(settingsMap['custom_route_base_fare']) || DEFAULT_SETTINGS.customRoute?.baseFare || 50,
+                kmRate: Number(settingsMap['custom_route_km_rate']) || DEFAULT_SETTINGS.customRoute?.kmRate || 3,
+                minFare: Number(settingsMap['custom_route_min_fare']) || DEFAULT_SETTINGS.customRoute?.minFare || 50,
             }
         };
 
@@ -148,6 +158,9 @@ export async function saveSettings(newSettings: Settings): Promise<void> {
 
         { key: 'email_template_booking_confirmation', value: newSettings.emailTemplates?.bookingConfirmation || '' },
         { key: 'email_template_admin_notification', value: newSettings.emailTemplates?.adminNotification || '' },
+        { key: 'custom_route_base_fare', value: String(newSettings.customRoute?.baseFare ?? 50) },
+        { key: 'custom_route_km_rate', value: String(newSettings.customRoute?.kmRate ?? 3) },
+        { key: 'custom_route_min_fare', value: String(newSettings.customRoute?.minFare ?? 50) },
     ];
 
     // Update each setting

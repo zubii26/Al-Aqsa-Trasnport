@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, Phone, User, ArrowRight, Car, Navigation, Clock, CheckCircle, Bus, Mail, MapPin, PlaneLanding, PlaneTakeoff, Building2, ShieldCheck, HeartHandshake, CreditCard, Headphones } from 'lucide-react';
@@ -117,10 +117,21 @@ const QuickBookingForm = ({
             const normalize = (s: string) => s.replace('madina', 'madinah');
 
             return routes.find(r => {
-                const routeName = r.name.toLowerCase();
                 const pNorm = normalize(p);
                 const dNorm = normalize(d);
 
+                // Use origin/destination fields if available (from DB routes)
+                const routeOrigin = (r.origin || '').toLowerCase();
+                const routeDest = (r.destination || '').toLowerCase();
+
+                if (routeOrigin && routeDest) {
+                    const startMatch = routeOrigin.includes(pNorm) || pNorm.includes(routeOrigin);
+                    const endMatch = routeDest.includes(dNorm) || dNorm.includes(routeDest);
+                    return startMatch && endMatch;
+                }
+
+                // Fallback: parse route name
+                const routeName = r.name.toLowerCase();
                 const parts = routeName.split(/\u2192|\u2194| to /);
                 if (parts.length < 2) return false;
 
@@ -197,13 +208,18 @@ const QuickBookingForm = ({
         } else {
             const selectedRoute = routes.find(r => r.id === routeId);
             if (selectedRoute) {
-                // Use same split logic as auto-detect for consistency
-                const parts = selectedRoute.name.split(/\u2192|\u2194| to /);
-                if (parts.length >= 2) {
-                    newPickup = parts[0].trim();
-                    newDropoff = parts[1].trim();
+                // Use origin/destination fields if available, fallback to name parsing
+                if (selectedRoute.origin && selectedRoute.destination) {
+                    newPickup = selectedRoute.origin;
+                    newDropoff = selectedRoute.destination;
                 } else {
-                    newDropoff = selectedRoute.name;
+                    const parts = selectedRoute.name.split(/\u2192|\u2194| to /);
+                    if (parts.length >= 2) {
+                        newPickup = parts[0].trim();
+                        newDropoff = parts[1].trim();
+                    } else {
+                        newDropoff = selectedRoute.name;
+                    }
                 }
             }
         }
@@ -396,50 +412,32 @@ const QuickBookingForm = ({
         setIsSubmitted(false);
     };
 
-    const allPickupLocations = [
-        "Makkah Hotel",
-        "Makkah Setup",
-        "Madinah Airport",
-        "Madinah Hotel",
-        "Makkah Haram",
-        "Madinah Haram",
-        "Jeddah Hotel",
-        "Jeddah Airport",
-        "Jeddah Port",
-        "Al Taif Hotel",
-        "Al Taif Airport",
-        "Badar Hotel",
-        "Al Ula Hotel",
-        "Yanbu Hotel",
-        "Yanbu Airport"
+    // Build pickup/dropoff locations dynamically from routes
+    // Extract unique origins from routes, with hardcoded fallbacks for locations not in routes
+    const routeOrigins = routes.map(r => {
+        if (r.origin) return r.origin;
+        const parts = r.name.split(/\u2192|\u2194| to /);
+        return parts[0]?.trim() || r.name;
+    });
+    const routeDestinations = routes.map(r => {
+        if (r.destination) return r.destination;
+        const parts = r.name.split(/\u2192|\u2194| to /);
+        return parts[1]?.trim() || '';
+    }).filter(Boolean);
+
+    // Combine routes data with a few extra common locations customers might need
+    const extraLocations = [
+        "Makkah Haram", "Madinah Haram", "Jeddah Port",
+        "Al Taif Hotel", "Al Taif Airport", "Badar Hotel",
+        "Al Ula Hotel", "Yanbu Hotel", "Yanbu Airport"
     ];
 
-    const allDropoffLocations = [
-        "Makkah Hotel",
-        "Makkah Haram",
-        "Madinah Hotel",
-        "Madinah Airport",
-        "Madinah Haram",
-        "Jeddah Hotel",
-        "Jeddah Airport",
-        "Jeddah Port",
-        "Al Taif Hotel",
-        "Al Taif Airport",
-        "Badar Hotel",
-        "Al Ula Hotel",
-        "Yanbu Hotel",
-        "Yanbu Airport",
-        "Jeddah City Tour",
-        "Makkah Ziyarat",
-        "Madinah Ziyarat",
-        "Taif Ziyarat",
-        "Badar Ziyarat",
-        "Al Ula Tour"
-    ];
-
-    const pickupLocations = allPickupLocations; // Simplified for now, or filter by category if needed
-
-    const dropoffLocations = allDropoffLocations;
+    const pickupLocations = Array.from(new Set([...routeOrigins, ...extraLocations])).sort();
+    const dropoffLocations = Array.from(new Set([
+        ...routeDestinations, ...routeOrigins, ...extraLocations,
+        "Jeddah City Tour", "Makkah Ziyarat", "Madinah Ziyarat",
+        "Taif Ziyarat", "Badar Ziyarat", "Al Ula Tour"
+    ])).sort();
 
     return (
         <motion.div
@@ -540,8 +538,13 @@ const QuickBookingForm = ({
                                                     if (route.isCustom) {
                                                         setFormData(prev => ({ ...prev, routeId: 'custom', pickup: '', dropoff: '' }));
                                                     } else {
-                                                        // Find ID dynamically
+                                                        // Find ID dynamically using origin/destination or name
                                                         const matched = routes.find(r => {
+                                                            // Try origin/destination match first
+                                                            if (r.origin && r.destination) {
+                                                                return r.origin.toLowerCase().includes(route.pickup.toLowerCase()) && r.destination.toLowerCase().includes(route.dropoff.toLowerCase());
+                                                            }
+                                                            // Fallback to name
                                                             const n = r.name.toLowerCase();
                                                             return n.includes(route.pickup.toLowerCase()) && n.includes(route.dropoff.toLowerCase());
                                                         });

@@ -65,9 +65,11 @@ export async function POST(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
+        const { revalidatePath, revalidateTag } = await import('next/cache');
         revalidatePath('/fleet');
         revalidatePath('/admin/fleet');
+        // @ts-ignore
+        revalidateTag('vehicles');
 
         return NextResponse.json(vehicle);
     } catch {
@@ -115,9 +117,11 @@ export async function PUT(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
+        const { revalidatePath, revalidateTag } = await import('next/cache');
         revalidatePath('/fleet');
         revalidatePath('/admin/fleet');
+        // @ts-ignore
+        revalidateTag('vehicles');
 
         return NextResponse.json(vehicle);
     } catch {
@@ -150,9 +154,11 @@ export async function DELETE(request: Request) {
             user: user.name || 'Admin',
         });
 
-        const { revalidatePath } = await import('next/cache');
+        const { revalidatePath, revalidateTag } = await import('next/cache');
         revalidatePath('/fleet');
         revalidatePath('/admin/fleet');
+        // @ts-ignore
+        revalidateTag('vehicles');
 
         return NextResponse.json({ success: true });
     } catch {

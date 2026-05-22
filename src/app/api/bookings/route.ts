@@ -6,7 +6,7 @@ import { validateRequest } from '@/lib/server-auth';
 import { getSettings } from '@/lib/settings-storage';
 import { routeService, RouteWithPrices } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
-import { calculateFinalPrice } from '@/lib/pricing';
+import { calculateFinalPrice, VEHICLES as DEFAULT_VEHICLES } from '@/lib/pricing';
 
 
 export async function GET() {
@@ -104,6 +104,17 @@ export async function POST(request: Request) {
                             if (priceEntry) {
                                 totalBasePrice += (priceEntry.price * sv.quantity);
                             }
+                        } else if (bookingData.routeId === 'custom' && bookingData.customRoute) {
+                            const baseFare = settings.customRoute?.baseFare ?? 50;
+                            const kmRate = settings.customRoute?.kmRate ?? 3;
+                            const minFare = settings.customRoute?.minFare ?? 50;
+                            const distance = bookingData.customRoute.distanceKm ?? 0;
+                            
+                            const defaultVehicle = DEFAULT_VEHICLES.find(dv => dv.id === sv.vehicleId || dv.name.toLowerCase() === vehicle.name.toLowerCase());
+                            const multiplier = defaultVehicle?.multiplier ?? 1;
+
+                            const customBase = Math.max(minFare, baseFare + distance * kmRate);
+                            totalBasePrice += (customBase * multiplier * sv.quantity);
                         }
                     }
                 }

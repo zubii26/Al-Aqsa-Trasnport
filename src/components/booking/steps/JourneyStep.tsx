@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 import MapAutocomplete from '../MapAutocomplete';
 import { usePricing } from '@/context/PricingContext';
-import { splitRouteName } from '@/lib/utils/route-utils'; // Need to create or check if exists
+import { splitRouteName, getRouteOrigin, getRouteDestination } from '@/lib/utils/route-utils';
 
 interface JourneyStepProps {
     data: any;
@@ -37,9 +37,12 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
         if (!data.pickup || !data.dropoff) return;
 
         const matched = routes.find(r => {
-            const [p, d] = r.name.toLowerCase().split(/\u2192|\u2194| to /);
-            const pMatch = data.pickup.toLowerCase().includes(p?.trim()) || p?.trim().includes(data.pickup.toLowerCase());
-            const dMatch = data.dropoff.toLowerCase().includes(d?.trim()) || d?.trim().includes(data.dropoff.toLowerCase());
+            const origin = getRouteOrigin(r).toLowerCase();
+            const dest = getRouteDestination(r).toLowerCase();
+            if (!origin || !dest) return false;
+
+            const pMatch = data.pickup.toLowerCase().includes(origin) || origin.includes(data.pickup.toLowerCase());
+            const dMatch = data.dropoff.toLowerCase().includes(dest) || dest.includes(data.dropoff.toLowerCase());
             return pMatch && dMatch;
         });
 

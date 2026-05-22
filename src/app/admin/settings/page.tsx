@@ -14,7 +14,7 @@ import EmailTemplateManager from '@/components/admin/settings/EmailTemplateManag
 import { Settings } from '@/lib/validations';
 import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPLATE } from '@/lib/email-templates';
 
-type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount' | 'emails' | 'database';
+type Tab = 'general' | 'contact' | 'social' | 'seo' | 'scripts' | 'security' | 'discount' | 'emails' | 'database' | 'customPricing';
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('general');
@@ -64,7 +64,10 @@ export default function SettingsPage() {
         emailTemplates: {
             bookingConfirmation: '',
             adminNotification: '',
-        }
+        },
+        custom_route_base_fare: '',
+        custom_route_km_rate: '',
+        custom_route_min_fare: '',
     });
 
     const [passwordForm, setPasswordForm] = useState({
@@ -247,6 +250,7 @@ export default function SettingsPage() {
         { id: 'seo', label: 'SEO', icon: Search, description: 'Search engine optimization' },
         { id: 'scripts', label: 'Scripts', icon: Code, description: 'Custom tracking scripts' },
         { id: 'discount', label: 'Discounts', icon: Percent, description: 'Promotions & offers' },
+        { id: 'customPricing', label: 'Custom Routes', icon: MapPin, description: 'Live routing pricing' },
         { id: 'emails', label: 'Email Templates', icon: Mail, description: 'Customize emails' },
         { id: 'database', label: 'Maintenance', icon: DatabaseBackup, description: 'Data retention & cleanup' },
         { id: 'security', label: 'Security', icon: ShieldCheck, description: 'Password & access' },
@@ -602,6 +606,57 @@ export default function SettingsPage() {
                                     settings={settings as unknown as Settings}
                                     onChange={handleSectionSave}
                                 />
+                            )}
+
+                            {activeTab === 'customPricing' && (
+                                <div className="space-y-8">
+                                    <div>
+                                        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                                            <MapPin className="text-amber-500" size={28} />
+                                            Custom Route Live Pricing
+                                        </h2>
+                                        <p className="text-muted-foreground">Configure global rates for user-drawn maps and custom pickup/dropoff booking queries.</p>
+                                    </div>
+
+                                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-2 text-white">Base Fare (SAR)</label>
+                                            <input
+                                                type="number"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                value={settings.custom_route_base_fare || ''}
+                                                onChange={(e) => setSettings({ ...settings, custom_route_base_fare: e.target.value })}
+                                                placeholder="e.g. 50"
+                                            />
+                                            <p className="text-xs text-muted-foreground mt-1">Starting cost for any custom route, regardless of distance.</p>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-2 text-white">Per Kilometer Rate (SAR)</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                value={settings.custom_route_km_rate || ''}
+                                                onChange={(e) => setSettings({ ...settings, custom_route_km_rate: e.target.value })}
+                                                placeholder="e.g. 3.00"
+                                            />
+                                            <p className="text-xs text-muted-foreground mt-1">Added cost per driven kilometer as calculated by routing engines.</p>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-2 text-white">Minimum Fare (SAR)</label>
+                                            <input
+                                                type="number"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                value={settings.custom_route_min_fare || ''}
+                                                onChange={(e) => setSettings({ ...settings, custom_route_min_fare: e.target.value })}
+                                                placeholder="e.g. 50"
+                                            />
+                                            <p className="text-xs text-muted-foreground mt-1">The minimum possible charge for a custom route. Price will be capped up to this if fare is less.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
 
                             {activeTab === 'database' && (
