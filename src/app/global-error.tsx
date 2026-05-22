@@ -15,6 +15,17 @@ export default function GlobalError({
 }) {
     useEffect(() => {
         console.error('Global Error (Root Layout) Caught:', error);
+        
+        // Auto-reload on chunk load errors (common after new deployments)
+        const isChunkError = error.message && (
+            error.message.includes('Failed to load chunk') || 
+            error.message.includes('Loading chunk') || 
+            error.name === 'ChunkLoadError'
+        );
+        
+        if (isChunkError) {
+            window.location.reload();
+        }
     }, [error]);
 
     return (
