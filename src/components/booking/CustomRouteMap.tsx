@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Polyline, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { MapPin, Navigation, Map, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { MapPin, Navigation, Map, Loader2, AlertCircle, RefreshCw, ArrowRight, ArrowLeft } from 'lucide-react';
 
 // Setup Leaflet icon fallback just in case
 if (typeof window !== 'undefined') {
@@ -57,26 +57,22 @@ const getDropoffIcon = () => {
     });
 };
 
+interface LocationPoint {
+    lat: number;
+    lng: number;
+    address: string;
+}
+
 interface CustomRouteMapProps {
     onRouteCalculated: (data: {
-        pickup: { lat: number; lng: number; address: string };
-        dropoff: { lat: number; lng: number; address: string };
+        pickup: LocationPoint;
+        dropoff: LocationPoint;
         distanceKm: number;
         durationMin: number;
         geometry: string;
     }) => void;
-    initialPickup?: { lat: number; lng: number; address: string } | null;
-    initialDropoff?: { lat: number; lng: number; address: string } | null;
-}
-
-// Map Event Listener for Clicks
-function MapEventsHandler({ onMapClick }: { onMapClick: (latlng: L.LatLng) => void }) {
-    useMapEvents({
-        click(e) {
-            onMapClick(e.latlng);
-        },
-    });
-    return null;
+    initialPickup?: LocationPoint | null;
+    initialDropoff?: LocationPoint | null;
 }
 
 // Auto Fit Map bounds to show route/markers dynamically
@@ -84,34 +80,33 @@ function MapBoundsManager({
     pickup,
     dropoff,
     routePolyline,
+    mode
 }: {
-    pickup: any;
-    dropoff: any;
-    routePolyline: any;
+    pickup: LocationPoint | null;
+    dropoff: LocationPoint | null;
+    routePolyline: [number, number][] | null;
+    mode: 'pickup' | 'dropoff' | 'route';
 }) {
     const map = useMap();
     useEffect(() => {
-        if (pickup && dropoff) {
+        if (mode === 'route' && pickup && dropoff) {
             const bounds = L.latLngBounds([
                 [pickup.lat, pickup.lng],
                 [dropoff.lat, dropoff.lng],
             ]);
             map.fitBounds(bounds, { padding: [60, 60], maxZoom: 15, animate: true, duration: 1 });
-        } else if (pickup) {
+        } else if (mode === 'dropoff' && pickup) {
+            // Center map on pickup when moving to dropoff step
             map.setView([pickup.lat, pickup.lng], 13, { animate: true });
-        } else {
-            // Zoom out and show the whole Saudi Arabia map by default when cleared
-            map.setView([23.8859, 45.0792], 5, { animate: true });
         }
-    }, [pickup, dropoff, routePolyline, map]);
+    }, [pickup, dropoff, routePolyline, mode, map]);
     return null;
 }
 
-// Interactive Map Size Invalidation Helper for Framer Motion / Modal animations
+// Interactive Map Size Invalidation Helper
 function MapResizeTrigger() {
     const map = useMap();
     useEffect(() => {
-        // Run size invalidation at multiple interval checkpoints as transition completes
         const timers = [
             setTimeout(() => map.invalidateSize({ animate: true }), 100),
             setTimeout(() => map.invalidateSize({ animate: true }), 300),
@@ -138,8 +133,14 @@ export default function CustomRouteMap({
     initialPickup = null,
     initialDropoff = null,
 }: CustomRouteMapProps) {
-    const [pickup, setPickup] = useState<{ lat: number; lng: number; address: string } | null>(initialPickup);
-    const [dropoff, setDropoff] = useState<{ lat: number; lng: number; address: string } | null>(initialDropoff);
+    const [mode, setMode] = useState<'pickup' | 'dropoff' | 'route'>('pickup');
+    
+    const [pickup, setPickup] = useState<LocationPoint | null>(initialPickup);
+    const [dropoff, setDropoff] = useState<LocationPoint | null>(initialDropoff);
+    
+    const [tempCenterAddress, setTempCenterAddress] = useState<string>('Locating...');
+    const [isMoving, setIsMoving] = useState(false);
+    
     const [distanceKm, setDistanceKm] = useState<number | null>(null);
     const [durationMin, setDurationMin] = useState<number | null>(null);
     const [routePolyline, setRoutePolyline] = useState<[number, number][] | null>(null);
@@ -149,45 +150,50 @@ export default function CustomRouteMap({
     const [error, setError] = useState<string | null>(null);
     const [mapReady, setMapReady] = useState(false);
 
-    const pickupMarkerRef = useRef<L.Marker>(null);
-    const dropoffMarkerRef = useRef<L.Marker>(null);
+    // Initial center is Saudi Arabia
+    const defaultCenter: [number, number] = [23.8859, 45.0792];
+    const currentCenterRef = useRef<L.LatLng>(L.latLng(defaultCenter[0], defaultCenter[1]));
+    const abortControllerRef = useRef<AbortController | null>(null);
 
-    const center: [number, number] = [23.8859, 45.0792]; // Saudi Arabia center default
-
-    // Memoize the Custom Icons
     const pickupIcon = useMemo(() => getPickupIcon(), []);
     const dropoffIcon = useMemo(() => getDropoffIcon(), []);
 
     // Reverse Geocoding via Nominatim API
     const reverseGeocode = async (lat: number, lng: number): Promise<string> => {
+        // Cancel pending geocodes to avoid race conditions
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+        abortControllerRef.current = new AbortController();
+
         try {
             const response = await fetch(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
                 {
                     headers: {
-                        'User-Agent': 'AlAqsaUmrahTransportCustomRouteApp/2.0 (info@alaqsatransport.com)',
+                        'User-Agent': 'AlAqsaUmrahTransportCustomRouteApp/3.0 (info@alaqsatransport.com)',
                     },
+                    signal: abortControllerRef.current.signal
                 }
             );
             
-            if (!response.ok) throw new Error('Geocoding server error');
+            if (!response.ok) throw new Error('Geocoding error');
             const data = await response.json();
             
-            // Format dynamic output with sensible names
             if (data && data.display_name) {
-                // Strip unnecessary long parts of address
                 const parts = data.display_name.split(', ');
                 const shortAddress = parts.slice(0, 4).join(', ');
                 return shortAddress || data.display_name;
             }
             return `Point: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-        } catch (err) {
+        } catch (err: any) {
+            if (err.name === 'AbortError') return '';
             console.error('Reverse Geocoding error:', err);
             return `Point: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         }
     };
 
-    // Calculate OSRM Route polyline, distance, duration
+    // Calculate OSRM Route
     const calculateRoute = useCallback(async (
         pLat: number,
         pLng: number,
@@ -202,18 +208,17 @@ export default function CustomRouteMap({
             const url = `https://router.project-osrm.org/route/v1/driving/${pLng},${pLat};${dLng},${dLat}?overview=full&geometries=geojson`;
             const response = await fetch(url);
             
-            if (!response.ok) throw new Error('OSRM routing service failed to respond.');
+            if (!response.ok) throw new Error('Routing service failed.');
             const data = await response.json();
 
             if (data.code !== 'Ok' || !data.routes || data.routes.length === 0) {
-                throw new Error('Could not compute routing coordinates. Please pick valid roads.');
+                throw new Error('Could not compute valid roads between points.');
             }
 
             const route = data.routes[0];
-            const dist = Number((route.distance / 1000).toFixed(1)); // Convert meters to km
-            const dur = Math.ceil(route.duration / 60); // Convert seconds to minutes
+            const dist = Number((route.distance / 1000).toFixed(1)); 
+            const dur = Math.ceil(route.duration / 60); 
             
-            // Convert OSRM GeoJSON coords [lng, lat] into Leaflet [lat, lng] coordinates
             const coords: [number, number][] = route.geometry.coordinates.map(
                 (c: [number, number]) => [c[1], c[0]] as [number, number]
             );
@@ -221,21 +226,20 @@ export default function CustomRouteMap({
             setDistanceKm(dist);
             setDurationMin(dur);
             setRoutePolyline(coords);
-            
-            const geomStr = JSON.stringify(route.geometry);
-            setGeometry(geomStr);
+            setGeometry(JSON.stringify(route.geometry));
 
-            // Report results
             onRouteCalculated({
                 pickup: { lat: pLat, lng: pLng, address: pAddress },
                 dropoff: { lat: dLat, lng: dLng, address: dAddress },
                 distanceKm: dist,
                 durationMin: dur,
-                geometry: geomStr,
+                geometry: JSON.stringify(route.geometry),
             });
+            
+            setMode('route');
         } catch (err: any) {
-            console.error('OSRM Calculation error:', err);
-            setError(err.message || 'Unable to load route driving coordinates between points.');
+            console.error('OSRM error:', err);
+            setError(err.message || 'Unable to load route.');
         } finally {
             setLoading(false);
         }
@@ -246,6 +250,7 @@ export default function CustomRouteMap({
         if (initialPickup && initialDropoff && !pickup && !dropoff) {
             setPickup(initialPickup);
             setDropoff(initialDropoff);
+            setMode('route');
             calculateRoute(
                 initialPickup.lat,
                 initialPickup.lng,
@@ -257,55 +262,69 @@ export default function CustomRouteMap({
         }
     }, [initialPickup, initialDropoff, pickup, dropoff, calculateRoute]);
 
-    // Handle Map Clicks to set coordinates
-    const handleMapClick = async (latlng: L.LatLng) => {
-        setError(null);
-        if (!pickup) {
-            setLoading(true);
-            const address = await reverseGeocode(latlng.lat, latlng.lng);
-            const newPickup = { lat: latlng.lat, lng: latlng.lng, address };
-            setPickup(newPickup);
-            setLoading(false);
-        } else if (!dropoff) {
-            setLoading(true);
-            const address = await reverseGeocode(latlng.lat, latlng.lng);
-            const newDropoff = { lat: latlng.lat, lng: latlng.lng, address };
-            setDropoff(newDropoff);
-            
-            // Triggers routing
-            await calculateRoute(pickup.lat, pickup.lng, latlng.lat, latlng.lng, pickup.address, address);
-        }
-    };
-
-    // Marker drag updates
-    const handleMarkerDragEnd = async (type: 'pickup' | 'dropoff') => {
-        setError(null);
-        if (type === 'pickup' && pickupMarkerRef.current && pickup) {
-            const marker = pickupMarkerRef.current;
-            const newLatLng = marker.getLatLng();
-            setLoading(true);
-            const address = await reverseGeocode(newLatLng.lat, newLatLng.lng);
-            const updatedPickup = { lat: newLatLng.lat, lng: newLatLng.lng, address };
-            setPickup(updatedPickup);
-            
-            if (dropoff) {
-                await calculateRoute(newLatLng.lat, newLatLng.lng, dropoff.lat, dropoff.lng, address, dropoff.address);
-            } else {
-                setLoading(false);
+    // Uber-style Map Movement Handler
+    function MapMovementHandler() {
+        const map = useMapEvents({
+            movestart() {
+                if (mode !== 'route') {
+                    setIsMoving(true);
+                    setTempCenterAddress('Locating...');
+                }
+            },
+            moveend() {
+                if (mode !== 'route') {
+                    setIsMoving(false);
+                    const center = map.getCenter();
+                    currentCenterRef.current = center;
+                    // Trigger reverse geocoding
+                    reverseGeocode(center.lat, center.lng).then(address => {
+                        if (address && !isMoving && currentCenterRef.current.lat === center.lat) {
+                            setTempCenterAddress(address);
+                        }
+                    });
+                }
+            },
+        });
+        
+        // Initial Geocode on mount for pickup
+        useEffect(() => {
+            if (mapReady && mode === 'pickup' && !pickup && tempCenterAddress === 'Locating...') {
+                const center = map.getCenter();
+                currentCenterRef.current = center;
+                reverseGeocode(center.lat, center.lng).then(address => {
+                    if (address) setTempCenterAddress(address);
+                });
             }
-        } else if (type === 'dropoff' && dropoffMarkerRef.current && dropoff && pickup) {
-            const marker = dropoffMarkerRef.current;
-            const newLatLng = marker.getLatLng();
-            setLoading(true);
-            const address = await reverseGeocode(newLatLng.lat, newLatLng.lng);
-            const updatedDropoff = { lat: newLatLng.lat, lng: newLatLng.lng, address };
-            setDropoff(updatedDropoff);
-            
-            await calculateRoute(pickup.lat, pickup.lng, newLatLng.lat, newLatLng.lng, pickup.address, address);
+        }, [mapReady, mode, pickup, tempCenterAddress, map]);
+        
+        return null;
+    }
+
+    const handleConfirmLocation = () => {
+        const center = currentCenterRef.current;
+        if (mode === 'pickup') {
+            setPickup({
+                lat: center.lat,
+                lng: center.lng,
+                address: tempCenterAddress
+            });
+            setMode('dropoff');
+            setTempCenterAddress('Locating...');
+            // Geocode immediately at new map center to avoid empty states
+            reverseGeocode(center.lat, center.lng).then(address => {
+                if (address) setTempCenterAddress(address);
+            });
+        } else if (mode === 'dropoff' && pickup) {
+            const newDropoff = {
+                lat: center.lat,
+                lng: center.lng,
+                address: tempCenterAddress
+            };
+            setDropoff(newDropoff);
+            calculateRoute(pickup.lat, pickup.lng, newDropoff.lat, newDropoff.lng, pickup.address, newDropoff.address);
         }
     };
 
-    // Reset Map selections
     const handleReset = () => {
         setPickup(null);
         setDropoff(null);
@@ -314,34 +333,57 @@ export default function CustomRouteMap({
         setRoutePolyline(null);
         setGeometry('');
         setError(null);
+        setMode('pickup');
+    };
+    
+    const handleBack = () => {
+        if (mode === 'dropoff') {
+            setMode('pickup');
+            setDropoff(null);
+            if (pickup) {
+                setTempCenterAddress(pickup.address);
+                currentCenterRef.current = L.latLng(pickup.lat, pickup.lng);
+            }
+        }
     };
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-900/50 border border-slate-800 p-4 rounded-2xl">
-                <div>
-                    <h3 className="font-semibold text-white flex items-center gap-2">
-                        <Map className="text-amber-500" size={18} />
-                        Custom Location Mapper
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                        {!pickup ? 'Step 1: Click on the map to set your pickup location' : !dropoff ? 'Step 2: Click on the map to set your dropoff location' : 'Drag markers to adjust your route seamlessly'}
-                    </p>
+            {/* Top Bar / Status */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-900/80 backdrop-blur-md border border-slate-800 p-4 rounded-2xl shadow-sm">
+                <div className="flex items-center gap-3">
+                    {mode === 'dropoff' && (
+                        <button 
+                            onClick={handleBack}
+                            className="p-2 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors"
+                        >
+                            <ArrowLeft size={16} />
+                        </button>
+                    )}
+                    <div>
+                        <h3 className="font-bold text-white flex items-center gap-2">
+                            {mode === 'pickup' && <><MapPin className="text-emerald-500" size={18} /> Step 1: Choose Pickup</>}
+                            {mode === 'dropoff' && <><MapPin className="text-rose-500" size={18} /> Step 2: Choose Dropoff</>}
+                            {mode === 'route' && <><Navigation className="text-amber-500" size={18} /> Route Summary</>}
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                            {mode !== 'route' ? 'Drag the map to set the exact location' : 'Review your route details'}
+                        </p>
+                    </div>
                 </div>
 
-                {(pickup || dropoff) && (
+                {mode === 'route' && (
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-semibold border border-rose-500/20 transition-all"
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
                     >
-                        <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
-                        Reset Map Coordinates
+                        <RefreshCw size={13} />
+                        Change Route
                     </button>
                 )}
             </div>
 
-            {/* Instruction Banner or Errors */}
             {error && (
                 <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 p-3.5 rounded-xl text-xs font-medium">
                     <AlertCircle size={16} className="shrink-0" />
@@ -349,134 +391,131 @@ export default function CustomRouteMap({
                 </div>
             )}
 
-            <div className="relative h-[450px] w-full rounded-2xl overflow-hidden border border-slate-800 shadow-xl z-0 bg-slate-950">
+            <div className="relative h-[550px] w-full rounded-2xl overflow-hidden border border-slate-800 shadow-2xl z-0 bg-slate-950 flex flex-col">
                 <MapContainer
-                    center={center}
+                    center={defaultCenter}
                     zoom={5}
                     style={{ height: '100%', width: '100%' }}
                     whenReady={() => setMapReady(true)}
+                    zoomControl={false}
                 >
                     <MapResizeTrigger />
                     <TileLayer
-                        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" // Premium Dark map style
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
                     />
 
-                    {mapReady && <MapEventsHandler onMapClick={handleMapClick} />}
+                    {mapReady && <MapMovementHandler />}
 
-                    {pickup && (
-                        <Marker
-                            position={[pickup.lat, pickup.lng]}
-                            draggable={!loading}
-                            icon={pickupIcon}
-                            eventHandlers={{
-                                dragend: () => handleMarkerDragEnd('pickup'),
-                            }}
-                            ref={pickupMarkerRef}
-                        />
+                    {/* Fixed Markers for selected points (Not Center Pin) */}
+                    {mode !== 'pickup' && pickup && (
+                        <Marker position={[pickup.lat, pickup.lng]} icon={pickupIcon!} />
                     )}
-
-                    {dropoff && (
-                        <Marker
-                            position={[dropoff.lat, dropoff.lng]}
-                            draggable={!loading}
-                            icon={dropoffIcon}
-                            eventHandlers={{
-                                dragend: () => handleMarkerDragEnd('dropoff'),
-                            }}
-                            ref={dropoffMarkerRef}
-                        />
+                    {mode === 'route' && dropoff && (
+                        <Marker position={[dropoff.lat, dropoff.lng]} icon={dropoffIcon!} />
                     )}
 
                     {routePolyline && (
                         <Polyline
                             positions={routePolyline}
-                            color="#D4AF37" // Beautiful Al Aqsa Gold Theme Color
-                            weight={5}
-                            opacity={0.85}
-                            dashArray="1, 8"
+                            color="#3b82f6" // Beautiful Blue line as requested for Uber style
+                            weight={4}
+                            opacity={0.9}
                             lineCap="round"
+                            lineJoin="round"
                         />
                     )}
 
-                    <MapBoundsManager pickup={pickup} dropoff={dropoff} routePolyline={routePolyline} />
+                    <MapBoundsManager pickup={pickup} dropoff={dropoff} routePolyline={routePolyline} mode={mode} />
                 </MapContainer>
 
-                {/* Floating Loading Overlay */}
+                {/* Fixed Center Pin Overlay for Pickup/Dropoff Modes */}
+                {mode !== 'route' && (
+                    <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center z-[1000] pb-16">
+                        <div className={`flex flex-col items-center justify-end h-16 w-16 -translate-y-8 transition-transform duration-300 ease-out ${isMoving ? '-translate-y-12' : ''}`}>
+                            <div className={`transform transition-transform duration-300 ${isMoving ? 'scale-105' : 'scale-100'}`}>
+                                {mode === 'pickup' ? (
+                                    <div className="relative flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-emerald-400 border-[3px] border-white flex items-center justify-center shadow-xl">
+                                            <div className="w-3 h-3 rounded-full bg-white shadow-inner"></div>
+                                        </div>
+                                        <div className="w-1 h-3 bg-slate-900 rounded-b-full shadow-lg"></div>
+                                    </div>
+                                ) : (
+                                    <div className="relative flex flex-col items-center">
+                                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-600 to-rose-400 border-[3px] border-white flex items-center justify-center shadow-xl">
+                                            <div className="w-3 h-3 rounded-full bg-white shadow-inner"></div>
+                                        </div>
+                                        <div className="w-1 h-3 bg-slate-900 rounded-b-full shadow-lg"></div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        {/* Shadow underneath */}
+                        <div className={`w-4 h-1.5 bg-black/40 rounded-full blur-[2px] transition-all duration-300 ${isMoving ? 'scale-50 opacity-20' : 'scale-100 opacity-60'}`}></div>
+                    </div>
+                )}
+
+                {/* Loading Overlay */}
                 {loading && (
-                    <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm z-[1000] flex flex-col items-center justify-center gap-3">
+                    <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm z-[2000] flex flex-col items-center justify-center gap-3">
                         <Loader2 size={36} className="text-amber-500 animate-spin" />
-                        <span className="text-sm font-semibold text-white">Recalculating custom route path...</span>
+                        <span className="text-sm font-semibold text-white">Routing...</span>
+                    </div>
+                )}
+
+                {/* Bottom Sheet HUD (Uber Style) */}
+                {mode !== 'route' && (
+                    <div className={`absolute bottom-0 left-0 right-0 z-[1500] p-4 transition-transform duration-500 ease-out`}>
+                        <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-700 shadow-2xl rounded-3xl p-5 w-full mx-auto max-w-lg">
+                            <div className="flex items-start gap-4 mb-5">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${mode === 'pickup' ? 'bg-emerald-500/20' : 'bg-rose-500/20'}`}>
+                                    {mode === 'pickup' ? (
+                                        <MapPin className="text-emerald-500" size={20} />
+                                    ) : (
+                                        <MapPin className="text-rose-500" size={20} />
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+                                        {mode === 'pickup' ? 'Pickup Location' : 'Dropoff Location'}
+                                    </span>
+                                    <h4 className="text-white font-medium text-lg leading-snug truncate">
+                                        {isMoving ? 'Locating...' : tempCenterAddress}
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={handleConfirmLocation}
+                                disabled={isMoving || tempCenterAddress === 'Locating...'}
+                                className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all flex items-center justify-center gap-2 shadow-lg
+                                    ${isMoving || tempCenterAddress === 'Locating...' ? 'bg-slate-700 opacity-50 cursor-not-allowed' : mode === 'pickup' ? 'bg-emerald-600 hover:bg-emerald-500 hover:shadow-emerald-900/50' : 'bg-amber-600 hover:bg-amber-500 hover:shadow-amber-900/50'}`}
+                            >
+                                {mode === 'pickup' ? 'Confirm Pickup' : 'Confirm Dropoff'}
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Stats HUD (Visible only when Route is active) */}
+                {mode === 'route' && distanceKm !== null && durationMin !== null && (
+                    <div className="absolute bottom-4 left-4 right-4 z-[1500]">
+                        <div className="bg-slate-900/95 backdrop-blur-xl border border-amber-500/30 shadow-2xl rounded-3xl p-5 flex items-center justify-between mx-auto max-w-lg">
+                            <div className="space-y-1">
+                                <span className="text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Distance</span>
+                                <div className="text-2xl font-black text-white">{distanceKm} <span className="text-sm font-medium text-slate-400">km</span></div>
+                            </div>
+                            <div className="h-10 w-px bg-slate-700"></div>
+                            <div className="space-y-1 text-right">
+                                <span className="text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Est. Time</span>
+                                <div className="text-2xl font-black text-white">{durationMin} <span className="text-sm font-medium text-slate-400">min</span></div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
-
-            {/* Premium Routing Stats HUD */}
-            {pickup && (
-                <div className="grid md:grid-cols-2 gap-4 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl text-slate-200">
-                    <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 text-emerald-400 mt-0.5">
-                                <span className="text-xs font-bold font-mono">A</span>
-                            </div>
-                            <div>
-                                <span className="text-xs text-muted-foreground font-semibold block uppercase tracking-wider">Pickup Point</span>
-                                <span className="text-sm font-medium text-white block mt-0.5 leading-snug">
-                                    {pickup.address}
-                                </span>
-                            </div>
-                        </div>
-
-                        {dropoff ? (
-                            <div className="flex items-start gap-3">
-                                <div className="w-6 h-6 rounded-full bg-rose-500/10 flex items-center justify-center shrink-0 text-rose-400 mt-0.5">
-                                    <span className="text-xs font-bold font-mono">B</span>
-                                </div>
-                                <div>
-                                    <span className="text-xs text-muted-foreground font-semibold block uppercase tracking-wider">Dropoff Point</span>
-                                    <span className="text-sm font-medium text-white block mt-0.5 leading-snug">
-                                        {dropoff.address}
-                                    </span>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="flex items-start gap-3 border border-dashed border-slate-800 rounded-xl p-3 bg-slate-950/20">
-                                <div className="w-5 h-5 rounded-full border border-dashed border-slate-600 flex items-center justify-center text-slate-500 shrink-0 mt-0.5 animate-pulse">
-                                    <span className="text-[10px] font-bold">B</span>
-                                </div>
-                                <span className="text-xs text-muted-foreground italic mt-0.5">
-                                    Click anywhere on the dark map above to drop your red Dropoff marker.
-                                </span>
-                            </div>
-                        )}
-                    </div>
-
-                    {distanceKm !== null && durationMin !== null && (
-                        <div className="flex flex-col justify-center items-center md:items-end md:text-right gap-4 border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-5">
-                            <div className="flex items-center gap-6">
-                                <div className="text-center md:text-right">
-                                    <span className="text-xs text-muted-foreground block font-semibold uppercase tracking-wider">Estimated Distance</span>
-                                    <span className="text-2xl font-black text-amber-500 font-mono mt-0.5 block">
-                                        {distanceKm} <span className="text-sm font-medium text-slate-400">km</span>
-                                    </span>
-                                </div>
-
-                                <div className="text-center md:text-right">
-                                    <span className="text-xs text-muted-foreground block font-semibold uppercase tracking-wider">Est. Duration</span>
-                                    <span className="text-2xl font-black text-amber-500 font-mono mt-0.5 block">
-                                        {durationMin} <span className="text-sm font-medium text-slate-400">mins</span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
-                                <Navigation size={13} className="animate-pulse" />
-                                Interactive OSRM Route Displayed
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
         </div>
     );
 }
