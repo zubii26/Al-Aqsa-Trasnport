@@ -3,6 +3,8 @@ import { routeService } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
 import { ROUTES as DEFAULT_ROUTES, VEHICLES as DEFAULT_VEHICLES } from '@/lib/pricing';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const [routes, vehicles] = await Promise.all([
