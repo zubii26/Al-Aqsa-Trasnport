@@ -95,7 +95,7 @@ export default function CustomRouteMap({
             const response = await fetch(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
                 {
-                    headers: { 'User-Agent': 'AlAqsaTransportApp/3.0' },
+                    headers: { 'User-Agent': 'AlAqsaUmrahTransport/3.0 (info@alaqsatransport.com)' },
                     signal: abortControllerRef.current.signal
                 }
             );
