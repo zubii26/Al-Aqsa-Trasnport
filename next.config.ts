@@ -62,7 +62,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; img-src 'self' https: data: blob:; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://router.project-osrm.org https://nominatim.openstreetmap.org; frame-src 'self' https://www.google.com; block-all-mixed-content;"
+            value: "default-src 'self'; img-src 'self' https: data: blob: https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://router.project-osrm.org https://nominatim.openstreetmap.org https://*.basemaps.cartocdn.com; frame-src 'self' https://www.google.com; block-all-mixed-content;"
           },
           {
             key: 'Permissions-Policy',

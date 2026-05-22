@@ -99,8 +99,37 @@ function MapBoundsManager({
             map.fitBounds(bounds, { padding: [60, 60], maxZoom: 15, animate: true, duration: 1 });
         } else if (pickup) {
             map.setView([pickup.lat, pickup.lng], 13, { animate: true });
+        } else {
+            // Zoom out and show the whole Saudi Arabia map by default when cleared
+            map.setView([23.8859, 45.0792], 5, { animate: true });
         }
     }, [pickup, dropoff, routePolyline, map]);
+    return null;
+}
+
+// Interactive Map Size Invalidation Helper for Framer Motion / Modal animations
+function MapResizeTrigger() {
+    const map = useMap();
+    useEffect(() => {
+        // Run size invalidation at multiple interval checkpoints as transition completes
+        const timers = [
+            setTimeout(() => map.invalidateSize({ animate: true }), 100),
+            setTimeout(() => map.invalidateSize({ animate: true }), 300),
+            setTimeout(() => map.invalidateSize({ animate: true }), 600),
+            setTimeout(() => map.invalidateSize({ animate: true }), 1000),
+            setTimeout(() => map.invalidateSize({ animate: true }), 2000),
+        ];
+
+        const handleResize = () => {
+            map.invalidateSize();
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            timers.forEach(clearTimeout);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [map]);
     return null;
 }
 
@@ -123,7 +152,7 @@ export default function CustomRouteMap({
     const pickupMarkerRef = useRef<L.Marker>(null);
     const dropoffMarkerRef = useRef<L.Marker>(null);
 
-    const center: [number, number] = [21.4225, 39.8262]; // Makkah center default
+    const center: [number, number] = [23.8859, 45.0792]; // Saudi Arabia center default
 
     // Memoize the Custom Icons
     const pickupIcon = useMemo(() => getPickupIcon(), []);
@@ -323,12 +352,13 @@ export default function CustomRouteMap({
             <div className="relative h-[450px] w-full rounded-2xl overflow-hidden border border-slate-800 shadow-xl z-0 bg-slate-950">
                 <MapContainer
                     center={center}
-                    zoom={12}
+                    zoom={5}
                     style={{ height: '100%', width: '100%' }}
                     whenReady={() => setMapReady(true)}
                 >
+                    <MapResizeTrigger />
                     <TileLayer
-                        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" // Premium Dark map style
+                        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" // Premium Dark map style
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                     />
 
