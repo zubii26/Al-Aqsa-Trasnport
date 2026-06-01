@@ -13,17 +13,16 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  */
 function InnerScrollReset() {
   useIsomorphicLayoutEffect(() => {
-    // Delay by a couple frames to ensure Next.js has finished its own scroll restoration
-    // and DOM calculations before we forcefully reset it.
-    let frameId: number;
-    frameId = requestAnimationFrame(() => {
-      frameId = requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-        window.dispatchEvent(new Event('lenis-scroll-to-top'));
-      });
-    });
+    // Reset Lenis virtual scroll immediately (before paint)
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
 
-    return () => cancelAnimationFrame(frameId);
+    // Reset native scroll immediately (before paint)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, []);
 
   return null;
@@ -46,3 +45,4 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     </AnimatePresence>
   );
 }
+

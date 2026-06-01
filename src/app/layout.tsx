@@ -10,6 +10,7 @@ import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { getSettings } from "@/lib/settings-storage";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import { PageTransition } from "@/components/providers/PageTransition";
+import ScrollToTop from "@/components/common/ScrollToTop";
 import "./globals.css";
 
 
@@ -124,6 +125,7 @@ export default async function RootLayout({
                 /> */}
 
                 <SmoothScrollProvider>
+                  <ScrollToTop />
                   <PageTransition>
                     {children}
                   </PageTransition>

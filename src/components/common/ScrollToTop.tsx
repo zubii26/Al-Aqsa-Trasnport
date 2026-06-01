@@ -1,54 +1,61 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { ArrowUp } from 'lucide-react';
-import styles from './ScrollToTop.module.css';
 
-import { useMobileMenu } from '@/context/MobileMenuContext';
-
+/**
+ * ScrollToTop — fires IMMEDIATELY on every route change via pathname.
+ *
+ * This component must be placed INSIDE SmoothScrollProvider so that
+ * window.__lenis is available. It runs BEFORE PageTransition's
+ * AnimatePresence, ensuring scroll is at 0 before any animation starts.
+ *
+ * Strategy:
+ * 1. Reset Lenis (virtual scroller) to 0 immediately
+ * 2. Reset native window scroll to 0 with behavior: 'instant'
+ * 3. Handle popstate (back/forward) by skipping the reset
+ */
 export default function ScrollToTop() {
-    const [isVisible, setIsVisible] = useState(false);
-    const pathname = usePathname();
-    const { isMenuOpen } = useMobileMenu();
+  const pathname = usePathname();
+  const isFirstMount = useRef(true);
+  const isPopstate = useRef(false);
 
-    // Automatically scroll to top on route change
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname]);
-
-    useEffect(() => {
-        const toggleVisibility = () => {
-            if (window.scrollY > 300) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        };
-
-        window.addEventListener('scroll', toggleVisibility);
-
-        return () => {
-            window.removeEventListener('scroll', toggleVisibility);
-        };
-    }, []);
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
+  // Detect browser back/forward navigation
+  useEffect(() => {
+    const handlePopstate = () => {
+      isPopstate.current = true;
     };
+    window.addEventListener('popstate', handlePopstate);
+    return () => window.removeEventListener('popstate', handlePopstate);
+  }, []);
 
-    if (isMenuOpen) return null;
+  useEffect(() => {
+    // Skip on first mount — browser handles initial load
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
 
-    return (
-        <button
-            className={`${styles.button} ${isVisible ? styles.visible : ''}`}
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-        >
-            <ArrowUp size={24} />
-        </button>
-    );
+    // Skip on browser back/forward — let the browser restore position naturally
+    if (isPopstate.current) {
+      isPopstate.current = false;
+      return;
+    }
+
+    // ── Step A: Reset Lenis virtual scroll position ──────────────────────
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+    }
+
+    // ── Step B: Reset native browser scroll immediately ──────────────────
+    // MUST use behavior: 'instant' — 'smooth' animates from old position
+    // creating the visible "scroll-to-footer" artifact
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    document.documentElement.scrollTop = 0; // Safari fallback
+    document.body.scrollTop = 0;            // Old WebKit fallback
+
+  }, [pathname]); // Re-runs on every route change
+
+  return null; // Renders nothing — pure side-effect
 }

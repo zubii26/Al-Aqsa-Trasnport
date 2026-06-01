@@ -27,11 +27,14 @@ export default function SmoothScrollProvider({
 
     lenisRef.current = lenis;
 
+    // ── CRITICAL: expose globally for ScrollToTop component ──────────────
+    (window as any).__lenis = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    const rafId = requestAnimationFrame(raf);
 
     /* Make anchor links (#section) work with Lenis */
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -52,9 +55,12 @@ export default function SmoothScrollProvider({
 
     return () => {
       window.removeEventListener('lenis-scroll-to-top', handleScrollToTop);
+      cancelAnimationFrame(rafId);
       lenis.destroy();
+      delete (window as any).__lenis;
     };
   }, []);
 
   return <>{children}</>;
 }
+
