@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import styles from './page.module.css';
 import ScrollReveal from '@/components/motion/ScrollReveal';
@@ -11,22 +10,21 @@ import { getWhatsAppLink } from '@/lib/whatsapp';
 
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
 
-// Lazy load heavy components
-const InstantPriceCalculator = dynamic(() => import('@/components/home/InstantPriceCalculator'));
-const Features = dynamic(() => import('@/components/home/Features'));
-const SafetyPromise = dynamic(() => import('@/components/home/SafetyPromise'));
-const PassengerCare = dynamic(() => import('@/components/home/PassengerCare'));
-const FleetCarouselWrapper = dynamic(() => import('@/components/home/FleetCarouselWrapper'));
-const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'));
-const CustomerGallery = dynamic(() => import('@/components/home/CustomerGallery'));
-const LatestArticles = dynamic(() => import('@/components/home/LatestArticles'));
-const ExpandedSEOContent = dynamic(() => import('@/components/home/ExpandedSEOContent'));
+import InstantPriceCalculator from '@/components/home/InstantPriceCalculator';
+import Features from '@/components/home/Features';
+import SafetyPromise from '@/components/home/SafetyPromise';
+import PassengerCare from '@/components/home/PassengerCare';
+import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import ReviewsSection from '@/components/reviews/ReviewsSection';
+import CustomerGallery from '@/components/home/CustomerGallery';
+import LatestArticles from '@/components/home/LatestArticles';
+import ExpandedSEOContent from '@/components/home/ExpandedSEOContent';
 
-const TransportServices = dynamic(() => import('@/components/home/TransportServices'));
-const Testimonials = dynamic(() => import('@/components/home/Testimonials'));
-const FleetGallery = dynamic(() => import('@/components/home/FleetGallery'));
-const BookingGuide = dynamic(() => import('@/components/home/BookingGuide'));
-const QuickBookingForm = dynamic(() => import('@/components/home/QuickBookingForm'));
+import TransportServices from '@/components/home/TransportServices';
+import Testimonials from '@/components/home/Testimonials';
+import FleetGallery from '@/components/home/FleetGallery';
+import BookingGuide from '@/components/home/BookingGuide';
+import QuickBookingForm from '@/components/home/QuickBookingForm';
 
 export async function generateMetadata() {
   return {
