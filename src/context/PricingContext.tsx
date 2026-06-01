@@ -33,18 +33,19 @@ const attachIcons = (vehiclesData: any[]): Vehicle[] => {
         // Check both ID and Name to ensure we catch the correct type even if ID is numeric/UUID
         const searchStr = `${v.id} ${v.name}`.toLowerCase();
 
-        let imageKey = 'default';
-        if (searchStr.includes('camry') || searchStr.includes('sedan')) imageKey = 'camry';
-        else if (searchStr.includes('gmc') || searchStr.includes('suv') || searchStr.includes('yukon')) imageKey = 'gmc';
-        else if (searchStr.includes('staria')) imageKey = 'staria';
-        else if (searchStr.includes('starex')) imageKey = 'starex';
-        else if (searchStr.includes('hiace') || searchStr.includes('van')) imageKey = 'hiace';
-        else if (searchStr.includes('coaster') || searchStr.includes('bus')) imageKey = 'coaster';
+        let fallbackImageKey = 'default';
+        if (searchStr.includes('camry') || searchStr.includes('sedan')) fallbackImageKey = 'camry';
+        else if (searchStr.includes('gmc') || searchStr.includes('suv') || searchStr.includes('yukon')) fallbackImageKey = 'gmc';
+        else if (searchStr.includes('staria')) fallbackImageKey = 'staria';
+        else if (searchStr.includes('starex')) fallbackImageKey = 'starex';
+        else if (searchStr.includes('hiace') || searchStr.includes('van')) fallbackImageKey = 'hiace';
+        else if (searchStr.includes('coaster') || searchStr.includes('bus')) fallbackImageKey = 'coaster';
 
         return {
             ...v,
             icon: v.id.includes('hiace') || v.id.includes('coaster') ? Bus : Car,
-            image: VEHICLE_IMAGES[imageKey]
+            // Use the image from the database/API first; only fall back to hardcoded if empty
+            image: v.image || VEHICLE_IMAGES[fallbackImageKey]
         };
     });
 };

@@ -69,6 +69,7 @@ export async function GET() {
             return {
                 id: vehicle.id,
                 name: vehicle.name,
+                image: vehicle.image || '',
                 capacity: vehicle.capacity || `${vehicle.passengers} Seater`,
                 passengers: vehicle.passengers,
                 multiplier,
