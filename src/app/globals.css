@@ -173,7 +173,16 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* CRITICAL: Must be auto for Lenis to work without lagging */
+    scroll-padding-top: 80px; /* matches your sticky navbar height */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none; /* removes rubber-band bounce jitter */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    scroll-margin-top: 80px;
   }
 
   /* Typography Defaults */
@@ -335,22 +344,73 @@
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+/* Thin, elegant custom scrollbar — desktop only */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb {
+    background: #D4AF37; /* your brand gold */
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #b8962e; }
+  * { scrollbar-width: thin; scrollbar-color: #D4AF37 #0a0a0a; }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Fleet Card Hover Micro-Interactions */
+.fleet-card {
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.5);
-  border-radius: 5px;
-  border: 2px solid transparent;
-  background-clip: content-box;
+.fleet-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(212,175,55,0.3); /* subtle gold glow */
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--secondary));
+.fleet-card img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fleet-card:hover img {
+  transform: scale(1.06) translateY(-4px);
+}
+
+/* Gold underline animation for nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: #D4AF37;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after { width: 100%; }
+
+/* Marquee infinite scroll */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -23,11 +23,11 @@ export const metadata: Metadata = {
 const CATEGORIES = ['All', 'Guide', 'Travel Tips', 'Safety', 'Accessibility', 'Experience', 'Value', 'Spiritual', 'News', 'FAQ'];
 
 export default async function BlogPage() {
-    // ✅ Use static posts for build stability.
-    const dbPosts = staticBlogPosts;
+    // Sort by date desc
+    const sortedDbPosts = [...staticBlogPosts].sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     // Map to match component interface (convert Date to string) and ensure serializable data
-    const posts = dbPosts.map((post: any) => ({
+    const posts = sortedDbPosts.map((post: any) => ({
         id: post.slug,
         slug: post.slug,
         title: post.title,

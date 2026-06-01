@@ -7,6 +7,13 @@
     color: hsl(var(--foreground));
     overflow: hidden;
     width: 100%;
+    padding-top: 120px; /* Clear the sticky navbar on desktop */
+}
+
+.heroMedium {
+    min-height: 60vh;
+    padding-top: 120px; /* Match standard hero padding */
+    padding-bottom: 80px; /* Balance the vertical spacing */
 }
 
 .bgImage {
@@ -380,6 +387,12 @@
         padding-bottom: 4rem;
         align-items: flex-start;
         padding-top: 120px;
+    }
+    
+    .heroMedium {
+        min-height: 50vh;
+        padding-top: 100px;
+        padding-bottom: 60px;
     }
 
     /* CRITICAL FIX: Disable Framer Motion JS parallax on mobile by overriding inline styles */

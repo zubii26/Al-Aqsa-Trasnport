@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion";
 import styles from './Hero.module.css';
 import GlassButton from '@/components/ui/GlassButton';
 import FadeIn from '@/components/common/FadeIn';
@@ -13,6 +15,7 @@ interface HeroProps {
     title: string;
     subtitle: string | React.ReactNode;
     bgImage: string;
+    bgImages?: string[]; // Optional array for horizontal slider
     ctaText?: string;
     ctaLink?: string;
     secondaryCtaText?: string;
@@ -30,6 +33,7 @@ const Hero: React.FC<HeroProps> = ({
     title,
     subtitle,
     bgImage,
+    bgImages,
     ctaText,
     ctaLink,
     secondaryCtaText,
@@ -41,35 +45,82 @@ const Hero: React.FC<HeroProps> = ({
     breadcrumbs,
     alt
 }) => {
-    // Simplified Hero component without heavy animation hooks
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start start", "end start"],
+    });
+
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+    const textY = useTransform(scrollYProgress, [0, 0.5], ["0%", "-20%"]);
+    const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
+    const pathname = usePathname();
+    const isHome = pathname === '/' || pathname === '/ar';
+    const heightClass = isHome ? 'h-screen' : styles.heroMedium;
+
+    // Background Slider Logic
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        if (bgImages && bgImages.length > 1) {
+            const interval = setInterval(() => {
+                setCurrentIndex((prev) => (prev + 1) % bgImages.length);
+            }, 6000); // 6 seconds per slide
+            return () => clearInterval(interval);
+        }
+    }, [bgImages]);
 
     return (
-        <section className={styles.hero}>
-            {/* Background Layer */}
-            <div className="absolute inset-0 z-0">
-                <div className={styles.bgImage}>
-                    <Image
-                        src={bgImage}
-                        alt={alt || "Umrah Transport Saudi Arabia Hero"}
-                        fill
-                        priority
-                        quality={65} // Reduced quality for background optimization (was 85)
-                        className="object-cover"
-                        sizes="100vw"
-                    />
-                </div>
-            </div>
+        <section ref={ref} className={`${styles.hero} ${heightClass} relative overflow-hidden`}>
+            {/* Background Layer - Added will-change-transform for hardware acceleration to prevent lag */}
+            <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform bg-black">
+                {bgImages && bgImages.length > 0 ? (
+                    <AnimatePresence initial={false}>
+                        <motion.div
+                            key={currentIndex}
+                            initial={{ x: '100%', opacity: 0.8 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: '-100%', opacity: 0.8 }}
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className={`${styles.bgImage} absolute inset-0`}
+                        >
+                            <Image
+                                src={bgImages[currentIndex]}
+                                alt={alt || `Umrah Transport Fleet ${currentIndex + 1}`}
+                                fill
+                                priority={currentIndex === 0}
+                                quality={65}
+                                className="object-cover scale-110"
+                                sizes="100vw"
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                ) : (
+                    <div className={styles.bgImage}>
+                        <Image
+                            src={bgImage}
+                            alt={alt || "Umrah Transport Saudi Arabia Hero"}
+                            fill
+                            priority
+                            quality={65}
+                            className="object-cover scale-110"
+                            sizes="100vw"
+                        />
+                    </div>
+                )}
+            </motion.div>
 
             <div className={styles.overlay} />
 
             {/* Custom Background Elements */}
             {backgroundChildren && (
-                <div className={`${styles.backgroundLayer} absolute inset-0 z-[1] pointer-events-none`}>
+                <div className={`${styles.backgroundLayer} absolute inset-0 z-[1] pointer-events-none will-change-transform`}>
                     {backgroundChildren}
                 </div>
             )}
 
-            <div className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} relative z-10`}>
+            <motion.div style={{ y: textY, opacity }} className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} relative z-10 will-change-transform`}>
                 <div className={styles.textContent}>
                     {breadcrumbs && (
                         <FadeIn delay={0.1} direction="down" className="mb-4">
@@ -129,7 +180,7 @@ const Hero: React.FC<HeroProps> = ({
                         </div>
                     </FadeIn>
                 )}
-            </div>
+            </motion.div>
 
             <div className={styles.scrollIndicator}>
                 <ChevronDown size={32} />

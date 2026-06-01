@@ -8,6 +8,7 @@ import QuickBookingForm from '@/components/home/QuickBookingForm';
 import FadeIn from '@/components/common/FadeIn';
 import styles from './page.module.css';
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
+import { vehicleService } from '@/services/vehicleService';
 
 
 
@@ -31,15 +32,25 @@ export default async function FleetPage() {
 
     const title = section?.title || "Our Premium Fleet";
     const subtitle = section?.subtitle || "Experience luxury and comfort with our diverse range of vehicles, tailored for your spiritual journey.";
-    const bgImage = getSectionImage(section, 'desktop') || "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2000&auto=format&fit=crop";
+    const fallbackBgImage = getSectionImage(section, 'desktop') || "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2000&auto=format&fit=crop";
     const badge = getCustomField(section, 'badge_text') || "Premium Collection 2025";
+
+    // Use premium cinematic images from the VIP category for the hero slider
+    const premiumGalleryImages = [
+        '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp',
+        '/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.webp',
+        '/images/fleet/mercedes-s-class/mercedes-s-class-rear-hero-view.webp',
+        '/images/fleet/mercedes-s-class/mercedes-s-class-front-grille-jeddah-airport.webp',
+        '/images/fleet/mercedes-s-class/mercedes-s-class-vip-transport-makkah-madinah.webp'
+    ];
 
     return (
         <main>
             <Hero
                 title={title}
                 subtitle={subtitle}
-                bgImage={bgImage}
+                bgImage={fallbackBgImage}
+                bgImages={premiumGalleryImages}
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
                 badge={badge}

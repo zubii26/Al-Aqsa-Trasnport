@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useScroll, useSpring, motion } from "framer-motion";
 
 import { 
     Menu, X, ChevronDown, ChevronRight, 
@@ -13,6 +14,22 @@ import {
 import { ThemeToggle } from '../common/ThemeToggle';
 import { useMobileMenu } from '@/context/MobileMenuContext';
 import GlassButton from '@/components/ui/GlassButton';
+
+export function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  return (
+    <motion.div
+      style={{ scaleX, transformOrigin: "left" }}
+      className="fixed top-0 left-0 right-0 h-[2px] bg-[#D4AF37] z-[9999]"
+    />
+  );
+}
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -118,6 +135,8 @@ export default function Navbar() {
     ];
 
     return (
+        <>
+        <ScrollProgressBar />
         <nav
             className={`relative lg:sticky lg:top-0 left-0 right-0 z-50 transition-all duration-500 ${mounted && scrolled
                 ? 'glass py-2 lg:py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)]'
@@ -371,5 +390,6 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
+        </>
     );
 }

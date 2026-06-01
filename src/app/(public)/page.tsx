@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import styles from './page.module.css';
-import FadeIn from '@/components/common/FadeIn';
+import ScrollReveal from '@/components/motion/ScrollReveal';
 import Hero from '@/components/common/Hero';
 
 import { ArrowRight } from 'lucide-react';
@@ -232,33 +232,44 @@ export default async function Home() {
       <FleetGallery />
 
       {/* Fleet Section */}
-      <FadeIn>
+      <ScrollReveal direction="up">
         <FleetCarouselWrapper />
-      </FadeIn>
+      </ScrollReveal>
 
       {/* Gallery Section */}
-      <CustomerGallery />
+      <ScrollReveal direction="up" delay={0.1}>
+        <CustomerGallery />
+      </ScrollReveal>
 
       {/* Testimonials Section */}
-      <Testimonials />
+      <ScrollReveal direction="fade" delay={0.2}>
+        <Testimonials />
+      </ScrollReveal>
+      
       {/* Reviews Section */}
-      <ReviewsSection />
+      <ScrollReveal direction="up">
+        <ReviewsSection />
+      </ScrollReveal>
 
       {/* SEO Content Section - Enhanced */}
-      <ExpandedSEOContent />
+      <ScrollReveal direction="fade">
+        <ExpandedSEOContent />
+      </ScrollReveal>
 
       {/* Latest Articles Section */}
-      <LatestArticles />
+      <ScrollReveal direction="up">
+        <LatestArticles />
+      </ScrollReveal>
 
       {/* Safety Promise Section - Moved to Bottom */}
-      <FadeIn>
+      <ScrollReveal direction="left">
         <SafetyPromise />
-      </FadeIn>
+      </ScrollReveal>
 
       {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className="container relative z-10">
-          <FadeIn>
+          <ScrollReveal direction="up">
             <h2 className={styles.ctaTitle}>Ready to Begin Your Blessed Journey?</h2>
             <p className={styles.ctaText}>
               Book your VIP transport now and let us take care of the logistics while you focus on your worship.
@@ -271,7 +282,7 @@ export default async function Home() {
             >
               Book Your Ride via WhatsApp <ArrowRight size={20} />
             </a>
-          </FadeIn>
+          </ScrollReveal>
         </div>
       </section>
       {/* Force Rebuild */}

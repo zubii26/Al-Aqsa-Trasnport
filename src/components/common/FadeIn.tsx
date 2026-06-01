@@ -23,7 +23,7 @@ export default function FadeIn({ children, delay = 0, className = '', direction 
                     observer.disconnect();
                 }
             },
-            { threshold: 0.1, rootMargin: "-10%" }
+            { threshold: 0, rootMargin: "0px" }
         );
 
         if (ref.current) {

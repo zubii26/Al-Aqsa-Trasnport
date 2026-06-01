@@ -541,8 +541,7 @@ export default function BookingPage() {
                                         }
                                     }}
                                     options={[
-                                        ...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p })),
-                                        { value: 'custom', label: 'Other / Custom Location' }
+                                        ...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p }))
                                     ]}
                                     placeholder="Select Pickup"
                                     className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base"
@@ -623,32 +622,10 @@ export default function BookingPage() {
                                     </div>
 
                                     <div className="space-y-4">
-                                        <CustomRouteMap
-                                            onRouteCalculated={(data) => {
-                                                setBookingData(prev => ({
-                                                    ...prev,
-                                                    pickup: data.pickup.address,
-                                                    dropoff: data.dropoff.address,
-                                                    customRoute: {
-                                                        pickupLat: data.pickup.lat,
-                                                        pickupLng: data.pickup.lng,
-                                                        dropoffLat: data.dropoff.lat,
-                                                        dropoffLng: data.dropoff.lng,
-                                                        distanceKm: data.distanceKm,
-                                                        durationMin: data.durationMin,
-                                                        geometry: data.geometry
-                                                    }
-                                                }));
-                                                setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
-                                            }}
-                                            initialPickup={bookingData.customRoute ? { lat: bookingData.customRoute.pickupLat, lng: bookingData.customRoute.pickupLng, address: bookingData.pickup } : null}
-                                            initialDropoff={bookingData.customRoute ? { lat: bookingData.customRoute.dropoffLat, lng: bookingData.customRoute.dropoffLng, address: bookingData.dropoff } : null}
-                                        />
-                                        {(errors.pickup || errors.dropoff) && (
-                                            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-sm">
-                                                {errors.pickup || errors.dropoff}
-                                            </div>
-                                        )}
+                                        <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 p-6 rounded-2xl text-center">
+                                            <p className="font-medium">Custom routing is currently unavailable.</p>
+                                            <p className="text-sm mt-2 opacity-80">Please select a standard route from the dropdowns above.</p>
+                                        </div>
                                     </div>
                                 </motion.div>
                             ) : (

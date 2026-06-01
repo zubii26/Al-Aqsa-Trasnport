@@ -8,6 +8,8 @@ import { SettingsProvider } from '@/context/SettingsContext';
 // import NextTopLoader from 'nextjs-toploader';
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { getSettings } from "@/lib/settings-storage";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import { PageTransition } from "@/components/providers/PageTransition";
 import "./globals.css";
 
 
@@ -121,7 +123,11 @@ export default async function RootLayout({
                   shadow="0 0 15px #D4AF37,0 0 5px #D4AF37"
                 /> */}
 
-                {children}
+                <SmoothScrollProvider>
+                  <PageTransition>
+                    {children}
+                  </PageTransition>
+                </SmoothScrollProvider>
 
               </PricingProvider>
             </ThemeProvider>

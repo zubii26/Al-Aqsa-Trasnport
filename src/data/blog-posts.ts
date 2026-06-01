@@ -1537,7 +1537,7 @@ export const staticBlogPosts = [
     },
     {
         _id: 'static-guide-best-transport-2025',
-        slug: 'best-umrah-transport-services-saudi-arabia-2025',
+        slug: 'best-umrah-transport-services-saudi-arabia-2025-guide',
         title: 'Best Umrah Transport Services in Saudi Arabia: The Ultimate 2025 Guide',
         excerpt: 'Confused about how to travel between Jeddah, Makkah, and Madinah? We compare VIP Taxis, the Haramain Train, and SAPTCO buses to help you choose the best option for your pilgrimage.',
         content: `
@@ -1629,10 +1629,162 @@ export const staticBlogPosts = [
         author: 'Senior Transport Consultant',
         tags: ['Guides', 'Reviews', 'Makkah', 'Madinah', 'Transport Options'],
         isPublished: true,
-        metaTitle: 'Best Umrah Transport Services Saudi Arabia | 2025 Reviews & Guide',
-        metaDescription: 'Detailed review of the best transport for Umrah. We compare VIP Taxis vs Haramain Train vs Buses. Price, safety, and comfort rankings for 2025.',
-        createdAt: new Date('2025-12-28'),
-        updatedAt: new Date('2025-12-28'),
+        metaTitle: 'Al Aqsa Transport Fleet | Affordable Umrah Taxi 2025',
+        metaDescription: 'Explore our modern fleet of GMC Yukons, Hyundai Staria, and Toyota Hiace. Compare prices and book your reliable Makkah-Madinah transport today.',
+        createdAt: new Date('2025-10-10'),
+        updatedAt: new Date('2025-10-10'),
+    },
+    {
+        _id: 'static-taxi-cost-jeddah-to-makkah',
+        slug: 'taxi-cost-jeddah-airport-to-makkah',
+        title: 'How Much Does a Taxi Cost from Jeddah Airport to Makkah? [2026 Pricing Guide]',
+        excerpt: 'Wondering about the taxi cost from Jeddah Airport to Makkah? Get 2026 pricing, vehicle options & tips. Book your airport transfer with Al Aqsa Umrah Transport today.',
+        content: `
+            <h2>What Is the Average Taxi Cost from Jeddah Airport to Makkah?</h2>
+            <p>Planning your Umrah journey comes with many questions — and one of the first is: how much does a taxi cost from Jeddah Airport to Makkah? Getting this right means no surprises when you land, no scrambling for cash, and no stress after a long flight.</p>
+
+            <p>The distance from King Abdulaziz International Airport (KAIA) to Makkah is approximately 80–90 km, and the journey typically takes 60 to 90 minutes depending on traffic and the time of day.</p>
+
+            <p>For most pilgrims, the taxi cost from Jeddah Airport to Makkah falls between SAR 150 and SAR 450 (approximately USD 40–120), depending on the type of vehicle and whether you book in advance or arrange a ride on arrival.</p>
+
+            <p>Below is a general pricing guide for 2026:</p>
+
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-800">
+                            <th class="p-3 border">Vehicle Type</th>
+                            <th class="p-3 border">Passengers</th>
+                            <th class="p-3 border">Approx. Price (SAR)</th>
+                            <th class="p-3 border">Approx. Price (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-3 border">Economy Sedan</td>
+                            <td class="p-3 border">1–3</td>
+                            <td class="p-3 border">SAR 150 – 200</td>
+                            <td class="p-3 border">USD 40 – 55</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border">Standard Sedan</td>
+                            <td class="p-3 border">1–4</td>
+                            <td class="p-3 border">SAR 200 – 280</td>
+                            <td class="p-3 border">USD 55 – 75</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border">Premium MPV / Minivan</td>
+                            <td class="p-3 border">1–7</td>
+                            <td class="p-3 border">SAR 280 – 380</td>
+                            <td class="p-3 border">USD 75 – 100</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border">VIP / Luxury SUV</td>
+                            <td class="p-3 border">1–6</td>
+                            <td class="p-3 border">SAR 380 – 450+</td>
+                            <td class="p-3 border">USD 100 – 120+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Note: Prices may increase during peak Umrah and Hajj seasons. All fares with Al Aqsa Umrah Transport are fixed — what you see when you book is what you pay.</p>
+
+            <h2>Factors That Affect the Taxi Price</h2>
+
+            <p>No two journeys are exactly the same. Here are the key factors that influence how much you will pay for your KAIA to Makkah taxi.</p>
+
+            <h3>Type of Vehicle</h3>
+            <p>The vehicle you choose is the biggest factor in your final fare. A basic economy sedan suits solo travellers or couples travelling light. Families or groups with multiple suitcases will need a minivan or MPV, which naturally costs more. VIP and luxury SUVs are ideal for those who want extra comfort after a long international flight.</p>
+
+            <h3>Time of Day</h3>
+            <p>Travelling during peak hours — particularly between 6am and 10am, or evening rush periods — can add time to your journey and, with some operators, a surcharge to your fare. Late-night or early-morning transfers can also carry a premium with on-demand taxis. Pre-booked transfers with Al Aqsa Umrah Transport are priced the same regardless of the hour.</p>
+
+            <h3>Umrah Season vs Regular Travel</h3>
+            <p>During Ramadan, Dhul Hijja, and major Umrah travel periods, demand for airport transfers skyrockets. On-the-spot taxis and ride-hailing apps often apply surge pricing at these times, with fares sometimes doubling or tripling the standard rate. Booking early locks in a fair, fixed price before demand peaks.</p>
+
+            <h3>Number of Passengers and Luggage</h3>
+            <p>A larger group or extra luggage may require upgrading to a larger vehicle. If you are travelling with 5 or more people, or carrying multiple large suitcases, factor in the cost of an MPV or minivan rather than a standard sedan. Always declare your group size and luggage count when booking to avoid issues on the day.</p>
+
+            <h3>Pre-Booked vs On-the-Spot</h3>
+            <p>This is perhaps the most significant variable of all. Taxis hired at the airport kerbside or through unofficial channels often charge inflated rates, particularly when they sense you are unfamiliar with local prices. Pre-booking through a licensed operator like Al Aqsa Umrah Transport guarantees a fixed fare, a professional driver, and no unpleasant surprises.</p>
+
+            <h2>Why Pre-Booking Your Taxi Is the Smarter Choice</h2>
+
+            <p>For Umrah pilgrims especially, arriving at Jeddah Airport can be overwhelming. Thousands of fellow travellers, unfamiliar surroundings, and the excitement — and fatigue — of a long journey all combine at once. Pre-booking your airport transfer removes one major source of stress before you even land.</p>
+
+            <h4>FIXED PRICE GUARANTEE</h4>
+            <p>Pre-booked transfers come with a confirmed price. There is no negotiating at the kerbside, no watching the meter climb, and no worry about surge pricing during peak season. You agree the fare before you travel, and that is the price you pay.</p>
+
+            <h4>MEET-AND-GREET AT ARRIVALS</h4>
+            <p>Your driver will be waiting in the arrivals hall with a name board, ready to assist with your luggage and guide you directly to the vehicle. For pilgrims unfamiliar with KAIA, this is invaluable.</p>
+
+            <h4>24/7 AVAILABILITY FOR LATE-NIGHT FLIGHTS</h4>
+            <p>Flights arrive at all hours. Whether your plane touches down at 2am or 2pm, your pre-booked transfer will be ready and waiting. There is no risk of arriving to find no taxis available.</p>
+
+            <h2>What's Included in Al Aqsa Umrah Transport's Price?</h2>
+
+            <p>When you book your Umrah transport from Jeddah with Al Aqsa Umrah Transport, the price you see is a complete, all-inclusive fare. Here is what comes with every booking:</p>
+
+            <ul>
+                <li><strong>FLIGHT TRACKING:</strong> We monitor your flight in real time. If your arrival is early or delayed, your driver adjusts accordingly. You will never be charged for waiting caused by flight changes.</li>
+                <li><strong>FREE WAITING TIME:</strong> A generous waiting period is included in your booking at no extra cost, giving you time to clear immigration, collect your luggage, and make your way to arrivals without rushing.</li>
+                <li><strong>LUGGAGE ASSISTANCE:</strong> Your driver will help load and unload your luggage. No struggling with heavy bags after a long journey.</li>
+                <li><strong>LICENSED, VETTED DRIVERS:</strong> Every driver in our fleet is fully licensed, background-checked, and experienced in the Jeddah–Makkah route. Your safety and comfort are our first priority.</li>
+                <li><strong>DOOR-TO-DOOR SERVICE:</strong> We take you directly from the airport arrivals hall to the entrance of your hotel or accommodation in Makkah. No connections, no confusion, no additional transfers.</li>
+            </ul>
+
+            <p>For pilgrims also planning onward travel, we also offer <a href="/routes/makkah-to-madinah-taxi">Jeddah to Madinah transfer</a> services and a range of <a href="/services">Umrah transport packages</a> to cover your entire journey.</p>
+            <p>For official guidance on travel to the Kingdom of Saudi Arabia, you can visit the Saudi Tourism Authority at: <a href="https://www.visitsaudi.com" target="_blank" rel="noopener noreferrer">https://www.visitsaudi.com</a></p>
+
+            <h2>How to Book Your Jeddah Airport to Makkah Taxi</h2>
+
+            <p>Securing your airport transfer with Al Aqsa Umrah Transport is straightforward. Follow these three steps:</p>
+
+            <p><strong>STEP 1 — CHOOSE YOUR VEHICLE</strong><br/>
+            Visit our website and select the vehicle type that suits your group size, luggage needs, and budget. Economy, Standard, Premium, and VIP options are all available.</p>
+
+            <p><strong>STEP 2 — ENTER YOUR FLIGHT DETAILS</strong><br/>
+            Provide your flight number, arrival date, and time. This allows us to track your flight and ensure your driver is ready when you land — inshallah, right on time.</p>
+
+            <p><strong>STEP 3 — CONFIRM AND PAY SECURELY</strong><br/>
+            Complete your booking with a secure online payment. You will receive an instant confirmation by email, along with your driver's contact details before travel.</p>
+
+            <blockquote>
+                <p>Book your transfer now at <a href="/booking">www.alaqsaumrahtransport.com</a></p>
+            </blockquote>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <h4>Q: Is the taxi from Jeddah Airport to Makkah safe?</h4>
+            <p>A: Yes. When you book through a licensed operator such as Al Aqsa Umrah Transport, you travel with fully vetted, professional drivers in well-maintained, insured vehicles. We strongly recommend avoiding unofficial taxis or unverified ride-hailing services, particularly during busy Umrah seasons.</p>
+
+            <h4>Q: How far is King Abdulaziz Airport from Makkah?</h4>
+            <p>A: King Abdulaziz International Airport (KAIA) is located approximately 80 to 90 km from the centre of Makkah. Under normal traffic conditions, the drive takes between 60 and 90 minutes.</p>
+
+            <h4>Q: What if my flight is delayed?</h4>
+            <p>A: We track all flights in real time. If your arrival is delayed for any reason, your driver will wait — at no extra cost to you. Your booking is not affected by flight schedule changes.</p>
+
+            <h2>Conclusion</h2>
+
+            <p>Your Umrah journey begins the moment you step off the plane. Knowing the taxi cost from Jeddah Airport to Makkah in advance, and booking a trusted, licensed transfer, means you can focus entirely on your spiritual journey — not logistics.</p>
+
+            <p>Al Aqsa Umrah Transport has been serving pilgrims with safe, reliable, and fairly priced airport transfers for years. From economy options for solo travellers to VIP vehicles for families, we have a solution for every pilgrim and every budget.</p>
+
+            <p>Book your Jeddah Airport to Makkah transfer today and arrive at the Holy City with peace of mind.</p>
+        `,
+        category: 'Guide',
+        date: new Date('2026-06-01'),
+        readTime: '6 min read',
+        image: '/images/blog/taxi-pricing-makkah.png',
+        alt: 'Taxi transfer from Jeddah Airport to Makkah — Al Aqsa Umrah Transport vehicle at KAIA arrivals terminal',
+        author: 'Al Aqsa Team',
+        tags: ['Jeddah Airport', 'Makkah Transport', 'Taxi Prices', 'Umrah Guide'],
+        isPublished: true,
+        metaTitle: 'How Much Does a Taxi Cost from Jeddah Airport to Makkah? [2026 Pricing Guide]',
+        metaDescription: 'Wondering about the taxi cost from Jeddah Airport to Makkah? Get 2026 pricing, vehicle options & tips. Book your airport transfer with Al Aqsa Umrah Transport today.',
+        createdAt: new Date('2026-06-01'),
+        updatedAt: new Date('2026-06-01'),
     },
     {
         _id: 'best-umrah-transport-services-saudi-arabia-ar',
