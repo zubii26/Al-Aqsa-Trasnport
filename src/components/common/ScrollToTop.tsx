@@ -4,20 +4,17 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 /**
- * ScrollToTop — fires IMMEDIATELY on every route change via pathname.
- *
- * This component must be placed INSIDE SmoothScrollProvider so that
- * window.__lenis is available. It runs BEFORE PageTransition's
- * AnimatePresence, ensuring scroll is at 0 before any animation starts.
- *
- * Strategy:
- * 1. Reset Lenis (virtual scroller) to 0 immediately
- * 2. Reset native window scroll to 0 with behavior: 'instant'
- * 3. Handle popstate (back/forward) by skipping the reset
+ * ScrollToTop — fires on every route change via pathname.
+ * 
+ * Placed INSIDE SmoothScrollProvider but BEFORE PageTransition,
+ * so it fires at the earliest possible moment when the URL changes.
+ * 
+ * This resets scroll BEFORE AnimatePresence even starts its exit animation,
+ * ensuring the user never sees the old page at a wrong scroll position.
  */
 export default function ScrollToTop() {
   const pathname = usePathname();
-  const isFirstMount = useRef(true);
+  const prevPathname = useRef(pathname);
   const isPopstate = useRef(false);
 
   // Detect browser back/forward navigation
@@ -30,11 +27,9 @@ export default function ScrollToTop() {
   }, []);
 
   useEffect(() => {
-    // Skip on first mount — browser handles initial load
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
-      return;
-    }
+    // Only fire when pathname actually changes
+    if (prevPathname.current === pathname) return;
+    prevPathname.current = pathname;
 
     // Skip on browser back/forward — let the browser restore position naturally
     if (isPopstate.current) {
@@ -42,20 +37,18 @@ export default function ScrollToTop() {
       return;
     }
 
-    // ── Step A: Reset Lenis virtual scroll position ──────────────────────
+    // ── Reset Lenis virtual scroll position ──────────────────────────────
     const lenis = (window as any).__lenis;
     if (lenis) {
       lenis.scrollTo(0, { immediate: true, force: true });
     }
 
-    // ── Step B: Reset native browser scroll immediately ──────────────────
-    // MUST use behavior: 'instant' — 'smooth' animates from old position
-    // creating the visible "scroll-to-footer" artifact
+    // ── Reset native browser scroll immediately ──────────────────────────
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-    document.documentElement.scrollTop = 0; // Safari fallback
-    document.body.scrollTop = 0;            // Old WebKit fallback
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
 
-  }, [pathname]); // Re-runs on every route change
+  }, [pathname]);
 
-  return null; // Renders nothing — pure side-effect
+  return null;
 }

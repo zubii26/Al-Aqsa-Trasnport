@@ -1,15 +1,14 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useEffect } from "react";
+import { useLayoutEffect, useEffect, useRef } from "react";
 
 // Safe useLayoutEffect for Server-Side Rendering
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * InnerScrollReset mounts EXACTLY when the new page mounts, after the old page exits.
- * useLayoutEffect runs synchronously before the browser paints the new frame,
- * completely eliminating scroll-jumping or footer-landing.
+ * InnerScrollReset mounts EXACTLY when the new page mounts.
+ * useLayoutEffect runs synchronously before the browser paints the new frame.
  */
 function InnerScrollReset() {
   useIsomorphicLayoutEffect(() => {
@@ -30,19 +29,51 @@ function InnerScrollReset() {
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const path = usePathname();
+  const prevPath = useRef(path);
+
+  // Reset scroll IMMEDIATELY when pathname changes — before AnimatePresence
+  // even starts its exit animation. This is critical because mode="wait"
+  // delays the new page mount, leaving the user staring at old content
+  // at position 0 during the exit fade, which feels correct.
+  useIsomorphicLayoutEffect(() => {
+    if (prevPath.current !== path) {
+      prevPath.current = path;
+
+      // Reset Lenis
+      const lenis = (window as any).__lenis;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true, force: true });
+      }
+
+      // Reset native scroll
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [path]);
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.main
+    <AnimatePresence mode="wait" onExitComplete={() => {
+      // Safety net: reset again after exit animation completes,
+      // right before the new page mounts
+      const lenis = (window as any).__lenis;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true, force: true });
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }}>
+      <motion.div
         key={path}
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: "easeInOut" }}
       >
         <InnerScrollReset />
         {children}
-      </motion.main>
+      </motion.div>
     </AnimatePresence>
   );
 }
-
