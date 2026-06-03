@@ -27,7 +27,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                     <span className="text-amber-600 dark:text-amber-500 text-xs font-bold uppercase tracking-wider mb-2 block">
                         Network Explorer
                     </span>
-                    <h2 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white">
+                    <h2 className="text-2xl font-bold  text-slate-900 dark:text-white">
                         Intercity Routes
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
@@ -77,7 +77,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                                         </span>
                                     </div>
 
-                                    <h3 className={`text-lg font-semibold font-playfair mb-1 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
+                                    <h3 className={`text-lg font-semibold  mb-1 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
                                         {route.origin.split(' ')[0]}
                                         <span className="mx-2 text-slate-400">→</span>
                                         {route.destination.split(' ')[0]}

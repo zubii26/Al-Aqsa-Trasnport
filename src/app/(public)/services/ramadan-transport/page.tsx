@@ -150,7 +150,7 @@ export default async function RamadanTransportPage() {
                     <div className="flex justify-center mb-6">
                         <Moon className="w-12 h-12 text-amber-500 fill-amber-500/20" />
                     </div>
-                    <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                    <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                         Experience a Stress-Free Ramadan 2026
                     </h2>
                     <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -164,7 +164,7 @@ export default async function RamadanTransportPage() {
             {/* Why Choose Us for Ramadan */}
             <section className="py-12 bg-amber-50 dark:bg-slate-800/50">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-2xl font-bold text-center mb-12 font-playfair">Why Book With Us This Ramadan?</h2>
+                    <h2 className="text-2xl font-bold text-center mb-12 ">Why Book With Us This Ramadan?</h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
                             {
@@ -202,7 +202,7 @@ export default async function RamadanTransportPage() {
             <section className="py-20 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5 mix-blend-overlay"></div>
                 <div className="container mx-auto px-4 text-center relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair">Plan Your Spiritual Journey Now</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 ">Plan Your Spiritual Journey Now</h2>
                     <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
                         Slots for the last 10 days of Ramadan fill up quickly. Secure your booking today.
                     </p>

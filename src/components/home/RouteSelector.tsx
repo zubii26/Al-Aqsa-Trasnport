@@ -43,7 +43,7 @@ export default function RouteSelector({ routes, selectedRouteId, onSelect }: Rou
             >
                 <div className={styles.triggerContent}>
                     <div className={styles.iconWrapper}>
-                        <Navigation size={20} />
+                        <Navigation size={20} strokeWidth={1.25} />
                     </div>
                     <div className={styles.routeInfo}>
                         <span className={styles.label}>Selected Route</span>

@@ -74,14 +74,14 @@ export default function CustomerGallery() {
                     className={`${styles.navButton} ${styles.prevButton}`}
                     aria-label="Previous slide"
                 >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={24} strokeWidth={1.5} />
                 </button>
                 <button
                     onClick={() => scroll('right')}
                     className={`${styles.navButton} ${styles.nextButton}`}
                     aria-label="Next slide"
                 >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={24} strokeWidth={1.5} />
                 </button>
 
                 <div
@@ -95,13 +95,15 @@ export default function CustomerGallery() {
                                     src={item.image}
                                     alt={item.caption}
                                     fill
+                                    loading="lazy"
+                                    quality={80}
                                     className={styles.image}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 />
                                 <div className={styles.overlay}>
                                     <h3 className={styles.caption}>{item.caption}</h3>
                                     <span className={styles.location}>
-                                        <MapPin size={14} /> {item.location}
+                                        <MapPin size={14} strokeWidth={1.5} /> {item.location}
                                     </span>
                                 </div>
                             </div>

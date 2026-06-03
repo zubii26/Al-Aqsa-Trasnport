@@ -14,7 +14,7 @@ export default function VehicleFeatures({
         <section className="py-16 bg-white dark:bg-slate-900">
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-playfair text-slate-900 dark:text-white">
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12  text-slate-900 dark:text-white">
                         {title}
                     </h2>
                     

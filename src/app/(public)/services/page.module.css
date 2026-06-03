@@ -63,7 +63,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .tagline {
@@ -93,7 +93,7 @@
     display: inline-block;
     left: 50%;
     transform: translateX(-50%);
-    font-family: var(--font-playfair), serif;
+
     font-weight: 700;
 }
 
@@ -155,7 +155,7 @@
     font-size: 1.35rem;
     margin-bottom: 0.75rem;
     color: hsl(var(--foreground));
-    font-family: var(--font-playfair), serif;
+
     font-weight: 600;
 }
 
@@ -210,7 +210,7 @@
     font-style: italic;
     margin-bottom: 3rem;
     line-height: 1.4;
-    font-family: var(--font-playfair), serif;
+
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -280,7 +280,7 @@
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: hsl(var(--foreground));
-    font-family: var(--font-playfair), serif;
+
     font-weight: 600;
 }
 
@@ -328,7 +328,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: hsl(var(--foreground));
-    font-family: var(--font-playfair), serif;
+
 }
 
 .faqQuestion:hover {

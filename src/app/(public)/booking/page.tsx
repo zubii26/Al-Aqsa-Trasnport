@@ -487,7 +487,7 @@ export default function BookingPage() {
                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <MapPin size={32} className="text-secondary animate-pulse" />
+                            <MapPin strokeWidth={1.25} size={32} className="text-secondary animate-pulse" />
                         </div>
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Finding Best Routes...</h3>
@@ -508,9 +508,9 @@ export default function BookingPage() {
                         <NusukBadge variant="gold" />
                     </div>
 
-                    <div className="max-w-xl mx-auto md:mx-0 glass-card p-6 md:p-10 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-2xl relative">
+                    <div className="max-w-xl mx-auto md:mx-0 ios-glass p-6 md:p-10 rounded-[32px] border border-white/20 dark:border-slate-700/50 shadow-2xl relative">
                         {/* Decorative Gold sheen - Contained to avoid spilling but separate from content clipping */}
-                        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                        <div className="absolute inset-0 overflow-hidden rounded-[32px] pointer-events-none">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                         </div>
 
@@ -545,7 +545,7 @@ export default function BookingPage() {
                                     ]}
                                     placeholder="Select Pickup"
                                     className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base"
-                                    icon={<MapPin size={20} />}
+                                    icon={<MapPin strokeWidth={1.25} size={20} />}
                                 />
                             </div>
 
@@ -592,7 +592,7 @@ export default function BookingPage() {
                                     disabled={!bookingData.pickup || bookingData.pickup === 'custom'}
                                     placeholder={!bookingData.pickup ? "Select Pickup First" : "Select Dropoff"}
                                     className={`w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base ${(!bookingData.pickup || bookingData.pickup === 'custom') ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    icon={<Navigation size={20} />}
+                                    icon={<Navigation strokeWidth={1.25} size={20} />}
                                 />
                             </div>
                         </div>
@@ -610,7 +610,7 @@ export default function BookingPage() {
                                     <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 shadow-sm mb-6">
                                         <div className="flex items-start gap-4">
                                             <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
-                                                <Info size={20} />
+                                                <Info strokeWidth={1.25} size={20} />
                                             </div>
                                             <div>
                                                 <h4 className="font-bold text-slate-900 dark:text-white text-sm">Custom Journey Map Routing</h4>
@@ -635,13 +635,13 @@ export default function BookingPage() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
-                                        className="bg-slate-50/50 dark:bg-slate-900/30 rounded-2xl p-6 border border-secondary/20 shadow-lg shadow-secondary/5 relative overflow-hidden"
+                                        className="ios-glass rounded-[32px] p-6 border border-secondary/20 shadow-lg shadow-secondary/5 relative overflow-hidden"
                                     >
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
 
                                         <div className="flex items-center gap-5 relative z-10">
                                             <div className="w-14 h-14 rounded-full bg-secondary text-white flex items-center justify-center shadow-lg shadow-secondary/30">
-                                                <MapPin size={28} fill="currentColor" />
+                                                <MapPin strokeWidth={1.25} size={28} fill="currentColor" />
                                             </div>
                                             <div>
                                                 <h4 className="font-bold text-slate-900 dark:text-white text-lg">Route Selected</h4>
@@ -692,7 +692,7 @@ export default function BookingPage() {
                 <div className="lg:hidden mb-8">
                     <div className="relative">
                         <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            <Briefcase size={18} className="text-secondary" />
+                            <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
                             <span>Vehicle Selection</span>
                         </label>
 
@@ -714,10 +714,10 @@ export default function BookingPage() {
                                             {/* Background Image / Placeholder */}
                                             <div className="absolute inset-0 bg-slate-900">
                                                 {v.image ? (
-                                                    <img src={v.image} alt={v.name} className="w-full h-full object-cover opacity-90" />
+                                                    <Image src={v.image} alt={v.name} fill className="object-cover opacity-90" sizes="(max-width: 768px) 100vw, 50vw" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center">
-                                                        <Briefcase className="text-slate-700" size={48} />
+                                                        <Briefcase strokeWidth={1.25} className="text-slate-700" size={48} />
                                                     </div>
                                                 )}
                                             </div>
@@ -727,7 +727,7 @@ export default function BookingPage() {
 
                                             {/* 'SELECTED' Badge */}
                                             <div className="absolute top-4 right-4 bg-secondary text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider flex items-center gap-1">
-                                                <CheckCircle size={12} fill="currentColor" className="text-white" />
+                                                <CheckCircle strokeWidth={1.25} size={12} fill="currentColor" className="text-white" />
                                                 Selected {sv.quantity > 1 && `x${sv.quantity}`}
                                             </div>
 
@@ -760,12 +760,12 @@ export default function BookingPage() {
                             onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
                         >
                             <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                                <Car size={20} className="text-secondary" />
+                                <Car strokeWidth={1.25} size={20} className="text-secondary" />
                                 {bookingData.selectedVehicles.length > 0
                                     ? `${bookingData.selectedVehicles.reduce((acc, v) => acc + v.quantity, 0)} Vehicles Added`
                                     : 'Tap to Add Vehicles'}
                             </span>
-                            <ChevronDown className={`text-slate-400 transition-transform ${isVehicleDropdownOpen ? 'rotate-180 text-secondary' : ''}`} size={20} />
+                            <ChevronDown strokeWidth={1.25} className={`text-slate-400 transition-transform ${isVehicleDropdownOpen ? 'rotate-180 text-secondary' : ''}`} size={20} />
                         </div>
 
                         {/* Dropdown List */}
@@ -795,8 +795,8 @@ export default function BookingPage() {
                                             <div className="flex items-center gap-4">
                                                 <div className="w-20 h-14 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-white/10 shadow-sm relative">
                                                     {vehicle.image ? (
-                                                        <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover" />
-                                                    ) : <div className="w-full h-full flex items-center justify-center"><User size={20} className="text-slate-300" /></div>}
+                                                        <Image src={vehicle.image} alt={vehicle.name} fill className="object-cover" sizes="80px" />
+                                                    ) : <div className="w-full h-full flex items-center justify-center"><User strokeWidth={1.25} size={20} className="text-slate-300" /></div>}
                                                 </div>
 
                                                 <div className="flex-1 min-w-0">
@@ -874,10 +874,10 @@ export default function BookingPage() {
                                 whileHover={{ y: -6 }}
                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1)}
                                 className={`
-                                    relative rounded-3xl transition-all duration-300 group overflow-hidden flex flex-col cursor-pointer
+                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col cursor-pointer
                                     ${isSelected
                                         ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20'
-                                        : 'bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
+                                        : 'ios-glass border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
                                     }
                                 `}
                             >
@@ -914,7 +914,7 @@ export default function BookingPage() {
                                         absolute bottom-4 right-4 px-4 py-2 rounded-xl shadow-lg border backdrop-blur-md
                                         ${isSelected
                                             ? 'bg-secondary text-white border-secondary'
-                                            : 'bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white border-white/20'
+                                            : 'ios-glass text-slate-900 dark:text-white border-white/20'
                                         }
                                     `}>
                                         {bookingData.routeId === 'custom' && priceDetails.price === 0 ? (
@@ -942,8 +942,8 @@ export default function BookingPage() {
                                                 {vehicle.name}
                                             </h3>
                                             <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
-                                                <span className="flex items-center gap-1.5"><Users size={14} /> {vehicle.capacity}</span>
-                                                <span className="flex items-center gap-1.5"><Luggage size={14} /> {vehicle.luggage}</span>
+                                                <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={14} /> {vehicle.capacity}</span>
+                                                <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={14} /> {vehicle.luggage}</span>
                                             </div>
                                         </div>
 
@@ -979,7 +979,7 @@ export default function BookingPage() {
                                     <div className="mt-auto pt-4 border-t border-slate-100 dark:border-dashed dark:border-slate-800 grid grid-cols-2 gap-2">
                                         {vehicle.features.slice(0, 4).map((feature, idx) => (
                                             <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                                                <CheckCircle size={12} className="text-emerald-500 shrink-0" />
+                                                <CheckCircle strokeWidth={1.25} size={12} className="text-emerald-500 shrink-0" />
                                                 <span className="truncate">{feature}</span>
                                             </div>
                                         ))}
@@ -1008,14 +1008,14 @@ export default function BookingPage() {
                 <p className="text-slate-500 text-lg">Help us coordinate your perfect pickup</p>
             </div>
 
-            <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-xl relative overflow-hidden">
+            <div className="ios-glass p-6 md:p-8 rounded-[32px] border border-white/20 dark:border-slate-700/50 shadow-xl relative overflow-hidden">
                 {/* Decorative Background */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-50" />
 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                     <div className="space-y-3">
                         <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
-                            <Calendar size={14} className="text-secondary" /> Pickup Date
+                            <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Date
                         </label>
                         <div className="relative group">
                             <input
@@ -1032,14 +1032,14 @@ export default function BookingPage() {
                                 min={new Date().toISOString().split('T')[0]}
                                 className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
                             />
-                            {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
+                            {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
                         </div>
                         {errors.date && <p className="text-red-500 text-xs ml-1 font-medium">{errors.date}</p>}
                     </div>
 
                     <div className="space-y-3">
                         <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
-                            <Clock size={14} className="text-secondary" /> Pickup Time
+                            <Clock strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Time
                         </label>
                         <div className="relative group">
                             <input
@@ -1058,7 +1058,7 @@ export default function BookingPage() {
                                 }}
                                 className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
                             />
-                            {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info size={18} /></div>}
+                            {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
                         </div>
                         {errors.time && <p className="text-red-500 text-xs ml-1 font-medium">{errors.time}</p>}
                     </div>
@@ -1077,7 +1077,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Full Name *</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <User size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                                <User strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
                             </div>
                             <input
                                 type="text"
@@ -1115,7 +1115,7 @@ export default function BookingPage() {
                             ]}
                             placeholder="Select Country"
                             className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
-                            icon={<Globe size={18} />}
+                            icon={<Globe strokeWidth={1.25} size={18} />}
                         />
                     </div>
 
@@ -1124,7 +1124,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Phone *</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Phone size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                                <Phone strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
                             </div>
                             <input
                                 type="tel"
@@ -1142,7 +1142,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Email Address *</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Mail size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                                <Mail strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
                             </div>
                             <input
                                 type="email"
@@ -1158,7 +1158,7 @@ export default function BookingPage() {
             </div>
 
             {/* Optional Details Section */}
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-6 md:p-8 border border-slate-100 dark:border-slate-800">
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-[32px] p-6 md:p-8 border border-slate-100 dark:border-slate-800">
                 <div className="mb-6 flex items-center justify-between">
                     <div>
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Additional Details</h3>
@@ -1173,7 +1173,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Flight Number</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <PlaneLanding size={18} className="text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                                <PlaneLanding strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                             </div>
                             <input
                                 type="text"
@@ -1211,7 +1211,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Passengers</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Users size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                                <Users strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
                             </div>
                             <input
                                 type="number"
@@ -1229,7 +1229,7 @@ export default function BookingPage() {
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Luggage Items</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Luggage size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
+                                <Luggage strokeWidth={1.25} size={18} className="text-slate-400 group-focus-within:text-secondary transition-colors" />
                             </div>
                             <input
                                 type="number"
@@ -1287,7 +1287,7 @@ export default function BookingPage() {
                 </div>
 
                 {/* Digital Ticket Container */}
-                <div className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative">
+                <div className="bg-white dark:bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative">
                     {/* Top Gold Bar */}
                     <div className="h-2 w-full bg-gradient-to-r from-secondary/80 to-[#B38E2D]" />
 
@@ -1309,9 +1309,9 @@ export default function BookingPage() {
                                             {bookingData.pickup || (route ? getRouteOrigin(route) : 'Unknown Pickup')}
                                         </h3>
                                         <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
-                                            <Calendar size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
+                                            <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
                                             <span className="w-1 h-1 rounded-full bg-slate-300" />
-                                            <Clock size={14} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            <Clock strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </div>
                                     </div>
                                     <div>
@@ -1336,7 +1336,7 @@ export default function BookingPage() {
                             <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
                                 <div className="flex justify-between items-start mb-4">
                                     <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                        <Briefcase size={18} className="text-secondary" />
+                                        <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
                                         Selected Vehicles
                                     </h4>
                                     <button onClick={() => setStep(2)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
@@ -1348,8 +1348,8 @@ export default function BookingPage() {
                                         const v = vehicles.find(veh => veh.id === sv.vehicleId);
                                         return v ? (
                                             <div key={sv.vehicleId} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
-                                                <div className="w-16 h-10 bg-white dark:bg-slate-700/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600">
-                                                    {v.image ? <img src={v.image} alt={v.name} className="w-full h-full object-cover" /> : <User size={20} />}
+                                                <div className="w-16 h-10 bg-white dark:bg-slate-700/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600 relative">
+                                                    {v.image ? <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" /> : <User strokeWidth={1.25} size={20} />}
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</p>
@@ -1377,7 +1377,7 @@ export default function BookingPage() {
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
-                                            <User size={14} />
+                                            <User strokeWidth={1.25} size={14} />
                                         </div>
                                         <div className="overflow-hidden">
                                             <p className="font-bold text-slate-900 dark:text-white truncate">{bookingData.name}</p>
@@ -1386,7 +1386,7 @@ export default function BookingPage() {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
-                                            <Phone size={14} />
+                                            <Phone strokeWidth={1.25} size={14} />
                                         </div>
                                         <p className="font-medium text-slate-700 dark:text-slate-300 text-sm">{bookingData.phone}</p>
                                     </div>
@@ -1434,7 +1434,7 @@ export default function BookingPage() {
 
                 {/* Security Badge */}
                 <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
-                    <ShieldCheck size={14} />
+                    <ShieldCheck strokeWidth={1.25} size={14} />
                     <span>Your data is encrypted and secure. We never share your details. (Official License #12345)</span>
                 </div>
             </motion.div>
@@ -1500,7 +1500,7 @@ export default function BookingPage() {
                 {/* Header / Islamic Greeting */}
                 <div className="bg-slate-50/50 dark:bg-slate-900/50 pt-10 pb-8 px-6 md:px-10 text-center border-b border-slate-100 dark:border-slate-800 print:hidden">
                     <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-4 ring-white dark:ring-slate-800">
-                        <CheckCircle size={36} className="text-green-600 dark:text-green-400" />
+                        <CheckCircle strokeWidth={1.25} size={36} className="text-green-600 dark:text-green-400" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold text-[#D4AF37] mb-2">Booking Confirmation</h2>
                 </div>
@@ -1538,7 +1538,7 @@ export default function BookingPage() {
 
                         <div className="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center print:hidden">
                             <h3 className="text-secondary font-bold text-sm uppercase tracking-wider flex items-center gap-2">
-                                <Briefcase size={16} /> Booking Details
+                                <Briefcase strokeWidth={1.25} size={16} /> Booking Details
                             </h3>
                             <button
                                 id="print-button"
@@ -1634,7 +1634,7 @@ export default function BookingPage() {
                                 className="w-full sm:w-auto px-8 py-3.5 bg-secondary text-white font-bold rounded-xl shadow-lg shadow-secondary/20 hover:shadow-xl hover:bg-[#B38E2D]/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                             >
                                 <span>Return Home</span>
-                                <ArrowRight size={18} />
+                                <ArrowRight strokeWidth={1.25} size={18} />
                             </Link>
                             <Link
                                 href="/contact"
@@ -1658,7 +1658,7 @@ export default function BookingPage() {
                 {/* Summary Card */}
                 <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                        <Briefcase size={20} className="text-secondary" />
+                        <Briefcase strokeWidth={1.25} size={20} className="text-secondary" />
                         Booking Summary
                     </h3>
 
@@ -1696,13 +1696,13 @@ export default function BookingPage() {
                     {bookingData.passengers > 0 && (
                         <div className="grid grid-cols-2 gap-2 mb-4 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg">
                             <div className="flex items-center gap-2">
-                                <Users size={14} className="text-slate-400" />
+                                <Users strokeWidth={1.25} size={14} className="text-slate-400" />
                                 <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     {bookingData.passengers} Passenger{bookingData.passengers > 1 ? 's' : ''}
                                 </span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Luggage size={14} className="text-slate-400" />
+                                <Luggage strokeWidth={1.25} size={14} className="text-slate-400" />
                                 <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     {bookingData.luggage} Bag{bookingData.luggage !== 1 ? 's' : ''}
                                 </span>
@@ -1720,11 +1720,11 @@ export default function BookingPage() {
                                 if (!v) return null;
                                 return (
                                     <div key={sv.vehicleId} className="flex items-center gap-4">
-                                        <div className="w-16 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center justify-center overflow-hidden">
+                                        <div className="w-16 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center justify-center overflow-hidden relative">
                                             {v.image ? (
-                                                <img src={v.image} alt={v.name} className="w-full h-full object-cover" />
+                                                <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" />
                                             ) : (
-                                                <User size={20} className="text-slate-400" />
+                                                <User strokeWidth={1.25} size={20} className="text-slate-400" />
                                             )}
                                         </div>
                                         <div className="flex-1">
@@ -1776,7 +1776,7 @@ export default function BookingPage() {
                                         w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ring-4 ring-white dark:ring-slate-950 mb-1
                                         ${step >= s.step ? 'bg-secondary text-white shadow-lg shadow-secondary/30 scale-110' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}
                                     `}>
-                                        {step > s.step ? <CheckCircle size={18} /> : s.step}
+                                        {step > s.step ? <CheckCircle strokeWidth={1.25} size={18} /> : s.step}
                                     </div>
                                     <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 ${step >= s.step ? 'text-secondary' : 'text-slate-400'}`}>
                                         {s.label}
@@ -1826,7 +1826,7 @@ export default function BookingPage() {
                                     className={`ml-auto flex items-center gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
                                     {step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}
-                                    {!isSubmitting && <ArrowRight size={20} />}
+                                    {!isSubmitting && <ArrowRight strokeWidth={1.25} size={20} />}
                                 </button>
                             </div>
                         )}
@@ -1839,15 +1839,15 @@ export default function BookingPage() {
                                 className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 gap-2 text-center"
                             >
                                 <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
-                                    <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                                    <ShieldCheck strokeWidth={1.25} className="w-5 h-5 text-emerald-500" />
                                     <span className="text-xs text-slate-500 font-medium">Official License</span>
                                 </div>
                                 <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
-                                    <Navigation className="w-5 h-5 text-blue-500" />
+                                    <Navigation strokeWidth={1.25} className="w-5 h-5 text-blue-500" />
                                     <span className="text-xs text-slate-500 font-medium">GPS Tracked</span>
                                 </div>
                                 <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
-                                    <HeartHandshake className="w-5 h-5 text-pink-500" />
+                                    <HeartHandshake strokeWidth={1.25} className="w-5 h-5 text-pink-500" />
                                     <span className="text-xs text-slate-500 font-medium">Family Staff</span>
                                 </div>
                             </motion.div>

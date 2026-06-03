@@ -74,7 +74,7 @@ export default function BookingWizard() {
             </div>
 
             {/* Main Content Card */}
-            <div className="bg-white dark:bg-slate-900 rounded-[32px] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden relative">
+            <div className="bg-white/70 dark:bg-slate-900/50 rounded-[32px] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden relative ios-glass">
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 blur-[100px] pointer-events-none" />
@@ -96,17 +96,17 @@ export default function BookingWizard() {
                 </div>
 
                 {/* Trust Footer */}
-                <div className="bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 py-4 px-12 flex justify-center md:justify-between items-center gap-8">
+                <div className="bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 py-4 px-6 md:px-12 flex justify-center md:justify-between items-center gap-8 ios-glass rounded-b-[32px]">
                     <div className="hidden md:flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <ShieldCheck size={14} className="text-emerald-500" />
+                        <ShieldCheck size={14} strokeWidth={1.25} className="text-emerald-500" />
                         Safe & Secure
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <Headphones size={14} className="text-amber-500" />
+                        <Headphones size={14} strokeWidth={1.25} className="text-amber-500" />
                         24/7 Support
                     </div>
                     <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <CreditCard size={14} className="text-blue-500" />
+                        <CreditCard size={14} strokeWidth={1.25} className="text-blue-500" />
                         Pay on Arrival
                     </div>
                 </div>

@@ -83,7 +83,7 @@ export default function InstantPriceCalculator() {
                                         Estimated Fare
                                     </div>
                                     <div className={styles.guaranteeBadge}>
-                                        <ShieldCheck size={15} strokeWidth={2.5} />
+                                        <ShieldCheck size={15} strokeWidth={1.25} />
                                         <span>Best Rate Guaranteed</span>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@ export default function InstantPriceCalculator() {
                                 className={styles.bookBtn}
                             >
                                 <span>Reserve via WhatsApp</span>
-                                <ArrowRight size={20} />
+                                <ArrowRight size={20} strokeWidth={1.25} />
                             </a>
                         </div>
                     </div>

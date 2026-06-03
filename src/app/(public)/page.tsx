@@ -22,7 +22,7 @@ import ExpandedSEOContent from '@/components/home/ExpandedSEOContent';
 
 import TransportServices from '@/components/home/TransportServices';
 import Testimonials from '@/components/home/Testimonials';
-import FleetGallery from '@/components/home/FleetGallery';
+import FleetShowcase from '@/components/home/FleetShowcase';
 import BookingGuide from '@/components/home/BookingGuide';
 import QuickBookingForm from '@/components/home/QuickBookingForm';
 
@@ -211,6 +211,9 @@ export default async function Home() {
         </div>
       </Hero>
 
+      {/* Fleet Showcase - NEW SLIDER */}
+      <FleetShowcase />
+
       {/* Transport Services Section - NEW */}
       <TransportServices />
 
@@ -225,9 +228,6 @@ export default async function Home() {
 
       {/* Passenger Care Section */}
       <PassengerCare />
-
-      {/* Fleet Gallery - NEW */}
-      <FleetGallery />
 
       {/* Fleet Section */}
       <ScrollReveal direction="up">
@@ -278,7 +278,7 @@ export default async function Home() {
               rel="noopener noreferrer"
               className={styles.ctaButton}
             >
-              Book Your Ride via WhatsApp <ArrowRight size={20} />
+              Book Your Ride via WhatsApp <ArrowRight strokeWidth={1.25} size={20} />
             </a>
           </ScrollReveal>
         </div>

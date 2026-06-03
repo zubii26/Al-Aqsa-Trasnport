@@ -479,7 +479,7 @@ const QuickBookingForm = ({
                         transition={{ duration: 0.5 }}
                     >
                         <div className={styles.successIconWrapper}>
-                            <CheckCircle size={64} className={styles.successIcon} />
+                            <CheckCircle size={64} strokeWidth={1} className={styles.successIcon} />
                         </div>
                         <h3 className={styles.successTitle}>Opening WhatsApp...</h3>
                         <p className={styles.successMessage}>
@@ -565,7 +565,7 @@ const QuickBookingForm = ({
                                                     }
                                                 `}
                                             >
-                                                <route.icon size={16} className={isActive ? 'text-amber-400' : 'text-slate-400'} />
+                                                <route.icon size={16} strokeWidth={1.25} className={isActive ? 'text-amber-400' : 'text-slate-400'} />
                                                 {route.label}
                                             </button>
                                         );
@@ -581,7 +581,7 @@ const QuickBookingForm = ({
                                 <div className="md:col-span-3 relative">
                                     <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Travel Date</label>
                                     <div className="relative">
-                                        <Calendar size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <Calendar size={18} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="date"
                                             value={formData.date ? formData.date.toISOString().split('T')[0] : ''}
@@ -600,7 +600,7 @@ const QuickBookingForm = ({
                                 <div className="md:col-span-3 relative">
                                     <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Pickup Time</label>
                                     <div className="relative">
-                                        <Clock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <Clock size={18} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="time"
                                             value={formData.time ? formData.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
@@ -627,7 +627,7 @@ const QuickBookingForm = ({
                                         options={vehicleOptions}
                                         placeholder="Select Vehicle & See Price"
                                         className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
-                                        icon={<Car size={18} />}
+                                        icon={<Car size={18} strokeWidth={1.25} />}
                                     />
                                     {errors.vehicleId && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.vehicleId}</span>}
                                 </div>
@@ -646,7 +646,7 @@ const QuickBookingForm = ({
                                                 options={pickupLocations}
                                                 placeholder="Pickup Location"
                                                 className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
-                                                icon={<MapPin size={18} />}
+                                                icon={<MapPin size={18} strokeWidth={1.25} />}
                                             />
                                         </div>
                                         {errors.pickup && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.pickup}</span>}
@@ -661,7 +661,7 @@ const QuickBookingForm = ({
                                                 options={dropoffLocations}
                                                 placeholder="Drop-off Location"
                                                 className="w-full bg-white border border-slate-200 rounded-xl text-sm !py-2.5"
-                                                icon={<MapPin size={18} />}
+                                                icon={<MapPin size={18} strokeWidth={1.25} />}
                                             />
                                         </div>
                                         {errors.dropoff && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.dropoff}</span>}
@@ -674,7 +674,7 @@ const QuickBookingForm = ({
                                 <div className="relative">
                                     <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Vehicles</label>
                                     <div className="relative">
-                                        <Car size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <Car size={16} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="number"
                                             name="vehicleCount"
@@ -689,7 +689,7 @@ const QuickBookingForm = ({
                                 <div className="relative">
                                     <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Passengers</label>
                                     <div className="relative">
-                                        <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <User size={16} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="number"
                                             name="passengers"
@@ -712,7 +712,7 @@ const QuickBookingForm = ({
                                     <div className="relative">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Full Name</label>
                                         <div className="relative">
-                                            <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                            <User size={16} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
                                                 type="text"
                                                 name="name"
@@ -727,7 +727,7 @@ const QuickBookingForm = ({
                                     <div className="relative">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Email</label>
                                         <div className="relative">
-                                            <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                            <Mail size={16} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
                                                 type="email"
                                                 name="email"
@@ -742,7 +742,7 @@ const QuickBookingForm = ({
                                     <div className="relative">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 mb-1 ml-1 block">Phone</label>
                                         <div className="relative">
-                                            <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                            <Phone size={16} strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
                                                 type="tel"
                                                 name="phone"
@@ -792,7 +792,7 @@ const QuickBookingForm = ({
                                             <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                         ) : (
                                             <>
-                                                Book via WhatsApp <ArrowRight size={18} />
+                                                Book via WhatsApp <ArrowRight size={18} strokeWidth={1.25} />
                                             </>
                                         )}
                                     </button>

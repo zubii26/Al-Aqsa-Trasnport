@@ -33,6 +33,7 @@ export default function VehicleHero({
                     priority
                     className="object-cover object-center"
                     sizes="100vw"
+                    quality={100}
                 />
                 {/* Premium Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent"></div>
@@ -54,7 +55,7 @@ export default function VehicleHero({
                         </div>
                     )}
                     
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white font-playfair leading-tight drop-shadow-lg">
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white  leading-tight drop-shadow-lg">
                         {title}
                     </h1>
                     
@@ -78,7 +79,7 @@ export default function VehicleHero({
                             target="_blank"
                             className="inline-flex items-center justify-center gap-2 bg-amber-500 text-white hover:bg-amber-600 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
                         >
-                            Book via WhatsApp <ArrowRight size={20} />
+                            Book via WhatsApp <ArrowRight strokeWidth={1.25} size={20} />
                         </Link>
                         <a 
                             href="#gallery" 

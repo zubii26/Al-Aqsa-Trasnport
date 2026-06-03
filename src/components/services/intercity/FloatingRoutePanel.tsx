@@ -24,7 +24,7 @@ export default function FloatingRoutePanel({ route }: FloatingRoutePanelProps) {
         >
             <div className="mb-4">
                 <span className="text-amber-500 text-xs font-bold uppercase tracking-wider mb-1 block">Selected Detail</span>
-                <h3 className="text-xl font-bold font-playfair leading-tight text-slate-900 dark:text-white">
+                <h3 className="text-xl font-bold  leading-tight text-slate-900 dark:text-white">
                     {route.origin} <span className="text-muted-foreground font-normal mx-1">to</span> {route.destination}
                 </h3>
             </div>

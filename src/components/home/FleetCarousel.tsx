@@ -29,21 +29,10 @@ interface FleetCarouselProps {
 }
 
 export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps) {
-    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
-
-    const scroll = (direction: 'left' | 'right') => {
-        if (scrollContainerRef.current) {
-            const container = scrollContainerRef.current;
-            // Get proper scroll amount based on card width + gap
-            const cardWidth = container.firstElementChild?.clientWidth || 350;
-            const gap = 16; // Approx gap
-            const scrollAmount = direction === 'left' ? -(cardWidth + gap) : (cardWidth + gap);
-
-            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
-
     if (vehicles.length === 0) return null;
+
+    // Duplicate list for seamless infinite scroll
+    const displayVehicles = [...vehicles, ...vehicles];
 
     // Check if discount is active
     const now = new Date();
@@ -66,51 +55,10 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                     </p>
                 </div>
 
-                <div className="relative group">
-                    <button
-                        onClick={() => scroll('left')}
-                        className={`${styles.navBtn} ${styles.prevBtn}`}
-                        aria-label="Scroll Left"
-                    >
-                        <ArrowRight className="rotate-180" size={24} />
-                    </button>
-
-                    <div
-                        ref={scrollContainerRef}
-                        className={`${styles.carouselContainer} cursor-grab active:cursor-grabbing select-none`}
-                        onMouseDown={(e) => {
-                            const slider = scrollContainerRef.current;
-                            if (!slider) return;
-                            let isDown = true;
-                            let startX = e.pageX - slider.offsetLeft;
-                            let scrollLeft = slider.scrollLeft;
-
-                            const onMouseLeave = () => {
-                                isDown = false;
-                                slider.classList.remove('active');
-                            };
-
-                            const onMouseUp = () => {
-                                isDown = false;
-                                slider.classList.remove('active');
-                                window.removeEventListener('mouseup', onMouseUp);
-                                window.removeEventListener('mousemove', onMouseMove);
-                            };
-
-                            const onMouseMove = (e: MouseEvent) => {
-                                if (!isDown) return;
-                                e.preventDefault();
-                                const x = e.pageX - slider.offsetLeft;
-                                const walk = (x - startX) * 2; // Scroll-fast
-                                slider.scrollLeft = scrollLeft - walk;
-                            };
-
-                            window.addEventListener('mouseup', onMouseUp);
-                            window.addEventListener('mousemove', onMouseMove);
-                        }}
-                    >
-                        {vehicles.map((vehicle, index) => (
-                            <div key={vehicle.id} className={`${styles.card} glass-card`}>
+                <div className="fleet-marquee-wrapper">
+                    <div className="fleet-marquee-track">
+                        {displayVehicles.map((vehicle, index) => (
+                            <div key={`${vehicle.id}-${index}`} className={`${styles.card} glass-card marquee-card`}>
                                 <div className={styles.imageWrapper} onDragStart={(e) => e.preventDefault()}>
                                     <Image
                                         src={vehicle.image}
@@ -170,14 +118,6 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                             </div>
                         ))}
                     </div>
-
-                    <button
-                        onClick={() => scroll('right')}
-                        className={`${styles.navBtn} ${styles.nextBtn}`}
-                        aria-label="Scroll Right"
-                    >
-                        <ArrowRight size={24} />
-                    </button>
                 </div>
             </div>
         </section>

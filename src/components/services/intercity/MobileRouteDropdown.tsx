@@ -14,7 +14,7 @@ export default function MobileRouteDropdown({ routes, activeRouteId, onSelectRou
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Select Route</label>
             <div className="relative">
                 <select
-                    className="w-full appearance-none bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white py-3 pl-10 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 font-bold font-playfair text-lg"
+                    className="w-full appearance-none bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white py-3 pl-10 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 font-bold  text-lg"
                     value={activeRouteId || ''}
                     onChange={(e) => onSelectRoute(e.target.value)}
                 >

@@ -110,9 +110,35 @@ export const metadata: Metadata = {
 };
 
 const galleryImages = [
-    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp', alt: 'Mercedes S-Class Front View' },
+    // Top 8 - balanced mix explicitly featuring side and back/trunk images
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-side-door.jpeg', alt: 'Sleek Side Door Profile' },
     { src: '/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.webp', alt: 'Elegant Side Profile' },
     { src: '/images/fleet/mercedes-s-class/mercedes-s-class-rear-hero-view.webp', alt: 'S-Class Rear Hero View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-night-back.jpeg', alt: 'Elegant Night Rear View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-dashboared.jpeg', alt: 'Luxurious VIP Dashboard' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-seats.jpeg', alt: 'Spacious Rear Passenger Seats' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-full-front.jpeg', alt: 'Commanding Full Front Stance' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-sun-roof.jpeg', alt: 'Panoramic Sun Roof View' },
+    
+    // Remaining newly uploaded images
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-side-door-interior.jpeg', alt: 'Refined Interior Door Panel' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-on-road.jpeg', alt: 'Cruising on the Open Road' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025--shot-Driver-seat-202605050328.jpeg', alt: 'Advanced Driver Cockpit' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-front-grill.jpeg', alt: 'Bold Front Grill Detail' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-front1.jpeg', alt: 'Striking Front View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-night.jpeg', alt: 'S-Class at Night' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-seat1.jpeg', alt: 'Premium Executive Seat' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-seatt.jpeg', alt: 'Plush Leather Seating' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-sun-roof1.jpeg', alt: 'Sun Roof Interior' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-top-roof.jpeg', alt: 'Aerodynamic Top Roof' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-top.jpeg', alt: 'Aerial View' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025-wheel.jpeg', alt: 'Distinctive Alloy Wheel' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025--shot-Front-elevation-202605050246.jpeg', alt: 'Majestic Front Elevation' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025--shot-LED-taillight-202605050245.jpeg', alt: 'Signature LED Taillight' },
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-2025--shot-Rear-executive-seat-202605050328.jpeg', alt: 'Ultimate Rear Executive Seat' },
+    
+    // Remaining original images
+    { src: '/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp', alt: 'Mercedes S-Class Front View' },
     { src: '/images/fleet/mercedes-s-class/mercedes-s-class-amg-wheels-umrah-taxi.webp', alt: '20-inch AMG Wheels' },
     { src: '/images/fleet/mercedes-s-class/mercedes-s-class-chrome-door-handle.webp', alt: 'Chrome Door Handle Details' },
     { src: '/images/fleet/mercedes-s-class/mercedes-s-class-front-grille-jeddah-airport.webp', alt: 'Iconic Front Grille' },
@@ -216,7 +242,7 @@ export default async function MercedesSClassPage() {
             <VehicleHero
                 title="Mercedes-Benz S-Class | VIP Umrah Transport"
                 subtitle="Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury."
-                bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp"
+                bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-on-road.jpeg"
                 badge="VIP Luxury Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["3 Passengers", "2-3 Suitcases", "Thermotronic AC", "Executive Luxury"]}
@@ -228,12 +254,12 @@ export default async function MercedesSClassPage() {
                 description="The Mercedes-Benz S-Class sets the global standard for VIP transport, ensuring that your Umrah pilgrimage is physically effortless and spiritually focused. The physical demands of Umrah require periods of profound rest, and the S-Class provides an unmatched sanctuary of peace with its legendary silent cabin and AIRMATIC suspension."
                 modelYear="Latest"
                 passengers={3}
-                luggage="2-3 Large Bags"
-                tech="Burmester® 3D & MBUX"
-                fuel="Hybrid & V6 Options"
+                luggage="3 Large Bags"
+                tech="Burmester® 3D Sound"
+                fuel="3.0L V6 / V8"
                 bookLink={whatsappLink}
-                mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-luxury.webp"
-                fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-luxury-front-view-makkah.webp"
+                mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-dashboared.jpeg"
+                fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-full-front.jpeg"
             />
 
             <VehicleGallery 
@@ -250,10 +276,10 @@ export default async function MercedesSClassPage() {
             <div className="py-16 bg-white dark:bg-slate-900">
                 <FleetPricingGrid
                     vehicleId={mercedesId}
-                    vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-side-profile-vip-transport.webp"
+                    vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-side-door.jpeg"
                     vehicleType="mercedes"
-                    title="Transparent VIP Pricing"
-                    subtitle="Executive class transportation with fixed rates for all transfers."
+                    title="Mercedes S-Class Rates | Jeddah, Makkah & Madinah"
+                    subtitle="Exclusive VIP pricing for the ultimate journey. Unmatched luxury and privacy."
                 />
             </div>
 

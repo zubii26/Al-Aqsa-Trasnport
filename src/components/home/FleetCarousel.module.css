@@ -33,7 +33,7 @@
     color: hsl(var(--foreground));
     font-weight: 800;
     letter-spacing: -0.02em;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .subtitle {
@@ -224,7 +224,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.2;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .priceTag {

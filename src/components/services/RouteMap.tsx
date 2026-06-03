@@ -34,7 +34,7 @@ const routes = [
 export default function RouteMap() {
     return (
         <div className="py-12">
-            <h3 className="text-2xl font-bold font-playfair text-center mb-10">Popular Routes Network</h3>
+            <h3 className="text-2xl font-bold  text-center mb-10">Popular Routes Network</h3>
 
             <div className="relative max-w-3xl mx-auto">
                 {/* Vertical Line for mobile / Horizontal for desktop could be complex, keeping it vertical stack for now effectively */}

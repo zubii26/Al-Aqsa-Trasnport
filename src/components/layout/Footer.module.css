@@ -54,9 +54,42 @@
 }
 
 @media (max-width: 640px) {
+    .footer {
+        padding: 3rem 0 2rem;
+    }
+
+    .container {
+        padding: 0 1.25rem;
+    }
+
     .grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .contactItem {
+        min-height: 44px;
+        padding: 0.5rem 0;
+    }
+
+    .heading {
+        font-size: 1.3rem;
+    }
+
+    .links {
+        gap: 0.75rem;
+    }
+
+    .links a {
+        font-size: 0.95rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .socials {
+        justify-content: center;
     }
 }
 
@@ -132,7 +165,7 @@
 
 /* Headings with Gold Underline */
 .heading {
-    font-family: var(--font-playfair), serif;
+
     font-size: 1.5rem;
     color: hsl(var(--foreground));
     margin-bottom: 1.5rem;

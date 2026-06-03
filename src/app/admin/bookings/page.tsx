@@ -302,7 +302,7 @@ export default function BookingsPage() {
                             ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                     >
-                        <Calendar size={18} /> Calendar
+                        <Calendar strokeWidth={1.25} size={18} /> Calendar
                     </button>
                 </div>
             </div>
@@ -310,7 +310,7 @@ export default function BookingsPage() {
             <div className="flex flex-col gap-4 bg-card border border-border p-4 rounded-xl shadow-sm">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+                        <Search strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
                         <input
                             type="text"
                             placeholder="Search bookings..."
@@ -375,7 +375,7 @@ export default function BookingsPage() {
                         className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500 text-white hover:bg-emerald-600 transition-colors flex items-center gap-2 whitespace-nowrap"
                         title="Export to CSV"
                     >
-                        <Download size={16} /> Export CSV
+                        <Download strokeWidth={1.25} size={16} /> Export CSV
                     </button>
                 </div>
             </div>
@@ -399,7 +399,7 @@ export default function BookingsPage() {
                                         <tr>
                                             <td colSpan={5} className="text-center py-12 text-muted-foreground">
                                                 <div className="flex flex-col items-center justify-center">
-                                                    <Calendar size={48} className="mb-4 opacity-20" />
+                                                    <Calendar strokeWidth={1.25} size={48} className="mb-4 opacity-20" />
                                                     <p>No bookings found matching your criteria</p>
                                                 </div>
                                             </td>
@@ -422,25 +422,25 @@ export default function BookingsPage() {
                                                             <span className="font-medium">{booking.name}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                            <Mail size={12} /> {booking.email}
+                                                            <Mail strokeWidth={1.25} size={12} /> {booking.email}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                            <Phone size={12} /> {booking.phone}
+                                                            <Phone strokeWidth={1.25} size={12} /> {booking.phone}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div className="flex flex-col gap-2">
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <MapPin size={14} className="text-emerald-500" />
+                                                            <MapPin strokeWidth={1.25} size={14} className="text-emerald-500" />
                                                             <span>{booking.pickup}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <MapPin size={14} className="text-red-500" />
+                                                            <MapPin strokeWidth={1.25} size={14} className="text-red-500" />
                                                             <span>{booking.dropoff}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                                                            <Calendar size={12} />
+                                                            <Calendar strokeWidth={1.25} size={12} />
                                                             <span>{booking.date} at {booking.time}</span>
                                                         </div>
                                                     </div>
@@ -461,10 +461,10 @@ export default function BookingsPage() {
 
                                                         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                                                             <span className="flex items-center gap-1">
-                                                                <Users size={12} /> {booking.passengers}
+                                                                <Users strokeWidth={1.25} size={12} /> {booking.passengers}
                                                             </span>
                                                             <span className="flex items-center gap-1">
-                                                                <Briefcase size={12} /> {booking.luggage || 0}
+                                                                <Briefcase strokeWidth={1.25} size={12} /> {booking.luggage || 0}
                                                             </span>
                                                         </div>
                                                         {booking.notes && (
@@ -518,14 +518,14 @@ export default function BookingsPage() {
                                                                     className="p-2 rounded-lg hover:bg-emerald-500/10 text-emerald-500 transition-colors"
                                                                     title="Confirm Booking"
                                                                 >
-                                                                    <Check size={18} />
+                                                                    <Check strokeWidth={1.25} size={18} />
                                                                 </button>
                                                                 <button
                                                                     onClick={() => handleStatusChange(booking.id, 'cancelled')}
                                                                     className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
                                                                     title="Cancel Booking"
                                                                 >
-                                                                    <X size={18} />
+                                                                    <X strokeWidth={1.25} size={18} />
                                                                 </button>
                                                             </>
                                                         )}
@@ -544,7 +544,7 @@ export default function BookingsPage() {
                                                                 className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
                                                                 title="Delete Booking"
                                                             >
-                                                                <Trash2 size={18} />
+                                                                <Trash2 strokeWidth={1.25} size={18} />
                                                             </button>
                                                         )}
                                                     </div>

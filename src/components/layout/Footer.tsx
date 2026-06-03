@@ -60,7 +60,7 @@ export default function Footer() {
                         <div className={styles.contactInfo}>
                             {contact.address && (
                                 <a href="https://www.google.com/maps?cid=13304906274217460428" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-                                    <MapPin size={18} className={styles.icon} />
+                                    <MapPin strokeWidth={1.25} size={18} className={styles.icon} />
                                     <span>{contact.address}</span>
                                 </a>
                             )}
@@ -78,13 +78,13 @@ export default function Footer() {
                             </a>
                             {contact.phone && (
                                 <a href={`tel:${contact.phone}`} className={styles.contactItem}>
-                                    <Phone size={18} className={styles.icon} />
+                                    <Phone strokeWidth={1.25} size={18} className={styles.icon} />
                                     <span>{contact.phone}</span>
                                 </a>
                             )}
                             {contact.email && (
                                 <a href={`mailto:${contact.email}`} className={styles.contactItem}>
-                                    <Mail size={18} className={styles.icon} />
+                                    <Mail strokeWidth={1.25} size={18} className={styles.icon} />
                                     <span>{contact.email}</span>
                                 </a>
                             )}
@@ -140,7 +140,7 @@ export default function Footer() {
                             <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
                                 <input type="email" placeholder="Email" className={styles.input} />
                                 <button type="submit" className={styles.submitBtn} aria-label="Subscribe">
-                                    <Send size={16} />
+                                    <Send strokeWidth={1.25} size={16} />
                                 </button>
                             </form>
                         </div>

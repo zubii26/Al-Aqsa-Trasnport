@@ -72,7 +72,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
         return (
             <div className="text-center py-12">
                 <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-                    <CheckCircle size={48} />
+                    <CheckCircle size={48} strokeWidth={1.25} />
                 </div>
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Booking Requested!</h2>
                 <p className="text-slate-500 mt-4 max-w-sm mx-auto">
@@ -98,7 +98,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <p className="text-slate-500 mt-2">Enter your info to secure your booking.</p>
                 </div>
                 <button onClick={onBack} className="text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-bold text-sm">
-                    <ChevronLeft size={18} />
+                    <ChevronLeft size={18} strokeWidth={1.25} />
                     Back
                 </button>
             </div>
@@ -110,7 +110,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Full Name</label>
                         <div className="relative group">
                             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                                <User size={20} />
+                                <User size={20} strokeWidth={1.25} />
                             </div>
                             <input
                                 type="text"
@@ -118,9 +118,9 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                 value={data.name}
                                 onChange={(e) => updateData({ name: e.target.value })}
                                 className={`
-                                    w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
-                                    border-2 border-slate-100 dark:border-slate-800 
-                                    rounded-2xl outline-none transition-all
+                                    w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
+                                    border border-slate-100 dark:border-slate-800 
+                                    rounded-[20px] outline-none transition-all ios-glass
                                     focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                     text-slate-900 dark:text-white
                                     ${errors.name ? 'border-red-500' : ''}
@@ -133,7 +133,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</label>
                         <div className="relative group">
                             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                                <Mail size={20} />
+                                <Mail size={20} strokeWidth={1.25} />
                             </div>
                             <input
                                 type="email"
@@ -141,9 +141,9 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                 value={data.email}
                                 onChange={(e) => updateData({ email: e.target.value })}
                                 className={`
-                                    w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
-                                    border-2 border-slate-100 dark:border-slate-800 
-                                    rounded-2xl outline-none transition-all
+                                    w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
+                                    border border-slate-100 dark:border-slate-800 
+                                    rounded-[20px] outline-none transition-all ios-glass
                                     focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                     text-slate-900 dark:text-white
                                     ${errors.email ? 'border-red-500' : ''}
@@ -156,7 +156,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">WhatsApp / Phone</label>
                         <div className="relative group">
                             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                                <Phone size={20} />
+                                <Phone size={20} strokeWidth={1.25} />
                             </div>
                             <input
                                 type="tel"
@@ -164,9 +164,9 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                 value={data.phone}
                                 onChange={(e) => updateData({ phone: e.target.value })}
                                 className={`
-                                    w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
-                                    border-2 border-slate-100 dark:border-slate-800 
-                                    rounded-2xl outline-none transition-all
+                                    w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
+                                    border border-slate-100 dark:border-slate-800 
+                                    rounded-[20px] outline-none transition-all ios-glass
                                     focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                     text-slate-900 dark:text-white
                                     ${errors.phone ? 'border-red-500' : ''}
@@ -179,13 +179,13 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Additional Notes (Optional)</label>
                         <div className="relative group">
                             <div className="absolute left-4 top-5 text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                                <MessageSquare size={20} />
+                                <MessageSquare size={20} strokeWidth={1.25} />
                             </div>
                             <textarea
                                 placeholder="Luggage details, flight number, etc."
                                 value={data.notes}
                                 onChange={(e) => updateData({ notes: e.target.value })}
-                                className="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-2xl outline-none transition-all focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white min-h-[58px]"
+                                className="w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-[20px] outline-none transition-all focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white min-h-[58px] ios-glass"
                             />
                         </div>
                     </div>
@@ -193,13 +193,13 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
 
                 {/* Right Column: Summary Card */}
                 <div className="space-y-6">
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 h-full">
+                    <div className="bg-slate-50/50 dark:bg-slate-800/50 p-6 rounded-[32px] border border-slate-100 dark:border-slate-700 h-full ios-glass">
                         <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Booking Summary</h3>
 
                         <div className="space-y-6">
                             <div className="flex gap-4">
                                 <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500 flex items-center justify-center shrink-0">
-                                    <MapPin size={20} />
+                                    <MapPin size={20} strokeWidth={1.25} />
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold text-slate-400">Route</p>
@@ -213,7 +213,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
 
                             <div className="flex gap-4">
                                 <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-500 flex items-center justify-center shrink-0">
-                                    <Calendar size={20} />
+                                    <Calendar size={20} strokeWidth={1.25} />
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold text-slate-400">Schedule</p>
@@ -228,7 +228,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
 
                             <div className="flex gap-4">
                                 <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-500 flex items-center justify-center shrink-0">
-                                    <Car size={20} />
+                                    <Car size={20} strokeWidth={1.25} />
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold text-slate-400">Vehicle</p>
@@ -253,8 +253,8 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                 </div>
             </div>
 
-            <div className="p-4 bg-emerald-50 dark:bg-emerald-900/10 rounded-2xl border border-emerald-100 dark:border-emerald-800/50 flex items-start gap-3">
-                <ShieldCheck className="text-emerald-500 shrink-0 mt-0.5" size={18} />
+            <div className="p-4 bg-emerald-50/80 dark:bg-emerald-900/10 rounded-[20px] border border-emerald-100 dark:border-emerald-800/50 flex items-start gap-3 ios-glass">
+                <ShieldCheck className="text-emerald-500 shrink-0 mt-0.5" size={18} strokeWidth={1.25} />
                 <p className="text-xs text-emerald-800 dark:text-emerald-500 font-medium leading-relaxed">
                     Safe & Secure. No payment required now. You will pay the driver directly upon arrival.
                 </p>
@@ -271,7 +271,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     ) : (
                         <>
                             Confirm Booking Request
-                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                            <ArrowRight size={20} strokeWidth={1.25} className="group-hover:translate-x-1 transition-transform" />
                         </>
                     )}
                 </button>

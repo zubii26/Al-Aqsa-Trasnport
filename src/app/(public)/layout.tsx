@@ -51,7 +51,7 @@ export default async function UmrahLayout({
                 <Navbar />
             </ClientLayoutWrapper>
 
-            <main style={{ minHeight: 'calc(100vh - 80px - 300px)' }}>
+            <main className="min-h-[calc(100dvh-80px)]">
                 {children}
             </main>
 

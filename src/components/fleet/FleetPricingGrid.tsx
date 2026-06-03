@@ -51,7 +51,7 @@ const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId:
                         {route.title}
                     </h3>
 
-                    <div className="text-sm sm:text-lg font-bold text-secondary font-playfair tracking-tight">
+                    <div className="text-sm sm:text-lg font-bold text-secondary  tracking-tight">
                         {route.price}
                     </div>
                 </div>
@@ -113,7 +113,7 @@ export default function FleetPricingGrid({
         <section className="py-20 bg-slate-50 dark:bg-slate-950">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 font-playfair text-secondary">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4  text-secondary">
                         {title || `Affordable ${vehicleType.toUpperCase()} Services`}
                     </h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">

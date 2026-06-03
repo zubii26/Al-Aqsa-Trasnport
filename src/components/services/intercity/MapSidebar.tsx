@@ -121,7 +121,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
             >
                 <div className="flex-1 min-w-0 mr-4">
                     <span className="text-amber-600 dark:text-amber-500 text-[10px] font-bold uppercase tracking-wider block mb-0.5">Route Explorer</span>
-                    <h2 className="text-base font-bold font-playfair text-slate-900 dark:text-white truncate">
+                    <h2 className="text-base font-bold  text-slate-900 dark:text-white truncate">
                         {activeRoute ? `${activeRoute.origin} - ${activeRoute.destination}` : 'Select Journey'}
                     </h2>
                 </div>
@@ -147,7 +147,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
             {/* Desktop Header */}
             <div className="hidden lg:block p-6 border-b border-slate-100 dark:border-slate-800 sticky top-0 bg-white dark:bg-slate-900 z-10">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 mb-2">Route Explorer</h3>
-                <h2 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white">Select Your Journey</h2>
+                <h2 className="text-2xl font-bold  text-slate-900 dark:text-white">Select Your Journey</h2>
                 <p className="text-sm text-slate-500 mt-2">Choose a route to view details on the map.</p>
             </div>
 

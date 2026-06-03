@@ -100,7 +100,7 @@ export default function FleetGallery() {
                             <Star size={14} className="text-[#D4AF37] fill-[#D4AF37]" />
                             <span className="text-[#D4AF37] font-bold text-xs uppercase tracking-widest">Premium Fleet</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white font-playfair leading-tight">
+                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white  leading-tight">
                             Experience the <span className="text-[#D4AF37]">Gold Standard</span> of Travel.
                         </h2>
                         <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
@@ -132,7 +132,7 @@ export default function FleetGallery() {
             <div className="relative w-full overflow-hidden pb-12">
                 <motion.div
                     ref={scrollContainerRef}
-                    className="flex gap-8 overflow-x-auto px-4 md:px-8 pb-12 cursor-grab active:cursor-grabbing select-none"
+                    className="flex gap-8 overflow-x-auto px-4 md:px-8 pt-6 pb-12 cursor-grab active:cursor-grabbing select-none"
                     style={{
                         scrollSnapType: 'x mandatory',
                         scrollbarWidth: 'none',
@@ -140,68 +140,83 @@ export default function FleetGallery() {
                     }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={{
+                        hidden: {},
+                        visible: {
+                            transition: {
+                                staggerChildren: 0.12
+                            }
+                        }
+                    }}
                 >
                     {displayImages.map((img, idx) => (
-                        <Link
+                        <motion.div
                             key={`${img.name}-${idx}`}
-                            href={img.url}
-                            className="group relative w-[320px] h-[420px] md:w-[400px] md:h-[500px] shrink-0 scroll-snap-align-start perspective-1000 block"
-                            draggable={false}
+                            className="shrink-0 scroll-snap-align-start perspective-1000 block"
+                            variants={{
+                                hidden: { opacity: 0, x: 30, clipPath: 'inset(0 30% 0 0)' },
+                                visible: { 
+                                    opacity: 1, 
+                                    x: 0, 
+                                    clipPath: 'inset(0 0% 0 0)',
+                                    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } 
+                                }
+                            }}
                         >
-                            <motion.div
-                                className="w-full h-full relative rounded-[2rem] overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 shadow-xl transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-[#D4AF37]/20 group-hover:border-[#D4AF37]/50"
-                                whileHover={{ y: -10 }}
-                            >
-                                {/* Image Gradient Background */}
-                                <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${img.gradient}`} />
-
-                                {/* Badge */}
-                                <div className="absolute top-6 left-6 z-20">
-                                    <span className="px-5 py-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">
-                                        {img.badge}
-                                    </span>
-                                </div>
-
-                                {/* Main Image */}
-                                <div className="absolute inset-0 z-0">
-                                    <Image
-                                        src={img.src}
-                                        alt={img.alt}
-                                        fill
-                                        sizes="(max-width: 768px) 320px, 400px"
-                                        className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-                                        draggable={false}
-                                    />
-                                    {/* Dark Gradient Overlay for text readability */}
-                                    <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90" />
-                                </div>
-
-                                {/* Content */}
-                                <div className="absolute bottom-0 left-0 right-0 p-8 z-10 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <h3 className="text-3xl font-bold text-white font-playfair mb-3">{img.name}</h3>
-
-                                    <div className="flex items-center gap-6 mb-6">
-                                        <div className="flex items-center gap-2 text-slate-300">
-                                            <Users size={16} className="text-[#D4AF37]" />
-                                            <span className="text-sm font-medium">{img.capacity}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-slate-300">
-                                            <Briefcase size={16} className="text-[#D4AF37]" />
-                                            <span className="text-sm font-medium">{img.luggage}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center justify-between border-t border-white/10 pt-6">
-                                        <span className="text-[#D4AF37] font-semibold text-sm uppercase tracking-wider group-hover:text-white transition-colors">
-                                            View Details
+                            <Link href={img.url} draggable={false}>
+                                <div className="card-base fleet-card group relative w-[320px] h-[420px] md:w-[400px] md:h-[500px]">
+                                    {/* Badge */}
+                                    <div className="absolute top-6 left-6 z-20">
+                                        <span className="fleet-badge-vip px-5 py-2 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">
+                                            {img.badge}
                                         </span>
-                                        <div className="w-10 h-10 rounded-full bg-[#D4AF37] text-white flex items-center justify-center shadow-lg shadow-[#D4AF37]/20 group-hover:bg-[#b89628] transition-all duration-300 transform group-hover:scale-110">
-                                            <ArrowRight size={18} />
+                                    </div>
+
+                                    {/* Main Image */}
+                                    <div className="absolute inset-0 z-0">
+                                        <Image
+                                            src={img.src}
+                                            alt={img.alt}
+                                            fill
+                                            sizes="(max-width: 768px) 320px, 400px"
+                                            className="fleet-card-image object-cover"
+                                            draggable={false}
+                                        />
+                                        <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90" />
+                                    </div>
+
+                                    {/* Content & Specs */}
+                                    <div className="absolute inset-0 p-8 z-10 flex flex-col justify-end pointer-events-none">
+                                        <h3 className="text-3xl font-bold text-white  mb-3">{img.name}</h3>
+
+                                        <div className="fleet-card-specs flex flex-col gap-4 pointer-events-auto">
+                                            <div className="flex items-center gap-6">
+                                                <div className="flex items-center gap-2 text-slate-300">
+                                                    <Users size={16} className="text-[#D4AF37]" />
+                                                    <span className="text-sm font-medium">{img.capacity}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-slate-300">
+                                                    <Briefcase size={16} className="text-[#D4AF37]" />
+                                                    <span className="text-sm font-medium">{img.luggage}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="fleet-card-cta flex items-center justify-between border-t border-white/10 pt-4">
+                                                <span className="text-[#D4AF37] font-semibold text-sm uppercase tracking-wider group-hover:text-white transition-colors">
+                                                    View Details
+                                                </span>
+                                                <div className="w-10 h-10 rounded-full bg-[#D4AF37] text-white flex items-center justify-center shadow-lg shadow-[#D4AF37]/20 group-hover:bg-[#b89628] transition-all duration-300">
+                                                    <ArrowRight size={18} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </motion.div>
-                        </Link>
+                            </Link>
+                        </motion.div>
                     ))}
                 </motion.div>
                 <style jsx>{`

@@ -120,7 +120,7 @@ export default async function MadinahAirportPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                                 Seamless Arrival in Madinah
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
@@ -220,7 +220,7 @@ export default async function MadinahAirportPage() {
                     </div>
 
                     <div className="mt-16">
-                        <h3 className="text-2xl font-bold mb-8 text-center font-playfair">Journey to Markazia</h3>
+                        <h3 className="text-2xl font-bold mb-8 text-center ">Journey to Markazia</h3>
                         <RouteVisual
                             from="Madinah Airport (MED)"
                             fromLabel="Arrival Terminal"

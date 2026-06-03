@@ -60,7 +60,7 @@ export default function ExpandedSEOContent() {
 
                         {/* Header Section */}
                         <div className="text-center space-y-4">
-                            <h2 className="text-3xl md:text-5xl font-bold font-playfair text-secondary">
+                            <h2 className="text-3xl md:text-5xl font-bold  text-secondary">
                                 Complete Umrah Transport Guide (2025/2026)
                             </h2>
                             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -71,7 +71,7 @@ export default function ExpandedSEOContent() {
                         {/* Semantic FAQ Section */}
                         <div className="grid md:grid-cols-2 gap-8 items-start">
                             <div className="space-y-6">
-                                <h3 className="text-2xl font-bold font-playfair mb-4">Frequently Asked Questions</h3>
+                                <h3 className="text-2xl font-bold  mb-4">Frequently Asked Questions</h3>
                                 <Accordion type="single" collapsible className="w-full">
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger>How much is a taxi from Jeddah Airport to Makkah?</AccordionTrigger>
@@ -101,7 +101,7 @@ export default function ExpandedSEOContent() {
                             </div>
 
                             <div className="space-y-6">
-                                <h3 className="text-2xl font-bold font-playfair mb-4">Route & Vehicle Information</h3>
+                                <h3 className="text-2xl font-bold  mb-4">Route & Vehicle Information</h3>
                                 <Accordion type="single" collapsible className="w-full">
                                     <AccordionItem value="item-5">
                                         <AccordionTrigger>What vehicles are available for large families?</AccordionTrigger>
@@ -137,7 +137,7 @@ export default function ExpandedSEOContent() {
                             {/* Intro Section with Image */}
                             <div className="grid lg:grid-cols-2 gap-8 items-center">
                                 <div>
-                                    <h2 className="text-2xl md:text-3xl font-bold font-playfair text-secondary mb-4">
+                                    <h2 className="text-2xl md:text-3xl font-bold  text-secondary mb-4">
                                         Al Aqsa Umrah Transport – Trusted Global Umrah Travel Partner
                                     </h2>
                                     <p className="text-lg text-muted-foreground leading-relaxed">

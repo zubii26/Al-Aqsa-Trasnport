@@ -138,7 +138,7 @@ export default async function MakkahMadinahTaxiPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                                 Why Choose Our Makkah-Madinah Transfer?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
@@ -186,7 +186,7 @@ export default async function MakkahMadinahTaxiPage() {
 
                     {/* Route Visualization - NEW */}
                     <div className="mt-16">
-                        <h2 className="text-2xl font-bold text-center mb-8 font-playfair">Your Journey Map</h2>
+                        <h2 className="text-2xl font-bold text-center mb-8 ">Your Journey Map</h2>
                         <RouteVisual />
                     </div>
                 </div>
@@ -203,7 +203,7 @@ export default async function MakkahMadinahTaxiPage() {
             {/* SEO Content Block */}
             <section className="py-16 bg-slate-50 dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl text-center">
-                    <h2 className="text-2xl font-bold mb-4 font-playfair">Compare: Taxi vs. Haramain Train</h2>
+                    <h2 className="text-2xl font-bold mb-4 ">Compare: Taxi vs. Haramain Train</h2>
                     <p className="text-slate-600 dark:text-slate-400 mb-8">
                         While the train is fast, a private taxi offers unmatched convenience for families.
                         No need to travel to the station, handle luggage multiple times, or worry about ticket availability.

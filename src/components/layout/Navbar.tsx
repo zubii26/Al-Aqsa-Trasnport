@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useScroll, useSpring, motion } from "framer-motion";
+import { useScroll, useSpring, motion, AnimatePresence } from "framer-motion";
 
 import { 
     Menu, X, ChevronDown, ChevronRight, 
@@ -146,24 +146,24 @@ export default function Navbar() {
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3 group">
                     <div className="relative flex items-center">
-                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${scrolled ? 'w-[60px] h-[60px] lg:w-[80px] lg:h-[80px]' : 'w-[80px] h-[80px] lg:w-[100px] lg:h-[100px]'} group-hover:scale-105`}>
+                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${scrolled ? 'w-[45px] h-[45px] sm:w-[60px] sm:h-[60px] lg:w-[80px] lg:h-[80px]' : 'w-[55px] h-[55px] sm:w-[80px] sm:h-[80px] lg:w-[100px] lg:h-[100px]'} group-hover:scale-105`}>
                             <Image
                                 src="/logo.png"
                                 alt="Al Aqsa Transport"
                                 fill
                                 className="object-contain"
                                 priority
-                                sizes="(max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                sizes="(max-width: 640px) 55px, (max-width: 1024px) 80px, 100px"
                             />
                         </div>
-                        <div className={`flex items-center gap-3 transition-all duration-300 ${scrolled ? 'ml-[70px] lg:ml-[90px]' : 'ml-[90px] lg:ml-[120px]'}`}>
+                        <div className={`flex items-center gap-2 sm:gap-3 transition-all duration-300 ${scrolled ? 'ml-[55px] sm:ml-[70px] lg:ml-[90px]' : 'ml-[65px] sm:ml-[90px] lg:ml-[120px]'}`}>
                             <div className="flex flex-col items-end">
-                                <span className="text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
-                                <span className="text-[0.65rem] lg:text-xs font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
+                                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
+                                <span className="text-[0.55rem] sm:text-[0.65rem] lg:text-xs font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
                             </div>
-                            <div className="w-px h-8 lg:h-10 bg-secondary/80"></div>
+                            <div className="w-px h-6 sm:h-8 lg:h-10 bg-secondary/80"></div>
                             <div className="flex flex-col items-start">
-                                <span className="font-[family-name:var(--font-reem-kufi)] text-lg lg:text-xl font-bold text-secondary leading-none">
+                                <span className="font-[family-name:var(--font-reem-kufi)] text-base sm:text-lg lg:text-xl font-bold text-secondary leading-none">
                                     النقل المعتمر الأقصى
                                 </span>
                             </div>
@@ -180,16 +180,16 @@ export default function Navbar() {
                                     className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 cursor-default ${scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90'}`}
                                 >
                                     {link.label}
-                                    {link.megaMenu && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                    {link.megaMenu && <ChevronDown strokeWidth={1.25} size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                 </span>
                             ) : (
                                 <Link
                                     href={link.href}
-                                    className={`relative text-sm transition-all duration-300 hover:text-secondary py-4 flex items-center gap-1 font-playfair tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : ((mounted && scrolled) ? 'text-foreground/80 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : 'text-foreground/90 dark:text-white/90 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]')
+                                    className={`relative text-sm transition-all duration-300 hover:text-secondary py-4 flex items-center gap-1  tracking-wide ${mounted && pathname === link.href ? 'text-secondary font-bold drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : ((mounted && scrolled) ? 'text-foreground/80 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : 'text-foreground/90 dark:text-white/90 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]')
                                         }`}
                                 >
                                     {link.label}
-                                    {link.megaMenu && <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
+                                    {link.megaMenu && <ChevronDown strokeWidth={1.25} size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                     <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${mounted && pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                                         }`} />
                                 </Link>
@@ -277,119 +277,134 @@ export default function Navbar() {
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isMenuOpen}
                 >
-                    {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                    {isMenuOpen ? <X size={28} /> : <Menu strokeWidth={1.25} size={28} />}
                 </button>
             </div>
+        </nav>
 
-            {/* Backdrop */}
-            <div
-                className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 xl:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                    }`}
-                onClick={() => setIsMenuOpen(false)}
-                aria-hidden="true"
-            />
-
-            {/* Mobile Sidebar Drawer */}
-            <div
-                className={`fixed top-0 right-0 h-[100dvh] w-[85%] max-w-sm bg-background shadow-2xl z-40 transform transition-transform duration-300 xl:hidden border-l border-border flex flex-col ${isMenuOpen ? 'translate-x-0 visible' : 'translate-x-full invisible pointer-events-none'
-                    }`}
-                role="dialog"
-                aria-modal="true"
-                aria-label="Mobile navigation"
-            >
-                <div className="flex items-center justify-between p-6 border-b border-border/50">
-                    <Link href="/" className="flex items-center gap-3">
-                        <div className="relative w-[80px] h-[80px]">
-                            <Image
-                                src="/logo.png"
-                                alt="Al Aqsa Transport"
-                                fill
-                                className="object-contain"
-                                sizes="80px"
-                            />
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, transition: { duration: 0.4, delay: 0.2 } }}
+                        className="fixed inset-0 z-[100] flex flex-col ios-glass bg-white/90 dark:bg-slate-950/90 backdrop-blur-3xl xl:hidden"
+                    >
+                        {/* Header of the drawer */}
+                        <div className="shrink-0 flex items-center justify-between p-4 sm:p-6 border-b border-slate-200/50 dark:border-slate-800/50">
+                            <motion.div 
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.1, duration: 0.5 }}
+                                className="flex items-center gap-3"
+                            >
+                                <Link href="/" onClick={() => setIsMenuOpen(false)} className="relative w-[50px] h-[50px]">
+                                    <Image
+                                        src="/logo.png"
+                                        alt="Al Aqsa Transport"
+                                        fill
+                                        className="object-contain"
+                                        sizes="50px"
+                                    />
+                                </Link>
+                                <div className="flex flex-col items-start">
+                                    <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
+                                    <span className="text-[0.65rem] font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
+                                </div>
+                            </motion.div>
+                            
+                            {/* Close button */}
+                            <button
+                                className="p-2 transition-colors text-foreground dark:text-white hover:text-secondary z-[101]"
+                                onClick={toggleMenu}
+                                aria-label="Close menu"
+                            >
+                                <X size={32} />
+                            </button>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <div className="flex flex-col items-end">
-                                <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
-                                <span className="text-[0.65rem] font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
-                            </div>
-                            <div className="w-px h-8 bg-secondary/80"></div>
-                            <div className="flex flex-col items-start">
-                                <span className="font-[family-name:var(--font-reem-kufi)] text-lg font-bold text-secondary leading-none">
-                                    النقل المعتمر الأقصى
-                                </span>
-                            </div>
-                        </div>
-                    </Link>
-                    {/* Close button is handled by the main toggle button which is fixed z-50 */}
-                </div>
 
-                <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-2">
-                    {links.map((link) => (
-                        <div key={link.href} className="flex flex-col">
-                            <Link
-                                href={link.href}
-                                className={`p-4 rounded-xl text-lg transition-all duration-200 flex items-center justify-between group font-playfair tracking-normal ${mounted && pathname === link.href
-                                    ? 'bg-secondary/10 text-secondary font-bold'
-                                    : 'text-foreground/80 hover:bg-muted hover:text-foreground'
-                                    }`}
-                                onClick={() => {
-                                    if (!link.megaMenu) {
-                                        // Allow navigation to start before closing menu (smoother feel)
-                                        setTimeout(() => setIsMenuOpen(false), 150);
+                        {/* Main Links Area (Scrollable) */}
+                        <div className="flex-1 overflow-y-auto overscroll-contain px-6 sm:px-8 py-8">
+                            <motion.div
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
+                                variants={{
+                                    visible: {
+                                        transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+                                    },
+                                    exit: {
+                                        transition: { staggerChildren: 0.05, staggerDirection: -1 }
                                     }
                                 }}
+                                className="flex flex-col gap-6"
                             >
-                                <span className="flex items-center gap-2">
-                                    {link.label}
-                                </span>
-                                {mounted && pathname === link.href && !link.megaMenu && (
-                                    <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                )}
-                            </Link>
-
-                            {/* Mobile Submenu - Always indent for simplicity */}
-                            {link.megaMenu && (
-                                <div className="pl-4 flex flex-col gap-1 mt-1 border-l-2 border-secondary/10 ml-4">
-                                    {[...link.megaMenu.main, ...link.megaMenu.sidebar.items].map((child) => (
+                                {links.map((link) => (
+                                    <motion.div 
+                                        key={link.href} 
+                                        variants={{
+                                            hidden: { opacity: 0, y: 30 },
+                                            visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
+                                            exit: { opacity: 0, y: 10, transition: { duration: 0.2 } }
+                                        }}
+                                        className="flex flex-col"
+                                    >
                                         <Link
-                                            key={child.href}
-                                            href={child.href}
-                                            className={`p-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center justify-between ${mounted && pathname === child.href
-                                                ? 'text-secondary bg-secondary/5 font-bold'
-                                                : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
-                                                }`}
+                                            href={link.href}
                                             onClick={() => setTimeout(() => setIsMenuOpen(false), 150)}
+                                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground dark:text-white flex items-center justify-between group"
                                         >
-                                            {child.label}
+                                            <span>{link.label}</span>
+                                            {mounted && pathname === link.href && (
+                                                <motion.span layoutId="activeDot" className="w-2.5 h-2.5 rounded-full bg-secondary" />
+                                            )}
                                         </Link>
-                                    ))}
-                                </div>
-                            )}
+
+                                        {link.megaMenu && (
+                                            <div className="mt-4 flex flex-col gap-3 pl-4 border-l-2 border-slate-200 dark:border-slate-800">
+                                                {[...link.megaMenu.main, ...link.megaMenu.sidebar.items].map((child) => (
+                                                    <Link
+                                                        key={child.href}
+                                                        href={child.href}
+                                                        onClick={() => setTimeout(() => setIsMenuOpen(false), 150)}
+                                                        className="text-lg font-medium text-foreground/70 dark:text-slate-400 hover:text-secondary dark:hover:text-secondary transition-colors"
+                                                    >
+                                                        {child.label}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                ))}
+                            </motion.div>
                         </div>
-                    ))}
-                </div>
 
-                <div className="p-6 border-t border-border/50 bg-muted/30 mt-auto space-y-4">
-                    <div className="flex items-center justify-between mb-2 bg-background/50 p-4 rounded-xl border border-border/50">
-                        <span className="text-sm font-medium text-foreground/80">Appearance</span>
-                        <ThemeToggle />
-                    </div>
-
-
-
-                    <GlassButton
-                        href="/booking"
-                        variant="secondary"
-                        size="lg"
-                        className="w-full justify-center shadow-lg font-bold text-lg !bg-secondary !text-white !bg-none hover:!bg-primary hover:!text-primary-foreground transition-all duration-300"
-                        onClick={() => setTimeout(() => setIsMenuOpen(false), 150)}
-                    >
-                        Book Now
-                    </GlassButton>
-                </div>
-            </div>
-        </nav>
+                        {/* Bottom Actions (Fixed at bottom) */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.5, type: 'spring', stiffness: 300, damping: 28 }}
+                            className="shrink-0 p-6 sm:p-8 bg-slate-50/80 dark:bg-slate-900/80 border-t border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md"
+                        >
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+                                    <span className="text-sm font-bold text-foreground dark:text-white uppercase tracking-wider">Appearance</span>
+                                    <ThemeToggle />
+                                </div>
+                                <GlassButton
+                                    href="/booking"
+                                    variant="secondary"
+                                    size="lg"
+                                    className="w-full justify-center shadow-lg font-bold text-xl !bg-gradient-to-r !from-[#D4AF37] !to-[#B49126] !text-[#0A1F44] !border-none transition-transform duration-300 hover:scale-[1.02]"
+                                    onClick={() => setTimeout(() => setIsMenuOpen(false), 150)}
+                                >
+                                    Book Now
+                                </GlassButton>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }

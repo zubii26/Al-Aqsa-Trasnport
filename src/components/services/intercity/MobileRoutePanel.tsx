@@ -48,7 +48,7 @@ export default function MobileRoutePanel({ route, onClose }: MobileRoutePanelPro
                 <div className="flex justify-between items-start mb-4">
                     <div>
                         <span className="text-amber-500 text-[10px] font-bold uppercase tracking-wider">SELECTED ROUTE</span>
-                        <h3 className="text-xl font-bold font-playfair text-slate-900 dark:text-white leading-tight">
+                        <h3 className="text-xl font-bold  text-slate-900 dark:text-white leading-tight">
                             {route.origin} <span className="text-slate-400 text-sm">to</span> {route.destination}
                         </h3>
                     </div>

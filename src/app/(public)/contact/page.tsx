@@ -118,7 +118,7 @@ export default async function ContactPage() {
                             { icon: Globe, text: "Multilingual", sub: "دعم متعدد اللغات" },
                             { icon: Star, text: "Top Rated", sub: "أعلى تقييم" }
                         ].map((item, idx) => (
-                            <div key={idx} className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                            <div key={idx} className="ios-glass backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20 text-center transform hover:-translate-y-1 transition-transform duration-300">
                                 <item.icon className="w-8 h-8 mx-auto mb-2 text-amber-500" />
                                 <h3 className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">{item.text}</h3>
                                 <p className="text-xs text-slate-500 dark:text-slate-400 font-arabic">{item.sub}</p>

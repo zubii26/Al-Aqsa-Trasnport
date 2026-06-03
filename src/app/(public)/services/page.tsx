@@ -35,17 +35,17 @@ const processSteps = [
     {
         title: "Book Online",
         description: "Select your vehicle and schedule your pickup in just a few clicks.",
-        icon: <Calendar size={24} />
+        icon: <Calendar strokeWidth={1.25} size={24} />
     },
     {
         title: "Get Confirmation",
         description: "Receive instant confirmation with driver details and tracking link.",
-        icon: <CheckCircle size={24} />
+        icon: <CheckCircle strokeWidth={1.25} size={24} />
     },
     {
         title: "Enjoy the Ride",
         description: "Travel in comfort and safety to your destination.",
-        icon: <Car size={24} />
+        icon: <Car strokeWidth={1.25} size={24} />
     }
 ];
 
@@ -136,7 +136,7 @@ export default function ServicesPage() {
                     <FadeIn>
                         <h2 className={styles.sectionTitle}>Our Premium Umrah Transport Services</h2>
                     </FadeIn>
-                    <div className="flex flex-col gap-24 px-4 max-w-7xl mx-auto">
+                    <div className="flex flex-col gap-16 md:gap-20 px-4 md:px-6 max-w-7xl mx-auto">
                         {services.map((service, index) => {
                             // Zig-Zag Logic:
                             // Index 0 (First): Image Left, Text Right (Image Order 1)
@@ -144,9 +144,9 @@ export default function ServicesPage() {
                             const isImageRight = index % 2 !== 0;
 
                             return (
-                                <div key={index} className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+                                <div key={index} className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 xl:gap-24">
                                     {/* Image Side */}
-                                    <div className={`w-full lg:w-1/2 relative h-[400px] lg:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl ${isImageRight ? 'lg:order-2' : 'lg:order-1'}`}>
+                                <div className={`w-full lg:w-1/2 relative h-[280px] md:h-[380px] lg:h-[500px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl ${isImageRight ? 'lg:order-2' : 'lg:order-1'}`}>
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 z-10" />
 
                                         <Image
@@ -161,7 +161,7 @@ export default function ServicesPage() {
                                     {/* Content Side */}
                                     <div className={`w-full lg:w-1/2 flex flex-col justify-center ${isImageRight ? 'lg:order-1' : 'lg:order-2'}`}>
                                         <div className="mb-6">
-                                            <h3 className="text-3xl lg:text-5xl font-bold font-playfair text-slate-900 dark:text-white mb-6 leading-tight">
+                                            <h3 className="text-2xl md:text-3xl lg:text-5xl font-bold  text-slate-900 dark:text-white mb-4 md:mb-6 leading-tight">
                                                 {service.title}
                                             </h3>
                                             <div className="h-2 w-24 bg-amber-500 rounded-full" />
@@ -185,10 +185,10 @@ export default function ServicesPage() {
 
                                         <Link
                                             href={service.link}
-                                            className="inline-flex items-center gap-2 text-white bg-amber-500 hover:bg-amber-600 px-8 py-4 rounded-full font-bold uppercase tracking-wider text-sm transition-all shadow-lg hover:shadow-amber-500/30 group/link self-start"
+                                            className="inline-flex items-center gap-2 text-white bg-amber-500 hover:bg-amber-600 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm transition-all shadow-lg hover:shadow-amber-500/30 group/link self-start"
                                         >
                                             Learn More
-                                            <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                                            <ArrowRight strokeWidth={1.25} size={18} className="group-hover/link:translate-x-1 transition-transform" />
                                         </Link>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@ export default function ServicesPage() {
                             &ldquo;Your journey of faith deserves comfort and care.&rdquo;
                         </blockquote>
                         <Link href="/booking" className={styles.ctaButton}>
-                            Book Your Ride Now <ArrowRight size={20} />
+                            Book Your Ride Now <ArrowRight strokeWidth={1.25} size={20} />
                         </Link>
                     </FadeIn>
                 </div>

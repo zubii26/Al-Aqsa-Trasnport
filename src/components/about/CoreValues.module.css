@@ -32,7 +32,7 @@
     letter-spacing: -0.03em;
     position: relative;
     display: inline-block;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .title::after {
@@ -132,7 +132,7 @@
     color: hsl(var(--foreground));
     margin-bottom: 1rem;
     transition: color 0.3s ease;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .card:hover h3 {

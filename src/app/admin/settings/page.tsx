@@ -341,7 +341,7 @@ export default function SettingsPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 ml-1">Site Name</label>
                                             <div className="relative">
-                                                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                                <Globe strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                                                 <input
                                                     type="text"
                                                     name="site_name"
@@ -373,7 +373,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Phone className="text-amber-500" size={28} />
+                                            <Phone strokeWidth={1.25} className="text-amber-500" size={28} />
                                             Contact Details
                                         </h2>
                                         <p className="text-muted-foreground">How customers can reach you.</p>
@@ -382,7 +382,7 @@ export default function SettingsPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 ml-1">Phone Number</label>
                                             <div className="relative">
-                                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                                <Phone strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                                                 <input
                                                     type="text"
                                                     name="contact_phone"
@@ -396,7 +396,7 @@ export default function SettingsPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm font-semibold text-slate-700 ml-1">Secondary Phone</label>
                                             <div className="relative">
-                                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                                <Phone strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                                                 <input
                                                     type="text"
                                                     name="contact_phone_2"
@@ -424,7 +424,7 @@ export default function SettingsPage() {
                                         <div className="space-y-2 md:col-span-2">
                                             <label className="text-sm font-semibold text-slate-700 ml-1">Address</label>
                                             <div className="relative">
-                                                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                                <MapPin strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                                                 <input
                                                     type="text"
                                                     name="address"
@@ -443,7 +443,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Globe className="text-amber-500" size={28} />
+                                            <Globe strokeWidth={1.25} className="text-amber-500" size={28} />
                                             Social Media
                                         </h2>
                                         <p className="text-muted-foreground">Connect your social platforms.</p>
@@ -481,7 +481,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Search className="text-amber-500" size={28} />
+                                            <Search strokeWidth={1.25} className="text-amber-500" size={28} />
                                             SEO Configuration
                                         </h2>
                                         <p className="text-muted-foreground">Optimize your site for search engines.</p>
@@ -612,7 +612,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <MapPin className="text-amber-500" size={28} />
+                                            <MapPin strokeWidth={1.25} className="text-amber-500" size={28} />
                                             Custom Route Live Pricing
                                         </h2>
                                         <p className="text-muted-foreground">Configure global rates for user-drawn maps and custom pickup/dropoff booking queries.</p>
@@ -672,7 +672,7 @@ export default function SettingsPage() {
                                     <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
                                         <div className="flex items-start gap-4">
                                             <div className="p-3 bg-amber-100 dark:bg-amber-800/30 rounded-xl text-amber-600 dark:text-amber-400">
-                                                <Trash2 size={24} />
+                                                <Trash2 strokeWidth={1.25} size={24} />
                                             </div>
                                             <div className="flex-1">
                                                 <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2">Clean Up Old Data</h3>
@@ -733,7 +733,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <ShieldCheck className="text-amber-500" size={28} />
+                                            <ShieldCheck strokeWidth={1.25} className="text-amber-500" size={28} />
                                             Security Settings
                                         </h2>
                                         <p className="text-muted-foreground">Manage your account security and password.</p>

@@ -91,7 +91,7 @@ export default function LoginPage() {
                             <div className="w-20 h-20 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-lg shadow-black/50 border border-white/5 group">
                                 <Lock className="text-amber-500 group-hover:scale-110 transition-transform duration-300" size={32} />
                             </div>
-                            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight font-playfair">Welcome Back</h1>
+                            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight ">Welcome Back</h1>
                             <p className="text-slate-400 text-sm">Sign in to manage Al Aqsa Transport</p>
                         </div>
 

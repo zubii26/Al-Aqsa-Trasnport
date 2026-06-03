@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Briefcase, Info, Check, ArrowRight, ChevronLeft, Star } from 'lucide-react';
+import Image from 'next/image';
 import { usePricing } from '@/context/PricingContext';
 
 interface VehicleStepProps {
@@ -27,7 +28,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                     <p className="text-slate-500 mt-2">Choose the perfect ride for your journey.</p>
                 </div>
                 <button onClick={onBack} className="text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-bold text-sm">
-                    <ChevronLeft size={18} />
+                    <ChevronLeft size={18} strokeWidth={1.25} />
                     Back
                 </button>
             </div>
@@ -44,20 +45,20 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                             key={vehicle.id}
                             onClick={() => handleSelect(vehicle.id)}
                             className={`
-                                relative p-1 rounded-[24px] cursor-pointer transition-all duration-300 group
+                                relative p-1 rounded-[24px] cursor-pointer transition-all duration-300 group ios-glass
                                 ${isSelected
                                     ? 'bg-gradient-to-br from-amber-400 to-amber-600 shadow-xl shadow-amber-500/20 scale-[1.02]'
-                                    : 'bg-slate-100 dark:bg-slate-800 hover:scale-[1.01] hover:bg-slate-200'}
+                                    : 'bg-slate-100/50 dark:bg-slate-800/50 hover:scale-[1.01] hover:bg-slate-200/50'}
                             `}
                         >
-                            <div className="bg-white dark:bg-slate-900 rounded-[22px] p-5 h-full">
+                            <div className="bg-white/80 dark:bg-slate-900/50 rounded-[22px] p-5 h-full">
                                 <div className="flex gap-5">
                                     <div className="w-24 h-24 relative overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0">
                                         {vehicle.image ? (
-                                            <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                            <Image src={vehicle.image} alt={vehicle.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" sizes="96px" />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-slate-300">
-                                                <Users size={32} />
+                                                <Users size={32} strokeWidth={1.25} />
                                             </div>
                                         )}
                                         {vehicle.name.includes('GMC') && (
@@ -72,16 +73,16 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                             <h3 className="font-black text-slate-900 dark:text-white text-lg leading-tight truncate">
                                                 {vehicle.name}
                                             </h3>
-                                            {isSelected && <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md"><Check size={14} /></div>}
+                                            {isSelected && <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md"><Check size={14} strokeWidth={1.25} /></div>}
                                         </div>
 
                                         <div className="flex items-center gap-3 mt-2">
                                             <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                                                <Users size={12} className="text-amber-500" />
+                                                <Users size={12} strokeWidth={1.25} className="text-amber-500" />
                                                 {vehicle.capacity} PAX
                                             </div>
                                             <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                                                <Briefcase size={12} className="text-amber-500" />
+                                                <Briefcase size={12} strokeWidth={1.25} className="text-amber-500" />
                                                 {vehicle.luggage} BAGS
                                             </div>
                                         </div>
@@ -122,7 +123,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                     `}
                 >
                     Continue to Details
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight size={20} strokeWidth={1.25} className="group-hover:translate-x-1 transition-transform" />
                 </button>
             </div>
         </div>

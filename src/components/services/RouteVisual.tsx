@@ -32,7 +32,7 @@ export default function RouteVisual({
                     <div className="w-16 h-16 bg-white dark:bg-slate-900 rounded-full border-4 border-secondary flex items-center justify-center shadow-lg mb-4">
                         <MapPin className="text-secondary" size={32} />
                     </div>
-                    <h3 className="text-xl font-bold font-playfair">{from}</h3>
+                    <h3 className="text-xl font-bold ">{from}</h3>
                     <p className="text-sm text-muted-foreground">{fromLabel}</p>
                 </div>
 
@@ -60,7 +60,7 @@ export default function RouteVisual({
                     <div className="w-16 h-16 bg-secondary text-white rounded-full flex items-center justify-center shadow-lg mb-4 shadow-secondary/30">
                         <MapPin size={32} />
                     </div>
-                    <h3 className="text-xl font-bold font-playfair">{to}</h3>
+                    <h3 className="text-xl font-bold ">{to}</h3>
                     <p className="text-sm text-muted-foreground">{toLabel}</p>
                 </div>
 

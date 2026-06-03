@@ -32,7 +32,7 @@
     letter-spacing: -0.03em;
     position: relative;
     display: inline-block;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .title::after {
@@ -169,7 +169,7 @@
     z-index: 0;
     pointer-events: none;
     transition: all 0.3s ease;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .left .year {
@@ -189,7 +189,7 @@
     margin-bottom: 1rem;
     position: relative;
     z-index: 1;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .desc {

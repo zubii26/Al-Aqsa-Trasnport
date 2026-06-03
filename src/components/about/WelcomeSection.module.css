@@ -34,7 +34,7 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .subtitle {
@@ -64,7 +64,7 @@
     color: hsl(var(--foreground));
     margin-bottom: 3rem;
     font-weight: 300;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .missionBox {
@@ -94,7 +94,7 @@
     color: hsl(var(--primary));
     margin: 0;
     letter-spacing: -0.01em;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .sparkle {
@@ -141,7 +141,7 @@
     margin-bottom: 2.5rem;
     position: relative;
     display: inline-block;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .subheading::after {
@@ -212,7 +212,7 @@
     font-style: italic;
     color: hsl(var(--foreground));
     line-height: 1.8;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .conclusion {

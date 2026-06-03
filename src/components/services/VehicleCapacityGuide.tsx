@@ -30,7 +30,7 @@ export default function VehicleCapacityGuide() {
         <section className="py-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
-                    <h2 className="text-2xl font-bold font-playfair mb-3">Vehicle Capacity Guide</h2>
+                    <h2 className="text-2xl font-bold  mb-3">Vehicle Capacity Guide</h2>
                     <p className="text-muted-foreground">Choose the right vehicle for your group size and luggage.</p>
                 </div>
 

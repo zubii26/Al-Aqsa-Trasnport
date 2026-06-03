@@ -11,9 +11,9 @@
 }
 
 .heroMedium {
-    min-height: 60vh;
-    padding-top: 120px; /* Match standard hero padding */
-    padding-bottom: 80px; /* Balance the vertical spacing */
+    min-height: 55vh;
+    padding-top: 100px;
+    padding-bottom: 60px;
 }
 
 .bgImage {
@@ -97,12 +97,18 @@
     text-align: center;
 }
 
+@media (min-width: 2000px) {
+    .content {
+        max-width: 1800px;
+    }
+}
+
 .textContent {
     width: 100%;
 }
 
 .title {
-    font-family: var(--font-playfair);
+
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
@@ -382,17 +388,17 @@
 /* Mobile - Fix for dynamic address bar causing jumps & parallax issues */
 @media (max-width: 768px) {
     .hero {
-        min-height: 100dvh;
+        min-height: 85dvh;
         /* Use dynamic viewport height */
-        padding-bottom: 4rem;
+        padding-bottom: 3rem;
         align-items: flex-start;
-        padding-top: 120px;
+        padding-top: 90px;
     }
     
     .heroMedium {
-        min-height: 50vh;
-        padding-top: 100px;
-        padding-bottom: 60px;
+        min-height: 45vh;
+        padding-top: 80px;
+        padding-bottom: 40px;
     }
 
     /* CRITICAL FIX: Disable Framer Motion JS parallax on mobile by overriding inline styles */
@@ -423,18 +429,40 @@
     }
 
     .title {
-        font-size: 2.75rem;
+        font-size: 2.5rem;
         /* Stabilization */
         will-change: auto;
     }
 
     .subtitle {
         will-change: auto;
+        font-size: 1rem;
     }
 
     /* Hide heavy animated background blobs on mobile */
     .backgroundLayer {
         display: none;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+    .hero {
+        padding-top: 80px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.5rem 1.2rem;
     }
 }
 

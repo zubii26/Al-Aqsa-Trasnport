@@ -101,8 +101,16 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   experimental: {
-    optimizeCss: false,
+    optimizeCss: true,
+    optimizePackageImports: [
+      'lucide-react',
+      'framer-motion',
+      'date-fns',
+      'recharts',
+      'react-big-calendar',
+    ],
   },
 };
 
 export default nextConfig;
+// Force Next.js Restart 1

@@ -83,7 +83,7 @@ export default function HotelTransferPage() {
                 <FadeIn>
                     <div className="text-center max-w-3xl mx-auto mb-12">
                         <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Comfort & Convenience</span>
-                        <h2 className="text-3xl md:text-4xl font-bold font-playfair text-slate-900 dark:text-white mb-6">
+                        <h2 className="text-3xl md:text-4xl font-bold  text-slate-900 dark:text-white mb-6">
                             Stress-Free Travel <span className="text-amber-500">To Your Doorstep</span>
                         </h2>
                         <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -144,7 +144,7 @@ export default function HotelTransferPage() {
                         </div>
                         <div className="flex-1 space-y-8">
                             <FadeIn direction="right">
-                                <h3 className="text-3xl font-bold font-playfair text-slate-900 dark:text-white">
+                                <h3 className="text-3xl font-bold  text-slate-900 dark:text-white">
                                     We Cover All Major Zones
                                 </h3>
                                 <div className="space-y-6 mt-6">

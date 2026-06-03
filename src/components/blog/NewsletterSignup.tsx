@@ -54,7 +54,7 @@ export default function NewsletterSignup() {
                                     <Bell size={14} />
                                     <span>Stay Updated</span>
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-playfair">
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 ">
                                     Join Our Community of Pilgrims
                                 </h2>
                                 <p className="text-slate-300 text-lg leading-relaxed max-w-xl">

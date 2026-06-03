@@ -29,7 +29,7 @@
     letter-spacing: -0.02em;
     position: relative;
     display: inline-block;
-    font-family: var(--font-playfair), serif;
+
     background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -197,7 +197,7 @@
 }
 
 .articleTitle {
-    font-family: var(--font-playfair), serif;
+
     font-size: 1.6rem;
     font-weight: 700;
     color: #1a1a1a;

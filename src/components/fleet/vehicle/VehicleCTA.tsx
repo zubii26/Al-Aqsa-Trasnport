@@ -22,7 +22,7 @@ export default function VehicleCTA({
             
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 font-playfair text-white">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6  text-white">
                         {title}
                     </h2>
                     <p className="text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto">

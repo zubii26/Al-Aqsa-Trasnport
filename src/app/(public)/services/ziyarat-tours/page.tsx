@@ -120,7 +120,7 @@ export default async function ZiyaratToursPage() {
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row gap-12 items-center">
                         <div className="md:w-1/2">
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100 border-l-4 border-amber-500 pl-4">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100 border-l-4 border-amber-500 pl-4">
                                 Makkah Ziyarat Sites
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
@@ -164,7 +164,7 @@ export default async function ZiyaratToursPage() {
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row-reverse gap-12 items-center">
                         <div className="md:w-1/2">
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100 border-l-4 border-green-500 pl-4">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100 border-l-4 border-green-500 pl-4">
                                 Madinah Ziyarat Sites
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
@@ -206,7 +206,7 @@ export default async function ZiyaratToursPage() {
             {/* Why Book Ziyarat With Us */}
             <section className="py-16 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-12 font-playfair">Enhance Your Spiritual Journey</h2>
+                    <h2 className="text-3xl font-bold mb-12 ">Enhance Your Spiritual Journey</h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="p-6">
                             <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">

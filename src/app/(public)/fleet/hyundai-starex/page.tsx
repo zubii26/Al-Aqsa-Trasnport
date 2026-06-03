@@ -153,7 +153,7 @@ export default async function HyundaiStarexPage() {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-3xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                                 Why Book Hyundai Starex for Makkah Travel?
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
@@ -201,7 +201,7 @@ export default async function HyundaiStarexPage() {
             {/* Detailed Specifications */}
             <section className="py-12 bg-slate-50 dark:bg-slate-950">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-900 dark:text-white">Technical Specifications</h2>
+                    <h2 className="text-3xl font-bold text-center mb-10  text-slate-900 dark:text-white">Technical Specifications</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
                             <h3 className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-2">Engine & Power</h3>
@@ -232,7 +232,7 @@ export default async function HyundaiStarexPage() {
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <span className="text-teal-500 font-bold tracking-widest uppercase text-sm mb-4 block">Budget Friendly Comfort</span>
-                    <h2 className="text-3xl md:text-5xl font-bold font-playfair mb-8">Step Inside</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold  mb-8">Step Inside</h2>
 
                     <div className="max-w-6xl mx-auto">
                         <Interior360Viewer
@@ -247,7 +247,7 @@ export default async function HyundaiStarexPage() {
             {/* Use Cases */}
             <section className="py-16 bg-slate-50 dark:bg-slate-950">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Reliability for Every Trip</h2>
+                    <h2 className="text-3xl font-bold text-center mb-12 ">Reliability for Every Trip</h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
                             {

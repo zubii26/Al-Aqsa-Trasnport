@@ -46,7 +46,7 @@ export default function VehicleOverview({
                         </div>
                     </div>
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100 leading-tight">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6  text-slate-800 dark:text-slate-100 leading-tight">
                             {title}
                         </h2>
                         <p className="text-slate-600 dark:text-slate-300 mb-8 leading-relaxed text-lg">

@@ -13,7 +13,7 @@ const config: Config = {
             center: true,
         },
         fontFamily: {
-            sans: ["var(--font-geist-sans)", "sans-serif"],
+            sans: ["var(--font-geist-sans)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
             mono: ["var(--font-geist-mono)", "monospace"],
             playfair: ["var(--font-playfair)", "serif"],
             opensans: ["var(--font-open-sans)", "sans-serif"],

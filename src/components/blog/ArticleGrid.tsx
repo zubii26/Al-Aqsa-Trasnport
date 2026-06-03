@@ -132,7 +132,7 @@ export default function ArticleGrid({
                                             </span>
                                         </div>
 
-                                        <h3 className="text-xl font-bold font-playfair text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-tight group-hover:text-amber-600 transition-colors">
+                                        <h3 className="text-xl font-bold  text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-tight group-hover:text-amber-600 transition-colors">
                                             {article.title}
                                         </h3>
 

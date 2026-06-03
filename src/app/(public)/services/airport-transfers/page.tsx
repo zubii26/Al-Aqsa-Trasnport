@@ -111,7 +111,7 @@ export default async function AirportTransfersPage() {
                         <div className="p-6 sm:p-8 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-end gap-4 bg-white dark:bg-slate-900">
                             <div>
                                 <span className="text-amber-500 font-bold tracking-wider uppercase text-xs mb-2 block">Real-time Connections</span>
-                                <h1 className="text-3xl font-bold font-playfair text-slate-900 dark:text-white">
+                                <h1 className="text-3xl font-bold  text-slate-900 dark:text-white">
                                     Airport Connectivity Network
                                 </h1>
                                 <p className="text-muted-foreground mt-2 max-w-xl">
@@ -143,7 +143,7 @@ export default async function AirportTransfersPage() {
                     <FadeIn>
                         <div className="text-center mb-16">
                             <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">Our Commitment</span>
-                            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 font-playfair">Why Book Your Airport Transfer With Us?</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 ">Why Book Your Airport Transfer With Us?</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
                                 We go beyond just transport. We offer comprehensive service ensuring your peace of mind from the moment you land.
                             </p>
@@ -177,7 +177,7 @@ export default async function AirportTransfersPage() {
             <section className="py-16 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
                 <div className="container">
                     <FadeIn>
-                        <h2 className="text-3xl font-bold text-center mb-16 font-playfair">Seamless Journey in 4 Steps</h2>
+                        <h2 className="text-3xl font-bold text-center mb-16 ">Seamless Journey in 4 Steps</h2>
                         <div className="grid md:grid-cols-4 gap-8 relative">
                             {/* Connector Line (Desktop) */}
                             <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-slate-200 dark:bg-slate-700 -z-10" />
@@ -206,7 +206,7 @@ export default async function AirportTransfersPage() {
                 <div className="container">
                     <FadeIn>
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl font-bold font-playfair mb-4">Choose Your Vehicle</h2>
+                            <h2 className="text-3xl font-bold  mb-4">Choose Your Vehicle</h2>
                             <p className="text-muted-foreground">Select the perfect vehicle for your group size and comfort preferences.</p>
                         </div>
                     </FadeIn>
@@ -280,7 +280,7 @@ export default async function AirportTransfersPage() {
             <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
                 <div className="container max-w-4xl">
                     <FadeIn>
-                        <h2 className="text-3xl font-bold text-center mb-12 font-playfair">Frequently Asked Questions</h2>
+                        <h2 className="text-3xl font-bold text-center mb-12 ">Frequently Asked Questions</h2>
                         <div className="space-y-4">
                             {airportFAQs.map((faq, i) => (
                                 <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
@@ -296,7 +296,7 @@ export default async function AirportTransfersPage() {
             {/* Final CTA */}
             <section className="py-20 bg-amber-500 text-white text-center">
                 <div className="container">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair">Ready for a Comfortable Journey?</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 ">Ready for a Comfortable Journey?</h2>
                     <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">Book your trusted Makkah transport today and let us handle the logistics while you focus on your worship.</p>
                     <Link
                         href="/booking?service=airport"

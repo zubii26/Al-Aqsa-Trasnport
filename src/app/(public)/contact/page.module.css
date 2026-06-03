@@ -59,7 +59,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .tagline {
@@ -100,7 +100,7 @@
     font-weight: 700;
     color: hsl(var(--foreground));
     margin-bottom: 1rem;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .formSubtitle {
@@ -163,7 +163,7 @@
     font-weight: 700;
     margin-bottom: 2.5rem;
     color: hsl(var(--foreground));
-    font-family: var(--font-playfair), serif;
+
 }
 
 .infoList {
@@ -251,7 +251,7 @@
     color: hsl(var(--foreground));
     margin-bottom: 1rem;
     font-size: 1.25rem;
-    font-family: var(--font-playfair), serif;
+
 }
 
 .faqAnswer {

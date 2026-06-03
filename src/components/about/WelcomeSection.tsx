@@ -40,7 +40,7 @@ export default function WelcomeSection() {
                     <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">
                         Welcome | أهلاً بك
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-playfair leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6  leading-tight">
                         Welcome to Al Aqsa Umrah Transport
                         <span className="block text-2xl md:text-4xl mt-3 font-reem-kufi text-amber-600">الأقصى لنقل المعتمرين</span>
                     </h2>
@@ -76,7 +76,7 @@ export default function WelcomeSection() {
                     <div className="space-y-8">
                         {/* Features Box */}
                         <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800">
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-playfair flex justify-between items-center">
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6  flex justify-between items-center">
                                 Why Choose Us?
                                 <span className="font-reem-kufi text-xl text-amber-600">لماذا نحن؟</span>
                             </h3>

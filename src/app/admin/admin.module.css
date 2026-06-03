@@ -94,7 +94,7 @@
 }
 
 .logoText {
-    font-family: var(--font-playfair), serif;
+
     font-size: 1.1rem;
     font-weight: 700;
     background: linear-gradient(90deg, var(--admin-fg), #94a3b8);
@@ -228,7 +228,7 @@
     font-weight: 700;
     margin-bottom: 0.25rem;
     color: var(--admin-fg);
-    font-family: var(--font-playfair), serif;
+
     letter-spacing: -0.02em;
 }
 
@@ -481,7 +481,7 @@
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--admin-fg);
-    font-family: var(--font-playfair), serif;
+
 }
 
 .mobileOverlay {

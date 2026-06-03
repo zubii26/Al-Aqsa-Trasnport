@@ -23,7 +23,7 @@ export default function SEOContent() {
                     {/* English Paragraphs */}
                     <FadeIn delay={0.1}>
                         <div className="prose dark:prose-invert max-w-none text-center md:text-left">
-                            <h3 className="text-2xl font-bold font-playfair mb-4 text-secondary">Al Aqsa Business Profile & Pilgrim Services</h3>
+                            <h3 className="text-2xl font-bold  mb-4 text-secondary">Al Aqsa Business Profile & Pilgrim Services</h3>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                                 At <strong>Al Aqsa Umrah Transport</strong>, we are honored to be your trusted partner for <strong>pilgrim transportation in Saudi Arabia</strong>. Our mission is to provide seamless, comfortable, and reliable <strong>Umrah transport services</strong> that allow you to focus entirely on your spiritual journey. From the moment you arrive, we ensure a smooth experience with our premium <strong>Jeddah Airport transfers</strong> and <strong>Madinah Airport pickups</strong>, guiding you safely to the holy cities. Whether you are performing Umrah, Hajj, or embarking on a spiritual visit, our professional team is dedicated to serving the Guests of Allah with the highest standards of hospitality.
                             </p>

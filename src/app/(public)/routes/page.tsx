@@ -180,7 +180,7 @@ export default function RoutesPage() {
                                         <div className="p-6 md:w-3/5 flex flex-col">
                                             <div className="flex items-start justify-between mb-2">
                                                 <div>
-                                                    <h3 className="text-2xl font-bold font-playfair group-hover:text-secondary transition-colors">
+                                                    <h3 className="text-2xl font-bold  group-hover:text-secondary transition-colors">
                                                         {route.title}
                                                     </h3>
                                                     <h4 className="text-lg font-bold text-secondary font-reem-kufi mt-1">
@@ -253,7 +253,7 @@ export default function RoutesPage() {
                 <div className="container mx-auto px-4">
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <FadeIn>
-                            <h2 className="text-3xl lg:text-4xl font-bold font-playfair mb-4">Why Travel With Al Aqsa?</h2>
+                            <h2 className="text-3xl lg:text-4xl font-bold  mb-4">Why Travel With Al Aqsa?</h2>
                             <p className="text-muted-foreground">More than just transport, we provide a seamless bridge between your spiritual destinations.</p>
                         </FadeIn>
                     </div>

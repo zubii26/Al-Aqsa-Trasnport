@@ -124,7 +124,7 @@ export default async function JeddahAirportTransferPage() {
             <section className="py-16 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center mb-12">
-                        <h2 className="text-3xl font-bold mb-4 font-playfair text-slate-800 dark:text-slate-100">
+                        <h2 className="text-3xl font-bold mb-4  text-slate-800 dark:text-slate-100">
                             Arrival Procedure: What to Expect
                         </h2>
                         <p className="text-slate-600 dark:text-slate-300">
@@ -168,7 +168,7 @@ export default async function JeddahAirportTransferPage() {
             {/* Route Visual Section */}
             <section className="py-8 bg-slate-50/50 dark:bg-slate-900/50">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-2xl font-bold text-center mb-8 font-playfair">Your Journey to Makkah</h2>
+                    <h2 className="text-2xl font-bold text-center mb-8 ">Your Journey to Makkah</h2>
                     <RouteVisual
                         from="Jeddah Airport (JED)"
                         fromLabel="Arrival Hall (Meet & Greet)"

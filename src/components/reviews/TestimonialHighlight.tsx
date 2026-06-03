@@ -15,7 +15,7 @@ export default function TestimonialHighlight() {
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-16">
                     <span className="text-amber-600 dark:text-amber-500 font-bold tracking-wider uppercase text-sm">Pilgrim Stories</span>
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mt-2 font-playfair">
+                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mt-2 ">
                         Journeys of Faith & Comfort
                     </h2>
                 </div>

@@ -57,7 +57,7 @@ export default function SafetyPage() {
             <section className="py-16 md:py-24">
                 <div className="container mx-auto px-4 text-center max-w-3xl">
                     <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Peace of Mind</span>
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-playfair">
+                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 ">
                         Traveling with Confidence
                     </h2>
                     <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -73,7 +73,7 @@ export default function SafetyPage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16">
                         <span className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Official Verification</span>
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-playfair">What Does "Nusuk Registered" Mean?</h2>
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 ">What Does "Nusuk Registered" Mean?</h2>
                         <p className="text-teal-100 max-w-2xl mx-auto text-lg leading-relaxed">
                             We don't just promise safety; we are officially verified by the government. Booking a Nusuk Registered cab means choosing the highest standard of accountability.
                         </p>
@@ -115,7 +115,7 @@ export default function SafetyPage() {
             <section className="py-16 bg-slate-50 dark:bg-slate-900">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 font-playfair">Tailored Safety for Every Pilgrim</h2>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 ">Tailored Safety for Every Pilgrim</h2>
                         <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">We understand that different guests have different needs. Our protocols are adapted to ensure everyone travels with dignity and security.</p>
                     </div>
 
@@ -204,7 +204,7 @@ export default function SafetyPage() {
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         <div>
                             <span className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-sm mb-3 block">Behind the Scenes</span>
-                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6 font-playfair"> rigorous Fleet Maintenance</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6 "> rigorous Fleet Maintenance</h2>
                             <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
                                 A safe journey starts long before you enter the car. Our fleet undergoes a strict maintenance schedule to ensure 100% reliability in the Saudi climate.
                             </p>
@@ -282,7 +282,7 @@ export default function SafetyPage() {
             <section className="py-16 bg-slate-50 dark:bg-slate-900">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 font-playfair">Only 1 in 10 Applicants Drive for Us</h2>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 ">Only 1 in 10 Applicants Drive for Us</h2>
                         <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our driver selection process is rigorous because we trust them with your life and your worship.</p>
                     </div>
 
@@ -323,7 +323,7 @@ export default function SafetyPage() {
                                     <AlertTriangle size={16} />
                                     <span>Emergency Protocol</span>
                                 </div>
-                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 font-playfair">
+                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 ">
                                     Our "Never Stranded" Promise
                                 </h3>
                                 <p className="text-slate-300 text-lg mb-8 leading-relaxed">
@@ -377,7 +377,7 @@ export default function SafetyPage() {
             <section className="py-16 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 font-playfair">Common Safety Questions</h2>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 ">Common Safety Questions</h2>
                         <p className="text-slate-600 dark:text-slate-400">Answers to common concerns from our pilgrims</p>
                     </div>
 

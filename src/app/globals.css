@@ -193,7 +193,7 @@
   h5,
   h6 {
     @apply font-bold tracking-tight;
-    font-family: var(--font-playfair), var(--font-geist-sans), serif;
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   /* Language Specific Overrides */
@@ -273,7 +273,7 @@
     background: #fff;
     border-color: #D4AF37;
     box-shadow:
-      0 0 0 4px rgba(212, 175, 55, 0.1),
+      0 0 0 4px rgba(212, 175, 55, 0.15),
       0 2px 4px rgba(0, 0, 0, 0.02) inset;
   }
 
@@ -337,7 +337,7 @@
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -414,3 +414,379 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================
+   PROMPT 3: CARD ANIMATIONS & MICRO-INTERACTIONS
+   ========================================= */
+
+/* UNIVERSAL CARD BASE */
+.card-base {
+  contain: layout style;
+  transform: translateZ(0);
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card-base:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 4px;
+  border-radius: inherit;
+}
+
+@media (hover: none) {
+  .card-base:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+  }
+}
+
+.card-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-sweep 1.5s infinite;
+}
+@keyframes skeleton-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* 1. SERVICE CARDS */
+.service-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 28px;
+    overflow: hidden;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08), 0 18px 36px -18px rgba(0, 0, 0, 0.04);
+  }
+  
+  .dark .service-card:hover {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 18px 36px -18px rgba(0, 0, 0, 0.2);
+  }
+
+  .ios-glass {
+    @apply backdrop-blur-2xl bg-white/60 dark:bg-slate-900/60 border border-white/30 dark:border-white/10;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+  }
+  
+  .ios-icon-box {
+    @apply flex items-center justify-center rounded-[20px] bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm;
+  }
+.service-card:active {
+  transform: translateY(-5px);
+  transition-duration: 0.15s;
+}
+.service-card-icon-wrap {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.service-card:hover .service-card-icon-wrap {
+  transform: scale(1.1) rotate(5deg);
+}
+.service-card-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.service-card:hover .service-card-arrow {
+  transform: translateX(6px);
+}
+
+/* 2. FLEET VEHICLE CARDS */
+.fleet-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 32px;
+  }
+
+  .fleet-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px -12px rgba(212, 175, 55, 0.1), 0 18px 36px -18px rgba(0, 0, 0, 0.04);
+  }
+  
+  .dark .fleet-card:hover {
+    box-shadow: 0 30px 60px -12px rgba(212, 175, 55, 0.15), 0 18px 36px -18px rgba(0, 0, 0, 0.2);
+  }
+.fleet-card-image {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fleet-card:hover .fleet-card-image {
+  transform: scale(1.06) translateY(-4px);
+}
+.fleet-card-specs {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 60%, transparent);
+  padding: 20px;
+  transform: translateY(20px);
+  opacity: 0.7;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.fleet-card:hover .fleet-card-specs {
+  transform: translateY(0);
+  opacity: 1;
+}
+.fleet-card-cta {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 0.35s ease 0.05s, opacity 0.35s ease 0.05s;
+}
+.fleet-card:hover .fleet-card-cta {
+  transform: translateY(0);
+  opacity: 1;
+}
+.fleet-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(212,175,55,0.2);
+}
+.fleet-badge-vip {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #D4AF37, #b8941f);
+}
+.fleet-badge-vip::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -75%;
+  width: 50%; height: 200%;
+  background: rgba(255,255,255,0.3);
+  transform: skewX(-20deg);
+  animation: shimmer 3s infinite 1s;
+}
+@keyframes shimmer {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* 3. FLEET MARQUEE CARDS */
+.fleet-marquee-wrapper {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+.fleet-marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+  padding: 20px 0 30px; /* Space for hover scaling */
+}
+.fleet-marquee-wrapper:hover .fleet-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-card {
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.marquee-card:hover {
+  transform: scale(1.03) translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* 4. TRUST PILLAR CARDS */
+.trust-grid {
+  perspective: 800px;
+}
+.trust-card {
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+.trust-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.08);
+}
+.trust-card-arabic {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.trust-card:hover .trust-card-arabic {
+  opacity: 1;
+}
+
+/* 5. BLOG CARDS */
+.blog-card {
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+}
+.blog-card-image-wrap { overflow: hidden; }
+.blog-card-image {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.blog-card:hover .blog-card-image {
+  transform: scale(1.07);
+}
+.blog-card-tag {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.blog-card:hover .blog-card-tag {
+  background-color: #D4AF37;
+  color: black;
+}
+.blog-card-meta {
+  transition: transform 0.3s ease;
+}
+.blog-card:hover .blog-card-meta {
+  transform: translateX(4px);
+}
+.blog-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* 6. TESTIMONIAL CARDS */
+.testimonial-card {
+  border-left: 3px solid transparent;
+  transition:
+    transform 0.4s ease,
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  border-left-color: #D4AF37;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.07);
+}
+.testimonial-quote-mark {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.testimonial-card:hover .testimonial-quote-mark {
+  transform: scale(1.15);
+  color: #D4AF37;
+}
+.testimonial-author {
+  transition: transform 0.3s ease;
+}
+.testimonial-card:hover .testimonial-author {
+  transform: translateY(-2px);
+}
+
+/* 7. TAILORED CARE PANELS */
+.care-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.care-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(212, 175, 55, 0);
+  transition: background 0.4s ease;
+  pointer-events: none;
+}
+.care-image-wrap:hover::after {
+  background: rgba(212, 175, 55, 0.08);
+}
+.care-image {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.care-image-wrap:hover .care-image {
+  transform: scale(1.04);
+}
+.care-blog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.care-blog-link:hover {
+  gap: 12px;
+  color: #D4AF37;
+}
+/* =========================================
+   IOS MICRO-ANIMATIONS & DYNAMICS
+   ========================================= */
+
+.ios-shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.ios-shimmer-btn:hover::after {
+  animation: ios-shimmer-sweep 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes ios-shimmer-sweep {
+  100% { left: 200%; }
+}
+
+.ios-glare {
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-glare::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255,255,255,0.2) 25%,
+    transparent 30%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 10;
+  border-radius: inherit;
+}
+
+.ios-glare:hover::before {
+  transform: translateX(150%);
+}
+
+.ios-glare-card {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ios-glare-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.stagger-item {
+  transform: translateY(8px);
+  opacity: 0.8;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.group:hover .stagger-1 { transition-delay: 50ms; transform: translateY(0); opacity: 1; }
+.group:hover .stagger-2 { transition-delay: 100ms; transform: translateY(0); opacity: 1; }
+.group:hover .stagger-3 { transition-delay: 150ms; transform: translateY(0); opacity: 1; }

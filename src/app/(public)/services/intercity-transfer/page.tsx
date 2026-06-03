@@ -146,7 +146,7 @@ export default async function IntercityTransferPage() {
                         <FadeIn>
                             <div className="prose dark:prose-invert max-w-none">
                                 <span className="text-amber-600 dark:text-amber-500 font-bold tracking-wider text-sm uppercase mb-2 block">The Sacred Route</span>
-                                <h2 className="text-3xl md:text-4xl font-bold font-playfair mb-6 text-slate-900 dark:text-white leading-tight">
+                                <h2 className="text-3xl md:text-4xl font-bold  mb-6 text-slate-900 dark:text-white leading-tight">
                                     Travel with Peace of Mind <br />
                                     <span className="text-amber-500">Between The Two Harams</span>
                                 </h2>
@@ -202,7 +202,7 @@ export default async function IntercityTransferPage() {
                             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-blue-600/20 rounded-full blur-3xl transform scale-90 opacity-40 translate-y-10" />
                             <div className="relative">
                                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-xl text-center">
-                                    <h3 className="text-2xl font-bold font-playfair text-slate-900 dark:text-white mb-4">Book Your Transfer</h3>
+                                    <h3 className="text-2xl font-bold  text-slate-900 dark:text-white mb-4">Book Your Transfer</h3>
                                     <p className="text-slate-600 dark:text-slate-400 mb-8">Best Rates & Immediate Confirmation</p>
                                     <Link
                                         href="/booking"

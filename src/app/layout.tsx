@@ -82,6 +82,12 @@ export async function generateMetadata(): Promise<Metadata> {
     verification: {
       google: '0JYg8N3CPUFhzseUIrbhKiLIShx1ltrIF0XoXVsO7-I',
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia",
+      description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
+      creator: '@alaqsatransport',
+    },
   };
 }
 
@@ -94,7 +100,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable}`}>
+      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable} font-sans antialiased`}>
         {/* 
           CHUNK ERROR RECOVERY — runs BEFORE React boots.
           If a JS chunk fails to load (stale turbopack/webpack hash after deployment),

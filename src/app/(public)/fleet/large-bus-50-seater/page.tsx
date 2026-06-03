@@ -183,7 +183,7 @@ export default async function LargeBusPage() {
             <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
                 <div className="container mx-auto px-4">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-slate-800 dark:text-slate-100">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                             The Ultimate Group Experience
                         </h2>
                         <p className="text-slate-600 dark:text-slate-400 text-lg">
@@ -217,7 +217,7 @@ export default async function LargeBusPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-8 font-playfair text-slate-800 dark:text-white">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-8  text-slate-800 dark:text-white">
                                 Ideal For Hajj & Umrah Groups
                             </h2>
                             <ul className="space-y-6">
@@ -255,7 +255,7 @@ export default async function LargeBusPage() {
             {/* SECTION 4: DETAILED SPECIFICATIONS TABLE */}
             <section className="py-20 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4 max-w-4xl">
-                    <h2 className="text-3xl font-bold text-center mb-10 font-playfair text-slate-800 dark:text-white">Detailed Specifications</h2>
+                    <h2 className="text-3xl font-bold text-center mb-10  text-slate-800 dark:text-white">Detailed Specifications</h2>
                     <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">
                         <table className="w-full text-left border-collapse">
                             <tbody>
@@ -286,7 +286,7 @@ export default async function LargeBusPage() {
             <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern-islamic.png')] bg-repeat"></div>
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair text-purple-500">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6  text-purple-500">
                         Why Choose Our 50-Seater Bus?
                     </h2>
                     <p className="text-xl leading-relaxed text-slate-300 mb-10">
@@ -298,7 +298,7 @@ export default async function LargeBusPage() {
             {/* SECTION 7: BOOKING CTA */}
             <section className="py-16 bg-purple-600 text-white">
                 <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4 font-playfair">Reserve Your Fleet Today</h2>
+                    <h2 className="text-3xl font-bold mb-4 ">Reserve Your Fleet Today</h2>
                     <p className="mb-8 font-medium max-w-2xl mx-auto text-purple-100">Book our 50-Seater Luxury Buses now for your organization's upcoming Umrah or Hajj campaign.</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all shadow-xl hover:scale-105">

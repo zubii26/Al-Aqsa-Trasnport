@@ -71,13 +71,13 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                         key={type.id}
                         onClick={() => updateData({ serviceType: type.id })}
                         className={`
-                            flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all
+                            flex flex-col items-center justify-center p-4 rounded-[20px] border transition-all ios-glass
                             ${data.serviceType === type.id
                                 ? 'border-amber-500 bg-amber-50 text-amber-600 dark:bg-amber-500/10'
                                 : 'border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-200'}
                         `}
                     >
-                        <type.icon size={24} className="mb-2" />
+                        <type.icon size={24} strokeWidth={1.25} className="mb-2" />
                         <span className="text-xs font-bold uppercase tracking-wider">{type.label}</span>
                     </button>
                 ))}
@@ -107,7 +107,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Travel Date</label>
                     <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
-                            <Calendar size={20} />
+                            <Calendar size={20} strokeWidth={1.25} />
                         </div>
                         <input
                             type="date"
@@ -122,9 +122,9 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                             }}
                             min={new Date().toISOString().split('T')[0]}
                             className={`
-                                w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
-                                border-2 border-slate-100 dark:border-slate-800 
-                                rounded-2xl outline-none transition-all
+                                w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
+                                border border-slate-100 dark:border-slate-800 ios-glass
+                                rounded-[20px] outline-none transition-all
                                 focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                 text-slate-900 dark:text-white
                                 ${errors.date ? 'border-red-500' : ''}
@@ -139,7 +139,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Pickup Time</label>
                     <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
-                            <Clock size={20} />
+                            <Clock size={20} strokeWidth={1.25} />
                         </div>
                         <input
                             type="time"
@@ -156,9 +156,9 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                 updateData({ time: newTime });
                             }}
                             className={`
-                                w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 
-                                border-2 border-slate-100 dark:border-slate-800 
-                                rounded-2xl outline-none transition-all
+                                w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
+                                border border-slate-100 dark:border-slate-800 ios-glass
+                                rounded-[20px] outline-none transition-all
                                 focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
                                 text-slate-900 dark:text-white
                                 ${errors.time ? 'border-red-500' : ''}
@@ -176,7 +176,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                     className="w-full py-5 bg-slate-900 dark:bg-amber-500 text-white font-bold rounded-2xl shadow-xl hover:bg-slate-800 dark:hover:bg-amber-600 transition-all flex items-center justify-center gap-2 group"
                 >
                     Choose Your Vehicle
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight size={20} strokeWidth={1.25} className="group-hover:translate-x-1 transition-transform" />
                 </button>
             </div>
         </div>

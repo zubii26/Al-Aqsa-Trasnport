@@ -167,7 +167,7 @@ export default function RoutesPage() {
                     onClick={() => { resetForm(); setShowModal(true); }}
                     className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
                 >
-                    <Plus size={20} />
+                    <Plus strokeWidth={1.25} size={20} />
                     Add Route
                 </button>
             </div>
@@ -175,7 +175,7 @@ export default function RoutesPage() {
             {/* Search and Filter Bar */}
             <div className="flex flex-col md:flex-row gap-4 bg-card border border-border p-4 rounded-xl shadow-sm">
                 <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+                    <Search strokeWidth={1.25} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
                     <input
                         type="text"
                         placeholder="Search origin or destination..."
@@ -230,19 +230,19 @@ export default function RoutesPage() {
                                         </td>
                                         <td className="font-medium">
                                             <div className="flex items-center gap-2">
-                                                <MapPin size={16} className="text-muted-foreground" />
+                                                <MapPin strokeWidth={1.25} size={16} className="text-muted-foreground" />
                                                 {route.destination}
                                             </div>
                                         </td>
                                         <td className="text-muted-foreground">
                                             <div className="flex items-center gap-2">
-                                                <Navigation size={16} />
+                                                <Navigation strokeWidth={1.25} size={16} />
                                                 {route.distance}
                                             </div>
                                         </td>
                                         <td className="text-muted-foreground">
                                             <div className="flex items-center gap-2">
-                                                <Clock size={16} />
+                                                <Clock strokeWidth={1.25} size={16} />
                                                 {route.duration}
                                             </div>
                                         </td>
@@ -261,14 +261,14 @@ export default function RoutesPage() {
                                                     className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
                                                     title="Edit"
                                                 >
-                                                    <Edit size={18} />
+                                                    <Edit strokeWidth={1.25} size={18} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(route.id)}
                                                     className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                                                     title="Delete"
                                                 >
-                                                    <Trash2 size={18} />
+                                                    <Trash2 strokeWidth={1.25} size={18} />
                                                 </button>
                                             </div>
                                         </td>
@@ -279,7 +279,7 @@ export default function RoutesPage() {
                                 <tr>
                                     <td colSpan={6} className="text-center py-12 text-muted-foreground">
                                         <div className="flex flex-col items-center gap-2">
-                                            <Search size={32} className="opacity-20" />
+                                            <Search strokeWidth={1.25} size={32} className="opacity-20" />
                                             <p>No routes found matching your criteria</p>
                                         </div>
                                     </td>
@@ -304,11 +304,11 @@ export default function RoutesPage() {
                                 onClick={() => setShowModal(false)}
                                 className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                             >
-                                <X size={20} />
+                                <X strokeWidth={1.25} size={20} />
                             </button>
 
                             <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-foreground">
-                                {editingId ? <Edit className="text-amber-500" /> : <Plus className="text-amber-500" />}
+                                {editingId ? <Edit className="text-amber-500" /> : <Plus strokeWidth={1.25} className="text-amber-500" />}
                                 {editingId ? 'Edit Route' : 'Add New Route'}
                             </h2>
 

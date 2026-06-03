@@ -111,7 +111,7 @@ export const metadata: Metadata = {
 const galleryImages = [
     { src: '/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp', alt: 'GMC Yukon Full Exterior View' },
     { src: '/images/fleet/gmc-yukon/gmc-yukon-family-seating-makkah-madinah-taxi.webp', alt: 'Family Seating Interior' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-front-grille-jeddah-makkah-transport.webp', alt: 'Bold Front Grille' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-luxury-umrah-transport-cinematic.webp', alt: 'GMC Yukon Front Side View' },
     { src: '/images/fleet/gmc-yukon/gmc-yukon-front-headlight-umrah-cab.webp', alt: 'LED Headlights' },
     { src: '/images/fleet/gmc-yukon/gmc-yukon-highway-driving-makkah-madinah.webp', alt: 'Highway Driving Makkah to Madinah' },
     { src: '/images/fleet/gmc-yukon/gmc-yukon-luggage-capacity-jeddah-airport.webp', alt: 'Massive Luggage Capacity' },

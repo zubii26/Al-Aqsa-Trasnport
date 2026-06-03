@@ -42,7 +42,7 @@ export default function VehicleGallery({
         <section className="py-16 bg-white dark:bg-slate-900" id="gallery">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-end mb-10">
-                    <h2 className="text-3xl md:text-4xl font-bold font-playfair text-slate-900 dark:text-white">
+                    <h2 className="text-3xl md:text-4xl font-bold  text-slate-900 dark:text-white">
                         {title}
                     </h2>
                     {hasMore && !showAll && (
@@ -67,6 +67,7 @@ export default function VehicleGallery({
                                 alt={img.alt}
                                 fill
                                 sizes="(max-width: 768px) 50vw, 25vw"
+                                quality={100}
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 loading={idx < 4 ? "eager" : "lazy"}
                             />
@@ -94,7 +95,7 @@ export default function VehicleGallery({
                         onClick={closeLightbox}
                         className="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-50 bg-slate-900/50 p-2 rounded-full"
                     >
-                        <X size={32} />
+                        <X strokeWidth={1.25} size={32} />
                     </button>
 
                     <button 
@@ -112,6 +113,7 @@ export default function VehicleGallery({
                                 fill
                                 className="object-contain"
                                 sizes="100vw"
+                                quality={100}
                                 priority
                             />
                         </div>
