@@ -1,20 +1,40 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = 'https://www.alaqsaumrahtransport.com';
+  const commonDisallow = [
+    '/admin/',
+    '/track-booking/confirmation',
+    '/booking/thankyou',
+    '/api/',
+    '/*?session=',
+    '/*?ref=',
+  ];
 
-    return {
-        rules: [
-            {
-                userAgent: '*',
-                allow: '/',
-                disallow: ['/admin/', '/api/', '/booking'],
-            },
-            {
-                userAgent: ['GPTBot', 'ChatGPT-User', 'Google-Extended', 'CCBot'],
-                disallow: ['/'], // Block AI scrapers to preserve content exclusivity
-            }
+  return {
+    rules: [
+      {
+        userAgent: [
+          'Googlebot', 'Bingbot', 'GPTBot', 'ChatGPT-User',
+          'ClaudeBot', 'anthropic-ai', 'PerplexityBot',
+          'Google-Extended', 'Meta-ExternalAgent', 'YouBot',
+          'CCBot', 'cohere-ai', 'Omgilibot', 'Diffbot'
         ],
-        sitemap: `${baseUrl}/sitemap.xml`,
-    };
+        allow: '/',
+        disallow: commonDisallow,
+      },
+      {
+        userAgent: ['DuckDuckBot', 'Slurp', 'Baiduspider'],
+        allow: '/',
+        disallow: commonDisallow,
+        crawlDelay: 1,
+      },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: commonDisallow,
+        crawlDelay: 1,
+      },
+    ],
+    sitemap: 'https://www.alaqsaumrahtransport.com/sitemap.xml',
+  };
 }
