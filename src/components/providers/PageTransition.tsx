@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useEffect, useRef } from "react";
+import { useLayoutEffect, useEffect, useRef, useState } from "react";
 
 // Safe useLayoutEffect for Server-Side Rendering
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -30,6 +30,20 @@ function InnerScrollReset() {
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const prevPath = useRef(path);
+
+  // CRITICAL FIX: Track whether this is the initial mount.
+  // On initial mount (SSR → hydration), we use initial={false} so that
+  // the server-rendered HTML is NOT wrapped in opacity:0. This prevents
+  // the blank white/dark screen if JS hydration is slow or fails.
+  // On subsequent client-side navigations, we enable the fade animation.
+  const isInitialMount = useRef(true);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    // After first hydration, mark as mounted so future navigations animate
+    isInitialMount.current = false;
+    setHasMounted(true);
+  }, []);
 
   // Reset scroll IMMEDIATELY when pathname changes — before AnimatePresence
   // even starts its exit animation. This is critical because mode="wait"
@@ -66,7 +80,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     }}>
       <motion.div
         key={path}
-        initial={{ opacity: 0 }}
+        initial={hasMounted ? { opacity: 0 } : false}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: "easeInOut" }}
