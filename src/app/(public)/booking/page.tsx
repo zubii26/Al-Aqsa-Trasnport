@@ -2004,7 +2004,7 @@ export default function BookingPage() {
         }, { originalPrice: 0, discountApplied: 0, price: 0 });
 
         let wadiJinnFeeTotal = 0;
-        const wadiJinnFee = settings?.routeFees?.wadiJinnFee ?? 150;
+        const wadiJinnFee = settings?.wadiJinnFee ?? 150;
         if (bookingData.routeType === 'multi') {
             bookingData.legs.forEach(leg => {
                 if (leg.includeWadiJinn) {
@@ -2121,7 +2121,6 @@ export default function BookingPage() {
                                                                         visaType: bookingData.visaType,
                                                                         pickup: leg.pickup,
                                                                         dropoff: leg.dropoff,
-                                                                        stopovers: leg.stopovers,
                                                                     });
                                                                     
                                                                     const vehicleLegTotal = legPriceDetails.price * sv.quantity;
@@ -2497,7 +2496,6 @@ export default function BookingPage() {
                                                     visaType: bookingData.visaType,
                                                     pickup: leg.pickup,
                                                     dropoff: leg.dropoff,
-                                                    stopovers: leg.stopovers,
                                                 });
                                                 return sum + priceDetails.price * sv.quantity;
                                             }, 0);
@@ -2664,7 +2662,6 @@ export default function BookingPage() {
                                             visaType: bookingData.visaType,
                                             pickup: leg.pickup,
                                             dropoff: leg.dropoff,
-                                            stopovers: leg.stopovers,
                                         });
                                         return sum + priceDetails.price * sv.quantity;
                                     }, 0);
