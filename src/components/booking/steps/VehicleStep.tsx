@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Briefcase, Info, Check, ArrowRight, ChevronLeft, Star } from 'lucide-react';
+import { Users, Briefcase, Info, Check, ArrowRight, ChevronLeft, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import { usePricing } from '@/context/PricingContext';
 
@@ -15,35 +15,57 @@ interface VehicleStepProps {
 
 export default function VehicleStep({ data, updateData, onNext, onBack }: VehicleStepProps) {
     const { vehicles, calculatePrice } = usePricing();
+    
+    const isMultiRoute = data.legs && data.legs.length > 1;
+    const [useSameVehicle, setUseSameVehicle] = useState(data.sameVehicleForAllLegs ?? true);
+    const [activeLegIndex, setActiveLegIndex] = useState(0);
 
-    const handleSelect = (vId: string) => {
+    useEffect(() => {
+        // If they had a top-level selectedVehicle, apply it to legs if we are in 'same vehicle' mode
+        if (useSameVehicle && data.selectedVehicle && data.legs) {
+            const newLegs = [...data.legs].map(leg => ({ ...leg, vehicleId: data.selectedVehicle }));
+            updateData({ legs: newLegs });
+        }
+    }, [useSameVehicle, data.selectedVehicle]);
+
+    const handleSelectSame = (vId: string) => {
         updateData({ selectedVehicle: vId });
+        if (data.legs) {
+            const newLegs = [...data.legs].map(leg => ({ ...leg, vehicleId: vId }));
+            updateData({ legs: newLegs });
+        }
     };
 
-    return (
-        <div className="space-y-8">
-            <div className="flex justify-between items-center">
-                <div>
-                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Select Fleet</h2>
-                    <p className="text-slate-500 mt-2">Choose the perfect ride for your journey.</p>
-                </div>
-                <button onClick={onBack} className="text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-bold text-sm">
-                    <ChevronLeft size={18} strokeWidth={1.25} />
-                    Back
-                </button>
-            </div>
+    const handleSelectPerLeg = (vId: string, legIndex: number) => {
+        const newLegs = [...(data.legs || [])];
+        newLegs[legIndex].vehicleId = vId;
+        updateData({ legs: newLegs, selectedVehicle: null }); // Clear top-level to avoid confusion
+    };
 
+    const isNextDisabled = () => {
+        if (useSameVehicle) {
+            return !data.selectedVehicle;
+        } else {
+            return data.legs.some((leg: any) => !leg.vehicleId);
+        }
+    };
+
+    const renderVehicleList = (legIndex?: number) => {
+        const currentRouteId = legIndex !== undefined && data.legs ? data.legs[legIndex].routeId : data.routeId;
+        const currentSelectedId = legIndex !== undefined && data.legs ? data.legs[legIndex].vehicleId : data.selectedVehicle;
+
+        return (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {vehicles.map((vehicle) => {
-                    const isSelected = data.selectedVehicle === vehicle.id;
-                    const pricing = data.routeId && data.routeId !== 'custom'
-                        ? calculatePrice(data.routeId, vehicle.id)
+                    const isSelected = currentSelectedId === vehicle.id;
+                    const pricing = currentRouteId && currentRouteId !== 'custom'
+                        ? calculatePrice(currentRouteId, vehicle.id)
                         : null;
 
                     return (
                         <div
                             key={vehicle.id}
-                            onClick={() => handleSelect(vehicle.id)}
+                            onClick={() => legIndex !== undefined ? handleSelectPerLeg(vehicle.id, legIndex) : handleSelectSame(vehicle.id)}
                             className={`
                                 relative p-1 rounded-[24px] cursor-pointer transition-all duration-300 group ios-glass
                                 ${isSelected
@@ -110,16 +132,89 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                     );
                 })}
             </div>
+        );
+    };
 
-            <div className="pt-6">
+    return (
+        <div className="space-y-8">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Select Fleet</h2>
+                    <p className="text-slate-500 mt-2">Choose the perfect ride for your journey.</p>
+                </div>
+                <button onClick={onBack} className="text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-bold text-sm">
+                    <ChevronLeft size={18} strokeWidth={1.25} />
+                    Back
+                </button>
+            </div>
+
+            {isMultiRoute && (
+                <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                    <label className="flex items-center gap-3 cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            checked={useSameVehicle}
+                            onChange={(e) => {
+                                setUseSameVehicle(e.target.checked);
+                                updateData({ sameVehicleForAllLegs: e.target.checked });
+                            }}
+                            className="w-5 h-5 rounded text-amber-500 focus:ring-amber-500 focus:ring-offset-0 border-slate-300"
+                        />
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
+                            Use the same vehicle for all {data.legs.length} routes
+                        </span>
+                    </label>
+                </div>
+            )}
+
+            {!isMultiRoute || useSameVehicle ? (
+                renderVehicleList()
+            ) : (
+                <div className="space-y-6">
+                    {/* Route Tabs */}
+                    <div className="flex overflow-x-auto pb-2 gap-2 snap-x hide-scrollbar">
+                        {data.legs.map((leg: any, index: number) => (
+                            <button
+                                key={index}
+                                onClick={() => setActiveLegIndex(index)}
+                                className={`
+                                    flex-none snap-start px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap
+                                    ${activeLegIndex === index 
+                                        ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' 
+                                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700'}
+                                `}
+                            >
+                                Route {index + 1}
+                                {leg.vehicleId && <Check size={14} className="inline ml-2 text-white" />}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center gap-2 mb-4 text-slate-500 text-sm font-medium">
+                            <MapPin size={16} className="text-amber-500" />
+                            {data.legs[activeLegIndex].pickup} <ArrowRight size={14} className="mx-1 opacity-50" /> {data.legs[activeLegIndex].dropoff}
+                        </div>
+                        {renderVehicleList(activeLegIndex)}
+                    </div>
+                </div>
+            )}
+
+            <div className="pt-6 flex gap-4">
+                <button
+                    onClick={onBack}
+                    className="py-5 px-6 font-bold rounded-2xl transition-all flex items-center justify-center gap-2 text-slate-600 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                >
+                    Back
+                </button>
                 <button
                     onClick={onNext}
-                    disabled={!data.selectedVehicle}
+                    disabled={isNextDisabled()}
                     className={`
-                        w-full py-5 font-bold rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 group
-                        ${data.selectedVehicle
+                        flex-1 py-5 font-bold rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 group
+                        ${!isNextDisabled()
                             ? 'bg-slate-900 dark:bg-amber-500 text-white hover:bg-slate-800 dark:hover:bg-amber-600'
-                            : 'bg-slate-100 text-slate-400 cursor-not-allowed'}
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'}
                     `}
                 >
                     Continue to Details

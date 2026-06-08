@@ -20,11 +20,26 @@ export default function BookingWizard() {
     const [currentStep, setCurrentStep] = useState(1);
     const [bookingData, setBookingData] = useState({
         serviceType: 'Intercity',
+        // Top-level defaults for backward compatibility, will be synced with leg 1
         routeId: '',
         pickup: '',
         dropoff: '',
         date: null as Date | null,
         time: null as Date | null,
+        
+        // Multi-route state
+        legs: [
+            {
+                pickup: '',
+                dropoff: '',
+                date: null as Date | null,
+                time: null as Date | null,
+                routeId: '',
+                vehicleId: '',
+                price: 0
+            }
+        ],
+
         selectedVehicle: null as string | null,
         vehicleCount: 1,
         passengers: 1,
@@ -34,7 +49,6 @@ export default function BookingWizard() {
         phone: '',
         notes: ''
     });
-
     const updateData = (data: Partial<typeof bookingData>) => {
         setBookingData(prev => ({ ...prev, ...data }));
     };

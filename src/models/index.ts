@@ -18,15 +18,32 @@ export interface IVehicle extends Document {
     updatedAt: Date;
 }
 
+export interface ILeg {
+    pickup: string;
+    dropoff: string;
+    date: string;
+    time: string;
+    routeId?: string;
+    vehicleId?: string;
+    vehicleName?: string;
+    price?: number;
+    stopovers?: string[]; // Array of stopover names selected
+}
+
 export interface IBooking extends Document {
     id?: string;
     name: string;
     email: string;
     phone: string;
+    // Top-level pickup/dropoff for summary/backwards compatibility
     pickup: string;
     dropoff: string;
     date: string;
     time: string;
+    
+    // Multi-route journey data
+    legs?: ILeg[];
+    
     vehicle: string;
     passengers: number;
     vehicleCount?: number;
@@ -41,6 +58,9 @@ export interface IBooking extends Document {
     discountApplied?: number;
     finalPrice?: number;
     discountType?: 'percentage' | 'fixed';
+    visaType?: string;
+    viaBadr?: boolean;
+    includeWadiJinn?: boolean;
     routeId?: string;
 
     vehicleId?: string;
@@ -130,6 +150,10 @@ export interface IRoute extends Document {
     duration?: string;
     category: string;
     isActive: boolean;
+    stopovers?: {
+        name: string;
+        extraPrice: number;
+    }[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -240,6 +264,18 @@ const VehicleSchema = new Schema<IVehicle>({
 VehicleSchema.index({ isActive: 1, createdAt: -1 });
 VehicleSchema.index({ isActive: 1 });
 
+const LegSchema = new Schema<ILeg>({
+    pickup: { type: String, required: true },
+    dropoff: { type: String, required: true },
+    date: { type: String, required: true },
+    time: { type: String, required: true },
+    routeId: { type: String },
+    vehicleId: { type: String },
+    vehicleName: { type: String },
+    price: { type: Number },
+    stopovers: { type: [String] }
+}, { _id: false });
+
 const BookingSchema = new Schema<IBooking>({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -248,6 +284,9 @@ const BookingSchema = new Schema<IBooking>({
     dropoff: { type: String, required: true },
     date: { type: String, required: true },
     time: { type: String, required: true },
+    
+    legs: [LegSchema],
+
     vehicle: { type: String },
     passengers: { type: Number },
     vehicleCount: { type: Number, default: 1 },
@@ -347,6 +386,10 @@ const RouteSchema = new Schema<IRoute>({
     duration: { type: String },
     category: { type: String, default: 'Intercity' },
     isActive: { type: Boolean, default: true },
+    stopovers: [{
+        name: { type: String, required: true },
+        extraPrice: { type: Number, required: true }
+    }],
 }, { timestamps: true });
 
 // Add indexes for performance

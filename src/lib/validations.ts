@@ -8,6 +8,24 @@ export const BookingSchema = z.object({
     dropoff: z.string().min(3, 'Dropoff location is required').max(200, 'Dropoff location is too long').trim(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
     time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
+    legs: z.array(z.object({
+        pickup: z.string().min(3),
+        dropoff: z.string().min(3),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        time: z.string().regex(/^\d{2}:\d{2}$/),
+        routeId: z.string().optional(),
+        vehicleId: z.string().optional(),
+        vehicleName: z.string().optional(),
+        price: z.number().optional(),
+        stopovers: z.array(z.string()).optional(),
+        selectedVehicles: z.array(z.object({
+            vehicleId: z.string().max(50).trim(),
+            quantity: z.number().min(1).max(20),
+            name: z.string().max(100).trim().optional()
+        })).optional(),
+        includeWadiJinn: z.boolean().optional(),
+        viaBadr: z.boolean().optional()
+    })).optional(),
     vehicle: z.string().max(100).trim().optional(), // Made optional for backward compatibility
     passengers: z.number().int().min(1, 'At least 1 passenger is required').max(100, 'Max 100 passengers').optional(), // Made optional as vehicle capacity determines this
     vehicleCount: z.number().int().min(1, 'At least 1 vehicle is required').max(20, 'Max 20 vehicles').optional(),
@@ -19,6 +37,8 @@ export const BookingSchema = z.object({
     discountType: z.enum(['percentage', 'fixed']).optional(),
     routeId: z.string().max(50).trim().optional(),
     vehicleId: z.string().max(50).trim().optional(), // Kept for backward compatibility
+    routeType: z.enum(['single', 'multi']).optional(),
+    sameVehicleForAllLegs: z.boolean().optional(),
     selectedVehicles: z.array(z.object({
         vehicleId: z.string().max(50).trim(),
         quantity: z.number().min(1).max(20),
@@ -39,6 +59,9 @@ export const BookingSchema = z.object({
         durationMin: z.number().optional(),
         geometry: z.string().optional(),
     }).optional(),
+    includeWadiJinn: z.boolean().optional(),
+    visaType: z.enum(['Umrah Visa', 'Visit Visa', 'Tourist Visa', 'Saudi Resident (Iqama)', 'GCC Resident']).optional(),
+    viaBadr: z.boolean().optional(),
 });
 
 export const VehicleSchema = z.object({
@@ -126,6 +149,13 @@ export const SettingsSchema = z.object({
         baseFare: z.number().min(0),
         kmRate: z.number().min(0),
         minFare: z.number().min(0),
+    }).optional(),
+    wadiJinnFee: z.number().min(0).optional(),
+    routeFees: z.object({
+        enableUmrahFee: z.boolean().optional(),
+        umrahFeeAmount: z.number().min(0).optional(),
+        enableViaBadr: z.boolean().optional(),
+        viaBadrFeeAmount: z.number().min(0).optional(),
     }).optional(),
 });
 

@@ -155,13 +155,13 @@
 
   #root,
   #__next {
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     position: relative;
   }
 
   main {
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     position: relative;
   }

@@ -76,14 +76,34 @@ export const generateBookingInvoice = (booking: any) => {
     // --- Table ---
     const tableStartY = 95;
 
-    const tableData = [
-        [
-            `${booking.vehicle} Transfer\n${booking.pickup?.split(',')[0]} -> ${booking.dropoff?.split(',')[0]}`,
-            "1",
-            `SAR ${booking.finalPrice}`,
-            `SAR ${booking.finalPrice}`
-        ]
-    ];
+    let tableData = [];
+    
+    if (booking.legs && booking.legs.length > 0) {
+        tableData = booking.legs.map((leg: any, index: number) => {
+            const dateStr = leg.date ? new Date(leg.date).toLocaleDateString() : '';
+            return [
+                `Route ${index + 1}: ${leg.pickup?.split(',')[0]} -> ${leg.dropoff?.split(',')[0]}\nVehicle: ${leg.vehicleName || booking.vehicle}\nDate: ${dateStr} ${leg.time || ''}`,
+                `${booking.vehicleCount || 1}`,
+                `-`,
+                `-`
+            ];
+        });
+        tableData.push([
+            { content: 'Total Package Value', styles: { fontStyle: 'bold' } },
+            '',
+            '',
+            { content: `SAR ${booking.finalPrice}`, styles: { fontStyle: 'bold' } }
+        ]);
+    } else {
+        tableData = [
+            [
+                `${booking.vehicle} Transfer\n${booking.pickup?.split(',')[0]} -> ${booking.dropoff?.split(',')[0]}`,
+                `${booking.vehicleCount || 1}`,
+                `SAR ${booking.finalPrice}`,
+                `SAR ${booking.finalPrice}`
+            ]
+        ];
+    }
 
     autoTable(doc, {
         startY: tableStartY,

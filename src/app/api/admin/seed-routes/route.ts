@@ -155,6 +155,51 @@ export async function GET() {
                 duration: '45 min',
                 category: 'Airport Departure',
                 prices: { [gmcId]: 250, [camryId]: 200 }
+            },
+            {
+                key: 'jed-hot-mak-hot',
+                origin: 'Jeddah Hotel',
+                destination: 'Makkah Hotel',
+                distance: '100 km',
+                duration: '1 hr 30 min',
+                category: 'Intercity',
+                prices: { [gmcId]: 550, [camryId]: 250 }
+            },
+            {
+                key: 'jed-hot-mad-hot',
+                origin: 'Jeddah Hotel',
+                destination: 'Madinah Hotel',
+                distance: '400 km',
+                duration: '4 hrs',
+                category: 'Intercity',
+                prices: { [gmcId]: 1350, [camryId]: 600 }
+            },
+            {
+                key: 'mad-hot-jed-air',
+                origin: 'Madinah Hotel',
+                destination: 'Jeddah Airport',
+                distance: '400 km',
+                duration: '4 hrs',
+                category: 'Airport Departure',
+                prices: { [gmcId]: 1350, [camryId]: 600 }
+            },
+            {
+                key: 'mad-air-mak-hot',
+                origin: 'Madinah Airport',
+                destination: 'Makkah Hotel',
+                distance: '450 km',
+                duration: '4 hrs 30 min',
+                category: 'Intercity',
+                prices: { [gmcId]: 1400, [camryId]: 500 }
+            },
+            {
+                key: 'mak-hot-mad-air',
+                origin: 'Makkah Hotel',
+                destination: 'Madinah Airport',
+                distance: '450 km',
+                duration: '4 hrs 30 min',
+                category: 'Intercity',
+                prices: { [gmcId]: 1400, [camryId]: 500 }
             }
         ];
 

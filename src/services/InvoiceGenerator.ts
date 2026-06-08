@@ -89,14 +89,27 @@ export const generateInvoice = async (booking: any) => {
     // --- TABLE ---
     const tableY = yPos + 30;
 
-    const tableData = [
-        [
-            booking.vehicle || 'Umrah Transport',
-            `${booking.pickup} -> ${booking.dropoff}`,
-            `Date: ${new Date(booking.date).toLocaleDateString()} ${booking.time || ''}\nRef: ${booking._id?.slice(-6)}`, // Details
-            `SAR ${booking.finalPrice}` // Amount
-        ]
-    ];
+    let tableData = [];
+    if (booking.legs && booking.legs.length > 0) {
+        tableData = booking.legs.map((leg: any, index: number) => {
+            const dateStr = leg.date ? new Date(leg.date).toLocaleDateString() : 'N/A';
+            return [
+                leg.vehicleName || booking.vehicle || 'Umrah Transport',
+                `${leg.pickup} -> ${leg.dropoff}`,
+                `Date: ${dateStr} ${leg.time || ''}\nRef: ${booking._id?.slice(-6)}`,
+                index === 0 ? `SAR ${booking.finalPrice}` : '-'
+            ];
+        });
+    } else {
+        tableData = [
+            [
+                booking.vehicle || 'Umrah Transport',
+                `${booking.pickup} -> ${booking.dropoff}`,
+                `Date: ${new Date(booking.date).toLocaleDateString()} ${booking.time || ''}\nRef: ${booking._id?.slice(-6)}`, // Details
+                `SAR ${booking.finalPrice}` // Amount
+            ]
+        ];
+    }
 
     doc.autoTable({
         startY: tableY,

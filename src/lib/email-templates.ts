@@ -70,7 +70,7 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
                 </td>
             </tr>
 
-             <!-- Passengers -->
+            <!-- Passengers -->
              <tr>
                 <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
                     <div style="font-size: 12px; text-transform: uppercase;">Count</div>
@@ -80,6 +80,15 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
                     <strong>{{passengers}}</strong> Passengers | <strong>{{luggage}}</strong> Bags
                 </td>
             </tr>
+
+            <!-- Wadi Jinn Add-on (Optional) -->
+            {{wadiJinn_row}}
+
+            <!-- Nusuk Fee (Optional) -->
+            {{nusukFee_row}}
+
+            <!-- Via Badr Route (Optional) -->
+            {{viaBadr_row}}
 
             <!-- Price -->
             {{price_row}}
@@ -128,6 +137,10 @@ export const DEFAULT_ADMIN_NOTIFICATION_TEMPLATE = `
         <p><strong>Date & Time:</strong> {{date}} at {{time}}</p>
         <p><strong>Passengers:</strong> {{passengers}}</p>
         <p><strong>Luggage:</strong> {{luggage}}</p>
+        {{wadiJinn_admin_row}}
+        {{visaType_row}}
+        {{nusukFee_admin_row}}
+        {{viaBadr_admin_row}}
         {{notes_row}}
         {{price_row}}
     </div>

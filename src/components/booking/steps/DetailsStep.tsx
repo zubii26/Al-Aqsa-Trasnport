@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { User, Mail, Phone, MessageSquare, ChevronLeft, ArrowRight, ShieldCheck, MapPin, Calendar, Car, Loader2, CheckCircle } from 'lucide-react';
+import { User, Mail, Phone, MessageSquare, ChevronLeft, ArrowRight, ShieldCheck, MapPin, Calendar, Car, Loader2, CheckCircle, Navigation, Clock } from 'lucide-react';
 import { usePricing } from '@/context/PricingContext';
 import Link from 'next/link';
 
@@ -12,22 +12,25 @@ interface DetailsStepProps {
 }
 
 export default function DetailsStep({ data, updateData, onBack }: DetailsStepProps) {
-    const { vehicles, calculatePrice } = usePricing();
+    const { vehicles, calculatePrice, calculateMultiRoutePrice } = usePricing();
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
+    const isMultiRoute = data.legs && data.legs.length > 0;
+    
     // Calculate Pricing for Summary
-    const vehicle = vehicles.find(v => v.id === data.selectedVehicle);
-    const pricing = data.routeId && data.routeId !== 'custom' && data.selectedVehicle
-        ? calculatePrice(data.routeId, data.selectedVehicle)
-        : null;
+    const pricing = isMultiRoute
+        ? calculateMultiRoutePrice(data.legs, data.vehicleCount || 1)
+        : (data.routeId && data.routeId !== 'custom' && data.selectedVehicle
+            ? calculatePrice(data.routeId, data.selectedVehicle)
+            : null);
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
-        if (!data.name.trim()) newErrors.name = 'Full name is required';
-        if (!data.email.trim() || !data.email.includes('@')) newErrors.email = 'Valid email is required';
-        if (!data.phone.trim()) newErrors.phone = 'WhatsApp number is required';
+        if (!data.name?.trim()) newErrors.name = 'Full name is required';
+        if (!data.email?.trim() || !data.email.includes('@')) newErrors.email = 'Valid email is required';
+        if (!data.phone?.trim()) newErrors.phone = 'WhatsApp number is required';
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -43,10 +46,19 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
         try {
             const payload = {
                 ...data,
-                date: data.date?.toISOString().split('T')[0],
-                time: data.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-                vehicle: vehicle?.name || 'Any',
-                totalPrice: pricing ? pricing.price * data.vehicleCount : 0
+                // Ensure top-level date/time are set for backward compatibility
+                date: (isMultiRoute ? data.legs[0].date : data.date)?.toISOString().split('T')[0],
+                time: (isMultiRoute ? data.legs[0].time : data.time)?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                // Format legs array properly
+                legs: isMultiRoute ? data.legs.map((leg: any) => ({
+                    ...leg,
+                    date: leg.date?.toISOString().split('T')[0],
+                    time: leg.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                    vehicleName: vehicles.find(v => v.id === leg.vehicleId)?.name || 'Any',
+                    vehicleId: leg.vehicleId || data.selectedVehicle
+                })) : [],
+                vehicle: vehicles.find(v => v.id === data.selectedVehicle)?.name || 'Multiple Vehicles',
+                totalPrice: pricing ? pricing.price * (data.vehicleCount || 1) : 0
             };
 
             const res = await fetch('/api/bookings', {
@@ -115,7 +127,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                             <input
                                 type="text"
                                 placeholder="Your Name"
-                                value={data.name}
+                                value={data.name || ''}
                                 onChange={(e) => updateData({ name: e.target.value })}
                                 className={`
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
@@ -138,7 +150,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                             <input
                                 type="email"
                                 placeholder="email@example.com"
-                                value={data.email}
+                                value={data.email || ''}
                                 onChange={(e) => updateData({ email: e.target.value })}
                                 className={`
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
@@ -161,7 +173,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                             <input
                                 type="tel"
                                 placeholder="+966 5..."
-                                value={data.phone}
+                                value={data.phone || ''}
                                 onChange={(e) => updateData({ phone: e.target.value })}
                                 className={`
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
@@ -183,7 +195,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                             </div>
                             <textarea
                                 placeholder="Luggage details, flight number, etc."
-                                value={data.notes}
+                                value={data.notes || ''}
                                 onChange={(e) => updateData({ notes: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-[20px] outline-none transition-all focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white min-h-[58px] ios-glass"
                             />
@@ -197,52 +209,85 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                         <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Booking Summary</h3>
 
                         <div className="space-y-6">
-                            <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500 flex items-center justify-center shrink-0">
-                                    <MapPin size={20} strokeWidth={1.25} />
-                                </div>
-                                <div>
-                                    <p className="text-xs font-bold text-slate-400">Route</p>
-                                    <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight mt-1">
-                                        {data.pickup} <br />
-                                        <span className="text-amber-500">↓</span> <br />
-                                        {data.dropoff}
-                                    </p>
-                                </div>
-                            </div>
+                            {isMultiRoute ? (
+                                data.legs.map((leg: any, index: number) => {
+                                    const legVehicle = vehicles.find(v => v.id === leg.vehicleId);
+                                    return (
+                                        <div key={index} className="relative pl-8 pb-6 last:pb-0 border-l-2 border-slate-200 dark:border-slate-700 ml-4">
+                                            <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-500 border-4 border-slate-50 dark:border-slate-800" />
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <p className="text-xs font-bold text-amber-500 uppercase">Route {index + 1}</p>
+                                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
+                                                        {leg.pickup} <br />
+                                                        <span className="text-slate-400 font-normal">to</span> <br />
+                                                        {leg.dropoff}
+                                                    </p>
+                                                    <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
+                                                        <span className="flex items-center gap-1"><Calendar size={12} /> {leg.date?.toLocaleDateString()}</span>
+                                                        <span className="flex items-center gap-1"><Clock size={12} /> {leg.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-3 flex items-center gap-2 bg-white dark:bg-slate-900/50 p-2 rounded-lg border border-slate-100 dark:border-slate-700 w-fit">
+                                                <Car size={14} className="text-amber-500" />
+                                                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                                                    {legVehicle?.name || 'Any Available'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <>
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500 flex items-center justify-center shrink-0">
+                                            <MapPin size={20} strokeWidth={1.25} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-400">Route</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight mt-1">
+                                                {data.pickup} <br />
+                                                <span className="text-amber-500">↓</span> <br />
+                                                {data.dropoff}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                            <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-500 flex items-center justify-center shrink-0">
-                                    <Calendar size={20} strokeWidth={1.25} />
-                                </div>
-                                <div>
-                                    <p className="text-xs font-bold text-slate-400">Schedule</p>
-                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
-                                        {data.date?.toLocaleDateString()}
-                                    </p>
-                                    <p className="text-xs text-slate-500">
-                                        {data.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </p>
-                                </div>
-                            </div>
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-500 flex items-center justify-center shrink-0">
+                                            <Calendar size={20} strokeWidth={1.25} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-400">Schedule</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
+                                                {data.date?.toLocaleDateString()}
+                                            </p>
+                                            <p className="text-xs text-slate-500">
+                                                {data.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                            <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-500 flex items-center justify-center shrink-0">
-                                    <Car size={20} strokeWidth={1.25} />
-                                </div>
-                                <div>
-                                    <p className="text-xs font-bold text-slate-400">Vehicle</p>
-                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">{vehicle?.name || 'Any Available'}</p>
-                                    <p className="text-xs text-slate-500">{data.vehicleCount} Vehicle(s)</p>
-                                </div>
-                            </div>
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-500 flex items-center justify-center shrink-0">
+                                            <Car size={20} strokeWidth={1.25} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-400">Vehicle</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">{vehicles.find(v => v.id === data.selectedVehicle)?.name || 'Any Available'}</p>
+                                            <p className="text-xs text-slate-500">{data.vehicleCount || 1} Vehicle(s)</p>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
 
                             <div className="pt-6 border-t border-slate-200 dark:border-slate-700 mt-auto">
                                 <div className="flex justify-between items-end">
                                     <div>
                                         <p className="text-xs font-bold text-slate-400">Estimated Total</p>
                                         <p className="text-3xl font-black text-amber-500">
-                                            {pricing ? pricing.price * data.vehicleCount : 'Quote Required'}
+                                            {pricing ? pricing.price * (data.vehicleCount || 1) : 'Quote Required'}
                                             {pricing && <span className="text-sm ml-1">SAR</span>}
                                         </p>
                                     </div>

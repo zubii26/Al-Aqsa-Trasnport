@@ -4,6 +4,7 @@ import { vehicleService } from '@/services/vehicleService';
 import { ROUTES as DEFAULT_ROUTES, VEHICLES as DEFAULT_VEHICLES } from '@/lib/pricing';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
     try {
@@ -57,7 +58,8 @@ export async function GET() {
                 baseRate: customRates && Object.values(customRates).length > 0
                     ? Math.min(...(Object.values(customRates) as number[]))
                     : 0,
-                customRates
+                customRates,
+                stopovers: route.stopovers || []
             };
         });
 
@@ -98,6 +100,10 @@ export async function GET() {
         return NextResponse.json({
             routes: formattedRoutes,
             vehicles: formattedVehicles
+        }, {
+            headers: {
+                'Cache-Control': 'no-store, max-age=0'
+            }
         });
     } catch (error) {
         console.error('Failed to fetch pricing:', error);

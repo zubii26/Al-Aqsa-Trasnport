@@ -60,6 +60,10 @@ interface BookingData {
     flightNumber?: string;
     arrivalDate?: string;
     phone?: string; // Added phone field
+    includeWadiJinn?: boolean;
+    legs?: any[];
+    visaType?: string;
+    viaBadr?: boolean;
 }
 
 import { replaceTemplateVariables } from './email-templates';
@@ -111,6 +115,49 @@ const prepareBookingVariables = (booking: BookingData) => {
         arrival_date_row: booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : '',
         notes_row: booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : '',
         phone_row: booking.phone ? `<p><strong>Phone:</strong> ${booking.phone}</p>` : '',
+        wadiJinn_row: (booking.includeWadiJinn || (booking.legs && booking.legs.some(l => l.includeWadiJinn))) 
+            ? `<tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">External Ziyarat</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">زيارة خارجية</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    Wadi Jinn (Included in total)
+                </td>
+               </tr>`
+            : '',
+        wadiJinn_admin_row: (booking.includeWadiJinn || (booking.legs && booking.legs.some(l => l.includeWadiJinn))) 
+            ? `<p><strong>Add-on:</strong> Wadi Jinn (External Ziyarat) included</p>`
+            : '',
+        visaType_row: booking.visaType ? `<p><strong>Visa Type:</strong> ${booking.visaType}</p>` : '',
+        nusukFee_row: (booking.visaType === 'Umrah Visa' && booking.pickup?.toLowerCase().includes('jeddah') && booking.dropoff?.toLowerCase().includes('madinah'))
+            ? `<tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Nusuk Direct Route Fee</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">رسوم نسك</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #d4af37; font-weight: bold;">
+                    Umrah Visa Only (Included in total)
+                </td>
+               </tr>`
+            : '',
+        nusukFee_admin_row: (booking.visaType === 'Umrah Visa' && booking.pickup?.toLowerCase().includes('jeddah') && booking.dropoff?.toLowerCase().includes('madinah'))
+            ? `<p><strong>Add-on:</strong> Nusuk Direct Route Fee (Umrah Visa) included</p>`
+            : '',
+        viaBadr_row: (booking.viaBadr || (booking.legs && booking.legs.some(l => l.viaBadr)))
+            ? `<tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Via Badr Route</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">طريق بدر</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    Includes Jabal Malaika Ziyarat (Included in total)
+                </td>
+               </tr>`
+            : '',
+        viaBadr_admin_row: (booking.viaBadr || (booking.legs && booking.legs.some(l => l.viaBadr)))
+            ? `<p><strong>Route:</strong> Via Badr (Includes Jabal Malaika Ziyarat)</p>`
+            : '',
     };
 };
 

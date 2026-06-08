@@ -68,6 +68,13 @@ export default function SettingsPage() {
         custom_route_base_fare: '',
         custom_route_km_rate: '',
         custom_route_min_fare: '',
+        wadiJinnFee: 200,
+        routeFees: {
+            enableUmrahFee: true,
+            umrahFeeAmount: 150,
+            enableViaBadr: true,
+            viaBadrFeeAmount: 150,
+        },
     });
 
     const [passwordForm, setPasswordForm] = useState({
@@ -100,11 +107,20 @@ export default function SettingsPage() {
                 adminNotification: data.email_template_admin_notification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE,
             };
 
+            const routeFees = {
+                enableUmrahFee: data.route_fees_enable_umrah === 'true' || data.routeFees?.enableUmrahFee === true,
+                umrahFeeAmount: Number(data.route_fees_umrah_amount || data.routeFees?.umrahFeeAmount) || 150,
+                enableViaBadr: data.route_fees_enable_via_badr === 'true' || data.routeFees?.enableViaBadr === true,
+                viaBadrFeeAmount: Number(data.route_fees_via_badr_amount || data.routeFees?.viaBadrFeeAmount) || 150,
+            };
+
             setSettings(prev => ({
                 ...prev,
                 ...data,
                 discount: discountSettings,
-                emailTemplates: emailTemplates
+                emailTemplates: emailTemplates,
+                wadiJinnFee: Number(data.wadiJinnFee) || 200,
+                routeFees: routeFees,
             }));
         } catch (error) {
             console.error('Failed to fetch settings:', error);
@@ -654,6 +670,106 @@ export default function SettingsPage() {
                                                 placeholder="e.g. 50"
                                             />
                                             <p className="text-xs text-muted-foreground mt-1">The minimum possible charge for a custom route. Price will be capped up to this if fare is less.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Route Fee Settings */}
+                                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 space-y-6">
+                                        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                            <MapPin size={20} className="text-amber-400" />
+                                            Route Fee Settings
+                                        </h3>
+
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-2 text-white">Wadi Jinn Fee (SAR)</label>
+                                            <input
+                                                type="number"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                value={settings.wadiJinnFee || 200}
+                                                onChange={(e) => setSettings({ ...settings, wadiJinnFee: Number(e.target.value) })}
+                                                placeholder="200"
+                                            />
+                                            <p className="text-xs text-muted-foreground mt-1">Fee charged for the Wadi Jinn external ziyarat add-on.</p>
+                                        </div>
+
+                                        <div className="border-t border-slate-700 pt-4 space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <label className="text-sm font-semibold text-white">Enable Umrah Visa Fee</label>
+                                                    <p className="text-xs text-muted-foreground">Charge an additional fee for Umrah Visa holders on Jeddah → Madinah routes.</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setSettings({
+                                                        ...settings,
+                                                        routeFees: { ...settings.routeFees, enableUmrahFee: !settings.routeFees.enableUmrahFee }
+                                                    })}
+                                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                                                        settings.routeFees.enableUmrahFee ? 'bg-amber-500' : 'bg-slate-600'
+                                                    }`}
+                                                >
+                                                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                                        settings.routeFees.enableUmrahFee ? 'translate-x-6' : 'translate-x-1'
+                                                    }`} />
+                                                </button>
+                                            </div>
+
+                                            {settings.routeFees.enableUmrahFee && (
+                                                <div>
+                                                    <label className="block text-sm font-semibold mb-2 text-white">Umrah Visa Fee Amount (SAR)</label>
+                                                    <input
+                                                        type="number"
+                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                        value={settings.routeFees.umrahFeeAmount || 150}
+                                                        onChange={(e) => setSettings({
+                                                            ...settings,
+                                                            routeFees: { ...settings.routeFees, umrahFeeAmount: Number(e.target.value) }
+                                                        })}
+                                                        placeholder="150"
+                                                    />
+                                                    <p className="text-xs text-muted-foreground mt-1">Nusuk direct route fee for Umrah Visa passengers.</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="border-t border-slate-700 pt-4 space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <label className="text-sm font-semibold text-white">Enable Via Badr Route</label>
+                                                    <p className="text-xs text-muted-foreground">Allow passengers to opt for the scenic Badr route with Jabal Malaika Ziyarat.</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setSettings({
+                                                        ...settings,
+                                                        routeFees: { ...settings.routeFees, enableViaBadr: !settings.routeFees.enableViaBadr }
+                                                    })}
+                                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                                                        settings.routeFees.enableViaBadr ? 'bg-amber-500' : 'bg-slate-600'
+                                                    }`}
+                                                >
+                                                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                                        settings.routeFees.enableViaBadr ? 'translate-x-6' : 'translate-x-1'
+                                                    }`} />
+                                                </button>
+                                            </div>
+
+                                            {settings.routeFees.enableViaBadr && (
+                                                <div>
+                                                    <label className="block text-sm font-semibold mb-2 text-white">Via Badr Fee Amount (SAR)</label>
+                                                    <input
+                                                        type="number"
+                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                        value={settings.routeFees.viaBadrFeeAmount || 150}
+                                                        onChange={(e) => setSettings({
+                                                            ...settings,
+                                                            routeFees: { ...settings.routeFees, viaBadrFeeAmount: Number(e.target.value) }
+                                                        })}
+                                                        placeholder="150"
+                                                    />
+                                                    <p className="text-xs text-muted-foreground mt-1">Additional fee for the Badr route including Jabal Malaika Ziyarat.</p>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

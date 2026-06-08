@@ -12,6 +12,7 @@ export interface Route {
     promotionalDiscount?: number; // Percentage discount
     category?: string; // e.g. 'Airport', 'Ziarat', 'Intercity'
     customRates?: { [vehicleId: string]: number };
+    stopovers?: { name: string; extraPrice: number; }[];
 }
 
 export const ROUTES: Route[] = pricingData.routes as unknown as Route[];

@@ -69,32 +69,72 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                         <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
                             <MapPin size={16} /> Journey Information
                         </h3>
-                        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 space-y-4 border border-slate-100 dark:border-slate-800">
-                            <div className="flex flex-col md:flex-row gap-6">
-                                <div className="flex-1">
-                                    <label className="text-xs text-slate-500 font-medium mb-1 block">Pickup Location</label>
-                                    <p className="text-slate-900 dark:text-white font-medium">{booking.pickup}</p>
-                                </div>
-                                <div className="hidden md:block w-px bg-slate-200 dark:bg-slate-700"></div>
-                                <div className="flex-1">
-                                    <label className="text-xs text-slate-500 font-medium mb-1 block">Dropoff Location</label>
-                                    <p className="text-slate-900 dark:text-white font-medium">{booking.dropoff}</p>
-                                </div>
+                        {booking.legs && booking.legs.length > 0 ? (
+                            <div className="space-y-4">
+                                {booking.legs.map((leg: any, index: number) => (
+                                    <div key={index} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 border border-slate-100 dark:border-slate-800">
+                                        <div className="text-xs font-bold text-amber-500 uppercase mb-3">Route {index + 1}</div>
+                                        <div className="flex flex-col md:flex-row gap-6">
+                                            <div className="flex-1">
+                                                <label className="text-xs text-slate-500 font-medium mb-1 block">Pickup Location</label>
+                                                <p className="text-slate-900 dark:text-white font-medium">{leg.pickup}</p>
+                                            </div>
+                                            <div className="hidden md:block w-px bg-slate-200 dark:bg-slate-700"></div>
+                                            <div className="flex-1">
+                                                <label className="text-xs text-slate-500 font-medium mb-1 block">Dropoff Location</label>
+                                                <p className="text-slate-900 dark:text-white font-medium">{leg.dropoff}</p>
+                                            </div>
+                                        </div>
+                                        <div className="border-t border-slate-200 dark:border-slate-700 mt-4 pt-4 flex gap-6">
+                                            <div>
+                                                <label className="text-xs text-slate-500 font-medium mb-1 block">Date</label>
+                                                <div className="flex items-center gap-2 text-slate-900 dark:text-white font-medium">
+                                                    <Calendar size={16} className="text-amber-500" />
+                                                    {leg.date ? format(new Date(leg.date), 'EEEE, MMMM do, yyyy') : 'N/A'}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="text-xs text-slate-500 font-medium mb-1 block">Time</label>
+                                                <p className="text-slate-900 dark:text-white font-medium">{leg.time}</p>
+                                            </div>
+                                            {leg.vehicleName && (
+                                                <div>
+                                                    <label className="text-xs text-slate-500 font-medium mb-1 block">Vehicle</label>
+                                                    <p className="text-slate-900 dark:text-white font-medium">{leg.vehicleName}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="border-t border-slate-200 dark:border-slate-700 pt-4 flex gap-6">
-                                <div>
-                                    <label className="text-xs text-slate-500 font-medium mb-1 block">Date</label>
-                                    <div className="flex items-center gap-2 text-slate-900 dark:text-white font-medium">
-                                        <Calendar size={16} className="text-amber-500" />
-                                        {formattedDate}
+                        ) : (
+                            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 space-y-4 border border-slate-100 dark:border-slate-800">
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    <div className="flex-1">
+                                        <label className="text-xs text-slate-500 font-medium mb-1 block">Pickup Location</label>
+                                        <p className="text-slate-900 dark:text-white font-medium">{booking.pickup}</p>
+                                    </div>
+                                    <div className="hidden md:block w-px bg-slate-200 dark:bg-slate-700"></div>
+                                    <div className="flex-1">
+                                        <label className="text-xs text-slate-500 font-medium mb-1 block">Dropoff Location</label>
+                                        <p className="text-slate-900 dark:text-white font-medium">{booking.dropoff}</p>
                                     </div>
                                 </div>
-                                <div>
-                                    <label className="text-xs text-slate-500 font-medium mb-1 block">Time</label>
-                                    <p className="text-slate-900 dark:text-white font-medium">{booking.time}</p>
+                                <div className="border-t border-slate-200 dark:border-slate-700 pt-4 flex gap-6">
+                                    <div>
+                                        <label className="text-xs text-slate-500 font-medium mb-1 block">Date</label>
+                                        <div className="flex items-center gap-2 text-slate-900 dark:text-white font-medium">
+                                            <Calendar size={16} className="text-amber-500" />
+                                            {formattedDate}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-slate-500 font-medium mb-1 block">Time</label>
+                                        <p className="text-slate-900 dark:text-white font-medium">{booking.time}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </section>
 
                     {/* Customer & Vehicle Grid */}

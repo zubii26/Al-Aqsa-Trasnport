@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -29,6 +29,28 @@ const splitRouteName = (name: string): [string, string] => {
 const getRouteOrigin = (r: Route): string => r.origin || splitRouteName(r.name)[0] || r.name;
 const getRouteDestination = (r: Route): string => r.destination || splitRouteName(r.name)[1] || '';
 
+// Normalize text for fuzzy matching of locations (e.g. Madina vs Madinah, Makka vs Makkah)
+const normalizeText = (text: string) => text ? text.toLowerCase().replace(/makkah?/g, 'makka').replace(/madinah?/g, 'madina').replace(/\s+/g, ' ').trim() : '';
+
+const ZIYARAT_PACKAGES: Record<string, { duration: string, places: string[] }> = {
+    'makkah ziyarat': {
+        duration: '3 Hours',
+        places: ['Jabal al Thawr', 'Masjid Nimrah', 'Jabal Al Rahma', 'Zubaida Canal', 'Muzdalifa', 'Ismail Spot', 'Khaif Mosque', 'Mina', 'Jamarat', 'Jabal Al Nour', 'Hira Cave']
+    },
+    'madinah ziyarat': {
+        duration: '3 Hours',
+        places: ['Masjid Quba', 'Salman Farsi Garden', 'Masjid Jumma', 'Jable Ohad', 'Masjid al Qiblatayn', 'Masjid Faseh', 'Al Ghars Well', 'Maqam e Khandak', '7 Mosques']
+    },
+    'taif ziyarat': {
+        duration: '6 Hours',
+        places: ['Masjid Adas', 'Masjid Ali', 'Masjid Meeqat', 'Masjid Rasool', 'Masjid Abdullah bin Abbas']
+    },
+    'badr ziyarat': {
+        duration: '4 Hours',
+        places: ['Beer Al Roha', 'Beer E Shifa', 'Masjid Areesh', 'Site of the Battle of Badr', 'Jabal e Malaika']
+    }
+};
+
 export default function BookingPage() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
     const { settings } = useSettings();
@@ -53,6 +75,9 @@ export default function BookingPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [bookingData, setBookingData] = useState({
+        routeType: 'single' as 'single' | 'multi',
+        legs: [] as { id: string, pickup: string, dropoff: string, date: Date | null, time: Date | null, stopovers?: string[], vehicleId?: string, routeId?: string, selectedVehicles?: { vehicleId: string; quantity: number }[], includeWadiJinn?: boolean, viaBadr?: boolean }[],
+        sameVehicleForAllLegs: true,
         routeId: '',
         selectedVehicles: [] as { vehicleId: string; quantity: number }[],
         date: null as Date | null,
@@ -76,7 +101,10 @@ export default function BookingPage() {
             distanceKm: number;
             durationMin: number;
             geometry: string;
-        } | null
+        } | null,
+        includeWadiJinn: false,
+        visaType: '' as string,
+        viaBadr: false,
     });
 
     const [bookingResponse, setBookingResponse] = useState<any>(null);
@@ -223,6 +251,30 @@ export default function BookingPage() {
     }, [isLoading, routes, vehicles, searchParams]);
 
     const getPriceDetails = useCallback((routeId: string, vehicleId: string) => {
+        if (routeId === 'multi') {
+            const validLegs = bookingData.legs.filter(l => l.pickup && l.dropoff);
+            let totalPrice = 0;
+            let totalOriginalPrice = 0;
+            let totalDiscount = 0;
+            
+            validLegs.forEach(leg => {
+                const matchedRoute = routes.find(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)) && getRouteDestination(r) === leg.dropoff);
+                if (matchedRoute) {
+                    const legPrice = calculatePrice(matchedRoute.id, vehicleId, { 
+                        includeWadiJinn: leg.includeWadiJinn, 
+                        viaBadr: leg.viaBadr,
+                        visaType: bookingData.visaType,
+                        pickup: leg.pickup,
+                        dropoff: leg.dropoff,
+                    });
+                    totalPrice += legPrice.price;
+                    totalOriginalPrice += legPrice.originalPrice;
+                    totalDiscount += legPrice.discountApplied;
+                }
+            });
+            return { price: totalPrice, originalPrice: totalOriginalPrice, discountApplied: totalDiscount };
+        }
+
         if (routeId === 'custom') {
             const distance = bookingData.customRoute?.distanceKm;
             if (!distance) {
@@ -237,23 +289,66 @@ export default function BookingPage() {
             const rawCost = Math.max(minFare, baseFare + distance * kmRate);
             return calculateFinalPrice(rawCost * multiplier, settings?.discount);
         }
-        return calculatePrice(routeId, vehicleId);
-    }, [bookingData.customRoute, calculatePrice, vehicles, settings]);
+        return calculatePrice(routeId, vehicleId, { 
+            includeWadiJinn: bookingData.includeWadiJinn, 
+            viaBadr: bookingData.viaBadr,
+            visaType: bookingData.visaType,
+            pickup: bookingData.pickup,
+            dropoff: bookingData.dropoff,
+        });
+    }, [bookingData.customRoute, bookingData.legs, bookingData.includeWadiJinn, bookingData.viaBadr, bookingData.visaType, bookingData.pickup, bookingData.dropoff, calculatePrice, vehicles, settings, routes]);
 
     useEffect(() => {
-        if (bookingData.routeId && bookingData.selectedVehicles.length > 0) {
-            const total = bookingData.selectedVehicles.reduce((sum, v) => {
+        let total = 0;
+        let originalTotal = 0;
+
+        if (bookingData.routeType === 'multi' && !bookingData.sameVehicleForAllLegs) {
+            total = bookingData.legs.reduce((legSum, leg) => {
+                if (!leg.routeId || !leg.selectedVehicles) return legSum;
+                const legVehiclesTotal = leg.selectedVehicles.reduce((sum, v) => {
+                    const priceDetails = calculatePrice(leg.routeId!, v.vehicleId);
+                    return sum + (priceDetails.price * v.quantity);
+                }, 0);
+                return legSum + legVehiclesTotal;
+            }, 0);
+        } else if (bookingData.routeId && bookingData.selectedVehicles.length > 0) {
+            total = bookingData.selectedVehicles.reduce((sum, v) => {
                 const priceDetails = getPriceDetails(bookingData.routeId, v.vehicleId);
                 return sum + (priceDetails.price * v.quantity);
             }, 0);
-            setTotalPrice(total);
-        } else {
-            setTotalPrice(0);
         }
-    }, [bookingData.routeId, bookingData.selectedVehicles, getPriceDetails]);
 
-    const handleVehicleQuantityChange = (vehicleId: string, delta: number) => {
+        // Apply 10% multi-route discount if 3 or more routes are selected
+        if (bookingData.routeType === 'multi' && bookingData.legs.filter(l => l.routeId).length >= 3 && total > 0) {
+            total = total * 0.9;
+        }
+
+        setTotalPrice(total);
+    }, [bookingData.routeId, bookingData.selectedVehicles, bookingData.legs, bookingData.routeType, bookingData.sameVehicleForAllLegs, getPriceDetails, calculatePrice]);
+
+    const handleVehicleQuantityChange = (vehicleId: string, delta: number, legId?: string) => {
         setBookingData(prev => {
+            if (legId && prev.routeType === 'multi' && !prev.sameVehicleForAllLegs) {
+                const newLegs = prev.legs.map(leg => {
+                    if (leg.id !== legId) return leg;
+                    const vehicles = leg.selectedVehicles || [];
+                    const existing = vehicles.find(v => v.vehicleId === vehicleId);
+                    let newVehicles = [...vehicles];
+                    if (existing) {
+                        const newQuantity = existing.quantity + delta;
+                        if (newQuantity <= 0) {
+                            newVehicles = newVehicles.filter(v => v.vehicleId !== vehicleId);
+                        } else {
+                            newVehicles = newVehicles.map(v => v.vehicleId === vehicleId ? { ...v, quantity: newQuantity } : v);
+                        }
+                    } else if (delta > 0) {
+                        newVehicles.push({ vehicleId, quantity: delta });
+                    }
+                    return { ...leg, selectedVehicles: newVehicles };
+                });
+                return { ...prev, legs: newLegs };
+            }
+
             const existing = prev.selectedVehicles.find(v => v.vehicleId === vehicleId);
             let newVehicles = [...prev.selectedVehicles];
 
@@ -298,13 +393,33 @@ export default function BookingPage() {
 
     const validateStep = () => {
         if (step === 1) {
-            if (bookingData.routeId === 'custom') {
-                if (!bookingData.pickup || !bookingData.customRoute?.pickupLat) {
-                    setErrors(prev => ({ ...prev, pickup: 'Pickup location must be pinned on the map' }));
+            if (bookingData.routeType === 'multi') {
+                if (bookingData.legs.length === 0) {
+                    alert('Please add at least one route.');
                     return false;
                 }
-                if (!bookingData.dropoff || !bookingData.customRoute?.dropoffLat) {
-                    setErrors(prev => ({ ...prev, dropoff: 'Dropoff location must be pinned on the map' }));
+                const incompleteLegs = bookingData.legs.some(l => !l.pickup || !l.dropoff);
+                if (incompleteLegs) {
+                    alert('Please complete all pickup and dropoff locations for your multi-city route.');
+                    return false;
+                }
+                const incompleteLegDates = bookingData.legs.some(l => !l.date || !l.time);
+                if (incompleteLegDates) {
+                    alert('Please select a date and time for each route.');
+                    return false;
+                }
+            } else {
+                if (bookingData.routeId === 'custom') {
+                    if (!bookingData.pickup || !bookingData.customRoute?.pickupLat) {
+                        setErrors(prev => ({ ...prev, pickup: 'Pickup location must be pinned on the map' }));
+                        return false;
+                    }
+                    if (!bookingData.dropoff || !bookingData.customRoute?.dropoffLat) {
+                        setErrors(prev => ({ ...prev, dropoff: 'Dropoff location must be pinned on the map' }));
+                        return false;
+                    }
+                } else if (!bookingData.routeId) {
+                    alert('Please select a valid pickup and dropoff location.');
                     return false;
                 }
             }
@@ -324,6 +439,7 @@ export default function BookingPage() {
             }
 
             if (!bookingData.country) newErrors.country = 'Please select your country/region';
+            if (!bookingData.visaType) newErrors.visaType = 'Please select your visa type';
 
             // Phone Validation: Allow international formats, ensure reasonable length
             // Accepts: +966..., 00966..., 050... (local), with spaces/dashes
@@ -338,8 +454,10 @@ export default function BookingPage() {
                 newErrors.phone = 'Please enter a valid phone number (min 9 digits)';
             }
 
-            if (!bookingData.date) newErrors.date = 'Date is required';
-            if (!bookingData.time) newErrors.time = 'Time is required';
+            if (bookingData.routeType !== 'multi') {
+                if (!bookingData.date) newErrors.date = 'Date is required';
+                if (!bookingData.time) newErrors.time = 'Time is required';
+            }
 
             setErrors(newErrors);
             return Object.keys(newErrors).length === 0;
@@ -372,8 +490,12 @@ export default function BookingPage() {
 
         if (step === 4) {
             const route = getSelectedRoute();
+            const isMulti = bookingData.routeType === 'multi';
+            const hasVehicles = isMulti && !bookingData.sameVehicleForAllLegs
+                ? bookingData.legs.filter(l => l.pickup && l.dropoff).every(leg => leg.selectedVehicles && leg.selectedVehicles.length > 0)
+                : bookingData.selectedVehicles.length > 0;
 
-            if (route && bookingData.selectedVehicles.length > 0) {
+            if ((route || isMulti) && hasVehicles) {
                 setIsSubmitting(true);
                 try {
                     const res = await fetch('/api/bookings', {
@@ -387,16 +509,30 @@ export default function BookingPage() {
                             dropoff: bookingData.dropoff,
                             passengers: bookingData.passengers,
                             luggage: bookingData.luggage,
-                            date: bookingData.date ? `${bookingData.date.getFullYear()}-${String(bookingData.date.getMonth() + 1).padStart(2, '0')}-${String(bookingData.date.getDate()).padStart(2, '0')}` : undefined,
-                            time: bookingData.time ? `${String(bookingData.time.getHours()).padStart(2, '0')}:${String(bookingData.time.getMinutes()).padStart(2, '0')}` : undefined,
+                            date: (bookingData.routeType === 'multi' && bookingData.legs[0]?.date) ? `${bookingData.legs[0].date.getFullYear()}-${String(bookingData.legs[0].date.getMonth() + 1).padStart(2, '0')}-${String(bookingData.legs[0].date.getDate()).padStart(2, '0')}` : (bookingData.date ? `${bookingData.date.getFullYear()}-${String(bookingData.date.getMonth() + 1).padStart(2, '0')}-${String(bookingData.date.getDate()).padStart(2, '0')}` : undefined),
+                            time: (bookingData.routeType === 'multi' && bookingData.legs[0]?.time) ? `${String(bookingData.legs[0].time.getHours()).padStart(2, '0')}:${String(bookingData.legs[0].time.getMinutes()).padStart(2, '0')}` : (bookingData.time ? `${String(bookingData.time.getHours()).padStart(2, '0')}:${String(bookingData.time.getMinutes()).padStart(2, '0')}` : undefined),
                             country: bookingData.country,
                             flightNumber: bookingData.flightNumber,
                             arrivalDate: bookingData.arrivalDate ? `${bookingData.arrivalDate.getFullYear()}-${String(bookingData.arrivalDate.getMonth() + 1).padStart(2, '0')}-${String(bookingData.arrivalDate.getDate()).padStart(2, '0')}` : undefined,
                             // Sending selectedVehicles array instead of single vehicle details
                             selectedVehicles: bookingData.selectedVehicles,
                             status: 'pending',
-                            routeId: bookingData.routeId === 'custom' ? 'custom' : bookingData.routeId,
-                            customRoute: bookingData.routeId === 'custom' ? bookingData.customRoute : undefined
+                            routeType: bookingData.routeType,
+                            sameVehicleForAllLegs: bookingData.sameVehicleForAllLegs,
+                            legs: bookingData.routeType === 'multi' ? bookingData.legs.map(leg => {
+                                const matchedRoute = routes.find(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)) && getRouteDestination(r) === leg.dropoff);
+                                return { 
+                                    ...leg, 
+                                    routeId: matchedRoute?.id || '',
+                                    date: leg.date ? `${leg.date.getFullYear()}-${String(leg.date.getMonth() + 1).padStart(2, '0')}-${String(leg.date.getDate()).padStart(2, '0')}` : undefined,
+                                    time: leg.time ? `${String(leg.time.getHours()).padStart(2, '0')}:${String(leg.time.getMinutes()).padStart(2, '0')}` : undefined,
+                                };
+                            }) : undefined,
+                            routeId: bookingData.routeType === 'multi' ? 'multi' : (bookingData.routeId === 'custom' ? 'custom' : bookingData.routeId),
+                            customRoute: bookingData.routeId === 'custom' ? bookingData.customRoute : undefined,
+                            includeWadiJinn: bookingData.includeWadiJinn || undefined,
+                            visaType: bookingData.visaType || undefined,
+                            viaBadr: bookingData.viaBadr || undefined,
                         }),
                     });
 
@@ -467,6 +603,88 @@ export default function BookingPage() {
         ${hasError ? 'border-red-500 ring-2 ring-red-500/10' : ''}
     `;
 
+    const addLeg = () => {
+        setBookingData(prev => ({
+            ...prev,
+            legs: [...prev.legs, { id: Date.now().toString(), pickup: prev.legs.length > 0 ? prev.legs[prev.legs.length - 1].dropoff : '', dropoff: '', date: null, time: null }]
+        }));
+    };
+
+    const updateLeg = (index: number, field: string, value: any) => {
+        setBookingData(prev => {
+            const newLegs = [...prev.legs];
+            newLegs[index] = { ...newLegs[index], [field]: value };
+            return { ...prev, legs: newLegs };
+        });
+    };
+
+    const removeLeg = (index: number) => {
+        setBookingData(prev => {
+            const newLegs = [...prev.legs];
+            newLegs.splice(index, 1);
+            return { ...prev, legs: newLegs };
+        });
+    };
+
+    const renderZiyaratDetails = (destination: string) => {
+        const destLower = destination.toLowerCase();
+        let packageKey = '';
+        if (destLower.includes('makkah ziyarat') && !destLower.includes('madinah')) packageKey = 'makkah ziyarat';
+        else if (destLower.includes('madinah ziyarat')) packageKey = 'madinah ziyarat';
+        else if (destLower.includes('taif ziyarat')) packageKey = 'taif ziyarat';
+        else if (destLower.includes('badr ziyarat')) packageKey = 'badr ziyarat';
+        
+        const pkg = ZIYARAT_PACKAGES[packageKey];
+        if (!pkg) return null;
+
+        return (
+            <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-6 mb-4 p-5 bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-xl relative z-10"
+            >
+                <div className="flex items-center gap-2 mb-3">
+                    <Info size={18} className="text-indigo-600 dark:text-indigo-400" />
+                    <h4 className="font-bold text-indigo-900 dark:text-indigo-300 text-sm md:text-base capitalize">
+                        {packageKey} – <span className="font-black">{pkg.duration}</span>
+                    </h4>
+                </div>
+                <p className="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase tracking-wider mb-2">Included Ziyarat Places:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {pkg.places.map((place, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm text-indigo-800 dark:text-indigo-200">
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+                            <span>{place}</span>
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
+        );
+    };
+
+    const renderReceiptZiyarat = (destination: string) => {
+        const destLower = destination.toLowerCase();
+        let packageKey = '';
+        if (destLower.includes('makkah ziyarat') && !destLower.includes('madinah')) packageKey = 'makkah ziyarat';
+        else if (destLower.includes('madinah ziyarat')) packageKey = 'madinah ziyarat';
+        else if (destLower.includes('taif ziyarat')) packageKey = 'taif ziyarat';
+        else if (destLower.includes('badr ziyarat')) packageKey = 'badr ziyarat';
+        
+        const pkg = ZIYARAT_PACKAGES[packageKey];
+        if (!pkg) return null;
+
+        return (
+            <div className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                <div className="font-bold text-slate-800 dark:text-slate-200 capitalize">
+                    {packageKey} – {pkg.duration}
+                </div>
+                <div className="text-[11px] mt-0.5">
+                    Includes: {pkg.places.join(', ')}
+                </div>
+            </div>
+        );
+    };
+
     const renderStep1 = () => (
         <AnimatePresence mode="wait">
             {isSearching ? (
@@ -514,9 +732,35 @@ export default function BookingPage() {
                             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                         </div>
 
+                        {/* Route Type Selector */}
+                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl mb-6 relative z-20">
+                            <button
+                                onClick={() => setBookingData(prev => ({ ...prev, routeType: 'single', routeId: '' }))}
+                                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${bookingData.routeType === 'single' ? 'bg-white shadow-sm text-secondary' : 'text-slate-500'}`}
+                            >
+                                Single Route
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setBookingData(prev => ({ 
+                                        ...prev, 
+                                        routeType: 'multi', 
+                                        routeId: 'multi',
+                                        pickup: '',
+                                        dropoff: '',
+                                        legs: prev.legs.length === 0 ? [{ id: Date.now().toString(), pickup: prev.pickup, dropoff: prev.dropoff, date: null, time: null }] : prev.legs 
+                                    }));
+                                    setSelectedRoute(null);
+                                }}
+                                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${bookingData.routeType === 'multi' ? 'bg-white shadow-sm text-secondary' : 'text-slate-500'}`}
+                            >
+                                Multi-City Route
+                            </button>
+                        </div>
 
-                        {/* Pickup & Dropoff Selection */}
-                        <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-20">
+                        {bookingData.routeType === 'single' ? (
+                            <>
+                                <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-20">
                             {/* Pickup Location - Higher Z-Index to overlap Dropoff */}
                             <div className="relative group z-20">
                                 <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 group-focus-within:text-secondary transition-colors">
@@ -565,11 +809,13 @@ export default function BookingPage() {
                                             // Try to find matching route using origin/destination
                                             if (prev.pickup && val) {
                                                 const matchedRoute = filteredRoutes.find(r =>
-                                                    getRouteOrigin(r) === prev.pickup && getRouteDestination(r) === val
+                                                    normalizeText(getRouteOrigin(r)).includes(normalizeText(prev.pickup)) && getRouteDestination(r) === val
                                                 );
 
                                                 if (matchedRoute) {
                                                     newData.routeId = matchedRoute.id;
+                                                    // Auto-correct pickup to match actual route
+                                                    newData.pickup = getRouteOrigin(matchedRoute);
                                                     setSelectedRoute(matchedRoute);
                                                     setErrors(curr => ({ ...curr, pickup: '', dropoff: '' }));
                                                 } else {
@@ -583,7 +829,7 @@ export default function BookingPage() {
                                     options={
                                         bookingData.pickup && bookingData.pickup !== 'custom'
                                             ? Array.from(new Set(filteredRoutes
-                                                .filter(r => getRouteOrigin(r) === bookingData.pickup)
+                                                .filter(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(bookingData.pickup)))
                                                 .map(r => getRouteDestination(r))
                                                 .filter(Boolean)
                                             )).sort().map(d => ({ value: d, label: d }))
@@ -596,6 +842,309 @@ export default function BookingPage() {
                                 />
                             </div>
                         </div>
+                        
+                        {/* Ziyarat Details Block */}
+                        {selectedRoute && renderZiyaratDetails(getRouteDestination(selectedRoute))}
+
+                        {selectedRoute && getRouteDestination(selectedRoute).toLowerCase().includes('madinah ziyarat') && !selectedRoute.name.toLowerCase().includes('wadi jin') && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mb-8 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-start gap-3 relative z-10"
+                            >
+                                <input 
+                                    type="checkbox" 
+                                    id="wadiJinn-single"
+                                    checked={bookingData.includeWadiJinn} 
+                                    onChange={(e) => setBookingData(prev => ({...prev, includeWadiJinn: e.target.checked}))}
+                                    className="mt-1 w-4 h-4 text-secondary rounded border-gray-300 focus:ring-secondary cursor-pointer"
+                                />
+                                <div>
+                                    <label htmlFor="wadiJinn-single" className="font-bold text-amber-900 dark:text-amber-300 text-sm cursor-pointer">
+                                        Add Wadi Jinn (External Ziyarat) +150 SAR
+                                    </label>
+                                    <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                                        Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
+                                    </p>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Via Badr Route Selector — Madinah → Makkah */}
+                        {selectedRoute && (() => {
+                            const dest = getRouteDestination(selectedRoute).toLowerCase();
+                            const orig = getRouteOrigin(selectedRoute).toLowerCase();
+                            const isMadinahToMakkah = (orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc')));
+                            return isMadinahToMakkah;
+                        })() && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mb-8 relative z-10"
+                            >
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 ml-1">Route Option</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {/* Straight Route */}
+                                    <label 
+                                        className={`relative flex flex-col p-4 rounded-2xl border-2 cursor-pointer transition-all ${!bookingData.viaBadr ? 'border-secondary bg-secondary/5 shadow-lg shadow-secondary/10' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'}`}
+                                        onClick={() => setBookingData(prev => ({...prev, viaBadr: false}))}
+                                    >
+                                        {!bookingData.viaBadr && (
+                                            <div className="absolute top-3 right-3">
+                                                <CheckCircle size={18} className="text-secondary" />
+                                            </div>
+                                        )}
+                                        <span className="font-bold text-slate-900 dark:text-white text-sm">Straight Route (Standard)</span>
+                                        <span className="text-xs text-slate-500 mt-1">Fastest route, no additional distance</span>
+                                        <span className="text-xs font-bold text-green-600 mt-2">No Extra Fee</span>
+                                    </label>
+
+                                    {/* Via Badr Route */}
+                                    <label 
+                                        className={`relative flex flex-col p-4 rounded-2xl border-2 cursor-pointer transition-all ${bookingData.viaBadr ? 'border-secondary bg-secondary/5 shadow-lg shadow-secondary/10' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'}`}
+                                        onClick={() => setBookingData(prev => ({...prev, viaBadr: true}))}
+                                    >
+                                        {bookingData.viaBadr && (
+                                            <div className="absolute top-3 right-3">
+                                                <CheckCircle size={18} className="text-secondary" />
+                                            </div>
+                                        )}
+                                        <span className="font-bold text-slate-900 dark:text-white text-sm">Via Badr Route (Extended + Ziyarat)</span>
+                                        <span className="text-xs text-slate-500 mt-1">Includes Badr region &amp; Jabal Malaika ziyarat</span>
+                                        <span className="text-xs text-slate-400 mt-0.5">~150–200 km extra distance</span>
+                                        <span className="text-xs font-bold text-secondary mt-2">+{settings?.routeFees?.viaBadrFeeAmount ?? 150} SAR</span>
+                                    </label>
+                                </div>
+                                <p className="text-[11px] text-slate-400 mt-2 ml-1 flex items-start gap-1">
+                                    <Info size={12} className="mt-0.5 shrink-0" />
+                                    This route includes the ziyarat point Jabal Malaika and adds approximately 150–200 km to the journey. An additional fee applies.
+                                </p>
+                            </motion.div>
+                        )}
+                            </>
+                        ) : (
+                            <div className="space-y-6 mb-8 relative z-20">
+                                {bookingData.legs.length >= 3 && (
+                                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center text-green-600 dark:text-green-400">
+                                                <span className="font-bold text-sm">%</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-green-800 dark:text-green-300 text-sm">10% Multi-Route Discount Unlocked!</h4>
+                                                <p className="text-xs text-green-600 dark:text-green-400">Applied automatically to your total package.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                {bookingData.legs.map((leg, index) => {
+                                    const matchedRoute = filteredRoutes.find(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)) && getRouteDestination(r) === leg.dropoff);
+                                    const hasStopovers = matchedRoute && matchedRoute.stopovers && matchedRoute.stopovers.length > 0;
+                                    return (
+                                    <div key={leg.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Route {index + 1}</span>
+                                            </div>
+                                            {index > 0 && (
+                                                <button onClick={() => removeLeg(index)} className="text-red-500 text-xs font-bold flex items-center gap-1 hover:underline">
+                                                    <Trash2 size={12} /> Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div className="relative group">
+                                                <SearchableSelect
+                                                    name={`pickup-${leg.id}`}
+                                                    value={leg.pickup}
+                                                    onChange={(e: any) => updateLeg(index, 'pickup', e.target.value)}
+                                                    options={[...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p }))]}
+                                                    placeholder="Select Pickup"
+                                                    className="w-full premium-input rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white"
+                                                    icon={<MapPin strokeWidth={1.25} size={16} />}
+                                                />
+                                            </div>
+                                            <div className="relative group">
+                                                <SearchableSelect
+                                                    name={`dropoff-${leg.id}`}
+                                                    value={leg.dropoff}
+                                                    onChange={(e: any) => {
+                                                        updateLeg(index, 'dropoff', e.target.value);
+                                                        const r = filteredRoutes.find(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)) && getRouteDestination(r) === e.target.value);
+                                                        if (r) updateLeg(index, 'routeId', r.id);
+                                                    }}
+                                                    options={
+                                                        leg.pickup
+                                                            ? Array.from(new Set(filteredRoutes
+                                                                .filter(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)))
+                                                                .map(r => getRouteDestination(r))
+                                                                .filter(Boolean)
+                                                            )).sort().map(d => ({ value: d, label: d }))
+                                                            : []
+                                                    }
+                                                    disabled={!leg.pickup}
+                                                    placeholder={!leg.pickup ? "Select Pickup First" : "Select Dropoff"}
+                                                    className={`w-full premium-input rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white ${!leg.pickup ? 'opacity-50' : ''}`}
+                                                    icon={<Navigation strokeWidth={1.25} size={16} />}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-4 mt-4">
+                                            <div className="relative group">
+                                                <label className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1 mb-1">
+                                                    <Calendar strokeWidth={1.25} size={12} className="text-secondary" /> Pickup Date
+                                                </label>
+                                                <input
+                                                    type="date"
+                                                    value={leg.date ? leg.date.toISOString().split('T')[0] : ''}
+                                                    onChange={(e) => {
+                                                        if (!e.target.value) {
+                                                            updateLeg(index, 'date', null);
+                                                            return;
+                                                        }
+                                                        updateLeg(index, 'date', new Date(e.target.value));
+                                                    }}
+                                                    min={new Date().toISOString().split('T')[0]}
+                                                    className="w-full premium-input rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 outline-none"
+                                                />
+                                            </div>
+                                            <div className="relative group">
+                                                <label className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1 mb-1">
+                                                    <Clock strokeWidth={1.25} size={12} className="text-secondary" /> Pickup Time
+                                                </label>
+                                                <input
+                                                    type="time"
+                                                    value={leg.time ? leg.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                                    onChange={(e) => {
+                                                        if (!e.target.value) {
+                                                            updateLeg(index, 'time', null);
+                                                            return;
+                                                        }
+                                                        const [hours, minutes] = e.target.value.split(':').map(Number);
+                                                        const newTime = new Date();
+                                                        newTime.setHours(hours);
+                                                        newTime.setMinutes(minutes);
+                                                        updateLeg(index, 'time', newTime);
+                                                    }}
+                                                    className="w-full premium-input rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 outline-none"
+                                                />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Ziyarat Details Block */}
+                                        {matchedRoute && renderZiyaratDetails(getRouteDestination(matchedRoute))}
+
+                                        {matchedRoute && getRouteDestination(matchedRoute).toLowerCase().includes('madinah ziyarat') && !matchedRoute.name.toLowerCase().includes('wadi jin') && (
+                                            <motion.div 
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-start gap-3"
+                                            >
+                                                <input 
+                                                    type="checkbox" 
+                                                    id={`wadiJinn-${leg.id}`}
+                                                    checked={leg.includeWadiJinn || false} 
+                                                    onChange={(e) => updateLeg(index, 'includeWadiJinn', e.target.checked)}
+                                                    className="mt-1 w-4 h-4 text-secondary rounded border-gray-300 focus:ring-secondary cursor-pointer"
+                                                />
+                                                <div>
+                                                    <label htmlFor={`wadiJinn-${leg.id}`} className="font-bold text-amber-900 dark:text-amber-300 text-sm cursor-pointer">
+                                                        Add Wadi Jinn (External Ziyarat) +150 SAR
+                                                    </label>
+                                                    <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                                                        Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
+                                                    </p>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                        
+                                        {/* Via Badr Route Selector for Multi-Route Legs */}
+                                        {matchedRoute && (() => {
+                                            const dest = getRouteDestination(matchedRoute).toLowerCase();
+                                            const orig = getRouteOrigin(matchedRoute).toLowerCase();
+                                            return orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc'));
+                                        })() && (
+                                            <motion.div 
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="mt-4"
+                                            >
+                                                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Route Option</p>
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <label 
+                                                        className={`flex flex-col p-3 rounded-xl border-2 cursor-pointer transition-all text-center ${!leg.viaBadr ? 'border-secondary bg-secondary/5' : 'border-slate-200 dark:border-slate-700'}`}
+                                                        onClick={() => updateLeg(index, 'viaBadr', false)}
+                                                    >
+                                                        <span className="font-bold text-slate-900 dark:text-white text-xs">Straight Route</span>
+                                                        <span className="text-[10px] text-green-600 font-bold mt-1">No Extra Fee</span>
+                                                    </label>
+                                                    <label 
+                                                        className={`flex flex-col p-3 rounded-xl border-2 cursor-pointer transition-all text-center ${leg.viaBadr ? 'border-secondary bg-secondary/5' : 'border-slate-200 dark:border-slate-700'}`}
+                                                        onClick={() => updateLeg(index, 'viaBadr', true)}
+                                                    >
+                                                        <span className="font-bold text-slate-900 dark:text-white text-xs">Via Badr</span>
+                                                        <span className="text-[10px] text-secondary font-bold mt-1">+{settings?.routeFees?.viaBadrFeeAmount ?? 150} SAR</span>
+                                                    </label>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                        {hasStopovers && (
+                                            <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4">
+                                                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Add Optional Stopover (Via)</p>
+                                                <div className="space-y-2">
+                                                    {matchedRoute.stopovers?.map((stopover: any) => (
+                                                        <label key={stopover.name} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+                                                            <input 
+                                                                type="checkbox" 
+                                                                checked={leg.stopovers?.includes(stopover.name) || false}
+                                                                onChange={(e) => {
+                                                                    const newStopovers = e.target.checked 
+                                                                        ? [...(leg.stopovers || []), stopover.name]
+                                                                        : (leg.stopovers || []).filter(s => s !== stopover.name);
+                                                                    updateLeg(index, 'stopovers', newStopovers);
+                                                                }}
+                                                                className="w-4 h-4 rounded border-slate-300 text-secondary focus:ring-secondary"
+                                                            />
+                                                            <span className="flex-1">{stopover.name}</span>
+                                                            <span className="font-medium text-slate-900 dark:text-white">+{stopover.extraPrice} SAR</span>
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {/* Professional Route Info Card */}
+                                        {matchedRoute && (
+                                            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-full bg-secondary/10 text-secondary flex items-center justify-center shadow-inner">
+                                                        <MapPin strokeWidth={1.25} size={20} fill="currentColor" />
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">Route Selected</h4>
+                                                        <p className="text-xs text-slate-500 font-medium">
+                                                            {matchedRoute.distance} • {matchedRoute.time} approx
+                                                        </p>
+                                                    </div>
+                                                    <div className="ml-auto text-right">
+                                                        {matchedRoute.baseRate > 0 && (
+                                                            <>
+                                                                <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
+                                                                <span className="font-black text-secondary text-lg tracking-tight">
+                                                                    {matchedRoute.baseRate + (leg.viaBadr ? (settings?.routeFees?.viaBadrFeeAmount ?? 150) : 0) + (leg.includeWadiJinn ? 150 : 0) + (leg.stopovers?.reduce((acc: number, cur: string) => { const st = matchedRoute.stopovers?.find((s:any) => s.name === cur); return acc + (st?.extraPrice || 0); }, 0) || 0)} <span className="text-xs font-bold text-slate-500 ml-0.5">SAR</span>
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )})}
+                                <button onClick={addLeg} className="w-full py-3 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 text-slate-500 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex justify-center items-center gap-2">
+                                    <Plus size={16} /> Add Route
+                                </button>
+                            </div>
+                        )}
 
                         {/* Route Info Card or Custom Warning */}
                         <AnimatePresence mode='wait'>
@@ -629,7 +1178,7 @@ export default function BookingPage() {
                                     </div>
                                 </motion.div>
                             ) : (
-                                selectedRoute && (
+                                bookingData.routeType === 'single' && selectedRoute && (
                                     <motion.div
                                         key="route-info"
                                         initial={{ opacity: 0, y: 10 }}
@@ -650,8 +1199,12 @@ export default function BookingPage() {
                                                 </p>
                                             </div>
                                             <div className="ml-auto text-right">
-                                                <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
-                                                <span className="font-black text-secondary text-2xl tracking-tight">{selectedRoute.baseRate} <span className="text-sm text-slate-500">SAR</span></span>
+                                                {selectedRoute.baseRate > 0 && (
+                                                    <>
+                                                        <span className="block text-[10px] uppercase font-bold text-slate-400">Starting From</span>
+                                                        <span className="font-black text-secondary text-2xl tracking-tight">{selectedRoute.baseRate} <span className="text-sm text-slate-500">SAR</span></span>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </motion.div>
@@ -686,10 +1239,162 @@ export default function BookingPage() {
                     <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
                 </div>
 
-                {/* Mobile Dropdown (Visible on small screens) */}
+                {bookingData.routeType === 'multi' && (
+                    <div className="mb-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h4 className="font-bold text-slate-900 dark:text-white">Vehicle Selection Preference</h4>
+                            <p className="text-xs text-slate-500">Do you want to book the same vehicle for all routes?</p>
+                        </div>
+                        <div className="flex bg-slate-200 dark:bg-slate-900 p-1 rounded-lg w-full md:w-auto">
+                            <button onClick={() => setBookingData(p => ({ ...p, sameVehicleForAllLegs: true }))} className={`flex-1 md:flex-none px-6 py-2 rounded-md text-sm font-bold transition-all ${bookingData.sameVehicleForAllLegs ? 'bg-white dark:bg-slate-700 shadow text-slate-900 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>Yes, same for all</button>
+                            <button onClick={() => setBookingData(p => ({ ...p, sameVehicleForAllLegs: false }))} className={`flex-1 md:flex-none px-6 py-2 rounded-md text-sm font-bold transition-all ${!bookingData.sameVehicleForAllLegs ? 'bg-white dark:bg-slate-700 shadow text-slate-900 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>No, select per route</button>
+                        </div>
+                    </div>
+                )}
 
+                {bookingData.routeType === 'multi' && !bookingData.sameVehicleForAllLegs ? (
+                    <div className="space-y-12">
+                        {bookingData.legs.filter(l => l.pickup && l.dropoff && l.routeId).map((leg, legIndex) => (
+                            <div key={leg.id} className="space-y-6 bg-slate-50/50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary font-bold">{legIndex + 1}</div>
+                                    <div>
+                                        <h3 className="font-bold text-slate-900 dark:text-white text-lg">{leg.pickup} → {leg.dropoff}</h3>
+                                        {leg.date && leg.time && <p className="text-sm text-slate-500">{leg.date.toLocaleDateString()} at {leg.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    {vehicles.map((vehicle) => {
+                                        const Icon = vehicle.icon;
+                                        const priceDetails = calculatePrice(leg.routeId!, vehicle.id);
+                                        const selectedMatch = leg.selectedVehicles?.find(v => v.vehicleId === vehicle.id);
+                                        const quantity = selectedMatch ? selectedMatch.quantity : 0;
+                                        const isSelected = quantity > 0;
 
-                <div className="lg:hidden mb-8">
+                                        return (
+                                            <motion.div
+                                                key={vehicle.id}
+                                                whileHover={{ y: -6 }}
+                                                onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1, leg.id)}
+                                                className={`
+                                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col cursor-pointer
+                                                    ${isSelected
+                                                        ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20'
+                                                        : 'ios-glass border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
+                                                    }
+                                                `}
+                                            >
+                                                {/* Image Container */}
+                                                <div className={`
+                                                    relative h-56 w-full overflow-hidden 
+                                                    ${isSelected ? 'bg-slate-50 dark:bg-slate-800/50' : 'bg-slate-100/50 dark:bg-slate-950/50'}
+                                                    transition-colors duration-300
+                                                `}>
+                                                    {vehicle.image ? (
+                                                        <img
+                                                            src={vehicle.image}
+                                                            alt={vehicle.name}
+                                                            className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+                                                        />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center text-slate-300">
+                                                            <Icon size={72} />
+                                                        </div>
+                                                    )}
+
+                                                    {/* Features Badges - Absolute */}
+                                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                                        {vehicle.name.includes('GMC') && (
+                                                            <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider border border-slate-700">Premium</span>
+                                                        )}
+                                                        {vehicle.name.includes('Hiace') && (
+                                                            <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider">Group</span>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Price Tag - Absolute */}
+                                                    <div className={`
+                                                        absolute bottom-4 right-4 px-4 py-2 rounded-xl shadow-lg border backdrop-blur-md
+                                                        ${isSelected
+                                                            ? 'bg-secondary text-white border-secondary'
+                                                            : 'ios-glass text-slate-900 dark:text-white border-white/20'
+                                                        }
+                                                    `}>
+                                                        <div className="flex flex-col items-end leading-none">
+                                                            {priceDetails.discountApplied > 0 && (
+                                                                <span className={`text-[10px] font-medium line-through mb-0.5 ${isSelected ? 'text-white/70' : 'text-slate-400'}`}>
+                                                                    {priceDetails.originalPrice}
+                                                                </span>
+                                                            )}
+                                                            <span className="text-xl font-black">
+                                                                {priceDetails.price} <span className="text-xs font-bold opacity-70">SAR</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Content */}
+                                                <div className="p-6 flex-1 flex flex-col">
+                                                    <div className="flex justify-between items-start mb-4">
+                                                        <div>
+                                                            <h3 className={`text-xl font-bold mb-1 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
+                                                                {vehicle.name}
+                                                            </h3>
+                                                            <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
+                                                                <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={14} /> {vehicle.capacity}</span>
+                                                                <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={14} /> {vehicle.luggage}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Quantity Control (Desktop) */}
+                                                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 rounded-lg p-1 border border-slate-100 dark:border-slate-800">
+                                                            {quantity > 0 ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, -1, leg.id); }}
+                                                                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                    <span className="font-bold text-slate-900 dark:text-white w-6 text-center">{quantity}</span>
+                                                                    <button
+                                                                        onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1, leg.id); }}
+                                                                        className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <button
+                                                                    onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1, leg.id); }}
+                                                                    className="px-4 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-secondary transition-colors"
+                                                                >
+                                                                    Select
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-dashed dark:border-slate-800 grid grid-cols-2 gap-2">
+                                                        {vehicle.features.slice(0, 4).map((feature, idx) => (
+                                                            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                                                                <CheckCircle strokeWidth={1.25} size={12} className="text-emerald-500 shrink-0" />
+                                                                <span className="truncate">{feature}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <>
+                        {/* Mobile Dropdown (Visible on small screens) */}
+                        <div className="lg:hidden mb-8">
                     <div className="relative">
                         <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                             <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
@@ -989,6 +1694,8 @@ export default function BookingPage() {
                         );
                     })}
                 </div>
+                    </>
+                )}
             </motion.div>
         );
     };
@@ -1012,59 +1719,63 @@ export default function BookingPage() {
                 {/* Decorative Background */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-50" />
 
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                    <div className="space-y-3">
-                        <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
-                            <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Date
-                        </label>
-                        <div className="relative group">
-                            <input
-                                type="date"
-                                value={bookingData.date ? bookingData.date.toISOString().split('T')[0] : ''}
-                                onChange={(e) => {
-                                    if (!e.target.value) {
-                                        updateData('date', null);
-                                        return;
-                                    }
-                                    const newDate = new Date(e.target.value);
-                                    updateData('date', newDate);
-                                }}
-                                min={new Date().toISOString().split('T')[0]}
-                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
-                            />
-                            {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
-                        </div>
-                        {errors.date && <p className="text-red-500 text-xs ml-1 font-medium">{errors.date}</p>}
-                    </div>
+                {bookingData.routeType !== 'multi' && (
+                    <>
+                        <div className="grid md:grid-cols-2 gap-8 mb-8">
+                            <div className="space-y-3">
+                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
+                                    <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Date
+                                </label>
+                                <div className="relative group">
+                                    <input
+                                        type="date"
+                                        value={bookingData.date ? bookingData.date.toISOString().split('T')[0] : ''}
+                                        onChange={(e) => {
+                                            if (!e.target.value) {
+                                                updateData('date', null);
+                                                return;
+                                            }
+                                            const newDate = new Date(e.target.value);
+                                            updateData('date', newDate);
+                                        }}
+                                        min={new Date().toISOString().split('T')[0]}
+                                        className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
+                                    />
+                                    {errors.date && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
+                                </div>
+                                {errors.date && <p className="text-red-500 text-xs ml-1 font-medium">{errors.date}</p>}
+                            </div>
 
-                    <div className="space-y-3">
-                        <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
-                            <Clock strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Time
-                        </label>
-                        <div className="relative group">
-                            <input
-                                type="time"
-                                value={bookingData.time ? bookingData.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
-                                onChange={(e) => {
-                                    if (!e.target.value) {
-                                        updateData('time', null);
-                                        return;
-                                    }
-                                    const [hours, minutes] = e.target.value.split(':').map(Number);
-                                    const newTime = new Date();
-                                    newTime.setHours(hours);
-                                    newTime.setMinutes(minutes);
-                                    updateData('time', newTime);
-                                }}
-                                className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
-                            />
-                            {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
+                            <div className="space-y-3">
+                                <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
+                                    <Clock strokeWidth={1.25} size={14} className="text-secondary" /> Pickup Time
+                                </label>
+                                <div className="relative group">
+                                    <input
+                                        type="time"
+                                        value={bookingData.time ? bookingData.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                        onChange={(e) => {
+                                            if (!e.target.value) {
+                                                updateData('time', null);
+                                                return;
+                                            }
+                                            const [hours, minutes] = e.target.value.split(':').map(Number);
+                                            const newTime = new Date();
+                                            newTime.setHours(hours);
+                                            newTime.setMinutes(minutes);
+                                            updateData('time', newTime);
+                                        }}
+                                        className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 text-base font-medium [color-scheme:light] dark:[color-scheme:dark]"
+                                    />
+                                    {errors.time && <div className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500"><Info strokeWidth={1.25} size={18} /></div>}
+                                </div>
+                                {errors.time && <p className="text-red-500 text-xs ml-1 font-medium">{errors.time}</p>}
+                            </div>
                         </div>
-                        {errors.time && <p className="text-red-500 text-xs ml-1 font-medium">{errors.time}</p>}
-                    </div>
-                </div>
 
-                <div className="my-8 border-t border-slate-100 dark:border-slate-700/50" />
+                        <div className="my-8 border-t border-slate-100 dark:border-slate-700/50" />
+                    </>
+                )}
 
                 <div className="mb-6">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Contact Information</h3>
@@ -1117,6 +1828,27 @@ export default function BookingPage() {
                             className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
                             icon={<Globe strokeWidth={1.25} size={18} />}
                         />
+                    </div>
+
+                    {/* Visa Type */}
+                    <div className="col-span-2 relative group">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Visa Type *</label>
+                        <SearchableSelect
+                            name="visaType"
+                            value={bookingData.visaType}
+                            onChange={(e: any) => updateData('visaType', e.target.value)}
+                            options={[
+                                { value: "Umrah Visa", label: "Umrah Visa", icon: "🕋" },
+                                { value: "Visit Visa", label: "Visit Visa", icon: "📋" },
+                                { value: "Tourist Visa", label: "Tourist Visa", icon: "✈️" },
+                                { value: "Saudi Resident (Iqama)", label: "Saudi Resident (Iqama)", icon: "🏠" },
+                                { value: "GCC Resident", label: "GCC Resident", icon: "🌐" }
+                            ]}
+                            placeholder="Select Visa Type"
+                            className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50"
+                            icon={<ShieldCheck strokeWidth={1.25} size={18} />}
+                        />
+                        {errors.visaType && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.visaType}</p>}
                     </div>
 
                     {/* Phone */}
@@ -1271,6 +2003,50 @@ export default function BookingPage() {
             };
         }, { originalPrice: 0, discountApplied: 0, price: 0 });
 
+        let wadiJinnFeeTotal = 0;
+        const wadiJinnFee = settings?.routeFees?.wadiJinnFee ?? 150;
+        if (bookingData.routeType === 'multi') {
+            bookingData.legs.forEach(leg => {
+                if (leg.includeWadiJinn) {
+                    const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
+                    wadiJinnFeeTotal += legVehicles.reduce((sum, sv) => sum + wadiJinnFee * sv.quantity, 0);
+                }
+            });
+        } else {
+            if (bookingData.includeWadiJinn) {
+                wadiJinnFeeTotal = bookingData.selectedVehicles.reduce((sum, sv) => sum + wadiJinnFee * sv.quantity, 0);
+            }
+        }
+
+        // Nusuk Direct Route Fee — Jeddah Airport → Madinah + Umrah Visa
+        let nusukFeeTotal = 0;
+        const umrahFeeAmount = settings?.routeFees?.umrahFeeAmount ?? 150;
+        if (bookingData.visaType === 'Umrah Visa' && settings?.routeFees?.enableUmrahFee !== false) {
+            const pickupLower = bookingData.pickup?.toLowerCase() || '';
+            const dropoffLower = bookingData.dropoff?.toLowerCase() || '';
+            if (pickupLower.includes('jeddah') && pickupLower.includes('airport') && dropoffLower.includes('madin')) {
+                nusukFeeTotal = bookingData.selectedVehicles.reduce((sum, sv) => sum + umrahFeeAmount * sv.quantity, 0);
+            }
+        }
+
+        // Via Badr Route Fee — Madinah → Makkah
+        let viaBadrFeeTotal = 0;
+        const viaBadrFeeAmount = settings?.routeFees?.viaBadrFeeAmount ?? 150;
+        if (bookingData.routeType === 'multi') {
+            bookingData.legs.forEach(leg => {
+                if (leg.viaBadr) {
+                    const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
+                    viaBadrFeeTotal += legVehicles.reduce((sum, sv) => sum + viaBadrFeeAmount * sv.quantity, 0);
+                }
+            });
+        } else {
+            if (bookingData.viaBadr && settings?.routeFees?.enableViaBadr !== false) {
+                viaBadrFeeTotal = bookingData.selectedVehicles.reduce((sum, sv) => sum + viaBadrFeeAmount * sv.quantity, 0);
+            }
+        }
+
+        const totalExtraFees = wadiJinnFeeTotal + nusukFeeTotal + viaBadrFeeTotal;
+
         return (
             <motion.div
                 key="step4"
@@ -1296,73 +2072,172 @@ export default function BookingPage() {
                         {/* Left Section: Trip Details */}
                         <div className="p-8 col-span-2 space-y-8">
                             {/* Route Visual */}
-                            <div className="flex items-start gap-4">
-                                <div className="flex flex-col items-center pt-2">
-                                    <div className="w-3 h-3 rounded-full bg-secondary ring-4 ring-secondary/20" />
-                                    <div className="w-0.5 h-16 bg-gradient-to-b from-secondary to-slate-200 dark:to-slate-800 my-1" />
-                                    <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-white ring-4 ring-slate-100 dark:ring-slate-700" />
-                                </div>
-                                <div className="flex-1 space-y-8">
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
-                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-                                            {bookingData.pickup || (route ? getRouteOrigin(route) : 'Unknown Pickup')}
-                                        </h3>
-                                        <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
-                                            <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
-                                            <span className="w-1 h-1 rounded-full bg-slate-300" />
-                                            <Clock strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </div>
+                            <div className="flex items-start gap-4 w-full relative">
+                                {bookingData.routeType === 'multi' ? (
+                                    <div className="space-y-6 w-full">
+                                        {bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => (
+                                            <div key={leg.id || index} className="flex gap-4 items-stretch relative">
+                                                <div className="flex flex-col items-center mt-4 z-10 w-6">
+                                                    <div className="w-3 h-3 rounded-full bg-secondary ring-4 ring-secondary/20 shrink-0" />
+                                                    {index !== bookingData.legs.length - 1 && (
+                                                        <div className="w-0.5 bg-slate-200 dark:bg-slate-700 flex-1 my-2" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                                                    <div className="flex justify-between items-start mb-2">
+                                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Route {index + 1}</span>
+                                                        <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                                                            <Calendar strokeWidth={1.25} size={12} className="text-secondary" /> {leg.date?.toLocaleDateString()}
+                                                            <span className="w-1 h-1 rounded-full bg-slate-300" />
+                                                            <Clock strokeWidth={1.25} size={12} className="text-secondary" /> {leg.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="flex-1">
+                                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{leg.pickup}</p>
+                                                        </div>
+                                                        <ArrowRight size={14} className="text-slate-400 shrink-0" />
+                                                        <div className="flex-1 text-right">
+                                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{leg.dropoff}</p>
+                                                        </div>
+                                                    </div>
+                                                    {renderReceiptZiyarat(leg.dropoff)}
+                                                    {(() => {
+                                                        const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
+                                                        if (legVehicles.length === 0 || !leg.routeId) return null;
+                                                        
+                                                        let legTotal = 0;
+                                                        return (
+                                                            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                                                                <p className="text-[10px] font-bold text-slate-500 uppercase">Selected Vehicles for Route {index + 1}</p>
+                                                                {legVehicles.map(sv => {
+                                                                    const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                                                    if (!v) return null;
+                                                                    
+                                                                    // We calculate the exact price for this specific leg with all its add-ons
+                                                                    const legPriceDetails = calculatePrice(leg.routeId!, sv.vehicleId, {
+                                                                        includeWadiJinn: leg.includeWadiJinn,
+                                                                        viaBadr: leg.viaBadr,
+                                                                        visaType: bookingData.visaType,
+                                                                        pickup: leg.pickup,
+                                                                        dropoff: leg.dropoff,
+                                                                        stopovers: leg.stopovers,
+                                                                    });
+                                                                    
+                                                                    const vehicleLegTotal = legPriceDetails.price * sv.quantity;
+                                                                    legTotal += vehicleLegTotal;
+                                                                    
+                                                                    return (
+                                                                        <div key={sv.vehicleId} className="flex justify-between items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
+                                                                            <div className="flex items-center gap-2">
+                                                                                <span className="font-bold text-xs text-slate-900 dark:text-white">{v.name}</span>
+                                                                                <span className="text-[10px] text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">x{sv.quantity}</span>
+                                                                            </div>
+                                                                            <span className="font-bold text-xs text-secondary">{vehicleLegTotal} SAR</span>
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                                <div className="flex justify-between items-center pt-2 px-1">
+                                                                    <span className="text-xs font-bold text-slate-500 uppercase">Route {index + 1} Subtotal</span>
+                                                                    <span className="font-black text-secondary">{legTotal} SAR</span>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</p>
-                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-                                            {bookingData.dropoff || (route ? getRouteDestination(route) : 'Unknown Dropoff')}
-                                        </h3>
-                                        {route && (
-                                            <div className="flex items-center gap-2 mt-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-md w-fit">
-                                                <span>{route.distance}</span>
-                                                <span>•</span>
-                                                <span>{route.time}</span>
+                                ) : (
+                                    <>
+                                        <div className="flex flex-col items-center pt-2 w-6">
+                                            <div className="w-3 h-3 rounded-full bg-secondary ring-4 ring-secondary/20" />
+                                            <div className="w-0.5 h-16 bg-gradient-to-b from-secondary to-slate-200 dark:to-slate-800 my-1" />
+                                            <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-white ring-4 ring-slate-100 dark:ring-slate-700" />
+                                        </div>
+                                        <div className="flex-1 space-y-8">
+                                            <div>
+                                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
+                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                                    {bookingData.pickup || (route ? getRouteOrigin(route) : 'Unknown Pickup')}
+                                                </h3>
+                                                <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
+                                                    <Calendar strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
+                                                    <span className="w-1 h-1 rounded-full bg-slate-300" />
+                                                    <Clock strokeWidth={1.25} size={14} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</p>
+                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                                    {bookingData.dropoff || (route ? getRouteDestination(route) : 'Unknown Dropoff')}
+                                                </h3>
+                                                {renderReceiptZiyarat(bookingData.dropoff || (route ? getRouteDestination(route) : ''))}
+                                                {route && (
+                                                    <div className="flex items-center gap-2 mt-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-md w-fit">
+                                                        <span>{route.distance}</span>
+                                                        <span>•</span>
+                                                        <span>{route.time}</span>
+                                                    </div>
+                                                )}
+                                                {bookingData.viaBadr && (
+                                                    <span className="inline-flex items-center gap-1 mt-2 text-xs font-bold bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2.5 py-1 rounded-md w-fit">
+                                                        <Navigation size={12} /> Via Badr (Jabal Malaika Ziyarat)
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {bookingData.visaType && (
+                                            <div className="mt-3 flex items-center gap-2">
+                                                <span className="inline-flex items-center gap-1 text-xs font-bold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-md">
+                                                    <ShieldCheck size={12} /> {bookingData.visaType}
+                                                </span>
+                                                {bookingData.visaType === 'Umrah Visa' && nusukFeeTotal > 0 && (
+                                                    <span className="inline-flex items-center gap-1 text-xs font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2.5 py-1 rounded-md">
+                                                        Nusuk Registered
+                                                    </span>
+                                                )}
                                             </div>
                                         )}
-                                    </div>
-                                </div>
-                                <button onClick={() => setStep(1)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
+                                    </>
+                                )}
+                                <button onClick={() => setStep(1)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4 mt-2 shrink-0">
                                     EDIT
                                 </button>
                             </div>
 
-                            <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
-                                <div className="flex justify-between items-start mb-4">
-                                    <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                        <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
-                                        Selected Vehicles
-                                    </h4>
-                                    <button onClick={() => setStep(2)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
-                                        EDIT
-                                    </button>
+                            {(!bookingData.routeType || bookingData.routeType === 'single' || bookingData.sameVehicleForAllLegs) && (
+                                <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                            <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
+                                            Selected Vehicles
+                                        </h4>
+                                        <button onClick={() => setStep(2)} className="text-xs font-bold text-secondary hover:text-[#B38E2D] hover:underline underline-offset-4">
+                                            EDIT
+                                        </button>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {bookingData.selectedVehicles.map(sv => {
+                                            const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                            return v ? (
+                                                <div key={sv.vehicleId} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
+                                                    <div className="w-16 h-10 bg-white dark:bg-slate-700/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600 relative">
+                                                        {v.image ? <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" /> : <User strokeWidth={1.25} size={20} />}
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</p>
+                                                        <p className="text-xs text-slate-500">{v.capacity} Passengers • {v.luggage} Bags</p>
+                                                    </div>
+                                                    <div className="ml-auto font-bold text-sm bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 shadow-sm">
+                                                        x{sv.quantity}
+                                                    </div>
+                                                </div>
+                                            ) : null;
+                                        })}
+                                    </div>
                                 </div>
-                                <div className="space-y-4">
-                                    {bookingData.selectedVehicles.map(sv => {
-                                        const v = vehicles.find(veh => veh.id === sv.vehicleId);
-                                        return v ? (
-                                            <div key={sv.vehicleId} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
-                                                <div className="w-16 h-10 bg-white dark:bg-slate-700/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600 relative">
-                                                    {v.image ? <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" /> : <User strokeWidth={1.25} size={20} />}
-                                                </div>
-                                                <div>
-                                                    <p className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</p>
-                                                    <p className="text-xs text-slate-500">{v.capacity} Passengers • {v.luggage} Bags</p>
-                                                </div>
-                                                <div className="ml-auto font-bold text-sm bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 shadow-sm">
-                                                    x{sv.quantity}
-                                                </div>
-                                            </div>
-                                        ) : null;
-                                    })}
-                                </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Right Section: Passenger & Pricing */}
@@ -1403,8 +2278,42 @@ export default function BookingPage() {
                                 <div className="space-y-2 mb-4">
                                     <div className="flex justify-between text-sm text-slate-500">
                                         <span>Base Rate</span>
-                                        <span>{priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price} SAR</span>
+                                        <span>{(priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price) - totalExtraFees} SAR</span>
                                     </div>
+                                    {wadiJinnFeeTotal > 0 && (
+                                        <div className="flex justify-between text-sm text-amber-600 font-medium">
+                                            <span>External Ziyarat (Wadi Jinn)</span>
+                                            <span>+{wadiJinnFeeTotal} SAR</span>
+                                        </div>
+                                    )}
+                                    {nusukFeeTotal > 0 && (
+                                        <div className="flex justify-between text-sm text-blue-600 font-medium">
+                                            <span className="flex items-center gap-1">
+                                                Nusuk Direct Route Fee
+                                                <span className="relative group/tip cursor-help">
+                                                    <Info size={12} className="text-blue-400" />
+                                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
+                                                        This fee applies only to Umrah Visa passengers traveling directly from Jeddah Airport to Madinah using Nusuk‑registered vehicles.
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>+{nusukFeeTotal} SAR</span>
+                                        </div>
+                                    )}
+                                    {viaBadrFeeTotal > 0 && (
+                                        <div className="flex justify-between text-sm text-purple-600 font-medium">
+                                            <span className="flex items-center gap-1">
+                                                Via Badr (Jabal Malaika Ziyarat)
+                                                <span className="relative group/tip cursor-help">
+                                                    <Info size={12} className="text-purple-400" />
+                                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
+                                                        This route includes the ziyarat point Jabal Malaika and adds approximately 150–200 km to the journey.
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span>+{viaBadrFeeTotal} SAR</span>
+                                        </div>
+                                    )}
                                     {priceDetails.discountApplied > 0 && (
                                         <div className="flex justify-between text-sm text-green-600 font-medium">
                                             <span>Discount</span>
@@ -1574,32 +2483,85 @@ export default function BookingPage() {
                                 </span>
                             </div>
 
-                            <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup / موقع الاستلام</span>
-                                <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.pickup}</span>
-                            </div>
+                            {bookingData.routeType === 'multi' ? (
+                                <div className="col-span-1 md:col-span-2 print:col-span-2 space-y-4">
+                                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Routes / المسارات</span>
+                                    {bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => {
+                                        const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
+                                        let legTotal = 0;
+                                        if (leg.routeId && legVehicles.length > 0) {
+                                            legTotal = legVehicles.reduce((sum, sv) => {
+                                                const priceDetails = calculatePrice(leg.routeId!, sv.vehicleId, {
+                                                    includeWadiJinn: leg.includeWadiJinn,
+                                                    viaBadr: leg.viaBadr,
+                                                    visaType: bookingData.visaType,
+                                                    pickup: leg.pickup,
+                                                    dropoff: leg.dropoff,
+                                                    stopovers: leg.stopovers,
+                                                });
+                                                return sum + priceDetails.price * sv.quantity;
+                                            }, 0);
+                                        }
+                                        return (
+                                            <div key={index} className="flex justify-between items-center relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                                                <div>
+                                                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Route {index + 1}</span>
+                                                    <span className="block font-medium text-slate-900 dark:text-white text-sm">{leg.pickup} → {leg.dropoff}</span>
+                                                    {renderReceiptZiyarat(leg.dropoff)}
+                                                </div>
+                                                {legTotal > 0 && (
+                                                    <div className="text-right">
+                                                        <span className="font-bold text-slate-900 dark:text-white">{legTotal} SAR</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                                        <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup / موقع الاستلام</span>
+                                        <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.pickup}</span>
+                                    </div>
 
-                            <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Destination / الوجهة</span>
-                                <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.dropoff}</span>
-                            </div>
+                                    <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                                        <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Destination / الوجهة</span>
+                                        <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.dropoff}</span>
+                                        {renderReceiptZiyarat(bookingData.dropoff)}
+                                    </div>
+                                </>
+                            )}
 
                             <div className="md:col-span-2 print:col-span-2 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-4 mt-2">
                                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Vehicle Configuration / تفاصيل المركبة</span>
                                 <div className="space-y-2">
-                                    {bookingData.selectedVehicles.map((sv) => {
-                                        const v = vehicles.find(veh => veh.id === sv.vehicleId);
-                                        return v ? (
-                                            <div key={sv.vehicleId} className="flex justify-between items-center text-sm">
-                                                <div className="font-bold text-slate-700 dark:text-slate-200">
-                                                    {v.name}
-                                                </div>
-                                                <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">
-                                                    x{sv.quantity}
-                                                </div>
+                                    {bookingData.routeType === 'multi' && !bookingData.sameVehicleForAllLegs ? (
+                                        bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => (
+                                            <div key={index} className="space-y-1 mb-3 last:mb-0">
+                                                <span className="text-[10px] text-slate-500 font-bold uppercase">Route {index + 1}</span>
+                                                {leg.selectedVehicles?.map(sv => {
+                                                    const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                                    return v ? (
+                                                        <div key={sv.vehicleId} className="flex justify-between items-center text-sm pl-2">
+                                                            <div className="font-bold text-slate-700 dark:text-slate-200">{v.name}</div>
+                                                            <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">x{sv.quantity}</div>
+                                                        </div>
+                                                    ) : null;
+                                                })}
                                             </div>
-                                        ) : null;
-                                    })}
+                                        ))
+                                    ) : (
+                                        bookingData.selectedVehicles.map((sv) => {
+                                            const v = vehicles.find(veh => veh.id === sv.vehicleId);
+                                            return v ? (
+                                                <div key={sv.vehicleId} className="flex justify-between items-center text-sm">
+                                                    <div className="font-bold text-slate-700 dark:text-slate-200">{v.name}</div>
+                                                    <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">x{sv.quantity}</div>
+                                                </div>
+                                            ) : null;
+                                        })
+                                    )}
                                 </div>
                             </div>
 
@@ -1653,8 +2615,34 @@ export default function BookingPage() {
     const Sidebar = () => {
         const route = getSelectedRoute();
 
+        const renderSidebarZiyarat = (destination: string) => {
+            const destLower = destination.toLowerCase();
+            let packageKey = '';
+            if (destLower.includes('makkah ziyarat') && !destLower.includes('madinah')) packageKey = 'makkah ziyarat';
+            else if (destLower.includes('madinah ziyarat')) packageKey = 'madinah ziyarat';
+            else if (destLower.includes('taif ziyarat')) packageKey = 'taif ziyarat';
+            else if (destLower.includes('badr ziyarat')) packageKey = 'badr ziyarat';
+            
+            const pkg = ZIYARAT_PACKAGES[packageKey];
+            if (!pkg) return null;
+
+            return (
+                <div className="mt-3 p-3 bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-lg">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                        <Info size={14} className="text-indigo-600 dark:text-indigo-400" />
+                        <span className="font-bold text-indigo-900 dark:text-indigo-300 text-[11px] uppercase tracking-wider">
+                            {packageKey} ({pkg.duration})
+                        </span>
+                    </div>
+                    <div className="text-[10px] text-indigo-700 dark:text-indigo-400 leading-tight">
+                        <span className="font-semibold">Includes {pkg.places.length} places:</span> {pkg.places.join(', ')}
+                    </div>
+                </div>
+            );
+        };
+
         return (
-            <div className="sticky top-40 space-y-6">
+            <div className="sticky top-32 space-y-6 h-max self-start pb-10">
                 {/* Summary Card */}
                 <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
@@ -1664,32 +2652,105 @@ export default function BookingPage() {
 
                     {/* Timeline */}
                     <div className="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100 dark:before:bg-slate-700">
-                        {/* Pickup */}
-                        <div className="relative pl-8">
-                            <div className="absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-secondary shadow-sm" />
-                            <div>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Origin</span>
-                                <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.pickup || (route ? getRouteOrigin(route) : 'Select Pickup')}
-                                </h4>
-                                {bookingData.date && (
-                                    <p className="text-sm text-slate-500 mt-1">
-                                        {bookingData.date.toLocaleDateString()}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
+                        {bookingData.routeType === 'multi' ? (
+                            bookingData.legs.map((leg, index) => {
+                                const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
+                                let legTotal = 0;
+                                if (leg.routeId && legVehicles.length > 0) {
+                                    legTotal = legVehicles.reduce((sum, sv) => {
+                                        const priceDetails = calculatePrice(leg.routeId!, sv.vehicleId, {
+                                            includeWadiJinn: leg.includeWadiJinn,
+                                            viaBadr: leg.viaBadr,
+                                            visaType: bookingData.visaType,
+                                            pickup: leg.pickup,
+                                            dropoff: leg.dropoff,
+                                            stopovers: leg.stopovers,
+                                        });
+                                        return sum + priceDetails.price * sv.quantity;
+                                    }, 0);
+                                }
 
-                        {/* Dropoff */}
-                        <div className="relative pl-8">
-                            <div className="absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-slate-900 dark:bg-white shadow-sm" />
-                            <div>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Destination</span>
-                                <h4 className="font-bold text-slate-900 dark:text-white">
-                                    {bookingData.dropoff || (route ? getRouteDestination(route) : 'Select Dropoff')}
-                                </h4>
-                            </div>
-                        </div>
+                                return (
+                                    <div key={leg.id} className="relative pl-8 mb-4 last:mb-0">
+                                        <div className={`absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 ${index === 0 ? 'bg-secondary' : 'bg-slate-400'} shadow-sm`} />
+                                        <div className="flex justify-between items-start gap-2">
+                                            <div>
+                                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Route {index + 1}</span>
+                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">
+                                                    {leg.pickup || 'Select Pickup'}
+                                                </h4>
+                                                <p className="text-[10px] text-slate-400 my-0.5">↓</p>
+                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">
+                                                    {leg.dropoff || 'Select Dropoff'}
+                                                </h4>
+                                                {leg.date && (
+                                                    <p className="text-[10px] text-secondary font-medium mt-1">
+                                                        {leg.date.toLocaleDateString()} {leg.time && `• ${leg.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            {legTotal > 0 && (
+                                                <div className="text-right shrink-0">
+                                                    <span className="font-black text-secondary text-sm">{legTotal}</span>
+                                                    <span className="text-[10px] text-slate-500 block">SAR</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {renderSidebarZiyarat(leg.dropoff)}
+                                        {leg.includeWadiJinn && (
+                                            <div className="mt-2 text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded">
+                                                + Wadi Jinn (150 SAR)
+                                            </div>
+                                        )}
+                                        {leg.viaBadr && (
+                                            <div className="mt-2 text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded">
+                                                + Via Badr / Jabal Malaika (150 SAR)
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <>
+                                {/* Pickup */}
+                                <div className="relative pl-8">
+                                    <div className="absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-secondary shadow-sm" />
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Origin</span>
+                                        <h4 className="font-bold text-slate-900 dark:text-white">
+                                            {bookingData.pickup || (route ? getRouteOrigin(route) : 'Select Pickup')}
+                                        </h4>
+                                        {bookingData.date && (
+                                            <p className="text-sm text-slate-500 mt-1">
+                                                {bookingData.date.toLocaleDateString()}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Dropoff */}
+                                <div className="relative pl-8">
+                                    <div className="absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-slate-900 dark:bg-white shadow-sm" />
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Destination</span>
+                                        <h4 className="font-bold text-slate-900 dark:text-white">
+                                            {bookingData.dropoff || (route ? getRouteDestination(route) : 'Select Dropoff')}
+                                        </h4>
+                                    </div>
+                                    {renderSidebarZiyarat(bookingData.dropoff || (route ? getRouteDestination(route) : ''))}
+                                    {bookingData.includeWadiJinn && (
+                                        <div className="mt-2 text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded w-max">
+                                            + Wadi Jinn (150 SAR)
+                                        </div>
+                                    )}
+                                    {bookingData.viaBadr && (
+                                        <div className="mt-2 text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded w-max">
+                                            + Via Badr / Jabal Malaika (150 SAR)
+                                        </div>
+                                    )}
+                                </div>
+                            </>
+                        )}
                     </div>
 
                     {/* Quick Stats */}
@@ -1714,31 +2775,67 @@ export default function BookingPage() {
 
                     {/* Selected Vehicles */}
                     <div className="mb-6 space-y-4">
-                        {bookingData.selectedVehicles.length > 0 ? (
-                            bookingData.selectedVehicles.map((sv) => {
-                                const v = vehicles.find(v => v.id === sv.vehicleId);
-                                if (!v) return null;
-                                return (
-                                    <div key={sv.vehicleId} className="flex items-center gap-4">
-                                        <div className="w-16 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center justify-center overflow-hidden relative">
-                                            {v.image ? (
-                                                <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" />
-                                            ) : (
-                                                <User strokeWidth={1.25} size={20} className="text-slate-400" />
-                                            )}
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex justify-between items-start">
-                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</h4>
-                                                <span className="text-xs font-bold bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">x{sv.quantity}</span>
+                        {(!bookingData.routeType || bookingData.routeType === 'single' || bookingData.sameVehicleForAllLegs) ? (
+                            bookingData.selectedVehicles.length > 0 ? (
+                                bookingData.selectedVehicles.map((sv) => {
+                                    const v = vehicles.find(v => v.id === sv.vehicleId);
+                                    if (!v) return null;
+                                    return (
+                                        <div key={sv.vehicleId} className="flex items-center gap-4">
+                                            <div className="w-16 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center justify-center overflow-hidden relative">
+                                                {v.image ? (
+                                                    <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" />
+                                                ) : (
+                                                    <User strokeWidth={1.25} size={20} className="text-slate-400" />
+                                                )}
                                             </div>
-                                            <p className="text-xs text-slate-500">{v.capacity} • {v.luggage}</p>
+                                            <div className="flex-1">
+                                                <div className="flex justify-between items-start">
+                                                    <h4 className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</h4>
+                                                    <span className="text-xs font-bold bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">x{sv.quantity}</span>
+                                                </div>
+                                                <p className="text-xs text-slate-500">{v.capacity} • {v.luggage}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })
+                                    );
+                                })
+                            ) : (
+                                <div className="text-sm text-slate-500 italic">No vehicles selected</div>
+                            )
                         ) : (
-                            <div className="text-sm text-slate-500 italic">No vehicles selected</div>
+                            bookingData.legs.filter(l => l.selectedVehicles && l.selectedVehicles.length > 0).length > 0 ? (
+                                bookingData.legs.map((leg, i) => (
+                                    leg.selectedVehicles && leg.selectedVehicles.length > 0 && (
+                                        <div key={leg.id} className="space-y-2 mt-4 first:mt-0">
+                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Route {i + 1}</p>
+                                            {leg.selectedVehicles.map(sv => {
+                                                const v = vehicles.find(v => v.id === sv.vehicleId);
+                                                if (!v) return null;
+                                                return (
+                                                    <div key={sv.vehicleId} className="flex items-center gap-4">
+                                                        <div className="w-16 h-12 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center justify-center overflow-hidden relative">
+                                                            {v.image ? (
+                                                                <Image src={v.image} alt={v.name} fill className="object-cover" sizes="64px" />
+                                                            ) : (
+                                                                <User strokeWidth={1.25} size={20} className="text-slate-400" />
+                                                            )}
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <div className="flex justify-between items-start">
+                                                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</h4>
+                                                                <span className="text-xs font-bold bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">x{sv.quantity}</span>
+                                                            </div>
+                                                            <p className="text-xs text-slate-500">{v.capacity} • {v.luggage}</p>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )
+                                ))
+                            ) : (
+                                <div className="text-sm text-slate-500 italic">No vehicles selected</div>
+                            )
                         )}
                     </div>
 
@@ -1800,7 +2897,7 @@ export default function BookingPage() {
                 </div>
                 <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12">
                     {/* Main Wizard Area */}
-                    <div className="lg:col-span-2">
+                    <div className={step === 5 ? "lg:col-span-3 max-w-3xl mx-auto w-full" : "lg:col-span-2"}>
                         <AnimatePresence mode="wait">
                             {step === 1 && renderStep1()}
                             {step === 2 && renderStep2()}
@@ -1855,7 +2952,7 @@ export default function BookingPage() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block h-full relative">
                         {step < 5 && <Sidebar />}
                     </div>
                 </div>

@@ -5,12 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FadeIn from '@/components/common/FadeIn';
 import ServiceLocationsGrid from './ServiceLocationsGrid';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
+import { MapPin, Clock, ShieldCheck, Star, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { POPULAR_ROUTES, VEHICLE_KEYWORDS } from '@/data/seo-keywords';
 
 export default function ExpandedSEOContent() {
@@ -71,63 +66,87 @@ export default function ExpandedSEOContent() {
                         {/* Semantic FAQ Section */}
                         <div className="grid md:grid-cols-2 gap-8 items-start">
                             <div className="space-y-6">
-                                <h3 className="text-2xl font-bold  mb-4">Frequently Asked Questions</h3>
-                                <Accordion type="single" collapsible className="w-full">
-                                    <AccordionItem value="item-1">
-                                        <AccordionTrigger>How much is a taxi from Jeddah Airport to Makkah?</AccordionTrigger>
-                                        <AccordionContent>
+                                <h3 className="text-2xl font-bold mb-4">Frequently Asked Questions</h3>
+                                <div className="w-full">
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            How much is a taxi from Jeddah Airport to Makkah?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             Prices vary by vehicle. A standard sedan (Camry) starts around <strong>200-250 SAR</strong>, while a luxury GMC Yukon XL is typically <strong>350-450 SAR</strong>. Prices may increase during Ramadan and Hajj seasons.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-2">
-                                        <AccordionTrigger>How long does it take to travel from Makkah to Madinah?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            How long does it take to travel from Makkah to Madinah?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             The journey typically takes <strong>4 to 4.5 hours</strong> by car (approx. 450 km). Our professional drivers ensure a smooth ride with optional stops at rest areas (Sasco) for prayers and food.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-3">
-                                        <AccordionTrigger>Do you offer Ziyarat tours in Makkah and Madinah?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            Do you offer Ziyarat tours in Makkah and Madinah?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             Yes! We provide comprehensive Ziyarat tours to historical sites like <strong>Masjid Quba, Mount Uhud, Cave Hira, and Cave Thawr</strong>. Our drivers are knowledgeable about these locations and can guide you.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-4">
-                                        <AccordionTrigger>Is the transport suitable for elderly pilgrims?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            Is the transport suitable for elderly pilgrims?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             Absolutely. We specialize in <strong>elderly-friendly transport</strong>. Our GMC Yukons have easy access, and our drivers provide door-to-door assistance, including wheelchair handling and luggage support.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                </Accordion>
+                                        </div>
+                                    </details>
+                                </div>
                             </div>
 
                             <div className="space-y-6">
-                                <h3 className="text-2xl font-bold  mb-4">Route & Vehicle Information</h3>
-                                <Accordion type="single" collapsible className="w-full">
-                                    <AccordionItem value="item-5">
-                                        <AccordionTrigger>What vehicles are available for large families?</AccordionTrigger>
-                                        <AccordionContent>
+                                <h3 className="text-2xl font-bold mb-4">Route & Vehicle Information</h3>
+                                <div className="w-full">
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            What vehicles are available for large families?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             For large groups (7-10 people), we recommend the <strong>Toyota Hiace</strong> or <strong>Hyundai H1</strong>. For extra luxury and comfort (up to 7 people), the <strong>GMC Yukon XL</strong> is the best choice. For larger groups (up to 21), we offer the <strong>Toyota Coaster</strong>.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-6">
-                                        <AccordionTrigger>Can I book a transfer from Madinah Airport to Makkah?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            Can I book a transfer from Madinah Airport to Makkah?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             Yes, we offer direct transfers from Madinah Airport to Makkah hotels. The journey takes approximately 4.5 hours. Alternatively, you can stay in Madinah first and book your Makkah transfer for a later date.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-7">
-                                        <AccordionTrigger>How do I book specific hotels like Fairmont or Hilton?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            How do I book specific hotels like Fairmont or Hilton?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             We serve all major hotels in the Clock Tower complex (Abraj Al Bait) and Jabal Omar. Simply mention your hotel name when booking via WhatsApp, and our drivers will drop you at the nearest drop-off point allowed by traffic police.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-8">
-                                        <AccordionTrigger>Is there transport during Ramadan?</AccordionTrigger>
-                                        <AccordionContent>
+                                        </div>
+                                    </details>
+                                    <details className="group border-b border-border">
+                                        <summary className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                                            Is there transport during Ramadan?
+                                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                                        </summary>
+                                        <div className="pb-4 pt-0 text-sm text-muted-foreground">
                                             Yes, we operate 24/7 during Ramadan. However, due to high demand and road closures near the Haram, we strongly advise <strong>pre-booking your ride</strong> at least 24 hours in advance to guarantee availability.
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                </Accordion>
+                                        </div>
+                                    </details>
+                                </div>
                             </div>
                         </div>
 

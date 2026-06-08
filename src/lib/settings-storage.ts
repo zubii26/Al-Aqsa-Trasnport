@@ -50,7 +50,14 @@ const DEFAULT_SETTINGS: Settings = {
         baseFare: 50,
         kmRate: 3,
         minFare: 50,
-    }
+    },
+    wadiJinnFee: 200,
+    routeFees: {
+        enableUmrahFee: true,
+        umrahFeeAmount: 150,
+        enableViaBadr: true,
+        viaBadrFeeAmount: 150,
+    },
 };
 
 export const getSettings = async (): Promise<Settings> => {
@@ -110,7 +117,14 @@ export const getSettings = async (): Promise<Settings> => {
                 baseFare: Number(settingsMap['custom_route_base_fare']) || DEFAULT_SETTINGS.customRoute?.baseFare || 50,
                 kmRate: Number(settingsMap['custom_route_km_rate']) || DEFAULT_SETTINGS.customRoute?.kmRate || 3,
                 minFare: Number(settingsMap['custom_route_min_fare']) || DEFAULT_SETTINGS.customRoute?.minFare || 50,
-            }
+            },
+            wadiJinnFee: Number(settingsMap['wadi_jinn_fee']) || DEFAULT_SETTINGS.wadiJinnFee || 200,
+            routeFees: {
+                enableUmrahFee: settingsMap['route_fees_enable_umrah_fee'] !== 'false',
+                umrahFeeAmount: Number(settingsMap['route_fees_umrah_fee_amount']) || DEFAULT_SETTINGS.routeFees?.umrahFeeAmount || 150,
+                enableViaBadr: settingsMap['route_fees_enable_via_badr'] !== 'false',
+                viaBadrFeeAmount: Number(settingsMap['route_fees_via_badr_fee_amount']) || DEFAULT_SETTINGS.routeFees?.viaBadrFeeAmount || 150,
+            },
         };
 
         console.log(`[getSettings] Settings merged`);
@@ -161,6 +175,11 @@ export async function saveSettings(newSettings: Settings): Promise<void> {
         { key: 'custom_route_base_fare', value: String(newSettings.customRoute?.baseFare ?? 50) },
         { key: 'custom_route_km_rate', value: String(newSettings.customRoute?.kmRate ?? 3) },
         { key: 'custom_route_min_fare', value: String(newSettings.customRoute?.minFare ?? 50) },
+        { key: 'wadi_jinn_fee', value: String(newSettings.wadiJinnFee ?? 200) },
+        { key: 'route_fees_enable_umrah_fee', value: String(newSettings.routeFees?.enableUmrahFee ?? true) },
+        { key: 'route_fees_umrah_fee_amount', value: String(newSettings.routeFees?.umrahFeeAmount ?? 150) },
+        { key: 'route_fees_enable_via_badr', value: String(newSettings.routeFees?.enableViaBadr ?? true) },
+        { key: 'route_fees_via_badr_fee_amount', value: String(newSettings.routeFees?.viaBadrFeeAmount ?? 150) },
     ];
 
     // Update each setting

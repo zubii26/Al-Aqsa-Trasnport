@@ -61,48 +61,123 @@ export async function POST(request: Request) {
 
         const bookingData = validation.data;
         let priceDetails: any = {};
-        const selectedVehiclesList = [];
+        const selectedVehiclesList: any[] = [];
+        let totalBasePrice = 0;
+        let vehicleNames: string[] = [];
 
-        // Normalize vehicle selection
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let vehiclesToProcess: any[] = [];
+        // Normalize top-level vehicle selection for backwards compatibility or "same vehicle"
+        let topLevelVehiclesToProcess: any[] = [];
         if (bookingData.selectedVehicles && bookingData.selectedVehicles.length > 0) {
-            vehiclesToProcess = bookingData.selectedVehicles;
+            topLevelVehiclesToProcess = bookingData.selectedVehicles;
         } else if (bookingData.vehicleId) {
-            vehiclesToProcess = [{ vehicleId: bookingData.vehicleId, quantity: bookingData.vehicleCount || 1 }];
+            topLevelVehiclesToProcess = [{ vehicleId: bookingData.vehicleId, quantity: bookingData.vehicleCount || 1 }];
         }
 
-        // Calculate price and resolve vehicle names
-        if (bookingData.routeId && vehiclesToProcess.length > 0) {
-            try {
-                const [routes, vehicles, settings] = await Promise.all([
-                    routeService.getRoutes(),
-                    vehicleService.getVehicles(),
-                    getSettings()
-                ]);
+        try {
+            const [routes, vehicles, settings] = await Promise.all([
+                routeService.getRoutes(),
+                vehicleService.getVehicles(),
+                getSettings()
+            ]);
 
-                const route = (routes as RouteWithPrices[]).find(r => r.id === bookingData.routeId);
+            const routesList = routes as RouteWithPrices[];
+            const vehiclesList = vehicles as any[];
 
-                let totalBasePrice = 0;
-                let vehicleNames: string[] = [];
+            // Process multi-leg bookings
+            if (bookingData.legs && bookingData.legs.length > 0) {
+                for (const leg of bookingData.legs) {
+                    const legRoute = routesList.find(r => r.id === leg.routeId);
+                    
+                    // Determine which vehicle applies to this leg (leg-specific or top-level fallback)
+                    let legVehiclesToProcess = topLevelVehiclesToProcess;
+                    if (!bookingData.sameVehicleForAllLegs && leg.selectedVehicles && leg.selectedVehicles.length > 0) {
+                        legVehiclesToProcess = leg.selectedVehicles;
+                    } else if (leg.vehicleId) {
+                        legVehiclesToProcess = [{ vehicleId: leg.vehicleId, quantity: bookingData.vehicleCount || 1 }];
+                    }
+                    
+                    for (const sv of legVehiclesToProcess) {
+                        if (!sv) continue;
+                        const vehicle = vehiclesList.find(v => v.id === sv.vehicleId);
+                        if (vehicle) {
+                            if (leg.date && vehicle.unavailableDates?.includes(leg.date)) {
+                                throw new Error(`Vehicle ${vehicle.name} is unavailable on ${leg.date}`);
+                            }
+                            
+                            leg.vehicleName = leg.vehicleName ? `${leg.vehicleName}, ${vehicle.name}` : vehicle.name;
+                            
+                            // Track unique vehicles globally for summary
+                            if (!vehicleNames.includes(`${sv.quantity} x ${vehicle.name}`)) {
+                                vehicleNames.push(`${sv.quantity} x ${vehicle.name}`);
+                                selectedVehiclesList.push({ name: vehicle.name, quantity: sv.quantity, vehicleId: vehicle.id });
+                            }
 
-                for (const sv of vehiclesToProcess) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const vehicle = (vehicles as any[]).find(v => v.id === sv.vehicleId);
+                            if (legRoute) {
+                                const priceEntry = legRoute.prices?.find(p => p.vehicleId === sv.vehicleId);
+                                if (priceEntry) {
+                                    let legPrice = priceEntry.price * sv.quantity;
+                                    
+                                    // Add stopover extra price
+                                    if (leg.stopovers && legRoute.stopovers) {
+                                        for (const sName of leg.stopovers) {
+                                            const s = legRoute.stopovers.find((rs: any) => rs.name === sName);
+                                            if (s) legPrice += (s.extraPrice * sv.quantity);
+                                        }
+                                    }
+                                    
+                                    if (leg.includeWadiJinn) {
+                                        const wadiJinnFee = settings.wadiJinnFee ?? 200;
+                                        legPrice += wadiJinnFee * sv.quantity;
+                                    }
+
+                                    // Via Badr route fee
+                                    if (leg.viaBadr && settings.routeFees?.enableViaBadr !== false) {
+                                        legPrice += (settings.routeFees?.viaBadrFeeAmount ?? 150) * sv.quantity;
+                                    }
+                                    
+                                    leg.price = (leg.price || 0) + legPrice;
+                                    totalBasePrice += legPrice;
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+            // Fallback to legacy single-route processing
+            else if (bookingData.routeId && topLevelVehiclesToProcess.length > 0) {
+                const route = routesList.find(r => r.id === bookingData.routeId);
+
+                for (const sv of topLevelVehiclesToProcess) {
+                    const vehicle = vehiclesList.find(v => v.id === sv.vehicleId);
                     if (vehicle) {
-                        // Check availability
                         if (bookingData.date && vehicle.unavailableDates?.includes(bookingData.date)) {
-                            // If this specific vehicle is unavailable on the requested date
                             throw new Error(`Vehicle ${vehicle.name} is unavailable on ${bookingData.date}`);
                         }
 
-                        selectedVehiclesList.push({ name: vehicle.name, quantity: sv.quantity });
+                        selectedVehiclesList.push({ name: vehicle.name, quantity: sv.quantity, vehicleId: vehicle.id });
                         vehicleNames.push(`${sv.quantity} x ${vehicle.name}`);
 
                         if (route) {
                             const priceEntry = route.prices?.find(p => p.vehicleId === sv.vehicleId);
                             if (priceEntry) {
-                                totalBasePrice += (priceEntry.price * sv.quantity);
+                                let singlePrice = priceEntry.price * sv.quantity;
+                                if (bookingData.includeWadiJinn) {
+                                    const wadiJinnFee = settings.wadiJinnFee ?? 200;
+                                    singlePrice += wadiJinnFee * sv.quantity;
+                                }
+                                // Nusuk Direct Route Fee (Umrah Visa + Jeddah Airport → Madinah)
+                                if (bookingData.visaType === 'Umrah Visa' && settings.routeFees?.enableUmrahFee !== false) {
+                                    const pickup = (bookingData.pickup || '').toLowerCase();
+                                    const dropoff = (bookingData.dropoff || '').toLowerCase();
+                                    if (pickup.includes('jeddah') && pickup.includes('airport') && dropoff.includes('madin')) {
+                                        singlePrice += (settings.routeFees?.umrahFeeAmount ?? 150) * sv.quantity;
+                                    }
+                                }
+                                // Via Badr route fee
+                                if (bookingData.viaBadr && settings.routeFees?.enableViaBadr !== false) {
+                                    singlePrice += (settings.routeFees?.viaBadrFeeAmount ?? 150) * sv.quantity;
+                                }
+                                totalBasePrice += singlePrice;
                             }
                         } else if (bookingData.routeId === 'custom' && bookingData.customRoute) {
                             const baseFare = settings.customRoute?.baseFare ?? 50;
@@ -114,35 +189,48 @@ export async function POST(request: Request) {
                             const multiplier = defaultVehicle?.multiplier ?? 1;
 
                             const customBase = Math.max(minFare, baseFare + distance * kmRate);
-                            totalBasePrice += (customBase * multiplier * sv.quantity);
+                            let singleCustomPrice = customBase * multiplier * sv.quantity;
+                            if (bookingData.includeWadiJinn) {
+                                const wadiJinnFee = settings.wadiJinnFee ?? 200;
+                                singleCustomPrice += wadiJinnFee * sv.quantity;
+                            }
+                            totalBasePrice += singleCustomPrice;
                         }
                     }
                 }
-
-                if (totalBasePrice > 0) {
-                    const { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(totalBasePrice, settings.discount);
-
-                    if (discountApplied > 0) {
-                        console.log(`[Booking] Discount applied: ${discountApplied} (${discountType})`);
-                    }
-
-                    priceDetails = {
-                        originalPrice,
-                        discountApplied,
-                        finalPrice: price,
-                        discountType,
-                        price: String(price) // Store final price as string for compatibility
-                    };
-                }
-
-                // Set the fallback/summary vehicle string
-                if (vehicleNames.length > 0) {
-                    bookingData.vehicle = vehicleNames.join(', ');
-                }
-
-            } catch (err) {
-                console.error('Error calculating price:', err);
             }
+
+            // Apply discounts to the total accumulated price
+            if (totalBasePrice > 0) {
+                let { price, originalPrice, discountApplied, discountType } = calculateFinalPrice(totalBasePrice, settings.discount);
+
+                // Multi-route 10% discount for 3+ routes
+                if (bookingData.legs && bookingData.legs.filter((l: any) => l.routeId && l.vehicleId).length >= 3) {
+                    const multiDiscount = price * 0.10;
+                    price = price - multiDiscount;
+                    discountApplied += multiDiscount;
+                    discountType = 'percentage';
+                }
+
+                if (discountApplied > 0) {
+                    console.log(`[Booking] Discount applied: ${discountApplied} (${discountType})`);
+                }
+
+                priceDetails = {
+                    originalPrice,
+                    discountApplied,
+                    finalPrice: price,
+                    discountType,
+                    price: String(price)
+                };
+            }
+
+            if (vehicleNames.length > 0) {
+                bookingData.vehicle = vehicleNames.join(', ');
+            }
+
+        } catch (err) {
+            console.error('Error calculating price:', err);
         }
 
         // Check if user is logged in (Optional)
@@ -205,6 +293,9 @@ export async function POST(request: Request) {
                     flightNumber: booking.flightNumber,
                     arrivalDate: booking.arrivalDate,
                     phone: booking.phone,
+                    legs: booking.legs,
+                    visaType: booking.visaType,
+                    viaBadr: booking.viaBadr,
                 };
 
                 await sendBookingConfirmationEmail(emailData);
