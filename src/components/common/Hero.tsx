@@ -123,29 +123,29 @@ const Hero: React.FC<HeroProps> = ({
             <motion.div style={{ y: textY, opacity }} className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} relative z-10 will-change-transform`}>
                 <div className={styles.textContent}>
                     {breadcrumbs && (
-                        <FadeIn animate delay={0.1} direction="down" className="mb-4">
+                        <FadeIn animate triggerOnMount delay={0.1} direction="down" className="mb-4">
                             {breadcrumbs}
                         </FadeIn>
                     )}
                     {badge && (
-                        <FadeIn animate delay={0.2} direction="down">
+                        <FadeIn animate triggerOnMount delay={0.2} direction="down">
                             <span className={styles.badge}>{badge}</span>
                         </FadeIn>
                     )}
                     {/* Main Title */}
-                    <FadeIn animate delay={0.3} direction="up">
+                    <FadeIn animate triggerOnMount delay={0.3} direction="up">
                         <h1 className={styles.title}>
                             {title}
                         </h1>
                     </FadeIn>
 
-                    <FadeIn animate delay={0.4} direction="up">
+                    <FadeIn animate triggerOnMount delay={0.4} direction="up">
                         <div className={styles.subtitle}>
                             {subtitle}
                         </div>
                     </FadeIn>
 
-                    <FadeIn animate delay={0.5} direction="up">
+                    <FadeIn animate triggerOnMount delay={0.5} direction="up">
                         <div className={styles.buttons}>
                             {ctaText && ctaLink && (
                                 <GlassButton
@@ -170,7 +170,7 @@ const Hero: React.FC<HeroProps> = ({
                 </div>
 
                 {children && (
-                    <FadeIn animate
+                    <FadeIn animate triggerOnMount
                         delay={0.6}
                         direction="up"
                         className={styles.childrenContainer}

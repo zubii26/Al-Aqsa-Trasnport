@@ -10,15 +10,22 @@ interface FadeInProps {
     direction?: 'up' | 'down' | 'left' | 'right' | 'none';
     scale?: boolean;
     animate?: boolean; // NEW: Toggle animation
+    triggerOnMount?: boolean; // NEW: Trigger animation immediately on mount
 }
 
-export default function FadeIn({ children, delay = 0, className = '', direction = 'up', scale = false, animate = false }: FadeInProps) {
+export default function FadeIn({ children, delay = 0, className = '', direction = 'up', scale = false, animate = false, triggerOnMount = false }: FadeInProps) {
     const ref = useRef<HTMLDivElement>(null);
     // If animate is false, it's visible immediately
     const [isVisible, setIsVisible] = useState(!animate);
 
     useEffect(() => {
         if (!animate) return; // Skip observer if we aren't animating
+
+        if (triggerOnMount) {
+            // Trigger animation shortly after mount, bypassing observer
+            const timer = setTimeout(() => setIsVisible(true), 50);
+            return () => clearTimeout(timer);
+        }
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -35,7 +42,7 @@ export default function FadeIn({ children, delay = 0, className = '', direction 
         }
 
         return () => observer.disconnect();
-    }, [animate]);
+    }, [animate, triggerOnMount]);
 
     const getDirectionStyles = () => {
         if (!animate) return ''; // No offset if not animating
