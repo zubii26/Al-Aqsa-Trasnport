@@ -341,68 +341,32 @@
         font-size: 1rem;
     }
 
-    .carouselContainer {
-        /* Revert to Vertical Stack */
-        flex-direction: column;
-        overflow-x: visible;
-        scroll-snap-type: none;
-        padding: 0;
-        gap: 1.5rem;
-    }
-
     .card {
-        min-width: 100%;
-        width: 100%;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        background: transparent;
-        margin-bottom: 1rem;
-    }
-
-    /* Restore card styling for dark mode or just general cleanup if needed */
-    :global(.dark) .card {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        min-width: 280px;
+        width: 280px;
+        margin-bottom: 0;
     }
 
     .imageWrapper {
-        height: 250px;
-        border-radius: 0;
-        background: transparent;
-        border-bottom: none;
-    }
-
-    .vehicleImage {
-        padding: 0;
-        /* Max size asked */
+        height: 180px;
     }
 
     .content {
-        padding: 1rem 1.5rem;
-        background: transparent;
-    }
-
-    .cardHeader {
-        flex-direction: row;
-        gap: 1rem;
-        align-items: center;
-        margin-bottom: 1rem;
+        padding: 1.25rem;
     }
 
     .vehicleName {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
 
     .specs {
-        gap: 1.5rem;
-        font-size: 0.95rem;
+        gap: 1rem;
+        font-size: 0.85rem;
         padding-bottom: 1rem;
         margin-bottom: 1rem;
     }
 
     .navBtn {
         display: none;
-        /* Hide buttons on mobile */
     }
 }
