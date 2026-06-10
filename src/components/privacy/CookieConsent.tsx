@@ -69,9 +69,9 @@ export default function CookieConsent() {
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    initial={{ y: 100, opacity: 0, scale: 0.95 }}
-                    animate={{ y: 0, opacity: 1, scale: 1 }}
-                    exit={{ y: 100, opacity: 0, scale: 0.95 }}
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
                     transition={{
                         type: "spring",
                         stiffness: 300,
@@ -80,34 +80,37 @@ export default function CookieConsent() {
                     }}
                     className={styles.banner}
                 >
-                    <div className={styles.glow} />
-
                     <div className={styles.content}>
                         <div className={styles.textSection}>
                             <div className={styles.iconWrapper}>
-                                <ShieldCheck size={28} />
+                                <ShieldCheck size={24} />
                             </div>
                             <div className={styles.textContent}>
-                                <h3 className="flex items-center gap-2">
-                                    Your Privacy Matters
-                                    <span className="text-amber-500 font-arabic text-sm opacity-80">| خصوصيتك تهمنا</span>
-                                </h3>
-                                <p>
+                                <div className={styles.titleWrapper}>
+                                    <span className={styles.titleEnglish}>Your Privacy Matters</span>
+                                    <span className={styles.titleArabic}>| خصوصيتك تهمنا</span>
+                                </div>
+                                <p className={styles.descEnglish}>
                                     We use cookies to enhance your experience, provide secure booking, and deliver personalized pilgrim services.
-                                    <span className="block font-arabic text-xs mt-1 opacity-70">نستخدم ملفات تعريف الارتباط لتحسين تجربتك وضمان حجز آمن لضيوف الرحمن.</span>
+                                </p>
+                                <p className={styles.descArabic} dir="rtl">
+                                    نستخدم ملفات تعريف الارتباط لتحسين تجربتك وضمان حجز آمن لضيوف الرحمن.
                                 </p>
                             </div>
                         </div>
 
                         <div className={styles.actions}>
                             <button onClick={handleAccept} className={styles.btnAccept}>
-                                Accept All <span className="font-arabic text-xs ml-1">موافق</span>
+                                <span>Accept All</span>
+                                <span className="font-arabic text-xs opacity-90">موافق</span>
                             </button>
                             <button onClick={handleReject} className={styles.btnReject}>
-                                Reject <span className="font-arabic text-xs ml-1">رفض</span>
+                                <span>Reject</span>
+                                <span className="font-arabic text-xs opacity-70">رفض</span>
                             </button>
                             <Link href="/cookie-preferences" className={styles.linkManage}>
-                                Preferences <span className="font-arabic text-xs ml-1">إعدادات</span>
+                                <span>Preferences</span>
+                                <span className="font-arabic text-xs opacity-70">إعدادات</span>
                             </Link>
                         </div>
                     </div>
