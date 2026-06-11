@@ -8,6 +8,8 @@ import Link from 'next/link';
 import { ArrowRight, CheckCircle2, MapPin, Clock } from 'lucide-react';
 import RouteVisual from '@/components/services/RouteVisual';
 import FAQSection from '@/components/services/FAQSection';
+import SchemaInjector from '@/components/SchemaInjector';
+import { makkahMadinahServiceSchema, makkahMadinahFAQSchema, makkahMadinahBreadcrumbSchema } from '@/lib/schema/makkah-madinah-taxi-schema';
 
 export const metadata: Metadata = {
     title: "Taxi Makkah to Madinah Price 2025 | VIP Private Car Cost",
@@ -59,50 +61,6 @@ const makkahMadinahFAQs = [
     }
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Makkah to Madinah Taxi Service",
-        "alternateName": "تاكسي مكة المدينة",
-        "provider": {
-            "@type": "Organization",
-            "name": "Al Aqsa Transport",
-            "url": "https://www.alaqsaumrahtransport.com"
-        },
-        "serviceType": "Intercity Transfer",
-        "areaServed": [
-            {
-                "@type": "City",
-                "name": "Makkah"
-            },
-            {
-                "@type": "City",
-                "name": "Madinah"
-            }
-        ],
-        "description": "Premium private transport between Makkah and Madinah in GMC Yukon or Staria.",
-        "offers": {
-            "@type": "Offer",
-            "price": "400",
-            "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi"
-        }
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": makkahMadinahFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.plainTextAnswer || faq.answer
-            }
-        }))
-    }
-];
 
 import { getSettings } from '@/lib/settings-storage';
 
@@ -119,10 +77,7 @@ export default async function MakkahMadinahTaxiPage() {
 
     return (
         <main className="overflow-x-hidden">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[makkahMadinahServiceSchema, makkahMadinahFAQSchema, makkahMadinahBreadcrumbSchema]} />
             <Hero
                 title={content.title}
                 subtitle={content.subtitle}

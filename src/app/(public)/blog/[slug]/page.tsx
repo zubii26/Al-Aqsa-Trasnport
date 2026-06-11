@@ -10,6 +10,8 @@ import FadeIn from '@/components/common/FadeIn';
 import GlassCard from '@/components/ui/GlassCard';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import ShareButtons from '@/components/blog/ShareButtons';
+import SchemaInjector from '@/components/SchemaInjector';
+import { generateBlogPostingSchema, generateBlogBreadcrumbSchema } from '@/lib/schema/blog-schema';
 
 interface BlogPostPageProps {
     params: Promise<{
@@ -82,28 +84,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         notFound();
     }
 
-    // JSON-LD Structured Data
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": post.title,
-        "image": [post.image], // In production, prepend domain
-        "datePublished": post.date, // Format should ideally be ISO 8601
-        "author": {
-            "@type": "Person",
-            "name": post.author
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Al Aqsa Umrah Transport",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://www.alaqsaumrahtransport.com/logo.png" // Update with actual logo URL
-            }
-        },
-        "description": post.excerpt,
-        "articleBody": post.content.replace(/<[^>]*>?/gm, '') // Strip HTML for plain text body
-    };
+    const blogPostingSchema = generateBlogPostingSchema(post);
+    const blogBreadcrumbSchema = generateBlogBreadcrumbSchema(post);
 
     // ✅ Use static posts only for related articles — no DB call during build.
     const relatedPosts = staticBlogPosts
@@ -113,10 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     return (
         <main>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[blogPostingSchema, blogBreadcrumbSchema]} />
 
 
 
@@ -137,6 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <Breadcrumbs
                             overrideLastItem={post.title}
                             className="mb-6 justify-center"
+                            hideJsonLd
                         />
                         <span className={styles.heroCategory}>{post.category}</span>
                         <h1 className={styles.heroTitle}>{post.title}</h1>

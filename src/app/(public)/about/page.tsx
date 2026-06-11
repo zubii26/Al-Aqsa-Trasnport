@@ -11,6 +11,7 @@ import ImpactStats from '@/components/about/ImpactStats';
 import TeamTeaser from '@/components/about/TeamTeaser';
 import PilgrimVoices from '@/components/about/PilgrimVoices';
 import { getSectionContent, getSectionImage } from '@/lib/content-service';
+import SchemaInjector from '@/components/SchemaInjector';
 
 
 
@@ -68,10 +69,7 @@ export default async function AboutPage() {
 
     return (
         <main className="min-h-screen">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[jsonLd]} />
             <div className="contents">
                 <Hero
                     title={title}

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReviewsCarousel from './ReviewsCarousel';
 import { Star, MessageSquarePlus, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SchemaInjector from '@/components/SchemaInjector';
 
 interface Review {
     id: string;
@@ -91,10 +92,39 @@ export default function ReviewsSection() {
         1: reviews.filter(r => r.rating === 1).length,
     };
 
+    const reviewsSchema = totalReviews > 0 ? [{
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://www.alaqsaumrahtransport.com/#organization",
+        "name": "Al Aqsa Umrah Transport",
+        "image": "https://www.alaqsaumrahtransport.com/images/logo.png",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": averageRating,
+            "reviewCount": totalReviews
+        },
+        "review": reviews.slice(0, 5).map(r => ({
+            "@type": "Review",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": r.rating,
+                "bestRating": "5"
+            },
+            "author": {
+                "@type": "Person",
+                "name": r.author
+            },
+            "reviewBody": r.comment,
+            "datePublished": new Date(r.date).toISOString().split('T')[0]
+        }))
+    }] : [];
+
     return (
-        <section className="py-12 md:py-16 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-            {/* Subtle Background */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-200/20 via-slate-50 to-slate-50 dark:from-slate-900/20 dark:via-slate-950 dark:to-slate-950" />
+        <>
+            {reviewsSchema.length > 0 && <SchemaInjector schemas={reviewsSchema} />}
+            <section className="py-12 md:py-16 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+                {/* Subtle Background */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-200/20 via-slate-50 to-slate-50 dark:from-slate-900/20 dark:via-slate-950 dark:to-slate-950" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-10">
@@ -209,5 +239,6 @@ export default function ReviewsSection() {
                 </motion.div>
             </div>
         </section>
+        </>
     );
 }

@@ -6,6 +6,8 @@ import { ArrowRight, MapPin, Clock, Camera, Heart, BookOpen } from 'lucide-react
 import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import SchemaInjector from '@/components/SchemaInjector';
+import { ziyaratTouristTripSchema, ziyaratFAQSchema, ziyaratBreadcrumbSchema } from '@/lib/schema/ziyarat-tours-schema';
 
 export const metadata: Metadata = {
     title: "Ziyarat Makkah Madinah Tours | Visit Historical Sites",
@@ -48,50 +50,6 @@ const ziyaratFAQs = [
     },
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "TouristTrip",
-        "name": "Makkah and Madinah Ziyarat Tour",
-        "description": "Private guided tour of historical Islamic sites in Makkah and Madinah including Cave Hira and Masjid Quba.",
-        "provider": {
-            "@type": "Organization",
-            "name": "Al Aqsa Transport",
-            "url": "https://www.alaqsaumrahtransport.com"
-        },
-        "itinerary": [
-            {
-                "@type": "City",
-                "name": "Makkah",
-                "description": "Visit Jabal Al-Nour, Jabal Thawr, and Arafat. زيارة جبل النور وغار ثور."
-            },
-            {
-                "@type": "City",
-                "name": "Madinah",
-                "description": "Visit Masjid Quba, Mount Uhud, and Qiblatayn. زيارة مسجد قباء وجبل أحد."
-            }
-        ],
-        "offers": {
-            "@type": "Offer",
-            "price": "300",
-            "priceCurrency": "SAR",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.alaqsaumrahtransport.com/services/ziyarat-tours"
-        }
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": ziyaratFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    }
-];
 
 export default async function ZiyaratToursPage() {
     const settings = await getSettings();
@@ -100,10 +58,7 @@ export default async function ZiyaratToursPage() {
 
     return (
         <main className="overflow-x-hidden">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[ziyaratTouristTripSchema, ziyaratFAQSchema, ziyaratBreadcrumbSchema]} />
             <Hero
                 title="Ziyarat Tours: Relive Islamic History"
                 subtitle="Walk in the footsteps of the Prophet (SAW). Comprehensive engaging tours of the holy sites in Makkah and Madinah."
@@ -111,7 +66,7 @@ export default async function ZiyaratToursPage() {
                 ctaText="Book Ziyarat Tour"
                 ctaLink={whatsappLink}
                 layout="center"
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
                 alt="Makkah and Madinah Historical Ziyarat Tours - Jabal Al Noor"
             />
 

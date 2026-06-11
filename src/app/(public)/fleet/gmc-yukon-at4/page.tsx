@@ -18,11 +18,33 @@ import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'gmc');
 
+const galleryImages = [
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp', alt: 'GMC Yukon Full Exterior View' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-family-seating-makkah-madinah-taxi.webp', alt: 'Family Seating Interior' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-luxury-umrah-transport-cinematic.webp', alt: 'GMC Yukon Front Side View' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-front-headlight-umrah-cab.webp', alt: 'LED Headlights' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-highway-driving-makkah-madinah.webp', alt: 'Highway Driving Makkah to Madinah' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-luggage-capacity-jeddah-airport.webp', alt: 'Massive Luggage Capacity' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-luxury-umrah-transport-cinematic.webp', alt: 'Cinematic Luxury View' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-panoramic-sunroof-luxury.webp', alt: 'Panoramic Sunroof' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-premium-alloy-wheels-umrah-cab.webp', alt: 'Premium Alloy Wheels' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-premium-dashboard-interior.webp', alt: 'Premium Dashboard Interior' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-rear-view-family-umrah-cab.webp', alt: 'Rear View Design' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-rear-view-umrah-cab-saudi.webp', alt: 'Saudi Arabia Umrah Cab Rear' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-side-profile-vip-umrah-taxi.webp', alt: 'Side Profile VIP Taxi' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-umrah-taxi-tail-lights-makkah.webp', alt: 'Distinctive Tail Lights' },
+    { src: '/images/fleet/gmc-yukon/gmc-yukon-vip-passenger-seats-umrah.webp', alt: 'VIP Passenger Seats' },
+];
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "GMC Yukon XL 2025 Rental Makkah",
-    "image": "https://www.alaqsaumrahtransport.com/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp",
+    "image": galleryImages.map(img => ({
+        "@type": "ImageObject",
+        "url": `https://www.alaqsaumrahtransport.com${img.src}`,
+        "caption": img.alt
+    })),
     "description": "Rent luxury GMC Yukon XL in Makkah & Madinah. Premium 7-Seater SUV for VIP Umrah transport, airport transfers, and intercity travel.",
     "brand": { "@type": "Brand", "name": "GMC" },
     "offers": { 
@@ -108,23 +130,6 @@ export const metadata: Metadata = {
     }
 };
 
-const galleryImages = [
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp', alt: 'GMC Yukon Full Exterior View' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-family-seating-makkah-madinah-taxi.webp', alt: 'Family Seating Interior' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-luxury-umrah-transport-cinematic.webp', alt: 'GMC Yukon Front Side View' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-front-headlight-umrah-cab.webp', alt: 'LED Headlights' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-highway-driving-makkah-madinah.webp', alt: 'Highway Driving Makkah to Madinah' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-luggage-capacity-jeddah-airport.webp', alt: 'Massive Luggage Capacity' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-luxury-umrah-transport-cinematic.webp', alt: 'Cinematic Luxury View' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-panoramic-sunroof-luxury.webp', alt: 'Panoramic Sunroof' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-premium-alloy-wheels-umrah-cab.webp', alt: 'Premium Alloy Wheels' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-premium-dashboard-interior.webp', alt: 'Premium Dashboard Interior' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-rear-view-family-umrah-cab.webp', alt: 'Rear View Design' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-rear-view-umrah-cab-saudi.webp', alt: 'Saudi Arabia Umrah Cab Rear' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-side-profile-vip-umrah-taxi.webp', alt: 'Side Profile VIP Taxi' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-umrah-taxi-tail-lights-makkah.webp', alt: 'Distinctive Tail Lights' },
-    { src: '/images/fleet/gmc-yukon/gmc-yukon-vip-passenger-seats-umrah.webp', alt: 'VIP Passenger Seats' },
-];
 
 const specs = [
     { label: "Engine & Power", value: "5.3L V8 Ecotec3", subValue: "355 Horsepower" },
@@ -230,7 +235,7 @@ export default async function GmcYukonPage() {
                 badge="VIP Choice"
                 whatsappLink={whatsappLink}
                 quickSpecs={["7 Passengers", "5+ Suitcases", "Tri-Zone AC", "Premium SUV"]}
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
             <VehicleOverview

@@ -9,8 +9,8 @@ import FadeIn from '@/components/common/FadeIn';
 import styles from './page.module.css';
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
 import { vehicleService } from '@/services/vehicleService';
-
-
+import SchemaInjector from '@/components/SchemaInjector';
+import { fleetCollectionSchema, fleetBreadcrumbSchema } from '@/lib/schema/fleet-schema';
 
 export async function generateMetadata() {
     return {
@@ -46,6 +46,7 @@ export default async function FleetPage() {
 
     return (
         <main>
+            <SchemaInjector schemas={[fleetCollectionSchema, fleetBreadcrumbSchema]} />
             <Hero
                 title={title}
                 subtitle={subtitle}
@@ -54,7 +55,7 @@ export default async function FleetPage() {
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
                 badge={badge}
-                breadcrumbs={<Breadcrumbs />}
+                breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
             <FadeIn>
                 <Suspense fallback={<div className="h-[800px] w-full bg-muted animate-pulse rounded-xl" />}>

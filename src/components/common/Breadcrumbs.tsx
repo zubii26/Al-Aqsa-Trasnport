@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Home } from 'lucide-react';
+import SchemaInjector from '@/components/SchemaInjector';
 
 interface BreadcrumbsProps {
     overrideLastItem?: string;
@@ -60,10 +61,7 @@ export default function Breadcrumbs({ overrideLastItem, className = '', hideJson
     return (
         <nav aria-label="Breadcrumb" className={`flex items-center text-sm ${className}`}>
             {!hideJsonLd && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                />
+                <SchemaInjector schemas={[jsonLd]} />
             )}
             <ol className="flex items-center flex-wrap gap-2">
                 {/* Home Link */}

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import SchemaInjector from '@/components/SchemaInjector';
+import { jeddahAirportServiceSchema, jeddahAirportFAQSchema, jeddahAirportBreadcrumbSchema } from '@/lib/schema/jeddah-airport-transfer-schema';
 import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
@@ -55,42 +57,6 @@ const jeddahAirportFAQs = [
     }
 ];
 
-const jsonLd = [
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Jeddah Airport to Makkah Private Transfer",
-        "serviceType": "Airport Transfer",
-        "provider": {
-            "@type": "Organization",
-            "name": "Al Aqsa Umrah Transport"
-        },
-        "description": "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall.",
-        "areaServed": [
-            { "@type": "City", "name": "Jeddah" },
-            { "@type": "City", "name": "Makkah" }
-        ],
-        "offers": {
-            "@type": "Offer",
-            "price": "200",
-            "priceCurrency": "SAR",
-            "url": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer"
-        }
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": jeddahAirportFAQs.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    }
-];
-
 import { getSettings } from '@/lib/settings-storage';
 
 export default async function JeddahAirportTransferPage() {
@@ -106,10 +72,7 @@ export default async function JeddahAirportTransferPage() {
 
     return (
         <main className="overflow-x-hidden">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[jeddahAirportServiceSchema, jeddahAirportFAQSchema, jeddahAirportBreadcrumbSchema]} />
             <Hero
                 title={content.title}
                 subtitle={content.subtitle}

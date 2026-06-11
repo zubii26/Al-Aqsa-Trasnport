@@ -91,6 +91,21 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
       creator: '@alaqsatransport',
     },
+    openGraph: {
+      type: 'website',
+      siteName: siteName,
+      title: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia",
+      description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
+      url: 'https://www.alaqsaumrahtransport.com',
+      images: [
+        {
+          url: '/images/routes/makkah-madinah-route-hero.webp',
+          width: 1200,
+          height: 630,
+          alt: 'Al Aqsa Umrah Transport - Premium Makkah & Madinah Taxi',
+        }
+      ],
+    },
   };
 }
 

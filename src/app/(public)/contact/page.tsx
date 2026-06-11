@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import GlassCard from '@/components/ui/GlassCard';
 import { getSettings } from '@/lib/settings-storage';
 import ContactGrid from '@/components/contact/ContactGrid';
+import SchemaInjector from '@/components/SchemaInjector';
 
 export async function generateMetadata() {
     const title = "Contact Al Aqsa Umrah Transport | Book Your Ride Today";
@@ -97,10 +98,7 @@ export default async function ContactPage() {
 
     return (
         <div className="bg-slate-50 dark:bg-slate-950 pb-20">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <SchemaInjector schemas={[jsonLd]} />
             <Hero
                 title="Get in Touch | تواصل معنا"
                 subtitle="Reliable Booking & 24/7 Support for Your Umrah Journey. Premium Transport Services from Makkah to Madinah."
