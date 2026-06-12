@@ -228,6 +228,7 @@ export const staticBlogPosts = [
                 "@type": "Answer",
                 "text": "To book Umrah transport during Ramadan, you must reserve your vehicle 3 to 6 weeks in advance due to massive global demand. Use our online booking system to lock in your vehicle before availability disappears."
             }
+        }
     ]
 }
 },
