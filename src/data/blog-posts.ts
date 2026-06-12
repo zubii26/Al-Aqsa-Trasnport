@@ -135,7 +135,7 @@ export const staticBlogPosts = [
     category: 'News & Updates',
     date: new Date('2026-06-12'),
     readTime: '12 min read',
-    image: '/images/blog/umrah-transport-prebooking.jpg',
+    image: '/images/blog/umrah-transport-prebooking-jeddah-airport-makkah.png',
     alt: 'Pilgrim arriving at Jeddah Airport with a private Umrah taxi waiting — Al Aqsa Umrah Transport Makkah',
     author: 'Al Aqsa Transport Team',
     tags: ['Umrah Transport', 'Pre-Booking', 'Jeddah Airport', 'Ramadan 2026'],
