@@ -93,9 +93,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         .slice(0, 3)
         .map(p => ({ ...p, id: p.slug }));
 
+    const schemasToInject = [blogPostingSchema, blogBreadcrumbSchema];
+    if ((post as any).faqSchema) {
+        schemasToInject.push((post as any).faqSchema);
+    }
+
     return (
         <main>
-            <SchemaInjector schemas={[blogPostingSchema, blogBreadcrumbSchema]} />
+            <SchemaInjector schemas={schemasToInject} />
 
 
 
