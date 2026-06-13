@@ -1,6 +1,10 @@
 import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+import { generateBookingInvoice } from './pdf-generator';
 
-// Create a transporter using environment variables
+const resendClient = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// Create a transporter using environment variables (fallback)
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Or use 'host', 'port', etc. for other providers
     auth: {
@@ -13,26 +17,53 @@ interface EmailOptions {
     to: string;
     subject: string;
     html: string;
+    attachments?: { filename: string; content: string | Buffer }[];
 }
 
-export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
+export const sendEmail = async ({ to, subject, html, attachments }: EmailOptions) => {
     // Debug logging for server-side troubleshooting
     console.log(`[Email] Attempting to send email to: ${to.substring(0, 3)}***@${to.split('@')[1]}`);
-    console.log(`[Email] Environment check - USER: ${!!process.env.EMAIL_USER ? 'Set' : 'Missing'}, PASS: ${!!process.env.EMAIL_PASS ? 'Set' : 'Missing'}`);
 
+    // Try Resend first if available
+    if (resendClient) {
+        try {
+            const fromEmail = process.env.RESEND_FROM_EMAIL || 'bookings@alaqsaumrahtransport.com';
+            const { data, error } = await resendClient.emails.send({
+                from: `Al Aqsa Transport <${fromEmail}>`,
+                to,
+                subject,
+                html,
+                attachments,
+            });
+            
+            if (error) {
+                console.error('[Email] Resend failed:', error);
+                return false;
+            }
+            console.log('[Email] Sent successfully via Resend. MessageId:', data?.id);
+            return true;
+        } catch (err: any) {
+            console.error('[Email] Resend exception:', err.message);
+            return false;
+        }
+    }
+
+    // Fallback to Nodemailer
+    console.log(`[Email] Environment check - USER: ${!!process.env.EMAIL_USER ? 'Set' : 'Missing'}, PASS: ${!!process.env.EMAIL_PASS ? 'Set' : 'Missing'}`);
     try {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to,
             subject,
             html,
+            attachments,
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log('[Email] Sent successfully. MessageId:', info.messageId);
+        console.log('[Email] Sent successfully via Nodemailer. MessageId:', info.messageId);
         return true;
     } catch (error: any) {
-        console.error('[Email] Failed to send:', error.message);
+        console.error('[Email] Failed to send via Nodemailer:', error.message);
         if (error.response) {
             console.error('[Email] SMTP Response:', error.response);
         }
@@ -42,10 +73,10 @@ export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
 
 interface BookingData {
     name: string;
-    email?: string; // Added email field
+    email?: string;
     status: string;
     id: string;
-    vehicle: string; // Keep for fallback/summary
+    vehicle: string;
     pickup: string;
     dropoff: string;
     date: string;
@@ -55,11 +86,11 @@ interface BookingData {
     luggage?: number;
     notes?: string;
     price?: string;
-    selectedVehicles?: { name: string; quantity: number }[]; // New field
+    selectedVehicles?: { name: string; quantity: number }[];
     country?: string;
     flightNumber?: string;
     arrivalDate?: string;
-    phone?: string; // Added phone field
+    phone?: string;
     includeWadiJinn?: boolean;
     legs?: any[];
     visaType?: string;
@@ -68,8 +99,6 @@ interface BookingData {
 
 import { replaceTemplateVariables } from './email-templates';
 import { getSettings } from './settings-storage';
-
-// ... imports
 
 // Helper to format vehicle list for the template substitution
 const formatVehicles = (booking: BookingData) => {
@@ -106,10 +135,10 @@ const prepareBookingVariables = (booking: BookingData) => {
         vehicle_details: formatVehicles(booking),
         passengers: booking.passengers,
         luggage: booking.luggage || 0,
-        price_row: formatPriceRow(booking), // Use row HTML for conditional rendering
+        price_row: formatPriceRow(booking),
         status: booking.status,
         submission_time: new Date().toLocaleString(),
-        year: new Date().getFullYear(), // Added for footer
+        year: new Date().getFullYear(),
         country_row: booking.country ? `<p><strong>Country:</strong> ${booking.country}</p>` : '',
         flight_row: booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : '',
         arrival_date_row: booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : '',
@@ -191,6 +220,23 @@ export const getContactFeedbackTemplate = ({ name, message }: ContactFeedbackDat
 `;
 };
 
+// Helper function to generate PDF attachment
+const getPdfAttachment = (booking: BookingData) => {
+    try {
+        // Map id to _id for pdf generator
+        const bookingForPdf = { ...booking, _id: booking.id, finalPrice: booking.price ? booking.price.replace(' SAR', '') : 0 };
+        const arrayBuffer = generateBookingInvoice(bookingForPdf, 'buffer') as ArrayBuffer;
+        
+        return [{
+            filename: `Invoice-${booking.id}.pdf`,
+            content: Buffer.from(arrayBuffer),
+        }];
+    } catch (err) {
+        console.error('Failed to generate PDF attachment:', err);
+        return undefined;
+    }
+};
+
 export const sendBookingConfirmationEmail = async (booking: BookingData) => {
     // 1. Fetch Request Settings
     const settings = await getSettings();
@@ -202,16 +248,20 @@ export const sendBookingConfirmationEmail = async (booking: BookingData) => {
     // 3. Bilingual Subject
     const subject = `Booking Confirmation #${booking.id} | تأكيد الحجز`;
 
-    // 4. Send
+    // 4. Attachments
+    const attachments = getPdfAttachment(booking);
+
+    // 5. Send
     return await sendEmail({
-        to: booking.email || '', // Ensure email exists
+        to: booking.email || '',
         subject,
-        html: htmlContent
+        html: htmlContent,
+        attachments
     });
 };
 
 export const sendAdminNewBookingEmail = async (booking: BookingData) => {
-    const adminEmail = process.env.ADMIN_EMAIL_NOTIFICATIONS || process.env.EMAIL_USER; // Fallback
+    const adminEmail = process.env.ADMIN_EMAIL_NOTIFICATIONS || process.env.EMAIL_USER;
     if (!adminEmail) return false;
 
     // 1. Fetch Request Settings
@@ -219,11 +269,13 @@ export const sendAdminNewBookingEmail = async (booking: BookingData) => {
     const templateString = settings.emailTemplates?.adminNotification || DEFAULT_ADMIN_NOTIFICATION_TEMPLATE;
 
     const htmlContent = getAdminBookingNotificationTemplate(booking, templateString);
+    const attachments = getPdfAttachment(booking);
 
     return await sendEmail({
         to: adminEmail,
         subject: `🔔 New Booking #${booking.id} Received`,
-        html: htmlContent
+        html: htmlContent,
+        attachments
     });
 };
 

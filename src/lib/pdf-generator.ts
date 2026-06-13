@@ -2,147 +2,369 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 // Define font and styling constants
-const COMPANY_NAME = "Al Aqsa Transport";
-const COMPANY_ISLAMIC_NAME = "الأقصى لنقل المعتمرين";
+const COMPANY_NAME = "AL AQSA";
+const COMPANY_SUBTITLE = "UMRAH TRANSPORT";
+const COMPANY_BADGE = "GOLD TRANSFER";
+const COMPANY_ARABIC = "أهلاً وسهلاً – ولكم أطيب الترحيب";
 const COMPANY_ADDRESS = "Makkah Al Mukarramah, Saudi Arabia";
+const COMPANY_WEBSITE = "www.alaqsa-transport.com";
 const COMPANY_PHONE = "+966 50 123 4567";
-const COMPANY_EMAIL = "bookings@alaqsa-transport.com";
-const PRIMARY_COLOR = "#0f172a"; // slate-900
 
-interface InvoiceData {
-    invoiceAllowed: boolean;
-    booking: any;
-}
+// Colors based on the uploaded template
+const PRIMARY_GOLD = "#D4AF37"; // Close to the gold in the image
+const PRIMARY_GOLD_RGB: [number, number, number] = [212, 175, 55];
+const LIGHT_YELLOW_RGB: [number, number, number] = [253, 246, 227]; // For the table footer and details box
+const TEXT_DARK = "#333333";
+const TEXT_GRAY = "#666666";
 
-export const generateBookingInvoice = (booking: any) => {
+export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base64' | 'buffer' = 'save') => {
     const doc = new jsPDF();
 
-    // --- Header ---
-    // Logo Placeholder (Left) - Ideally we addImage here if we have a base64 logo
-    // For now, we use text as logo
-    doc.setFontSize(22);
-    doc.setTextColor(PRIMARY_COLOR);
+    // Helper function for drawing right-aligned text
+    const textRight = (text: string, y: number, size: number, color: string, style: 'normal' | 'bold' | 'italic' = 'normal') => {
+        doc.setFontSize(size);
+        doc.setTextColor(color);
+        doc.setFont("helvetica", style);
+        doc.text(text, 195, y, { align: "right" });
+    };
+
+    // --- Page 1: Invoice ---
+
+    // Header Left
     doc.setFont("helvetica", "bold");
-    doc.text("Al Aqsa", 20, 20);
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Transport", 20, 26);
-
-    // Company Info (Right)
-    doc.setFontSize(10);
-    doc.text(COMPANY_ADDRESS, 190, 20, { align: "right" });
-    doc.text(COMPANY_PHONE, 190, 25, { align: "right" });
-    doc.text(COMPANY_EMAIL, 190, 30, { align: "right" });
-
-    // Title
-    doc.setFontSize(18);
-    doc.setTextColor(PRIMARY_COLOR);
-    doc.text("INVOICE", 190, 50, { align: "right" });
-
-    // Line Divider
-    doc.setDrawColor(200, 200, 200);
-    doc.line(20, 55, 190, 55);
-
-    // --- Bill To ---
-    doc.setFontSize(10);
-    doc.setTextColor(100, 100, 100);
-    doc.text("BILL TO:", 20, 65);
+    doc.setFontSize(24);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.text(COMPANY_NAME, 15, 20);
 
     doc.setFontSize(11);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont("helvetica", "bold");
-    doc.text(booking.name || "Customer Name", 20, 71);
+    doc.setTextColor(TEXT_GRAY);
+    doc.text(COMPANY_SUBTITLE, 15, 26);
 
+    // Gold Badge
+    doc.setFillColor(...PRIMARY_GOLD_RGB);
+    doc.rect(15, 29, 35, 5, 'F');
+    doc.setFontSize(8);
+    doc.setTextColor("#FFFFFF");
+    doc.text(COMPANY_BADGE, 17, 33);
+
+    // Arabic welcome text (Note: jsPDF might not render complex Arabic ligatures perfectly without a custom VFS font, but we provide the text)
+    doc.setTextColor(TEXT_GRAY);
     doc.setFont("helvetica", "normal");
+    doc.text(COMPANY_ARABIC, 15, 40);
+
+    // Header Right
+    textRight("INVOICE", 22, 24, PRIMARY_GOLD, "bold");
+    textRight(COMPANY_ADDRESS, 28, 10, TEXT_GRAY, "normal");
+    textRight(COMPANY_WEBSITE, 33, 10, TEXT_GRAY, "normal");
+
+    // Divider Line
+    doc.setDrawColor(...PRIMARY_GOLD_RGB);
+    doc.setLineWidth(0.5);
+    doc.line(15, 45, 195, 45);
+
+    // --- From & Invoice Details ---
+    const topY = 55;
+
+    // From
+    doc.setFontSize(11);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "bold");
+    doc.text("From", 15, topY);
+
     doc.setFontSize(10);
-    if (booking.email) doc.text(booking.email, 20, 76);
-    if (booking.phone) doc.text(booking.phone, 20, 81);
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "normal");
+    doc.text("Al Aqsa Transport", 15, topY + 6);
+    doc.text(COMPANY_ADDRESS, 15, topY + 11);
+    doc.text(COMPANY_PHONE, 15, topY + 16);
 
-    // --- Invoice Details ---
-    const startY = 65;
-    const rightColX = 140;
-    const lineHeight = 6;
+    // Invoice Details Box (Light Yellow Background)
+    doc.setFillColor(...LIGHT_YELLOW_RGB);
+    doc.rect(120, 48, 75, 30, 'F');
 
-    doc.setTextColor(100, 100, 100);
-    doc.text("Invoice Number:", rightColX, startY);
-    doc.text("Date:", rightColX, startY + lineHeight);
-    doc.text("Booking Ref:", rightColX, startY + lineHeight * 2);
+    doc.setFontSize(10);
+    doc.setTextColor(TEXT_DARK);
+    
+    const detailsX = 125;
+    let currY = topY;
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Invoice No:", detailsX, currY);
+    doc.setFont("helvetica", "normal");
+    doc.text(`INV-${booking._id?.slice(-6).toUpperCase() || '1000'}`, detailsX + 25, currY);
 
-    doc.setTextColor(0, 0, 0);
-    doc.text(`INV-${booking._id?.slice(-6).toUpperCase()}`, 190, startY, { align: "right" });
-    doc.text(new Date().toLocaleDateString(), 190, startY + lineHeight, { align: "right" });
-    doc.text(booking._id?.slice(-6).toUpperCase(), 190, startY + lineHeight * 2, { align: "right" });
+    currY += 6;
+    doc.setFont("helvetica", "bold");
+    doc.text("Date:", detailsX, currY);
+    doc.setFont("helvetica", "normal");
+    doc.text(new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }), detailsX + 25, currY);
+
+    currY += 6;
+    doc.setFont("helvetica", "bold");
+    doc.text("Status:", detailsX, currY);
+    doc.setFont("helvetica", "normal");
+    doc.text(booking.status === 'confirmed' ? 'CONFIRMED' : (booking.status?.toUpperCase() || 'CONFIRMED'), detailsX + 25, currY);
+
+    currY += 6;
+    doc.setFont("helvetica", "bold");
+    doc.text("Payment:", detailsX, currY);
+    doc.setFont("helvetica", "normal");
+    // Depending on logic, it can be AWAITING PAYMENT or PAID
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.text(booking.paymentStatus === 'paid' ? 'PAID' : 'AWAITING PAYMENT', detailsX + 25, currY);
+
+    // --- Bill To ---
+    const billToY = 85;
+    doc.setFontSize(11);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "bold");
+    doc.text("Bill To", 15, billToY);
+
+    doc.setFontSize(10);
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "normal");
+    doc.text(booking.name || "Customer Name", 15, billToY + 6);
+    if (booking.email) doc.text(booking.email, 15, billToY + 11);
+    if (booking.phone) doc.text(booking.phone, 15, billToY + 16);
+
+    // --- Service Details Title ---
+    const serviceDetailsY = 115;
+    doc.setFontSize(13);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "bold");
+    doc.text("Service Details", 15, serviceDetailsY);
 
     // --- Table ---
-    const tableStartY = 95;
+    const tableStartY = serviceDetailsY + 5;
 
     let tableData = [];
     
     if (booking.legs && booking.legs.length > 0) {
         tableData = booking.legs.map((leg: any, index: number) => {
-            const dateStr = leg.date ? new Date(leg.date).toLocaleDateString() : '';
+            const dateStr = leg.date ? new Date(leg.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+            const pickup = leg.pickup?.split(',')[0] || '';
+            const dropoff = leg.dropoff?.split(',')[0] || '';
             return [
-                `Route ${index + 1}: ${leg.pickup?.split(',')[0]} -> ${leg.dropoff?.split(',')[0]}\nVehicle: ${leg.vehicleName || booking.vehicle}\nDate: ${dateStr} ${leg.time || ''}`,
-                `${booking.vehicleCount || 1}`,
-                `-`,
-                `-`
+                (index + 1).toString(),
+                `${pickup} -> ${dropoff}`,
+                dateStr,
+                leg.vehicleName || booking.vehicle || 'Hiace',
+                (booking.vehicleCount || 1).toString(),
+                leg.price ? Number(leg.price).toFixed(2) : '-'
             ];
         });
-        tableData.push([
-            { content: 'Total Package Value', styles: { fontStyle: 'bold' } },
-            '',
-            '',
-            { content: `SAR ${booking.finalPrice}`, styles: { fontStyle: 'bold' } }
-        ]);
     } else {
+        const pickup = booking.pickup?.split(',')[0] || '';
+        const dropoff = booking.dropoff?.split(',')[0] || '';
         tableData = [
             [
-                `${booking.vehicle} Transfer\n${booking.pickup?.split(',')[0]} -> ${booking.dropoff?.split(',')[0]}`,
-                `${booking.vehicleCount || 1}`,
-                `SAR ${booking.finalPrice}`,
-                `SAR ${booking.finalPrice}`
+                "1",
+                `${pickup} -> ${dropoff}`,
+                new Date(booking.pickupDate || Date.now()).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+                booking.vehicle || 'Hiace',
+                (booking.vehicleCount || 1).toString(),
+                booking.finalPrice ? Number(booking.finalPrice).toFixed(2) : '0.00'
             ]
         ];
     }
 
     autoTable(doc, {
         startY: tableStartY,
-        head: [['Description', 'Qty', 'Unit Price', 'Total']],
+        head: [['#', 'Service Description', 'Date', 'Vehicle', 'Qty', 'Amount\n(SAR)']],
         body: tableData,
-        theme: 'grid',
-        headStyles: { fillColor: PRIMARY_COLOR, textColor: 255 },
-        styles: { fontSize: 10, cellPadding: 3 },
+        theme: 'plain',
+        headStyles: { fillColor: PRIMARY_GOLD_RGB, textColor: 255, fontStyle: 'bold', halign: 'center', valign: 'middle' },
+        bodyStyles: { textColor: TEXT_DARK, fontSize: 10 },
+        alternateRowStyles: { fillColor: [249, 249, 249] },
+        styles: { cellPadding: 4, lineColor: [220, 220, 220], lineWidth: 0.1 },
         columnStyles: {
-            0: { cellWidth: 'auto' }, // Description
-            1: { cellWidth: 20, halign: 'center' }, // Qty
-            2: { cellWidth: 30, halign: 'right' }, // Price
-            3: { cellWidth: 30, halign: 'right' } // Total
+            0: { cellWidth: 10, halign: 'center' }, // #
+            1: { cellWidth: 'auto' }, // Description
+            2: { cellWidth: 30, halign: 'center' }, // Date
+            3: { cellWidth: 25, halign: 'center' }, // Vehicle
+            4: { cellWidth: 15, halign: 'center' }, // Qty
+            5: { cellWidth: 25, halign: 'right' } // Amount
         },
     });
 
-    // --- Totals ---
+    // --- Subtotal / Total Block ---
     // @ts-ignore
-    const finalY = doc.lastAutoTable.finalY + 10;
+    const finalTableY = doc.lastAutoTable.finalY;
+    
+    doc.setFillColor(...LIGHT_YELLOW_RGB);
+    // x: 140 (approx under last 2 columns), y: finalTableY, w: 55, h: 20
+    doc.rect(130, finalTableY, 65, 20, 'F');
+    
+    doc.setFontSize(10);
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "bold");
+    
+    const subtotalY = finalTableY + 7;
+    doc.text("Subtotal", 165, subtotalY, { align: "right" });
+    doc.text(`SAR\n${Number(booking.finalPrice || 0).toFixed(2)}`, 190, subtotalY - 2, { align: "right" });
+
+    const totalY = finalTableY + 16;
+    doc.text("Total", 165, totalY, { align: "right" });
+    doc.text(`SAR\n${Number(booking.finalPrice || 0).toFixed(2)}`, 190, totalY - 2, { align: "right" });
+
+    // --- Terms & Conditions ---
+    const termsY = finalTableY + 35;
+    doc.setFontSize(11);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "bold");
+    doc.text("Terms & Conditions", 15, termsY);
 
     doc.setFontSize(10);
-    doc.text("Subtotal:", 140, finalY);
-    doc.text(`SAR ${booking.finalPrice}`, 190, finalY, { align: "right" });
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "normal");
+    
+    const terms = [
+        "1. All amounts are quoted and payable in Saudi Riyal (SAR).",
+        "2. Prices are inclusive of all applicable taxes and fees, unless stated otherwise.",
+        "3. Cancellations must be notified at least 24 hours in advance to avoid additional charges.",
+        "4. If you wish to pay by card, please inform us in advance to arrange this. If you do not have Saudi",
+        "   Riyal (SAR), you may pay in your own currency or in US Dollars at the prevailing exchange rate."
+    ];
+    
+    let currentTermY = termsY + 6;
+    terms.forEach(term => {
+        doc.text(term, 15, currentTermY);
+        currentTermY += 5;
+    });
 
-    doc.text("Tax (15%):", 140, finalY + 6);
-    doc.text("SAR 0.00", 190, finalY + 6, { align: "right" }); // Assuming tax included or 0 for now as per logic
 
-    doc.setFontSize(12);
+    // --- Page 2: Guest Information & Guidelines ---
+    doc.addPage();
+
+    // Header
+    doc.setFontSize(16);
+    doc.setTextColor(PRIMARY_GOLD);
     doc.setFont("helvetica", "bold");
-    doc.text("Total:", 140, finalY + 14);
-    doc.text(`SAR ${booking.finalPrice}`, 190, finalY + 14, { align: "right" });
-
-    // --- Footer ---
-    doc.setFontSize(9);
+    doc.text("WELCOME TO AL AQSA TRANSFER", 105, 20, { align: "center" });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(TEXT_GRAY);
     doc.setFont("helvetica", "italic");
-    doc.setTextColor(150, 150, 150);
-    doc.text("Thank you for your business.", 105, 280, { align: "center" });
-    doc.text("Al Aqsa Transport - CR: 1234567890", 105, 285, { align: "center" });
+    doc.text("Guest Information & Guidelines", 105, 26, { align: "center" });
 
-    // Save
-    doc.save(`Invoice-${booking._id}.pdf`);
+    // Rules
+    const rulesY = 40;
+    doc.setFontSize(11);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "bold");
+    doc.text("Rules & Regulations", 15, rulesY);
+
+    doc.setFontSize(10);
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "normal");
+
+    const rules = [
+        "1. If the assigned driver does not respond, is late without notice, or behaves in an unprofessional",
+        "manner, please report it immediately via our WhatsApp Community group — do not handle",
+        "disputes directly with the driver.",
+        "",
+        "2. In case of flight delays, the driver will wait for you at the airport free of charge. Please share your",
+        "flight number and updated arrival time with us in advance.",
+        "",
+        "3. All pickup and drop-off timings should be confirmed with our team at least 24 hours before the",
+        "scheduled service.",
+        "",
+        "4. Vehicles are well-maintained, air-conditioned, and driven by licensed, experienced drivers.",
+        "5. Passengers are requested to be ready at the pickup point at least 10 minutes before the",
+        "scheduled time.",
+        "",
+        "6. All passengers must share their visa number(s) prior to airport pickup, as company documents are",
+        "required by authorities to receive pilgrims at the airport or for any intercity transfer. We kindly request",
+        "your cooperation in providing this information in advance.",
+        "",
+        "7. If a ride is booked as part of a package and a B2B (business-to-business) rate has been provided,",
+        "individual legs of that package must not be cancelled separately. Cancelling a single ride from a",
+        "package affects our agreement with the company and may impact future trust and cooperation.",
+        "",
+        "8. For any assistance, complaints, or emergencies during your journey, our support team is",
+        "available 24/7 via the WhatsApp Community."
+    ];
+
+    let currRuleY = rulesY + 7;
+    rules.forEach(line => {
+        if (line.includes("please report it immediately") || line.includes("flight delays") || line.includes("confirmed with our team") || line.includes("support team is")) {
+            // It's a bit complex to mix bold and normal text in jsPDF easily without splitting strings.
+            // We'll just render it normally to keep it simple, or split manually if needed.
+            // For simplicity, printing the whole line normal.
+            doc.text(line, 15, currRuleY);
+        } else {
+            doc.text(line, 15, currRuleY);
+        }
+        currRuleY += 5;
+    });
+
+    // Important Box
+    const importantBoxY = currRuleY + 5;
+    doc.setDrawColor(...PRIMARY_GOLD_RGB);
+    doc.setFillColor(...LIGHT_YELLOW_RGB);
+    doc.setLineWidth(0.5);
+    doc.rect(15, importantBoxY, 180, 45, 'FD');
+
+    let boxTextY = importantBoxY + 8;
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.text("⚠ IMPORTANT — PLEASE READ CAREFULLY", 18, boxTextY);
+
+    boxTextY += 8;
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(TEXT_DARK);
+    doc.text("Visa Requirement:", 18, boxTextY);
+    doc.setFont("helvetica", "normal");
+    doc.text("All passengers MUST share their visa number(s) before airport pickup.", 52, boxTextY);
+    boxTextY += 5;
+    doc.text("Company documents are legally required by authorities to receive pilgrims at the airport or for", 18, boxTextY);
+    boxTextY += 5;
+    doc.text("any intercity transfer. Cooperation is mandatory.", 18, boxTextY);
+
+    boxTextY += 8;
+    doc.setFont("helvetica", "bold");
+    doc.text("B2B Package Bookings:", 18, boxTextY);
+    doc.setFont("helvetica", "normal");
+    doc.text("If your ride is part of a package booked at a B2B rate, you MUST NOT", 60, boxTextY);
+    boxTextY += 5;
+    doc.text("cancel a single ride separately. Doing so affects our agreement with the partner company and", 18, boxTextY);
+    boxTextY += 5;
+    doc.text("may result in loss of trust for future bookings.", 18, boxTextY);
+
+    // Arabic Prayers at the bottom
+    let prayerY = importantBoxY + 60;
+    doc.setFontSize(12);
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "normal");
+    doc.text("تقبّل الله عمرتكم وأحسن الله إليكم الخلف", 105, prayerY, { align: "center" });
+    
+    prayerY += 6;
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "italic");
+    doc.text("May Allah accept your Umrah and grant you a safe, blessed and spiritually fulfilling journey.", 105, prayerY, { align: "center" });
+
+    prayerY += 8;
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.setFont("helvetica", "normal");
+    doc.text("لبّيك اللهم لبّيك", 105, prayerY, { align: "center" });
+
+    prayerY += 6;
+    doc.setTextColor(TEXT_DARK);
+    doc.setFont("helvetica", "italic");
+    doc.text("Wishing you ease in every step, acceptance of your prayers, and a heart filled with peace throughout", 105, prayerY, { align: "center" });
+    prayerY += 5;
+    doc.text("your sacred journey.", 105, prayerY, { align: "center" });
+
+    prayerY += 12;
+    doc.setTextColor(PRIMARY_GOLD);
+    doc.text("We wish you a peaceful, blessed and memorable journey with Al Aqsa Transport", 105, prayerY, { align: "center" });
+
+    // Output based on returnType
+    if (returnType === 'base64') {
+        return doc.output('datauristring');
+    } else if (returnType === 'buffer') {
+        return doc.output('arraybuffer');
+    } else {
+        doc.save(`Invoice-${booking._id || 'booking'}.pdf`);
+    }
 };
