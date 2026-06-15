@@ -7,11 +7,12 @@ import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import SchemaInjector from '@/components/SchemaInjector';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { ziyaratTouristTripSchema, ziyaratFAQSchema, ziyaratBreadcrumbSchema } from '@/lib/schema/ziyarat-tours-schema';
 
 export const metadata: Metadata = {
-    title: "Ziyarat Makkah Madinah Tours | Visit Historical Sites",
-    description: "Private Ziyarat tours in Makkah (Jabal Al-Nour, Arafat) & Madinah (Masjid Quba, Uhud). Experienced drivers sharing Islamic history.",
+    title: "Ziyarat Makkah & Madinah Places | Private Guided Tours",
+    description: "Book private Ziyarat tours in Makkah and Madinah. Visit historical places like Jabal Al-Nour and Masjid Quba with knowledgeable, English-speaking drivers.",
     keywords: [
         "Ziyarat Tours Makkah",
         "Ziyarat Madinah Places",
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/services/ziyarat-tours',
     },
     openGraph: {
-        title: "Ziyarat Makkah Madinah Tours | Historical Site Visits",
-        description: "Guided private tours to Jabal Al-Nour, Masjid Quba, Mount Uhud, and more. deeply spiritual experience with knowledgeable drivers.",
+        title: "Ziyarat Makkah & Madinah Places | Private Guided Tours",
+        description: "Book private Ziyarat tours in Makkah and Madinah. Visit historical places like Jabal Al-Nour and Masjid Quba with knowledgeable, English-speaking drivers.",
         images: [{ url: '/images/routes/makkah-ziyarat-hero.webp', width: 1200, height: 630, alt: 'Jabal Al-Nour Makkah Ziyarat' }]
     }
 };
@@ -60,7 +61,7 @@ export default async function ZiyaratToursPage() {
         <main className="overflow-x-hidden">
             <SchemaInjector schemas={[ziyaratTouristTripSchema, ziyaratFAQSchema, ziyaratBreadcrumbSchema]} />
             <Hero
-                title="Ziyarat Tours: Relive Islamic History"
+                title="Ziyarat Makkah & Madinah Places | Private Guided Tours"
                 subtitle="Walk in the footsteps of the Prophet (SAW). Comprehensive engaging tours of the holy sites in Makkah and Madinah."
                 bgImage="/images/routes/makkah-ziyarat-hero.webp"
                 ctaText="Book Ziyarat Tour"
@@ -69,6 +70,25 @@ export default async function ZiyaratToursPage() {
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
                 alt="Makkah and Madinah Historical Ziyarat Tours - Jabal Al Noor"
             />
+
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Ziyarat Tours (Makkah & Madinah)"
+                            summary="Private, flexible guided tours of key Islamic historical sites including Jabal Al-Nour, Arafat, and Masjid Quba. Enjoy unhurried visits with knowledgeable drivers."
+                            features={[
+                                { label: "Duration", value: "Standard tours take 2–3 hours; half-day and full-day options (e.g., Taif) available." },
+                                { label: "Pricing", value: "Starts from SAR 200 per vehicle (varies by city and duration)." },
+                                { label: "Highlights", value: "Door-to-door hotel pickup, customized itineraries, English-speaking drivers." }
+                            ]}
+                            ctaText="Book a Ziyarat Tour"
+                            ctaLink={whatsappLink}
+                        />
+                    </div>
+                </div>
+            </section>
 
             {/* Makkah Ziyarat */}
             <section className="py-16 bg-white dark:bg-slate-900">
@@ -79,7 +99,7 @@ export default async function ZiyaratToursPage() {
                                 Makkah Ziyarat Sites
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                Discover the places where Revelation began. Our Makkah tour covers the most significant landmarks outside the Haram.
+                                Discover the places where Revelation began. Our historical places tour Makkah covers the most significant landmarks outside the Haram. Whether you want a standard tour or a full Taif day trip from Makkah, we customize the journey to your needs.
                             </p>
                             <ul className="space-y-4">
                                 {[
@@ -123,7 +143,7 @@ export default async function ZiyaratToursPage() {
                                 Madinah Ziyarat Sites
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                Feel the peace of the City of the Prophet. Visit the first mosque of Islam and the sites of early battles.
+                                Feel the peace of the City of the Prophet. Explore the most important Ziyarat Madinah places, visiting the first mosque of Islam and the sites of early battles.
                             </p>
                             <ul className="space-y-4">
                                 {[

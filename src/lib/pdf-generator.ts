@@ -47,10 +47,10 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     doc.setTextColor("#FFFFFF");
     doc.text(COMPANY_BADGE, 17, 33);
 
-    // Arabic welcome text (Note: jsPDF might not render complex Arabic ligatures perfectly without a custom VFS font, but we provide the text)
-    doc.setTextColor(TEXT_GRAY);
-    doc.setFont("helvetica", "normal");
-    doc.text(COMPANY_ARABIC, 15, 40);
+    // Arabic welcome text (Removed due to jsPDF rendering issues without custom VFS font)
+    // doc.setTextColor(TEXT_GRAY);
+    // doc.setFont("helvetica", "normal");
+    // doc.text(COMPANY_ARABIC, 15, 40);
 
     // Header Right
     textRight("INVOICE", 22, 24, PRIMARY_GOLD, "bold");
@@ -331,12 +331,12 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     boxTextY += 5;
     doc.text("may result in loss of trust for future bookings.", 18, boxTextY);
 
-    // Arabic Prayers at the bottom
+    // Arabic Prayers at the bottom (Removed due to jsPDF rendering issues)
     let prayerY = importantBoxY + 60;
     doc.setFontSize(12);
     doc.setTextColor(PRIMARY_GOLD);
     doc.setFont("helvetica", "normal");
-    doc.text("تقبّل الله عمرتكم وأحسن الله إليكم الخلف", 105, prayerY, { align: "center" });
+    // doc.text("تقبّل الله عمرتكم وأحسن الله إليكم الخلف", 105, prayerY, { align: "center" });
     
     prayerY += 6;
     doc.setTextColor(TEXT_DARK);
@@ -346,7 +346,7 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     prayerY += 8;
     doc.setTextColor(PRIMARY_GOLD);
     doc.setFont("helvetica", "normal");
-    doc.text("لبّيك اللهم لبّيك", 105, prayerY, { align: "center" });
+    // doc.text("لبّيك اللهم لبّيك", 105, prayerY, { align: "center" });
 
     prayerY += 6;
     doc.setTextColor(TEXT_DARK);

@@ -127,7 +127,7 @@ const formatPriceRow = (booking: BookingData) => {
 const prepareBookingVariables = (booking: BookingData) => {
     return {
         name: booking.name,
-        booking_id: booking.id,
+        booking_id: `INV-${(booking.id || '').slice(-6).toUpperCase()}`,
         date: booking.date,
         time: booking.time,
         pickup: booking.pickup,

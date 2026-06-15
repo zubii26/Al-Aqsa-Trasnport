@@ -7,10 +7,11 @@ import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import RouteVisual from '@/components/services/RouteVisual';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 
 export const metadata: Metadata = {
-    title: "Madinah Airport Taxi to Hotel | Meet & Greet | تاكسي مطار المدينة",
-    description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup. حجز تاكسي مطار المدينة المنورة. توصيل الى فندق الحرم.",
+    title: "Madinah Airport to Masjid Nabawi Taxi & Private Transfers",
+    description: "Pre-book your Prince Mohammad Bin Abdulaziz Airport (MED) taxi. Professional meet & greet, 25-min transfer to Masjid Nabawi. Fares SAR 150-300.",
     keywords: [
         "Madinah Airport Taxi",
         "Madinah Airport to Masjid Nabawi",
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/services/madinah-airport-transfer',
     },
     openGraph: {
-        title: "Madinah Airport Taxi to Hotel | Prince Mohammad Bin Abdulaziz Airport Transfer",
-        description: "Reliable taxi from Madinah Airport (MED) to Masjid Nabawi hotels. 24/7 airport pickup, meet & greet service.",
+        title: "Madinah Airport to Masjid Nabawi Taxi & Private Transfers",
+        description: "Pre-book your Prince Mohammad Bin Abdulaziz Airport (MED) taxi. Professional meet & greet, 25-min transfer to Masjid Nabawi. Fares SAR 150-300.",
         images: [{ url: '/images/routes/madinah-airport-hero.webp', width: 1200, height: 630, alt: 'Madinah Airport Transfer Service' }]
     }
 };
@@ -106,7 +107,7 @@ export default async function MadinahAirportPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero
-                title="Madinah Airport (MED) Transfers"
+                title="Madinah Airport to Masjid Nabawi Taxi & Private Transfers"
                 subtitle="Start your visit to the Prophet's City with peace of mind. Reliable meet & greet service from Prince Mohammad Bin Abdulaziz Airport."
                 bgImage="/images/routes/madinah-airport-hero.webp"
                 ctaText="Book Airport Pickup"
@@ -114,6 +115,25 @@ export default async function MadinahAirportPage() {
                 layout="center"
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
+
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Madinah Airport (MED) Transfer"
+                            summary="Direct, hassle-free private taxi service from Prince Mohammad Bin Abdulaziz International Airport to all hotels in the central Markazia area near Masjid Nabawi."
+                            features={[
+                                { label: "Duration & Distance", value: "20–25 minutes (approx. 20 km)." },
+                                { label: "Pricing", value: "SAR 150 to SAR 300, depending on the chosen vehicle class." },
+                                { label: "Availability", value: "24/7 service. Driver meets you at arrivals with a personalized name board." }
+                            ]}
+                            ctaText="Book Madinah Airport Taxi"
+                            ctaLink={whatsappLink}
+                        />
+                    </div>
+                </div>
+            </section>
 
             {/* Service Highlights */}
             <section className="py-16 bg-white dark:bg-slate-900">
@@ -124,8 +144,8 @@ export default async function MadinahAirportPage() {
                                 Seamless Arrival in Madinah
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                Arriving for Umrah or Ziyarat should be stress-free. Avoid the hassle of haggling with local taxis.
-                                Our professional drivers greet you at the arrival terminal with a name sign and assist with your luggage to your comfortable private vehicle.
+                                Arriving for Umrah or Ziyarat should be stress-free. Whether you are checking the Madinah airport taxi price or looking for reliable Prince Mohammad Bin Abdulaziz Airport transfers, avoid the hassle of haggling with local taxis.
+                                Our professional drivers greet you at the arrival terminal with a name sign and assist with your luggage for your direct MED airport to Markazia comfortable private vehicle transfer.
                             </p>
 
                             <div className="space-y-6">

@@ -9,11 +9,12 @@ import { ArrowRight, CheckCircle2, MapPin, Clock } from 'lucide-react';
 import RouteVisual from '@/components/services/RouteVisual';
 import FAQSection from '@/components/services/FAQSection';
 import SchemaInjector from '@/components/SchemaInjector';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { makkahMadinahServiceSchema, makkahMadinahFAQSchema, makkahMadinahBreadcrumbSchema } from '@/lib/schema/makkah-madinah-taxi-schema';
 
 export const metadata: Metadata = {
-    title: "Taxi Makkah to Madinah Price 2025 | VIP Private Car Cost",
-    description: "Book private taxi from Makkah to Madinah. 4-hour luxury transfer in GMC Yukon or Hyundai Staria. Door-to-door service with Miqat option (احرام).",
+    title: "Makkah to Madinah Private Taxi & VIP Transfer Services",
+    description: "Direct Makkah to Madinah private taxi transfers. Safe, comfortable 4.5-hour journey across 450km. Professional drivers with fares from SAR 300–600.",
     keywords: [
         "Taxi Makkah to Madinah",
         "Makkah to Madinah Taxi Price",
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/services/makkah-madinah-taxi',
     },
     openGraph: {
-        title: "Taxi Makkah to Madinah Price 2025 | VIP Private Transport",
-        description: "Book the most comfortable Makkah to Madinah taxi service. Private GMC Yukon, Hyundai Staria, and VIP buses.",
+        title: "Makkah to Madinah Private Taxi & VIP Transfer Services",
+        description: "Direct Makkah to Madinah private taxi transfers. Safe, comfortable 4.5-hour journey across 450km. Professional drivers with fares from SAR 300–600.",
         images: [{ url: '/images/routes/makkah-madinah-route-hero.webp', width: 1200, height: 630, alt: 'Makkah to Madinah Highway Scenic View' }]
     }
 };
@@ -70,7 +71,7 @@ export default async function MakkahMadinahTaxiPage() {
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}`;
 
     const content = {
-        title: "VIP Makkah to Madinah Taxi Services",
+        title: "Makkah to Madinah Private Taxi & VIP Transfer Services",
         subtitle: "Experience a spiritual journey with absolute comfort (راحة تامة). 4-5 hours travel time in luxury GMC Yukon or Hyundai Staria.",
         heroImage: "/images/routes/makkah-madinah-route-hero.webp"
     };
@@ -88,6 +89,25 @@ export default async function MakkahMadinahTaxiPage() {
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Makkah to Madinah Transfer"
+                            summary="Al Aqsa Umrah Transport offers direct, express private taxi services between Makkah and Madinah. This door-to-door service avoids the hassle of train station logistics and provides a comfortable, climate-controlled ride via the Hijrah Highway."
+                            features={[
+                                { label: "Duration & Distance", value: "4.5 hours (approx. 450 km direct route)." },
+                                { label: "Pricing", value: "SAR 300 to SAR 600, varying by vehicle size and season." },
+                                { label: "Availability", value: "Pre-scheduled departures available 24/7 from all Makkah hotel zones." }
+                            ]}
+                            ctaText="Book Makkah to Madinah Taxi"
+                            ctaLink={whatsappLink}
+                        />
+                    </div>
+                </div>
+            </section>
+
             {/* Trust/Benefits Section */}
             <section className="py-16 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4">
@@ -98,7 +118,7 @@ export default async function MakkahMadinahTaxiPage() {
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                                 The journey between the two Holy Cities (approx. 450km) requires a vehicle that guarantees comfort and safety.
-                                Skip the crowded buses and strict train schedules. Our private taxi service offers premium rides in our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 font-medium hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 font-medium hover:underline">Hyundai Staria</Link>:
+                                Skip the crowded buses and strict train schedules. Whether you are traveling Makkah to Madinah by road via a reliable Hijrah route taxi or seeking VIP GMC transport Madinah, our private taxi service offers premium rides in our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 font-medium hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 font-medium hover:underline">Hyundai Staria</Link>:
                             </p>
 
                             <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30">

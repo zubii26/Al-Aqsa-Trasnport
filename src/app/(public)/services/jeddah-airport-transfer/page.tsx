@@ -12,10 +12,11 @@ import { ArrowRight, Plane, ShieldCheck, UserCheck } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import VehicleCapacityGuide from '@/components/services/VehicleCapacityGuide';
 import RouteVisual from '@/components/services/RouteVisual';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 
 export const metadata: Metadata = {
-    title: "Taxi Jeddah Airport to Makkah | Private Hotel Transfer Price",
-    description: "Book your Jeddah Airport to Makkah taxi. Private GMC Yukon & Hyundai Staria transfer with Meet & Greet service (استقبال المطار). Fixed rates, no hidden fees.",
+    title: "Jeddah Airport (KAIA) to Makkah Taxi & Private Transfers",
+    description: "Book a reliable Jeddah Airport to Makkah taxi transfer. Official Nusuk-registered 24/7 service covering the 80km journey in 90 minutes. Fares SAR 150–300.",
     keywords: [
         "Jeddah Airport to Makkah Taxi",
         "Taxi Jeddah Airport Price",
@@ -32,8 +33,8 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer',
     },
     openGraph: {
-        title: "Taxi Jeddah Airport to Makkah | Private Transfer Price",
-        description: "Reliable transfer from Jeddah Airport (JED) to Makkah hotels. Our driver waits for you at the arrival hall.",
+        title: "Jeddah Airport (KAIA) to Makkah Taxi & Private Transfers",
+        description: "Book a reliable Jeddah Airport to Makkah taxi transfer. Official Nusuk-registered 24/7 service covering the 80km journey in 90 minutes. Fares SAR 150–300.",
         images: [{ url: '/images/routes/jeddah-airport-hero-professional.webp', width: 1200, height: 630, alt: 'Jeddah Airport VIP Transfer' }]
     }
 };
@@ -65,7 +66,7 @@ export default async function JeddahAirportTransferPage() {
     const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}`;
 
     const content = {
-        title: "Jeddah Airport to Makkah Transfers",
+        title: "Jeddah Airport (KAIA) to Makkah Taxi & Private Transfers",
         subtitle: "Start your Umrah with peace of mind. Professional drivers, Meet & Greet service (استقبال خاص). Direct transfer to your Makkah hotel.",
         heroImage: "/images/routes/jeddah-airport-hero-professional.webp"
     };
@@ -83,6 +84,25 @@ export default async function JeddahAirportTransferPage() {
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
 
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Jeddah Airport to Makkah Transfer"
+                            summary="Al Aqsa Umrah Transport provides direct, private transfers from King Abdulaziz International Airport (KAIA) in Jeddah to all Makkah hotels. All vehicles are Nusuk-registered and driven by licensed professionals familiar with Haram traffic regulations."
+                            features={[
+                                { label: "Duration & Distance", value: "Approximately 90 minutes (80 km route)." },
+                                { label: "Pricing", value: "SAR 150 to SAR 300 per vehicle, depending on fleet type." },
+                                { label: "Availability", value: "24/7 service with complimentary flight tracking and airport wait time included." }
+                            ]}
+                            ctaText="Book Jeddah to Makkah Transfer"
+                            ctaLink="/booking"
+                        />
+                    </div>
+                </div>
+            </section>
+
             {/* Arrival Guide Section */}
             <section className="py-16 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4">
@@ -91,7 +111,7 @@ export default async function JeddahAirportTransferPage() {
                             Arrival Procedure: What to Expect
                         </h2>
                         <p className="text-slate-600 dark:text-slate-300">
-                            We know arriving in a new country can be stressful. Here is how we make it easy:
+                            We know arriving for Umrah or navigating Hajj terminal transport areas can be stressful. Whether you are looking for a reliable King Abdulaziz International Airport taxi or a comfortable Haramain high speed railway alternative, here is how we make it easy:
                         </p>
                         <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800/30 inline-block">
                             <p className="text-green-800 dark:text-green-200 font-medium">

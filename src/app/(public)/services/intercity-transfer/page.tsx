@@ -9,17 +9,18 @@ import { routeService } from '@/services/routeService';
 import { ShieldCheck, Star, UserCheck, Timer } from 'lucide-react';
 import { RouteWithPrices } from '@/services/routeService';
 import FAQSection from '@/components/services/FAQSection';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 
 export const metadata = {
-    title: "Makkah to Madinah Taxi & Intercity Transport | Al Aqsa",
-    description: "Comfortable Makkah to Madinah transport. Reliable intercity taxi transfers between Jeddah, Makkah & Madinah. Enjoy a seamless, spiritual travel experience.",
+    title: "Saudi Arabia Intercity Transfers | Makkah, Madinah & Jeddah",
+    description: "Private intercity transfers across Saudi Arabia. VIP taxi services connecting Jeddah, Makkah, and Madinah. Fixed fares, no hidden fees, and door-to-door comfort.",
     keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"],
     alternates: {
         canonical: 'https://www.alaqsaumrahtransport.com/services/intercity-transfer',
     },
     openGraph: {
-        title: "Makkah to Madinah Taxi & Intercity Transport | VIP Fleet",
-        description: "Travel comfortably between Jeddah, Makkah, and Madinah. Premium private taxi service with experienced drivers.",
+        title: "Saudi Arabia Intercity Transfers | Makkah, Madinah & Jeddah",
+        description: "Private intercity transfers across Saudi Arabia. VIP taxi services connecting Jeddah, Makkah, and Madinah. Fixed fares, no hidden fees, and door-to-door comfort.",
         images: [{ url: '/images/routes/routes-network-hero.webp', width: 1200, height: 630, alt: 'Saudi Arabia Intercity Transport Network' }]
     }
 };
@@ -131,7 +132,7 @@ export default async function IntercityTransferPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero
-                title="Premium Intercity Travel"
+                title="Saudi Arabia Intercity Transfers"
                 subtitle="Journey between the Holy Cities via our interactive premium network. Explore routes and book your VIP transfer instantly."
                 bgImage="/images/routes/routes-network-hero.webp"
                 ctaText="Start Exploring"
@@ -139,6 +140,25 @@ export default async function IntercityTransferPage() {
                 backgroundChildren={<AnimatedMapBackground />}
                 breadcrumbs={<Breadcrumbs />}
             />
+
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Intercity Transfers"
+                            summary="Reliable, premium private transport between Saudi Arabia's major holy cities and airports. A comfortable, private alternative to public transportation networks."
+                            features={[
+                                { label: "Routes Covered", value: "Makkah ↔ Jeddah, Makkah ↔ Madinah, and Jeddah ↔ Madinah." },
+                                { label: "Pricing", value: "Transparent, flat-rate pricing per route based on the selected vehicle class." },
+                                { label: "Availability", value: "On-demand and pre-scheduled bookings available daily; door-to-door service included." }
+                            ]}
+                            ctaText="Book Intercity Travel"
+                            ctaLink="/booking"
+                        />
+                    </div>
+                </div>
+            </section>
 
             <section className="py-16 md:py-24 bg-white dark:bg-slate-950 relative overflow-hidden">
                 <div className="container relative z-10">
@@ -151,7 +171,7 @@ export default async function IntercityTransferPage() {
                                     <span className="text-amber-500">Between The Two Harams</span>
                                 </h2>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-                                    The journey between Makkah and Madinah is more than just travel; it is a transition between two sacred sanctuaries. We honor this journey by providing a service that prioritizes your rest and reverence.
+                                    Whether you need Madinah to Makkah transport or a reliable Haramain transport alternative, the journey between Makkah and Madinah is more than just travel; it is a transition between two sacred sanctuaries. We honor this journey by providing a KSA intercity transfer service that prioritizes your rest and reverence.
                                 </p>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
                                     Forget the hassle of crowded buses. Our <strong>private intercity taxis</strong> allow you to travel on your own schedule, stop at Miqats (Dhul Hulayfah) for intention, and enjoy the scenic Hijrah route in the privacy of a premium vehicle.

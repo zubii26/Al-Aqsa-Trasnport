@@ -5,11 +5,12 @@ import { Plane, Clock, ShieldCheck, MapPin, UserCheck, Smartphone, CheckCircle2,
 import Link from 'next/link';
 import { routeService } from '@/services/routeService';
 import AirportInteractiveMap from '@/components/services/airport/AirportInteractiveMap';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Jeddah & Madinah Airport Transfers | Umrah Taxi | توصيل المطارات",
-    description: "Reliable airport pickups for Jeddah & Madinah. Punctual, hassle-free transfers. 24/7 service. توصيل من مطار جدة الى مكة. استقبال مطار المدينة المنورة.",
+    title: "Saudi Arabia Airport Transfers | Umrah Taxi Services",
+    description: "Reliable 24/7 airport transfers for Jeddah (KAIA) and Madinah (MED). Professional meet & greet, flight tracking, and private Umrah taxi services.",
     keywords: [
         "Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi",
         "VIP Umrah Transport", "Jeddah Airport Shuttle", "Makkah Private Taxi",
@@ -20,15 +21,15 @@ export const metadata: Metadata = {
         canonical: 'https://www.alaqsaumrahtransport.com/services/airport-transfers',
     },
     openGraph: {
-        title: "Jeddah & Madinah Airport Transfers | Al Aqsa Transport",
-        description: "Reliable airport pickups for Jeddah & Madinah. توصيل آمن ومريح من المطارات.",
+        title: "Saudi Arabia Airport Transfers | Umrah Taxi Services",
+        description: "Reliable 24/7 airport transfers for Jeddah (KAIA) and Madinah (MED). Professional meet & greet, flight tracking, and private Umrah taxi services.",
         images: ["/images/fleet/gmc.webp"],
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Jeddah & Madinah Airport Transfers | Umrah Taxi",
-        description: "Reliable airport pickups for Jeddah & Madinah. توصيل من مطار جدة ومطار المدينة.",
+        title: "Saudi Arabia Airport Transfers | Umrah Taxi Services",
+        description: "Reliable 24/7 airport transfers for Jeddah (KAIA) and Madinah (MED). Professional meet & greet, flight tracking, and private Umrah taxi services.",
         images: ["/images/fleet/gmc.webp"],
     }
 };
@@ -96,13 +97,32 @@ export default async function AirportTransfersPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero
-                title="VIP Jeddah Airport Transfers"
+                title="Saudi Arabia Airport Transfers | Umrah Taxi Services"
                 subtitle="Experience a seamless arrival with our premium chauffeur service. We track your flight and wait for you at KAIA, ensuring a stress-free journey to Makkah."
                 bgImage="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop"
                 ctaText="Book Transfer Now"
                 ctaLink="/booking?service=airport"
                 alt="Jeddah Airport Arrival Lounge Private Chauffeur Transfer"
             />
+
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="General Airport Transfers"
+                            summary="Comprehensive Meet & Greet airport transfer services for pilgrims arriving at King Abdulaziz International Airport (Jeddah) or Prince Mohammad Bin Abdulaziz Airport (Madinah)."
+                            features={[
+                                { label: "Locations", value: "Jeddah (KAIA) and Madinah (MED) airports to all major hotels." },
+                                { label: "Key Features", value: "Complimentary flight tracking, 24/7 availability, and luggage assistance." },
+                                { label: "Fleet", value: "Ranging from standard sedans to VIP GMC Yukons and 10-seater family vans." }
+                            ]}
+                            ctaText="View Airport Routes"
+                            ctaLink="/booking?service=airport"
+                        />
+                    </div>
+                </div>
+            </section>
 
             {/* Interactive Map Section */}
             <section className="relative z-10 -mt-10 mb-12">
@@ -145,7 +165,7 @@ export default async function AirportTransfersPage() {
                             <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">Our Commitment</span>
                             <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 ">Why Book Your Airport Transfer With Us?</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
-                                We go beyond just transport. We offer comprehensive service ensuring your peace of mind from the moment you land.
+                                Whether you need a direct KAIA transfer, a dedicated Umrah airport pickup, or premium VIP Umrah Transport, we go beyond just transport. We offer comprehensive service ensuring your peace of mind from the moment you land.
                             </p>
                         </div>
                     </FadeIn>

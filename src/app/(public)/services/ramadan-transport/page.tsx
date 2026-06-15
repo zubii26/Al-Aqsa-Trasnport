@@ -9,11 +9,12 @@ import { ArrowRight, Moon, Clock, ShieldCheck, MapPin } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import { getSettings } from '@/lib/settings-storage';
 import SchemaInjector from '@/components/SchemaInjector';
+import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { ramadanServiceSchema, ramadanFaqSchema } from '@/lib/schema/ramadan-schema';
 
 export const metadata: Metadata = {
-    title: "Ramadan 2026 Umrah Transport | Makkah Taxi",
-    description: "Book reliable Ramadan 2026 transport in Makkah & Madinah. VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",
+    title: "Ramadan 2026 Umrah Transport & Private Makkah Taxi",
+    description: "Secure your Ramadan 2026 Umrah transport. VIP private taxi for Tarawih, Qiyam-ul-Layl, and airport transfers in Makkah & Madinah. 24/7 service.",
     keywords: [
         "Ramadan Umrah Transport",
         "Makkah Taxi Ramadan 2026",
@@ -26,8 +27,8 @@ export const metadata: Metadata = {
         "تاكسي الحرم رمضان"
     ],
     openGraph: {
-        title: "Ramadan 2026 Umrah Transport | Makkah Taxi",
-        description: "Book reliable Ramadan 2026 transport in Makkah & Madinah. VIP private car rentals for Tarawih, Qiyam-ul-Layl, and Airport transfers. 24/7 Service.",
+        title: "Ramadan 2026 Umrah Transport & Private Makkah Taxi",
+        description: "Secure your Ramadan 2026 Umrah transport. VIP private taxi for Tarawih, Qiyam-ul-Layl, and airport transfers in Makkah & Madinah. 24/7 service.",
         images: [{ url: '/images/hero/masjid-nabawi-dusk.jpg', width: 1200, height: 630, alt: 'Ramadan Umrah Services' }]
     }
 };
@@ -61,7 +62,7 @@ export default async function RamadanTransportPage() {
         <main className="overflow-x-hidden">
             <SchemaInjector schemas={[ramadanServiceSchema, ramadanFaqSchema]} />
             <Hero
-                title="Blessed Journeys in the Holy Month"
+                title="Ramadan 2026 Umrah Transport & Private Makkah Taxi"
                 subtitle="Reliable, comfortable, and punctual transport services for your Ramadan Umrah. Focus on your worship; let us handle the roads."
                 bgImage="/images/hero/ramadan-transport-hero.webp" // Updated to generated Ramadan hero image
                 ctaText="Book Your Ramadan Ride"
@@ -69,6 +70,25 @@ export default async function RamadanTransportPage() {
                 layout="center"
                 breadcrumbs={<Breadcrumbs />}
             />
+
+            {/* Quick Answer Block */}
+            <section className="py-8 bg-white dark:bg-slate-900">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <QuickAnswerBox
+                            title="Ramadan 2026 Transport"
+                            summary="Specialized Umrah transport services during the holy month of Ramadan. We provide reliable rides despite heavy traffic and road closures in Makkah and Madinah."
+                            features={[
+                                { label: "Services", value: "Airport transfers, Tarawih/Qiyam-ul-Layl drop-offs, and intercity travel." },
+                                { label: "Pricing", value: "Fixed seasonal rates with no hidden surge pricing if booked in advance." },
+                                { label: "Availability", value: "Highly limited during the last 10 days (Laylatul Qadr); advance booking strictly required." }
+                            ]}
+                            ctaText="Secure Ramadan Transport"
+                            ctaLink={whatsappLink}
+                        />
+                    </div>
+                </div>
+            </section>
 
             {/* Introduction */}
             <section className="py-16 bg-white dark:bg-slate-900">
@@ -81,7 +101,7 @@ export default async function RamadanTransportPage() {
                     </h2>
                     <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                         Ramadan in Makkah and Madinah is a spiritually uplifting experience, but the logistics can be challenging.
-                        With millions of pilgrims, finding reliable transport can be difficult. Al Aqsa Transport ensures you arrive
+                        Whether you need Madinah Airport to Makkah Ramadan transfers or a dedicated Laylatul Qadr taxi Makkah, finding reliable Ramadan Umrah transport can be difficult with millions of pilgrims. Al Aqsa Transport ensures you arrive
                         fresh and on time for your prayers, Ziyarat, and airport transfers.
                     </p>
                 </div>
