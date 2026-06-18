@@ -23,6 +23,11 @@ export const localBusinessSchema = {
   "image": "https://www.alaqsaumrahtransport.com/images/fleet.jpg",
   "telephone": "+966 54 870 7332",
   "email": "alaqsaumrahtransport@gmail.com",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "328"
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Near Masjid al-Haram, Al Haram District",

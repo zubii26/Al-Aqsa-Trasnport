@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { blogService } from '@/services/blogService';
 import pricingData from '@/data/pricing.json';
+import { topHotels } from '@/data/hotels';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.alaqsaumrahtransport.com';
@@ -70,5 +71,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Continue without blog routes to ensure build succeeds
     }
 
-    return [...routes, ...transportRoutes, ...blogRoutes];
+    // Dynamic Hotel Transfer Routes
+    const hotelRoutes = topHotels.map((hotel) => ({
+        url: `${baseUrl}/transfers/jeddah-airport-to-${hotel.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
+    return [...routes, ...transportRoutes, ...hotelRoutes, ...blogRoutes];
 }

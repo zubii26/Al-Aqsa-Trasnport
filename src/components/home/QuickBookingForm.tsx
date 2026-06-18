@@ -193,75 +193,71 @@ const QuickBookingForm = ({
         };
     });
 
-    // Update Pickup/Dropoff when Route changes
     const handleRouteChange = (e: any) => {
         const routeId = e.target.value;
 
-        let newPickup = formData.pickup;
-        let newDropoff = formData.dropoff;
+        startTransition(() => {
+            let newPickup = formData.pickup;
+            let newDropoff = formData.dropoff;
 
-        if (routeId === 'custom') {
-            // If custom, clear fields or keep as is? Let's clear to let user type fresh or keep if they switched back
-            // Keeping them empty is safer for "Custom" feeling
-            newPickup = '';
-            newDropoff = '';
-        } else {
-            const selectedRoute = routes.find(r => r.id === routeId);
-            if (selectedRoute) {
-                // Use origin/destination fields if available, fallback to name parsing
-                if (selectedRoute.origin && selectedRoute.destination) {
-                    newPickup = selectedRoute.origin;
-                    newDropoff = selectedRoute.destination;
-                } else {
-                    const parts = selectedRoute.name.split(/\u2192|\u2194| to /);
-                    if (parts.length >= 2) {
-                        newPickup = parts[0].trim();
-                        newDropoff = parts[1].trim();
+            if (routeId === 'custom') {
+                newPickup = '';
+                newDropoff = '';
+            } else {
+                const selectedRoute = routes.find(r => r.id === routeId);
+                if (selectedRoute) {
+                    if (selectedRoute.origin && selectedRoute.destination) {
+                        newPickup = selectedRoute.origin;
+                        newDropoff = selectedRoute.destination;
                     } else {
-                        newDropoff = selectedRoute.name;
+                        const parts = selectedRoute.name.split(/\u2192|\u2194| to /);
+                        if (parts.length >= 2) {
+                            newPickup = parts[0].trim();
+                            newDropoff = parts[1].trim();
+                        } else {
+                            newDropoff = selectedRoute.name;
+                        }
                     }
                 }
             }
-        }
 
-        setFormData(prev => ({
-            ...prev,
-            routeId,
-            pickup: newPickup,
-            dropoff: newDropoff
-        }));
+            setFormData(prev => ({
+                ...prev,
+                routeId,
+                pickup: newPickup,
+                dropoff: newDropoff
+            }));
 
-        if (errors.routeId) setErrors(prev => ({ ...prev, routeId: '' }));
+            if (errors.routeId) setErrors(prev => ({ ...prev, routeId: '' }));
+        });
     };
+
+    const [isPending, startTransition] = React.useTransition();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
-        // Auto-update passengers when vehicle count changes if not manually set? 
-        // For simplicity, we just update the field. If it's vehicleId or vehicleCount, we might want to auto-cap passengers?
+        startTransition(() => {
+            setFormData(prev => {
+                const newData = { ...prev, [name]: value };
 
-        setFormData(prev => {
-            const newData = { ...prev, [name]: value };
+                if (name === 'vehicleId' || name === 'vehicleCount') {
+                    const vId = name === 'vehicleId' ? value : prev.vehicleId;
+                    const vCount = name === 'vehicleCount' ? Number(value) : prev.vehicleCount;
 
-            // If Vehicle or Count changes, auto-set passengers to max capacity as a suggestion
-            // (User can change it later)
-            if (name === 'vehicleId' || name === 'vehicleCount') {
-                const vId = name === 'vehicleId' ? value : prev.vehicleId;
-                const vCount = name === 'vehicleCount' ? Number(value) : prev.vehicleCount;
-
-                const selectedV = vehicles.find(v => v.id === vId);
-                if (selectedV) {
-                    newData.passengers = parseInt(selectedV.capacity) * vCount;
+                    const selectedV = vehicles.find(v => v.id === vId);
+                    if (selectedV) {
+                        newData.passengers = parseInt(selectedV.capacity) * vCount;
+                    }
                 }
+
+                return newData;
+            });
+
+            if (errors[name]) {
+                setErrors({ ...errors, [name]: '' });
             }
-
-            return newData;
         });
-
-        // Clear error when user starts typing
-        if (errors[name]) {
-            setErrors({ ...errors, [name]: '' });
-        }
     };
 
     const handleDateChange = (date: Date | null) => {

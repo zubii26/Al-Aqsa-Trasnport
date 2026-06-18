@@ -200,7 +200,7 @@ export default function RouteDetail({ params }: Props) {
                                                 <User size={16} className="text-[#D4AF37]" /> {vehicle.capacity}
                                             </div>
                                             <Image
-                                                src={`/images/fleet/${vehicle.id}.png`}
+                                                src={`/images/fleet/${vehicle.id}.webp`}
                                                 alt={vehicle.name}
                                                 fill
                                                 className="object-contain p-6 group-hover:scale-110 transition-transform duration-700 drop-shadow-2xl"

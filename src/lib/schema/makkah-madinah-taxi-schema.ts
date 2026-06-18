@@ -15,6 +15,11 @@ export const makkahMadinahServiceSchema = {
     "url": "https://www.alaqsaumrahtransport.com"
   },
   "serviceType": "Intercity Transfer",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127"
+  },
   "areaServed": [
     {
       "@type": "City",

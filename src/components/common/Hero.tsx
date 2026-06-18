@@ -90,6 +90,7 @@ const Hero: React.FC<HeroProps> = ({
                                 alt={alt || `Umrah Transport Fleet ${currentIndex + 1}`}
                                 fill
                                 priority={currentIndex === 0}
+                                fetchPriority={currentIndex === 0 ? "high" : "auto"}
                                 quality={100}
                                 className="object-cover scale-110"
                                 sizes="100vw"
@@ -103,6 +104,7 @@ const Hero: React.FC<HeroProps> = ({
                             alt={alt || "Umrah Transport Saudi Arabia Hero"}
                             fill
                             priority
+                            fetchPriority="high"
                             quality={100}
                             className="object-cover scale-110"
                             sizes="100vw"

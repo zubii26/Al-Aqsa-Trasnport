@@ -21,6 +21,11 @@ export const jeddahAirportServiceSchema = {
   "url": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer",
   "serviceType": "Airport Transfer",
   "category": "Pilgrim Transport",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "184"
+  },
   "provider": {
     "@type": "LocalBusiness",
     "@id": "https://www.alaqsaumrahtransport.com/#organization",

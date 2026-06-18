@@ -58,7 +58,7 @@ const FLEET_IMAGES = [
         gradient: 'from-purple-500/20 to-slate-900/40'
     },
     {
-        src: '/images/fleet/coaster-hero-professional.png',
+        src: '/images/fleet/coaster-hero-professional.webp',
         alt: 'Toyota Coaster 21 Seater Bus',
         name: 'Toyota Coaster',
         badge: 'Group Travel',
