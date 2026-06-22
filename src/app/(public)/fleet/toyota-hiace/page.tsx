@@ -28,6 +28,7 @@ const jsonLd = {
     "offers": { "@type": "Offer", "price": "350", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" ,
         "hasMerchantReturnPolicy": {
             "@type": "MerchantReturnPolicy",
+            "applicableCountry": "SA",
             "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
             "description": "Due to the nature of pre-booked private transport services, returns or refunds are not permitted once the service has commenced or been completed. Please refer to our cancellation policy for pre-service modifications."
         },
@@ -41,7 +42,7 @@ const jsonLd = {
             },
             "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "SA" }
         }},
-    "hasCertification": "Nusuk Registered Vehicle",
+    "award": "Nusuk Registered Vehicle",
     "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
