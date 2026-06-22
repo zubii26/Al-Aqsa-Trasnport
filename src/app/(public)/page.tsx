@@ -30,10 +30,10 @@ import QuickBookingForm from '@/components/home/QuickBookingForm';
 
 export async function generateMetadata() {
   return {
-    title: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport",
+    title: { absolute: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport" },
     description: "Book reliable Jeddah Airport to Makkah taxi services. We offer VIP, safe, and affordable 24/7 pilgrim travel across Saudi Arabia with our luxury fleet.",
     alternates: {
-      canonical: 'https://www.alaqsaumrahtransport.com',
+      canonical: 'https://www.alaqsaumrahtransport.com/',
     },
     keywords: [
       "Umrah transport services", "Umrah travel agency", "Umrah packages worldwide",

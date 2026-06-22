@@ -2,7 +2,14 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const { pathname, host } = request.nextUrl;
+
+    // Enforce www redirect at the edge
+    if (host === 'alaqsaumrahtransport.com') {
+        const url = request.nextUrl.clone();
+        url.host = 'www.alaqsaumrahtransport.com';
+        return NextResponse.redirect(url, 301);
+    }
 
     // Check if the request is for the admin panel or admin API
     if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
@@ -61,8 +68,13 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/admin/:path*',
-        '/api/admin/:path*',
-        '/api/auth/migrate-passwords',
+        /*
+         * Match all request paths except for the ones starting with:
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+         * - images/ (public images)
+         */
+        '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images/).*)',
     ],
 };

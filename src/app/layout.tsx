@@ -80,9 +80,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     verification: {
       google: '0JYg8N3CPUFhzseUIrbhKiLIShx1ltrIF0XoXVsO7-I',
-      other: {
-        'msvalidate.01': 'YOUR_BING_VERIFICATION_CODE_HERE',
-      },
     },
     twitter: {
       card: 'summary_large_image',
