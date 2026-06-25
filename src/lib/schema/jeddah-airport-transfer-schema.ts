@@ -129,13 +129,6 @@ export const jeddahAirportServiceSchema = {
     },
     "reviewBody": "Excellent service, driver was waiting at arrivals with our name sign. Vehicle was clean and comfortable, and we arrived at our Makkah hotel safely."
   },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",      // ← replace with your real rating
-    "reviewCount": "284",      // ← replace with your real review count
-    "bestRating": "5",
-    "worstRating": "1"
-  }
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -147,42 +140,42 @@ export const jeddahAirportFAQSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How do I find my driver at Jeddah Airport (KAIA)?",
+      "name": "Can you take a taxi directly to your hotel in Makkah?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "After clearing customs and collecting your luggage, your Al Aqsa Umrah Transport driver will be waiting in the arrivals hall holding a sign with your name on it. You will receive the driver's name, phone number, and vehicle registration details via WhatsApp and SMS at least one hour before your flight lands. If you experience any difficulty locating your driver, our 24/7 operations team is reachable by phone and WhatsApp to assist you immediately. No need to search for a taxi or negotiate — your transfer is fully pre-arranged."
+        "text": "Yes, our private taxis transport you directly from the Jeddah airport arrivals hall to the front lobby of your Makkah hotel. We navigate the local Makkah roads to ensure a seamless door-to-door experience, minimizing physical strain."
       }
     },
     {
       "@type": "Question",
-      "name": "What happens if my flight to Jeddah is delayed?",
+      "name": "Are taxis available at KAIA late at night?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We monitor all incoming flights in real time using live flight tracking tools. If your flight to Jeddah Airport is delayed, your driver automatically adjusts their arrival time to match your updated landing. There is no extra charge for delays up to 3 hours. For longer delays or cancellations, simply contact our WhatsApp support line and we will reschedule your transfer at no penalty. We understand that flight disruptions are beyond your control, and we never charge cancellation or rebooking fees for flight-related delays."
+        "text": "Yes, our private airport pickups operate on a strict 24/7 availability schedule. Whether your flight lands at 2:00 PM or 3:00 AM, your assigned driver will be actively monitoring your flight status and waiting in the arrivals area."
       }
     },
     {
       "@type": "Question",
-      "name": "Can non-Muslim passengers travel in your vehicles to Makkah?",
+      "name": "How much luggage can a standard taxi hold?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Only Muslims are permitted to enter the holy city of Makkah, as per Saudi Arabian law and Nusuk regulations. Al Aqsa Umrah Transport complies fully with this requirement. Passengers booking a Jeddah Airport to Makkah transfer should be aware that Saudi authorities conduct checks at the entry checkpoint to Makkah. Non-Muslim travelers can book our Jeddah Airport to Jeddah City Hotel service or alternative destinations within the Jeddah and Madinah area, which have no religious entry restrictions."
+        "text": "A standard sedan holds up to 3 passengers and 2 to 3 medium-sized bags. If your group carries large hard-shell suitcases, you must upgrade to an SUV or a van to ensure all luggage fits safely."
       }
     },
     {
       "@type": "Question",
-      "name": "What is included in the Jeddah Airport to Makkah transfer price?",
+      "name": "Do you need Saudi Riyals to pay for the taxi?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our fixed transfer price includes door-to-door service from the arrivals hall at King Abdulaziz International Airport (KAIA) to your hotel or accommodation in Makkah. The price covers the driver's meet-and-greet service, fuel, vehicle air conditioning, all toll fees, and up to 2 standard checked bags per passenger. Child seats are available on request at no extra cost. There are no hidden surcharges for late-night, early-morning, or Ramadan-period transfers — the quoted price is final. Optional extras such as additional stops are available and quoted transparently before booking."
+        "text": "You do not strictly need Saudi Riyals if you book with us, as drivers accept major credit cards and Apple Pay via mobile terminals. However, we recommend withdrawing a small amount of cash (SAR 100–200) from airport ATMs for tipping."
       }
     },
     {
       "@type": "Question",
-      "name": "How far in advance should I book my Jeddah Airport to Makkah taxi?",
+      "name": "Can you book a return trip or onward travel?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "For standard travel periods, we recommend booking your Jeddah Airport to Makkah transfer at least 48–72 hours before your flight arrives, though same-day bookings are often possible. During Ramadan — especially the last ten nights — and the Hajj season (Dhul Hijjah), vehicle availability becomes extremely tight and we recommend booking 3–6 weeks in advance to guarantee your preferred vehicle type. Early booking also locks in the current price, which may increase during peak pilgrim seasons due to high demand across all licensed transport providers."
+        "text": "Yes, you can easily arrange your complete itinerary with our team, including your onward Makkah to Madinah taxi once your Umrah rituals are complete. Booking your entire transport itinerary with a single operator simplifies communication."
       }
     }
   ]
