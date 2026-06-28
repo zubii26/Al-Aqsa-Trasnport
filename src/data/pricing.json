@@ -520,6 +520,8 @@
         {
             "id": "makkah-hotel-to-jeddah-hotel",
             "name": "Makkah Hotel to Jeddah Hotel",
+            "origin": "Makkah Hotel",
+            "destination": "Jeddah Hotel",
             "slug": "makkah-to-jeddah-hotel",
             "seo": {
                 "title": "Taxi Makkah to Jeddah Hotel | Private Transfer",
@@ -549,6 +551,8 @@
         {
             "id": "makkah-hotel-to-train-station",
             "name": "Makkah Hotel to Makkah Train Station",
+            "origin": "Makkah Hotel",
+            "destination": "Makkah Train Station",
             "slug": "makkah-hotel-to-train-station",
             "seo": {
                 "title": "Taxi Makkah Hotel to Train Station | Haramain HSR Transfer",
@@ -579,6 +583,8 @@
         {
             "id": "madinah-hotel-to-train-station",
             "name": "Madinah Hotel to Madinah Train Station",
+            "origin": "Madinah Hotel",
+            "destination": "Madinah Train Station",
             "slug": "madinah-hotel-to-train-station",
             "seo": {
                 "title": "Taxi Madinah Hotel to Train Station | Haramain HSR Transfer",
@@ -609,6 +615,8 @@
         {
             "id": "makkah-train-station-to-hotel",
             "name": "Makkah Train Station to Makkah Hotel",
+            "origin": "Makkah Train Station",
+            "destination": "Makkah Hotel",
             "slug": "makkah-train-station-to-hotel",
             "seo": {
                 "title": "Taxi Makkah Train Station to Hotel | Arrival Transfer",
@@ -638,6 +646,8 @@
         {
             "id": "madinah-train-station-to-hotel",
             "name": "Madinah Train Station to Madinah Hotel",
+            "origin": "Madinah Train Station",
+            "destination": "Madinah Hotel",
             "slug": "madinah-train-station-to-hotel",
             "seo": {
                 "title": "Taxi Madinah Train Station to Hotel | Arrival Transfer",
