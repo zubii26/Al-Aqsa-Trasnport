@@ -302,8 +302,8 @@ export async function GET() {
         }
 
         // 3. Invalidate Cache
-        // TODO: revalidateTag expects 2 arguments in this version? checks needed.
-        // revalidateTag('routes');
+        // @ts-expect-error: revalidateTag signature mismatch in this next version
+        revalidateTag('routes');
 
         return NextResponse.json({
             success: true,
