@@ -311,9 +311,9 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
         "5. Passengers are requested to be ready at the pickup point at least 10 minutes before the",
         "scheduled time.",
         "",
-        "6. All passengers must share their visa number(s) prior to airport pickup, as company documents are",
-        "required by authorities to receive pilgrims at the airport or for any intercity transfer. We kindly request",
-        "your cooperation in providing this information in advance.",
+        "6. Our team will contact you on WhatsApp 24 hours before your flight to collect your required Umrah",
+        "travel documents. These are legally required by authorities to receive pilgrims at the airport or for",
+        "any intercity transfer.",
         "",
         "7. If a ride is booked as part of a package and a B2B (business-to-business) rate has been provided,",
         "individual legs of that package must not be cancelled separately. Cancelling a single ride from a",
@@ -353,11 +353,11 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     doc.setTextColor(TEXT_DARK);
     doc.text("Visa Requirement:", 18, boxTextY);
     doc.setFont("helvetica", "normal");
-    doc.text("All passengers MUST share their visa number(s) before airport pickup.", 52, boxTextY);
+    doc.text("Our team will contact you on WhatsApp 24 hours before your flight", 52, boxTextY);
     boxTextY += 5;
-    doc.text("Company documents are legally required by authorities to receive pilgrims at the airport or for", 18, boxTextY);
+    doc.text("to collect your required Umrah travel documents. Cooperation is mandatory.", 18, boxTextY);
     boxTextY += 5;
-    doc.text("any intercity transfer. Cooperation is mandatory.", 18, boxTextY);
+    doc.text("These are required by authorities to receive pilgrims at the airport.", 18, boxTextY);
 
     boxTextY += 8;
     doc.setFont("helvetica", "bold");

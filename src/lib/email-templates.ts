@@ -98,10 +98,10 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
     <!-- WhatsApp Notice -->
     <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #25D366; margin: 25px 0; text-align: center;">
         <p style="margin: 0; font-size: 16px; font-weight: bold; color: #1a1a1a;">
-            Our team will contact you on WhatsApp within 24 hours before your flight to reconfirm your pickup.
+            Our team will contact you on WhatsApp 24 hours before your flight to collect your required Umrah travel documents.
         </p>
         <p style="margin: 8px 0 0 0; font-size: 18px; font-weight: bold; font-family: 'Amiri', serif; color: #1a1a1a; direction: rtl;">
-            سيتواصل معك فريقنا عبر الواتساب خلال ٢٤ ساعة قبل رحلتك لتأكيد الاستلام.
+            سيتواصل معك فريقنا عبر الواتساب قبل ٢٤ ساعة من رحلتك لجمع المستندات المطلوبة للعمرة.
         </p>
     </div>
 
