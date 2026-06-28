@@ -137,17 +137,44 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     // --- Table ---
     const tableStartY = serviceDetailsY + 5;
 
+    const formatTime = (timeStr: string) => {
+        if (!timeStr) return '';
+        try {
+            const [hours, minutes] = timeStr.split(':');
+            let h = parseInt(hours, 10);
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12;
+            h = h ? h : 12;
+            return `${h}:${minutes} ${ampm}`;
+        } catch(e) {
+            return timeStr;
+        }
+    };
+
+    const formatDate = (dateInput: string | Date) => {
+        if (!dateInput) return '';
+        try {
+            const d = new Date(dateInput);
+            if (isNaN(d.getTime())) return String(dateInput);
+            return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        } catch(e) {
+            return String(dateInput);
+        }
+    };
+
     let tableData = [];
     
     if (booking.legs && booking.legs.length > 0) {
         tableData = booking.legs.map((leg: any, index: number) => {
-            const dateStr = leg.date ? new Date(leg.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+            const dateStr = formatDate(leg.date);
+            const timeStr = formatTime(leg.time);
             const pickup = leg.pickup?.split(',')[0] || '';
             const dropoff = leg.dropoff?.split(',')[0] || '';
             return [
                 (index + 1).toString(),
                 `${pickup} -> ${dropoff}`,
                 dateStr,
+                timeStr,
                 leg.vehicleName || booking.vehicle || 'Hiace',
                 (booking.vehicleCount || 1).toString(),
                 leg.price ? Number(leg.price).toFixed(2) : '-'
@@ -160,7 +187,8 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
             [
                 "1",
                 `${pickup} -> ${dropoff}`,
-                new Date(booking.pickupDate || Date.now()).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+                formatDate(booking.date || booking.pickupDate || Date.now()),
+                formatTime(booking.time),
                 booking.vehicle || 'Hiace',
                 (booking.vehicleCount || 1).toString(),
                 booking.finalPrice ? Number(booking.finalPrice).toFixed(2) : '0.00'
@@ -170,7 +198,7 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
 
     autoTable(doc, {
         startY: tableStartY,
-        head: [['#', 'Service Description', 'Date', 'Vehicle', 'Qty', 'Amount\n(SAR)']],
+        head: [['#', 'Service Description', 'Date', 'Time', 'Vehicle', 'Qty', 'Amount\n(SAR)']],
         body: tableData,
         theme: 'plain',
         headStyles: { fillColor: PRIMARY_GOLD_RGB, textColor: 255, fontStyle: 'bold', halign: 'center', valign: 'middle' },
@@ -178,12 +206,13 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
         alternateRowStyles: { fillColor: [249, 249, 249] },
         styles: { cellPadding: 4, lineColor: [220, 220, 220], lineWidth: 0.1 },
         columnStyles: {
-            0: { cellWidth: 10, halign: 'center' }, // #
+            0: { cellWidth: 8, halign: 'center' }, // #
             1: { cellWidth: 'auto' }, // Description
-            2: { cellWidth: 30, halign: 'center' }, // Date
-            3: { cellWidth: 25, halign: 'center' }, // Vehicle
-            4: { cellWidth: 15, halign: 'center' }, // Qty
-            5: { cellWidth: 25, halign: 'right' } // Amount
+            2: { cellWidth: 25, halign: 'center' }, // Date
+            3: { cellWidth: 20, halign: 'center' }, // Time
+            4: { cellWidth: 25, halign: 'center' }, // Vehicle
+            5: { cellWidth: 10, halign: 'center' }, // Qty
+            6: { cellWidth: 25, halign: 'right' } // Amount
         },
     });
 

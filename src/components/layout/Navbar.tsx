@@ -9,7 +9,7 @@ import { useScroll, useSpring, motion, AnimatePresence } from "framer-motion";
 import { 
     Menu, X, ChevronDown, ChevronRight, 
     Car, Plane, MapPin, Building,
-    Calendar, Compass, Navigation, Bus, Search, Users, Shield
+    Calendar, Compass, Navigation, Bus, Search, Users, Shield, TrainFront
 } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { useMobileMenu } from '@/context/MobileMenuContext';
@@ -78,6 +78,7 @@ export default function Navbar() {
                     { href: '/services/makkah-madinah-taxi', label: 'Makkah ⇄ Madinah', description: 'Direct express transport between the two holy cities', icon: Navigation },
                     { href: '/services/jeddah-airport-transfer', label: 'Jeddah Airport ⇄ Makkah', description: 'Comfortable arrivals from King Abdulaziz Airport', icon: Plane },
                     { href: '/services/madinah-airport-transfer', label: 'Madinah Airport ⇄ Hotel', description: 'Quick and easy transfers directly to your hotel', icon: Plane },
+                    { href: '/services/train-station-transfer', label: 'Train Station ⇄ Hotel', description: 'Transfers to and from Haramain HSR stations', icon: TrainFront },
                 ],
                 sidebar: {
                     title: 'More Options',

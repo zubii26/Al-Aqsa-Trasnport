@@ -200,6 +200,60 @@ export async function GET() {
                 duration: '4 hrs 30 min',
                 category: 'Intercity',
                 prices: { [gmcId]: 1400, [camryId]: 500 }
+            },
+            {
+                key: 'mak-hot-jed-hot',
+                origin: 'Makkah Hotel',
+                destination: 'Jeddah Hotel',
+                distance: '100 km',
+                duration: '1 hr 30 min',
+                category: 'Intercity',
+                prices: { [gmcId]: 500, [camryId]: 200 }
+            },
+            {
+                key: 'mad-hot-jed-hot',
+                origin: 'Madinah Hotel',
+                destination: 'Jeddah Hotel',
+                distance: '400 km',
+                duration: '4 hrs',
+                category: 'Intercity',
+                prices: { [gmcId]: 1000, [camryId]: 500 }
+            },
+            {
+                key: 'mak-hot-mak-train',
+                origin: 'Makkah Hotel',
+                destination: 'Makkah Train Station',
+                distance: '15 km',
+                duration: '20 min',
+                category: 'Train Station',
+                prices: { [gmcId]: 300, [camryId]: 150 }
+            },
+            {
+                key: 'mad-hot-mad-train',
+                origin: 'Madinah Hotel',
+                destination: 'Madinah Train Station',
+                distance: '15 km',
+                duration: '20 min',
+                category: 'Train Station',
+                prices: { [gmcId]: 300, [camryId]: 150 }
+            },
+            {
+                key: 'mak-train-mak-hot',
+                origin: 'Makkah Train Station',
+                destination: 'Makkah Hotel',
+                distance: '15 km',
+                duration: '20 min',
+                category: 'Train Station',
+                prices: { [gmcId]: 300, [camryId]: 120 }
+            },
+            {
+                key: 'mad-train-mad-hot',
+                origin: 'Madinah Train Station',
+                destination: 'Madinah Hotel',
+                distance: '15 km',
+                duration: '20 min',
+                category: 'Train Station',
+                prices: { [gmcId]: 300, [camryId]: 120 }
             }
         ];
 

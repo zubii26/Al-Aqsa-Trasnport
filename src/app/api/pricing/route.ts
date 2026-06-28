@@ -50,8 +50,10 @@ export async function GET() {
                 category: route.category || (
                     route.destination.toLowerCase().includes('airport') ? 'Airport Departure' :
                         route.origin.toLowerCase().includes('airport') ? 'Airport Arrival' :
-                            (route.name.toLowerCase().includes('ziarat') || route.name.toLowerCase().includes('ziyarat')) ? 'Ziarat' :
-                                'Intercity'
+                            route.destination.toLowerCase().includes('train station') ? 'Train Station Departure' :
+                                route.origin.toLowerCase().includes('train station') ? 'Train Station Arrival' :
+                                    (route.name.toLowerCase().includes('ziarat') || route.name.toLowerCase().includes('ziyarat')) ? 'Ziarat' :
+                                        'Intercity'
                 ),
                 distance: route.distance || '',
                 time: route.duration || '',

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Calendar, Clock, PlaneLanding, PlaneTakeoff, Building2, Navigation, ArrowRight, Plus, Trash2 } from 'lucide-react';
+import { MapPin, Calendar, Clock, PlaneLanding, PlaneTakeoff, Building2, Navigation, ArrowRight, Plus, Trash2, TrainFront } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import MapAutocomplete from '../MapAutocomplete';
@@ -131,10 +131,11 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
             </div>
 
             {/* Service Type Selector */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-4 gap-3">
                 {[
                     { id: 'Intercity', icon: Building2, label: 'Intercity' },
                     { id: 'Airport', icon: PlaneLanding, label: 'Airport' },
+                    { id: 'Train', icon: TrainFront, label: 'Train' },
                     { id: 'Ziarat', icon: Navigation, label: 'Ziarat' }
                 ].map((type) => (
                     <button

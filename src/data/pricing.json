@@ -516,6 +516,153 @@
                 "xpander": 700,
                 "large-bus": 2500
             }
+        },
+        {
+            "id": "makkah-hotel-to-jeddah-hotel",
+            "name": "Makkah Hotel to Jeddah Hotel",
+            "slug": "makkah-to-jeddah-hotel",
+            "seo": {
+                "title": "Taxi Makkah to Jeddah Hotel | Private Transfer",
+                "description": "Comfortable private taxi from Makkah Hotel to Jeddah Hotel. Direct intercity transfer with professional drivers.",
+                "keywords": [
+                    "Makkah to Jeddah Hotel taxi",
+                    "Makkah Jeddah transfer",
+                    "توصيل من مكة الى فندق جدة"
+                ]
+            },
+            "distance": "100 km",
+            "time": "1 hr 30 min",
+            "baseRate": 200,
+            "customRates": {
+                "camry": 200,
+                "hiace": 350,
+                "gmc": 500,
+                "starex": 300,
+                "staria": 300,
+                "coaster": 550,
+                "mercedes": 700,
+                "kia": 220,
+                "xpander": 280,
+                "large-bus": 1000
+            }
+        },
+        {
+            "id": "makkah-hotel-to-train-station",
+            "name": "Makkah Hotel to Makkah Train Station",
+            "slug": "makkah-hotel-to-train-station",
+            "seo": {
+                "title": "Taxi Makkah Hotel to Train Station | Haramain HSR Transfer",
+                "description": "Quick transfer from your Makkah hotel to Makkah Train Station (Haramain High-Speed Railway). Reliable pickup service.",
+                "keywords": [
+                    "Makkah hotel to train station",
+                    "Haramain train Makkah",
+                    "محطة قطار مكة",
+                    "توصيل فندق مكة محطة القطار"
+                ]
+            },
+            "distance": "15 km",
+            "time": "20 min",
+            "baseRate": 150,
+            "customRates": {
+                "camry": 150,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400,
+                "mercedes": 530,
+                "kia": 170,
+                "xpander": 210,
+                "large-bus": 750
+            }
+        },
+        {
+            "id": "madinah-hotel-to-train-station",
+            "name": "Madinah Hotel to Madinah Train Station",
+            "slug": "madinah-hotel-to-train-station",
+            "seo": {
+                "title": "Taxi Madinah Hotel to Train Station | Haramain HSR Transfer",
+                "description": "Reliable transfer from your Madinah hotel to Madinah Train Station. Punctual drivers for your Haramain train departure.",
+                "keywords": [
+                    "Madinah hotel to train station",
+                    "Haramain train Madinah",
+                    "محطة قطار المدينة",
+                    "توصيل فندق المدينة محطة القطار"
+                ]
+            },
+            "distance": "15 km",
+            "time": "20 min",
+            "baseRate": 150,
+            "customRates": {
+                "camry": 150,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400,
+                "mercedes": 530,
+                "kia": 170,
+                "xpander": 210,
+                "large-bus": 750
+            }
+        },
+        {
+            "id": "makkah-train-station-to-hotel",
+            "name": "Makkah Train Station to Makkah Hotel",
+            "slug": "makkah-train-station-to-hotel",
+            "seo": {
+                "title": "Taxi Makkah Train Station to Hotel | Arrival Transfer",
+                "description": "Direct transfer from Makkah Train Station to your hotel. Meet & greet at the station. 24/7 service available.",
+                "keywords": [
+                    "Makkah train station to hotel",
+                    "Haramain station Makkah taxi",
+                    "محطة قطار مكة الى الفندق"
+                ]
+            },
+            "distance": "15 km",
+            "time": "20 min",
+            "baseRate": 120,
+            "customRates": {
+                "camry": 120,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400,
+                "mercedes": 420,
+                "kia": 130,
+                "xpander": 170,
+                "large-bus": 600
+            }
+        },
+        {
+            "id": "madinah-train-station-to-hotel",
+            "name": "Madinah Train Station to Madinah Hotel",
+            "slug": "madinah-train-station-to-hotel",
+            "seo": {
+                "title": "Taxi Madinah Train Station to Hotel | Arrival Transfer",
+                "description": "Direct transfer from Madinah Train Station to your hotel near Masjid Nabawi. Comfortable, reliable service.",
+                "keywords": [
+                    "Madinah train station to hotel",
+                    "Haramain station Madinah taxi",
+                    "محطة قطار المدينة الى الفندق"
+                ]
+            },
+            "distance": "15 km",
+            "time": "20 min",
+            "baseRate": 120,
+            "customRates": {
+                "camry": 120,
+                "hiace": 250,
+                "gmc": 300,
+                "starex": 200,
+                "staria": 250,
+                "coaster": 400,
+                "mercedes": 420,
+                "kia": 130,
+                "xpander": 170,
+                "large-bus": 600
+            }
         }
     ],
     "vehicles": [

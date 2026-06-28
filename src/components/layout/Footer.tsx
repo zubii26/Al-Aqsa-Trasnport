@@ -113,6 +113,7 @@ export default function Footer() {
                             <li><Link href="/services/jeddah-airport-transfer">Jeddah Airport Transfer</Link></li>
                             <li><Link href="/services/makkah-madinah-taxi">Makkah ⇄ Madinah Taxi</Link></li>
                             <li><Link href="/services/madinah-airport-transfer">Madinah Airport Transfer</Link></li>
+                            <li><Link href="/services/train-station-transfer">Train Station Transfer</Link></li>
                             <li><Link href="/services/ziyarat-tours">Ziyarat Tours</Link></li>
                             <li><Link href="/services/airport-transfers">Airport Transfers</Link></li>
                             <li><Link href="/services/intercity-transfer">Intercity Transfer</Link></li>

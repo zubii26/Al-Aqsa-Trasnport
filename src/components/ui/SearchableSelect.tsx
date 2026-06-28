@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronDown } from 'lucide-react';
+import { Check, ChevronDown, ChevronLeft, Search } from 'lucide-react';
 
 interface Option {
     value: string;
@@ -19,6 +20,7 @@ interface SearchableSelectProps {
     error?: string;
     disabled?: boolean;
     renderOption?: (option: Option) => React.ReactNode;
+    emptyStateAction?: React.ReactNode;
 }
 
 const SearchableSelect: React.FC<SearchableSelectProps> = ({
@@ -31,11 +33,17 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     icon,
     error,
     disabled,
-    renderOption
+    renderOption,
+    emptyStateAction
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
+    const [mounted, setMounted] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Normalize options to objects
     const normalizedOptions = options.map(opt =>
@@ -109,48 +117,151 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     placeholder={placeholder}
                     autoComplete="off"
                     disabled={disabled}
-                    className={`${className} ${icon ? 'pl-11' : ''}`}
+                    className={`${className} ${icon ? 'pl-11' : ''} max-md:pointer-events-none max-md:opacity-0`}
+                    // On mobile we hide the real input (or make it unclickable) if we rely on a wrapper click, 
+                    // but wait, we need it to be clickable to trigger focus.
+                    // Actually let's just keep it simple:
                 />
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-white/40">
+                <div 
+                    className="md:hidden absolute inset-0 z-20 cursor-pointer" 
+                    onClick={() => !disabled && setIsOpen(true)}
+                >
+                    {/* Mobile click overlay to prevent virtual keyboard on the main input */}
+                </div>
+                <input
+                    type="text"
+                    value={searchTerm}
+                    placeholder={placeholder}
+                    readOnly
+                    className={`md:hidden ${className} ${icon ? 'pl-11' : ''} absolute inset-0 z-10`}
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-white/40 z-10">
                     <ChevronDown size={16} />
                 </div>
             </div>
 
-            <AnimatePresence>
-                {isOpen && displayedOptions.length > 0 && (
-                    <motion.ul
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 z-[100] w-full mt-2 max-h-60 overflow-y-auto 
-                                   bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl 
-                                   border border-slate-200 dark:border-slate-700 
-                                   rounded-xl shadow-2xl scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
-                    >
-                        {displayedOptions.map((option) => (
-                            <li
-                                key={option.value}
-                                onClick={() => handleOptionClick(option)}
-                                className="px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10 
-                                           text-slate-700 dark:text-slate-200 
-                                           transition-colors duration-150 flex items-center justify-between
-                                           text-sm border-b border-slate-50 dark:border-white/5 last:border-0"
-                            >
-                                {renderOption ? renderOption(option) : (
-                                    <>
-                                        <div className="flex items-center gap-3">
-                                            {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
-                                            <span className="font-medium">{option.label}</span>
+            {/* Desktop Dropdown */}
+            <div className="hidden md:block">
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.ul
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-full left-0 z-[100] w-full mt-2 max-h-60 overflow-y-auto 
+                                       bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl 
+                                       border border-slate-200 dark:border-slate-700 
+                                       rounded-xl shadow-2xl scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
+                        >
+                            {displayedOptions.length > 0 ? displayedOptions.map((option) => (
+                                <li
+                                    key={option.value}
+                                    onClick={() => handleOptionClick(option)}
+                                    className="px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10 
+                                               text-slate-700 dark:text-slate-200 
+                                               transition-colors duration-150 flex items-center justify-between
+                                               text-sm border-b border-slate-50 dark:border-white/5 last:border-0"
+                                >
+                                    {renderOption ? renderOption(option) : (
+                                        <>
+                                            <div className="flex items-center gap-3">
+                                                {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
+                                                <span className="font-medium">{option.label}</span>
+                                            </div>
+                                            {value === option.value && <Check size={14} className="text-secondary" />}
+                                        </>
+                                    )}
+                                </li>
+                            )) : (
+                                <li className="px-4 py-6 text-center text-slate-500 dark:text-slate-400 text-sm flex flex-col items-center gap-3">
+                                    No matching options found
+                                    {emptyStateAction && (
+                                        <div className="mt-2 w-full">
+                                            {emptyStateAction}
                                         </div>
-                                        {value === option.value && <Check size={14} className="text-secondary" />}
-                                    </>
-                                )}
-                            </li>
-                        ))}
-                    </motion.ul>
-                )}
-            </AnimatePresence>
+                                    )}
+                                </li>
+                            )}
+                        </motion.ul>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Mobile Full-Screen Modal (Portal to escape stacking contexts) */}
+            {mounted && typeof document !== 'undefined' && createPortal(
+                <div className="md:hidden">
+                    <AnimatePresence>
+                        {isOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 10 }}
+                                transition={{ duration: 0.2 }}
+                                className="fixed inset-0 z-[99999] bg-slate-50 dark:bg-slate-900 flex flex-col overflow-hidden"
+                            >
+                                {/* Mobile Header */}
+                                <div className="flex-none bg-white dark:bg-slate-900 pt-safe border-b border-slate-200 dark:border-slate-800 shadow-sm">
+                                    <div className="flex items-center gap-2 p-4">
+                                        <button 
+                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(false); }}
+                                            className="p-2 -ml-2 text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                                        >
+                                            <ChevronLeft size={24} />
+                                        </button>
+                                        <div className="flex-1 relative">
+                                            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                            <input
+                                                autoFocus
+                                                type="text"
+                                                placeholder={placeholder}
+                                                value={searchTerm}
+                                                onChange={handleInputChange}
+                                                className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl pl-10 pr-4 py-3 text-base outline-none text-slate-900 dark:text-white"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Options List */}
+                                <ul className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20 p-2">
+                                    {displayedOptions.length > 0 ? displayedOptions.map((option) => (
+                                        <li
+                                            key={option.value}
+                                            onClick={() => handleOptionClick(option)}
+                                            className="px-4 py-4 cursor-pointer rounded-xl bg-white dark:bg-slate-800 mb-2
+                                                       hover:bg-slate-50 shadow-sm
+                                                       text-slate-700 dark:text-slate-200 
+                                                       transition-colors duration-150 flex items-center justify-between
+                                                       text-base border border-slate-100 dark:border-slate-700 last:border-0"
+                                        >
+                                            {renderOption ? renderOption(option) : (
+                                                <>
+                                                    <div className="flex items-center gap-3">
+                                                        {option.icon && <span className="shrink-0 text-lg">{option.icon}</span>}
+                                                        <span className="font-semibold">{option.label}</span>
+                                                    </div>
+                                                    {value === option.value && <Check size={18} className="text-secondary" />}
+                                                </>
+                                            )}
+                                        </li>
+                                    )) : (
+                                        <li className="px-4 py-10 text-center text-slate-500 dark:text-slate-400 text-base flex flex-col items-center gap-4">
+                                            No matching options found
+                                            {emptyStateAction && (
+                                                <div className="mt-2 w-full flex justify-center">
+                                                    {emptyStateAction}
+                                                </div>
+                                            )}
+                                        </li>
+                                    )}
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>,
+                document.body
+            )}
             {error && <span className="text-red-500 text-xs font-semibold mt-1 block">{error}</span>}
         </div>
     );

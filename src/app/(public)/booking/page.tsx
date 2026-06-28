@@ -111,7 +111,6 @@ export default function BookingPage() {
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [dropdownRef, setDropdownRef] = useState<HTMLDivElement | null>(null);
     const wizardRef = useRef<HTMLDivElement>(null);
@@ -839,6 +838,15 @@ export default function BookingPage() {
                                     placeholder={!bookingData.pickup ? "Select Pickup First" : "Select Dropoff"}
                                     className={`w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base ${(!bookingData.pickup || bookingData.pickup === 'custom') ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     icon={<Navigation strokeWidth={1.25} size={20} />}
+                                    emptyStateAction={
+                                        <Link 
+                                            href="/contact" 
+                                            className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg text-sm font-bold shadow-md hover:bg-secondary/90 transition-all"
+                                        >
+                                            <Navigation size={16} />
+                                            Request Custom Route
+                                        </Link>
+                                    }
                                 />
                             </div>
                         </div>
@@ -1393,179 +1401,8 @@ export default function BookingPage() {
                     </div>
                 ) : (
                     <>
-                        {/* Mobile Dropdown (Visible on small screens) */}
-                        <div className="lg:hidden mb-8">
-                    <div className="relative">
-                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            <Briefcase strokeWidth={1.25} size={18} className="text-secondary" />
-                            <span>Vehicle Selection</span>
-                        </label>
-
-                        {/* Selected Vehicle Cards (Mobile Hero) */}
-                        <div className="space-y-4 mb-4">
-                            <AnimatePresence>
-                                {bookingData.selectedVehicles.map((sv) => {
-                                    const v = vehicles.find(veh => veh.id === sv.vehicleId);
-                                    if (!v) return null;
-
-                                    return (
-                                        <motion.div
-                                            key={sv.vehicleId}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, height: 0 }}
-                                            className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-2xl border-2 border-secondary/50 group"
-                                        >
-                                            {/* Background Image / Placeholder */}
-                                            <div className="absolute inset-0 bg-slate-900">
-                                                {v.image ? (
-                                                    <Image src={v.image} alt={v.name} fill className="object-cover opacity-90" sizes="(max-width: 768px) 100vw, 50vw" />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center">
-                                                        <Briefcase strokeWidth={1.25} className="text-slate-700" size={48} />
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            {/* Gradient Overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
-
-                                            {/* 'SELECTED' Badge */}
-                                            <div className="absolute top-4 right-4 bg-secondary text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider flex items-center gap-1">
-                                                <CheckCircle strokeWidth={1.25} size={12} fill="currentColor" className="text-white" />
-                                                Selected {sv.quantity > 1 && `x${sv.quantity}`}
-                                            </div>
-
-                                            {/* Content */}
-                                            <div className="absolute bottom-0 left-0 right-0 p-5">
-                                                <h3 className="text-2xl font-bold text-white mb-1 leading-tight flex items-center gap-2">
-                                                    {v.name}
-                                                    {v.name.includes('GMC') && <span className="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full">VIP</span>}
-                                                </h3>
-                                                <div className="flex items-center gap-3 text-white/80 text-sm font-medium">
-                                                    <span>{v.capacity} Seater</span>
-                                                    <span className="w-1 h-1 rounded-full bg-white/50" />
-                                                    <span>{v.luggage} Bags</span>
-                                                </div>
-                                            </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </AnimatePresence>
-                        </div>
-
-                        {/* Dropdown Header */}
-                        <div
-                            className={`
-                                relative w-full premium-input bg-white dark:bg-slate-900
-                                rounded-xl px-4 py-4 flex items-center justify-between 
-                                cursor-pointer transition-all hover:border-secondary/50 shadow-sm
-                                ${isVehicleDropdownOpen ? 'border-secondary ring-2 ring-secondary/20' : 'border-slate-200 dark:border-slate-700'}
-                            `}
-                            onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
-                        >
-                            <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                                <Car strokeWidth={1.25} size={20} className="text-secondary" />
-                                {bookingData.selectedVehicles.length > 0
-                                    ? `${bookingData.selectedVehicles.reduce((acc, v) => acc + v.quantity, 0)} Vehicles Added`
-                                    : 'Tap to Add Vehicles'}
-                            </span>
-                            <ChevronDown strokeWidth={1.25} className={`text-slate-400 transition-transform ${isVehicleDropdownOpen ? 'rotate-180 text-secondary' : ''}`} size={20} />
-                        </div>
-
-                        {/* Dropdown List */}
-                        {isVehicleDropdownOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl z-[100] max-h-[60vh] overflow-y-auto custom-scrollbar pb-4 ring-1 ring-black/5"
-                            >
-                                {vehicles.map((vehicle, idx) => {
-                                    const priceDetails = getPriceDetails(bookingData.routeId, vehicle.id);
-                                    const selectedMatch = bookingData.selectedVehicles.find(v => v.vehicleId === vehicle.id);
-                                    const quantity = selectedMatch ? selectedMatch.quantity : 0;
-                                    const isSelected = quantity > 0;
-
-                                    return (
-                                        <motion.div
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: idx * 0.05 }}
-                                            key={vehicle.id}
-                                            className={`
-                                                relative p-4 flex flex-col gap-3 border-b border-slate-100 dark:border-white/5 last:border-0 transition-all duration-200 group
-                                                ${isSelected ? 'bg-secondary/5 dark:bg-secondary/10' : 'hover:bg-slate-50 dark:hover:bg-white/5'}
-                                            `}
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-20 h-14 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-white/10 shadow-sm relative">
-                                                    {vehicle.image ? (
-                                                        <Image src={vehicle.image} alt={vehicle.name} fill className="object-cover" sizes="80px" />
-                                                    ) : <div className="w-full h-full flex items-center justify-center"><User strokeWidth={1.25} size={20} className="text-slate-300" /></div>}
-                                                </div>
-
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex justify-between items-start mb-1">
-                                                        <span className={`block font-bold text-sm ${isSelected ? 'text-secondary dark:text-secondary' : 'text-slate-900 dark:text-white'}`}>
-                                                            {vehicle.name}
-                                                            {vehicle.name.includes('GMC') && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 border border-amber-200 px-1.5 py-0.5 rounded-full">VIP</span>}
-                                                        </span>
-                                                        <div className="text-right shrink-0 ml-2">
-
-                                                            <span className="text-sm font-bold text-slate-900 dark:text-white">
-                                                                {bookingData.routeId === 'custom'
-                                                                    ? (priceDetails.price > 0 ? `${priceDetails.price} SAR` : 'Pin map for price')
-                                                                    : `${priceDetails.price} SAR`
-                                                                }
-                                                            </span>
-
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
-                                                        <span>{vehicle.capacity} Passengers</span>
-                                                        <span>•</span>
-                                                        <span>{vehicle.luggage} Bags</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Quantity Controls Row */}
-                                            <div className="flex justify-end items-center gap-3 pt-2">
-                                                {quantity > 0 ? (
-                                                    <div className="flex items-center gap-3 bg-white dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700 shadow-sm">
-                                                        <button
-                                                            onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, -1); }}
-                                                            className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300"
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <span className="font-bold text-sm min-w-[1.5rem] text-center">{quantity}</span>
-                                                        <button
-                                                            onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
-                                                            className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90"
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                ) : (
-                                                    <button
-                                                        onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
-                                                        className="text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary transition-all"
-                                                    >
-                                                        Add Vehicle
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </motion.div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Desktop Grid (Hidden on mobile) - Refined Premium Look */}
-                <div className="hidden lg:grid grid-cols-2 gap-8">
+                        {/* Vehicle Grid - Responsive Premium Look */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     {vehicles.map((vehicle) => {
                         const Icon = vehicle.icon;
                         const priceDetails = getPriceDetails(bookingData.routeId, vehicle.id);
@@ -2888,7 +2725,7 @@ export default function BookingPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 mt-24" ref={wizardRef}>
+            <div className="container mx-auto px-4 mt-24 pb-28 md:pb-8" ref={wizardRef}>
                 <div className="mb-6">
                     <Breadcrumbs />
                 </div>
@@ -2905,11 +2742,11 @@ export default function BookingPage() {
 
                         {/* Navigation Buttons */}
                         {step < 5 && (
-                            <div className="mt-10 flex gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+                            <div className="mt-10 flex gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:bg-white max-md:dark:bg-slate-900 max-md:p-4 max-md:border-t max-md:z-[150] max-md:shadow-[0_-4px_20px_rgba(0,0,0,0.1)] max-md:m-0 max-md:pt-4">
                                 {step > 1 && (
                                     <button
                                         onClick={prevStep}
-                                        className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                        className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors max-md:bg-slate-100 max-md:dark:bg-slate-800"
                                     >
                                         Back
                                     </button>
@@ -2917,7 +2754,7 @@ export default function BookingPage() {
                                 <button
                                     onClick={nextStep}
                                     disabled={isSubmitting}
-                                    className={`ml-auto flex items-center gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                    className={`ml-auto flex items-center justify-center max-md:flex-1 gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
                                     {step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}
                                     {!isSubmitting && <ArrowRight strokeWidth={1.25} size={20} />}
