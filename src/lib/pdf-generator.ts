@@ -80,7 +80,7 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
 
     // Invoice Details Box (Light Yellow Background)
     doc.setFillColor(...LIGHT_YELLOW_RGB);
-    doc.rect(120, 48, 75, 30, 'F');
+    doc.rect(120, 48, 75, booking.visaType ? 36 : 30, 'F');
 
     doc.setFontSize(10);
     doc.setTextColor(TEXT_DARK);
@@ -112,6 +112,15 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     // Depending on logic, it can be AWAITING PAYMENT or PAID
     doc.setTextColor(PRIMARY_GOLD);
     doc.text(booking.paymentStatus === 'paid' ? 'PAID' : 'AWAITING PAYMENT', detailsX + 25, currY);
+
+    if (booking.visaType) {
+        currY += 6;
+        doc.setTextColor(TEXT_DARK);
+        doc.setFont("helvetica", "bold");
+        doc.text("Visa Type:", detailsX, currY);
+        doc.setFont("helvetica", "normal");
+        doc.text(booking.visaType, detailsX + 25, currY);
+    }
 
     // --- Bill To ---
     const billToY = 85;
