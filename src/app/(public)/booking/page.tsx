@@ -1700,7 +1700,7 @@ export default function BookingPage() {
                                 className="w-full premium-input rounded-xl pl-11 pr-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700/50 font-medium placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all focus:ring-2 focus:ring-secondary/20"
                                 value={bookingData.phone}
                                 onChange={(e) => updateData('phone', e.target.value)}
-                                placeholder="+966 54 549 4921"
+                                placeholder="+966 54 870 7332"
                             />
                         </div>
                         {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.phone}</p>}
@@ -2704,10 +2704,10 @@ export default function BookingPage() {
                             <div key={s.step} className="flex relative group sm:flex-1 last:flex-none">
                                 <div className="flex flex-col items-center z-10">
                                     <div className={`
-                                        w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ring-4 ring-white dark:ring-slate-950 mb-1
-                                        ${step >= s.step ? 'bg-secondary text-white shadow-lg shadow-secondary/30 scale-110' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}
+                                        w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-300 ring-2 ring-white dark:ring-slate-950 mb-1
+                                        ${step >= s.step ? 'bg-secondary text-white shadow-md shadow-secondary/30 scale-105' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}
                                     `}>
-                                        {step > s.step ? <CheckCircle strokeWidth={1.25} size={18} /> : s.step}
+                                        {step > s.step ? <CheckCircle strokeWidth={1.25} size={16} /> : s.step}
                                     </div>
                                     <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 ${step >= s.step ? 'text-secondary' : 'text-slate-400'}`}>
                                         {s.label}
@@ -2715,7 +2715,7 @@ export default function BookingPage() {
                                 </div>
                                 {s.step < 4 && (
                                     <div className={`
-                                        flex-1 h-1 mx-4 rounded-full transition-all duration-500 hidden sm:block mt-5
+                                        flex-1 h-0.5 mx-4 rounded-full transition-all duration-500 hidden sm:block mt-4
                                         ${step > s.step ? 'bg-secondary' : 'bg-slate-100 dark:bg-slate-800'}
                                     `} />
                                 )}
@@ -2725,7 +2725,7 @@ export default function BookingPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 mt-24 pb-28 md:pb-8" ref={wizardRef}>
+            <div className="container mx-auto px-4 mt-8 pb-28 md:pb-8" ref={wizardRef}>
                 <div className="mb-6">
                     <Breadcrumbs />
                 </div>

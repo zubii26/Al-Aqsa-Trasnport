@@ -7,8 +7,8 @@ const COMPANY_SUBTITLE = "UMRAH TRANSPORT";
 const COMPANY_BADGE = "GOLD TRANSFER";
 const COMPANY_ARABIC = "أهلاً وسهلاً – ولكم أطيب الترحيب";
 const COMPANY_ADDRESS = "Makkah Al Mukarramah, Saudi Arabia";
-const COMPANY_WEBSITE = "www.alaqsa-transport.com";
-const COMPANY_PHONE = "+966 50 123 4567";
+const COMPANY_WEBSITE = "www.alaqsaumrahtransport.com";
+const COMPANY_PHONE = "+966 54 870 7332";
 
 // Colors based on the uploaded template
 const PRIMARY_GOLD = "#D4AF37"; // Close to the gold in the image
@@ -396,6 +396,11 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
     prayerY += 12;
     doc.setTextColor(PRIMARY_GOLD);
     doc.text("We wish you a peaceful, blessed and memorable journey with Al Aqsa Transport", 105, prayerY, { align: "center" });
+
+    prayerY += 10;
+    doc.setFontSize(8);
+    doc.setTextColor(TEXT_DARK);
+    doc.text(`Al Aqsa Umrah Transport | ${COMPANY_ADDRESS} | ${COMPANY_PHONE} | ${COMPANY_WEBSITE}`, 105, prayerY, { align: "center" });
 
     // Output based on returnType
     if (returnType === 'base64') {

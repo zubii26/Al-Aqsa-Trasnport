@@ -14,8 +14,8 @@ const DEFAULT_SETTINGS: Settings = {
         googleAnalyticsId: '',
     },
     contact: {
-        email: 'info@alaqsatransport.com',
-        phone: '+966 54 549 4921',
+        email: 'info@alaqsaumrahtransport.com',
+        phone: '+966 54 870 7332',
         phone2: '',
         address: 'Makkah, Saudi Arabia',
         social: {

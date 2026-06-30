@@ -126,10 +126,10 @@ export default function AIChatBox({ contactPhone, contactEmail }: AIChatBoxProps
                 action: { label: "Book Now", url: "/booking" }
             },
             contact: {
-                text: `You can reach us 24/7 via WhatsApp at ${contactPhone || '+966 54 549 4921'} or email us at ${contactEmail || 'info@alaqsatransport.com'}.`,
+                text: `You can reach us 24/7 via WhatsApp at ${contactPhone || '+966 54 870 7332'} or email us at ${contactEmail || 'info@alaqsaumrahtransport.com'}.`,
                 action: {
                     label: "WhatsApp Us",
-                    url: `https://wa.me/${(contactPhone || '+966 54 549 4921').replace(/\D/g, '')}`
+                    url: `https://wa.me/${(contactPhone || '+966 54 870 7332').replace(/\D/g, '')}`
                 }
             },
             vehicle: {

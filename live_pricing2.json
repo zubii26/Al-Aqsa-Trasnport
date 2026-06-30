@@ -1,0 +1,673 @@
+﻿{
+    "routes":  [
+                   {
+                       "id":  "692db09a34f15bc89b45a60e",
+                       "name":  "Hourly Rental â Per Hour",
+                       "origin":  "Hourly Rental",
+                       "destination":  "Per Hour",
+                       "category":  "Intercity",
+                       "distance":  "-",
+                       "time":  "1 hr",
+                       "baseRate":  80,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  80,
+                                           "692db09834f15bc89b45a5f7":  260,
+                                           "692db09834f15bc89b45a5f8":  150,
+                                           "692db09834f15bc89b45a5f9":  120,
+                                           "692db09834f15bc89b45a5fa":  100,
+                                           "692db09834f15bc89b45a5fb":  100,
+                                           "692db09834f15bc89b45a5fc":  140,
+                                           "6a0f9d2407ca7f0eeb278908":  180
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6949bbfca41f6410e88ed999",
+                       "name":  "Jeddah Airport â Jeddah Hotel",
+                       "origin":  "Jeddah Airport",
+                       "destination":  "Jeddah Hotel",
+                       "category":  "Airport Arrival",
+                       "distance":  "40 km",
+                       "time":  "45 min",
+                       "baseRate":  200,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  250,
+                                           "692db09834f15bc89b45a5f6":  200,
+                                           "692db09834f15bc89b45a5fa":  250,
+                                           "692db09834f15bc89b45a5fb":  250,
+                                           "692db09834f15bc89b45a5f9":  300,
+                                           "692db09834f15bc89b45a5f7":  450
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a605",
+                       "name":  "Jeddah Airport â Jeddah Train Station",
+                       "origin":  "Jeddah Airport",
+                       "destination":  "Jeddah Train Station",
+                       "category":  "Airport Arrival",
+                       "distance":  "20 km",
+                       "time":  "30 min",
+                       "baseRate":  120,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  120,
+                                           "692db09834f15bc89b45a5f7":  350,
+                                           "692db09834f15bc89b45a5f8":  250,
+                                           "692db09834f15bc89b45a5f9":  200,
+                                           "692db09834f15bc89b45a5fa":  180,
+                                           "692db09834f15bc89b45a5fb":  180,
+                                           "692db09834f15bc89b45a5fc":  250
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "694a59e6be1a31b06e5d87f7",
+                       "name":  "Jeddah Airport â Madinah Hotel",
+                       "origin":  "Jeddah Airport",
+                       "destination":  "Madinah Hotel",
+                       "category":  "Airport Arrival",
+                       "distance":  "400 km",
+                       "time":  "4 hrs",
+                       "baseRate":  500,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  1350,
+                                           "692db09834f15bc89b45a5f6":  500,
+                                           "692db09834f15bc89b45a5fa":  500,
+                                           "692db09834f15bc89b45a5fb":  500,
+                                           "692db09834f15bc89b45a5f9":  600,
+                                           "692db09834f15bc89b45a5f7":  1100
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "694a59e0be1a31b06e5d87d2",
+                       "name":  "Jeddah Airport â Makkah Hotel",
+                       "origin":  "Jeddah Airport",
+                       "destination":  "Makkah Hotel",
+                       "category":  "Airport Arrival",
+                       "distance":  "100 km",
+                       "time":  "1 hr 30 min",
+                       "baseRate":  250,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  550,
+                                           "692db09834f15bc89b45a5f6":  250,
+                                           "692db09834f15bc89b45a5fa":  300,
+                                           "692db09834f15bc89b45a5fb":  300,
+                                           "692db09834f15bc89b45a5f9":  400,
+                                           "692db09834f15bc89b45a5f7":  550
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6949bb4ca41f6410e88ed931",
+                       "name":  "Jeddah Hotel â Jeddah Airport",
+                       "origin":  "Jeddah Hotel",
+                       "destination":  "Jeddah Airport",
+                       "category":  "Airport Departure",
+                       "distance":  "40 km",
+                       "time":  "45 min",
+                       "baseRate":  200,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  250,
+                                           "692db09834f15bc89b45a5f6":  200,
+                                           "692db09834f15bc89b45a5fa":  250,
+                                           "692db09834f15bc89b45a5fb":  250,
+                                           "692db09834f15bc89b45a5f9":  600,
+                                           "692db09834f15bc89b45a5f7":  400
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a260faaffde6181c6fe5320",
+                       "name":  "Jeddah Hotel â Madinah Hotel",
+                       "origin":  "Jeddah Hotel",
+                       "destination":  "Madinah Hotel",
+                       "category":  "Intercity",
+                       "distance":  "400 km",
+                       "time":  "4 hrs",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a260faaffde6181c6fe531f",
+                       "name":  "Jeddah Hotel â Makkah Hotel",
+                       "origin":  "Jeddah Hotel",
+                       "destination":  "Makkah Hotel",
+                       "category":  "Intercity",
+                       "distance":  "100 km",
+                       "time":  "1 hr 30 min",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09a34f15bc89b45a60c",
+                       "name":  "Jeddah â Taif (Return)",
+                       "origin":  "Jeddah",
+                       "destination":  "Taif (Return)",
+                       "category":  "Intercity",
+                       "distance":  "350 km",
+                       "time":  "10-12 hrs",
+                       "baseRate":  700,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  700,
+                                           "692db09834f15bc89b45a5f7":  1500,
+                                           "692db09834f15bc89b45a5f8":  800,
+                                           "692db09834f15bc89b45a5f9":  1300,
+                                           "692db09834f15bc89b45a5fa":  1000,
+                                           "692db09834f15bc89b45a5fb":  1000,
+                                           "692db09834f15bc89b45a5fc":  1000,
+                                           "6a0f9d2407ca7f0eeb278908":  1500
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "69502a769674045c15f3dfeb",
+                       "name":  "Madina Airport â Makkah Hotel",
+                       "origin":  "Madina Airport",
+                       "destination":  "Makkah Hotel",
+                       "category":  "Airport Arrival",
+                       "distance":  "450 Km",
+                       "time":  "4.5 hours",
+                       "baseRate":  550,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5fa":  600,
+                                           "692db09834f15bc89b45a5fb":  600,
+                                           "692db09834f15bc89b45a5f6":  600,
+                                           "692db09834f15bc89b45a5f8":  900,
+                                           "692db09834f15bc89b45a5f9":  550,
+                                           "692db09834f15bc89b45a5f7":  950
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a603",
+                       "name":  "Madinah Airport â Madinah Hotel",
+                       "origin":  "Madinah Airport",
+                       "destination":  "Madinah Hotel",
+                       "category":  "Airport Arrival",
+                       "distance":  "20 km",
+                       "time":  "25 min",
+                       "baseRate":  120,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  120,
+                                           "692db09834f15bc89b45a5f7":  400,
+                                           "692db09834f15bc89b45a5f8":  200,
+                                           "692db09834f15bc89b45a5f9":  300,
+                                           "692db09834f15bc89b45a5fa":  150,
+                                           "692db09834f15bc89b45a5fb":  150,
+                                           "692db09834f15bc89b45a5fc":  300
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a260faaffde6181c6fe5322",
+                       "name":  "Madinah Airport â Makkah Hotel",
+                       "origin":  "Madinah Airport",
+                       "destination":  "Makkah Hotel",
+                       "category":  "Intercity",
+                       "distance":  "450 km",
+                       "time":  "4 hrs 30 min",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a260faaffde6181c6fe5321",
+                       "name":  "Madinah Hotel â Jeddah Airport",
+                       "origin":  "Madinah Hotel",
+                       "destination":  "Jeddah Airport",
+                       "category":  "Airport Departure",
+                       "distance":  "400 km",
+                       "time":  "4 hrs",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6949bbfba41f6410e88ed993",
+                       "name":  "Madinah Hotel â Madinah Airport",
+                       "origin":  "Madinah Hotel",
+                       "destination":  "Madinah Airport",
+                       "category":  "Airport Departure",
+                       "distance":  "20 km",
+                       "time":  "25 min",
+                       "baseRate":  150,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  200,
+                                           "692db09834f15bc89b45a5f6":  150,
+                                           "692db09834f15bc89b45a5fa":  150,
+                                           "692db09834f15bc89b45a5fb":  150,
+                                           "692db09834f15bc89b45a5f9":  300,
+                                           "692db09834f15bc89b45a5f7":  400
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a607",
+                       "name":  "Madinah Hotel â Madinah Train Station",
+                       "origin":  "Madinah Hotel",
+                       "destination":  "Madinah Train Station",
+                       "category":  "Intercity",
+                       "distance":  "15 km",
+                       "time":  "25 min",
+                       "baseRate":  120,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  120,
+                                           "692db09834f15bc89b45a5f7":  350,
+                                           "692db09834f15bc89b45a5f8":  250,
+                                           "692db09834f15bc89b45a5f9":  200,
+                                           "692db09834f15bc89b45a5fa":  180,
+                                           "692db09834f15bc89b45a5fb":  180,
+                                           "692db09834f15bc89b45a5fc":  250
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a261458262e78381b297bf6",
+                       "name":  "Madinah Hotel â Madinah Ziyarat ",
+                       "origin":  "Madinah Hotel",
+                       "destination":  "Madinah Ziyarat ",
+                       "category":  "Ziarat",
+                       "distance":  "100 km",
+                       "time":  "4 hrs",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a600",
+                       "name":  "Madinah Hotel â Makkah Hotel",
+                       "origin":  "Madinah Hotel",
+                       "destination":  "Makkah Hotel",
+                       "category":  "Intercity",
+                       "distance":  "450 km",
+                       "time":  "4 hrs 30 min",
+                       "baseRate":  500,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  500,
+                                           "692db09834f15bc89b45a5f7":  900,
+                                           "692db09834f15bc89b45a5f8":  1400,
+                                           "692db09834f15bc89b45a5f9":  600,
+                                           "692db09834f15bc89b45a5fa":  500,
+                                           "692db09834f15bc89b45a5fb":  500,
+                                           "692db09834f15bc89b45a5fc":  900
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a270c66e963caf86b9c2ed3",
+                       "name":  "Madinah â Wadi-e-Jin",
+                       "origin":  "Madinah",
+                       "destination":  "Wadi-e-Jin",
+                       "category":  "Intercity",
+                       "distance":  "50 km",
+                       "time":  "45 mint",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a60a",
+                       "name":  "Madinah â Ziarat (Half Day)",
+                       "origin":  "Madinah",
+                       "destination":  "Ziarat (Half Day)",
+                       "category":  "Ziarat",
+                       "distance":  "40 km",
+                       "time":  "3-4 hrs",
+                       "baseRate":  300,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  300,
+                                           "692db09834f15bc89b45a5f7":  500,
+                                           "692db09834f15bc89b45a5f8":  600,
+                                           "692db09834f15bc89b45a5f9":  450,
+                                           "692db09834f15bc89b45a5fa":  350,
+                                           "692db09834f15bc89b45a5fb":  350,
+                                           "692db09834f15bc89b45a5fc":  400
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6949bbfba41f6410e88ed989",
+                       "name":  "Madinah â Ziyarat Taxi (Standard)",
+                       "origin":  "Madinah",
+                       "destination":  "Ziyarat Taxi (Standard)",
+                       "category":  "Ziarat",
+                       "distance":  "40 km",
+                       "time":  "3 hrs",
+                       "baseRate":  250,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  500,
+                                           "692db09834f15bc89b45a5f6":  250,
+                                           "692db09834f15bc89b45a5fa":  300,
+                                           "692db09834f15bc89b45a5fb":  300,
+                                           "692db09834f15bc89b45a5f9":  400,
+                                           "692db09834f15bc89b45a5f7":  500
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a601",
+                       "name":  "Makkah Hotel â Jeddah Airport",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Jeddah Airport",
+                       "category":  "Airport Departure",
+                       "distance":  "100 km",
+                       "time":  "1 hr 30 min",
+                       "baseRate":  200,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  200,
+                                           "692db09834f15bc89b45a5f7":  600,
+                                           "692db09834f15bc89b45a5f8":  500,
+                                           "692db09834f15bc89b45a5f9":  350,
+                                           "692db09834f15bc89b45a5fa":  300,
+                                           "692db09834f15bc89b45a5fb":  300,
+                                           "692db09834f15bc89b45a5fc":  500
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a260faaffde6181c6fe5323",
+                       "name":  "Makkah Hotel â Madinah Airport",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Madinah Airport",
+                       "category":  "Intercity",
+                       "distance":  "450 km",
+                       "time":  "4 hrs 30 min",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a5ff",
+                       "name":  "Makkah Hotel â Madinah Hotel",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Madinah Hotel",
+                       "category":  "Intercity",
+                       "distance":  "450 km",
+                       "time":  "4 hrs 30 min",
+                       "baseRate":  500,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  500,
+                                           "692db09834f15bc89b45a5f7":  900,
+                                           "692db09834f15bc89b45a5f8":  1400,
+                                           "692db09834f15bc89b45a5f9":  600,
+                                           "692db09834f15bc89b45a5fa":  500,
+                                           "692db09834f15bc89b45a5fb":  550,
+                                           "692db09834f15bc89b45a5fc":  900
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09934f15bc89b45a606",
+                       "name":  "Makkah Hotel â Makkah Train Station",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Makkah Train Station",
+                       "category":  "Intercity",
+                       "distance":  "15 km",
+                       "time":  "25 min",
+                       "baseRate":  120,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  120,
+                                           "692db09834f15bc89b45a5f7":  350,
+                                           "692db09834f15bc89b45a5f8":  250,
+                                           "692db09834f15bc89b45a5f9":  200,
+                                           "692db09834f15bc89b45a5fa":  180,
+                                           "692db09834f15bc89b45a5fb":  180,
+                                           "692db09834f15bc89b45a5fc":  250
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a261459262e78381b297bf7",
+                       "name":  "Makkah Hotel â Makkah Ziyarat",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Makkah Ziyarat",
+                       "category":  "Ziyarat",
+                       "distance":  "80 km",
+                       "time":  "3 hrs",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6a26145a262e78381b297bf8",
+                       "name":  "Makkah Hotel â Taif Ziyarat",
+                       "origin":  "Makkah Hotel",
+                       "destination":  "Taif Ziyarat",
+                       "category":  "Ziyarat",
+                       "distance":  "120 km",
+                       "time":  "6 hrs",
+                       "baseRate":  0,
+                       "customRates":  {
+
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "692db09a34f15bc89b45a60b",
+                       "name":  "Makkah â Taif (Return)",
+                       "origin":  "Makkah",
+                       "destination":  "Taif (Return)",
+                       "category":  "Intercity",
+                       "distance":  "180 km",
+                       "time":  "8-10 hrs",
+                       "baseRate":  500,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f6":  500,
+                                           "692db09834f15bc89b45a5f7":  900,
+                                           "692db09834f15bc89b45a5f8":  1300,
+                                           "692db09834f15bc89b45a5f9":  600,
+                                           "692db09834f15bc89b45a5fa":  500,
+                                           "692db09834f15bc89b45a5fb":  550,
+                                           "692db09834f15bc89b45a5fc":  800
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   },
+                   {
+                       "id":  "6949bbfba41f6410e88ed98d",
+                       "name":  "Makkah â Ziyarat (Half Day)",
+                       "origin":  "Makkah",
+                       "destination":  "Ziyarat (Half Day)",
+                       "category":  "Ziarat",
+                       "distance":  "40 km",
+                       "time":  "3-4 hrs",
+                       "baseRate":  250,
+                       "customRates":  {
+                                           "692db09834f15bc89b45a5f8":  600,
+                                           "692db09834f15bc89b45a5f6":  250,
+                                           "692db09834f15bc89b45a5fa":  300,
+                                           "692db09834f15bc89b45a5fb":  300,
+                                           "692db09834f15bc89b45a5f9":  400,
+                                           "692db09834f15bc89b45a5f7":  500
+                                       },
+                       "stopovers":  [
+
+                                     ]
+                   }
+               ],
+    "vehicles":  [
+                     {
+                         "id":  "692db09834f15bc89b45a5f6",
+                         "name":  "Toyota Camry",
+                         "image":  "/images/fleet/camry.png",
+                         "capacity":  "4 Seater",
+                         "passengers":  4,
+                         "multiplier":  1,
+                         "features":  [
+                                          "Comfort",
+                                          "AC",
+                                          "USB"
+                                      ],
+                         "luggage":  "2 Bags",
+                         "category":  "Standard",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "692db09834f15bc89b45a5f8",
+                         "name":  "GMC Yukon",
+                         "image":  "/images/fleet/gmc.png",
+                         "capacity":  "7 Seater",
+                         "passengers":  7,
+                         "multiplier":  1.5,
+                         "features":  [
+                                          "Luxury",
+                                          "Leather",
+                                          "WiFi"
+                                      ],
+                         "luggage":  "5 Bags",
+                         "category":  "VIP",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "692db09834f15bc89b45a5fa",
+                         "name":  "Hyundai Staria",
+                         "image":  "/images/fleet/staria.png",
+                         "capacity":  "7 Seater",
+                         "passengers":  7,
+                         "multiplier":  1.3,
+                         "features":  [
+                                          "Modern",
+                                          "Comfort",
+                                          "Tech"
+                                      ],
+                         "luggage":  "5 Bags",
+                         "category":  "Premium",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "692db09834f15bc89b45a5fb",
+                         "name":  "Hyundai Starex",
+                         "image":  "/images/fleet/starex.png",
+                         "capacity":  "7 Seater",
+                         "passengers":  7,
+                         "multiplier":  1.2,
+                         "features":  [
+                                          "Spacious",
+                                          "AC",
+                                          "Sliding Doors"
+                                      ],
+                         "luggage":  "4 Bags",
+                         "category":  "Standard",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "692db09834f15bc89b45a5f9",
+                         "name":  "Toyota Hiace",
+                         "image":  "/images/fleet/hiace.png",
+                         "capacity":  "10/11 Seater",
+                         "passengers":  10,
+                         "multiplier":  1.6,
+                         "features":  [
+                                          "Spacious",
+                                          "AC",
+                                          "Reliable"
+                                      ],
+                         "luggage":  "10 Bags",
+                         "category":  "Standard",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "692db09834f15bc89b45a5f7",
+                         "name":  "Toyota Coaster",
+                         "image":  "/images/fleet/coaster.png",
+                         "capacity":  "22 Seater",
+                         "passengers":  22,
+                         "multiplier":  2.5,
+                         "features":  [
+                                          "Large Group",
+                                          "AC",
+                                          "Mic"
+                                      ],
+                         "luggage":  "15 Bags",
+                         "category":  "Bus",
+                         "isActive":  true
+                     },
+                     {
+                         "id":  "6a0f9d2407ca7f0eeb278908",
+                         "name":  "Mercedes-Benz S-Class",
+                         "image":  "https://res.cloudinary.com/dgigf2ymy/image/upload/v1779407963/transport_uploads/oh7zuqppjzvoxv41jgws.png",
+                         "capacity":  "3 Seater",
+                         "passengers":  3,
+                         "multiplier":  3.5,
+                         "features":  [
+                                          "Free Wifi",
+                                          "Comfrotable Seats"
+                                      ],
+                         "luggage":  "3 Bags",
+                         "category":  "VIP",
+                         "isActive":  true
+                     }
+                 ]
+}

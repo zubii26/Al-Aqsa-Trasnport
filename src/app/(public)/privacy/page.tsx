@@ -5,7 +5,7 @@ import { getSettings } from '@/lib/settings-storage';
 
 export default async function PrivacyPage() {
     const settings = await getSettings();
-    const phone = settings.contact.phone || '+966 54 549 4921';
+    const phone = settings.contact.phone || '+966 54 870 7332';
     const email = settings.contact.email || 'info@alaqsaumrahtransport.com';
     const address = settings.contact.address || 'Al Aziziyah, Makkah, Saudi Arabia';
 

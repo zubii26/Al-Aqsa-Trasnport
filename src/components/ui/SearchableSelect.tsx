@@ -212,7 +212,6 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                                         <div className="flex-1 relative">
                                             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                             <input
-                                                autoFocus
                                                 type="text"
                                                 placeholder={placeholder}
                                                 value={searchTerm}
