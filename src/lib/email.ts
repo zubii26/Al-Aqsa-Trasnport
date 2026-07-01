@@ -246,7 +246,8 @@ export const sendBookingConfirmationEmail = async (booking: BookingData) => {
     const htmlContent = getBookingConfirmationTemplate(booking, templateString);
 
     // 3. Bilingual Subject
-    const subject = `Booking Confirmation #${booking.id} | تأكيد الحجز`;
+    const vars = prepareBookingVariables(booking);
+    const subject = `Booking Confirmation ${vars.booking_id} | تأكيد الحجز`;
 
     // 4. Attachments
     const attachments = getPdfAttachment(booking);
@@ -271,9 +272,11 @@ export const sendAdminNewBookingEmail = async (booking: BookingData) => {
     const htmlContent = getAdminBookingNotificationTemplate(booking, templateString);
     const attachments = getPdfAttachment(booking);
 
+    const vars = prepareBookingVariables(booking);
+
     return await sendEmail({
         to: adminEmail,
-        subject: `🔔 New Booking #${booking.id} Received`,
+        subject: `🔔 New Booking ${vars.booking_id} Received`,
         html: htmlContent,
         attachments
     });

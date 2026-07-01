@@ -51,7 +51,8 @@ export const generateInvoice = async (booking: any) => {
     doc.text("Al Aqsa Umrah Transport", 15, yPos + 6);
     doc.setFont("helvetica", "normal");
     doc.text("Jeddah, Saudi Arabia", 15, yPos + 11);
-    doc.text("support@alaqsa.com", 15, yPos + 16);
+    doc.text("info@alaqsaumrahtransport.com", 15, yPos + 16);
+    doc.text("+966 54 870 7332", 15, yPos + 21);
 
     // To (Customer)
     doc.setFontSize(10);

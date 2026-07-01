@@ -115,7 +115,7 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
     <div style="text-align: center; color: #666; font-size: 14px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
         <p>Need to make changes? Call/WhatsApp us anytime.</p>
         <a href="https://wa.me/${WHATSAPP_NUMBER}" style="display: inline-block; background-color: #25D366; color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; margin-top: 10px;">
-            WhatsApp Support
+            WhatsApp Support (+966 54 870 7332)
         </a>
     </div>
 
