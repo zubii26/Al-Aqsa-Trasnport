@@ -312,6 +312,9 @@ const BookingSchema = new Schema<IBooking>({
     country: { type: String },
     flightNumber: { type: String },
     arrivalDate: { type: String },
+    visaType: { type: String },
+    viaBadr: { type: Boolean },
+    includeWadiJinn: { type: Boolean },
     
     // Custom Route coordinates, distance, duration, polyline
     customRoute: {
