@@ -32,6 +32,7 @@ export interface ILeg {
 
 export interface IBooking extends Document {
     id?: string;
+    bookingReference?: string;
     name: string;
     email: string;
     phone: string;
@@ -277,6 +278,7 @@ const LegSchema = new Schema<ILeg>({
 }, { _id: false });
 
 const BookingSchema = new Schema<IBooking>({
+    bookingReference: { type: String, unique: true, sparse: true, index: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },

@@ -126,16 +126,18 @@ const formatPriceRow = (booking: BookingData) => {
 // Generic function to prepare variables
 const prepareBookingVariables = (booking: BookingData) => {
     return {
-        name: booking.name,
-        booking_id: `INV-${(booking.id || '').slice(-6).toUpperCase()}`,
-        date: booking.date,
-        time: booking.time,
-        pickup: booking.pickup,
+        // Booking variables
+        booking_id: booking.bookingReference || `INV-${(booking.id || '').slice(-6).toUpperCase()}`,
+        booking_date: new Date(booking.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
         dropoff: booking.dropoff,
         vehicle_details: formatVehicles(booking),
         passengers: booking.passengers,
         luggage: booking.luggage || 0,
         price_row: formatPriceRow(booking),
+        name: booking.name,
+        date: booking.date,
+        time: booking.time,
+        pickup: booking.pickup,
         status: booking.status,
         submission_time: new Date().toLocaleString(),
         year: new Date().getFullYear(),
@@ -228,7 +230,7 @@ const getPdfAttachment = (booking: BookingData) => {
         const arrayBuffer = generateBookingInvoice(bookingForPdf, 'buffer') as ArrayBuffer;
         
         return [{
-            filename: `Invoice-${booking.id}.pdf`,
+            filename: `Invoice-${booking.bookingReference || booking.id}.pdf`,
             content: Buffer.from(arrayBuffer),
         }];
     } catch (err) {

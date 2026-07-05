@@ -46,9 +46,9 @@ const airportFAQs = [
 export default async function AirportTransfersPage() {
     const allRoutes = await routeService.getActiveRoutes();
     const airportRoutes = allRoutes.filter(r =>
-        r.origin.toLowerCase().includes('airport') ||
-        r.destination.toLowerCase().includes('airport') ||
-        r.origin.toLowerCase().includes('jeddah')
+        r.origin?.toLowerCase().includes('airport') ||
+        r.destination?.toLowerCase().includes('airport') ||
+        r.origin?.toLowerCase().includes('jeddah')
     );
 
     // Schema.org Structured Data
@@ -178,8 +178,8 @@ export default async function AirportTransfersPage() {
                             { icon: Star, title: "Fixed Pricing", desc: "No hidden fees. Steps are clear and prices are all-inclusive." }
                         ].map((item, idx) => (
                             <FadeIn key={idx} delay={idx * 0.1}>
-                                <div className="text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:shadow-lg transition-shadow">
-                                    <div className="w-14 h-14 mx-auto bg-amber-100 dark:bg-amber-900/20 text-amber-600 rounded-full flex items-center justify-center mb-4">
+                                <div className="card-premium text-center">
+                                    <div className="bg-amber-50 dark:bg-amber-900/20 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 text-amber-500">
                                         <item.icon size={28} />
                                     </div>
                                     <h3 className="font-bold text-lg mb-2">{item.title}</h3>

@@ -20,12 +20,18 @@ export async function POST(request: Request) {
 
         let booking = null;
         try {
-            booking = await Booking.findOne({
-                _id: reference,
-                email: { $regex: new RegExp(`^${email}$`, 'i') } // Case insensitive email
-            });
+            const isObjectId = /^[0-9a-fA-F]{24}$/.test(reference);
+            const query: any = { email: { $regex: new RegExp(`^${email}$`, 'i') } };
+            
+            if (isObjectId) {
+                query.$or = [{ _id: reference }, { bookingReference: reference }];
+            } else {
+                query.bookingReference = reference;
+            }
+            
+            booking = await Booking.findOne(query);
         } catch (err) {
-            // Likely invalid ObjectId format
+            // Likely invalid ObjectId format or db error
             return NextResponse.json(
                 { success: false, message: 'Invalid booking reference format' },
                 { status: 400 }
@@ -43,7 +49,7 @@ export async function POST(request: Request) {
         return NextResponse.json({
             success: true,
             booking: {
-                id: booking._id,
+                id: booking.bookingReference || booking._id,
                 status: booking.status,
                 createdAt: booking.createdAt,
                 date: booking.date,
@@ -51,13 +57,7 @@ export async function POST(request: Request) {
                 pickup: booking.pickup,
                 dropoff: booking.dropoff,
                 vehicle: booking.vehicle,
-                passengers: booking.passengers,
-                // Driver Details (if assigned)
-                valet: booking.valet ? {
-                    name: booking.valet.name,
-                    phone: booking.valet.phone, // Assuming structure, verify schema if possible needed
-                    plateNumber: booking.valet.plateNumber
-                } : null
+                passengers: booking.passengers
             }
         });
 

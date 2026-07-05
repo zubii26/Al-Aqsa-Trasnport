@@ -73,6 +73,7 @@ export default function HotelTransferPage() {
                 title="Premium Hotel Transfers"
                 subtitle="Seamless door-to-door transport between your hotel and the Holy Mosques in Makkah & Madinah."
                 bgImage="/images/services/hotel-transfer-real.webp"
+                bgImagePosition="object-center"
                 ctaText="Book Your Ride"
                 ctaLink="/booking"
                 layout="center"
@@ -112,7 +113,7 @@ export default function HotelTransferPage() {
                         }
                     ].map((feature, idx) => (
                         <FadeIn key={idx} delay={idx * 0.1}>
-                            <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                            <div className="card-premium h-full">
                                 <div className="bg-amber-50 dark:bg-amber-900/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
                                     {feature.icon}
                                 </div>

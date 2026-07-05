@@ -2299,7 +2299,7 @@ export default function BookingPage() {
                                 <p className="text-2xl text-[#D4AF37] font-serif mb-2">﷽</p>
                                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference / مرجع الحجز</span>
                                 <span className="block font-mono text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                                    {(bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase()}
+                                    {bookingResponse?.bookingReference || (bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase()}
                                 </span>
                             </div>
 

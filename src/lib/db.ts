@@ -130,8 +130,34 @@ export async function getBooking(id: string): Promise<IBooking | null> {
     } as unknown as IBooking;
 }
 
+export function generateBookingReference(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let ref = 'AQT-';
+    for (let i = 0; i < 6; i++) {
+        ref += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return ref;
+}
+
 export async function addBooking(bookingData: Partial<IBooking>): Promise<IBooking> {
     await dbConnect();
+    
+    // Generate unique booking reference
+    let bookingReference = generateBookingReference();
+    let isUnique = false;
+    let attempts = 0;
+    while (!isUnique && attempts < 5) {
+        const existing = await Booking.exists({ bookingReference });
+        if (!existing) {
+            isUnique = true;
+        } else {
+            bookingReference = generateBookingReference();
+            attempts++;
+        }
+    }
+    
+    bookingData.bookingReference = bookingReference;
+    
     const newBooking = await Booking.create(bookingData);
     const obj = newBooking.toObject();
     return {

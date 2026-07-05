@@ -554,10 +554,10 @@ const QuickBookingForm = ({
                                                     setErrors({});
                                                 }}
                                                 className={`
-                                                    flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border
+                                                    flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border
                                                     ${isActive
                                                         ? 'bg-slate-900 border-slate-900 text-white shadow-lg scale-105'
-                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 hover:bg-amber-50'
+                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-secondary hover:text-secondary hover:bg-amber-50'
                                                     }
                                                 `}
                                             >
@@ -782,7 +782,7 @@ const QuickBookingForm = ({
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full md:w-64 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-amber-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                        className="btn-primary w-full md:w-64"
                                     >
                                         {isSubmitting ? (
                                             <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

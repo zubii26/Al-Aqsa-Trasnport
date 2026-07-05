@@ -376,7 +376,7 @@ export default function FleetShowcase() {
                                                     sizes="(max-width: 1024px) 100vw, 60vw"
                                                     quality={90}
                                                     loading="lazy"
-                                                    className="object-cover object-center w-full h-full transition-transform duration-700 group-hover/image:scale-105"
+                                                    className="object-contain sm:object-cover object-center w-full h-full transition-transform duration-700 group-hover/image:scale-105"
                                                 />
                                             </motion.div>
                                         </AnimatePresence>

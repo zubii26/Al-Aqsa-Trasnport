@@ -27,6 +27,7 @@ interface HeroProps {
     backgroundChildren?: React.ReactNode;
     breadcrumbs?: React.ReactNode;
     alt?: string;
+    bgImagePosition?: string;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -43,7 +44,8 @@ const Hero: React.FC<HeroProps> = ({
     badge,
     backgroundChildren,
     breadcrumbs,
-    alt
+    alt,
+    bgImagePosition
 }) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -92,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({
                                 priority={currentIndex === 0}
                                 fetchPriority={currentIndex === 0 ? "high" : "auto"}
                                 quality={100}
-                                className="object-cover scale-110"
+                                className={`object-cover scale-110 ${bgImagePosition || 'object-center'}`}
                                 sizes="100vw"
                             />
                         </motion.div>
@@ -106,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({
                             priority
                             fetchPriority="high"
                             quality={100}
-                            className="object-cover scale-110"
+                            className={`object-cover scale-110 ${bgImagePosition || 'object-center'}`}
                             sizes="100vw"
                         />
                     </div>

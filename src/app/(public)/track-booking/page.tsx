@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Calendar, User, Phone, CheckCircle, Clock, XCircle, AlertCircle, ArrowRight, Car } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Hero from '@/components/common/Hero';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 
 export default function TrackBookingPage() {
     const [formData, setFormData] = useState({ reference: '', email: '' });
@@ -89,18 +91,20 @@ export default function TrackBookingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
-            <main className="flex-1 container mx-auto px-4 py-32 flex flex-col items-center">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
+            <Hero
+                title="Track Your Booking"
+                subtitle="Enter your booking reference and email to see real-time updates."
+                bgImage="/images/services/hotel-transfer-real.webp"
+                breadcrumbs={<Breadcrumbs />}
+            />
+
+            <div className="container mx-auto px-4 -mt-16 relative z-10 flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="max-w-xl w-full"
                 >
-                    <div className="text-center mb-10">
-                        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Track Your Booking</h1>
-                        <p className="text-slate-500 dark:text-slate-400 text-lg">Enter your booking reference and email to see real-time updates.</p>
-                    </div>
-
                     <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-slate-100 dark:border-slate-800 relative overflow-hidden">
                         {/* Decorative BG */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -110,7 +114,7 @@ export default function TrackBookingPage() {
                                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Booking Reference</label>
                                 <input
                                     type="text"
-                                    placeholder="e.g. 64f8a..."
+                                    placeholder="e.g. AQT-9X4F2A"
                                     className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none border border-slate-200 dark:border-slate-700 focus:border-secondary transition-all"
                                     value={formData.reference}
                                     onChange={e => setFormData({ ...formData, reference: e.target.value })}
@@ -193,7 +197,7 @@ export default function TrackBookingPage() {
                                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
                                                 <p className="font-bold text-slate-900 dark:text-white">{booking.pickup}</p>
                                                 <div className="flex items-center gap-4 mt-1 text-sm text-slate-500">
-                                                    <span className="flex items-center gap-1"><Calendar size={14} /> {new Date(booking.date).toLocaleDateString()}</span>
+                                                    <span className="flex items-center gap-1"><Calendar size={14} /> {isNaN(new Date(booking.date).getTime()) ? booking.date : new Date(booking.date).toLocaleDateString()}</span>
                                                     <span className="flex items-center gap-1"><Clock size={14} /> {booking.time}</span>
                                                 </div>
                                             </div>
@@ -220,7 +224,7 @@ export default function TrackBookingPage() {
                         )}
                     </AnimatePresence>
                 </motion.div>
-            </main>
+            </div>
         </div>
     );
 }

@@ -20,19 +20,19 @@ export default function GlassButton({
     ...props
 }: GlassButtonProps) {
     const variants = {
-        primary: "bg-primary text-primary-foreground hover:bg-primary/90 border-transparent",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 border-transparent",
-        outline: "bg-transparent border-primary/20 hover:bg-primary/5 text-foreground"
+        primary: "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+        secondary: "bg-white/10 text-white hover:bg-white/20 backdrop-blur-md border border-white/20",
+        outline: "border-2 border-white text-white hover:bg-white/10"
     };
 
     const sizes = {
-        sm: "h-9 px-4 text-sm",
-        md: "h-11 px-6 text-base",
-        lg: "h-14 px-8 text-lg"
+        sm: "h-9 px-4 py-2 text-sm",
+        md: "h-11 px-8 py-2 text-base",
+        lg: "h-14 px-10 py-3 text-lg"
     };
 
     const baseStyles = cn(
-        "glass-button ios-shimmer-btn group inline-flex items-center justify-center rounded-xl font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 font-bold",
         variants[variant],
         sizes[size],
         className

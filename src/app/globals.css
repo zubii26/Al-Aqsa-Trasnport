@@ -471,7 +471,7 @@
   }
 
   .ios-glass {
-    @apply backdrop-blur-2xl bg-white/60 dark:bg-slate-900/60 border border-white/30 dark:border-white/10;
+    @apply backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 border border-white/40 dark:border-white/10;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
   }
   
@@ -844,4 +844,55 @@
 
 .geo-qa-btn:hover {
   background-color: #D4AF37;
+}
+
+/* =========================================
+   AL AQSA UNIFIED COMPONENT SYSTEM
+   ========================================= */
+@layer components {
+  .btn-base {
+    @apply inline-flex items-center justify-center px-6 py-3 h-12 text-[15px] gap-2 rounded-xl font-bold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply btn-base bg-secondary text-slate-900 shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] hover:bg-secondary/90 hover:shadow-[0_6px_20px_rgba(212,175,55,0.23)] hover:-translate-y-0.5 focus:ring-secondary;
+  }
+
+  .btn-primary-dark {
+    @apply btn-base bg-slate-900 text-white shadow-xl hover:bg-slate-800 hover:-translate-y-0.5 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 focus:ring-slate-900 dark:focus:ring-white;
+  }
+
+  .btn-secondary {
+    @apply btn-base bg-white text-slate-900 shadow-sm border border-slate-200 hover:bg-slate-50 hover:shadow-md hover:-translate-y-0.5 focus:ring-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:bg-slate-700;
+  }
+
+  .btn-ghost {
+    @apply btn-base bg-transparent text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 focus:ring-slate-200 dark:focus:ring-slate-800;
+  }
+
+  .btn-size-sm {
+    @apply h-10 px-4 text-sm;
+  }
+
+  .btn-size-md {
+    @apply h-12 px-6 text-base;
+  }
+
+  .btn-size-lg {
+    @apply h-14 px-8 text-lg;
+  }
+
+  /* Universal Card Pattern */
+  .card-premium {
+    @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 ease-out;
+  }
+  
+  .card-glass {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.04)] rounded-2xl;
+  }
+
+  /* Standard Inputs */
+  .input-premium {
+    @apply w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all;
+  }
 }

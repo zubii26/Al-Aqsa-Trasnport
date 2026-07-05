@@ -6,7 +6,7 @@ export default function SafetyPromise() {
     return (
         <section className="py-12 md:py-24 relative overflow-hidden bg-white dark:bg-slate-950">
             <div className="container mx-auto px-4">
-                <div className="bg-slate-900/90 dark:bg-slate-950/90 rounded-[32px] overflow-hidden shadow-2xl relative ios-glass">
+                <div className="bg-slate-900 dark:bg-slate-950 rounded-[32px] overflow-hidden shadow-2xl relative backdrop-blur-2xl border border-slate-800">
                     {/* Decorative Background Effects */}
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] -mr-48 -mt-48 opacity-40 animate-pulse-slow"></div>
                     <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-48 -mb-48 opacity-40"></div>

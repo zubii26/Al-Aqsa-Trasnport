@@ -255,30 +255,27 @@ export default function Navbar() {
                     ))}
                 </div>
 
+
                 <div className="hidden xl:flex items-center gap-4">
                     {/* ThemeToggle hidden on desktop as requested */}
                     {/* <ThemeToggle /> */}
 
-
-
-                    <GlassButton
+                    <Link
                         href="/booking"
-                        variant="secondary"
-                        size="md"
-                        className="font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] !bg-gradient-to-r !from-[#D4AF37] !to-[#B49126] !text-[#0A1F44] !border-none transition-all duration-300 hover:scale-105"
+                        className="btn-primary"
                     >
                         Book Now
-                    </GlassButton>
+                    </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile Menu Button - Enhanced Touch Target (48x48) */}
                 <button
-                    className={`xl:hidden p-2 transition-colors relative z-50 ${scrolled ? 'text-foreground hover:text-secondary' : 'text-foreground dark:text-white hover:text-secondary'}`}
+                    className={`xl:hidden w-12 h-12 flex items-center justify-center transition-colors relative z-50 ${scrolled ? 'text-foreground hover:text-secondary' : 'text-foreground dark:text-white hover:text-secondary'}`}
                     onClick={toggleMenu}
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isMenuOpen}
                 >
-                    {isMenuOpen ? <X size={28} /> : <Menu strokeWidth={1.25} size={28} />}
+                    {isMenuOpen ? <X size={28} /> : <Menu strokeWidth={1.5} size={28} />}
                 </button>
             </div>
         </nav>
@@ -314,9 +311,9 @@ export default function Navbar() {
                                 </div>
                             </motion.div>
                             
-                            {/* Close button */}
+                            {/* Close button - Enhanced Touch Target */}
                             <button
-                                className="p-2 transition-colors text-foreground dark:text-white hover:text-secondary z-[101]"
+                                className="w-12 h-12 flex items-center justify-center transition-colors text-foreground dark:text-white hover:text-secondary z-[101]"
                                 onClick={toggleMenu}
                                 aria-label="Close menu"
                             >

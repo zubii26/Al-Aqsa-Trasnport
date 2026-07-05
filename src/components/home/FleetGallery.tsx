@@ -182,7 +182,7 @@ export default function FleetGallery() {
                                             alt={img.alt}
                                             fill
                                             sizes="(max-width: 768px) 320px, 400px"
-                                            className="fleet-card-image object-cover"
+                                            className="fleet-card-image object-cover object-center"
                                             draggable={false}
                                         />
                                         <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90" />

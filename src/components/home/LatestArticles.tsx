@@ -31,7 +31,7 @@ export default async function LatestArticles() {
                                         src={post.image}
                                         alt={post.alt || post.title}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
                                 <div className={styles.content}>

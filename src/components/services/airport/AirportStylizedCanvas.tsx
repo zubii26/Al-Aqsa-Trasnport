@@ -21,11 +21,13 @@ const AIRPORT_NODES: Record<string, { x: number; y: number; label: string; icon?
     'Madinah': { x: 80, y: 20, label: 'Madinah' },
 };
 
-const getAirportCoords = (name: string) => {
+const getAirportCoords = (name?: string) => {
+    if (!name) return { x: 50, y: 50, label: 'Unknown' };
     // Simple robust matching
-    if (name.toLowerCase().includes('airport') || name.toLowerCase().includes('jeddah')) return AIRPORT_NODES['Jeddah Airport'];
-    if (name.toLowerCase().includes('makkah')) return AIRPORT_NODES['Makkah'];
-    if (name.toLowerCase().includes('madinah')) return AIRPORT_NODES['Madinah'];
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('airport') || lowerName.includes('jeddah')) return AIRPORT_NODES['Jeddah Airport'];
+    if (lowerName.includes('makkah')) return AIRPORT_NODES['Makkah'];
+    if (lowerName.includes('madinah')) return AIRPORT_NODES['Madinah'];
     return { x: 50, y: 50, label: name };
 };
 
