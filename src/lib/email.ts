@@ -142,7 +142,7 @@ const prepareBookingVariables = (booking: BookingData) => {
         status: booking.status,
         submission_time: new Date().toLocaleString(),
         year: new Date().getFullYear(),
-        country_row: booking.country ? `<p><strong>Country:</strong> ${booking.country}</p>` : '',
+        country_row: booking.country ? `<p><strong>Nationality:</strong> ${booking.country}</p>` : '',
         flight_row: booking.flightNumber ? `<p><strong>Flight:</strong> ${booking.flightNumber}</p>` : '',
         arrival_date_row: booking.arrivalDate ? `<p><strong>Arrival Date:</strong> ${booking.arrivalDate}</p>` : '',
         notes_row: booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : '',

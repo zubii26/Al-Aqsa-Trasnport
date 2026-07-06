@@ -8,52 +8,57 @@ const BookingFooter = () => {
     const { settings } = useSettings();
 
     return (
-        <footer className="w-full bg-[#0f172a] text-slate-300 py-12 mt-auto">
-            <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row justify-between items-center gap-8">
+        <footer className="w-full bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-slate-500 py-6 mt-auto">
+            <div className="max-w-6xl mx-auto px-4 md:px-6 w-full flex flex-col items-center gap-4 text-xs font-medium">
                 
-                {/* Left: Branding & Trust */}
-                <div className="flex flex-col items-center md:items-start gap-4">
-                    <div className="flex items-center gap-2">
-                        <Lock size={20} className="text-secondary" />
-                        <span className="text-lg font-bold text-white">Secure Booking</span>
+                {/* Top Row: Trust & Contact */}
+                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                    <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                        <Lock size={14} className="text-emerald-600" />
+                        <span>Secure Booking</span>
                     </div>
-                    <span className="text-sm font-medium text-slate-400">Licensed Saudi Transport</span>
+                    <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+                    <span className="text-slate-600 dark:text-slate-400">Licensed Saudi Transport</span>
                     
-                    <div className="flex items-center gap-6 mt-2">
-                        {settings?.contact?.phone && (
-                            <div className="flex items-center gap-2 text-sm font-bold text-white">
-                                <Phone size={16} className="text-secondary" />
-                                {settings.contact.phone}
+                    {settings?.contact?.phone && (
+                        <>
+                            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+                            <div className="flex items-center gap-1.5">
+                                <Phone size={14} className="text-secondary" />
+                                <span className="text-slate-600 dark:text-slate-400">24/7 Support: {settings.contact.phone}</span>
                             </div>
-                        )}
-                        {settings?.contact?.whatsapp && (
+                        </>
+                    )}
+                    
+                    {settings?.contact?.whatsapp && (
+                        <>
+                            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
                             <a 
                                 href={`https://wa.me/${settings.contact.whatsapp.replace(/[^0-9]/g, '')}`} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-sm font-bold text-white hover:text-secondary transition-colors"
+                                className="flex items-center gap-1.5 hover:text-emerald-600 transition-colors"
                             >
-                                <MessageCircle size={16} className="text-secondary" />
-                                WhatsApp Support
+                                <MessageCircle size={14} className="text-emerald-500" />
+                                <span>WhatsApp</span>
                             </a>
-                        )}
-                    </div>
+                        </>
+                    )}
                 </div>
 
-                {/* Right: Legal Links */}
-                <div className="flex flex-col items-center md:items-end gap-4 text-sm font-medium">
-                    <div className="flex items-center gap-4">
-                        <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <span className="text-slate-700">•</span>
-                        <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
-                        <span className="text-slate-700">•</span>
-                        <Link href="/cancellation" className="hover:text-white transition-colors">Cancellation Policy</Link>
-                    </div>
-                    <span className="text-xs text-slate-500">
-                        &copy; {new Date().getFullYear()} Al Aqsa Umrah Transport. All rights reserved.
-                    </span>
+                {/* Bottom Row: Legal */}
+                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                    <Link href="/privacy-policy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</Link>
+                    <span className="text-slate-300 dark:text-slate-700">•</span>
+                    <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms & Conditions</Link>
+                    <span className="text-slate-300 dark:text-slate-700">•</span>
+                    <Link href="/cancellation" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cancellation Policy</Link>
                 </div>
-
+                
+                {/* Copyright */}
+                <div className="text-[10px] text-slate-400">
+                    &copy; {new Date().getFullYear()} Al Aqsa Umrah Transport. All rights reserved.
+                </div>
             </div>
         </footer>
     );

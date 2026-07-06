@@ -21,6 +21,7 @@ interface SearchableSelectProps {
     disabled?: boolean;
     renderOption?: (option: Option) => React.ReactNode;
     emptyStateAction?: React.ReactNode;
+    searchable?: boolean;
 }
 
 const SearchableSelect: React.FC<SearchableSelectProps> = ({
@@ -34,7 +35,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     error,
     disabled,
     renderOption,
-    emptyStateAction
+    emptyStateAction,
+    searchable = true
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
@@ -117,7 +119,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     placeholder={placeholder}
                     autoComplete="off"
                     disabled={disabled}
-                    className={`${className} ${icon ? 'pl-11' : ''} max-md:pointer-events-none max-md:opacity-0`}
+                    readOnly={!searchable}
+                    className={`${className} ${icon ? 'pl-11' : ''} ${!searchable ? 'cursor-pointer' : ''} max-md:pointer-events-none max-md:opacity-0`}
                     // On mobile we hide the real input (or make it unclickable) if we rely on a wrapper click, 
                     // but wait, we need it to be clickable to trigger focus.
                     // Actually let's just keep it simple:
@@ -149,7 +152,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute top-full left-0 z-[100] w-full mt-2 max-h-60 overflow-y-auto 
+                            className="absolute top-full left-0 z-[100] w-full mt-2 max-h-80 overflow-y-auto 
                                        bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl 
                                        border border-slate-200 dark:border-slate-700 
                                        rounded-xl shadow-2xl scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
@@ -210,14 +213,22 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                                             <ChevronLeft size={24} />
                                         </button>
                                         <div className="flex-1 relative">
-                                            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                                            <input
-                                                type="text"
-                                                placeholder={placeholder}
-                                                value={searchTerm}
-                                                onChange={handleInputChange}
-                                                className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl pl-10 pr-4 py-3 text-base outline-none text-slate-900 dark:text-white"
-                                            />
+                                            {searchable ? (
+                                                <>
+                                                    <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                    <input
+                                                        type="text"
+                                                        placeholder={placeholder}
+                                                        value={searchTerm}
+                                                        onChange={handleInputChange}
+                                                        className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl pl-10 pr-4 py-3 text-base outline-none text-slate-900 dark:text-white"
+                                                    />
+                                                </>
+                                            ) : (
+                                                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-3 text-base text-slate-900 dark:text-white font-medium flex items-center h-[48px]">
+                                                    {placeholder || 'Select option'}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

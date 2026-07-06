@@ -147,7 +147,7 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                             <div className="space-y-4">
                                 <div>
                                     <p className="text-slate-900 dark:text-white font-bold text-lg">{booking.name}</p>
-                                    {booking.country && <p className="text-sm text-slate-500">{booking.country}</p>}
+                                    {booking.country && <p className="text-sm text-slate-500">Nationality: {booking.country}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">

@@ -48,10 +48,8 @@ export default async function BookingLayout({
                 {children}
             </main>
 
-            <ClientLayoutWrapper>
-                <BookingFooter />
-                <GlobalClientComponents contactSettings={settings.contact} />
-            </ClientLayoutWrapper>
+            <BookingFooter />
+            <GlobalClientComponents contactSettings={settings.contact} />
         </>
     );
 }

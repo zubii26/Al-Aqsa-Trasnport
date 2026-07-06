@@ -475,7 +475,7 @@ export default function BookingsPage() {
                                                         {/* Display Country, Flight, Arrival if present */}
                                                         {(booking.country || booking.flightNumber || booking.arrivalDate) && (
                                                             <div className="mt-1 pt-1 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
-                                                                {booking.country && <div>Country: {booking.country}</div>}
+                                                                {booking.country && <div>Nationality: {booking.country}</div>}
                                                                 {booking.flightNumber && <div>Flight: {booking.flightNumber}</div>}
                                                                 {booking.arrivalDate && <div>Arrival: {booking.arrivalDate}</div>}
                                                             </div>
