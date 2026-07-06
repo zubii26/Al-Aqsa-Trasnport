@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -56,12 +56,13 @@ const ZIYARAT_PACKAGES: Record<string, { duration: string, places: string[] }> =
     }
 };
 
-export default function BookingPage() {
+function BookingContent() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
     const { settings } = useSettings();
     const [step, setStep] = useState(1);
     const [isSearching, setIsSearching] = useState(false);
     const [accordionOpen, setAccordionOpen] = useState<string>('journey');
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
     // PWA Install Prompt State
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -587,6 +588,20 @@ export default function BookingPage() {
         setIsDropdownOpen(false);
         setErrors(prev => ({ ...prev, pickup: '', dropoff: '' }));
     };
+
+    const getVehicleCategory = (vehicle: any): string => {
+        const name = vehicle.name.toLowerCase();
+        if (name.includes('camry') || name.includes('kia')) return 'Sedan';
+        if (name.includes('gmc') || name.includes('xpander')) return 'SUV';
+        if (name.includes('mercedes')) return 'Luxury';
+        if (name.includes('staria') || name.includes('starex')) return 'Van';
+        if (name.includes('hiace') || name.includes('coaster') || name.includes('bus')) return 'Bus';
+        return 'Other';
+    };
+
+    const availableCategories = ['Sedan', 'SUV', 'Luxury', 'Van', 'Bus'];
+
+    const filteredVehicles = vehicles.filter(v => selectedCategory === 'All' || getVehicleCategory(v) === selectedCategory);
 
     const filteredRoutes = routes;
 
@@ -1278,7 +1293,7 @@ export default function BookingPage() {
                                         {leg.date && leg.time && <p className="text-sm text-slate-500">{leg.date.toLocaleDateString()} at {leg.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>}
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="flex flex-col gap-6">
                                     {vehicles.map((vehicle) => {
                                         const Icon = vehicle.icon;
                                         const priceDetails = calculatePrice(leg.routeId!, vehicle.id);
@@ -1292,24 +1307,24 @@ export default function BookingPage() {
                                                 whileHover={{ y: -6 }}
                                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1, leg.id)}
                                                 className={`
-                                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col cursor-pointer
+                                                    relative rounded-3xl transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer
                                                     ${isSelected
-                                                        ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20'
-                                                        : 'ios-glass border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
+                                                        ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-lg ring-1 ring-secondary/20'
+                                                        : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xl'
                                                     }
                                                 `}
                                             >
                                                 {/* Image Container */}
                                                 <div className={`
-                                                    relative h-56 w-full overflow-hidden 
-                                                    ${isSelected ? 'bg-slate-50 dark:bg-slate-800/50' : 'bg-slate-100/50 dark:bg-slate-950/50'}
-                                                    transition-colors duration-300
+                                                    relative md:w-[35%] w-full shrink-0 flex items-center justify-center p-6
+                                                    ${isSelected ? 'bg-slate-50 dark:bg-slate-800/50' : 'bg-slate-50 dark:bg-slate-950/50'}
+                                                    transition-colors duration-300 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800
                                                 `}>
                                                     {vehicle.image ? (
                                                         <img
                                                             src={vehicle.image}
                                                             alt={vehicle.name}
-                                                            className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+                                                            className="w-full max-w-[240px] h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                                                         />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-slate-300">
@@ -1326,77 +1341,65 @@ export default function BookingPage() {
                                                             <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider">Group</span>
                                                         )}
                                                     </div>
-
-                                                    {/* Price Tag - Absolute */}
-                                                    <div className={`
-                                                        absolute bottom-4 right-4 px-4 py-2 rounded-xl shadow-lg border backdrop-blur-md
-                                                        ${isSelected
-                                                            ? 'bg-secondary text-white border-secondary'
-                                                            : 'ios-glass text-slate-900 dark:text-white border-white/20'
-                                                        }
-                                                    `}>
-                                                        <div className="flex flex-col items-end leading-none">
-                                                            {priceDetails.discountApplied > 0 && (
-                                                                <span className={`text-[10px] font-medium line-through mb-0.5 ${isSelected ? 'text-white/70' : 'text-slate-400'}`}>
-                                                                    {priceDetails.originalPrice}
-                                                                </span>
-                                                            )}
-                                                            <span className="text-xl font-black">
-                                                                {priceDetails.price} <span className="text-xs font-bold opacity-70">SAR</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                                 {/* Content */}
-                                                <div className="p-6 flex-1 flex flex-col">
-                                                    <div className="flex justify-between items-start mb-4">
-                                                        <div>
-                                                            <h3 className={`text-xl font-bold mb-1 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
-                                                                {vehicle.name}
-                                                            </h3>
-                                                            <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
-                                                                <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={14} /> {vehicle.capacity}</span>
-                                                                <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={14} /> {vehicle.luggage}</span>
-                                                            </div>
+                                                <div className="p-6 md:p-8 flex-1 flex flex-col md:flex-row gap-6 md:gap-8 justify-between">
+                                                    <div className="flex-1">
+                                                        <h3 className={`text-2xl font-bold mb-2 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
+                                                            {vehicle.name}
+                                                        </h3>
+                                                        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-medium mb-4">
+                                                            <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={16} /> {vehicle.capacity}</span>
+                                                            <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={16} /> {vehicle.luggage}</span>
                                                         </div>
 
-                                                        {/* Quantity Control (Desktop) */}
-                                                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 rounded-lg p-1 border border-slate-100 dark:border-slate-800">
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {vehicle.features.slice(0, 4).map((feature, idx) => (
+                                                                <div key={idx} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">
+                                                                    <CheckCircle2 strokeWidth={2.5} size={14} className="text-emerald-500" />
+                                                                    <span>{feature}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex flex-col justify-center items-start md:items-end md:pl-8 md:border-l border-slate-100 dark:border-slate-800">
+                                                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">TOTAL PRICE</div>
+                                                        <div className="flex items-end gap-1 mb-4">
+                                                            <span className="text-3xl font-black text-slate-900 dark:text-white leading-none">
+                                                                {priceDetails.price}
+                                                            </span>
+                                                            <span className="text-sm font-bold text-slate-500 mb-0.5">SAR</span>
+                                                        </div>
+
+                                                        {/* Quantity Control or Select Button */}
+                                                        <div className="w-full flex justify-end">
                                                             {quantity > 0 ? (
-                                                                <>
+                                                                <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 rounded-xl p-1.5 border border-slate-200 dark:border-slate-800">
                                                                     <button
                                                                         onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, -1, leg.id); }}
-                                                                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                                                                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
                                                                     >
                                                                         -
                                                                     </button>
-                                                                    <span className="font-bold text-slate-900 dark:text-white w-6 text-center">{quantity}</span>
+                                                                    <span className="font-black text-slate-900 dark:text-white w-6 text-center text-lg">{quantity}</span>
                                                                     <button
                                                                         onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1, leg.id); }}
-                                                                        className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
+                                                                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
                                                                     >
                                                                         +
                                                                     </button>
-                                                                </>
+                                                                </div>
                                                             ) : (
                                                                 <button
                                                                     onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1, leg.id); }}
-                                                                    className="px-4 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-secondary transition-colors"
+                                                                    className="px-8 py-3 rounded-full text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors w-full md:w-auto text-center"
                                                                 >
                                                                     Select
                                                                 </button>
                                                             )}
                                                         </div>
-                                                    </div>
-
-                                                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-dashed dark:border-slate-800 grid grid-cols-2 gap-2">
-                                                        {vehicle.features.slice(0, 4).map((feature, idx) => (
-                                                            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                                                                <CheckCircle strokeWidth={1.25} size={12} className="text-emerald-500 shrink-0" />
-                                                                <span className="truncate">{feature}</span>
-                                                            </div>
-                                                        ))}
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -1408,9 +1411,14 @@ export default function BookingPage() {
                     </div>
                 ) : (
                     <>
-                        {/* Vehicle Grid - Responsive Premium Look */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    {vehicles.map((vehicle) => {
+                        <VehicleCategoryFilter 
+                            categories={availableCategories} 
+                            selectedCategory={selectedCategory} 
+                            onSelect={setSelectedCategory} 
+                        />
+                        {/* Vehicle List - Responsive Horizontal Layout */}
+                        <div className="flex flex-col gap-6">
+                    {filteredVehicles.map((vehicle) => {
                         const Icon = vehicle.icon;
                         const priceDetails = getPriceDetails(bookingData.routeId, vehicle.id);
                         const selectedMatch = bookingData.selectedVehicles.find(v => v.vehicleId === vehicle.id);
@@ -1457,81 +1465,76 @@ export default function BookingPage() {
                                             <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wider">Group</span>
                                         )}
                                     </div>
-
-                                    {/* Price Tag - Absolute */}
-                                    <div className={`
-                                        absolute bottom-4 right-4 px-4 py-2 rounded-xl shadow-lg border backdrop-blur-md
-                                        ${isSelected
-                                            ? 'bg-secondary text-white border-secondary'
-                                            : 'ios-glass text-slate-900 dark:text-white border-white/20'
-                                        }
-                                    `}>
-                                        {bookingData.routeId === 'custom' && priceDetails.price === 0 ? (
-                                            <span className="text-sm font-bold">Pin map for price</span>
-                                        ) : (
-                                            <div className="flex flex-col items-end leading-none">
-                                                {priceDetails.discountApplied > 0 && (
-                                                    <span className={`text-[10px] font-medium line-through mb-0.5 ${isSelected ? 'text-white/70' : 'text-slate-400'}`}>
-                                                        {priceDetails.originalPrice}
-                                                    </span>
-                                                )}
-                                                <span className="text-xl font-black">
-                                                    {priceDetails.price} <span className="text-xs font-bold opacity-70">SAR</span>
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-6 flex-1 flex flex-col">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <h3 className={`text-xl font-bold mb-1 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
-                                                {vehicle.name}
-                                            </h3>
-                                            <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
-                                                <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={14} /> {vehicle.capacity}</span>
-                                                <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={14} /> {vehicle.luggage}</span>
-                                            </div>
+                                <div className="p-6 md:p-8 flex-1 flex flex-col md:flex-row gap-6 md:gap-8 justify-between">
+                                    <div className="flex-1">
+                                        <h3 className={`text-2xl font-bold mb-2 ${isSelected ? 'text-secondary' : 'text-slate-900 dark:text-white'}`}>
+                                            {vehicle.name}
+                                        </h3>
+                                        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-medium mb-4">
+                                            <span className="flex items-center gap-1.5"><Users strokeWidth={1.25} size={16} /> {vehicle.capacity}</span>
+                                            <span className="flex items-center gap-1.5"><Luggage strokeWidth={1.25} size={16} /> {vehicle.luggage}</span>
                                         </div>
 
-                                        {/* Quantity Control (Desktop) */}
-                                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 rounded-lg p-1 border border-slate-100 dark:border-slate-800">
-                                            {quantity > 0 ? (
+                                        <div className="flex flex-wrap gap-2">
+                                            {vehicle.features.slice(0, 4).map((feature, idx) => (
+                                                <div key={idx} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-semibold">
+                                                    <CheckCircle2 strokeWidth={2.5} size={14} className="text-emerald-500" />
+                                                    <span>{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col justify-center items-start md:items-end md:pl-8 md:border-l border-slate-100 dark:border-slate-800">
+                                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">TOTAL PRICE</div>
+                                        <div className="flex items-end gap-1 mb-4">
+                                            {bookingData.routeId === 'custom' && priceDetails.price === 0 ? (
+                                                <span className="text-sm font-bold text-slate-900 dark:text-white">Pin map for price</span>
+                                            ) : (
                                                 <>
+                                                    {priceDetails.discountApplied > 0 && (
+                                                        <span className="text-xs font-medium line-through mb-1 text-slate-400 mr-2">
+                                                            {priceDetails.originalPrice}
+                                                        </span>
+                                                    )}
+                                                    <span className="text-3xl font-black text-slate-900 dark:text-white leading-none">
+                                                        {priceDetails.price}
+                                                    </span>
+                                                    <span className="text-sm font-bold text-slate-500 mb-0.5">SAR</span>
+                                                </>
+                                            )}
+                                        </div>
+
+                                        {/* Quantity Control or Select Button */}
+                                        <div className="w-full flex justify-end">
+                                            {quantity > 0 ? (
+                                                <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 rounded-xl p-1.5 border border-slate-200 dark:border-slate-800">
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, -1); }}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                                                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
                                                     >
                                                         -
                                                     </button>
-                                                    <span className="font-bold text-slate-900 dark:text-white w-6 text-center">{quantity}</span>
+                                                    <span className="font-black text-slate-900 dark:text-white w-6 text-center text-lg">{quantity}</span>
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
+                                                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary text-white hover:bg-secondary/90 transition-colors shadow-sm"
                                                     >
                                                         +
                                                     </button>
-                                                </>
+                                                </div>
                                             ) : (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); handleVehicleQuantityChange(vehicle.id, 1); }}
-                                                    className="px-4 py-1.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-secondary transition-colors"
+                                                    className="px-8 py-3 rounded-full text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors w-full md:w-auto text-center"
                                                 >
                                                     Select
                                                 </button>
                                             )}
                                         </div>
-                                    </div>
-
-                                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-dashed dark:border-slate-800 grid grid-cols-2 gap-2">
-                                        {vehicle.features.slice(0, 4).map((feature, idx) => (
-                                            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                                                <CheckCircle strokeWidth={1.25} size={12} className="text-emerald-500 shrink-0" />
-                                                <span className="truncate">{feature}</span>
-                                            </div>
-                                        ))}
                                     </div>
                                 </div>
                             </motion.div>
@@ -2848,3 +2851,11 @@ export default function BookingPage() {
 
 
 
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37]"></div></div>}>
+      <BookingContent />
+    </Suspense>
+  );
+}

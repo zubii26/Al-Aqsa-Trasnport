@@ -15,8 +15,8 @@ export default function VehicleCategoryFilter({ categories, selectedCategory, on
                 onClick={() => onSelect('All')}
                 className={`flex-shrink-0 px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
                     selectedCategory === 'All'
-                        ? 'bg-secondary text-white shadow-md shadow-secondary/20'
-                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-secondary hover:bg-secondary/5'
+                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md'
+                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-slate-400'
                 }`}
             >
                 All
@@ -27,8 +27,8 @@ export default function VehicleCategoryFilter({ categories, selectedCategory, on
                     onClick={() => onSelect(category)}
                     className={`flex-shrink-0 px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
                         selectedCategory === category
-                            ? 'bg-secondary text-white shadow-md shadow-secondary/20'
-                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-secondary hover:bg-secondary/5'
+                            ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md'
+                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-slate-400'
                     }`}
                 >
                     {category}
