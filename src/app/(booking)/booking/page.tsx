@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -16,6 +16,11 @@ import NusukBadge from '@/components/common/NusukBadge';
 import { useSettings } from '@/context/SettingsContext';
 import { calculateFinalPrice } from '@/lib/pricing';
 import dynamic from 'next/dynamic';
+import BookingHeader from '@/components/booking/BookingHeader';
+import BookingFooter from '@/components/booking/BookingFooter';
+import TrustBadges from '@/components/booking/TrustBadges';
+import VehicleCategoryFilter from '@/components/booking/VehicleCategoryFilter';
+
 
 const CustomRouteMap = dynamic(() => import('@/components/booking/CustomRouteMap'), { ssr: false });
 
@@ -858,7 +863,7 @@ export default function BookingPage() {
                             <motion.div 
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="mb-8 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-start gap-3 relative z-10"
+                                className="mb-8 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3 relative z-10"
                             >
                                 <input 
                                     type="checkbox" 
@@ -868,10 +873,10 @@ export default function BookingPage() {
                                     className="mt-1 w-4 h-4 text-secondary rounded border-gray-300 focus:ring-secondary cursor-pointer"
                                 />
                                 <div>
-                                    <label htmlFor="wadiJinn-single" className="font-bold text-amber-900 dark:text-amber-300 text-sm cursor-pointer">
+                                    <label htmlFor="wadiJinn-single" className="font-bold text-secondary dark:text-secondary/50 text-sm cursor-pointer">
                                         Add Wadi Jinn (External Ziyarat) +150 SAR
                                     </label>
-                                    <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                                    <p className="text-xs text-secondary dark:text-secondary/90 mt-1">
                                         Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
                                     </p>
                                 </div>
@@ -1046,7 +1051,7 @@ export default function BookingPage() {
                                             <motion.div 
                                                 initial={{ opacity: 0, y: -10 }}
                                                 animate={{ opacity: 1, y: 0 }}
-                                                className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-start gap-3"
+                                                className="mt-4 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3"
                                             >
                                                 <input 
                                                     type="checkbox" 
@@ -1056,10 +1061,10 @@ export default function BookingPage() {
                                                     className="mt-1 w-4 h-4 text-secondary rounded border-gray-300 focus:ring-secondary cursor-pointer"
                                                 />
                                                 <div>
-                                                    <label htmlFor={`wadiJinn-${leg.id}`} className="font-bold text-amber-900 dark:text-amber-300 text-sm cursor-pointer">
+                                                    <label htmlFor={`wadiJinn-${leg.id}`} className="font-bold text-secondary dark:text-secondary/50 text-sm cursor-pointer">
                                                         Add Wadi Jinn (External Ziyarat) +150 SAR
                                                     </label>
-                                                    <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                                                    <p className="text-xs text-secondary dark:text-secondary/90 mt-1">
                                                         Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
                                                     </p>
                                                 </div>
@@ -1179,7 +1184,7 @@ export default function BookingPage() {
                                     </div>
 
                                     <div className="space-y-4">
-                                        <div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 p-6 rounded-2xl text-center">
+                                        <div className="bg-secondary/10 border border-secondary/20 text-secondary p-6 rounded-2xl text-center">
                                             <p className="font-medium">Custom routing is currently unavailable.</p>
                                             <p className="text-sm mt-2 opacity-80">Please select a standard route from the dropdowns above.</p>
                                         </div>
@@ -1246,6 +1251,8 @@ export default function BookingPage() {
                     <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
                     <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
                 </div>
+
+                <TrustBadges />
 
                 {bookingData.routeType === 'multi' && (
                     <div className="mb-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -2029,7 +2036,7 @@ export default function BookingPage() {
                                                     <ShieldCheck size={12} /> {bookingData.visaType}
                                                 </span>
                                                 {bookingData.visaType === 'Umrah Visa' && nusukFeeTotal > 0 && (
-                                                    <span className="inline-flex items-center gap-1 text-xs font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2.5 py-1 rounded-md">
+                                                    <span className="inline-flex items-center gap-1 text-xs font-bold bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-secondary/50 px-2.5 py-1 rounded-md">
                                                         Nusuk Registered
                                                     </span>
                                                 )}
@@ -2117,7 +2124,7 @@ export default function BookingPage() {
                                         <span>{(priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price) - totalExtraFees} SAR</span>
                                     </div>
                                     {wadiJinnFeeTotal > 0 && (
-                                        <div className="flex justify-between text-sm text-amber-600 font-medium">
+                                        <div className="flex justify-between text-sm text-secondary font-medium">
                                             <span>External Ziyarat (Wadi Jinn)</span>
                                             <span>+{wadiJinnFeeTotal} SAR</span>
                                         </div>
@@ -2412,8 +2419,8 @@ export default function BookingPage() {
                     </div>
 
                     {/* Safar Dua Card - Spiritual Resonance */}
-                    <div className="bg-gradient-to-br from-amber-50 to-white dark:from-slate-900 dark:to-slate-800 p-6 rounded-xl border border-amber-100 dark:border-slate-700 text-center print:hidden">
-                        <p className="text-xs font-bold text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-3">Travel Supplication (Dua)</p>
+                    <div className="bg-gradient-to-br from-secondary/10 to-white dark:from-slate-900 dark:to-slate-800 p-6 rounded-xl border border-secondary/20 dark:border-slate-700 text-center print:hidden">
+                        <p className="text-xs font-bold text-secondary dark:text-secondary uppercase tracking-widest mb-3">Travel Supplication (Dua)</p>
                         <p className="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-4 leading-loose" dir="rtl">
                             سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ
                         </p>
@@ -2532,7 +2539,7 @@ export default function BookingPage() {
                                         </div>
                                         {renderSidebarZiyarat(leg.dropoff)}
                                         {leg.includeWadiJinn && (
-                                            <div className="mt-2 text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded">
+                                            <div className="mt-2 text-[10px] text-secondary font-bold bg-secondary/10 px-2 py-1 rounded">
                                                 + Wadi Jinn (150 SAR)
                                             </div>
                                         )}
@@ -2573,7 +2580,7 @@ export default function BookingPage() {
                                     </div>
                                     {renderSidebarZiyarat(bookingData.dropoff || (route ? getRouteDestination(route) : ''))}
                                     {bookingData.includeWadiJinn && (
-                                        <div className="mt-2 text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded w-max">
+                                        <div className="mt-2 text-[10px] text-secondary font-bold bg-secondary/10 px-2 py-1 rounded w-max">
                                             + Wadi Jinn (150 SAR)
                                         </div>
                                     )}
@@ -2690,40 +2697,79 @@ export default function BookingPage() {
     };
 
     return (
-        <main className="min-h-screen bg-white dark:bg-slate-950 pb-24">
-            {/* Progress Bar (Sticky) */}
-            <div className="sticky top-[35px] z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300 print:hidden">
-                <div className="container mx-auto px-4">
-                    <div className="flex items-start justify-between py-3 max-w-4xl mx-auto">
+        <main className="min-h-screen bg-slate-50 pb-24">
+                        {/* Integrated Booking Header with Stepper */}
+            <header className="sticky top-0 z-50 w-full h-[80px] bg-white border-b border-slate-200 shadow-sm flex items-center print:hidden">
+                <div className="max-w-7xl mx-auto px-4 md:px-6 w-full flex items-center justify-between">
+                    
+                    {/* Left: Logo & Secure Booking */}
+                    <div className="flex items-center gap-4">
+                        <Link href="/" className="flex items-center gap-2">
+                            <div className="flex flex-col">
+                                <span className="text-lg font-bold text-secondary leading-none">Al Aqsa</span>
+                                <span className="text-[10px] font-bold text-slate-800 tracking-widest uppercase">Transport</span>
+                            </div>
+                        </Link>
+                        <div className="hidden md:flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
+                            <Lock size={14} className="text-emerald-600" />
+                            <span className="text-xs font-bold text-slate-700">Secure Booking</span>
+                        </div>
+                    </div>
+
+                    {/* Center: Progress Stepper */}
+                    <div className="flex-1 max-w-2xl mx-4 md:mx-8 hidden sm:flex items-center justify-between">
                         {[
                             { step: 1, label: 'Journey' },
                             { step: 2, label: 'Vehicle' },
                             { step: 3, label: 'Details' },
                             { step: 4, label: 'Review' }
-                        ].map((s) => (
-                            <div key={s.step} className="flex relative group sm:flex-1 last:flex-none">
-                                <div className="flex flex-col items-center z-10">
+                        ].map((s, idx, arr) => (
+                            <div key={s.step} className="flex items-center flex-1 last:flex-none">
+                                <div className="flex flex-col items-center gap-1 relative z-10">
                                     <div className={`
-                                        w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-300 ring-2 ring-white dark:ring-slate-950 mb-1
-                                        ${step >= s.step ? 'bg-secondary text-white shadow-md shadow-secondary/30 scale-105' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}
+                                        w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] transition-all duration-300 ring-2 ring-white
+                                        ${step > s.step ? 'bg-secondary text-[#0f172a] shadow-md shadow-secondary/20' : 
+                                          step === s.step ? 'bg-[#0f172a] text-white shadow-lg' : 'bg-slate-100 text-slate-400'}
                                     `}>
-                                        {step > s.step ? <CheckCircle strokeWidth={1.25} size={16} /> : s.step}
+                                        {step > s.step ? <CheckCircle2 strokeWidth={3} size={12} /> : s.step}
                                     </div>
-                                    <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 ${step >= s.step ? 'text-secondary' : 'text-slate-400'}`}>
+                                    <span className={`absolute top-7 text-[9px] font-bold uppercase tracking-widest whitespace-nowrap transition-colors duration-300 ${step === s.step ? 'text-[#0f172a]' : step > s.step ? 'text-secondary' : 'text-slate-400'}`}>
                                         {s.label}
                                     </span>
                                 </div>
-                                {s.step < 4 && (
-                                    <div className={`
-                                        flex-1 h-0.5 mx-4 rounded-full transition-all duration-500 hidden sm:block mt-4
-                                        ${step > s.step ? 'bg-secondary' : 'bg-slate-100 dark:bg-slate-800'}
-                                    `} />
+                                {idx < arr.length - 1 && (
+                                    <div className={`flex-1 h-[2px] mx-2 transition-all duration-500 ${step > s.step ? 'bg-secondary' : 'bg-slate-100'}`} />
                                 )}
                             </div>
                         ))}
                     </div>
+
+                    {/* Right: Support */}
+                    <div className="flex items-center gap-3">
+                        {settings?.contact?.phone && (
+                            <div className="hidden lg:flex items-center gap-2 text-slate-600">
+                                <Phone size={16} className="text-[#0f172a]" />
+                                <div className="flex flex-col">
+                                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">24/7 Support</span>
+                                    <span className="text-xs font-bold">{settings.contact.phone}</span>
+                                </div>
+                            </div>
+                        )}
+                        {settings?.contact?.whatsapp && (
+                            <a 
+                                href={`https://wa.me/${settings.contact.whatsapp?.replace(/[^0-9]/g, '') || ''}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-full transition-colors border border-emerald-200"
+                            >
+                                <MessageCircle size={16} />
+                                <span className="text-xs font-bold hidden sm:block">WhatsApp</span>
+                            </a>
+                        )}
+                    </div>
+
                 </div>
-            </div>
+            </header>
 
             <div className="container mx-auto px-4 mt-8 pb-28 md:pb-8" ref={wizardRef}>
                 <div className="mb-6">
@@ -2786,8 +2832,12 @@ export default function BookingPage() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="hidden lg:block h-full relative">
-                        {step < 5 && <Sidebar />}
+                    <div className="hidden lg:block">
+                        {step < 5 && (
+                            <div className="sticky top-32 space-y-6 pb-10">
+                                <Sidebar />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

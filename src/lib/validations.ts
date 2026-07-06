@@ -116,6 +116,7 @@ export const SettingsSchema = z.object({
         email: z.string().email('Invalid email').max(254).trim(),
         phone: z.string().max(30).trim(),
         phone2: z.string().max(30).trim().optional(),
+        whatsapp: z.string().max(30).trim().optional(),
         address: z.string().max(500).trim(),
         social: z.object({
             facebook: z.string().max(500).trim().optional(),

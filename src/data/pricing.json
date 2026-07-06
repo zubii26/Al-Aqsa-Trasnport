@@ -693,12 +693,15 @@
             "capacity": "4 Seater",
             "multiplier": 1,
             "features": [
-                "Air Conditioning",
-                "Comfortable Seating",
-                "USB Charging",
-                "Perfect for couples"
+                "Professional Chauffeur",
+                "Complimentary Water",
+                "Free Waiting Time",
+                "Perfect for Couples"
             ],
-            "luggage": "2 Large Suitcases"
+            "luggage": "2 Large Suitcases",
+            "rating": "4.8",
+            "reviews": "215",
+            "badge": "🏆 Most Popular"
         },
         {
             "id": "gmc",
@@ -718,13 +721,15 @@
             "capacity": "7 Seater",
             "multiplier": 1.5,
             "features": [
-                "Luxury Leather Seats",
-                "Premium Sound",
-                "Extra Legroom",
-                "Privacy Tint",
-                "Dual AC"
+                "VIP Chauffeur",
+                "Luxury Leather Interior",
+                "Complimentary WiFi",
+                "Flight Monitoring"
             ],
-            "luggage": "5 Large Suitcases"
+            "luggage": "5 Large Suitcases",
+            "rating": "5.0",
+            "reviews": "128",
+            "badge": "⭐ Premium"
         },
         {
             "id": "staria",
@@ -743,13 +748,15 @@
             "capacity": "7 Seater",
             "multiplier": 1.3,
             "features": [
-                "Modern Design",
+                "Professional Chauffeur",
                 "Panoramic Windows",
-                "Premium Comfort",
-                "Pilot Seats",
-                "USB-C Ports"
+                "Spacious Legroom",
+                "USB-C Charging"
             ],
-            "luggage": "4 Large Suitcases"
+            "luggage": "4 Large Suitcases",
+            "rating": "4.9",
+            "reviews": "342",
+            "badge": "👨‍👩‍👧 Best for Families"
         },
         {
             "id": "starex",
@@ -768,12 +775,15 @@
             "capacity": "7 Seater",
             "multiplier": 1.2,
             "features": [
-                "Spacious Interior",
-                "AC Vents for Rear",
-                "Sliding Doors",
-                "Budget Friendly"
+                "Experienced Driver",
+                "Dual AC Vents",
+                "Budget Friendly",
+                "Sliding Doors"
             ],
-            "luggage": "4 Large Suitcases"
+            "luggage": "4 Large Suitcases",
+            "rating": "4.7",
+            "reviews": "189",
+            "badge": "💰 Best Value"
         },
         {
             "id": "hiace",
@@ -792,12 +802,15 @@
             "capacity": "10/11 Seater",
             "multiplier": 1.6,
             "features": [
-                "High Roof",
-                "Individual Seats",
+                "Professional Driver",
+                "High Roof Comfort",
                 "Ample Luggage Space",
                 "Group Travel"
             ],
-            "luggage": "8 Large Suitcases"
+            "luggage": "8 Large Suitcases",
+            "rating": "4.8",
+            "reviews": "412",
+            "badge": "👥 Group Choice"
         },
         {
             "id": "coaster",
@@ -816,12 +829,15 @@
             "capacity": "21 Seater",
             "multiplier": 2.5,
             "features": [
-                "Microphone System",
-                "Curtains",
-                "Reclining Seats",
-                "Large Windows"
+                "Certified Driver",
+                "Mini-bus Layout",
+                "PA System",
+                "Overhead Storage"
             ],
-            "luggage": "15 Large Suitcases"
+            "luggage": "15 Large Suitcases",
+            "rating": "4.8",
+            "reviews": "95",
+            "badge": "🚌 Large Group"
         },
         {
             "id": "mercedes",
@@ -840,13 +856,15 @@
             "capacity": "3 Seater",
             "multiplier": 3.5,
             "features": [
-                "VIP Executive Comfort",
-                "Luxury Leather Interior",
-                "Silent Cabin",
-                "Advanced Safety",
-                "Smooth Air Suspension"
+                "Elite Chauffeur",
+                "First-Class Seating",
+                "Ambient Lighting",
+                "Premium Refreshments"
             ],
-            "luggage": "2-3 Large Suitcases"
+            "luggage": "2-3 Large Suitcases",
+            "rating": "5.0",
+            "reviews": "56",
+            "badge": "👑 Ultimate Luxury"
         },
         {
             "id": "kia",
@@ -865,12 +883,15 @@
             "capacity": "3-4 Seater",
             "multiplier": 1.1,
             "features": [
-                "Modern Stylish Design",
-                "Excellent Fuel Efficiency",
-                "Comfortable Suspension",
-                "Advanced Safety Systems"
+                "Friendly Driver",
+                "Spacious Seating",
+                "Rear AC",
+                "Value for Money"
             ],
-            "luggage": "2-3 Large Suitcases"
+            "luggage": "2-3 Large Suitcases",
+            "rating": "4.8",
+            "reviews": "112",
+            "badge": "👨‍👩‍👧 Family Economy"
         },
         {
             "id": "xpander",
@@ -889,12 +910,15 @@
             "capacity": "6-7 Seater",
             "multiplier": 1.4,
             "features": [
-                "Family-Friendly Space",
-                "Smooth Suspension",
+                "Professional Driver",
                 "Flexible Seating",
-                "Modern Air Conditioning"
+                "Modern Interior",
+                "USB Ports"
             ],
-            "luggage": "3-4 Large Suitcases"
+            "luggage": "3-4 Large Suitcases",
+            "rating": "4.8",
+            "reviews": "74",
+            "badge": "🚙 Compact SUV"
         },
         {
             "id": "large-bus",
@@ -913,13 +937,15 @@
             "capacity": "50 Seater",
             "multiplier": 5,
             "features": [
-                "AC Vents for All Seats",
-                "Wide Viewing Windows",
-                "Massive Luggage Compartments",
-                "PA System for Guide",
-                "Restroom (Optional)"
+                "Heavy Duty Driver",
+                "Full AC System",
+                "Luggage Compartment",
+                "Intercity Comfort"
             ],
-            "luggage": "50+ Large Suitcases"
+            "luggage": "50+ Large Suitcases",
+            "rating": "4.7",
+            "reviews": "42",
+            "badge": "🏢 Corporate"
         }
     ]
 }

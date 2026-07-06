@@ -95,6 +95,7 @@ interface BookingData {
     legs?: any[];
     visaType?: string;
     viaBadr?: boolean;
+    bookingReference?: string;
 }
 
 import { replaceTemplateVariables } from './email-templates';

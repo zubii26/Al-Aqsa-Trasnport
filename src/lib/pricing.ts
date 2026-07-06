@@ -28,6 +28,9 @@ export interface Vehicle {
     category?: 'Standard' | 'Premium' | 'VIP';
     isActive?: boolean;
     image?: string;
+    rating?: string;
+    reviews?: string;
+    badge?: string;
 }
 
 export const VEHICLES: Vehicle[] = pricingData.vehicles as unknown as Vehicle[];
