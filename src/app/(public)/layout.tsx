@@ -51,7 +51,7 @@ export default async function UmrahLayout({
                 <Navbar />
             </ClientLayoutWrapper>
 
-            <main className="min-h-[calc(100dvh-80px)]">
+            <main className="min-h-[calc(100dvh-80px)] relative overflow-x-hidden w-full">
                 {children}
             </main>
 

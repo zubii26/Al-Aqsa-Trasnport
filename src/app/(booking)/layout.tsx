@@ -44,7 +44,7 @@ export default async function BookingLayout({
                 <TopBar />
             </ClientLayoutWrapper>
 
-            <main className="min-h-[calc(100dvh-80px)] bg-slate-50">
+            <main className="min-h-[calc(100dvh-80px)] bg-slate-50 relative overflow-x-hidden w-full">
                 {children}
             </main>
 
