@@ -2821,7 +2821,7 @@ function BookingContent() {
 
 export default function BookingPage() {
     return (
-        <div className="min-h-screen overflow-x-hidden lg:overflow-x-visible bg-white dark:bg-slate-950 font-sans selection:bg-secondary/30">
+        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans selection:bg-secondary/30">
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37]"></div></div>}>
                 <BookingContent />
             </Suspense>
