@@ -112,6 +112,7 @@ export default function Footer() {
                             <li><Link href="/services/ramadan-transport">Ramadan 2026 Transport</Link></li>
                             <li><Link href="/services/jeddah-airport-transfer">Jeddah Airport Transfer</Link></li>
                             <li><Link href="/services/makkah-madinah-taxi">Makkah ⇄ Madinah Taxi</Link></li>
+                            <li><Link href="/routes/makkah-to-taif-taxi">Makkah ⇄ Taif Taxi</Link></li>
                             <li><Link href="/services/madinah-airport-transfer">Madinah Airport Transfer</Link></li>
                             <li><Link href="/services/train-station-transfer">Train Station Transfer</Link></li>
                             <li><Link href="/services/ziyarat-tours">Ziyarat Tours</Link></li>
