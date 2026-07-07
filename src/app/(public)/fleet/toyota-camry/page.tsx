@@ -90,12 +90,12 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Toyota Camry Umrah Taxi | Jeddah to Makkah Transfers",
+    title: "Business Sedan | Toyota Camry Umrah Taxi",
     description: "Book a Toyota Camry for your Umrah journey. Premium 4-seater sedan offering reliable and comfortable transfers between Jeddah Airport, Makkah, and Madinah.",
     keywords: ["Toyota Camry Umrah Taxi", "Jeddah Airport Taxi", "Makkah to Madinah Taxi", "Family Umrah Car", "Private Umrah Transport Saudi Arabia"],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/toyota-camry' },
     openGraph: {
-        title: "Toyota Camry Umrah Taxi | Premium Transfers",
+        title: "Business Sedan | Toyota Camry Umrah Taxi",
         description: "Premium Toyota Camry for your Umrah journey. Comfortable transfers between Jeddah, Makkah, and Madinah.",
         images: [{ url: '/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp', width: 1200, height: 630, alt: 'Toyota Camry Umrah Taxi' }]
     }
@@ -211,7 +211,7 @@ const camryFAQs = [
 export default async function ToyotaCamryPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Toyota%20Camry%20for%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Business%20Sedan%20for%20Umrah`;
     
     const camryId = '692db09834f15bc89b45a5f6';
 
@@ -220,8 +220,8 @@ export default async function ToyotaCamryPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Toyota Camry Umrah Taxi"
-                subtitle="Premium 4-Seater Sedan for Umrah Families. Experience a quiet, smooth, and spiritually uplifting journey across Saudi Arabia."
+                title="Business Sedan"
+                subtitle="Example Vehicle: Toyota Camry. Premium 4-Seater Sedan for Umrah Families. Experience a quiet, smooth, and spiritually uplifting journey across Saudi Arabia."
                 bgImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                 badge="Most Popular Sedan"
                 whatsappLink={whatsappLink}

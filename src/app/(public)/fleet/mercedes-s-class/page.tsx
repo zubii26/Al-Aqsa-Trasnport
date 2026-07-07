@@ -232,7 +232,7 @@ const mercedesFAQs = [
 export default async function MercedesSClassPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Mercedes%20S-Class%20for%20VIP%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20VIP%20Sedan%20for%20Umrah`;
     
     const mercedesId = 'mercedes';
 
@@ -241,8 +241,8 @@ export default async function MercedesSClassPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Mercedes-Benz S-Class | VIP Umrah Transport"
-                subtitle="Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury."
+                title="VIP Sedan"
+                subtitle="Example Vehicle: Mercedes-Benz S-Class. Step into unparalleled serenity and executive comfort. Experience a spiritual journey defined by safety, reliability, and ultra-luxury."
                 bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-on-road.jpeg"
                 badge="VIP Luxury Choice"
                 whatsappLink={whatsappLink}

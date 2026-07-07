@@ -113,20 +113,20 @@ export default function Navbar() {
             label: 'Fleet',
             megaMenu: {
                 main: [
-                    { href: '/fleet/mercedes-s-class', label: 'Mercedes-Benz S-Class', description: 'The pinnacle of luxury and VIP comfort', icon: Shield },
-                    { href: '/fleet/gmc-yukon-at4', label: 'GMC Yukon XL', description: 'Premium 7-seater for family travel', icon: Users },
-                    { href: '/fleet/hyundai-staria', label: 'Hyundai Staria', description: 'Futuristic and spacious group van', icon: Car },
-                    { href: '/fleet/kia-k5', label: 'Kia K5', description: 'Modern and highly efficient sedan', icon: Car },
+                    { href: '/fleet/mercedes-s-class', label: 'VIP Sedan', description: 'The pinnacle of luxury and VIP comfort', icon: Shield },
+                    { href: '/fleet/gmc-yukon-at4', label: 'Luxury SUV', description: 'Premium 7-seater for family travel', icon: Users },
+                    { href: '/fleet/hyundai-staria', label: 'Premium Family MPV', description: 'Futuristic and spacious group van', icon: Car },
+                    { href: '/fleet/kia-k5', label: 'Economy Sedan', description: 'Modern and highly efficient sedan', icon: Car },
                 ],
                 sidebar: {
                     title: 'Standard & Large',
                     items: [
-                        { href: '/fleet/toyota-camry', label: 'Toyota Camry', icon: Car },
-                        { href: '/fleet/mitsubishi-xpander', label: 'Mitsubishi Xpander', icon: Car },
-                        { href: '/fleet/hyundai-starex', label: 'Hyundai H1', icon: Car },
-                        { href: '/fleet/toyota-hiace', label: 'Toyota Hiace', icon: Bus },
-                        { href: '/fleet/toyota-coaster', label: 'Toyota Coaster', icon: Bus },
-                        { href: '/fleet/large-bus-50-seater', label: '50-Seater Bus', icon: Bus },
+                        { href: '/fleet/toyota-camry', label: 'Business Sedan', icon: Car },
+                        { href: '/fleet/mitsubishi-xpander', label: 'Compact Family MPV', icon: Car },
+                        { href: '/fleet/hyundai-starex', label: 'Economy Family MPV', icon: Car },
+                        { href: '/fleet/toyota-hiace', label: 'Executive Van', icon: Bus },
+                        { href: '/fleet/toyota-coaster', label: 'Group Minibus', icon: Bus },
+                        { href: '/fleet/large-bus-50-seater', label: 'Coach Bus', icon: Bus },
                     ]
                 }
             }

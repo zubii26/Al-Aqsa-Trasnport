@@ -58,7 +58,7 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
+    title: "Executive Van | Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
     description: "Book Toyota Hiace 12-seater bus for Umrah groups. Affordable transport from Jeddah Airport to Makkah & Madinah. Reliable & spacious.",
     keywords: [
         "Toyota Hiace Rental Makkah",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     ],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/toyota-hiace' },
     openGraph: {
-        title: "Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
+        title: "Executive Van | Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
         description: "Book Toyota Hiace 12-seater bus for Umrah groups. Affordable transport from Jeddah Airport to Makkah & Madinah. Reliable & spacious.",
         images: [{ url: '/images/fleet/toyota-hiace/toyota-hiace-2026-lifestyle-open-road.jpeg', width: 1200, height: 630, alt: 'Toyota Hiace Bus' }]
     }
@@ -191,7 +191,7 @@ const hiaceFAQs = [
 export default async function ToyotaHiacePage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Toyota%20Hiace%20for%20Group%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20an%20Executive%20Van%20for%20Umrah`;
     
     // Toyota Hiace ID
     const hiaceId = '692db09834f15bc89b45a5fb';
@@ -201,8 +201,8 @@ export default async function ToyotaHiacePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Toyota Hiace 2026 | Group Umrah Transport"
-                subtitle="The trusted choice for large families and groups traveling between Jeddah, Makkah, and Madinah. Reliable and spacious."
+                title="Executive Van"
+                subtitle="Example Vehicle: Toyota Hiace 2026. The trusted choice for large families and groups traveling between Jeddah, Makkah, and Madinah. Reliable and spacious."
                 bgImage="/images/fleet/toyota-hiace/toyota-hiace-2026-lifestyle-open-road.jpeg"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}

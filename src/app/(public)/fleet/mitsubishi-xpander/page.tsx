@@ -203,7 +203,7 @@ const xpanderFAQs = [
 export default async function MitsubishiXpanderPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Mitsubishi%20Xpander%20for%20Family`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Compact%20Family%20MPV%20for%20Umrah`;
     
     const xpanderId = 'xpander';
 
@@ -212,8 +212,8 @@ export default async function MitsubishiXpanderPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Mitsubishi Xpander | 7-Seater Family Transport"
-                subtitle="The ultimate family vehicle for your spiritual journey. Enjoy exceptional spaciousness, a smooth ride, and peace of mind."
+                title="Compact Family MPV"
+                subtitle="Example Vehicle: Mitsubishi Xpander. The ultimate family vehicle for your spiritual journey. Enjoy exceptional spaciousness, a smooth ride, and peace of mind."
                 bgImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
                 badge="Family Choice"
                 whatsappLink={whatsappLink}

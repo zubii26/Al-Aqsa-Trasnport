@@ -200,7 +200,7 @@ const kiaFAQs = [
 export default async function KiaK5Page() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Kia%20K5%20for%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20an%20Economy%20Sedan%20for%20Umrah`;
     
     const kiaId = 'kia';
 
@@ -209,8 +209,8 @@ export default async function KiaK5Page() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Kia K5 Sedan | Comfortable Umrah Transport"
-                subtitle="A perfect blend of modern design, smooth ride quality, and excellent fuel efficiency. Ensuring a reliable and peaceful journey for you and your family."
+                title="Economy Sedan"
+                subtitle="Example Vehicle: Kia K5. A perfect blend of modern design, smooth ride quality, and excellent fuel efficiency. Ensuring a reliable and peaceful journey for you and your family."
                 bgImage="/images/fleet/kia-k5-hero.webp"
                 badge="Modern & Efficient"
                 whatsappLink={whatsappLink}

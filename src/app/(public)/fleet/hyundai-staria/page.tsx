@@ -89,12 +89,12 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
+    title: "Premium Family MPV | Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
     description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
     keywords: ["Hyundai Staria Rental Makkah", "Family Van for Umrah", "Hyundai Staria Jeddah Airport", "7 Seater Taxi Makkah", "Luxury Van Rental Saudi Arabia"],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/hyundai-staria' },
     openGraph: {
-        title: "Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
+        title: "Premium Family MPV | Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
         description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families.",
         images: [{ url: '/images/fleet/hyundai-staria/hyundai-staria-front-view.webp', width: 1200, height: 630, alt: 'Hyundai Staria Umrah Taxi' }]
     }
@@ -210,7 +210,7 @@ const stariaFAQs = [
 export default async function HyundaiStariaPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Hyundai%20Staria%20for%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Premium%20Family%20MPV%20for%20Umrah`;
     
     const stariaId = '692db09834f15bc89b45a5f9';
 
@@ -219,8 +219,8 @@ export default async function HyundaiStariaPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Hyundai Staria VIP Transport"
-                subtitle="The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."
+                title="Premium Family MPV"
+                subtitle="Example Vehicle: Hyundai Staria. The future of travel in Saudi Arabia. Spacious and luxurious 7-seater van for families visiting Makkah and Madinah."
                 bgImage="/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.webp"
                 badge="Futuristic Choice"
                 whatsappLink={whatsappLink}

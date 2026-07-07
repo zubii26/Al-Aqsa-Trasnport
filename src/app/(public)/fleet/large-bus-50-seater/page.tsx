@@ -147,7 +147,7 @@ const jsonLd = [
 export default async function LargeBusPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%2050%20Seater%20Bus`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Coach%20Bus%20for%20Umrah`;
 
     const busId = 'large-bus';
     const busImage = '/images/fleet/large-bus-hero.webp';
@@ -161,8 +161,8 @@ export default async function LargeBusPage() {
 
             {/* SECTION 1: HERO OVERVIEW */}
             <Hero
-                title="50-Seater Luxury Bus – Large Group Transport"
-                subtitle="Uniting congregations in comfort. Featuring premium reclining seats, massive luggage capacity, and top-tier safety features for Hajj and Umrah groups."
+                title="Coach Bus"
+                subtitle="Example Vehicle: 50-Seater Luxury Bus. Uniting congregations in comfort. Featuring premium reclining seats, massive luggage capacity, and top-tier safety features for Hajj and Umrah groups."
                 bgImage={busImage}
                 badge="Large Group VIP"
                 ctaText="Book via WhatsApp"

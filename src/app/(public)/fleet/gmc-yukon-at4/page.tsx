@@ -112,7 +112,7 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",
+    title: "Luxury SUV | GMC Yukon Rental Makkah | VIP Umrah Taxi",
     description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel with VIP private chauffeur.",
     keywords: [
         "GMC Yukon Rental Makkah",
@@ -126,7 +126,7 @@ export const metadata: Metadata = {
     ],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4' },
     openGraph: {
-        title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",
+        title: "Luxury SUV | GMC Yukon Rental Makkah | VIP Umrah Taxi",
         description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel.",
         images: [{ url: '/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp', width: 1200, height: 630, alt: 'GMC Yukon XL VIP Transport' }]
     }
@@ -222,7 +222,7 @@ const gmcFAQs = [
 export default async function GmcYukonPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20GMC%20Yukon%20for%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Luxury%20SUV%20for%20Umrah`;
     
     const gmcId = '692db09834f15bc89b45a5f8';
 
@@ -231,8 +231,8 @@ export default async function GmcYukonPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="GMC Yukon 2025 | VIP Umrah Transport"
-                subtitle="Travel in unmatched luxury between Jeddah, Makkah, and Madinah. The preferred 7-seater choice for families and VIP pilgrims."
+                title="Luxury SUV"
+                subtitle="Example Vehicle: GMC Yukon 2025. Travel in unmatched luxury between Jeddah, Makkah, and Madinah. The preferred 7-seater choice for families and VIP pilgrims."
                 bgImage="/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp"
                 badge="VIP Choice"
                 whatsappLink={whatsappLink}

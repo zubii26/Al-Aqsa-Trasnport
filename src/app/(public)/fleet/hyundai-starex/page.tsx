@@ -111,7 +111,7 @@ const starexFAQs = [
 export default async function HyundaiStarexPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Hyundai%20H1%20Starex%20for%20Umrah`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20an%20Economy%20Family%20MPV%20for%20Umrah`;
 
     // Hyundai Starex ID: 692db09834f15bc89b45a5fa
     const starexId = '692db09834f15bc89b45a5fa';
@@ -121,8 +121,8 @@ export default async function HyundaiStarexPage() {
         <main className="overflow-x-hidden">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Hero
-                title="Hyundai H1 Starex | Best Family Van for Umrah"
-                subtitle="The practical choice for family travel between Jeddah, Makkah, and Madinah. Reliable, spacious, and perfect for groups."
+                title="Economy Family MPV"
+                subtitle="Example Vehicle: Hyundai H1 Starex. The practical choice for family travel between Jeddah, Makkah, and Madinah. Reliable, spacious, and perfect for groups."
                 bgImage={starexImage}
                 badge="Family Favorite"
                 ctaText="Book via WhatsApp"

@@ -199,7 +199,7 @@ const coasterFAQs = [
 export default async function ToyotaCoasterPage() {
     const settings = await getSettings();
     const phoneNumber = settings.contact.phone;
-    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20Toyota%20Coaster%20for%20Group`;
+    const whatsappLink = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=I%20am%20interested%20in%20booking%20a%20Group%20Minibus%20for%20Umrah`;
     
     const coasterId = 'coaster';
 
@@ -208,8 +208,8 @@ export default async function ToyotaCoasterPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             
             <VehicleHero
-                title="Toyota Coaster | 22-30 Seater Group Transport"
-                subtitle="The benchmark for reliable group travel. Keep your entire congregation together with wide windows, individual AC vents, and comfortable long-route seating."
+                title="Group Minibus"
+                subtitle="Example Vehicle: Toyota Coaster. The benchmark for reliable group travel. Keep your entire congregation together with wide windows, individual AC vents, and comfortable long-route seating."
                 bgImage="/images/fleet/coaster.webp"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}
