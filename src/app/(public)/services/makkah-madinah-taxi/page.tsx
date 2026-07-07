@@ -5,7 +5,6 @@ import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import Features from '@/components/home/Features';
 import styles from '@/app/page.module.css';
 import Link from 'next/link';
-import { getSettings } from '@/lib/settings';
 import { Truck, MapPin, Navigation, ArrowRight, CheckCircle2, Clock } from 'lucide-react';
 import RelatedReading from '@/components/blog/RelatedReading';
 import RouteVisual from '@/components/services/RouteVisual';
