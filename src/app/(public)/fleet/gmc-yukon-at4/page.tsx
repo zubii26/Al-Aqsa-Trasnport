@@ -15,6 +15,7 @@ import VehicleFeatures from '@/components/fleet/vehicle/VehicleFeatures';
 import VehicleUseCases from '@/components/fleet/vehicle/VehicleUseCases';
 import VehicleReviews from '@/components/fleet/vehicle/VehicleReviews';
 import VehicleCTA from '@/components/fleet/vehicle/VehicleCTA';
+import RelatedReading from '@/components/blog/RelatedReading';
 
 const vehicleData = pricingData.vehicles.find(v => v.id === 'gmc');
 
@@ -281,6 +282,8 @@ export default async function GmcYukonPage() {
                 whatsappLink={whatsappLink}
                 phoneNumber={phoneNumber}
             />
+
+            <RelatedReading title="Fleet & Transport Guides" category="Transport Service" />
         </main>
     );
 }

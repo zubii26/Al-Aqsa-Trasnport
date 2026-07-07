@@ -19,7 +19,7 @@ import PassengerCare from '@/components/home/PassengerCare';
 import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
 import CustomerGallery from '@/components/home/CustomerGallery';
-import LatestArticles from '@/components/home/LatestArticles';
+import RelatedReading from '@/components/blog/RelatedReading';
 import ExpandedSEOContent from '@/components/home/ExpandedSEOContent';
 
 import TransportServices from '@/components/home/TransportServices';
@@ -139,7 +139,7 @@ export default async function Home() {
 
       {/* Latest Articles Section */}
       <ScrollReveal direction="up">
-        <LatestArticles />
+        <RelatedReading title="Latest from Our Blog" />
       </ScrollReveal>
 
       {/* Safety Promise Section - Moved to Bottom */}

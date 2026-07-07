@@ -5,7 +5,9 @@ import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import Features from '@/components/home/Features';
 import styles from '@/app/page.module.css';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, MapPin, Clock } from 'lucide-react';
+import { getSettings } from '@/lib/settings';
+import { Truck, MapPin, Navigation, ArrowRight, CheckCircle2, Clock } from 'lucide-react';
+import RelatedReading from '@/components/blog/RelatedReading';
 import RouteVisual from '@/components/services/RouteVisual';
 import FAQSection from '@/components/services/FAQSection';
 import SchemaInjector from '@/components/SchemaInjector';
@@ -189,6 +191,8 @@ export default async function MakkahMadinahTaxiPage() {
                     </Link>
                 </div>
             </section>
+
+            <RelatedReading title="Makkah & Madinah Travel Guides" category="Travel Tips" />
         </main>
     );
 }

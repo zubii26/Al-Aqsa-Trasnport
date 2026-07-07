@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 import QuickAnswerBox from '@/components/services/QuickAnswerBox';
+import RelatedReading from '@/components/blog/RelatedReading';
 
 import { getSettings } from '@/lib/settings-storage';
 
@@ -251,6 +252,7 @@ export default async function JeddahAirportTransferPage() {
                 </div>
             </section>
 
+            <RelatedReading title="Jeddah Airport Travel Guides" category="Airport Transfer" />
         </main>
     );
 }
