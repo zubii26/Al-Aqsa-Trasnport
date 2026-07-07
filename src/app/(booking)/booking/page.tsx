@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft , Copy, Check} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -1923,7 +1923,7 @@ function BookingContent() {
                     <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-800">
 
                         {/* Left Section: Trip Details */}
-                        <div className="p-8 col-span-2 space-y-8">
+                        <div className="p-4 md:p-8 md:col-span-2 space-y-8">
                             {/* Route Visual */}
                             <div className="flex items-start gap-4 w-full relative">
                                 {bookingData.routeType === 'multi' ? (
@@ -2090,7 +2090,7 @@ function BookingContent() {
                         </div>
 
                         {/* Right Section: Passenger & Pricing */}
-                        <div className="bg-slate-50/50 dark:bg-black/20 p-8 flex flex-col h-full">
+                        <div className="bg-slate-50/50 dark:bg-black/20 p-4 md:p-8 flex flex-col h-full">
                             <div className="mb-8">
                                 <div className="flex justify-between items-start mb-4">
                                     <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">Passenger</h4>
@@ -2205,253 +2205,197 @@ function BookingContent() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-6 md:py-12 px-4"
         >
-            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden max-w-2xl mx-auto text-left relative">
-
-                {/* Header / Islamic Greeting */}
-                <style jsx global>{`
-                    @media print {
-                        @page { margin: 0; size: auto; }
-                        
-                        /* 1. Hide everything initially */
-                        body {
-                            visibility: hidden;
-                        }
-
-                        /* 2. Hide interfering overlays/layout components */
-                        nav, footer, header, aside, .sticky, .fixed, 
-                        [role="dialog"], [class*="banner"], iframe, 
-                        div[id^="chat-widget"], button[class*="chat"] {
-                            display: none !important;
-                        }
-
-                        /* 3. Global opacity reset to fix blank page animation bugs */
-                        * {
-                            opacity: 1 !important;
-                        }
-
-                        /* 4. Show Receipt using FIXED positioning to break out of all parent containers */
-                        #printable-receipt {
-                            visibility: visible !important;
-                            position: fixed !important;
-                            left: 0 !important;
-                            top: 0 !important;
-                            width: 100% !important;
-                            height: 100% !important;
-                            margin: 0 !important;
-                            padding: 30px !important;
-                            background: white !important;
-                            color: black !important;
-                            z-index: 2147483647 !important;
-                        }
-
-                        /* Ensure children are visible */
-                        #printable-receipt * {
-                            visibility: visible !important;
-                        }
-                        
-                        /* Hide print utilities */
-                        .print\:hidden, #print-button {
-                            display: none !important;
-                        }
-                    }
-                `}</style>
-                {/* Header / Islamic Greeting */}
-                <div className="bg-slate-50/50 dark:bg-slate-900/50 pt-10 pb-8 px-6 md:px-10 text-center border-b border-slate-100 dark:border-slate-800 print:hidden">
-                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-4 ring-white dark:ring-slate-800">
-                        <CheckCircle strokeWidth={1.25} size={36} className="text-green-600 dark:text-green-400" />
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#D4AF37] mb-2">Booking Confirmation</h2>
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden max-w-3xl mx-auto border border-slate-200 dark:border-slate-700">
+                {/* 1. Success Header */}
+                <div className="bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-slate-800 pt-12 pb-8 px-6 text-center border-b border-slate-100 dark:border-slate-700/50">
+                    <motion.div 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        className="w-24 h-24 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-8 ring-white dark:ring-slate-800"
+                    >
+                        <CheckCircle strokeWidth={1.5} size={48} className="text-green-600 dark:text-green-400" />
+                    </motion.div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">Booking Confirmed</h2>
+                    <p className="text-lg md:text-xl font-medium text-[#D4AF37] mb-3">JazakAllah Khair for choosing Al Aqsa Umrah Transport.</p>
+                    <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-lg mx-auto">Your reservation has been successfully confirmed. Everything is ready for your upcoming journey.</p>
                 </div>
 
-                <div className="p-6 md:p-10 space-y-8">
-                    {/* Welcome Text */}
-                    <div className="text-center md:text-left text-slate-600 dark:text-slate-300 space-y-4 text-base md:text-lg leading-relaxed print:hidden">
-                        <p>Dear <span className="font-bold text-slate-900 dark:text-white capitalize">{bookingData.name}</span>,</p>
-                        <p>
-                            Thank you for choosing <span className="font-semibold text-secondary text-nowrap">Al Aqsa Umrah Transport</span>.
-                        </p>
+                <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50/30 dark:bg-slate-900/30">
+                    {/* 2. Booking Reference */}
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div className="text-center sm:text-left">
+                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference</span>
+                            <span className="block font-mono text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                                {bookingResponse?.bookingReference || (bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase()}
+                            </span>
+                        </div>
+                        <button 
+                            onClick={() => {
+                                const ref = bookingResponse?.bookingReference || (bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase();
+                                navigator.clipboard.writeText(ref);
+                                alert("Reference copied to clipboard!");
+                            }}
+                            className="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition-colors w-full sm:w-auto justify-center"
+                        >
+                            <Copy size={18} />
+                            Copy
+                        </button>
                     </div>
 
-
-
-                    {/* Booking Details Card */}
-                    <div id="printable-receipt" className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-
-                        {/* Print Header - Visible only in print */}
-                        <div className="hidden print:flex flex-row justify-between items-center p-8 border-b border-slate-100">
-                            <div className="flex items-center gap-4">
-                                <div className="relative w-16 h-16">
-                                    <Image src="/logo.png" alt="Al Aqsa" fill className="object-contain" />
-                                </div>
-                                <div>
-                                    <h1 className="text-xl font-bold text-slate-900">Al Aqsa Transport</h1>
-                                    <p className="text-sm text-slate-500 font-serif">النقل المعتمر الأقصى</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <h2 className="text-lg font-bold text-[#D4AF37] uppercase tracking-wider">Booking Receipt</h2>
-                                <p className="text-xs text-slate-400 mt-1">Confirmed</p>
-                            </div>
-                        </div>
-
-                        <div className="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center print:hidden">
-                            <h3 className="text-secondary font-bold text-sm uppercase tracking-wider flex items-center gap-2">
-                                <Briefcase strokeWidth={1.25} size={16} /> Booking Details
+                    {/* 3. Booking Summary */}
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                        <div className="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700">
+                            <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                                <Briefcase strokeWidth={1.5} size={18} className="text-[#D4AF37]" /> Trip Details
                             </h3>
-                            <button
-                                id="print-button"
-                                onClick={() => window.print()}
-                                className="text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors print:hidden"
-                            >
-                                <span>Print Receipt</span>
-                            </button>
                         </div>
-
-                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-y-6 gap-x-8">
-                            <div className="col-span-1 md:col-span-2 print:col-span-2 pb-4 border-b border-slate-100 dark:border-slate-700/50 text-center">
-                                <p className="text-2xl text-[#D4AF37] font-serif mb-2">﷽</p>
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference / مرجع الحجز</span>
-                                <span className="block font-mono text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                                    {bookingResponse?.bookingReference || (bookingResponse?._id || bookingResponse?.id || 'PENDING').toString().slice(-8).toUpperCase()}
-                                </span>
-                            </div>
-
-                            <div>
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Date & Time / التاريخ والوقت</span>
-                                <span className="block font-medium text-slate-900 dark:text-white">
-                                    {bookingData.date?.toLocaleDateString()}
-                                    <span className="text-slate-300 mx-2">|</span>
-                                    {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                            </div>
-
-                            <div>
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Amount / المبلغ الإجمالي</span>
-                                <span className="block font-bold text-slate-900 dark:text-white text-lg">
-                                    {totalPrice} <span className="text-sm font-normal text-slate-500">SAR</span>
-                                </span>
-                            </div>
-
-                            {bookingData.routeType === 'multi' ? (
-                                <div className="col-span-1 md:col-span-2 print:col-span-2 space-y-4">
-                                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Routes / المسارات</span>
-                                    {bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => {
-                                        const legVehicles = bookingData.sameVehicleForAllLegs ? bookingData.selectedVehicles : (leg.selectedVehicles || []);
-                                        let legTotal = 0;
-                                        if (leg.routeId && legVehicles.length > 0) {
-                                            legTotal = legVehicles.reduce((sum, sv) => {
-                                                const priceDetails = calculatePrice(leg.routeId!, sv.vehicleId, {
-                                                    includeWadiJinn: leg.includeWadiJinn,
-                                                    viaBadr: leg.viaBadr,
-                                                    visaType: bookingData.visaType,
-                                                    pickup: leg.pickup,
-                                                    dropoff: leg.dropoff,
-                                                });
-                                                return sum + priceDetails.price * sv.quantity;
-                                            }, 0);
-                                        }
-                                        return (
-                                            <div key={index} className="flex justify-between items-center relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
-                                                <div>
-                                                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Route {index + 1}</span>
-                                                    <span className="block font-medium text-slate-900 dark:text-white text-sm">{leg.pickup} → {leg.dropoff}</span>
-                                                    {renderReceiptZiyarat(leg.dropoff)}
-                                                </div>
-                                                {legTotal > 0 && (
-                                                    <div className="text-right">
-                                                        <span className="font-bold text-slate-900 dark:text-white">{legTotal} SAR</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
+                        <div className="p-6 space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-1">
+                                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Date &amp; Time</span>
+                                    <div className="flex items-center gap-2 font-medium text-slate-900 dark:text-white">
+                                        <Calendar size={16} className="text-secondary" /> {bookingData.date?.toLocaleDateString()}
+                                        <span className="text-slate-300">|</span>
+                                        <Clock size={16} className="text-secondary" /> {bookingData.time?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </div>
                                 </div>
-                            ) : (
-                                <>
-                                    <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
-                                        <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup / موقع الاستلام</span>
-                                        <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.pickup}</span>
+                                <div className="space-y-1">
+                                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Passengers</span>
+                                    <div className="flex items-center gap-2 font-medium text-slate-900 dark:text-white">
+                                        <Users size={16} className="text-secondary" /> {bookingData.passengers || bookingData.selectedVehicles.reduce((acc, sv) => { const v = vehicles.find(veh => veh.id === sv.vehicleId); return acc + (v ? parseInt(v.capacity) * sv.quantity : 0); }, 0)} Passengers
                                     </div>
-
-                                    <div className="relative pl-4 border-l-2 border-slate-100 dark:border-slate-700">
-                                        <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Destination / الوجهة</span>
-                                        <span className="block font-medium text-slate-900 dark:text-white text-sm">{bookingData.dropoff}</span>
-                                        {renderReceiptZiyarat(bookingData.dropoff)}
-                                    </div>
-                                </>
-                            )}
-
-                            <div className="md:col-span-2 print:col-span-2 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-4 mt-2">
-                                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Vehicle Configuration / تفاصيل المركبة</span>
-                                <div className="space-y-2">
-                                    {bookingData.routeType === 'multi' && !bookingData.sameVehicleForAllLegs ? (
-                                        bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => (
-                                            <div key={index} className="space-y-1 mb-3 last:mb-0">
-                                                <span className="text-[10px] text-slate-500 font-bold uppercase">Route {index + 1}</span>
-                                                {leg.selectedVehicles?.map(sv => {
-                                                    const v = vehicles.find(veh => veh.id === sv.vehicleId);
-                                                    return v ? (
-                                                        <div key={sv.vehicleId} className="flex justify-between items-center text-sm pl-2">
-                                                            <div className="font-bold text-slate-700 dark:text-slate-200">{v.name}</div>
-                                                            <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">x{sv.quantity}</div>
-                                                        </div>
-                                                    ) : null;
-                                                })}
-                                            </div>
-                                        ))
-                                    ) : (
-                                        bookingData.selectedVehicles.map((sv) => {
-                                            const v = vehicles.find(veh => veh.id === sv.vehicleId);
-                                            return v ? (
-                                                <div key={sv.vehicleId} className="flex justify-between items-center text-sm">
-                                                    <div className="font-bold text-slate-700 dark:text-slate-200">{v.name}</div>
-                                                    <div className="text-xs font-semibold bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">x{sv.quantity}</div>
-                                                </div>
-                                            ) : null;
-                                        })
-                                    )}
                                 </div>
                             </div>
+                            
+                            <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700 space-y-4">
+                                {bookingData.routeType === 'multi' ? (
+                                    bookingData.legs.filter(l => l.pickup && l.dropoff).map((leg, index) => (
+                                        <div key={index} className="flex flex-col gap-2 relative pl-6 border-l-2 border-slate-200 dark:border-slate-600 pb-4 last:pb-0 last:border-0">
+                                            <div className="absolute w-3 h-3 bg-secondary rounded-full -left-[7px] top-1" />
+                                            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Route {index + 1}</span>
+                                            <div className="font-bold text-slate-900 dark:text-white text-sm md:text-base">{leg.pickup} <ArrowRight size={14} className="inline mx-1 text-slate-400" /> {leg.dropoff}</div>
+                                            {renderReceiptZiyarat(leg.dropoff)}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>
+                                        <div className="flex flex-col gap-1 relative pl-6 border-l-2 border-slate-200 dark:border-slate-600 pb-4">
+                                            <div className="absolute w-3 h-3 bg-slate-400 rounded-full -left-[7px] top-1" />
+                                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Pickup</span>
+                                            <span className="font-bold text-slate-900 dark:text-white text-sm md:text-base">{bookingData.pickup}</span>
+                                        </div>
+                                        <div className="flex flex-col gap-1 relative pl-6">
+                                            <div className="absolute w-3 h-3 bg-secondary rounded-full -left-[7px] top-1" />
+                                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Destination</span>
+                                            <span className="font-bold text-slate-900 dark:text-white text-sm md:text-base">{bookingData.dropoff}</span>
+                                            {renderReceiptZiyarat(bookingData.dropoff)}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
 
-                            {/* Print Footer - Spiritual Quote */}
-                            <div className="hidden print:block col-span-1 md:col-span-2 mt-8 pt-8 border-t border-slate-100 text-center">
-                                <p className="text-lg font-serif italic text-slate-700 mb-2">"The reward of Umrah is expiation for the sins committed between it and the next Umrah."</p>
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">– Prophet Muhammad (S.A.W.W)</p>
-                                <div className="mt-4 text-[10px] text-slate-300">
-                                    Generated by Al Aqsa Transport System
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                                <div className="space-y-1">
+                                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Status</span>
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        <CheckCircle size={12} /> Confirmed
+                                    </span>
+                                </div>
+                                <div className="text-left sm:text-right">
+                                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Paid</span>
+                                    <span className="block font-black text-slate-900 dark:text-white text-2xl">
+                                        {totalPrice} <span className="text-sm font-bold text-slate-500">SAR</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Safar Dua Card - Spiritual Resonance */}
-                    <div className="bg-gradient-to-br from-secondary/10 to-white dark:from-slate-900 dark:to-slate-800 p-6 rounded-xl border border-secondary/20 dark:border-slate-700 text-center print:hidden">
-                        <p className="text-xs font-bold text-secondary dark:text-secondary uppercase tracking-widest mb-3">Travel Supplication (Dua)</p>
-                        <p className="text-2xl md:text-3xl font-serif text-slate-800 dark:text-slate-200 mb-4 leading-loose" dir="rtl">
+                    {/* 4. Invoice Confirmation */}
+                    <div className="bg-green-50 dark:bg-green-900/10 rounded-2xl p-6 border border-green-100 dark:border-green-800 flex items-start gap-4">
+                        <div className="bg-white dark:bg-green-900/50 w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                            <Mail className="text-green-600 dark:text-green-400" size={24} />
+                        </div>
+                        <div>
+                            <h4 className="text-green-800 dark:text-green-400 font-bold mb-1 flex items-center gap-2">
+                                <Check size={16} /> Invoice Sent Successfully
+                            </h4>
+                            <p className="text-sm text-green-700 dark:text-green-300/80 mb-2 leading-relaxed">
+                                Your booking confirmation and PDF invoice have been securely sent to: <br/>
+                                <strong className="text-green-900 dark:text-green-200">{bookingData.email}</strong>
+                            </p>
+                            <p className="text-xs text-green-600 dark:text-green-400/60 font-medium">No further action is required. Please keep this email for your travel records.</p>
+                        </div>
+                    </div>
+
+                    {/* 5. What Happens Next? */}
+                    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">What Happens Next?</h3>
+                        
+                        <div className="space-y-6">
+                            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
+                                Our operations team is now preparing your journey. Before your scheduled pickup, we will contact you via WhatsApp or email to confirm all travel arrangements.
+                            </p>
+                            
+                            <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-100 dark:border-slate-700 shadow-sm">
+                                <p className="text-sm font-bold text-slate-900 dark:text-white mb-3">You will receive:</p>
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {['Driver\'s name', 'Driver\'s contact number', 'Vehicle make and model', 'Vehicle registration details', 'Pickup instructions', 'Airport meeting point (if applicable)'].map((item, i) => (
+                                        <li key={i} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                            <CheckCircle2 size={16} className="text-secondary shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            
+                            <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/30">
+                                <Info size={20} className="text-blue-500 shrink-0 mt-0.5" />
+                                <p className="text-xs md:text-sm text-blue-700 dark:text-blue-300">
+                                    If you have provided your flight details, our team will monitor your flight in real time and adjust your pickup accordingly in the event of delays. Simply arrive at your pickup location, and we'll take care of the rest.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 6. Travel Supplication (Dua) */}
+                    <div className="bg-[#1a2332] dark:bg-slate-950 p-8 rounded-2xl border-2 border-[#D4AF37]/30 text-center relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37] opacity-5 rounded-bl-full" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#D4AF37] opacity-5 rounded-tr-full" />
+                        
+                        <p className="text-xs font-bold text-[#D4AF37] uppercase tracking-widest mb-6 relative z-10">Travel Supplication (Dua)</p>
+                        <p className="text-2xl md:text-4xl font-serif text-white mb-6 leading-[1.8] relative z-10" dir="rtl">
                             سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ
                         </p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                        <p className="text-sm md:text-base text-slate-400 italic relative z-10 max-w-xl mx-auto">
                             &quot;Glory be to Him who has subjected this to us, and we could not have otherwise subdued it. And indeed we, to our Lord, will surely return.&quot;
                         </p>
                     </div>
 
-                    <div className="text-center pt-2 print:hidden">
-                        <p className="text-slate-500 text-sm mb-6">A confirmation email has been sent to <strong>{bookingData.email}</strong></p>
-
-                        <div className="flex flex-col sm:flex-row justify-center gap-3">
-                            <Link
-                                href="/"
-                                className="w-full sm:w-auto px-8 py-3.5 bg-secondary text-white font-bold rounded-xl shadow-lg shadow-secondary/20 hover:shadow-xl hover:bg-[#B38E2D]/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                            >
-                                <span>Return Home</span>
-                                <ArrowRight strokeWidth={1.25} size={18} />
-                            </Link>
+                    {/* 7. Primary Actions */}
+                    <div className="pt-4 flex flex-col md:flex-row gap-4 items-center justify-center">
+                        <Link
+                            href="/"
+                            className="w-full md:w-auto px-8 min-h-[48px] flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-sm"
+                        >
+                            Return Home
+                        </Link>
+                        <div className="flex flex-col sm:flex-row w-full md:w-auto gap-4">
                             <Link
                                 href="/contact"
-                                className="w-full sm:w-auto px-8 py-3.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-[0.98] transition-all flex items-center justify-center"
+                                className="w-full sm:w-auto px-6 min-h-[48px] flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                             >
                                 Contact Support
                             </Link>
+                            <a
+                                href="https://wa.me/966XXXXXXXXX"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full sm:w-auto px-6 min-h-[48px] flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl transition-colors shadow-sm"
+                            >
+                                <MessageCircle size={18} /> WhatsApp
+                            </a>
                         </div>
                     </div>
 
