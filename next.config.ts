@@ -111,6 +111,43 @@ const nextConfig: NextConfig = {
         destination: '/terms',
         permanent: true,
       },
+      // ── Legacy /umrah/* URLs from GSC ───────────────────────────────────
+      {
+        source: '/umrah/services/jeddah-airport-transfer',
+        destination: '/services/jeddah-airport-transfer',
+        permanent: true,
+      },
+      {
+        source: '/umrah/services/airport-transfers',
+        destination: '/services/airport-transfers',
+        permanent: true,
+      },
+      {
+        source: '/umrah/contact',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/umrah/routes',
+        destination: '/routes',
+        permanent: true,
+      },
+      {
+        source: '/umrah/services/intercity-transfer',
+        destination: '/services/intercity-transfer',
+        permanent: true,
+      },
+      {
+        source: '/umrah/fleet/hyundai-staria',
+        destination: '/fleet/hyundai-staria',
+        permanent: true,
+      },
+      // Catch-all safety net: any other stray /umrah/* path redirects to homepage
+      {
+        source: '/umrah/:path*',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
   compress: true,
