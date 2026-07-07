@@ -282,7 +282,7 @@ export default function GalleryPage() {
                                         disabled={uploading}
                                     />
                                     {uploading ? (
-                                        <div className="text-amber-500">Uploading...</div>
+                                        <div className="text-secondary">Uploading...</div>
                                     ) : formData.image ? (
                                         <div className="relative h-40 w-full rounded-lg overflow-hidden">
                                             <Image src={formData.image} alt="Preview" fill className="object-cover" />

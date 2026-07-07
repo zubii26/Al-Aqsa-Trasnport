@@ -47,7 +47,7 @@ export default function MarketingPage() {
                     <div className="flex justify-between items-start mb-6">
                         <div>
                             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                <Mail className="text-amber-500" />
+                                <Mail className="text-secondary" />
                                 Post-Trip Reviews
                             </h2>
                             <p className="text-sm text-slate-500 mt-1">
@@ -67,7 +67,7 @@ export default function MarketingPage() {
                         <button
                             onClick={() => runBatchProcessing('reviews')}
                             disabled={!!loadingType}
-                            className="w-full py-3 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full py-3 bg-secondary hover:bg-secondary/90 active:scale-[0.98] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loadingType === 'reviews' ? (
                                 <>

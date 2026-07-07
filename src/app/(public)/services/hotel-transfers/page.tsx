@@ -83,9 +83,9 @@ export default function HotelTransferPage() {
             <section className="py-16 container mx-auto px-4">
                 <FadeIn>
                     <div className="text-center max-w-3xl mx-auto mb-12">
-                        <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Comfort & Convenience</span>
+                        <span className="text-secondary font-bold tracking-wider uppercase text-sm mb-3 block">Comfort & Convenience</span>
                         <h2 className="text-3xl md:text-4xl font-bold  text-slate-900 dark:text-white mb-6">
-                            Stress-Free Travel <span className="text-amber-500">To Your Doorstep</span>
+                            Stress-Free Travel <span className="text-secondary">To Your Doorstep</span>
                         </h2>
                         <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                             Arrive refreshed and on time. Whether you are heading to the Haram for prayers or returning to your hotel after Umrah, our dedicated drivers ensure a smooth, comfortable, and private journey for you and your family.
@@ -97,24 +97,24 @@ export default function HotelTransferPage() {
                 <div className="grid md:grid-cols-3 gap-8 mb-16">
                     {[
                         {
-                            icon: <MapPin className="text-amber-500" size={32} />,
+                            icon: <MapPin className="text-secondary" size={32} />,
                             title: "Door-to-Door Service",
                             desc: "Direct pickup from your hotel lobby and drop-off at the closest accessible point to the Haram."
                         },
                         {
-                            icon: <Clock className="text-amber-500" size={32} />,
+                            icon: <Clock className="text-secondary" size={32} />,
                             title: "24/7 Availability",
                             desc: "Round-the-clock service to align with your prayer times, Ziyarat plans, and flight schedules."
                         },
                         {
-                            icon: <Users className="text-amber-500" size={32} />,
+                            icon: <Users className="text-secondary" size={32} />,
                             title: "Family Friendly",
                             desc: "Spacious vehicles (GMC, H1, HiAce) perfect for families with children, elderly, and luggage."
                         }
                     ].map((feature, idx) => (
                         <FadeIn key={idx} delay={idx * 0.1}>
                             <div className="card-premium h-full">
-                                <div className="bg-amber-50 dark:bg-amber-900/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                                <div className="bg-secondary/10 dark:bg-secondary/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
                                     {feature.icon}
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
@@ -150,8 +150,8 @@ export default function HotelTransferPage() {
                                 </h3>
                                 <div className="space-y-6 mt-6">
                                     <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-amber-100 dark:bg-amber-900/30 p-2 rounded-full">
-                                            <Building2 className="text-amber-600 dark:text-amber-500" size={24} />
+                                        <div className="mt-1 bg-secondary/20 dark:bg-secondary/30 p-2 rounded-full">
+                                            <Building2 className="text-secondary dark:text-secondary" size={24} />
                                         </div>
                                         <div>
                                             <h4 className="text-xl font-semibold text-slate-900 dark:text-white">Makkah Hotels</h4>
@@ -159,8 +159,8 @@ export default function HotelTransferPage() {
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-amber-100 dark:bg-amber-900/30 p-2 rounded-full">
-                                            <Building2 className="text-amber-600 dark:text-amber-500" size={24} />
+                                        <div className="mt-1 bg-secondary/20 dark:bg-secondary/30 p-2 rounded-full">
+                                            <Building2 className="text-secondary dark:text-secondary" size={24} />
                                         </div>
                                         <div>
                                             <h4 className="text-xl font-semibold text-slate-900 dark:text-white">Madinah Hotels</h4>
@@ -168,8 +168,8 @@ export default function HotelTransferPage() {
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-amber-100 dark:bg-amber-900/30 p-2 rounded-full">
-                                            <ShieldCheck className="text-amber-600 dark:text-amber-500" size={24} />
+                                        <div className="mt-1 bg-secondary/20 dark:bg-secondary/30 p-2 rounded-full">
+                                            <ShieldCheck className="text-secondary dark:text-secondary" size={24} />
                                         </div>
                                         <div>
                                             <h4 className="text-xl font-semibold text-slate-900 dark:text-white">Reliable & Safe</h4>
@@ -180,7 +180,7 @@ export default function HotelTransferPage() {
                                 <div className="mt-10">
                                     <Link
                                         href="/booking"
-                                        className="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-amber-500/20"
+                                        className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-secondary/20"
                                     >
                                         Book Your Hotel Transfer
                                         <ArrowRight size={20} />

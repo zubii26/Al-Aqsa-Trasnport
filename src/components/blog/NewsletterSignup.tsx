@@ -42,7 +42,7 @@ export default function NewsletterSignup() {
                 <GlassCard className="relative overflow-hidden p-8 md:p-12 !bg-gradient-to-br !from-slate-900 !to-slate-800 !border-slate-700">
 
                     {/* Background Accents */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
 
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16">
@@ -50,7 +50,7 @@ export default function NewsletterSignup() {
                         {/* Text Content */}
                         <div className="flex-1 text-center md:text-left">
                             <FadeIn>
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 border border-amber-500/20">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 border border-secondary/20">
                                     <Bell size={14} />
                                     <span>Stay Updated</span>
                                 </div>
@@ -90,13 +90,13 @@ export default function NewsletterSignup() {
                                                 placeholder="Enter your email address"
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
-                                                className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none transition-all"
+                                                className="w-full bg-slate-950/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 outline-none transition-all"
                                             />
                                         </div>
                                         <button
                                             type="submit"
                                             disabled={status === 'loading'}
-                                            className="group bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-4 px-6 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25"
+                                            className="group bg-secondary hover:bg-amber-400 text-slate-900 font-bold py-4 px-6 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25"
                                         >
                                             {status === 'loading' ? (
                                                 <div className="w-5 h-5 border-2 border-slate-900/30 border-t-slate-900 rounded-full animate-spin" />

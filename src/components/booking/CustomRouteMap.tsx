@@ -326,7 +326,7 @@ export default function CustomRouteMap({
                         <h3 className="font-bold text-white flex items-center gap-2">
                             {mode === 'pickup' && <><MapPin className="text-emerald-500" size={18} /> Step 1: Choose Pickup</>}
                             {mode === 'dropoff' && <><MapPin className="text-rose-500" size={18} /> Step 2: Choose Dropoff</>}
-                            {mode === 'route' && <><Navigation className="text-amber-500" size={18} /> Route Summary</>}
+                            {mode === 'route' && <><Navigation className="text-secondary" size={18} /> Route Summary</>}
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">
                             {mode !== 'route' ? 'Drag the map to set the exact location' : 'Review your route details'}
@@ -373,7 +373,7 @@ export default function CustomRouteMap({
                 {/* Loading Overlay */}
                 {loading && (
                     <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm z-[2000] flex flex-col items-center justify-center gap-3">
-                        <Loader2 size={36} className="text-amber-500 animate-spin" />
+                        <Loader2 size={36} className="text-secondary animate-spin" />
                         <span className="text-sm font-semibold text-white">Routing...</span>
                     </div>
                 )}
@@ -400,7 +400,7 @@ export default function CustomRouteMap({
                                 onClick={handleConfirmLocation}
                                 disabled={isMoving || tempCenterAddress === 'Locating...'}
                                 className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all flex items-center justify-center gap-2 shadow-lg
-                                    ${isMoving || tempCenterAddress === 'Locating...' ? 'bg-slate-700 opacity-50 cursor-not-allowed' : mode === 'pickup' ? 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/50' : 'bg-amber-600 hover:bg-amber-500 shadow-amber-900/50'}`}
+                                    ${isMoving || tempCenterAddress === 'Locating...' ? 'bg-slate-700 opacity-50 cursor-not-allowed' : mode === 'pickup' ? 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/50' : 'bg-secondary hover:bg-secondary shadow-amber-900/50'}`}
                             >
                                 {mode === 'pickup' ? 'Confirm Pickup' : 'Confirm Dropoff'}
                                 <ArrowRight size={18} />

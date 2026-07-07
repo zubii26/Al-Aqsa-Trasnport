@@ -286,7 +286,7 @@ export const staticBlogPosts = [
         content: `
             <h2>A Spiritual Resolution for 2026</h2>
             <p>As the Gregorian calendar turns to 2026, many of us set resolutions: fitness, finance, or career. But what about your soul? There is no better way to begin a new chapter than by standing before the Kaaba and asking Allah to bless your year ahead.</p>
-            <p>Whether you are planning a solo spiritual retreat or a <a href="/blog/how-to-choose-best-umrah-transport-family" class="text-amber-600 hover:underline">family Umrah trip</a>, 2026 offers unique opportunities for pilgrims. Here is your complete guide to starting the year with Barakah.</p>
+            <p>Whether you are planning a solo spiritual retreat or a <a href="/blog/how-to-choose-best-umrah-transport-family" class="text-secondary hover:underline">family Umrah trip</a>, 2026 offers unique opportunities for pilgrims. Here is your complete guide to starting the year with Barakah.</p>
 
             <h3>1. Why January 2026 is the "Golden Month"</h3>
             <p>January in Saudi Arabia is arguably the best weather of the year. With daytime temperatures in Makkah averaging a pleasant 25°C (77°F) and Madinah being cool and crisp, it is the perfect time for walking between Ziyarat sites.</p>
@@ -296,7 +296,7 @@ export const staticBlogPosts = [
             </ul>
 
             <h3>2. Key Islamic Dates in 2026 to Watch</h3>
-            <p>Mark your calendars early to secure the best <a href="/booking" class="text-amber-600 hover:underline">transport details</a>.</p>
+            <p>Mark your calendars early to secure the best <a href="/booking" class="text-secondary hover:underline">transport details</a>.</p>
             <ul>
                 <li><strong>Ramadan 2026:</strong> Expected to begin around mid-February. Booking your transport 3 months in advance is critical.</li>
                 <li><strong>Hajj 2026:</strong> Expected in May. Umrah visas usually close a few weeks prior.</li>
@@ -306,12 +306,12 @@ export const staticBlogPosts = [
             <p>The smartest pilgrims book their ground transport before their flight. Why?</p>
             <ul>
                 <li><strong>Price Locking:</strong> Transport rates often spike by 30-40% as the season peaks. Booking in January for a March trip locks in the lower rate.</li>
-                <li><strong>Vehicle Choice:</strong> High-demand vehicles like the <a href="/fleet/gmc-yukon-at4" class="text-amber-600 hover:underline">GMC Yukon XL</a> sell out fast. Early booking guarantees your specific car.</li>
+                <li><strong>Vehicle Choice:</strong> High-demand vehicles like the <a href="/fleet/gmc-yukon-at4" class="text-secondary hover:underline">GMC Yukon XL</a> sell out fast. Early booking guarantees your specific car.</li>
             </ul>
 
             <div class="bg-emerald-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-emerald-500 my-8">
                 <h4 class="font-bold text-lg mb-2 text-emerald-800 dark:text-emerald-400">Resolution Idea: The "Digital Detox" Umrah</h4>
-                <p class="text-slate-700 dark:text-slate-300">For 2026, make a Niyyah to keep your phone in the hotel safe during Salah times. Use the travel time between <a href="/services/makkah-madinah-taxi" class="text-amber-600 hover:underline">Makkah and Madinah</a> to read Seerah instead of scrolling social media. Our wifi-enabled cars are there if you need them, but disconnecting is the ultimate luxury.</p>
+                <p class="text-slate-700 dark:text-slate-300">For 2026, make a Niyyah to keep your phone in the hotel safe during Salah times. Use the travel time between <a href="/services/makkah-madinah-taxi" class="text-secondary hover:underline">Makkah and Madinah</a> to read Seerah instead of scrolling social media. Our wifi-enabled cars are there if you need them, but disconnecting is the ultimate luxury.</p>
             </div>
 
             <h3>4. Packing for a 2026 Umrah</h3>
@@ -348,8 +348,8 @@ export const staticBlogPosts = [
         excerpt: 'Traveling with family? Discover why the GMC Yukon XL is the top choice for comfort, space, and safety on the road between Makkah and Madinah.',
         content: `
             <h2>The King of the Road for Umrah Families</h2>
-            <p>When you are traveling with your family for Umrah, the journey between <a href="/services/jeddah-airport-transfer" class="text-amber-600 hover:underline">Jeddah Airport</a>, Makkah, and Madinah can be exhausting. The heat, the luggage, and the long hours on the road require a vehicle that offers more than just a seat.</p>
-            <p>Enter the <strong><a href="/fleet/gmc-yukon-at4" class="text-amber-600 hover:underline">GMC Yukon XL</a></strong>. In Saudi Arabia, this vehicle is not just an SUV; it is the gold standard for VIP family transport. Here is why it is the #1 choice for smart pilgrims in 2025.</p>
+            <p>When you are traveling with your family for Umrah, the journey between <a href="/services/jeddah-airport-transfer" class="text-secondary hover:underline">Jeddah Airport</a>, Makkah, and Madinah can be exhausting. The heat, the luggage, and the long hours on the road require a vehicle that offers more than just a seat.</p>
+            <p>Enter the <strong><a href="/fleet/gmc-yukon-at4" class="text-secondary hover:underline">GMC Yukon XL</a></strong>. In Saudi Arabia, this vehicle is not just an SUV; it is the gold standard for VIP family transport. Here is why it is the #1 choice for smart pilgrims in 2025.</p>
 
             <h3>1. Unmatched Space for Luggage</h3>
             <p>The "XL" stands for extended length, and that makes all the difference.</p>
@@ -373,8 +373,8 @@ export const staticBlogPosts = [
                 <li><strong>Individual Comfort:</strong> Reclining seats with armrests, perfect for elderly parents who need to sleep during the 4.5-hour drive to Madinah.</li>
             </ul>
 
-            <div class="bg-amber-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500 my-8">
-                <h4 class="font-bold text-lg mb-2 text-amber-800 dark:text-amber-400">Did You Know?</h4>
+            <div class="bg-secondary/10 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-secondary my-8">
+                <h4 class="font-bold text-lg mb-2 text-secondary dark:text-amber-400">Did You Know?</h4>
                 <p class="text-slate-700 dark:text-slate-300">The GMC Yukon XL suspension is tuned for "Magnetic Ride Control," meaning it absorbs the bumps of the desert highway better than almost any other vehicle, reducing motion sickness for children.</p>
             </div>
 
@@ -384,7 +384,7 @@ export const staticBlogPosts = [
             <p>Don't compromise on your family's comfort. For a few riyals more than a van, you get the safety, silence, and speed of the GMC Yukon XL.</p>
             
             <p class="mt-8 font-bold text-center">
-                <a href="/booking" class="inline-block bg-amber-600 text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors shadow-lg">Check GMC Yukon Availability & Price</a>
+                <a href="/booking" class="inline-block bg-secondary text-white px-8 py-3 rounded-full hover:bg-secondary transition-colors shadow-lg">Check GMC Yukon Availability & Price</a>
             </p>
         `,
         category: 'Vehicle Spotlight',
@@ -562,8 +562,8 @@ export const staticBlogPosts = [
             <h3>3. The Taif Day Trip</h3>
             <p>Just an hour from Makkah, Taif offers cool mountain air and rich history. Visit the <strong>Masjid Addas</strong> (built by the Christian boy who served grapes to the Prophet ﷺ) and see the valleys where the Prophet ﷺ was tested.</p>
 
-            <div class="bg-amber-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500 my-8">
-                <h4 class="font-bold text-lg mb-2 text-amber-800 dark:text-amber-400">Why Go Private?</h4>
+            <div class="bg-secondary/10 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-secondary my-8">
+                <h4 class="font-bold text-lg mb-2 text-secondary dark:text-amber-400">Why Go Private?</h4>
                 <p class="text-slate-700 dark:text-slate-300"><strong>Flexibility is key.</strong> Want to spend an hour making Dua at Uhud? You can. Want to stop for dates at the best farm in Quba? We know the place. You aren't on a schedule; you are on a journey.</p>
             </div>
 
@@ -916,7 +916,7 @@ export const staticBlogPosts = [
             <p>If you value <strong>peace of mind</strong>, book a private transfer. It bridges the gap between the airport and your spiritual intent, allowing you to focus on your Niyyah, not the map.</p>
 
             <p class="mt-8 font-bold text-center">
-                <a href="/booking" class="inline-block bg-amber-600 text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors shadow-lg">Check 2025 Transport Rates</a>
+                <a href="/booking" class="inline-block bg-secondary text-white px-8 py-3 rounded-full hover:bg-secondary transition-colors shadow-lg">Check 2025 Transport Rates</a>
             </p>
         `,
         category: 'Guide',
@@ -1498,8 +1498,8 @@ export const staticBlogPosts = [
 
             <h3>3. Our 60-Minute Rescue Protocol</h3>
             <p>In the rare event of a failure, our "Red Phone" protocol activates:</p>
-            <div class="bg-amber-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500 my-8">
-                <h4 class="font-bold text-lg mb-2 text-amber-700 dark:text-amber-400">The S.O.P.</h4>
+            <div class="bg-secondary/10 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-secondary my-8">
+                <h4 class="font-bold text-lg mb-2 text-secondary dark:text-amber-400">The S.O.P.</h4>
                 <ol class="list-decimal pl-5 space-y-2 text-slate-700 dark:text-slate-300">
                     <li><strong>Safety First:</strong> Driver secures the vehicle on the shoulder and guides you to a shaded safe zone.</li>
                     <li><strong>Instant Alert:</strong> GPS automatically flags the breakdown to our 24/7 Operations Hub.</li>
@@ -1566,7 +1566,7 @@ export const staticBlogPosts = [
 
             <h3>Head-to-Head Comparison</h3>
             <table class="w-full border-collapse border border-slate-200 dark:border-slate-700 my-8 text-sm">
-                <thead class="bg-amber-50 dark:bg-slate-900">
+                <thead class="bg-secondary/10 dark:bg-slate-900">
                     <tr>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">Feature</th>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">GMC Yukon 2024</th>
@@ -1650,7 +1650,7 @@ export const staticBlogPosts = [
 
             <h3>Choosing Your Transport Mode</h3>
             <table class="w-full border-collapse border border-slate-200 dark:border-slate-700 my-8 text-sm">
-                <thead class="bg-amber-50 dark:bg-slate-900">
+                <thead class="bg-secondary/10 dark:bg-slate-900">
                     <tr>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">Mode</th>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">Pros</th>
@@ -1783,8 +1783,8 @@ export const staticBlogPosts = [
             <p><strong>Look for:</strong> Licensed companies offering GMC Yukons, Ford Expeditions, or Toyota Camrys.</p>
             <p>For 90% of international pilgrims—especially families, elderly travelers, and those with luggage—luxury private taxis remain the gold standard. Services like <strong>Al Aqsa Umrah Transport</strong> specialize in this "door-to-door" experience.</p>
             
-            <div class="bg-amber-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-amber-500 my-8">
-                <h4 class="font-bold text-lg mb-2 text-amber-700 dark:text-amber-400">Why It Ranks #1:</h4>
+            <div class="bg-secondary/10 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-secondary my-8">
+                <h4 class="font-bold text-lg mb-2 text-secondary dark:text-amber-400">Why It Ranks #1:</h4>
                 <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
                     <li><strong>Door-to-Door:</strong> You are picked up from the chaos of Jeddah Airport arrivals and dropped off <em>exactly</em> at your hotel lobby in Makkah. No shuttles, no walking.</li>
                     <li><strong>Luggage Freedom:</strong> Unlike trains (which limit you) or buses (where bags get crushed), a GMC Yukon can hold 6-8 large suitcases easily.</li>
@@ -1808,7 +1808,7 @@ export const staticBlogPosts = [
             
             <h3>Comparision: Jeddah Airport to Makkah</h3>
             <table class="w-full border-collapse border border-slate-200 dark:border-slate-700 my-8 text-sm">
-                <thead class="bg-amber-50 dark:bg-slate-900">
+                <thead class="bg-secondary/10 dark:bg-slate-900">
                     <tr>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">Feature</th>
                         <th class="p-3 border border-slate-200 dark:border-slate-700 text-left">Private VIP Taxi</th>
@@ -2054,7 +2054,7 @@ export const staticBlogPosts = [
 
                 <h3>مقارنة سريعة: التاكسي vs النقل الخاص</h3>
                 <table class="w-full border-collapse border border-slate-200 dark:border-slate-700 my-8 text-sm text-right">
-                    <thead class="bg-amber-50 dark:bg-slate-900">
+                    <thead class="bg-secondary/10 dark:bg-slate-900">
                         <tr>
                             <th class="p-3 border border-slate-200 dark:border-slate-700">وجه المقارنة</th>
                             <th class="p-3 border border-slate-200 dark:border-slate-700">النقل الخاص (الأقصى)</th>

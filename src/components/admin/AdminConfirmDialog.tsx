@@ -42,7 +42,7 @@ export default function AdminConfirmDialog({
                     >
                         <div className="p-6">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className={`p-3 rounded-full ${isDestructive ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400'}`}>
+                                <div className={`p-3 rounded-full ${isDestructive ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-secondary/20 text-secondary dark:bg-secondary/30 dark:text-amber-400'}`}>
                                     <AlertTriangle size={24} />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -63,7 +63,7 @@ export default function AdminConfirmDialog({
                                     onClick={onConfirm}
                                     className={`px-4 py-2 rounded-lg text-white font-medium shadow-lg transition-all transform hover:-translate-y-0.5 ${isDestructive
                                         ? 'bg-red-500 hover:bg-red-600 shadow-red-500/20'
-                                        : 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20'
+                                        : 'bg-secondary hover:bg-secondary/90 shadow-secondary/20'
                                         }`}
                                 >
                                     {confirmLabel}

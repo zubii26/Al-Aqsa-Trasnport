@@ -36,7 +36,8 @@ export default function GlassCard({
                     }
                 }
             }}
-            className={`glass-card p-6 ${hoverEffect ? 'hover:scale-[1.02]' : ''} ${className}`}
+            className={`glass-card p-6 ${className}`}
+            whileHover={hoverEffect ? { scale: 1.02, y: -5 } : undefined}
             id={id}
         >
             {children}

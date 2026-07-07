@@ -50,7 +50,7 @@ export default function VehicleHero({
                         </div>
                     )}
                     {badge && (
-                        <div className="inline-block bg-amber-500 text-white px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-6 shadow-lg shadow-amber-500/20">
+                        <div className="inline-block bg-secondary text-white px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-6 shadow-lg shadow-secondary/20">
                             {badge}
                         </div>
                     )}
@@ -77,7 +77,7 @@ export default function VehicleHero({
                         <Link 
                             href={whatsappLink} 
                             target="_blank"
-                            className="inline-flex items-center justify-center gap-2 bg-amber-500 text-white hover:bg-amber-600 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
+                            className="inline-flex items-center justify-center gap-2 bg-secondary text-white hover:bg-secondary/90 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
                         >
                             Book via WhatsApp <ArrowRight strokeWidth={1.25} size={20} />
                         </Link>

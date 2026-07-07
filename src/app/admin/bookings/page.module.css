@@ -48,7 +48,7 @@
     border-radius: 0.75rem;
     background: var(--background);
     font-size: 0.9rem;
-    transition: all 0.2s;
+    transition: opacity 0.2s, transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .searchInput:focus {
@@ -74,7 +74,7 @@
     color: var(--muted-foreground);
     background: transparent;
     border: 1px solid transparent;
-    transition: all 0.2s;
+    transition: opacity 0.2s, transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
     white-space: nowrap;
 }
 
@@ -271,7 +271,7 @@
     height: 32px;
     border-radius: 0.5rem;
     border: 1px solid transparent;
-    transition: all 0.2s;
+    transition: opacity 0.2s, transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
 }
 

@@ -95,7 +95,7 @@ export default async function ZiyaratToursPage() {
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row gap-12 items-center">
                         <div className="md:w-1/2">
-                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100 border-l-4 border-amber-500 pl-4">
+                            <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100 border-l-4 border-secondary pl-4">
                                 Makkah Ziyarat Sites
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
@@ -109,7 +109,7 @@ export default async function ZiyaratToursPage() {
                                     { name: "Jannat al-Mu'alla", desc: "The cemetery where Khadijah (RA) is buried." }
                                 ].map((site, idx) => (
                                     <li key={idx} className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg flex gap-4 hover:shadow-md transition-shadow">
-                                        <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full h-fit text-amber-600 dark:text-amber-400">
+                                        <div className="bg-secondary/20 dark:bg-secondary/30 p-3 rounded-full h-fit text-secondary dark:text-amber-400">
                                             <MapPin size={24} />
                                         </div>
                                         <div>
@@ -184,21 +184,21 @@ export default async function ZiyaratToursPage() {
                     <h2 className="text-3xl font-bold mb-12 ">Enhance Your Spiritual Journey</h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="p-6">
-                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">
+                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-secondary">
                                 <Clock size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-2">No Hasted Visits</h3>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Unlike group buses, we wait for you. Travel in our private <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Hyundai Staria</Link> and take your time to pray.</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">Unlike group buses, we wait for you. Travel in our private <Link href="/fleet/gmc-yukon-at4" className="text-secondary hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-secondary hover:underline">Hyundai Staria</Link> and take your time to pray.</p>
                         </div>
                         <div className="p-6">
-                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">
+                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-secondary">
                                 <BookOpen size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-2">Historical Context</h3>
                             <p className="text-sm text-slate-600 dark:text-slate-400">Our drivers share the history and significance of the locations you visit.</p>
                         </div>
                         <div className="p-6">
-                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">
+                            <div className="bg-slate-100 dark:bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-secondary">
                                 <Camera size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-2">Photo Opportunities</h3>

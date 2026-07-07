@@ -51,7 +51,7 @@ export default function AnimatedMapBackground() {
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-10">
-            <svg className="w-full h-full text-amber-500" width="100%" height="100%">
+            <svg className="w-full h-full text-secondary" width="100%" height="100%">
                 {/* Connections */}
                 {connections.map((conn, i) => (
                     <motion.line

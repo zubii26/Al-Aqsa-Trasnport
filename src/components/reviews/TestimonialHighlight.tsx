@@ -7,14 +7,14 @@ import { curatedTestimonials } from '@/data/testimonials';
 
 export default function TestimonialHighlight() {
     return (
-        <section className="py-20 bg-amber-50 dark:bg-slate-900/50 overflow-hidden relative">
+        <section className="py-20 bg-secondary/10 dark:bg-slate-900/50 overflow-hidden relative">
             {/* Background Pattern */}
             <div className="absolute top-0 left-0 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl -ml-32 -mt-32" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-48 -mb-48" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -mr-48 -mb-48" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-16">
-                    <span className="text-amber-600 dark:text-amber-500 font-bold tracking-wider uppercase text-sm">Pilgrim Stories</span>
+                    <span className="text-secondary dark:text-secondary font-bold tracking-wider uppercase text-sm">Pilgrim Stories</span>
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mt-2 ">
                         Journeys of Faith & Comfort
                     </h2>
@@ -30,7 +30,7 @@ export default function TestimonialHighlight() {
                             transition={{ delay: idx * 0.2 }}
                             className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 relative group hover:-translate-y-2 transition-transform duration-300"
                         >
-                            <Quote size={40} className="text-amber-500/20 absolute top-8 right-8 group-hover:text-amber-500/40 transition-colors" />
+                            <Quote size={40} className="text-secondary/20 absolute top-8 right-8 group-hover:text-secondary/40 transition-colors" />
 
                             <div className="flex gap-1 mb-6">
                                 {[...Array(5)].map((_, i) => (
@@ -48,7 +48,7 @@ export default function TestimonialHighlight() {
 
                             <div className="flex flex-wrap gap-2 mb-6">
                                 {testimonial.tags.map(tag => (
-                                    <span key={tag} className="px-3 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-xs rounded-full font-medium">
+                                    <span key={tag} className="px-3 py-1 bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-amber-400 text-xs rounded-full font-medium">
                                         #{tag}
                                     </span>
                                 ))}

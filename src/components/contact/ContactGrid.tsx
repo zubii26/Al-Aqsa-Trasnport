@@ -63,7 +63,7 @@ export default function ContactGrid({ contactSettings }: ContactGridProps) {
                 {contactCards.map((card, index) => (
                     <GlassCard key={index} className="p-6 hover:border-amber-400/50 transition-colors group">
                         <div className="flex items-start gap-4">
-                            <div className="p-3 bg-amber-100 dark:bg-amber-900/20 rounded-lg text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform">
+                            <div className="p-3 bg-secondary/20 dark:bg-secondary/20 rounded-lg text-secondary dark:text-secondary group-hover:scale-110 transition-transform">
                                 <card.icon size={24} />
                             </div>
                             <div className="flex-1">
@@ -75,7 +75,7 @@ export default function ContactGrid({ contactSettings }: ContactGridProps) {
                                     target={card.action.startsWith('http') ? "_blank" : "_self"}
                                     rel="noopener noreferrer"
                                     onClick={() => trackConversion(card.type as any, 'contact_page')}
-                                    className="inline-flex items-center text-sm font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400"
+                                    className="inline-flex items-center text-sm font-semibold text-secondary hover:text-secondary dark:text-secondary dark:hover:text-amber-400"
                                 >
                                     {card.btnText} →
                                 </a>

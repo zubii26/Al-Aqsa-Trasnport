@@ -44,9 +44,9 @@ export default function BookingGuide() {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-500 text-xs font-bold uppercase tracking-widest border border-amber-500/20 mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 text-secondary dark:text-secondary text-xs font-bold uppercase tracking-widest border border-secondary/20 mb-6"
                     >
-                        <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
                         Simple & Professional
                     </motion.div>
 
@@ -60,7 +60,7 @@ export default function BookingGuide() {
                         Your Journey in <br className="hidden md:block" />
                         <span className="relative inline-block">
                             <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600">3 Simple Steps</span>
-                            <span className="absolute bottom-2 left-0 w-full h-3 bg-amber-500/20 -rotate-1 z-0 rounded-full blur-sm"></span>
+                            <span className="absolute bottom-2 left-0 w-full h-3 bg-secondary/20 -rotate-1 z-0 rounded-full blur-sm"></span>
                         </span>
                     </motion.h2>
                     <motion.p
@@ -96,7 +96,7 @@ export default function BookingGuide() {
                                     </div>
 
                                     {/* background glow */}
-                                    <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full -z-10 transform scale-75" />
+                                    <div className="absolute inset-0 bg-secondary/20 blur-xl rounded-full -z-10 transform scale-75" />
 
                                     {/* Step Number Badge */}
                                     <div className="absolute -top-3 -right-3 w-8 h-8 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl flex items-center justify-center font-bold text-sm shadow-md z-20 border border-white/20 dark:border-slate-900/20">
@@ -125,14 +125,14 @@ export default function BookingGuide() {
                 >
                     <Link
                         href="/booking"
-                        className="inline-flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 md:px-12 md:py-6 rounded-[24px] font-semibold text-base md:text-lg shadow-2xl shadow-slate-900/20 hover:shadow-amber-500/20 hover:-translate-y-1 transition-all group relative overflow-hidden"
+                        className="inline-flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 md:px-12 md:py-6 rounded-[24px] font-semibold text-base md:text-lg shadow-2xl shadow-slate-900/20 hover:shadow-secondary/20 hover:-translate-y-1 transition-all group relative overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                         Book Your Ride Now
                         <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" strokeWidth={1.5} />
                     </Link>
                     <p className="mt-6 text-sm font-medium text-slate-400 flex items-center justify-center gap-2">
-                        <MousePointerClick size={16} className="text-amber-500" strokeWidth={1.5} />
+                        <MousePointerClick size={16} className="text-secondary" strokeWidth={1.5} />
                         No prepayment required • Pay upon arrival
                     </p>
                 </motion.div>

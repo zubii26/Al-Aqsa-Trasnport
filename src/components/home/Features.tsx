@@ -1,93 +1,89 @@
 'use client';
 
-import { Shield, Clock, Heart } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { Shield, Clock, Heart, Banknote, Navigation, Car } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
-import AnimatedSection from '@/components/ui/AnimatedSection';
-import FadeIn from '@/components/common/FadeIn';
+
+const FEATURES = [
+    {
+        id: 'licensed',
+        icon: Shield,
+        title: 'Licensed Transport',
+        titleAr: 'نقل مرخص',
+        description: 'Officially licensed by the Ministry of Transport for safe Makkah and Madinah travel.'
+    },
+    {
+        id: 'professional',
+        icon: Navigation,
+        title: 'Professional Drivers',
+        titleAr: 'سائقون محترفون',
+        description: 'Expert, bilingual chauffeurs familiar with all Holy City routes and hotels.'
+    },
+    {
+        id: 'pricing',
+        icon: Banknote,
+        title: 'Fixed Pricing',
+        titleAr: 'أسعار ثابتة',
+        description: 'Transparent rates with no hidden fees, toll charges, or surge pricing.'
+    },
+    {
+        id: 'flight',
+        icon: Clock,
+        title: 'Flight Monitoring',
+        titleAr: 'متابعة الرحلات',
+        description: 'We track your Jeddah/Madinah arrival to ensure punctual pickups, even if delayed.'
+    },
+    {
+        id: 'support',
+        icon: Heart,
+        title: '24/7 Support',
+        titleAr: 'دعم على مدار الساعة',
+        description: 'Round-the-clock customer service via WhatsApp for your peace of mind.'
+    },
+    {
+        id: 'luxury',
+        icon: Car,
+        title: 'Luxury Fleet',
+        titleAr: 'أسطول فاخر',
+        description: 'Premium GMC Yukons, Hyundai Starias, and spacious vans for ultimate comfort.'
+    }
+];
 
 export default function Features() {
     return (
-        <AnimatedSection className="py-12 md:py-16 relative overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-                <div className="absolute top-1/4 -left-64 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 -right-64 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
-            </div>
-
-            <div className="container relative z-10 mx-auto px-4">
-                <FadeIn animate={true}>
-                    <h2 className="text-4xl md:text-5xl font-bold text-center mb-10  px-4 md:px-0">
-                        Why Choose Al Aqsa for <span className="text-gradient-gold">Umrah Transport?</span>
+        <section className="py-20 bg-white dark:bg-[#0B1221]">
+            <div className="container mx-auto px-4">
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <span className="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Why Choose Us</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                        The Al Aqsa Promise
                     </h2>
-                </FadeIn>
+                    <p className="text-slate-600 dark:text-slate-400">
+                        We combine spiritual understanding with logistical excellence to provide a seamless journey for the Guests of Allah.
+                    </p>
+                </div>
 
-                <motion.div 
-                    className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 divide-y md:divide-y-0 divide-slate-200/50 dark:divide-white/5 bg-white/5 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none trust-grid"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={{
-                        hidden: {},
-                        visible: {
-                            transition: {
-                                staggerChildren: 0.15
-                            }
-                        }
-                    }}
-                >
-                    <motion.div 
-                        className="trust-card text-center group ios-glass rounded-none md:rounded-[32px] shadow-none md:shadow-xl py-10 md:py-8 px-6"
-                        variants={{
-                            hidden: { opacity: 0, y: 40, rotateX: 12 },
-                            visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
-                        }}
-                    >
-                        <div className="mb-6 inline-flex ios-icon-box w-16 h-16 text-amber-500 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-amber-500/10">
-                            <Shield size={32} strokeWidth={1.25} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {FEATURES.map((feature) => (
+                        <div key={feature.id} className="h-full">
+                            <GlassCard className="h-full p-8 text-center lg:hover:bg-slate-50 dark:lg:hover:bg-slate-800/50 transition-colors border border-border/50">
+                                <div className="mb-6 inline-flex p-4 rounded-full bg-primary/10 text-primary">
+                                    <feature.icon size={32} strokeWidth={1.5} />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-primary font-bold font-reem-kufi mb-4">
+                                    {feature.titleAr}
+                                </p>
+                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                                    {feature.description}
+                                </p>
+                            </GlassCard>
                         </div>
-                        <h3 className="text-xl font-bold mb-1  tracking-tight">Safe & Trusted Pilgrim Transport</h3>
-                        <p className="trust-card-arabic text-amber-500 font-bold font-reem-kufi mb-4">نقل آمن وموثوق</p>
-                        <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
-                            Officially licensed chauffeurs & well-maintained vehicles. The most trusted choice for safe Makkah to Madinah travel.
-                        </p>
-                    </motion.div>
-
-                    <motion.div 
-                        className="trust-card text-center group ios-glass rounded-none md:rounded-[32px] shadow-none md:shadow-xl py-10 md:py-8 px-6"
-                        variants={{
-                            hidden: { opacity: 0, y: 40, rotateX: 12 },
-                            visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
-                        }}
-                    >
-                        <div className="mb-6 inline-flex ios-icon-box w-16 h-16 text-amber-500 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-amber-500/10">
-                            <Clock size={32} strokeWidth={1.25} />
-                        </div>
-                        <h3 className="text-xl font-bold mb-1  tracking-tight">Punctual Airport Transfers</h3>
-                        <p className="trust-card-arabic text-amber-500 font-bold font-reem-kufi mb-4">دقة في المواعيد</p>
-                        <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
-                            We track your flight to ensure timely pickups. Reliable Jeddah & Madinah Airport service available 24/7.
-                        </p>
-                    </motion.div>
-
-                    <motion.div 
-                        className="trust-card text-center group ios-glass rounded-none md:rounded-[32px] shadow-none md:shadow-xl py-10 md:py-8 px-6"
-                        variants={{
-                            hidden: { opacity: 0, y: 40, rotateX: 12 },
-                            visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
-                        }}
-                    >
-                        <div className="mb-6 inline-flex ios-icon-box w-16 h-16 text-amber-500 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-amber-500/10">
-                            <Heart size={32} strokeWidth={1.25} />
-                        </div>
-                        <h3 className="text-xl font-bold mb-1  tracking-tight">VIP Hospitality & Comfort</h3>
-                        <p className="trust-card-arabic text-amber-500 font-bold font-reem-kufi mb-4">ضيافة وراحة VIP</p>
-                        <p className="text-muted-foreground leading-relaxed px-4 md:px-0">
-                            Spacious GMC Yukons & luxury vans for families. We serve the guests of Allah with utmost respect and premium comfort.
-                        </p>
-                    </motion.div>
-                </motion.div>
+                    ))}
+                </div>
             </div>
-        </AnimatedSection>
+        </section>
     );
 }

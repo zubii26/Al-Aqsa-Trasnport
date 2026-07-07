@@ -259,7 +259,7 @@
   .premium-input {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #e2e8f0;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) inset;
   }
 
@@ -286,13 +286,16 @@
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--glass-shadow);
     border-radius: var(--radius);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
 
   .glass-card:hover {
-    transform: translateY(-5px);
     border-color: hsl(var(--secondary) / 0.5);
     box-shadow:
       0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -320,7 +323,7 @@
     backdrop-filter: blur(4px);
     border: 1px solid var(--glass-border);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .glass-button:hover {
@@ -456,7 +459,7 @@
 
 /* 1. SERVICE CARDS */
 .service-card {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 28px;
     overflow: hidden;
   }
@@ -498,7 +501,7 @@
 
 /* 2. FLEET VEHICLE CARDS */
 .fleet-card {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 32px;
   }
 
@@ -589,10 +592,6 @@
 .marquee-card {
   flex-shrink: 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.marquee-card:hover {
-  transform: scale(1.03) translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
 /* 4. TRUST PILLAR CARDS */
@@ -896,3 +895,6 @@
     @apply w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all;
   }
 }
+
+/* Prevent hover repaints during smooth scrolling */
+html.lenis-scrolling, html.lenis-scrolling * { pointer-events: none !important; }

@@ -39,7 +39,7 @@ export default function CompanyStory() {
 
             <div className="container mx-auto px-4 relative">
                 <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-                    <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Our History</span>
+                    <span className="text-secondary dark:text-secondary font-bold uppercase tracking-widest text-sm mb-3 block">Our History</span>
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 ">
                         Our Sacred Journey
                     </h2>
@@ -57,7 +57,7 @@ export default function CompanyStory() {
                             <div key={item.year} className={`relative md:flex items-center justify-between ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} group`}>
 
                                 {/* Center Dot */}
-                                <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-amber-500 rounded-full border-4 border-white dark:border-slate-950 shadow-lg -translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-300" />
+                                <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-secondary rounded-full border-4 border-white dark:border-slate-950 shadow-lg -translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-300" />
 
                                 {/* Empty space for the other side */}
                                 <div className="hidden md:block w-5/12" />
@@ -66,7 +66,7 @@ export default function CompanyStory() {
                                 <div className="ml-16 md:ml-0 md:w-5/12">
                                     <GlassCard delay={index * 0.2} className="p-8 relative hover:-translate-y-2 transition-transform duration-500 border-l-4 border-l-amber-500">
                                         <div className="flex items-center gap-4 mb-4">
-                                            <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-xl text-amber-600 dark:text-amber-400">
+                                            <div className="bg-secondary/20 dark:bg-secondary/30 p-3 rounded-xl text-secondary dark:text-amber-400">
                                                 <item.icon size={24} />
                                             </div>
                                             <span className="text-3xl font-bold font-outfit text-slate-900 dark:text-white">{item.year}</span>

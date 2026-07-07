@@ -47,7 +47,7 @@ export default function MobileRoutePanel({ route, onClose }: MobileRoutePanelPro
                 {/* Header */}
                 <div className="flex justify-between items-start mb-4">
                     <div>
-                        <span className="text-amber-500 text-[10px] font-bold uppercase tracking-wider">SELECTED ROUTE</span>
+                        <span className="text-secondary text-[10px] font-bold uppercase tracking-wider">SELECTED ROUTE</span>
                         <h3 className="text-xl font-bold  text-slate-900 dark:text-white leading-tight">
                             {route.origin} <span className="text-slate-400 text-sm">to</span> {route.destination}
                         </h3>
@@ -61,7 +61,7 @@ export default function MobileRoutePanel({ route, onClose }: MobileRoutePanelPro
                 {/* Quick Stats */}
                 <div className="flex gap-4 mb-6">
                     <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
-                        <Clock size={14} className="text-amber-500" />
+                        <Clock size={14} className="text-secondary" />
                         <span>{route.duration}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
@@ -80,7 +80,7 @@ export default function MobileRoutePanel({ route, onClose }: MobileRoutePanelPro
                         </div>
                     </div>
                     <Link href={`/booking?from=${encodeURIComponent(route.origin)}&to=${encodeURIComponent(route.destination)}&service=transfer`} className="flex-1">
-                        <GlassButton variant="primary" className="w-full justify-center bg-amber-500 hover:bg-amber-600 text-slate-900 border-none">
+                        <GlassButton variant="primary" className="w-full justify-center bg-secondary hover:bg-secondary/90 text-slate-900 border-none">
                             Book Now <ArrowRight size={16} className="ml-2" />
                         </GlassButton>
                     </Link>

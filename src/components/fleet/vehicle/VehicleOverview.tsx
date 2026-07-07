@@ -41,7 +41,7 @@ export default function VehicleOverview({
                             className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-in-out"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                        <div className="absolute bottom-6 left-6 bg-amber-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">
+                        <div className="absolute bottom-6 left-6 bg-secondary text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">
                             {modelYear} Model
                         </div>
                     </div>
@@ -56,28 +56,28 @@ export default function VehicleOverview({
                         <div className="grid grid-cols-2 gap-6 mb-10">
                             <div className="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                                 <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                    <Users className="text-amber-500" size={24} /> {passengers} Passengers
+                                    <Users className="text-secondary" size={24} /> {passengers} Passengers
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                                 <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                    <Briefcase className="text-amber-500" size={24} /> {luggage}
+                                    <Briefcase className="text-secondary" size={24} /> {luggage}
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                                 <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                    <Wifi className="text-amber-500" size={24} /> {tech}
+                                    <Wifi className="text-secondary" size={24} /> {tech}
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                                 <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
-                                    <Fuel className="text-amber-500" size={24} /> {fuel}
+                                    <Fuel className="text-secondary" size={24} /> {fuel}
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <Link href={bookLink} className="inline-flex items-center gap-3 bg-slate-900 text-white hover:bg-amber-500 dark:bg-white dark:text-slate-900 dark:hover:bg-amber-500 dark:hover:text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-amber-500/30 text-lg">
+                            <Link href={bookLink} className="inline-flex items-center gap-3 bg-slate-900 text-white hover:bg-secondary dark:bg-white dark:text-slate-900 dark:hover:bg-secondary dark:hover:text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-amber-500/30 text-lg">
                                 Book Now <ArrowRight size={20} />
                             </Link>
                         </div>

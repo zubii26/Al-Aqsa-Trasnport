@@ -150,7 +150,7 @@ export default async function MadinahAirportPage() {
 
                             <div className="space-y-6">
                                 <div className="flex gap-4">
-                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-amber-500">
+                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-secondary">
                                         <Plane size={24} />
                                     </div>
                                     <div>
@@ -159,7 +159,7 @@ export default async function MadinahAirportPage() {
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
-                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-amber-500">
+                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-secondary">
                                         <Hotel size={24} />
                                     </div>
                                     <div>
@@ -168,7 +168,7 @@ export default async function MadinahAirportPage() {
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
-                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-amber-500">
+                                    <div className="bg-slate-100 dark:bg-slate-800 p-3 rounded-full h-fit text-secondary">
                                         <Clock size={24} />
                                     </div>
                                     <div>
@@ -192,7 +192,7 @@ export default async function MadinahAirportPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-lg shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <MapPin className="text-amber-500" size={20} />
+                                        <MapPin className="text-secondary" size={20} />
                                         <div>
                                             <p className="font-bold text-slate-800 dark:text-white">To Masjid Nabawi</p>
                                             <p className="text-xs text-slate-500">Central Hotels</p>

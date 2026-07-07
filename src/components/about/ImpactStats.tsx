@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import React, { useState, useEffect, useRef } from 'react';
+import { useInView } from 'framer-motion';
 import { Users, MapPin, Star, Calendar } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 
 const Counter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
     const [count, setCount] = useState(0);
-    const [ref, isIntersecting] = useIntersectionObserver({ threshold: 0.5 });
+    const ref = useRef<HTMLElement>(null);
+    const isInView = useInView(ref, { once: true, amount: 0.5 });
     const [hasAnimated, setHasAnimated] = useState(false);
 
     useEffect(() => {
-        if (isIntersecting && !hasAnimated) {
+        if (isInView && !hasAnimated) {
             setTimeout(() => setHasAnimated(true), 0);
             let startTime: number | null = null;
             const step = (timestamp: number) => {
@@ -24,9 +25,9 @@ const Counter = ({ end, duration = 2000 }: { end: number; duration?: number }) =
             };
             window.requestAnimationFrame(step);
         }
-    }, [isIntersecting, end, duration, hasAnimated]);
+    }, [isInView, end, duration, hasAnimated]);
 
-    return <span ref={ref as unknown as React.RefObject<HTMLElement>}>{count.toLocaleString()}+</span>;
+    return <span ref={ref as unknown as React.RefObject<HTMLSpanElement>}>{count.toLocaleString()}+</span>;
 };
 
 export default function ImpactStats() {
@@ -42,7 +43,7 @@ export default function ImpactStats() {
         <section className="py-16 md:py-24 relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-white dark:from-slate-900 dark:to-slate-950 -z-10" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 dark:bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 dark:bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -50,9 +51,9 @@ export default function ImpactStats() {
                         <GlassCard
                             key={stat.id}
                             delay={index * 0.1}
-                            className="flex flex-col items-center justify-center text-center p-8 group hover:border-amber-500/30 transition-colors duration-500"
+                            className="flex flex-col items-center justify-center text-center p-8 group hover:border-secondary/30 transition-colors duration-500"
                         >
-                            <div className="mb-4 text-amber-600 dark:text-amber-500 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-full group-hover:scale-110 transition-transform duration-300">
+                            <div className="mb-4 text-secondary dark:text-secondary p-4 bg-secondary/10 dark:bg-secondary/20 rounded-full group-hover:scale-110 transition-transform duration-300">
                                 <stat.icon size={32} strokeWidth={1.5} />
                             </div>
                             <div className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 mb-2 font-outfit">

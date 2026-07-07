@@ -128,25 +128,25 @@ export default function SEOContentSection() {
                                 <ul className="space-y-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        <Link href="/services/jeddah-airport-transfer" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                        <Link href="/services/jeddah-airport-transfer" className="hover:text-secondary transition-colors underline-offset-4 hover:underline">
                                             Jeddah Airport (KAIA) to Makkah Hotel
                                         </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        <Link href="/services/makkah-madinah-taxi" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                        <Link href="/services/makkah-madinah-taxi" className="hover:text-secondary transition-colors underline-offset-4 hover:underline">
                                             Makkah Hotel to Madinah Munawwarah
                                         </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        <Link href="/services/madinah-airport-transfer" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                        <Link href="/services/madinah-airport-transfer" className="hover:text-secondary transition-colors underline-offset-4 hover:underline">
                                             Madinah Airport to Masjid Nabawi
                                         </Link>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                                        <Link href="/services/ziyarat-tours" className="hover:text-amber-600 transition-colors underline-offset-4 hover:underline">
+                                        <Link href="/services/ziyarat-tours" className="hover:text-secondary transition-colors underline-offset-4 hover:underline">
                                             VIP Ziarah & Haram Shuttle Services
                                         </Link>
                                     </li>

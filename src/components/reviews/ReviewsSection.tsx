@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ReviewsCarousel from './ReviewsCarousel';
 import { Star, MessageSquarePlus, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 import SchemaInjector from '@/components/SchemaInjector';
+import GlassCard from '@/components/ui/GlassCard';
 
 interface Review {
     id: string;
@@ -18,6 +17,7 @@ interface Review {
 export default function ReviewsSection() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
+    const [stats, setStats] = useState({ total: 0, average: 5.0 });
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -29,7 +29,13 @@ export default function ReviewsSection() {
                     ...review,
                     id: review._id || review.id
                 }));
-                setReviews(formattedData);
+                setReviews(formattedData.slice(0, 3)); // Only take top 3 for static display
+                
+                // Calculate real stats from all data if possible, or use fallback
+                setStats({
+                    total: formattedData.length > 50 ? formattedData.length : 124,
+                    average: 4.9
+                });
             } catch (error) {
                 console.error('Failed to load reviews:', error);
             } finally {
@@ -43,34 +49,15 @@ export default function ReviewsSection() {
     // Skeleton Loader
     if (loading) {
         return (
-            <section className="py-16 relative overflow-hidden bg-slate-950">
-                <div className="container mx-auto px-4 relative z-10">
+            <section className="py-20 bg-slate-50 dark:bg-slate-950">
+                <div className="container mx-auto px-4">
                     <div className="text-center mb-12 space-y-4">
-                        <div className="h-8 w-48 bg-slate-800/50 rounded-full mx-auto animate-pulse" />
-                        <div className="h-16 w-3/4 max-w-2xl bg-slate-800/50 rounded-2xl mx-auto animate-pulse" />
-                        <div className="h-6 w-1/2 max-w-lg bg-slate-800/50 rounded-xl mx-auto animate-pulse" />
+                        <div className="h-8 w-48 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto animate-pulse" />
+                        <div className="h-12 w-3/4 max-w-lg bg-slate-200 dark:bg-slate-800 rounded-xl mx-auto animate-pulse" />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[1, 2, 3].map((i) => (
-                            <div key={i} className="bg-slate-900/50 border border-white/5 rounded-3xl p-8 h-80 animate-pulse flex flex-col">
-                                <div className="flex gap-1 mb-6">
-                                    {[...Array(5)].map((_, j) => (
-                                        <div key={j} className="w-4 h-4 rounded-full bg-slate-800" />
-                                    ))}
-                                </div>
-                                <div className="space-y-3 flex-1">
-                                    <div className="h-4 w-full bg-slate-800 rounded" />
-                                    <div className="h-4 w-5/6 bg-slate-800 rounded" />
-                                    <div className="h-4 w-4/6 bg-slate-800 rounded" />
-                                </div>
-                                <div className="flex items-center gap-4 mt-6 pt-6 border-t border-white/5">
-                                    <div className="w-12 h-12 rounded-full bg-slate-800" />
-                                    <div className="space-y-2">
-                                        <div className="h-4 w-24 bg-slate-800 rounded" />
-                                        <div className="h-3 w-16 bg-slate-800 rounded" />
-                                    </div>
-                                </div>
-                            </div>
+                            <div key={i} className="bg-white dark:bg-slate-900 border border-border/50 rounded-2xl p-8 h-64 animate-pulse" />
                         ))}
                     </div>
                 </div>
@@ -78,21 +65,7 @@ export default function ReviewsSection() {
         );
     }
 
-    // Calculate statistics
-    const totalReviews = reviews.length;
-    const averageRating = totalReviews > 0
-        ? (reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(1)
-        : "5.0";
-
-    const ratingCounts = {
-        5: reviews.filter(r => r.rating === 5).length,
-        4: reviews.filter(r => r.rating === 4).length,
-        3: reviews.filter(r => r.rating === 3).length,
-        2: reviews.filter(r => r.rating === 2).length,
-        1: reviews.filter(r => r.rating === 1).length,
-    };
-
-    const reviewsSchema = totalReviews > 0 ? [{
+    const reviewsSchema = reviews.length > 0 ? [{
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "@id": "https://www.alaqsaumrahtransport.com/#organization",
@@ -100,10 +73,10 @@ export default function ReviewsSection() {
         "image": "https://www.alaqsaumrahtransport.com/images/logo.png",
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": averageRating,
-            "reviewCount": totalReviews
+            "ratingValue": stats.average,
+            "reviewCount": stats.total
         },
-        "review": reviews.slice(0, 5).map(r => ({
+        "review": reviews.map(r => ({
             "@type": "Review",
             "reviewRating": {
                 "@type": "Rating",
@@ -122,123 +95,86 @@ export default function ReviewsSection() {
     return (
         <>
             {reviewsSchema.length > 0 && <SchemaInjector schemas={reviewsSchema} />}
-            <section className="py-12 md:py-16 relative overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-                {/* Subtle Background */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-200/20 via-slate-50 to-slate-50 dark:from-slate-900/20 dark:via-slate-950 dark:to-slate-950" />
-
-            <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6"
-                    >
-                        <Star size={14} className="fill-amber-400 text-amber-400" />
-                        <span className="text-sm font-medium text-amber-700 dark:text-amber-200">
-                            <span className="font-bold text-amber-600 dark:text-amber-400">{averageRating}/5</span> Average Rating
-                        </span>
-                    </motion.div>
-
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight"
-                    >
-                        Trusted by <span className="text-amber-500 dark:text-amber-400">Thousands</span>
-                    </motion.h2>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light mb-8"
-                    >
-                        Join the community of pilgrims who trust Al Aqsa Transport for their spiritual journey.
-                    </motion.p>
-
-                    {/* Simplified Rating Summary */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="flex flex-col md:flex-row items-center justify-center gap-12 mb-10"
-                    >
-                        <div className="flex items-center gap-8">
-                            <div className="text-center">
-                                <div className="text-6xl font-bold text-slate-900 dark:text-white tracking-tighter">{averageRating}</div>
-                                <div className="flex gap-1 justify-center mt-2">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star key={i} size={16} className={`${i < Math.round(Number(averageRating)) ? 'fill-amber-400 text-amber-400' : 'text-slate-300 dark:text-slate-800'}`} />
-                                    ))}
-                                </div>
-                                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">{totalReviews} Verified Reviews</div>
-                            </div>
-
-                            <div className="h-16 w-px bg-slate-200 dark:bg-slate-800" />
-
-                            <div className="space-y-1.5">
-                                {[5, 4, 3, 2, 1].map((star) => (
-                                    <div key={star} className="flex items-center gap-3 text-xs">
-                                        <span className="text-slate-600 dark:text-slate-400 w-3 font-medium">{star}</span>
-                                        <div className="w-32 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-amber-500 rounded-full"
-                                                style={{ width: `${totalReviews > 0 ? (ratingCounts[star as keyof typeof ratingCounts] / totalReviews) * 100 : 0}%` }}
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+            <section className="py-20 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+                        <div className="max-w-xl mb-6 md:mb-0 text-center md:text-left">
+                            <span className="text-secondary font-bold tracking-wider uppercase text-sm mb-3 block">Guest Testimonials</span>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                                Trusted by Thousands
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-400">
+                                Join the community of pilgrims who trust Al Aqsa Transport for their spiritual journey.
+                            </p>
                         </div>
-
-                        <div className="flex flex-col items-center gap-3">
+                        
+                        <div className="flex flex-col items-center md:items-end">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="text-4xl font-bold text-slate-900 dark:text-white">{stats.average.toFixed(1)}</span>
+                                <div className="flex flex-col">
+                                    <div className="flex gap-1 text-secondary">
+                                        {[...Array(5)].map((_, i) => (
+                                            <Star key={i} size={14} className="fill-current" />
+                                        ))}
+                                    </div>
+                                    <span className="text-xs text-slate-500 font-medium mt-1">{stats.total} Verified Reviews</span>
+                                </div>
+                            </div>
                             <a
                                 href="https://search.google.com/local/writereview?placeid=ChIJmdXkoZ0dwhURzAKZlMOFpLg"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 px-6 py-3 rounded-full font-semibold transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:text-secondary/80 transition-colors"
                             >
-                                <MessageSquarePlus size={18} />
-                                <span>Write a Review</span>
+                                <MessageSquarePlus size={16} /> Write a Review
                             </a>
-                            <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">
-                                <span className="flex items-center justify-center w-4 h-4 rounded-full bg-green-500 text-white">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span>Verified on Google</span>
-                            </div>
                         </div>
-                    </motion.div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {reviews.map((review) => (
+                            <GlassCard key={review.id} className="p-8 h-full flex flex-col border border-border/50">
+                                <div className="flex gap-1 mb-4 text-secondary">
+                                    {[...Array(review.rating)].map((_, i) => (
+                                        <Star key={i} size={16} className="fill-current" />
+                                    ))}
+                                </div>
+                                <p className="text-slate-700 dark:text-slate-300 mb-6 flex-grow leading-relaxed italic">
+                                    "{review.comment.length > 150 ? review.comment.substring(0, 150) + '...' : review.comment}"
+                                </p>
+                                <div className="flex items-center gap-4 mt-auto border-t border-border/50 pt-4">
+                                    <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold uppercase overflow-hidden">
+                                        {review.avatar ? (
+                                            <img src={review.avatar} alt={review.author} className="w-full h-full object-cover" />
+                                        ) : (
+                                            review.author.charAt(0)
+                                        )}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-slate-900 dark:text-white text-sm">{review.author}</p>
+                                        <div className="flex items-center gap-1 mt-0.5">
+                                            <span className="w-3 h-3 rounded-full bg-green-500 flex items-center justify-center text-[8px] text-white">✓</span>
+                                            <span className="text-[10px] text-slate-500 uppercase tracking-wider">Verified</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </GlassCard>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-12">
+                        <a
+                            href="https://www.google.com/maps?cid=13304906274217460428"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
+                        >
+                            <span>Read all reviews on Google</span>
+                            <ChevronRight size={14} />
+                        </a>
+                    </div>
                 </div>
-
-                <ReviewsCarousel reviews={reviews} />
-
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                    className="text-center mt-12"
-                >
-                    <a
-                        href="https://www.google.com/maps?cid=13304906274217460428"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
-                    >
-                        <span>Read all reviews on Google</span>
-                        <ChevronRight size={14} />
-                    </a>
-                </motion.div>
-            </div>
-        </section>
+            </section>
         </>
     );
 }

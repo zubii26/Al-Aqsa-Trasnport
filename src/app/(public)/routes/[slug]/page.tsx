@@ -127,21 +127,21 @@ export default function RouteDetail({ params }: Props) {
                         {/* Quick Stats Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-slate-100 dark:border-slate-800">
                             <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl">
-                                <Clock className="text-amber-500 w-8 h-8 shrink-0" />
+                                <Clock className="text-secondary w-8 h-8 shrink-0" />
                                 <div>
                                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Est. Travel Time</h4>
                                     <p className="text-lg font-bold text-slate-900 dark:text-white">{route.time}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl">
-                                <Navigation className="text-amber-500 w-8 h-8 shrink-0" />
+                                <Navigation className="text-secondary w-8 h-8 shrink-0" />
                                 <div>
                                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Distance</h4>
                                     <p className="text-lg font-bold text-slate-900 dark:text-white">{route.distance}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl">
-                                <CheckCircle className="text-amber-500 w-8 h-8 shrink-0" />
+                                <CheckCircle className="text-secondary w-8 h-8 shrink-0" />
                                 <div>
                                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Availability</h4>
                                     <p className="text-lg font-bold text-slate-900 dark:text-white">24/7 Service</p>

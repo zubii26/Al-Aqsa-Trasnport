@@ -8,7 +8,7 @@ export default function SafetyPromise() {
             <div className="container mx-auto px-4">
                 <div className="bg-slate-900 dark:bg-slate-950 rounded-[32px] overflow-hidden shadow-2xl relative backdrop-blur-2xl border border-slate-800">
                     {/* Decorative Background Effects */}
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] -mr-48 -mt-48 opacity-40 animate-pulse-slow"></div>
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] -mr-48 -mt-48 opacity-40 animate-pulse-slow"></div>
                     <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-48 -mb-48 opacity-40"></div>
                     <div className="absolute inset-0 bg-[url('/images/pattern-grid.png')] opacity-[0.03] mix-blend-overlay"></div>
 
@@ -50,13 +50,13 @@ export default function SafetyPromise() {
                             >
                                 {/* Feature Card 1 */}
                                 <motion.div 
-                                    className="card-base trust-card group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300"
+                                    className="card-base trust-card group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-secondary/30 transition-all duration-300"
                                     variants={{
                                         hidden: { opacity: 0, y: 40, rotateX: 12 },
                                         visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
                                     }}
                                 >
-                                    <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg p-3 text-slate-900 shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
+                                    <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg p-3 text-slate-900 shadow-lg shadow-secondary/20 group-hover:scale-110 transition-transform">
                                         <Clock size={24} strokeWidth={1.25} />
                                     </div>
                                     <div>
@@ -123,7 +123,7 @@ export default function SafetyPromise() {
                                         ].map((item, idx) => (
                                             <div key={idx} className="flex gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors group cursor-default">
                                                 <div className="flex-shrink-0 relative">
-                                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-500 font-bold font-mono group-hover:border-amber-500 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all duration-300 z-10 relative shadow-lg">
+                                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-secondary font-bold font-mono group-hover:border-secondary group-hover:bg-secondary group-hover:text-slate-900 transition-all duration-300 z-10 relative shadow-lg">
                                                         {item.step}
                                                     </div>
                                                     {idx !== 2 && <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[2px] h-full bg-slate-800 group-hover:bg-slate-700 transition-colors -z-0"></div>}

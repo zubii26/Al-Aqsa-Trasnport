@@ -45,7 +45,7 @@ export default function RateBookingPage({ params }: { params: Promise<{ id: stri
                     <p className="text-slate-500">
                         Your feedback helps us improve our service. We hope to see you again soon.
                     </p>
-                    <Link href="/" className="inline-block mt-4 px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors">
+                    <Link href="/" className="inline-block mt-4 px-6 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors">
                         Return Home
                     </Link>
                 </div>
@@ -57,7 +57,7 @@ export default function RateBookingPage({ params }: { params: Promise<{ id: stri
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
             <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-secondary/20 text-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                         <Car size={32} />
                     </div>
                     <h1 className="text-2xl font-bold text-slate-800">Rate Your Trip</h1>
@@ -87,7 +87,7 @@ export default function RateBookingPage({ params }: { params: Promise<{ id: stri
                         ))}
                     </div>
 
-                    <div className="text-center text-sm font-medium text-amber-600 min-h-[20px]">
+                    <div className="text-center text-sm font-medium text-secondary min-h-[20px]">
                         {rating === 5 ? "Excellent!" :
                             rating === 4 ? "Very Good" :
                                 rating === 3 ? "Good" :
@@ -102,7 +102,7 @@ export default function RateBookingPage({ params }: { params: Promise<{ id: stri
                         <textarea
                             value={review}
                             onChange={(e) => setReview(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none min-h-[100px] resize-none"
+                            className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none min-h-[100px] resize-none"
                             placeholder="Tell us about your driver, vehicle, or overall experience..."
                         />
                     </div>

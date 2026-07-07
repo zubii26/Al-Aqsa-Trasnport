@@ -69,7 +69,7 @@ export default function RouteMap() {
 
                                     {/* Destination */}
                                     <div className="flex items-center gap-3 w-full md:w-1/3 justify-end md:flex-row-reverse">
-                                        <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600">
+                                        <div className="w-10 h-10 rounded-full bg-secondary/20 dark:bg-secondary/30 flex items-center justify-center text-secondary">
                                             <MapPin size={20} />
                                         </div>
                                         <span className="font-bold text-lg text-right">{route.to}</span>

@@ -29,8 +29,8 @@ const TopBar = async () => {
                             href={`mailto:${contact.email}`}
                             className="flex items-center gap-2 group transition-colors duration-300"
                         >
-                            <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-amber-500 transition-colors duration-300">
-                                <Mail size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                            <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-secondary transition-colors duration-300">
+                                <Mail size={12} className="text-secondary group-hover:text-white transition-colors duration-300" />
                             </div>
                             <span className="group-hover:text-white transition-colors duration-300">{contact.email}</span>
                         </a>
@@ -44,7 +44,7 @@ const TopBar = async () => {
                             className="flex items-center gap-2 group transition-colors duration-300"
                         >
                             <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#25D366] transition-colors duration-300">
-                                <Phone size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                                <Phone size={12} className="text-secondary group-hover:text-white transition-colors duration-300" />
                             </div>
                             <span className="group-hover:text-white transition-colors duration-300">{contact.phone}</span>
                         </a>
@@ -59,7 +59,7 @@ const TopBar = async () => {
                                 className="flex items-center gap-2 group transition-colors duration-300"
                             >
                                 <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#25D366] transition-colors duration-300">
-                                    <Phone size={12} className="text-amber-500 group-hover:text-white transition-colors duration-300" />
+                                    <Phone size={12} className="text-secondary group-hover:text-white transition-colors duration-300" />
                                 </div>
                                 <span className="group-hover:text-white transition-colors duration-300">{contact.phone2}</span>
                             </a>
@@ -106,7 +106,7 @@ const TopBar = async () => {
                                     target="_blank"
                                     rel="noreferrer"
                                     aria-label={social.label}
-                                    className="w-7 h-7 flex items-center justify-center rounded-full bg-white/5 text-slate-400 hover:bg-amber-500 hover:text-white hover:-translate-y-0.5 transition-all duration-300"
+                                    className="w-7 h-7 flex items-center justify-center rounded-full bg-white/5 text-slate-400 hover:bg-secondary hover:text-white hover:-translate-y-0.5 transition-all duration-300"
                                 >
                                     <social.icon size={13} />
                                 </a>

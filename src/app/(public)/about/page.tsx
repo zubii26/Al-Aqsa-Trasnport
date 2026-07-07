@@ -12,6 +12,7 @@ import TeamTeaser from '@/components/about/TeamTeaser';
 import PilgrimVoices from '@/components/about/PilgrimVoices';
 import { getSectionContent, getSectionImage } from '@/lib/content-service';
 import SchemaInjector from '@/components/SchemaInjector';
+import ExpandedSEOContent from '@/components/home/ExpandedSEOContent';
 
 
 
@@ -85,6 +86,7 @@ export default async function AboutPage() {
                 <TrustSection />
                 <TeamTeaser />
                 <PilgrimVoices />
+                <ExpandedSEOContent />
                 <SEOContent />
             </div>
         </main>

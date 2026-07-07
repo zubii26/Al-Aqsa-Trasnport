@@ -92,7 +92,7 @@ export default function NotificationBell() {
                         {unreadCount > 0 && (
                             <button
                                 onClick={() => markAsRead()}
-                                className="text-xs text-amber-500 hover:text-amber-600 font-medium"
+                                className="text-xs text-secondary hover:text-secondary font-medium"
                             >
                                 Mark all read
                             </button>
@@ -110,10 +110,10 @@ export default function NotificationBell() {
                                     <div
                                         key={notification._id}
                                         onClick={() => handleNotificationClick(notification)}
-                                        className={`p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer flex gap-3 ${!notification.isRead ? 'bg-amber-50/50 dark:bg-amber-900/10' : ''
+                                        className={`p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer flex gap-3 ${!notification.isRead ? 'bg-secondary/10/50 dark:bg-amber-900/10' : ''
                                             }`}
                                     >
-                                        <div className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${!notification.isRead ? 'bg-amber-500' : 'bg-slate-300'
+                                        <div className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${!notification.isRead ? 'bg-secondary' : 'bg-slate-300'
                                             }`} />
                                         <div className="flex-1">
                                             <p className={`text-sm ${!notification.isRead ? 'font-medium text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'}`}>

@@ -150,7 +150,7 @@
     color: hsl(var(--muted-foreground));
     text-decoration: none;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contactItem:hover {
@@ -204,7 +204,7 @@
 .links a {
     color: hsl(var(--muted-foreground));
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     min-height: 44px; /* Strict 44px touch target */
@@ -255,7 +255,7 @@
     align-items: center;
     justify-content: center;
     color: hsl(var(--muted-foreground));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(4px);
@@ -332,7 +332,7 @@
     border-radius: 12px;
     color: hsl(var(--foreground));
     outline: none;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input:focus {
@@ -354,7 +354,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .submitBtn:hover {

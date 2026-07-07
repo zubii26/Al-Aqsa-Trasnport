@@ -52,17 +52,17 @@ export default function VehicleCTA({
                     {/* Trust Badges */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-white/10">
                         <div className="flex flex-col items-center gap-3">
-                            <ShieldCheck className="text-amber-500 w-10 h-10" />
+                            <ShieldCheck className="text-secondary w-10 h-10" />
                             <h4 className="font-bold text-lg">Licensed & Insured</h4>
                             <p className="text-sm text-slate-400">Authorized Umrah Transport</p>
                         </div>
                         <div className="flex flex-col items-center gap-3">
-                            <Clock className="text-amber-500 w-10 h-10" />
+                            <Clock className="text-secondary w-10 h-10" />
                             <h4 className="font-bold text-lg">24/7 Availability</h4>
                             <p className="text-sm text-slate-400">Always ready for airport pickups</p>
                         </div>
                         <div className="flex flex-col items-center gap-3">
-                            <Award className="text-amber-500 w-10 h-10" />
+                            <Award className="text-secondary w-10 h-10" />
                             <h4 className="font-bold text-lg">10,000+ Pilgrims</h4>
                             <p className="text-sm text-slate-400">Trusted by families worldwide</p>
                         </div>

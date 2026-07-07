@@ -59,7 +59,7 @@ export default function PasswordConfirmModal({
             <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-md border border-slate-200 dark:border-slate-700 animate-in zoom-in-95 duration-200">
                 <div className="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-700">
                     <div className="flex items-center gap-2 text-slate-800 dark:text-white font-semibold">
-                        <Lock className="w-5 h-5 text-amber-500" />
+                        <Lock className="w-5 h-5 text-secondary" />
                         {title}
                     </div>
                     <button
@@ -83,7 +83,7 @@ export default function PasswordConfirmModal({
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                            className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                             placeholder="Enter your admin password"
                             autoFocus
                         />
@@ -107,7 +107,7 @@ export default function PasswordConfirmModal({
                         <button
                             type="submit"
                             disabled={loading || !password}
-                            className="flex-1 px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-2 rounded-lg bg-secondary hover:bg-secondary/90 text-white font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                         >
                             {loading ? <Loader2 size={18} className="animate-spin" /> : null}
                             {actionLabel}

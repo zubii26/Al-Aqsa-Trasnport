@@ -48,7 +48,7 @@ export default function VehicleGallery({
                     {hasMore && !showAll && (
                         <button 
                             onClick={() => setShowAll(true)}
-                            className="hidden md:flex items-center gap-2 text-amber-500 font-bold hover:text-amber-600 transition-colors"
+                            className="hidden md:flex items-center gap-2 text-secondary font-bold hover:text-secondary transition-colors"
                         >
                             <Camera size={20} /> View All {images.length} Photos
                         </button>
@@ -80,7 +80,7 @@ export default function VehicleGallery({
                     <div className="mt-8 text-center md:hidden">
                         <button 
                             onClick={() => setShowAll(true)}
-                            className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-amber-500 hover:text-amber-500 px-6 py-3 rounded-full font-bold transition-colors"
+                            className="inline-flex items-center gap-2 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-secondary hover:text-secondary px-6 py-3 rounded-full font-bold transition-colors"
                         >
                             <Camera size={20} /> View All {images.length} Photos
                         </button>
@@ -93,14 +93,14 @@ export default function VehicleGallery({
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-sm">
                     <button 
                         onClick={closeLightbox}
-                        className="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-50 bg-slate-900/50 p-2 rounded-full"
+                        className="absolute top-6 right-6 text-white hover:text-secondary transition-colors z-50 bg-slate-900/50 p-2 rounded-full"
                     >
                         <X strokeWidth={1.25} size={32} />
                     </button>
 
                     <button 
                         onClick={(e) => { e.stopPropagation(); navigateLightbox('prev'); }}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-amber-500 transition-colors z-50 bg-slate-900/50 p-3 rounded-full"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-secondary transition-colors z-50 bg-slate-900/50 p-3 rounded-full"
                     >
                         <ChevronLeft size={36} />
                     </button>
@@ -121,7 +121,7 @@ export default function VehicleGallery({
 
                     <button 
                         onClick={(e) => { e.stopPropagation(); navigateLightbox('next'); }}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-amber-500 transition-colors z-50 bg-slate-900/50 p-3 rounded-full"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-secondary transition-colors z-50 bg-slate-900/50 p-3 rounded-full"
                     >
                         <ChevronRight size={36} />
                     </button>

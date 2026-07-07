@@ -69,7 +69,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                             className={`
                                 relative p-1 rounded-[24px] cursor-pointer transition-all duration-300 group ios-glass
                                 ${isSelected
-                                    ? 'bg-gradient-to-br from-amber-400 to-amber-600 shadow-xl shadow-amber-500/20 scale-[1.02]'
+                                    ? 'bg-gradient-to-br from-amber-400 to-amber-600 shadow-xl shadow-secondary/20 scale-[1.02]'
                                     : 'bg-slate-100/50 dark:bg-slate-800/50 hover:scale-[1.01] hover:bg-slate-200/50'}
                             `}
                         >
@@ -84,7 +84,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                             </div>
                                         )}
                                         {vehicle.name.includes('GMC') && (
-                                            <div className="absolute top-1 right-1 bg-amber-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter">
+                                            <div className="absolute top-1 right-1 bg-secondary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter">
                                                 VIP
                                             </div>
                                         )}
@@ -95,16 +95,16 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                             <h3 className="font-black text-slate-900 dark:text-white text-lg leading-tight truncate">
                                                 {vehicle.name}
                                             </h3>
-                                            {isSelected && <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md"><Check size={14} strokeWidth={1.25} /></div>}
+                                            {isSelected && <div className="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shadow-md"><Check size={14} strokeWidth={1.25} /></div>}
                                         </div>
 
                                         <div className="flex items-center gap-3 mt-2">
                                             <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                                                <Users size={12} strokeWidth={1.25} className="text-amber-500" />
+                                                <Users size={12} strokeWidth={1.25} className="text-secondary" />
                                                 {vehicle.capacity} PAX
                                             </div>
                                             <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                                                <Briefcase size={12} strokeWidth={1.25} className="text-amber-500" />
+                                                <Briefcase size={12} strokeWidth={1.25} className="text-secondary" />
                                                 {vehicle.luggage} BAGS
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                                     )}
                                                 </div>
                                             ) : (
-                                                <span className="text-xs font-bold text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full uppercase tracking-widest">
+                                                <span className="text-xs font-bold text-secondary bg-secondary/10 dark:bg-secondary/20 px-3 py-1 rounded-full uppercase tracking-widest">
                                                     Quote Basis
                                                 </span>
                                             )}
@@ -158,7 +158,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                 setUseSameVehicle(e.target.checked);
                                 updateData({ sameVehicleForAllLegs: e.target.checked });
                             }}
-                            className="w-5 h-5 rounded text-amber-500 focus:ring-amber-500 focus:ring-offset-0 border-slate-300"
+                            className="w-5 h-5 rounded text-secondary focus:ring-secondary focus:ring-offset-0 border-slate-300"
                         />
                         <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
                             Use the same vehicle for all {data.legs.length} routes
@@ -180,7 +180,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                                 className={`
                                     flex-none snap-start px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap
                                     ${activeLegIndex === index 
-                                        ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' 
+                                        ? 'bg-secondary text-white shadow-lg shadow-secondary/20' 
                                         : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700'}
                                 `}
                             >
@@ -192,7 +192,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
 
                     <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800">
                         <div className="flex items-center gap-2 mb-4 text-slate-500 text-sm font-medium">
-                            <MapPin size={16} className="text-amber-500" />
+                            <MapPin size={16} className="text-secondary" />
                             {data.legs[activeLegIndex].pickup} <ArrowRight size={14} className="mx-1 opacity-50" /> {data.legs[activeLegIndex].dropoff}
                         </div>
                         {renderVehicleList(activeLegIndex)}
@@ -213,7 +213,7 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                     className={`
                         flex-1 py-5 font-bold rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 group
                         ${!isNextDisabled()
-                            ? 'bg-slate-900 dark:bg-amber-500 text-white hover:bg-slate-800 dark:hover:bg-amber-600'
+                            ? 'bg-slate-900 dark:bg-secondary text-white hover:bg-slate-800 dark:hover:bg-secondary/90'
                             : 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'}
                     `}
                 >

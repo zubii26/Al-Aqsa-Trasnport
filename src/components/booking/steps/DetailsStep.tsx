@@ -94,7 +94,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <Link href="/" className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all">
                         Back to Home
                     </Link>
-                    <button onClick={() => window.location.reload()} className="text-amber-600 font-bold hover:underline">
+                    <button onClick={() => window.location.reload()} className="text-secondary font-bold hover:underline">
                         Book Another Trip
                     </button>
                 </div>
@@ -121,7 +121,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Full Name</label>
                         <div className="relative group">
-                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary transition-colors">
                                 <User size={20} strokeWidth={1.25} />
                             </div>
                             <input
@@ -133,7 +133,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
                                     border border-slate-100 dark:border-slate-800 
                                     rounded-[20px] outline-none transition-all ios-glass
-                                    focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                                    focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                                     text-slate-900 dark:text-white
                                     ${errors.name ? 'border-red-500' : ''}
                                 `}
@@ -144,7 +144,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</label>
                         <div className="relative group">
-                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary transition-colors">
                                 <Mail size={20} strokeWidth={1.25} />
                             </div>
                             <input
@@ -156,7 +156,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
                                     border border-slate-100 dark:border-slate-800 
                                     rounded-[20px] outline-none transition-all ios-glass
-                                    focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                                    focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                                     text-slate-900 dark:text-white
                                     ${errors.email ? 'border-red-500' : ''}
                                 `}
@@ -167,7 +167,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">WhatsApp / Phone</label>
                         <div className="relative group">
-                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary transition-colors">
                                 <Phone size={20} strokeWidth={1.25} />
                             </div>
                             <input
@@ -179,7 +179,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                     w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
                                     border border-slate-100 dark:border-slate-800 
                                     rounded-[20px] outline-none transition-all ios-glass
-                                    focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                                    focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                                     text-slate-900 dark:text-white
                                     ${errors.phone ? 'border-red-500' : ''}
                                 `}
@@ -190,14 +190,14 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Additional Notes (Optional)</label>
                         <div className="relative group">
-                            <div className="absolute left-4 top-5 text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                            <div className="absolute left-4 top-5 text-slate-400 group-focus-within:text-secondary transition-colors">
                                 <MessageSquare size={20} strokeWidth={1.25} />
                             </div>
                             <textarea
                                 placeholder="Luggage details, flight number, etc."
                                 value={data.notes || ''}
                                 onChange={(e) => updateData({ notes: e.target.value })}
-                                className="w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-[20px] outline-none transition-all focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white min-h-[58px] ios-glass"
+                                className="w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-[20px] outline-none transition-all focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10 text-slate-900 dark:text-white min-h-[58px] ios-glass"
                             />
                         </div>
                     </div>
@@ -214,10 +214,10 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                     const legVehicle = vehicles.find(v => v.id === leg.vehicleId);
                                     return (
                                         <div key={index} className="relative pl-8 pb-6 last:pb-0 border-l-2 border-slate-200 dark:border-slate-700 ml-4">
-                                            <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-500 border-4 border-slate-50 dark:border-slate-800" />
+                                            <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-secondary border-4 border-slate-50 dark:border-slate-800" />
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <p className="text-xs font-bold text-amber-500 uppercase">Route {index + 1}</p>
+                                                    <p className="text-xs font-bold text-secondary uppercase">Route {index + 1}</p>
                                                     <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                                                         {leg.pickup} <br />
                                                         <span className="text-slate-400 font-normal">to</span> <br />
@@ -230,7 +230,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                                 </div>
                                             </div>
                                             <div className="mt-3 flex items-center gap-2 bg-white dark:bg-slate-900/50 p-2 rounded-lg border border-slate-100 dark:border-slate-700 w-fit">
-                                                <Car size={14} className="text-amber-500" />
+                                                <Car size={14} className="text-secondary" />
                                                 <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
                                                     {legVehicle?.name || 'Any Available'}
                                                 </span>
@@ -241,14 +241,14 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                             ) : (
                                 <>
                                     <div className="flex gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500 flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 rounded-full bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-secondary flex items-center justify-center shrink-0">
                                             <MapPin size={20} strokeWidth={1.25} />
                                         </div>
                                         <div>
                                             <p className="text-xs font-bold text-slate-400">Route</p>
                                             <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight mt-1">
                                                 {data.pickup} <br />
-                                                <span className="text-amber-500">↓</span> <br />
+                                                <span className="text-secondary">↓</span> <br />
                                                 {data.dropoff}
                                             </p>
                                         </div>
@@ -286,7 +286,7 @@ export default function DetailsStep({ data, updateData, onBack }: DetailsStepPro
                                 <div className="flex justify-between items-end">
                                     <div>
                                         <p className="text-xs font-bold text-slate-400">Estimated Total</p>
-                                        <p className="text-3xl font-black text-amber-500">
+                                        <p className="text-3xl font-black text-secondary">
                                             {pricing ? pricing.price * (data.vehicleCount || 1) : 'Quote Required'}
                                             {pricing && <span className="text-sm ml-1">SAR</span>}
                                         </p>

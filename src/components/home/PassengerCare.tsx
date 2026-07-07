@@ -11,9 +11,9 @@ export default function PassengerCare() {
             <div className="container mx-auto px-4">
                 <FadeIn>
                     <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
-                        <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Dedicated Service</span>
+                        <span className="text-secondary dark:text-secondary font-bold uppercase tracking-widest text-sm mb-3 block">Dedicated Service</span>
                         <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-2 ">
-                            Tailored Care for <span className="text-amber-600 dark:text-amber-500">Every Guest</span>
+                            Tailored Care for <span className="text-secondary dark:text-secondary">Every Guest</span>
                         </h2>
                         <h3 className="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-6 font-reem-kufi">
                             عناية خاصة لكل ضيف
@@ -189,7 +189,7 @@ export default function PassengerCare() {
                         }}
                     >
                         <div className="w-full md:w-1/2 relative">
-                            <div className="absolute inset-0 bg-amber-500/10 rounded-3xl transform rotate-3 scale-105" />
+                            <div className="absolute inset-0 bg-secondary/10 rounded-3xl transform rotate-3 scale-105" />
                             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                                 <motion.div 
                                     className="gold-overlay absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/20 to-transparent pointer-events-none"
@@ -208,7 +208,7 @@ export default function PassengerCare() {
                                 />
                                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
                                     <div className="flex items-center gap-3 text-white">
-                                        <div className="bg-amber-500/20 backdrop-blur-md p-2 rounded-lg">
+                                        <div className="bg-secondary/20 backdrop-blur-md p-2 rounded-lg">
                                             <HeartHandshake size={24} className="text-amber-300" />
                                         </div>
                                         <span className="font-bold text-lg">Gentle Care for Elders</span>
@@ -218,29 +218,29 @@ export default function PassengerCare() {
                         </div>
                         <div className="w-full md:w-1/2">
                             <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2 ">
-                                Dignity & Patience for <span className="text-amber-600 dark:text-amber-500">Elderly Parents</span>
+                                Dignity & Patience for <span className="text-secondary dark:text-secondary">Elderly Parents</span>
                             </h3>
-                            <h4 className="text-xl font-bold text-amber-600 dark:text-amber-500 mb-6 font-reem-kufi">رعاية ورفق بكبار السن</h4>
+                            <h4 className="text-xl font-bold text-secondary dark:text-secondary mb-6 font-reem-kufi">رعاية ورفق بكبار السن</h4>
                             <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
-                                <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-300 px-1 font-semibold">Serving them is our Honor.</span> We understand the physical challenges of Umrah.
+                                <span className="bg-secondary/10 dark:bg-secondary/30 text-amber-900 dark:text-amber-300 px-1 font-semibold">Serving them is our Honor.</span> We understand the physical challenges of Umrah.
                                 Our chauffeurs are trained to be extra patient, providing physical assistance at every step to ensure your parents perform their pilgrimage with ease.
                             </p>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 shrink-0 mt-1" />
+                                    <CheckCircle2 className="text-secondary shrink-0 mt-1" />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Door-to-Door Assistance</strong> with boarding and alighting.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 shrink-0 mt-1" />
+                                    <CheckCircle2 className="text-secondary shrink-0 mt-1" />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Closest Hotel Drop-offs</strong> to minimize walking distance.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 shrink-0 mt-1" />
+                                    <CheckCircle2 className="text-secondary shrink-0 mt-1" />
                                     <span className="text-slate-700 dark:text-slate-300">Gentle driving style to protect sensitive backs/joints.</span>
                                 </li>
                             </ul>
                             <div className="mt-8">
-                                <a href="/blog/accessible-umrah-elderly-transport" className="inline-flex items-center text-amber-600 dark:text-amber-500 font-bold hover:underline group">
+                                <a href="/blog/accessible-umrah-elderly-transport" className="inline-flex items-center text-secondary dark:text-secondary font-bold hover:underline group">
                                     See Elderly Care Tips <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
                                 </a>
                             </div>

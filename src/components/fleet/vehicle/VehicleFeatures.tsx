@@ -21,7 +21,7 @@ export default function VehicleFeatures({
                     <div className="grid md:grid-cols-2 gap-x-12 gap-y-6 bg-slate-50 dark:bg-slate-800/50 p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-800">
                         {features.map((feature, idx) => (
                             <div key={idx} className="flex items-start gap-4">
-                                <CheckCircle2 className="text-amber-500 shrink-0 mt-1" size={24} />
+                                <CheckCircle2 className="text-secondary shrink-0 mt-1" size={24} />
                                 <span className="text-lg text-slate-700 dark:text-slate-300">
                                     {feature}
                                 </span>

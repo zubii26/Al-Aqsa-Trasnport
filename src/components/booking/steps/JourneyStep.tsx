@@ -144,7 +144,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                         className={`
                             flex flex-col items-center justify-center p-4 rounded-[20px] border transition-all ios-glass
                             ${data.serviceType === type.id
-                                ? 'border-amber-500 bg-amber-50 text-amber-600 dark:bg-amber-500/10'
+                                ? 'border-secondary bg-secondary/10 text-secondary dark:bg-secondary/10'
                                 : 'border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-200'}
                         `}
                     >
@@ -160,7 +160,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                     <div key={index} className="relative p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                <MapPin size={16} className="text-amber-500" />
+                                <MapPin size={16} className="text-secondary" />
                                 Route {index + 1}
                             </h3>
                             {index > 0 && (
@@ -196,7 +196,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Travel Date</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary z-10">
                                         <Calendar size={20} strokeWidth={1.25} />
                                     </div>
                                     <input
@@ -215,7 +215,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                             w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
                                             border border-slate-200 dark:border-slate-700 ios-glass
                                             rounded-[20px] outline-none transition-all
-                                            focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                                            focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                                             text-slate-900 dark:text-white
                                             ${errors[`date_${index}`] ? 'border-red-500' : ''}
                                             [color-scheme:light] dark:[color-scheme:dark]
@@ -228,7 +228,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Pickup Time</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 z-10">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary z-10">
                                         <Clock size={20} strokeWidth={1.25} />
                                     </div>
                                     <input
@@ -249,7 +249,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                             w-full pl-12 pr-4 py-4 bg-white/70 dark:bg-slate-900/50 
                                             border border-slate-200 dark:border-slate-700 ios-glass
                                             rounded-[20px] outline-none transition-all
-                                            focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                                            focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                                             text-slate-900 dark:text-white
                                             ${errors[`time_${index}`] ? 'border-red-500' : ''}
                                             [color-scheme:light] dark:[color-scheme:dark]
@@ -266,7 +266,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
             <div className="flex justify-center pt-2">
                 <button
                     onClick={addLeg}
-                    className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-amber-500 hover:text-amber-500 transition-colors font-bold text-sm"
+                    className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-secondary hover:text-secondary transition-colors font-bold text-sm"
                 >
                     <Plus size={18} /> Add Another Route
                 </button>
@@ -275,7 +275,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
             <div className="pt-6">
                 <button
                     onClick={handleNext}
-                    className="w-full py-5 bg-slate-900 dark:bg-amber-500 text-white font-bold rounded-2xl shadow-xl hover:bg-slate-800 dark:hover:bg-amber-600 transition-all flex items-center justify-center gap-2 group"
+                    className="w-full py-5 bg-slate-900 dark:bg-secondary text-white font-bold rounded-2xl shadow-xl hover:bg-slate-800 dark:hover:bg-secondary/90 transition-all flex items-center justify-center gap-2 group"
                 >
                     Choose Your Vehicle
                     <ArrowRight size={20} strokeWidth={1.25} className="group-hover:translate-x-1 transition-transform" />

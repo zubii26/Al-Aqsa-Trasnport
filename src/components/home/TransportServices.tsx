@@ -89,7 +89,7 @@ export default function TransportServices() {
             <div className="container relative z-10 mx-auto px-4" suppressHydrationWarning>
                 <FadeIn>
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Our Core Services</span>
+                        <span className="text-secondary font-bold tracking-wider uppercase text-sm mb-3 block">Our Core Services</span>
                         <h2 className="text-3xl md:text-5xl font-bold  text-slate-900 dark:text-white mb-6">
                             Premium Transport for <span className="text-gradient-gold">Your Spiritual Journey</span>
                         </h2>
@@ -133,7 +133,7 @@ export default function TransportServices() {
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                     className={`object-cover ${service.imagePosition || 'object-center'} transform group-hover:scale-110 transition-transform duration-700`}
                                 />
-                                <div className="absolute top-4 left-4 z-20 ios-icon-box p-2.5 text-amber-500 service-card-icon-wrap">
+                                <div className="absolute top-4 left-4 z-20 ios-icon-box p-2.5 text-secondary service-card-icon-wrap">
                                     {service.icon}
                                 </div>
                             </Link>
@@ -142,11 +142,11 @@ export default function TransportServices() {
                             <div className="p-6 flex flex-col flex-1">
                                 <div className="mb-4">
                                     <Link href={service.link}>
-                                        <h3 className="text-2xl font-bold  text-slate-900 dark:text-white mb-1 hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                        <h3 className="text-2xl font-bold  text-slate-900 dark:text-white mb-1 hover:text-secondary dark:hover:text-secondary transition-colors">
                                             {service.title}
                                         </h3>
                                     </Link>
-                                    <p className="text-sm font-medium text-amber-600 dark:text-amber-500">
+                                    <p className="text-sm font-medium text-secondary dark:text-secondary">
                                         {service.subtitle}
                                     </p>
                                 </div>
@@ -158,7 +158,7 @@ export default function TransportServices() {
                                 <div className="pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
                                     <Link
                                         href={service.link}
-                                        className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-500 font-semibold transition-all cursor-pointer"
+                                        className="inline-flex items-center gap-2 text-secondary dark:text-secondary font-semibold transition-all cursor-pointer"
                                         aria-label={`Read more about ${service.title}`}
                                     >
                                         Read More <ArrowRight className="service-card-arrow" size={18} />

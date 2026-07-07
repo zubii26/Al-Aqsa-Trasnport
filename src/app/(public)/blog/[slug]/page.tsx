@@ -205,20 +205,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <h3 className={styles.widgetTitle}>Popular Services</h3>
                             <ul className="space-y-3">
                                 <li>
-                                    <Link href="/services/makkah-madinah-taxi" className="flex items-center gap-2 text-slate-700 hover:text-amber-600 transition-colors">
-                                        <div className="w-2 h-2 rounded-full bg-amber-500" />
+                                    <Link href="/services/makkah-madinah-taxi" className="flex items-center gap-2 text-slate-700 hover:text-secondary transition-colors">
+                                        <div className="w-2 h-2 rounded-full bg-secondary" />
                                         <span className="text-sm font-medium">Makkah ⇄ Madinah Taxi</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/jeddah-airport-transfer" className="flex items-center gap-2 text-slate-700 hover:text-amber-600 transition-colors">
-                                        <div className="w-2 h-2 rounded-full bg-amber-500" />
+                                    <Link href="/services/jeddah-airport-transfer" className="flex items-center gap-2 text-slate-700 hover:text-secondary transition-colors">
+                                        <div className="w-2 h-2 rounded-full bg-secondary" />
                                         <span className="text-sm font-medium">Jeddah Airport Transfer</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/services/ziyarat-tours" className="flex items-center gap-2 text-slate-700 hover:text-amber-600 transition-colors">
-                                        <div className="w-2 h-2 rounded-full bg-amber-500" />
+                                    <Link href="/services/ziyarat-tours" className="flex items-center gap-2 text-slate-700 hover:text-secondary transition-colors">
+                                        <div className="w-2 h-2 rounded-full bg-secondary" />
                                         <span className="text-sm font-medium">VIP Ziyarat Tours</span>
                                     </Link>
                                 </li>

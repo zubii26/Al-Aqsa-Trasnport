@@ -69,7 +69,7 @@ export default function BookingCalendar({ events, onSelectEvent }: BookingCalend
                     </button>
                     <button
                         onClick={() => handleNavigate('TODAY')}
-                        className="px-4 py-1.5 text-sm font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 rounded-md hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+                        className="px-4 py-1.5 text-sm font-medium bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary rounded-md hover:bg-secondary/20 dark:hover:bg-secondary/30 transition-colors"
                     >
                         Today
                     </button>
@@ -80,7 +80,7 @@ export default function BookingCalendar({ events, onSelectEvent }: BookingCalend
                         <ChevronRight size={20} className="text-slate-600 dark:text-slate-300" />
                     </button>
                     <h3 className="text-xl font-bold ml-2 text-slate-800 dark:text-white flex items-center gap-2">
-                        <CalendarIcon size={20} className="text-amber-500" />
+                        <CalendarIcon size={20} className="text-secondary" />
                         {format(date, 'MMMM yyyy')}
                     </h3>
                 </div>
@@ -91,7 +91,7 @@ export default function BookingCalendar({ events, onSelectEvent }: BookingCalend
                             key={v}
                             onClick={() => setView(v as View)}
                             className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-all ${view === v
-                                ? 'bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-500 shadow-sm'
+                                ? 'bg-white dark:bg-slate-700 text-secondary dark:text-secondary shadow-sm'
                                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
                                 }`}
                         >
@@ -124,7 +124,7 @@ export default function BookingCalendar({ events, onSelectEvent }: BookingCalend
                     const status = event.resource.status;
 
                     if (status === 'confirmed') className = '!bg-emerald-500 !border-emerald-600';
-                    else if (status === 'pending') className = '!bg-amber-500 !border-amber-600';
+                    else if (status === 'pending') className = '!bg-secondary !border-amber-600';
                     else if (status === 'cancelled') className = '!bg-red-500 !border-red-600 !opacity-60';
                     else if (status === 'completed') className = '!bg-blue-500 !border-blue-600';
 

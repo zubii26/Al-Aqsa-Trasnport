@@ -58,7 +58,7 @@
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
@@ -116,7 +116,7 @@
     box-shadow:
         0 1px 2px -1px rgba(0, 0, 0, 0.05),
         0 4px 6px -2px rgba(0, 0, 0, 0.025);
-    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     /* Smoother spring-like easing */
     display: flex;
     flex-direction: column;
@@ -222,7 +222,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     /* More professional footer link */

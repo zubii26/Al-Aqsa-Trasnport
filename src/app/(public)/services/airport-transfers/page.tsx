@@ -130,7 +130,7 @@ export default async function AirportTransfersPage() {
                     <div className="bg-white dark:bg-slate-900 rounded-none sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
                         <div className="p-6 sm:p-8 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-end gap-4 bg-white dark:bg-slate-900">
                             <div>
-                                <span className="text-amber-500 font-bold tracking-wider uppercase text-xs mb-2 block">Real-time Connections</span>
+                                <span className="text-secondary font-bold tracking-wider uppercase text-xs mb-2 block">Real-time Connections</span>
                                 <h1 className="text-3xl font-bold  text-slate-900 dark:text-white">
                                     Airport Connectivity Network
                                 </h1>
@@ -141,7 +141,7 @@ export default async function AirportTransfersPage() {
                             </div>
                             <div className="flex items-center gap-4 text-xs font-medium text-slate-500">
                                 <div className="flex items-center gap-2">
-                                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                                    <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
                                     Live Flight Tracking
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ export default async function AirportTransfersPage() {
                 <div className="container">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">Our Commitment</span>
+                            <span className="text-secondary font-medium tracking-wider uppercase text-sm">Our Commitment</span>
                             <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4 ">Why Book Your Airport Transfer With Us?</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
                                 Whether you need a direct KAIA transfer, a dedicated Umrah airport pickup, or premium VIP Umrah Transport, we go beyond just transport. We offer comprehensive service ensuring your peace of mind from the moment you land.
@@ -179,7 +179,7 @@ export default async function AirportTransfersPage() {
                         ].map((item, idx) => (
                             <FadeIn key={idx} delay={idx * 0.1}>
                                 <div className="card-premium text-center">
-                                    <div className="bg-amber-50 dark:bg-amber-900/20 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 text-amber-500">
+                                    <div className="bg-secondary/10 dark:bg-secondary/20 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 text-secondary">
                                         <item.icon size={28} />
                                     </div>
                                     <h3 className="font-bold text-lg mb-2">{item.title}</h3>
@@ -210,7 +210,7 @@ export default async function AirportTransfersPage() {
                             ].map((step, idx) => (
                                 <div key={idx} className="flex flex-col items-center text-center bg-transparent">
                                     <div className="w-24 h-24 bg-white dark:bg-slate-800 border-4 border-slate-50 dark:border-slate-900 shadow-sm rounded-full flex items-center justify-center mb-6 z-10">
-                                        <step.icon size={32} className="text-amber-500" />
+                                        <step.icon size={32} className="text-secondary" />
                                     </div>
                                     <h3 className="font-bold text-xl mb-2">{step.title}</h3>
                                     <p className="text-sm text-muted-foreground">{step.desc}</p>
@@ -245,15 +245,15 @@ export default async function AirportTransfersPage() {
                                     <h3 className="text-xl font-bold mb-2">Standard Sedan</h3>
                                     <p className="text-muted-foreground text-sm mb-4">Perfect for couples or solo travelers with light luggage.</p>
                                     <ul className="text-sm space-y-3 mb-6 mt-auto text-slate-600 dark:text-slate-400">
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Comfortable for 2-3 Passengers</li>
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Space for 2 Standard Suitcases</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Comfortable for 2-3 Passengers</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Space for 2 Standard Suitcases</li>
                                     </ul>
                                 </div>
                             </div>
                         </FadeIn>
                         <FadeIn delay={0.2}>
-                            <div className="bg-slate-50 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg border-2 border-amber-500 relative h-full flex flex-col transform md:-translate-y-4">
-                                <div className="absolute top-4 right-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">Most Popular</div>
+                            <div className="bg-slate-50 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg border-2 border-secondary relative h-full flex flex-col transform md:-translate-y-4">
+                                <div className="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">Most Popular</div>
                                 <div className="h-56 relative overflow-hidden group bg-white dark:bg-slate-800 flex items-center justify-center p-4">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
@@ -266,8 +266,8 @@ export default async function AirportTransfersPage() {
                                     <h3 className="text-xl font-bold mb-2">VIP GMC Yukon</h3>
                                     <p className="text-muted-foreground text-sm mb-4">Luxury and space for families. Travel like a VIP.</p>
                                     <ul className="text-sm space-y-3 mb-6 mt-auto text-slate-600 dark:text-slate-400">
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Luxury seating for 7 Passengers</li>
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Large boot for 5-6 Suitcases</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Luxury seating for 7 Passengers</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Large boot for 5-6 Suitcases</li>
                                     </ul>
                                 </div>
                             </div>
@@ -286,8 +286,8 @@ export default async function AirportTransfersPage() {
                                     <h3 className="text-xl font-bold mb-2">Family Van (Hiace)</h3>
                                     <p className="text-muted-foreground text-sm mb-4">Ideal for large groups or families with extra luggage.</p>
                                     <ul className="text-sm space-y-3 mb-6 mt-auto text-slate-600 dark:text-slate-400">
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Spacious for 10 Passengers</li>
-                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-amber-500" /> Capacity for 8-10 Suitcases</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Spacious for 10 Passengers</li>
+                                        <li className="flex items-center gap-3"><MapPin size={16} className="text-secondary" /> Capacity for 8-10 Suitcases</li>
                                     </ul>
                                 </div>
                             </div>
@@ -314,13 +314,13 @@ export default async function AirportTransfersPage() {
             </section>
 
             {/* Final CTA */}
-            <section className="py-20 bg-amber-500 text-white text-center">
+            <section className="py-20 bg-secondary text-white text-center">
                 <div className="container">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6 ">Ready for a Comfortable Journey?</h2>
                     <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">Book your trusted Makkah transport today and let us handle the logistics while you focus on your worship.</p>
                     <Link
                         href="/booking?service=airport"
-                        className="inline-flex items-center gap-2 bg-white text-amber-600 font-bold py-4 px-8 rounded-full hover:bg-slate-100 transition-colors shadow-lg"
+                        className="inline-flex items-center gap-2 bg-white text-secondary font-bold py-4 px-8 rounded-full hover:bg-slate-100 transition-colors shadow-lg"
                     >
                         Book Your Transfer Now
                         <Plane className="w-5 h-5" />

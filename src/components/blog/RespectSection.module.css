@@ -89,7 +89,7 @@
     border-radius: 24px;
     text-align: center;
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
-    transition: all 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid hsl(var(--border));
 }
 
@@ -108,7 +108,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 2rem;
-    transition: all 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .commitmentCard:hover .commitmentIconWrapper {

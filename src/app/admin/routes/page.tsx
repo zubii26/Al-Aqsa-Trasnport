@@ -224,7 +224,7 @@ export default function RoutesPage() {
                                     >
                                         <td className="font-medium">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-2 h-2 rounded-full bg-amber-500" />
+                                                <div className="w-2 h-2 rounded-full bg-secondary" />
                                                 {route.origin}
                                             </div>
                                         </td>
@@ -249,7 +249,7 @@ export default function RoutesPage() {
                                         <td>
                                             <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${route.category === 'Airport' || route.category === 'Airport Arrival' || route.category === 'Airport Departure' ? 'bg-blue-500/10 text-blue-500' :
                                                 route.category === 'Ziarat' ? 'bg-emerald-500/10 text-emerald-500' :
-                                                    'bg-amber-500/10 text-amber-500'
+                                                    'bg-secondary/10 text-secondary'
                                                 }`}>
                                                 {route.category}
                                             </span>
@@ -308,7 +308,7 @@ export default function RoutesPage() {
                             </button>
 
                             <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-foreground">
-                                {editingId ? <Edit className="text-amber-500" /> : <Plus strokeWidth={1.25} className="text-amber-500" />}
+                                {editingId ? <Edit className="text-secondary" /> : <Plus strokeWidth={1.25} className="text-secondary" />}
                                 {editingId ? 'Edit Route' : 'Add New Route'}
                             </h2>
 
@@ -318,7 +318,7 @@ export default function RoutesPage() {
                                         <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Origin</label>
                                         <input
                                             required
-                                            className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-secondary/20 outline-none transition-all"
                                             value={formData.origin}
                                             onChange={e => setFormData({ ...formData, origin: e.target.value })}
                                             placeholder="e.g. Makkah"
@@ -328,7 +328,7 @@ export default function RoutesPage() {
                                         <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Destination</label>
                                         <input
                                             required
-                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-secondary/20 outline-none transition-all"
                                             value={formData.destination}
                                             onChange={e => setFormData({ ...formData, destination: e.target.value })}
                                             placeholder="e.g. Madinah"
@@ -339,7 +339,7 @@ export default function RoutesPage() {
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Distance</label>
                                         <input
-                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-secondary/20 outline-none transition-all"
                                             value={formData.distance}
                                             onChange={e => setFormData({ ...formData, distance: e.target.value })}
                                             placeholder="e.g. 450 km"
@@ -348,7 +348,7 @@ export default function RoutesPage() {
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Duration</label>
                                         <input
-                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
+                                            className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-secondary/20 outline-none transition-all"
                                             value={formData.duration}
                                             onChange={e => setFormData({ ...formData, duration: e.target.value })}
                                             placeholder="e.g. 4.5 hours"
@@ -358,7 +358,7 @@ export default function RoutesPage() {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
                                     <select
-                                        className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500/20 outline-none transition-all cursor-pointer"
+                                        className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-secondary/20 outline-none transition-all cursor-pointer"
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value })}
                                     >
@@ -378,7 +378,7 @@ export default function RoutesPage() {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium hover:bg-amber-600 shadow-lg shadow-amber-500/20 hover:scale-105 transition-all"
+                                        className="px-4 py-2 bg-secondary text-white rounded-lg text-sm font-medium hover:bg-secondary/90 shadow-lg shadow-secondary/20 hover:scale-105 transition-all"
                                     >
                                         {editingId ? 'Save Changes' : 'Create Route'}
                                     </button>

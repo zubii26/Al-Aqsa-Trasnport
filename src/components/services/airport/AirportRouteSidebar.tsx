@@ -18,10 +18,10 @@ export default function AirportRouteSidebar({ routes, activeRouteId, onSelectRou
             {/* Header */}
             <div className="p-6 border-b border-slate-800 bg-slate-900/50">
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-amber-500/10 rounded-lg">
-                        <Plane className="text-amber-500" size={20} />
+                    <div className="p-2 bg-secondary/10 rounded-lg">
+                        <Plane className="text-secondary" size={20} />
                     </div>
-                    <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Airport Transfer</span>
+                    <span className="text-xs font-bold text-secondary uppercase tracking-widest">Airport Transfer</span>
                 </div>
                 <h2 className="text-2xl font-bold  text-white">Select Destination</h2>
                 <p className="text-slate-400 text-sm mt-1">Reliable pickups from KAIA Airport</p>
@@ -40,7 +40,7 @@ export default function AirportRouteSidebar({ routes, activeRouteId, onSelectRou
                             className={`
                                 group relative p-4 rounded-xl cursor-pointer transition-all duration-300 border
                                 ${isActive
-                                    ? 'bg-amber-950/20 border-amber-500/50 shadow-lg'
+                                    ? 'bg-amber-950/20 border-secondary/50 shadow-lg'
                                     : 'bg-slate-900/50 border-transparent hover:bg-slate-900 hover:border-slate-700'}
                             `}
                         >
@@ -59,7 +59,7 @@ export default function AirportRouteSidebar({ routes, activeRouteId, onSelectRou
                                 </div>
                                 <div className={`
                                     w-8 h-8 rounded-full flex items-center justify-center transition-colors
-                                    ${isActive ? 'bg-amber-500 text-slate-900' : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700'}
+                                    ${isActive ? 'bg-secondary text-slate-900' : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700'}
                                 `}>
                                     <ChevronRight size={16} />
                                 </div>
@@ -72,7 +72,7 @@ export default function AirportRouteSidebar({ routes, activeRouteId, onSelectRou
             {/* Footer */}
             <div className="p-4 bg-slate-900 border-t border-slate-800">
                 <div className="flex items-center gap-3 text-xs text-slate-500">
-                    <span className="flex items-center gap-1"><span className="w-2 h-2 bg-amber-500 rounded-full"></span> Flight Tracking Included</span>
+                    <span className="flex items-center gap-1"><span className="w-2 h-2 bg-secondary rounded-full"></span> Flight Tracking Included</span>
                 </div>
             </div>
         </div>

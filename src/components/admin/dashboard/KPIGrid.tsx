@@ -78,7 +78,7 @@ export default function KPIGrid({
                 <div className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
                     <span>{confirmedBookings} Confirmed</span>
                     <span className="w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-600" />
-                    <span className="text-amber-600 dark:text-amber-400">{pendingBookings} Pending</span>
+                    <span className="text-secondary dark:text-amber-400">{pendingBookings} Pending</span>
                 </div>
             </motion.div>
 

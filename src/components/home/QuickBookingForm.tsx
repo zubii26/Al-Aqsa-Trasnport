@@ -557,7 +557,7 @@ const QuickBookingForm = ({
                                                     flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border
                                                     ${isActive
                                                         ? 'bg-slate-900 border-slate-900 text-white shadow-lg scale-105'
-                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-secondary hover:text-secondary hover:bg-amber-50'
+                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-secondary hover:text-secondary hover:bg-secondary/10'
                                                     }
                                                 `}
                                             >
@@ -586,7 +586,7 @@ const QuickBookingForm = ({
                                                 handleDateChange(new Date(e.target.value));
                                             }}
                                             min={minDate}
-                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
                                         />
                                     </div>
                                     {errors.date && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.date}</span>}
@@ -606,7 +606,7 @@ const QuickBookingForm = ({
                                                 const t = new Date(); t.setHours(h); t.setMinutes(m);
                                                 handleTimeChange(t);
                                             }}
-                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
+                                            className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
                                         />
                                     </div>
                                     {errors.time && <span className="absolute -bottom-4 left-0 text-[10px] text-red-500">{errors.time}</span>}
@@ -678,7 +678,7 @@ const QuickBookingForm = ({
                                             max="5"
                                             value={formData.vehicleCount}
                                             onChange={handleChange}
-                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors"
+                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-secondary transition-colors"
                                         />
                                     </div>
                                 </div>
@@ -692,7 +692,7 @@ const QuickBookingForm = ({
                                             min="1"
                                             value={formData.passengers}
                                             onChange={handleChange}
-                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors"
+                                            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-secondary transition-colors"
                                         />
                                     </div>
                                 </div>
@@ -715,7 +715,7 @@ const QuickBookingForm = ({
                                                 placeholder="Your Name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.name ? 'border-red-500 bg-red-50' : ''}`}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-secondary transition-colors ${errors.name ? 'border-red-500 bg-red-50' : ''}`}
                                             />
                                         </div>
                                         {errors.name && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.name}</span>}
@@ -730,7 +730,7 @@ const QuickBookingForm = ({
                                                 placeholder="email@example.com"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.email ? 'border-red-500 bg-red-50' : ''}`}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-secondary transition-colors ${errors.email ? 'border-red-500 bg-red-50' : ''}`}
                                             />
                                         </div>
                                         {errors.email && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.email}</span>}
@@ -745,7 +745,7 @@ const QuickBookingForm = ({
                                                 placeholder="+966 50..."
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-amber-500 transition-colors ${errors.phone ? 'border-red-500 bg-red-50' : ''}`}
+                                                className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-9 text-sm outline-none focus:border-secondary transition-colors ${errors.phone ? 'border-red-500 bg-red-50' : ''}`}
                                             />
                                         </div>
                                         {errors.phone && <span className="text-[10px] text-red-500 mt-1 ml-1 block">{errors.phone}</span>}

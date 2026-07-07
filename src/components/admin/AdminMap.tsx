@@ -109,7 +109,7 @@ export default function AdminMap() {
 
             {loading && drivers.length === 0 && (
                 <div className="absolute inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-sm z-[1000] flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary"></div>
                 </div>
             )}
         </div>

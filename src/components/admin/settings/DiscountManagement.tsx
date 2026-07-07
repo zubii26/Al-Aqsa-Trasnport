@@ -67,7 +67,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                 {/* Enable Toggle */}
                 <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/30 rounded-lg border border-slate-200 dark:border-slate-700">
                     <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.enabled ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-slate-200 text-slate-500'}`}>
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.enabled ? 'bg-secondary/20 text-secondary dark:bg-secondary/30 dark:text-amber-400' : 'bg-slate-200 text-slate-500'}`}>
                             <Percent size={20} />
                         </div>
                         <div>
@@ -87,7 +87,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                             checked={formData.enabled}
                             onChange={(e) => handleChange('enabled', e.target.checked)}
                         />
-                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 dark:peer-focus:ring-amber-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"></div>
+                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 dark:peer-focus:ring-amber-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-secondary"></div>
                     </label>
                 </div>
 
@@ -102,7 +102,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                                 type="button"
                                 onClick={() => handleChange('type', 'percentage')}
                                 className={`flex items-center justify-center gap-2 p-3 rounded-lg border transition-all ${formData.type === 'percentage'
-                                    ? 'bg-amber-50 border-amber-500 text-amber-700 dark:bg-amber-900/20 dark:border-amber-500 dark:text-amber-400'
+                                    ? 'bg-secondary/10 border-secondary text-secondary dark:bg-secondary/20 dark:border-secondary dark:text-amber-400'
                                     : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700'
                                     }`}
                             >
@@ -113,7 +113,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                                 type="button"
                                 onClick={() => handleChange('type', 'fixed')}
                                 className={`flex items-center justify-center gap-2 p-3 rounded-lg border transition-all ${formData.type === 'fixed'
-                                    ? 'bg-amber-50 border-amber-500 text-amber-700 dark:bg-amber-900/20 dark:border-amber-500 dark:text-amber-400'
+                                    ? 'bg-secondary/10 border-secondary text-secondary dark:bg-secondary/20 dark:border-secondary dark:text-amber-400'
                                     : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700'
                                     }`}
                             >
@@ -142,7 +142,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                                 max={formData.type === 'percentage' ? "100" : undefined}
                                 value={formData.value ?? 0}
                                 onChange={(e) => handleChange('value', Number(e.target.value))}
-                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
                                 placeholder="0"
                             />
                         </div>
@@ -166,7 +166,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                                 type="date"
                                 value={formData.startDate ? formData.startDate.split('T')[0] : ''}
                                 onChange={(e) => handleChange('startDate', e.target.value ? new Date(e.target.value).toISOString() : '')}
-                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
+                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
                                 placeholder="Select start date"
                             />
                         </div>
@@ -186,7 +186,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                                 value={formData.endDate ? formData.endDate.split('T')[0] : ''}
                                 onChange={(e) => handleChange('endDate', e.target.value ? new Date(e.target.value).toISOString() : '')}
                                 min={formData.startDate ? formData.startDate.split('T')[0] : undefined}
-                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
+                                className="pl-10 w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition-all [color-scheme:light] dark:[color-scheme:dark]"
                                 placeholder="Select end date"
                             />
                         </div>
@@ -194,11 +194,11 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                 </div>
 
                 {formData.enabled && (
-                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex gap-3">
-                        <AlertCircle className="text-amber-600 dark:text-amber-400 shrink-0" size={20} />
+                    <div className="p-4 bg-secondary/10 dark:bg-secondary/20 border border-amber-200 dark:border-secondary rounded-lg flex gap-3">
+                        <AlertCircle className="text-secondary dark:text-amber-400 shrink-0" size={20} />
                         <div>
-                            <h4 className="text-sm font-medium text-amber-800 dark:text-amber-300">Discount is Active</h4>
-                            <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                            <h4 className="text-sm font-medium text-secondary dark:text-amber-300">Discount is Active</h4>
+                            <p className="text-xs text-secondary dark:text-amber-400 mt-1">
                                 Users will see a banner and receive {formData.type === 'percentage' ? `${formData.value}%` : `${formData.value} SAR`} off on all bookings
                                 {formData.endDate ? ` until ${new Date(formData.endDate).toLocaleDateString()}` : ''}.
                             </p>
@@ -210,7 +210,7 @@ export default function DiscountManagement({ settings, onSave, isSaving }: Disco
                     <button
                         type="submit"
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex items-center gap-2 px-6 py-2.5 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <Save size={18} />
                         {isSaving ? 'Saving...' : 'Save Changes'}

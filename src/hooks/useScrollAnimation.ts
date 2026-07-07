@@ -1,17 +1,23 @@
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 export function useScrollAnimation(options = {}) {
     const ref = useRef(null);
+    const [hasFired, setHasFired] = useState(false);
     const isInView = useInView(ref, {
         once: true,
         margin: "-10%",
         ...options
     });
 
-    return { ref, isInView };
-}
+    useEffect(() => {
+        if (isInView && !hasFired) {
+            setHasFired(true);
+        }
+    }, [isInView, hasFired]);
 
+    return { ref, isInView: hasFired || isInView };
+}
 export const fadeUpVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: {

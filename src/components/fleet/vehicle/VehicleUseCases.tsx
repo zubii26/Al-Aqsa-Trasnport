@@ -26,9 +26,9 @@ export default function VehicleUseCases({
                     {cases.map((item, idx) => (
                         <div 
                             key={idx} 
-                            className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-md border-t-4 border-amber-500 transition-all hover:-translate-y-2 hover:shadow-xl"
+                            className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-md border-t-4 border-secondary transition-all hover:-translate-y-2 hover:shadow-xl"
                         >
-                            <item.icon className="w-12 h-12 text-amber-500 mb-6" />
+                            <item.icon className="w-12 h-12 text-secondary mb-6" />
                             <h3 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white ">
                                 {item.title}
                             </h3>

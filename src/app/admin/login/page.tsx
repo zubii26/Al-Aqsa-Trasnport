@@ -58,9 +58,9 @@ export default function LoginPage() {
             {/* Back to Home Button */}
             <Link
                 href="/"
-                className="absolute top-6 left-6 z-50 flex items-center gap-2 text-slate-400 hover:text-amber-500 transition-colors group"
+                className="absolute top-6 left-6 z-50 flex items-center gap-2 text-slate-400 hover:text-secondary transition-colors group"
             >
-                <div className="p-2 rounded-full bg-slate-900/50 border border-slate-800 group-hover:border-amber-500/50 transition-colors">
+                <div className="p-2 rounded-full bg-slate-900/50 border border-slate-800 group-hover:border-secondary/50 transition-colors">
                     <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                 </div>
                 <span className="font-medium text-sm">Back to Home</span>
@@ -78,7 +78,7 @@ export default function LoginPage() {
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px] animate-pulse-slow"></div>
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] animate-pulse-slow"></div>
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
 
             <div className="w-full max-w-md relative z-10 p-6">
@@ -89,7 +89,7 @@ export default function LoginPage() {
                     <div className="p-8">
                         <div className="text-center mb-10">
                             <div className="w-20 h-20 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-lg shadow-black/50 border border-white/5 group">
-                                <Lock className="text-amber-500 group-hover:scale-110 transition-transform duration-300" size={32} />
+                                <Lock className="text-secondary group-hover:scale-110 transition-transform duration-300" size={32} />
                             </div>
                             <h1 className="text-3xl font-bold text-white mb-2 tracking-tight ">Welcome Back</h1>
                             <p className="text-slate-400 text-sm">Sign in to manage Al Aqsa Transport</p>
@@ -108,12 +108,12 @@ export default function LoginPage() {
                                     Email Address
                                 </label>
                                 <div className="relative group">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-amber-500 transition-colors" size={20} />
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-secondary transition-colors" size={20} />
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all shadow-inner"
+                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all shadow-inner"
                                         placeholder="admin@alaqsa.com"
                                         required
                                     />
@@ -125,12 +125,12 @@ export default function LoginPage() {
                                     Password
                                 </label>
                                 <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-amber-500 transition-colors" size={20} />
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-secondary transition-colors" size={20} />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all shadow-inner"
+                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all shadow-inner"
                                         placeholder="••••••••"
                                         required
                                     />
@@ -140,7 +140,7 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-0.5 hover:shadow-amber-500/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 group relative overflow-hidden"
+                                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5 hover:shadow-amber-500/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 group relative overflow-hidden"
                             >
                                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                                 {loading ? (
@@ -158,7 +158,7 @@ export default function LoginPage() {
                         </form>
                     </div>
                     <div className="bg-slate-950/30 p-4 text-center text-xs text-slate-500 border-t border-white/5 backdrop-blur-sm">
-                        <p>Protected by <span className="text-amber-500/80">Secure RBAC System</span></p>
+                        <p>Protected by <span className="text-secondary/80">Secure RBAC System</span></p>
                     </div>
                 </div>
 

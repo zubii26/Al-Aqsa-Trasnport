@@ -165,10 +165,10 @@ export default async function IntercityTransferPage() {
                     <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
                         <FadeIn>
                             <div className="prose dark:prose-invert max-w-none">
-                                <span className="text-amber-600 dark:text-amber-500 font-bold tracking-wider text-sm uppercase mb-2 block">The Sacred Route</span>
+                                <span className="text-secondary dark:text-secondary font-bold tracking-wider text-sm uppercase mb-2 block">The Sacred Route</span>
                                 <h2 className="text-3xl md:text-4xl font-bold  mb-6 text-slate-900 dark:text-white leading-tight">
                                     Travel with Peace of Mind <br />
-                                    <span className="text-amber-500">Between The Two Harams</span>
+                                    <span className="text-secondary">Between The Two Harams</span>
                                 </h2>
                                 <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                                     Whether you need Madinah to Makkah transport or a reliable Haramain transport alternative, the journey between Makkah and Madinah is more than just travel; it is a transition between two sacred sanctuaries. We honor this journey by providing a KSA intercity transfer service that prioritizes your rest and reverence.
@@ -179,7 +179,7 @@ export default async function IntercityTransferPage() {
 
                                 <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6 mb-8">
                                     <div className="flex gap-4 items-start">
-                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                        <div className="p-3 rounded-lg bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary shrink-0">
                                             <ShieldCheck size={24} />
                                         </div>
                                         <div>
@@ -188,7 +188,7 @@ export default async function IntercityTransferPage() {
                                         </div>
                                     </div>
                                     <div className="flex gap-4 items-start">
-                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                        <div className="p-3 rounded-lg bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary shrink-0">
                                             <Star size={24} />
                                         </div>
                                         <div>
@@ -197,7 +197,7 @@ export default async function IntercityTransferPage() {
                                         </div>
                                     </div>
                                     <div className="flex gap-4 items-start">
-                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                        <div className="p-3 rounded-lg bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary shrink-0">
                                             <UserCheck size={24} />
                                         </div>
                                         <div>
@@ -206,7 +206,7 @@ export default async function IntercityTransferPage() {
                                         </div>
                                     </div>
                                     <div className="flex gap-4 items-start">
-                                        <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 shrink-0">
+                                        <div className="p-3 rounded-lg bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary shrink-0">
                                             <Timer size={24} />
                                         </div>
                                         <div>
@@ -226,7 +226,7 @@ export default async function IntercityTransferPage() {
                                     <p className="text-slate-600 dark:text-slate-400 mb-8">Best Rates & Immediate Confirmation</p>
                                     <Link
                                         href="/booking"
-                                        className="inline-block w-full py-4 px-6 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                                        className="inline-block w-full py-4 px-6 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-xl transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                                     >
                                         Book Now
                                     </Link>
@@ -236,7 +236,7 @@ export default async function IntercityTransferPage() {
                                             <span>No Hidden Fees</span>
                                         </div>
                                         <div className="flex items-center justify-center gap-2">
-                                            <Star size={16} className="text-amber-500" />
+                                            <Star size={16} className="text-secondary" />
                                             <span>4.9/5 Customer Rating</span>
                                         </div>
                                     </div>

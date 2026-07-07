@@ -23,7 +23,7 @@ const BookingHeader = () => {
                         />
                     </div>
                     <div className="hidden md:flex flex-col">
-                        <span className="text-xl font-bold text-amber-500 leading-none">Al Aqsa</span>
+                        <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
                         <span className="text-[10px] font-bold text-slate-800 tracking-widest uppercase">Transport</span>
                     </div>
                 </Link>

@@ -75,7 +75,7 @@ export default function UserDetailsPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary"></div>
             </div>
         );
     }
@@ -103,8 +103,8 @@ export default function UserDetailsPage() {
             {/* Profile Card */}
             <div className={adminStyles.glassCard + " p-6"}>
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-full">
-                        <User size={48} className="text-amber-500" />
+                    <div className="p-4 bg-secondary/10 dark:bg-secondary/20 rounded-full">
+                        <User size={48} className="text-secondary" />
                     </div>
                     <div className="space-y-2 flex-1">
                         <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">

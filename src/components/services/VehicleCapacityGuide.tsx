@@ -44,11 +44,11 @@ export default function VehicleCapacityGuide() {
 
                             <div className="space-y-3 mb-4">
                                 <div className="flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300">
-                                    <Users size={18} className="text-amber-500" />
+                                    <Users size={18} className="text-secondary" />
                                     <span>{v.pax}</span>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300">
-                                    <Briefcase size={18} className="text-amber-500" />
+                                    <Briefcase size={18} className="text-secondary" />
                                     <span>{v.bags}</span>
                                 </div>
                             </div>

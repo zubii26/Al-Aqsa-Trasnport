@@ -63,11 +63,11 @@ const PriceCell = memo(({
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     onBlur={handleBlur}
-                    className={`w-20 text-center bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none transition-all ${isModified ? 'text-amber-500 font-bold' : 'text-foreground'
+                    className={`w-20 text-center bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none transition-all ${isModified ? 'text-secondary font-bold' : 'text-foreground'
                         }`}
                 />
                 {isModified && (
-                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-secondary rounded-full animate-pulse" />
                 )}
             </div>
         </td>
@@ -216,7 +216,7 @@ export default function PricingPage() {
                         placeholder="Search routes..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-full focus:ring-2 focus:ring-amber-500/50 outline-none transition-all"
+                        className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-full focus:ring-2 focus:ring-secondary/50 outline-none transition-all"
                     />
                 </div>
 
@@ -233,7 +233,7 @@ export default function PricingPage() {
                 <button
                     onClick={handleSaveAll}
                     disabled={saving || Object.keys(modified).length === 0}
-                    className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 px-6 py-2.5 rounded-full font-bold shadow-lg shadow-amber-500/20 hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100 whitespace-nowrap"
+                    className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 px-6 py-2.5 rounded-full font-bold shadow-lg shadow-secondary/20 hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100 whitespace-nowrap"
                 >
                     <Save size={20} />
                     {saving ? 'Saving...' : 'Save Changes'}

@@ -116,7 +116,7 @@ export default function TrainStationTransferPage() {
                         "Family Friendly", "Multilingual Drivers"
                     ].map((badge, i) => (
                         <div key={i} className="flex items-center gap-2 text-slate-300 text-sm font-medium">
-                            <CheckCircle2 className="text-amber-500 shrink-0" size={16} />
+                            <CheckCircle2 className="text-secondary shrink-0" size={16} />
                             {badge}
                         </div>
                     ))}
@@ -127,7 +127,7 @@ export default function TrainStationTransferPage() {
             <section className="py-16 md:py-24 container mx-auto px-4">
                 <FadeIn>
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Premium Standards</span>
+                        <span className="text-secondary font-bold tracking-wider uppercase text-sm mb-3 block">Premium Standards</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
                             Why Choose Al Aqsa for Train Transfers?
                         </h2>
@@ -146,7 +146,7 @@ export default function TrainStationTransferPage() {
                     ].map((feature, idx) => (
                         <FadeIn key={idx} delay={idx * 0.1}>
                             <div className="card-premium h-full">
-                                <div className="bg-amber-50 dark:bg-amber-900/20 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-amber-500">
+                                <div className="bg-secondary/10 dark:bg-secondary/20 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-secondary">
                                     {feature.icon}
                                 </div>
                                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
@@ -175,7 +175,7 @@ export default function TrainStationTransferPage() {
                                     <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-800/50 z-10"></div>
                                     <Train className="absolute opacity-5 w-32 h-32 text-white -right-4 -bottom-4 transform -rotate-12 transition-transform group-hover:scale-110" />
                                     <div className="relative z-20">
-                                        <MapPin className="text-amber-500 mx-auto mb-3" size={28} />
+                                        <MapPin className="text-secondary mx-auto mb-3" size={28} />
                                         <h3 className="text-lg font-bold text-white">{station}</h3>
                                     </div>
                                 </div>
@@ -206,7 +206,7 @@ export default function TrainStationTransferPage() {
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center text-center">
                                 <div className="flex items-center justify-center gap-3 w-full mb-3">
                                     <div className="h-[1px] bg-slate-300 dark:bg-slate-600 flex-1"></div>
-                                    <Train size={20} className="text-amber-500" />
+                                    <Train size={20} className="text-secondary" />
                                     <div className="h-[1px] bg-slate-300 dark:bg-slate-600 flex-1"></div>
                                 </div>
                                 <h4 className="font-bold text-slate-900 dark:text-white mb-2">{item.route}</h4>
@@ -242,7 +242,7 @@ export default function TrainStationTransferPage() {
                                     </div>
                                     <div className="p-5 flex-1 flex flex-col">
                                         <h3 className="font-bold text-lg mb-1">{car.name}</h3>
-                                        <p className="text-xs text-amber-500 mb-4 uppercase tracking-wider font-bold">{car.desc}</p>
+                                        <p className="text-xs text-secondary mb-4 uppercase tracking-wider font-bold">{car.desc}</p>
                                         <div className="space-y-2 text-sm text-slate-300 mt-auto">
                                             <div className="flex justify-between border-b border-slate-700 pb-2">
                                                 <span className="flex items-center gap-2"><Users size={14}/> Passengers</span>
@@ -267,7 +267,7 @@ export default function TrainStationTransferPage() {
                     {/* Meet & Greet */}
                     <FadeIn>
                         <div>
-                            <span className="text-amber-500 font-bold tracking-wider uppercase text-sm mb-3 block">Premium Hospitality</span>
+                            <span className="text-secondary font-bold tracking-wider uppercase text-sm mb-3 block">Premium Hospitality</span>
                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">VIP Meet & Greet Service</h2>
                             <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                                 Navigating busy train stations can be overwhelming, especially with luggage and family. Our VIP Meet & Greet service ensures you are welcomed the moment you step off the train.
@@ -303,7 +303,7 @@ export default function TrainStationTransferPage() {
                                     { title: "Enjoy Journey", desc: "Smooth & comfortable ride" }
                                 ].map((step, i) => (
                                     <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                                        <div className="flex items-center justify-center w-8 h-8 rounded-full border-4 border-white dark:border-slate-900 bg-amber-500 text-slate-900 font-bold text-xs shadow shrink-0 md:order-1 md:group-odd:-ml-4 md:group-even:-mr-4 z-10 ml-0 md:ml-auto md:mr-auto">
+                                        <div className="flex items-center justify-center w-8 h-8 rounded-full border-4 border-white dark:border-slate-900 bg-secondary text-slate-900 font-bold text-xs shadow shrink-0 md:order-1 md:group-odd:-ml-4 md:group-even:-mr-4 z-10 ml-0 md:ml-auto md:mr-auto">
                                             {i + 1}
                                         </div>
                                         <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 ml-4 md:ml-0 shadow-sm">
@@ -330,7 +330,7 @@ export default function TrainStationTransferPage() {
                                 <thead>
                                     <tr className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white">
                                         <th className="p-4 border-b border-slate-200 dark:border-slate-700 font-bold w-1/3">Feature</th>
-                                        <th className="p-4 border-b border-slate-200 dark:border-slate-700 font-bold w-1/3 text-amber-600 dark:text-amber-500 text-center bg-amber-50 dark:bg-amber-900/10">Private Transfer (Al Aqsa)</th>
+                                        <th className="p-4 border-b border-slate-200 dark:border-slate-700 font-bold w-1/3 text-secondary dark:text-secondary text-center bg-secondary/10 dark:bg-amber-900/10">Private Transfer (Al Aqsa)</th>
                                         <th className="p-4 border-b border-slate-200 dark:border-slate-700 font-bold w-1/3 text-center text-slate-500">Local Taxi</th>
                                     </tr>
                                 </thead>
@@ -346,7 +346,7 @@ export default function TrainStationTransferPage() {
                                     ].map((row, i) => (
                                         <tr key={i} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                             <td className="p-4 text-slate-700 dark:text-slate-300 font-medium">{row.feature}</td>
-                                            <td className="p-4 text-center bg-amber-50/50 dark:bg-amber-900/5">
+                                            <td className="p-4 text-center bg-secondary/10/50 dark:bg-amber-900/5">
                                                 <span className="inline-flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-medium text-sm w-full">
                                                     <Check size={16} /> {row.pro}
                                                 </span>
@@ -411,7 +411,7 @@ export default function TrainStationTransferPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-sm text-white">{review.name}</h4>
-                                            <span className="text-xs text-amber-500">{review.country}</span>
+                                            <span className="text-xs text-secondary">{review.country}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -424,7 +424,7 @@ export default function TrainStationTransferPage() {
             {/* 12. SEO Content Section */}
             <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
-                    <div className="prose prose-lg dark:prose-invert prose-slate prose-headings:text-slate-900 dark:prose-headings:text-white prose-a:text-amber-600 max-w-none">
+                    <div className="prose prose-lg dark:prose-invert prose-slate prose-headings:text-slate-900 dark:prose-headings:text-white prose-a:text-secondary max-w-none">
                         <h2>The Ultimate Haramain High Speed Railway Transfer Experience</h2>
                         <p>
                             The <strong>Haramain High Speed Railway</strong> has revolutionized travel for Umrah and Hajj pilgrims, seamlessly connecting the Holy Cities of Makkah and Madinah with Jeddah and King Abdullah Economic City. However, navigating from the train station to your final destination—whether it's a luxury hotel facing the Haram or a flight out of Jeddah Airport—requires a reliable transportation partner. 
@@ -472,7 +472,7 @@ export default function TrainStationTransferPage() {
             </section>
 
             {/* 13 & 14. Call To Action */}
-            <section className="py-20 bg-amber-500 text-slate-900 text-center relative overflow-hidden">
+            <section className="py-20 bg-secondary text-slate-900 text-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/images/pattern-grid.png')] opacity-10 mix-blend-overlay"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready for Your Haramain Train Transfer?</h2>

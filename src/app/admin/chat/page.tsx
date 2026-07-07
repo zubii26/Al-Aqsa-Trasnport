@@ -50,7 +50,7 @@ export default function AdminChatPage() {
                         <input
                             type="text"
                             placeholder="Search driver..."
-                            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500"
+                            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-secondary"
                         />
                     </div>
                 </div>
@@ -67,7 +67,7 @@ export default function AdminChatPage() {
                                     setSelectedDriverName(conv.members[0]?.name || 'Unknown Driver');
                                 }}
                                 className={`w-full text-left p-4 border-b border-slate-50 hover:bg-slate-50 transition flex items-center gap-3
-                                    ${selectedChannel === conv.channelId ? 'bg-amber-50 border-l-4 border-l-amber-500' : ''}
+                                    ${selectedChannel === conv.channelId ? 'bg-secondary/10 border-l-4 border-l-amber-500' : ''}
                                 `}
                             >
                                 <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500">

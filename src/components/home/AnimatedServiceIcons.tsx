@@ -11,7 +11,7 @@ export function IntercityIcon() {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
-                className="text-amber-500/30"
+                className="text-secondary/30"
             />
             {/* Animated Path */}
             <motion.path
@@ -19,7 +19,7 @@ export function IntercityIcon() {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
-                className="text-amber-500"
+                className="text-secondary"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
@@ -52,7 +52,7 @@ export function AirportIcon() {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeDasharray="4 4"
-                className="text-amber-500/50"
+                className="text-secondary/50"
             />
             {/* Plane */}
             <motion.g
@@ -63,7 +63,7 @@ export function AirportIcon() {
                 <path
                     d="M12 2L14.5 9H20L16 13L17 19L11 15L5 19L6 13L2 9H7.5L12 2Z"
                     fill="currentColor"
-                    className="text-amber-500"
+                    className="text-secondary"
                 />
             </motion.g>
         </svg>
@@ -78,7 +78,7 @@ export function HotelIcon() {
                 d="M6 22V4C6 2.9 6.9 2 8 2H16C17.1 2 18 2.9 18 4V22"
                 stroke="currentColor"
                 strokeWidth="2"
-                className="text-amber-500"
+                className="text-secondary"
             />
             {/* Windows - Staggered Light up */}
             {[0, 1, 2].map((row) => (
@@ -103,7 +103,7 @@ export function HotelIcon() {
                 </g>
             ))}
             {/* Door */}
-            <rect x="10" y="18" width="4" height="4" stroke="currentColor" strokeWidth="2" className="text-amber-500" />
+            <rect x="10" y="18" width="4" height="4" stroke="currentColor" strokeWidth="2" className="text-secondary" />
         </svg>
     );
 }

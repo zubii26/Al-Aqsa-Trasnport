@@ -142,7 +142,7 @@ export default function ReviewsAdminPage() {
                         placeholder="Search reviews..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                     />
                 </div>
 
@@ -150,7 +150,7 @@ export default function ReviewsAdminPage() {
                     <select
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
-                        className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                        className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                     >
                         <option value="all">All Status</option>
                         <option value="pending">Pending</option>
@@ -161,7 +161,7 @@ export default function ReviewsAdminPage() {
                     <select
                         value={filterRating}
                         onChange={(e) => setFilterRating(e.target.value === 'all' ? 'all' : Number(e.target.value))}
-                        className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                        className="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                     >
                         <option value="all">All Ratings</option>
                         <option value="5">5 Stars</option>
@@ -176,7 +176,7 @@ export default function ReviewsAdminPage() {
             {/* Grid */}
             {loading ? (
                 <div className="flex justify-center py-20">
-                    <Loader2 size={40} className="animate-spin text-amber-500" />
+                    <Loader2 size={40} className="animate-spin text-secondary" />
                 </div>
             ) : filteredReviews.length === 0 ? (
                 <div className="text-center py-20 text-slate-500">
@@ -232,7 +232,7 @@ function ReviewCard({ review, onUpdateStatus }: { review: Review; onUpdateStatus
                 relative overflow-hidden rounded-2xl p-6 flex flex-col h-full transition-all duration-300
                 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/60 dark:border-slate-700/60
                 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/30 hover:-translate-y-1
-                ${review.status === 'pending' ? 'ring-2 ring-amber-500/30 dark:ring-amber-500/20' : ''}
+                ${review.status === 'pending' ? 'ring-2 ring-secondary/30 dark:ring-secondary/20' : ''}
             `}
         >
             {/* Gradient Overlay for subtle depth */}
@@ -274,7 +274,7 @@ function ReviewCard({ review, onUpdateStatus }: { review: Review; onUpdateStatus
                             ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-500/20'
                             : review.status === 'rejected'
                                 ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-200/50 dark:border-red-500/20'
-                                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20'
+                                : 'bg-secondary/10 text-secondary dark:text-amber-400 border-amber-200/50 dark:border-secondary/20'
                         }
                     `}>
                         {review.status}
@@ -299,7 +299,7 @@ function ReviewCard({ review, onUpdateStatus }: { review: Review; onUpdateStatus
                     {isLong && (
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-amber-600 dark:text-amber-400 text-xs font-semibold mt-2 hover:underline flex items-center gap-1"
+                            className="text-secondary dark:text-amber-400 text-xs font-semibold mt-2 hover:underline flex items-center gap-1"
                         >
                             {isExpanded ? 'Show Less' : 'Read More'}
                         </button>

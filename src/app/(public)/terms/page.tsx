@@ -76,15 +76,15 @@ export default async function TermsPage() {
                         </p>
                         <div className={styles.contactInfo}>
                             <div className={styles.contactItem} dir="ltr">
-                                <MapPin size={20} className="text-amber-500 shrink-0" />
+                                <MapPin size={20} className="text-secondary shrink-0" />
                                 <span>{address}</span>
                             </div>
                             <div className={styles.contactItem} dir="ltr">
-                                <Phone size={20} className="text-amber-500 shrink-0" />
+                                <Phone size={20} className="text-secondary shrink-0" />
                                 <span>{phone}</span>
                             </div>
                             <div className={styles.contactItem} dir="ltr">
-                                <Mail size={20} className="text-amber-500 shrink-0" />
+                                <Mail size={20} className="text-secondary shrink-0" />
                                 <span>{email}</span>
                             </div>
                         </div>

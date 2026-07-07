@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useRef, useState, useEffect } from 'react';
 
 interface FadeInProps {
     children: React.ReactNode;
@@ -9,65 +10,90 @@ interface FadeInProps {
     className?: string;
     direction?: 'up' | 'down' | 'left' | 'right' | 'none';
     scale?: boolean;
-    animate?: boolean; // NEW: Toggle animation
-    triggerOnMount?: boolean; // NEW: Trigger animation immediately on mount
+    animate?: boolean; 
+    triggerOnMount?: boolean; 
 }
 
-export default function FadeIn({ children, delay = 0, className = '', direction = 'up', scale = false, animate = false, triggerOnMount = false }: FadeInProps) {
-    const ref = useRef<HTMLDivElement>(null);
-    // If animate is false, it's visible immediately
-    const [isVisible, setIsVisible] = useState(!animate);
+export default function FadeIn({ 
+    children, 
+    delay = 0, 
+    className = '', 
+    direction = 'up', 
+    scale = false, 
+    animate = false, 
+    triggerOnMount = false 
+}: FadeInProps) {
+    if (!animate) {
+        return <div className={className}>{children}</div>;
+    }
 
-    useEffect(() => {
-        if (!animate) return; // Skip observer if we aren't animating
-
-        if (triggerOnMount) {
-            // Trigger animation shortly after mount, bypassing observer
-            const timer = setTimeout(() => setIsVisible(true), 50);
-            return () => clearTimeout(timer);
-        }
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0, rootMargin: "0px" }
-        );
-
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-
-        return () => observer.disconnect();
-    }, [animate, triggerOnMount]);
-
-    const getDirectionStyles = () => {
-        if (!animate) return ''; // No offset if not animating
+    const getDirectionOffset = () => {
         switch (direction) {
-            case 'up': return 'translate-y-10';
-            case 'down': return '-translate-y-10';
-            case 'left': return 'translate-x-10';
-            case 'right': return '-translate-x-10';
-            default: return '';
+            case 'up': return { y: 40 };
+            case 'down': return { y: -40 };
+            case 'left': return { x: 40 };
+            case 'right': return { x: -40 };
+            default: return {};
         }
     };
 
-    const initialScale = (scale && animate) ? 'scale-95' : 'scale-100';
+    const initialOffset = getDirectionOffset();
+    const initialScale = scale ? { scale: 0.95 } : {};
 
-    return (
-        <div ref={ref} className={className}>
-            <div
-                className={cn(
-                    animate ? "transition-all duration-1000 ease-out" : "",
-                    isVisible ? "opacity-100 translate-x-0 translate-y-0 scale-100" : `opacity-0 ${getDirectionStyles()} ${initialScale}`
-                )}
-                style={animate ? { transitionDelay: `${delay}s` } : {}}
+    const initial = {
+        opacity: 0,
+        ...initialOffset,
+        ...initialScale
+    };
+
+    const animateState = {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1
+    };
+
+    if (triggerOnMount) {
+        return (
+            <motion.div
+                className={className}
+                initial={initial}
+                animate={animateState}
+                transition={{
+                    duration: 0.8,
+                    delay: delay,
+                    ease: [0.22, 1, 0.36, 1]
+                }}
             >
                 {children}
-            </div>
-        </div>
+            </motion.div>
+        );
+    }
+
+    // Scroll animation with stable lock
+    const ref = useRef(null);
+    const [hasFired, setHasFired] = useState(false);
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+    useEffect(() => {
+        if (isInView && !hasFired) {
+            setHasFired(true);
+        }
+    }, [isInView, hasFired]);
+
+    return (
+        <motion.div
+            ref={ref}
+            className={className}
+            initial={initial}
+            animate={hasFired || isInView ? animateState : initial}
+            transition={{
+                duration: 0.8,
+                delay: delay,
+                ease: [0.22, 1, 0.36, 1]
+            }}
+        >
+            {children}
+        </motion.div>
     );
 }

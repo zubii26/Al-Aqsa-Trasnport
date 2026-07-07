@@ -119,7 +119,7 @@ export default function VehicleSelector({ vehicles, selectedVehicleId, onSelect 
                                 )}
 
                                 <div className={styles.iconWrapper}>
-                                    <Icon size={28} strokeWidth={1.25} className={isSelected ? 'text-amber-500' : 'text-muted-foreground'} />
+                                    <Icon size={28} strokeWidth={1.25} className={isSelected ? 'text-secondary' : 'text-muted-foreground'} />
                                 </div>
 
                                 <div className={styles.info}>
@@ -140,7 +140,7 @@ export default function VehicleSelector({ vehicles, selectedVehicleId, onSelect 
                                         animate={{ scale: 1 }}
                                         className={styles.checkIcon}
                                     >
-                                        <CheckCircle2 size={20} strokeWidth={1.25} className="text-amber-500 fill-amber-500/10" />
+                                        <CheckCircle2 size={20} strokeWidth={1.25} className="text-secondary fill-amber-500/10" />
                                     </motion.div>
                                 )}
                             </motion.button>

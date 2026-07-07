@@ -117,7 +117,7 @@ export default function AirportStylizedCanvas({ routes, activeRouteId, hoveredRo
                                     <motion.g>
                                         <switch>
                                             <foreignObject width="4" height="4" x="-2" y="-2">
-                                                <div className="w-full h-full flex items-center justify-center text-amber-500">
+                                                <div className="w-full h-full flex items-center justify-center text-secondary">
                                                     <Plane size={8} className="rotate-90" />
                                                 </div>
                                             </foreignObject>
@@ -164,7 +164,7 @@ export default function AirportStylizedCanvas({ routes, activeRouteId, hoveredRo
             <div className="absolute bottom-6 right-6 flex items-center gap-2 bg-slate-900/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700">
                 <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
                 </span>
                 <span className="text-xs text-slate-300 font-medium tracking-wide">Live Traffic</span>
             </div>

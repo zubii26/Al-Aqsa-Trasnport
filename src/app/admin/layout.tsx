@@ -68,7 +68,7 @@ export default function AdminLayout({
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center h-screen bg-slate-50 dark:bg-slate-900 gap-4">
-                <div className="w-12 h-12 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-secondary/30 border-t-amber-500 rounded-full animate-spin"></div>
                 <div className="text-slate-500 font-medium animate-pulse">Verifying Session...</div>
             </div>
         );
@@ -134,7 +134,7 @@ export default function AdminLayout({
                 {/* Mobile User Profile Trigger */}
                 {user && (
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-sm">
+                        <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-sm">
                             {user.name.charAt(0)}
                         </div>
                     </div>
@@ -180,7 +180,7 @@ export default function AdminLayout({
 
                 <div className={styles.userProfile}>
                     <div className={styles.userAvatar}>
-                        <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold">
+                        <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold">
                             {user.name.charAt(0)}
                         </div>
                     </div>

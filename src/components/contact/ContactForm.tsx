@@ -61,7 +61,7 @@ export default function ContactForm() {
                         type="text"
                         id="name"
                         name="name"
-                        className="w-full bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+                        className="w-full bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
                         placeholder="e.g. Abdullah Ahmed"
                         required
                     />
@@ -79,7 +79,7 @@ export default function ContactForm() {
                         type="email"
                         id="email"
                         name="email"
-                        className={`w-full bg-white/50 dark:bg-slate-900/50 border rounded-lg pl-10 pr-4 py-3 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white ${emailError ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500'}`}
+                        className={`w-full bg-white/50 dark:bg-slate-900/50 border rounded-lg pl-10 pr-4 py-3 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white ${emailError ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-secondary/50 focus:border-secondary'}`}
                         placeholder="your@email.com"
                         required
                         onChange={() => setEmailError('')}
@@ -98,7 +98,7 @@ export default function ContactForm() {
                     <textarea
                         id="message"
                         name="message"
-                        className="w-full bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 h-32 resize-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+                        className="w-full bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 h-32 resize-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
                         placeholder="How can we help you? (كيف يمكننا مساعدتك؟)"
                         required
                     ></textarea>
@@ -109,7 +109,7 @@ export default function ContactForm() {
                 type="submit"
                 variant="primary"
                 size="lg"
-                className="w-full relative overflow-hidden group !bg-amber-500 hover:!bg-amber-600 text-white"
+                className="w-full relative overflow-hidden group !bg-secondary hover:!bg-secondary text-white"
                 disabled={status === 'submitting'}
             >
                 <div className="relative z-10 flex items-center justify-center gap-2">

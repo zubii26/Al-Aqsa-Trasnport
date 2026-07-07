@@ -39,7 +39,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
                         onMouseEnter={() => !isMobile && onHoverRoute(route.id)}
                         onMouseLeave={() => !isMobile && onHoverRoute(null)}
                         className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 group relative overflow-hidden ${isActive
-                                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-500 shadow-xl transform scale-[1.02] z-10'
+                                ? 'bg-secondary/10 dark:bg-secondary/20 border-secondary shadow-xl transform scale-[1.02] z-10'
                                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg scale-100'
                             }`}
                         initial={{ opacity: 0, x: -20 }}
@@ -59,7 +59,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
                                 <div className="space-y-4 w-full">
                                     {/* Origin */}
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isActive ? 'bg-amber-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isActive ? 'bg-secondary text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
                                             <div className="w-2 h-2 bg-current rounded-full" />
                                         </div>
                                         <div>
@@ -77,8 +77,8 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
 
                                     {/* Destination */}
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 ${isActive ? 'border-amber-500 bg-white' : 'border-slate-200 dark:border-slate-700 bg-transparent'}`}>
-                                            <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`} />
+                                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 ${isActive ? 'border-secondary bg-white' : 'border-slate-200 dark:border-slate-700 bg-transparent'}`}>
+                                            <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-secondary' : 'bg-slate-300 dark:bg-slate-600'}`} />
                                         </div>
                                         <div>
                                             <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block leading-none mb-1">To</span>
@@ -99,7 +99,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
                                             </span>
                                         </div>
                                     )}
-                                    <div className={`mt-auto w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isActive ? 'bg-amber-500 text-white' : 'bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-amber-500 group-hover:text-white'}`}>
+                                    <div className={`mt-auto w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isActive ? 'bg-secondary text-white' : 'bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-secondary group-hover:text-white'}`}>
                                         <ArrowRight size={16} />
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
                 onClick={toggleOpen}
             >
                 <div className="flex-1 min-w-0 mr-4">
-                    <span className="text-amber-600 dark:text-amber-500 text-[10px] font-bold uppercase tracking-wider block mb-0.5">Route Explorer</span>
+                    <span className="text-secondary dark:text-secondary text-[10px] font-bold uppercase tracking-wider block mb-0.5">Route Explorer</span>
                     <h2 className="text-base font-bold  text-slate-900 dark:text-white truncate">
                         {activeRoute ? `${activeRoute.origin} - ${activeRoute.destination}` : 'Select Journey'}
                     </h2>
@@ -132,7 +132,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
                         <a
                             href={`/booking?from=${encodeURIComponent(activeRoute.origin)}&to=${encodeURIComponent(activeRoute.destination)}&service=transfer`}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-md transition-colors whitespace-nowrap"
+                            className="bg-secondary hover:bg-secondary/90 text-white text-xs font-bold px-4 py-2 rounded-full shadow-md transition-colors whitespace-nowrap"
                         >
                             Book {activeRoute.prices?.[0]?.price} SAR
                         </a>
@@ -146,7 +146,7 @@ export default function MapSidebar({ routes, activeRouteId, onSelectRoute, onHov
 
             {/* Desktop Header */}
             <div className="hidden lg:block p-6 border-b border-slate-100 dark:border-slate-800 sticky top-0 bg-white dark:bg-slate-900 z-10">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 mb-2">Route Explorer</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-secondary dark:text-secondary mb-2">Route Explorer</h3>
                 <h2 className="text-2xl font-bold  text-slate-900 dark:text-white">Select Your Journey</h2>
                 <p className="text-sm text-slate-500 mt-2">Choose a route to view details on the map.</p>
             </div>

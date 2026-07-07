@@ -118,7 +118,7 @@
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 3rem 2rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -224,7 +224,7 @@
     border-radius: 50px;
     font-weight: 700;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
     box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
 }
@@ -311,7 +311,7 @@
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: var(--glass-shadow);
 }
 
@@ -339,7 +339,7 @@
     padding: 0 1.75rem;
     max-height: 0;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     color: hsl(var(--muted-foreground));
     line-height: 1.7;
     font-size: 1.05rem;

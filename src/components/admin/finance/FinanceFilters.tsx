@@ -37,8 +37,8 @@ export default function FinanceFilters({ search, onSearchChange, statusFilter, o
                 <button
                     onClick={() => onFilterChange('warning')}
                     className={`px-4 py-2 rounded-lg border font-medium flex items-center gap-2 transition-colors ${statusFilter === 'warning'
-                            ? 'bg-amber-500 text-white border-amber-500'
-                            : 'bg-background border-border hover:bg-amber-50 dark:hover:bg-amber-900/10'
+                            ? 'bg-secondary text-white border-secondary'
+                            : 'bg-background border-border hover:bg-secondary/10 dark:hover:bg-amber-900/10'
                         }`}
                 >
                     <AlertTriangle size={16} />

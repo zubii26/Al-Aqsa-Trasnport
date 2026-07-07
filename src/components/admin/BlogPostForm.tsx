@@ -167,7 +167,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                 {isEditing ? 'Edit Post' : 'New Blog Post'}
                             </h1>
                             <div className="flex items-center gap-2 text-sm">
-                                <span className={`w-2 h-2 rounded-full ${formData.isPublished ? 'bg-green-500' : 'bg-amber-500'}`} />
+                                <span className={`w-2 h-2 rounded-full ${formData.isPublished ? 'bg-green-500' : 'bg-secondary'}`} />
                                 <span className="text-slate-500 dark:text-slate-400">
                                     {formData.isPublished ? 'Published' : 'Draft'}
                                 </span>
@@ -186,7 +186,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg transition-colors font-medium disabled:opacity-50 shadow-lg shadow-amber-500/20"
+                            className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-6 py-2 rounded-lg transition-colors font-medium disabled:opacity-50 shadow-lg shadow-secondary/20"
                         >
                             {loading ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
                             <span>{isEditing ? 'Update' : 'Publish'}</span>
@@ -199,21 +199,21 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                     <button
                         type="button"
                         onClick={() => setActiveTab('content')}
-                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'content' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'content' ? 'border-b-2 border-secondary text-secondary dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                     >
                         Content
                     </button>
                     <button
                         type="button"
                         onClick={() => setActiveTab('seo')}
-                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'seo' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'seo' ? 'border-b-2 border-secondary text-secondary dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                     >
                         SEO
                     </button>
                     <button
                         type="button"
                         onClick={() => setActiveTab('settings')}
-                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'settings' ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        className={`pb-2 px-1 text-sm font-medium transition-colors ${activeTab === 'settings' ? 'border-b-2 border-secondary text-secondary dark:text-amber-400' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                     >
                         Settings
                     </button>
@@ -279,7 +279,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                         rows={3}
                                         value={formData.excerpt}
                                         onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                                         placeholder="Short summary for cards and SEO..."
                                     />
                                 </div>
@@ -298,7 +298,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                         type="text"
                                         value={formData.metaTitle}
                                         onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                                         placeholder="Title tag for search engines"
                                     />
                                     <p className="text-xs text-slate-500 mt-1">Recommended length: 50-60 characters</p>
@@ -312,7 +312,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                         rows={3}
                                         value={formData.metaDescription}
                                         onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                                         placeholder="Description for search results"
                                     />
                                     <p className="text-xs text-slate-500 mt-1">Recommended length: 150-160 characters</p>
@@ -338,7 +338,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                 <button
                                     type="button"
                                     onClick={() => setFormData({ ...formData, isPublished: !formData.isPublished })}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${formData.isPublished ? 'bg-green-500' : 'bg-slate-200 dark:bg-slate-700'}`}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${formData.isPublished ? 'bg-green-500' : 'bg-slate-200 dark:bg-slate-700'}`}
                                 >
                                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isPublished ? 'translate-x-6' : 'translate-x-1'}`} />
                                 </button>
@@ -347,7 +347,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                 {formData.isPublished ? (
                                     <><CheckCircle size={14} className="text-green-500" /> Visible to public</>
                                 ) : (
-                                    <><AlertCircle size={14} className="text-amber-500" /> Only visible to admins</>
+                                    <><AlertCircle size={14} className="text-secondary" /> Only visible to admins</>
                                 )}
                             </div>
                         </div>
@@ -363,7 +363,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                 <select
                                     value={formData.category}
                                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                                 >
                                     {CATEGORIES.map(cat => (
                                         <option key={cat} value={cat}>{cat}</option>
@@ -380,7 +380,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                     required
                                     value={formData.author}
                                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white"
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white"
                                 />
                             </div>
 
@@ -390,7 +390,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                 </label>
                                 <div className="flex flex-wrap gap-2 mb-2">
                                     {formData.tags.map(tag => (
-                                        <span key={tag} className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300 text-xs font-medium">
+                                        <span key={tag} className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/20 text-secondary dark:bg-secondary/30 dark:text-amber-300 text-xs font-medium">
                                             {tag}
                                             <button type="button" onClick={() => removeTag(tag)} className="hover:text-amber-900 dark:hover:text-amber-100"><X size={12} /></button>
                                         </span>
@@ -401,7 +401,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                     value={tagInput}
                                     onChange={(e) => setTagInput(e.target.value)}
                                     onKeyDown={handleAddTag}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white text-sm"
                                     placeholder="Type and press Enter..."
                                 />
                             </div>
@@ -483,7 +483,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                                     }
                                                 }
                                             }}
-                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-all text-sm"
+                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-secondary/10 file:text-secondary hover:file:bg-secondary/20 transition-all text-sm"
                                         />
                                     </div>
                                 </div>
@@ -492,7 +492,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                     type="text"
                                     value={formData.image}
                                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white text-sm"
                                     placeholder="Or enter image URL manually..."
                                 />
 
@@ -525,7 +525,7 @@ export default function BlogPostForm({ initialData, isEditing = false }: BlogPos
                                     type="text"
                                     value={formData.alt}
                                     onChange={(e) => setFormData({ ...formData, alt: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:text-white text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary dark:text-white text-sm"
                                     placeholder="Describe the image for SEO..."
                                 />
                             </div>

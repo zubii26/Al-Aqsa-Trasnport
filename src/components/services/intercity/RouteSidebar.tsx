@@ -24,7 +24,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
             {/* Header */}
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
                 <div className="mb-4">
-                    <span className="text-amber-600 dark:text-amber-500 text-xs font-bold uppercase tracking-wider mb-2 block">
+                    <span className="text-secondary dark:text-secondary text-xs font-bold uppercase tracking-wider mb-2 block">
                         Network Explorer
                     </span>
                     <h2 className="text-2xl font-bold  text-slate-900 dark:text-white">
@@ -36,11 +36,11 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                 </div>
 
                 <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors" size={18} />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary transition-colors" size={18} />
                     <input
                         type="text"
                         placeholder="Search cities..."
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border-none rounded-xl focus:ring-2 focus:ring-amber-500/20 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm transition-all"
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border-none rounded-xl focus:ring-2 focus:ring-secondary/20 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm transition-all"
                     />
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                             className={`
                                 group relative p-4 rounded-xl cursor-pointer transition-all duration-300 border
                                 ${isActive
-                                    ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800/50 shadow-md'
+                                    ? 'bg-secondary/10 dark:bg-amber-950/30 border-amber-200 dark:border-secondary/50 shadow-md'
                                     : 'bg-white dark:bg-slate-900/50 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-slate-200 dark:hover:border-slate-800'
                                 }
                             `}
@@ -69,10 +69,10 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                             <div className="flex items-start justify-between gap-3">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className={`p-1.5 rounded-full ${isActive ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-500' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
+                                        <div className={`p-1.5 rounded-full ${isActive ? 'bg-secondary/20 dark:bg-amber-900/40 text-secondary dark:text-secondary' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
                                             <MapPin size={14} />
                                         </div>
-                                        <span className={`text-xs font-semibold uppercase tracking-wider ${isActive ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                                        <span className={`text-xs font-semibold uppercase tracking-wider ${isActive ? 'text-secondary dark:text-amber-400' : 'text-slate-500 dark:text-slate-500'}`}>
                                             Route {i + 1}
                                         </span>
                                     </div>
@@ -93,7 +93,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                                     </div>
                                 </div>
 
-                                <div className={`mt-2 ${isActive ? 'text-amber-500' : 'text-slate-300 group-hover:text-amber-400'} transition-colors`}>
+                                <div className={`mt-2 ${isActive ? 'text-secondary' : 'text-slate-300 group-hover:text-amber-400'} transition-colors`}>
                                     <ChevronRight size={18} />
                                 </div>
                             </div>
@@ -102,7 +102,7 @@ export default function RouteSidebar({ routes, activeRouteId, onSelectRoute, onH
                             {isActive && (
                                 <motion.div
                                     layoutId="activeIndicator"
-                                    className="absolute left-0 top-4 bottom-4 w-1 bg-amber-500 rounded-r-full"
+                                    className="absolute left-0 top-4 bottom-4 w-1 bg-secondary rounded-r-full"
                                 />
                             )}
                         </motion.div>

@@ -41,7 +41,7 @@ export function ThemeToggle() {
                 <Sun
                     className={`
                         absolute inset-0 w-full h-full
-                        text-amber-500
+                        text-secondary
                         transition-all duration-500 cubic-bezier(0.23, 1, 0.32, 1)
                         ${isDark ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}
                     `}

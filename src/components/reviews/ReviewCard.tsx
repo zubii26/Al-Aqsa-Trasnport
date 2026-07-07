@@ -23,7 +23,7 @@ export default function ReviewCard({ review }: ReviewProps) {
             {/* Decorative Gradient Border */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-slate-100 to-transparent dark:from-white/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            <div className="absolute top-8 right-8 text-slate-100 dark:text-white/5 group-hover:text-amber-500/20 transition-colors duration-500">
+            <div className="absolute top-8 right-8 text-slate-100 dark:text-white/5 group-hover:text-secondary/20 transition-colors duration-500">
                 <Quote size={64} className="rotate-12" />
             </div>
 
@@ -43,7 +43,7 @@ export default function ReviewCard({ review }: ReviewProps) {
                 </p>
 
                 <div className="flex items-center gap-4 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-white/10 group-hover:border-amber-500/50 transition-colors duration-300">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-white/10 group-hover:border-secondary/50 transition-colors duration-300">
                         {review.avatar ? (
                             <Image src={review.avatar} alt={review.author} fill className="object-cover" unoptimized />
                         ) : (
@@ -54,7 +54,7 @@ export default function ReviewCard({ review }: ReviewProps) {
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
-                            <h4 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">{review.author}</h4>
+                            <h4 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-secondary dark:group-hover:text-secondary transition-colors">{review.author}</h4>
                             <BadgeCheck size={16} className="text-blue-500 dark:text-blue-400" />
                         </div>
                         <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-500">

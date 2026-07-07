@@ -16,7 +16,7 @@ export default function AnimatedBackground() {
                     repeat: Infinity,
                     ease: "easeInOut"
                 }}
-                className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-3xl"
+                className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-secondary/10 rounded-full blur-3xl"
             />
 
             {/* Bottom Left Blue Glow */}

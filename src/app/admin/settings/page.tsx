@@ -274,7 +274,7 @@ export default function SettingsPage() {
 
     if (loading) return (
         <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary" />
         </div>
     );
 
@@ -295,7 +295,7 @@ export default function SettingsPage() {
                 <button
                     onClick={handleSubmit}
                     disabled={saving}
-                    className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 px-8 py-3 rounded-full font-bold shadow-lg shadow-amber-500/20 hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"
+                    className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 px-8 py-3 rounded-full font-bold shadow-lg shadow-secondary/20 hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"
                 >
                     <Save size={20} />
                     {saving ? 'Saving...' : 'Save Changes'}
@@ -313,11 +313,11 @@ export default function SettingsPage() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as Tab)}
                                 className={`group flex items-center gap-4 px-4 py-4 rounded-2xl transition-all text-left border ${isActive
-                                    ? 'bg-white shadow-md border-amber-100'
+                                    ? 'bg-white shadow-md border-secondary/20'
                                     : 'hover:bg-white/50 border-transparent hover:border-slate-100'
                                     }`}
                             >
-                                <div className={`p-2.5 rounded-xl transition-colors ${isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30' : 'bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-amber-500'}`}>
+                                <div className={`p-2.5 rounded-xl transition-colors ${isActive ? 'bg-secondary text-white shadow-lg shadow-amber-500/30' : 'bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-secondary'}`}>
                                     <Icon size={20} />
                                 </div>
                                 <div>
@@ -348,7 +348,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Layout className="text-amber-500" size={28} />
+                                            <Layout className="text-secondary" size={28} />
                                             General Information
                                         </h2>
                                         <p className="text-muted-foreground">Basic details about your website identity.</p>
@@ -363,7 +363,7 @@ export default function SettingsPage() {
                                                     name="site_name"
                                                     value={settings.site_name}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Al Aqsa Umrah Transport"
                                                 />
                                             </div>
@@ -376,7 +376,7 @@ export default function SettingsPage() {
                                                     name="site_description"
                                                     value={settings.site_description}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none min-h-[120px]"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none min-h-[120px]"
                                                     placeholder="Brief description of your services..."
                                                 />
                                             </div>
@@ -389,7 +389,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Phone strokeWidth={1.25} className="text-amber-500" size={28} />
+                                            <Phone strokeWidth={1.25} className="text-secondary" size={28} />
                                             Contact Details
                                         </h2>
                                         <p className="text-muted-foreground">How customers can reach you.</p>
@@ -404,7 +404,7 @@ export default function SettingsPage() {
                                                     name="contact_phone"
                                                     value={settings.contact_phone}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="+966 50 123 4567"
                                                 />
                                             </div>
@@ -418,7 +418,7 @@ export default function SettingsPage() {
                                                     name="contact_phone_2"
                                                     value={settings.contact_phone_2}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="+966 50 987 6543"
                                                 />
                                             </div>
@@ -432,7 +432,7 @@ export default function SettingsPage() {
                                                     name="contact_email"
                                                     value={settings.contact_email}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="info@alaqsa.com"
                                                 />
                                             </div>
@@ -446,7 +446,7 @@ export default function SettingsPage() {
                                                     name="address"
                                                     value={settings.address}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Makkah, Saudi Arabia"
                                                 />
                                             </div>
@@ -459,7 +459,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Globe strokeWidth={1.25} className="text-amber-500" size={28} />
+                                            <Globe strokeWidth={1.25} className="text-secondary" size={28} />
                                             Social Media
                                         </h2>
                                         <p className="text-muted-foreground">Connect your social platforms.</p>
@@ -483,7 +483,7 @@ export default function SettingsPage() {
                                                         name={social.name}
                                                         value={settings[social.name as keyof typeof settings] as string}
                                                         onChange={handleChange}
-                                                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                         placeholder={`https://${social.label.toLowerCase().split(' ')[0]}.com/...`}
                                                     />
                                                 </div>
@@ -497,7 +497,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Search strokeWidth={1.25} className="text-amber-500" size={28} />
+                                            <Search strokeWidth={1.25} className="text-secondary" size={28} />
                                             SEO Configuration
                                         </h2>
                                         <p className="text-muted-foreground">Optimize your site for search engines.</p>
@@ -512,7 +512,7 @@ export default function SettingsPage() {
                                                     name="seo_title"
                                                     value={settings.seo_title}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Al Aqsa Umrah Transport - Premium Taxi Service"
                                                 />
                                             </div>
@@ -526,7 +526,7 @@ export default function SettingsPage() {
                                                     name="seo_description"
                                                     value={settings.seo_description}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none min-h-[100px]"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none min-h-[100px]"
                                                     placeholder="Best Umrah taxi service in Saudi Arabia..."
                                                 />
                                             </div>
@@ -541,7 +541,7 @@ export default function SettingsPage() {
                                                     name="seo_keywords"
                                                     value={settings.seo_keywords}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="umrah taxi, makkah transport, jeddah airport taxi"
                                                 />
                                             </div>
@@ -555,7 +555,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <Code className="text-amber-500" size={28} />
+                                            <Code className="text-secondary" size={28} />
                                             Custom Scripts
                                         </h2>
                                         <p className="text-muted-foreground">Inject custom code into your site.</p>
@@ -570,7 +570,7 @@ export default function SettingsPage() {
                                                     name="google_analytics_id"
                                                     value={settings.google_analytics_id}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="G-XXXXXXXXXX"
                                                 />
                                             </div>
@@ -585,7 +585,7 @@ export default function SettingsPage() {
                                                     name="scripts_header"
                                                     value={settings.scripts_header}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none font-mono text-sm min-h-[200px]"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none font-mono text-sm min-h-[200px]"
                                                     placeholder="<!-- Google Analytics -->"
                                                 />
                                             </div>
@@ -599,7 +599,7 @@ export default function SettingsPage() {
                                                     name="scripts_footer"
                                                     value={settings.scripts_footer}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none font-mono text-sm min-h-[200px]"
+                                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none font-mono text-sm min-h-[200px]"
                                                     placeholder="<!-- Chat Widget -->"
                                                 />
                                             </div>
@@ -628,7 +628,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <MapPin strokeWidth={1.25} className="text-amber-500" size={28} />
+                                            <MapPin strokeWidth={1.25} className="text-secondary" size={28} />
                                             Custom Route Live Pricing
                                         </h2>
                                         <p className="text-muted-foreground">Configure global rates for user-drawn maps and custom pickup/dropoff booking queries.</p>
@@ -639,7 +639,7 @@ export default function SettingsPage() {
                                             <label className="block text-sm font-semibold mb-2 text-white">Base Fare (SAR)</label>
                                             <input
                                                 type="number"
-                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                 value={settings.custom_route_base_fare || ''}
                                                 onChange={(e) => setSettings({ ...settings, custom_route_base_fare: e.target.value })}
                                                 placeholder="e.g. 50"
@@ -652,7 +652,7 @@ export default function SettingsPage() {
                                             <input
                                                 type="number"
                                                 step="0.01"
-                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                 value={settings.custom_route_km_rate || ''}
                                                 onChange={(e) => setSettings({ ...settings, custom_route_km_rate: e.target.value })}
                                                 placeholder="e.g. 3.00"
@@ -664,7 +664,7 @@ export default function SettingsPage() {
                                             <label className="block text-sm font-semibold mb-2 text-white">Minimum Fare (SAR)</label>
                                             <input
                                                 type="number"
-                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                 value={settings.custom_route_min_fare || ''}
                                                 onChange={(e) => setSettings({ ...settings, custom_route_min_fare: e.target.value })}
                                                 placeholder="e.g. 50"
@@ -684,7 +684,7 @@ export default function SettingsPage() {
                                             <label className="block text-sm font-semibold mb-2 text-white">Wadi Jinn Fee (SAR)</label>
                                             <input
                                                 type="number"
-                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                 value={settings.wadiJinnFee || 200}
                                                 onChange={(e) => setSettings({ ...settings, wadiJinnFee: Number(e.target.value) })}
                                                 placeholder="200"
@@ -705,7 +705,7 @@ export default function SettingsPage() {
                                                         routeFees: { ...settings.routeFees, enableUmrahFee: !settings.routeFees.enableUmrahFee }
                                                     })}
                                                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                                        settings.routeFees.enableUmrahFee ? 'bg-amber-500' : 'bg-slate-600'
+                                                        settings.routeFees.enableUmrahFee ? 'bg-secondary' : 'bg-slate-600'
                                                     }`}
                                                 >
                                                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -719,7 +719,7 @@ export default function SettingsPage() {
                                                     <label className="block text-sm font-semibold mb-2 text-white">Umrah Visa Fee Amount (SAR)</label>
                                                     <input
                                                         type="number"
-                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                         value={settings.routeFees.umrahFeeAmount || 150}
                                                         onChange={(e) => setSettings({
                                                             ...settings,
@@ -745,7 +745,7 @@ export default function SettingsPage() {
                                                         routeFees: { ...settings.routeFees, enableViaBadr: !settings.routeFees.enableViaBadr }
                                                     })}
                                                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                                        settings.routeFees.enableViaBadr ? 'bg-amber-500' : 'bg-slate-600'
+                                                        settings.routeFees.enableViaBadr ? 'bg-secondary' : 'bg-slate-600'
                                                     }`}
                                                 >
                                                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -759,7 +759,7 @@ export default function SettingsPage() {
                                                     <label className="block text-sm font-semibold mb-2 text-white">Via Badr Fee Amount (SAR)</label>
                                                     <input
                                                         type="number"
-                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"
+                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-secondary"
                                                         value={settings.routeFees.viaBadrFeeAmount || 150}
                                                         onChange={(e) => setSettings({
                                                             ...settings,
@@ -779,15 +779,15 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <DatabaseBackup className="text-amber-500" size={28} />
+                                            <DatabaseBackup className="text-secondary" size={28} />
                                             Database Maintenance
                                         </h2>
                                         <p className="text-muted-foreground">Manage data retention and optimization.</p>
                                     </div>
 
-                                    <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+                                    <div className="bg-secondary/10 dark:bg-amber-900/10 border border-amber-200 dark:border-secondary rounded-2xl p-6">
                                         <div className="flex items-start gap-4">
-                                            <div className="p-3 bg-amber-100 dark:bg-amber-800/30 rounded-xl text-amber-600 dark:text-amber-400">
+                                            <div className="p-3 bg-secondary/20 dark:bg-secondary/30 rounded-xl text-secondary dark:text-amber-400">
                                                 <Trash2 strokeWidth={1.25} size={24} />
                                             </div>
                                             <div className="flex-1">
@@ -804,7 +804,7 @@ export default function SettingsPage() {
                                                         <select
                                                             value={retentionMonths}
                                                             onChange={(e) => setRetentionMonths(e.target.value)}
-                                                            className="w-full p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500 outline-none font-medium"
+                                                            className="w-full p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-secondary outline-none font-medium"
                                                         >
                                                             <option value="1">1 Month</option>
                                                             <option value="3">3 Months</option>
@@ -849,7 +849,7 @@ export default function SettingsPage() {
                                 <div className="space-y-8">
                                     <div>
                                         <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                                            <ShieldCheck strokeWidth={1.25} className="text-amber-500" size={28} />
+                                            <ShieldCheck strokeWidth={1.25} className="text-secondary" size={28} />
                                             Security Settings
                                         </h2>
                                         <p className="text-muted-foreground">Manage your account security and password.</p>
@@ -869,7 +869,7 @@ export default function SettingsPage() {
                                                     value={passwordForm.currentPassword}
                                                     onChange={handlePasswordChange}
                                                     required
-                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Enter current password"
                                                 />
                                             </div>
@@ -882,7 +882,7 @@ export default function SettingsPage() {
                                                     onChange={handlePasswordChange}
                                                     required
                                                     minLength={6}
-                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Enter new password"
                                                 />
                                             </div>
@@ -895,7 +895,7 @@ export default function SettingsPage() {
                                                     onChange={handlePasswordChange}
                                                     required
                                                     minLength={6}
-                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none"
                                                     placeholder="Confirm new password"
                                                 />
                                             </div>

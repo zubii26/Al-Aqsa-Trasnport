@@ -94,7 +94,7 @@ export default async function RamadanTransportPage() {
             <section className="py-16 bg-white dark:bg-slate-900">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <div className="flex justify-center mb-6">
-                        <Moon className="w-12 h-12 text-amber-500 fill-amber-500/20" />
+                        <Moon className="w-12 h-12 text-secondary fill-amber-500/20" />
                     </div>
                     <h2 className="text-3xl font-bold mb-6  text-slate-800 dark:text-slate-100">
                         Experience a Stress-Free Ramadan 2026
@@ -108,28 +108,28 @@ export default async function RamadanTransportPage() {
             </section>
 
             {/* Why Choose Us for Ramadan */}
-            <section className="py-12 bg-amber-50 dark:bg-slate-800/50">
+            <section className="py-12 bg-secondary/10 dark:bg-slate-800/50">
                 <div className="container mx-auto px-4">
                     <h2 className="text-2xl font-bold text-center mb-12 ">Why Book With Us This Ramadan?</h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
                             {
-                                icon: <Clock size={40} className="text-amber-500" />,
+                                icon: <Clock size={40} className="text-secondary" />,
                                 title: "Punctuality Matters",
                                 desc: "We know every minute of Ramadan is precious. Our drivers know the best routes to avoid congestion during rush hours."
                             },
                             {
-                                icon: <ShieldCheck size={40} className="text-amber-500" />,
+                                icon: <ShieldCheck size={40} className="text-secondary" />,
                                 title: "Guaranteed Availability",
                                 desc: "Pre-book your rides to secure your vehicle. Don't waste time waiting for taxis on the street."
                             },
                             {
-                                icon: <MapPin size={40} className="text-amber-500" />,
+                                icon: <MapPin size={40} className="text-secondary" />,
                                 title: "Door-to-Door Service",
                                 desc: "We pick you up from your hotel lobby and drop you as close as possible to the Haram boundaries allowed by traffic police."
                             }
                         ].map((item, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-amber-100 dark:border-slate-700 text-center">
+                            <div key={idx} className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-secondary/20 dark:border-slate-700 text-center">
                                 <div className="flex justify-center mb-4">{item.icon}</div>
                                 <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-slate-100">{item.title}</h3>
                                 <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
@@ -152,7 +152,7 @@ export default async function RamadanTransportPage() {
                     <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
                         Slots for the last 10 days of Ramadan fill up quickly. Secure your booking today.
                     </p>
-                    <Link href={whatsappLink} target="_blank" className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-white px-10 py-5 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-amber-500/25 hover:-translate-y-1">
+                    <Link href={whatsappLink} target="_blank" className="inline-flex items-center gap-3 bg-secondary hover:bg-secondary/90 text-white px-10 py-5 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-amber-500/25 hover:-translate-y-1">
                         Book via WhatsApp <ArrowRight size={20} />
                     </Link>
                 </div>

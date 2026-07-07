@@ -46,7 +46,7 @@ const jeddahAirportFAQs = [
     },
     {
         question: "Can you book a return trip or onward travel?",
-        answer: <span>Yes, you can easily arrange your complete itinerary with our team, including your onward <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah taxi</Link> once your Umrah rituals are complete. Booking your entire transport itinerary with a single operator simplifies communication.</span>
+        answer: <span>Yes, you can easily arrange your complete itinerary with our team, including your onward <Link href="/services/makkah-madinah-taxi" className="text-secondary hover:underline">Makkah to Madinah taxi</Link> once your Umrah rituals are complete. Booking your entire transport itinerary with a single operator simplifies communication.</span>
     }
 ];
 
@@ -94,7 +94,7 @@ export default async function JeddahAirportTransferPage() {
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                         Umrah pilgrims arrive at one of three operational terminals at KAIA: Terminal 1, the North Terminal, or the seasonal Hajj & Umrah Terminal. Your exact arrival terminal depends entirely on your airline and travel date. Terminal 1 handles nearly all international full-service airlines year-round. This is where most Umrah travelers arrive outside the core Hajj season. The North Terminal primarily serves non-Saudia and low-cost international carriers. While smaller than Terminal 1, it remains fully operational for international arrivals. The seasonal Hajj & Umrah Terminal opens only during Hajj season and peak Umrah periods to manage massive crowd surges. This terminal features tent-style architecture designed to process large pilgrim groups efficiently. Knowing your arrival terminal is critical because meeting points for your driver differ significantly.
                     </p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: Your arrival will be at Terminal 1 for major airlines, the North Terminal for low-cost carriers, or the seasonal Hajj & Umrah Terminal during peak periods.
                     </p>
 
@@ -143,7 +143,7 @@ export default async function JeddahAirportTransferPage() {
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                         When traveling with family, selecting the right vehicle is more important than finding the absolute lowest price. Trying to fit four adults into a standard sedan often results in hiring a second vehicle at the airport.
                     </p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: Expect to pay SAR 150–300 for a standard sedan, but pre-book a vehicle sized correctly for your group to avoid unexpected costs.
                     </p>
 
@@ -152,11 +152,11 @@ export default async function JeddahAirportTransferPage() {
                         The drive time by road from Jeddah Airport to Makkah is 70 to 90 minutes. This accounts for the standard ~80 km distance along the Haramain Expressway under normal traffic conditions. Actual travel times vary based on operational factors. Traffic congestion is the primary variable. During Ramadan, on Fridays before Jumu'ah prayers, or during Islamic holidays, the highway experiences heavy vehicle volume. In these scenarios, the journey can stretch beyond two hours. Additionally, all vehicles entering Makkah must pass through security checkpoints at the Haram boundary. Verification of permits or volume delays at these checkpoints can add 15 to 30 minutes to your trip.
                     </p>
 
-                    <blockquote className="my-8 p-6 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 rounded-r-lg italic text-slate-700 dark:text-slate-300">
+                    <blockquote className="my-8 p-6 bg-secondary/10 dark:bg-secondary/20 border-l-4 border-secondary rounded-r-lg italic text-slate-700 dark:text-slate-300">
                         "The Al Aqsa Umrah Transport team monitors local traffic patterns constantly. We often utilize alternative routes like the Old Makkah Road when the main expressway stalls. Always factor in an extra 45 minutes of buffer time if your arrival coincides with prayer times or major shifts in pilgrim movement."
                     </blockquote>
 
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: Plan for a 70 to 90-minute road journey covering ~80 km, but allow extra time during peak seasons and Friday prayer times.
                     </p>
 
@@ -201,7 +201,7 @@ export default async function JeddahAirportTransferPage() {
                             </tbody>
                         </table>
                     </div>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: A private taxi offers the only true 24/7 door-to-door service, while the train provides speed at the cost of luggage convenience.
                     </p>
 
@@ -212,18 +212,18 @@ export default async function JeddahAirportTransferPage() {
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                         Exit through customs into the main arrivals concourse to find ATMs, telecom kiosks selling SIM cards, and currency exchange counters. If you pre-booked a private transfer, your driver will be waiting in the designated meet-and-greet zone holding a sign with your name. They will assist with your trolley and guide you to the parking structure. Be prepared for a short walk, as security regulations restrict vehicles from parking directly against the terminal curb.
                     </p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: The arrival process involves immigration biometrics, baggage claim, and a short walk to the designated parking zones where your driver meets you.
                     </p>
 
                     <h2 className="text-3xl font-bold mt-12 mb-6 text-slate-800 dark:text-slate-100">How do you pre-book your Jeddah to Makkah transfer with Al Aqsa?</h2>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-                        You can <Link href="/booking" className="text-amber-600 hover:underline">book your airport transfer</Link> directly through our secure platform by providing your flight details, arrival date, and passenger count. Pre-booking eliminates uncertainty upon arrival. First, determine the correct vehicle size for your group. A standard sedan works for solo travelers, while you should reserve a <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon XL for families</Link> if you have multiple adults and large suitcases. Next, input your flight number into our booking system. This allows our dispatch team to track your flight in real-time. We automatically adjust your pickup time if your flight is delayed or arrives early.
+                        You can <Link href="/booking" className="text-secondary hover:underline">book your airport transfer</Link> directly through our secure platform by providing your flight details, arrival date, and passenger count. Pre-booking eliminates uncertainty upon arrival. First, determine the correct vehicle size for your group. A standard sedan works for solo travelers, while you should reserve a <Link href="/fleet/gmc-yukon-at4" className="text-secondary hover:underline">GMC Yukon XL for families</Link> if you have multiple adults and large suitcases. Next, input your flight number into our booking system. This allows our dispatch team to track your flight in real-time. We automatically adjust your pickup time if your flight is delayed or arrives early.
                     </p>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                         Once confirmed, you receive an itinerary complete with your driver’s name, vehicle license plate, and a direct WhatsApp contact number. Connect to the airport Wi-Fi to message your driver, ensuring a seamless linkup in the arrivals hall. Pay your driver directly in cash or via card upon reaching your destination.
                     </p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1">
                         Key takeaway: Pre-booking requires simply selecting your vehicle and providing flight details, giving you a dedicated driver and flight tracking at no extra upfront cost.
                     </p>
                 </div>
@@ -243,10 +243,10 @@ export default async function JeddahAirportTransferPage() {
                     <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                         You can secure your direct transport today and eliminate the stress of finding a reliable taxi after a long international flight. Arriving for Umrah should be a spiritual and peaceful experience, not one plagued by logistical headaches at the taxi rank. By reserving your vehicle in advance, you guarantee your rate, secure the correct vehicle size for your family, and gain the peace of mind that a professional driver is tracking your flight. Our operational team handles the complexities of Jeddah traffic and Makkah navigation so you can focus entirely on your pilgrimage. Reach out to our dispatch team today.
                     </p>
-                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-amber-500 pl-4 py-1 max-w-2xl mx-auto text-left">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 mb-8 border-l-4 border-secondary pl-4 py-1 max-w-2xl mx-auto text-left">
                         Key takeaway: Securing your transfer in advance guarantees your vehicle, locks in your price, and allows you to focus purely on your Umrah experience.
                     </p>
-                    <Link href="/booking" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+                    <Link href="/booking" className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
                         Book Your Airport Transfer <ArrowRight size={20} />
                     </Link>
                 </div>

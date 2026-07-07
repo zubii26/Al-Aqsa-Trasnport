@@ -263,7 +263,7 @@ export default function BookingsPage() {
     const getStatusBadge = (status: string) => {
         switch (status) {
             case 'confirmed': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
-            case 'pending': return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+            case 'pending': return 'bg-secondary/10 text-secondary border-secondary/20';
             case 'completed': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
             case 'cancelled': return 'bg-red-500/10 text-red-500 border-red-500/20';
             default: return 'bg-slate-500/10 text-slate-500 border-slate-500/20';
@@ -468,7 +468,7 @@ export default function BookingsPage() {
                                                             </span>
                                                         </div>
                                                         {booking.notes && (
-                                                            <div className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded mt-1 break-words max-w-[200px]">
+                                                            <div className="text-xs text-secondary bg-secondary/10 dark:bg-secondary/20 px-1.5 py-0.5 rounded mt-1 break-words max-w-[200px]">
                                                                 {booking.notes}
                                                             </div>
                                                         )}
@@ -488,7 +488,7 @@ export default function BookingsPage() {
                                                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                                                     </span>
                                                     {booking.rating && (
-                                                        <div className="mt-1 flex items-center gap-1 text-[10px] text-amber-500 font-bold">
+                                                        <div className="mt-1 flex items-center gap-1 text-[10px] text-secondary font-bold">
                                                             <span>⭐ {booking.rating}/5</span>
                                                         </div>
                                                     )}

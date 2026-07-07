@@ -23,7 +23,7 @@ export default function FloatingRoutePanel({ route }: FloatingRoutePanelProps) {
             className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-6 w-full"
         >
             <div className="mb-4">
-                <span className="text-amber-500 text-xs font-bold uppercase tracking-wider mb-1 block">Selected Detail</span>
+                <span className="text-secondary text-xs font-bold uppercase tracking-wider mb-1 block">Selected Detail</span>
                 <h3 className="text-xl font-bold  leading-tight text-slate-900 dark:text-white">
                     {route.origin} <span className="text-muted-foreground font-normal mx-1">to</span> {route.destination}
                 </h3>
@@ -46,14 +46,14 @@ export default function FloatingRoutePanel({ route }: FloatingRoutePanelProps) {
                     <span>Hijrah Road Certified</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                    <Star size={16} className="text-amber-500" />
+                    <Star size={16} className="text-secondary" />
                     <span>VIP Fleet Service</span>
                 </div>
             </div>
 
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
                 <Link href={`/booking?from=${encodeURIComponent(route.origin)}&to=${encodeURIComponent(route.destination)}&service=transfer`}>
-                    <GlassButton variant="primary" className="w-full justify-center text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 border-none">
+                    <GlassButton variant="primary" className="w-full justify-center text-sm bg-secondary hover:bg-secondary/90 text-slate-900 border-none">
                         Book Now {price && <span className="ml-1 opacity-90">({price} SAR)</span>} <ArrowRight size={16} className="ml-2" />
                     </GlassButton>
                 </Link>

@@ -70,12 +70,12 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
                         {/* Meta Info */}
                         <div className="flex items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400 mb-6">
                             <span className="flex items-center gap-1.5">
-                                <Calendar size={14} className="text-amber-500" />
+                                <Calendar size={14} className="text-secondary" />
                                 {formattedDate}
                             </span>
                             <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
                             <span className="flex items-center gap-1.5">
-                                <Clock size={14} className="text-amber-500" />
+                                <Clock size={14} className="text-secondary" />
                                 {post.readTime}
                             </span>
                         </div>

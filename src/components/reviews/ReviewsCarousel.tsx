@@ -67,7 +67,7 @@ export default function ReviewsCarousel({ reviews }: ReviewsCarouselProps) {
                 <button
                     onClick={prevSlide}
                     disabled={currentIndex === 0}
-                    className="p-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 hover:border-amber-500/50 hover:text-amber-600 dark:hover:text-amber-400 transition-all duration-300 disabled:opacity-30 disabled:hover:bg-slate-100 dark:disabled:hover:bg-white/5 disabled:hover:border-slate-200 dark:disabled:hover:border-white/10 disabled:cursor-not-allowed group"
+                    className="p-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 hover:border-secondary/50 hover:text-secondary dark:hover:text-amber-400 transition-all duration-300 disabled:opacity-30 disabled:hover:bg-slate-100 dark:disabled:hover:bg-white/5 disabled:hover:border-slate-200 dark:disabled:hover:border-white/10 disabled:cursor-not-allowed group"
                     aria-label="Previous review"
                 >
                     <ChevronLeft size={24} className="group-hover:-translate-x-0.5 transition-transform" />
@@ -75,7 +75,7 @@ export default function ReviewsCarousel({ reviews }: ReviewsCarouselProps) {
                 <button
                     onClick={nextSlide}
                     disabled={currentIndex >= reviews.length - visibleItems}
-                    className="p-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 hover:border-amber-500/50 hover:text-amber-600 dark:hover:text-amber-400 transition-all duration-300 disabled:opacity-30 disabled:hover:bg-slate-100 dark:disabled:hover:bg-white/5 disabled:hover:border-slate-200 dark:disabled:hover:border-white/10 disabled:cursor-not-allowed group"
+                    className="p-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 hover:border-secondary/50 hover:text-secondary dark:hover:text-amber-400 transition-all duration-300 disabled:opacity-30 disabled:hover:bg-slate-100 dark:disabled:hover:bg-white/5 disabled:hover:border-slate-200 dark:disabled:hover:border-white/10 disabled:cursor-not-allowed group"
                     aria-label="Next review"
                 >
                     <ChevronRight size={24} className="group-hover:translate-x-0.5 transition-transform" />

@@ -92,11 +92,11 @@ export default function RecentBookingsTable({ bookings, onStatusChange }: Recent
                                         inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide
                                         ${booking.status === 'confirmed' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20' :
                                             booking.status === 'cancelled' ? 'bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20' :
-                                                'bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20'}
+                                                'bg-secondary/20 dark:bg-secondary/10 text-secondary dark:text-amber-400 border border-amber-200 dark:border-secondary/20'}
                                     `}>
                                         <span className={`w-1.5 h-1.5 rounded-full ${booking.status === 'confirmed' ? 'bg-emerald-500' :
                                             booking.status === 'cancelled' ? 'bg-red-500' :
-                                                'bg-amber-500'
+                                                'bg-secondary'
                                             }`} />
                                         {booking.status || 'Pending'}
                                     </span>

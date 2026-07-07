@@ -128,12 +128,12 @@ export default function ChatWidget({ channelId, currentUserId, currentUserRole, 
                                 <div className={`
                                     max-w-[70%] rounded-2xl px-4 py-2 text-sm
                                     ${isMe
-                                        ? 'bg-amber-600 text-white rounded-tr-none'
+                                        ? 'bg-secondary text-white rounded-tr-none'
                                         : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
                                     }
                                 `}>
                                     <p>{msg.content}</p>
-                                    <p className={`text-[10px] mt-1 text-right ${isMe ? 'text-amber-200' : 'text-slate-400'}`}>
+                                    <p className={`text-[10px] mt-1 text-right ${isMe ? 'text-secondary' : 'text-slate-400'}`}>
                                         {format(new Date(msg.createdAt), 'HH:mm')}
                                     </p>
                                 </div>
@@ -151,7 +151,7 @@ export default function ChatWidget({ channelId, currentUserId, currentUserRole, 
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Type a message..."
-                    className="flex-1 border border-slate-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                    className="flex-1 border border-slate-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
                 />
                 <button
                     type="submit"

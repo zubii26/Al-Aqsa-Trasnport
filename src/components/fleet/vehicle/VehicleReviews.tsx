@@ -37,7 +37,7 @@ export default function VehicleReviews({
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {reviews.map((review, idx) => (
                         <div key={idx} className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <div className="flex items-center gap-1 mb-4 text-amber-500">
+                            <div className="flex items-center gap-1 mb-4 text-secondary">
                                 {[...Array(5)].map((_, i) => (
                                     <Star 
                                         key={i} 

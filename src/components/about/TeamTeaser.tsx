@@ -12,7 +12,7 @@ export default function TeamTeaser() {
     return (
         <section className="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
             <div className="container mx-auto px-4 text-center">
-                <span className="text-amber-500 font-bold uppercase tracking-wider text-sm mb-2 block">Our Ambassadors</span>
+                <span className="text-secondary font-bold uppercase tracking-wider text-sm mb-2 block">Our Ambassadors</span>
                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6 ">
                     Dedicated Professionals at Your Service
                 </h2>
@@ -22,7 +22,7 @@ export default function TeamTeaser() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
                     <div className="flex flex-col items-center gap-3 p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm">
-                        <Shield className="text-amber-500" size={32} />
+                        <Shield className="text-secondary" size={32} />
                         <span className="font-bold">Verified & Vetted</span>
                     </div>
                     <div className="flex flex-col items-center gap-3 p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm">

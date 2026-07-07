@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 const makkahMadinahFAQs = [
     {
         question: "How long is the journey from Makkah to Madinah?",
-        answer: <span>The distance is approximately 450 km. By private taxi (<Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC</Link>/<Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Staria</Link>), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah.</span>,
+        answer: <span>The distance is approximately 450 km. By private taxi (<Link href="/fleet/gmc-yukon-at4" className="text-secondary hover:underline">GMC</Link>/<Link href="/fleet/hyundai-staria" className="text-secondary hover:underline">Staria</Link>), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah.</span>,
         plainTextAnswer: "The distance is approximately 450 km. By private taxi (GMC/Staria), the journey typically takes 4.5 to 5 hours. We can stop at the Miqat (Bir Ali) for 15-30 minutes if you wish to assume Ihram before entering Makkah."
     },
     {
@@ -50,7 +50,7 @@ const makkahMadinahFAQs = [
     },
     {
         question: "Do you offer transport from Jeddah Airport to Makkah?",
-        answer: <span>Yes, we specialize in <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport transfers</Link>. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram.</span>,
+        answer: <span>Yes, we specialize in <Link href="/services/jeddah-airport-transfer" className="text-secondary hover:underline">Jeddah Airport transfers</Link>. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram.</span>,
         plainTextAnswer: "Yes, we specialize in Jeddah Airport transfers. Our driver will meet you at the arrival hall and take you directly to your hotel or the Haram."
     },
     {
@@ -119,11 +119,11 @@ export default async function MakkahMadinahTaxiPage() {
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                                 The journey between the two Holy Cities (approx. 450km) requires a vehicle that guarantees comfort and safety.
-                                Skip the crowded buses and strict train schedules. Whether you are traveling Makkah to Madinah by road via a reliable Hijrah route taxi or seeking VIP GMC transport Madinah, our private taxi service offers premium rides in our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 font-medium hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 font-medium hover:underline">Hyundai Staria</Link>:
+                                Skip the crowded buses and strict train schedules. Whether you are traveling Makkah to Madinah by road via a reliable Hijrah route taxi or seeking VIP GMC transport Madinah, our private taxi service offers premium rides in our <Link href="/fleet/gmc-yukon-at4" className="text-secondary font-medium hover:underline">GMC Yukon</Link> or <Link href="/fleet/hyundai-staria" className="text-secondary font-medium hover:underline">Hyundai Staria</Link>:
                             </p>
 
-                            <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30">
-                                <p className="text-amber-800 dark:text-amber-200 italic font-medium text-center font-serif">
+                            <div className="mb-6 p-4 bg-secondary/10 dark:bg-secondary/20 rounded-lg border border-secondary/20 dark:border-secondary/30">
+                                <p className="text-secondary dark:text-secondary italic font-medium text-center font-serif">
                                     "Welcome to the City of the Prophet ﷺ – May your journey be blessed."
                                 </p>
                             </div>
@@ -137,7 +137,7 @@ export default async function MakkahMadinahTaxiPage() {
                                     "New Model Vehicles (2024-2025)"
                                 ].map((item, index) => (
                                     <li key={index} className="flex items-center gap-3">
-                                        <CheckCircle2 className="text-amber-500 flex-shrink-0" size={20} />
+                                        <CheckCircle2 className="text-secondary flex-shrink-0" size={20} />
                                         <span className="text-slate-700 dark:text-slate-200">{item}</span>
                                     </li>
                                 ))}
@@ -145,16 +145,16 @@ export default async function MakkahMadinahTaxiPage() {
                         </div>
                         <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
                             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                <Clock className="text-amber-500" /> Average Travel Time
+                                <Clock className="text-secondary" /> Average Travel Time
                             </h3>
                             <p className="mb-6 text-2xl font-bold text-slate-800 dark:text-white">4 Hours 30 Minutes</p>
 
                             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                <MapPin className="text-amber-500" /> Route Highlights
+                                <MapPin className="text-secondary" /> Route Highlights
                             </h3>
                             <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
                                 <p>• Pickup from your Makkah Hotel</p>
-                                <p>• Optional <Link href="/services/ziyarat-tours" className="text-amber-600 hover:underline">Ziyarat stops</Link> (on request)</p>
+                                <p>• Optional <Link href="/services/ziyarat-tours" className="text-secondary hover:underline">Ziyarat stops</Link> (on request)</p>
                                 <p>• Drop-off at Madinah Hotel / Masjid Nabawi</p>
                             </div>
                         </div>
@@ -185,7 +185,7 @@ export default async function MakkahMadinahTaxiPage() {
                         No need to travel to the station, handle luggage multiple times, or worry about ticket availability.
                         Our service picks you up directly from your lobby.
                     </p>
-                    <Link href="/booking" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-bold transition-all">
+                    <Link href="/booking" className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-8 py-3 rounded-full font-bold transition-all">
                         Check Prices & Book <ArrowRight size={20} />
                     </Link>
                 </div>

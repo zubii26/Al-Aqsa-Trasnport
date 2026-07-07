@@ -79,7 +79,7 @@ const MapAutocomplete: React.FC<MapAutocompleteProps> = ({
                 </label>
             )}
             <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors pointer-events-none">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-secondary transition-colors pointer-events-none">
                     <MapPin size={20} />
                 </div>
                 <input
@@ -92,7 +92,7 @@ const MapAutocomplete: React.FC<MapAutocompleteProps> = ({
                         w-full pl-12 pr-10 py-4 bg-white dark:bg-slate-900 
                         border-2 border-slate-100 dark:border-slate-800 
                         rounded-2xl outline-none transition-all
-                        focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10
+                        focus:border-secondary/50 focus:ring-4 focus:ring-secondary/10
                         text-slate-900 dark:text-white placeholder:text-slate-400
                         ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' : ''}
                     `}
@@ -109,7 +109,7 @@ const MapAutocomplete: React.FC<MapAutocompleteProps> = ({
 
                 {isLoading && (
                     <div className="absolute right-12 top-1/2 -translate-y-1/2">
-                        <Loader2 size={18} className="animate-spin text-amber-500" />
+                        <Loader2 size={18} className="animate-spin text-secondary" />
                     </div>
                 )}
             </div>

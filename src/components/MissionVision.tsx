@@ -24,10 +24,10 @@ export default function MissionVision() {
                 {/* Vision Card */}
                 <div className="group p-8 rounded-2xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <Eye size={120} className="text-amber-500" />
+                        <Eye size={120} className="text-secondary" />
                     </div>
                     <div className="relative z-10">
-                        <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center mb-6 text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <div className="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                             <Eye size={28} />
                         </div>
                         <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>

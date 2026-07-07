@@ -84,7 +84,7 @@ export default function TrackBookingPage() {
         switch (status.toLowerCase()) {
             case 'completed': return 'text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800';
             case 'confirmed': return 'text-blue-500 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800';
-            case 'pending': return 'text-amber-500 bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800';
+            case 'pending': return 'text-secondary bg-secondary/10 dark:bg-secondary/20 border-amber-200 dark:border-secondary';
             case 'cancelled': return 'text-red-500 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800';
             default: return 'text-slate-500 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700';
         }

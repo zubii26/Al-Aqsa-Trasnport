@@ -140,11 +140,11 @@ export default async function MakkahTaifTaxiPage() {
             <div className="bg-slate-900 text-slate-300 py-4 border-b border-slate-800 hidden md:block">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-center gap-8 text-sm font-medium">
-                        <div className="flex items-center gap-2"><Star className="text-amber-500 w-4 h-4 fill-amber-500" /> ★★★★★ Customer Rating</div>
-                        <div className="flex items-center gap-2"><Shield className="text-amber-500 w-4 h-4" /> Licensed Drivers</div>
-                        <div className="flex items-center gap-2"><Clock className="text-amber-500 w-4 h-4" /> 24/7 Service</div>
-                        <div className="flex items-center gap-2"><CheckCircle2 className="text-amber-500 w-4 h-4" /> Instant Confirmation</div>
-                        <div className="flex items-center gap-2"><CreditCard className="text-amber-500 w-4 h-4" /> Fixed Pricing</div>
+                        <div className="flex items-center gap-2"><Star className="text-secondary w-4 h-4 fill-amber-500" /> ★★★★★ Customer Rating</div>
+                        <div className="flex items-center gap-2"><Shield className="text-secondary w-4 h-4" /> Licensed Drivers</div>
+                        <div className="flex items-center gap-2"><Clock className="text-secondary w-4 h-4" /> 24/7 Service</div>
+                        <div className="flex items-center gap-2"><CheckCircle2 className="text-secondary w-4 h-4" /> Instant Confirmation</div>
+                        <div className="flex items-center gap-2"><CreditCard className="text-secondary w-4 h-4" /> Fixed Pricing</div>
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@ export default async function MakkahTaifTaxiPage() {
                     
                     <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl text-center border border-slate-100 dark:border-slate-800 shadow-sm">
-                            <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">1</div>
+                            <div className="w-16 h-16 bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">1</div>
                             <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Choose Your Vehicle</h3>
                             <p className="text-slate-600 dark:text-slate-400 text-sm">Select the perfect luxury sedan, SUV, or van for your family's size and luggage needs.</p>
                         </div>
@@ -240,12 +240,12 @@ export default async function MakkahTaifTaxiPage() {
                             <div className="hidden md:block absolute top-1/2 -left-4 w-8 border-t-2 border-dashed border-amber-300 dark:border-amber-700"></div>
                             <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-amber-300 dark:border-amber-700"></div>
                             
-                            <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">2</div>
+                            <div className="w-16 h-16 bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">2</div>
                             <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Enter Journey Details</h3>
                             <p className="text-slate-600 dark:text-slate-400 text-sm">Provide your Makkah hotel, Taif destination, and preferred pickup date and time.</p>
                         </div>
                         <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl text-center border border-slate-100 dark:border-slate-800 shadow-sm">
-                            <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">3</div>
+                            <div className="w-16 h-16 bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">3</div>
                             <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Enjoy Your Journey</h3>
                             <p className="text-slate-600 dark:text-slate-400 text-sm">Receive instant confirmation, meet your professional driver, and travel in absolute comfort.</p>
                         </div>
@@ -261,19 +261,19 @@ export default async function MakkahTaifTaxiPage() {
                             <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">Why Book in Advance?</h2>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 flex-shrink-0 mt-1" size={20} />
+                                    <CheckCircle2 className="text-secondary flex-shrink-0 mt-1" size={20} />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Guaranteed availability</strong> during peak Umrah seasons.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 flex-shrink-0 mt-1" size={20} />
+                                    <CheckCircle2 className="text-secondary flex-shrink-0 mt-1" size={20} />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Fixed pricing</strong> locked in with no unexpected surge charges.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 flex-shrink-0 mt-1" size={20} />
+                                    <CheckCircle2 className="text-secondary flex-shrink-0 mt-1" size={20} />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Best vehicle selection</strong> for your family's exact needs.</span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <CheckCircle2 className="text-amber-500 flex-shrink-0 mt-1" size={20} />
+                                    <CheckCircle2 className="text-secondary flex-shrink-0 mt-1" size={20} />
                                     <span className="text-slate-700 dark:text-slate-300"><strong>Total peace of mind</strong> knowing your professional driver is already assigned.</span>
                                 </li>
                             </ul>

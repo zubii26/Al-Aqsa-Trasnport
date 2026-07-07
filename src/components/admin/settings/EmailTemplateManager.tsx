@@ -165,9 +165,9 @@ export default function EmailTemplateManager({ settings, onChange }: EmailTempla
                         </div>
                     </div>
 
-                    <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30 rounded-lg">
-                        <h4 className="text-sm font-medium text-amber-700 dark:text-amber-500 mb-2">Tips</h4>
-                        <ul className="text-xs text-amber-600/90 dark:text-amber-500/80 space-y-1 list-disc pl-4">
+                    <div className="mt-4 p-4 bg-secondary/10 dark:bg-amber-900/10 border border-amber-200 dark:border-secondary/30 rounded-lg">
+                        <h4 className="text-sm font-medium text-secondary dark:text-secondary mb-2">Tips</h4>
+                        <ul className="text-xs text-secondary/90 dark:text-secondary/80 space-y-1 list-disc pl-4">
                             <li>Use inline CSS for styling (e.g., style="color: red;")</li>
                             <li>Images must be hosted publicly (use full URLs)</li>
                             <li>{`{{ vehicle_details }}`} renders a list or single name automatically</li>

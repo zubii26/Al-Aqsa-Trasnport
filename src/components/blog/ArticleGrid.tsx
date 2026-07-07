@@ -56,7 +56,7 @@ export default function ArticleGrid({
                                         key={cat}
                                         onClick={() => onCategoryChange(cat)}
                                         className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${activeCategory === cat
-                                                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/20'
                                                 : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                                             }`}
                                     >
@@ -74,7 +74,7 @@ export default function ArticleGrid({
                                     placeholder="Search articles..."
                                     value={searchTerm}
                                     onChange={(e) => onSearchChange(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-secondary text-sm"
                                 />
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                             </div>
@@ -107,7 +107,7 @@ export default function ArticleGrid({
 
                                         {/* Category Badge */}
                                         <div className="absolute top-4 left-4">
-                                            <span className="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 rounded-full shadow-lg">
+                                            <span className="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-secondary dark:text-secondary rounded-full shadow-lg">
                                                 {article.category}
                                             </span>
                                         </div>
@@ -117,7 +117,7 @@ export default function ArticleGrid({
                                     <div className="p-6 flex flex-col flex-1">
                                         <div className="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 mb-4">
                                             <span className="flex items-center gap-1.5">
-                                                <CalendarDays size={14} className="text-amber-500" />
+                                                <CalendarDays size={14} className="text-secondary" />
                                                 {// Handle both Date object and string date
                                                     new Date(article.date).toLocaleDateString(undefined, {
                                                         month: 'short',
@@ -127,12 +127,12 @@ export default function ArticleGrid({
                                             </span>
                                             <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
                                             <span className="flex items-center gap-1.5">
-                                                <Clock size={14} className="text-amber-500" />
+                                                <Clock size={14} className="text-secondary" />
                                                 {article.readTime}
                                             </span>
                                         </div>
 
-                                        <h3 className="text-xl font-bold  text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-tight group-hover:text-amber-600 transition-colors">
+                                        <h3 className="text-xl font-bold  text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-tight group-hover:text-secondary transition-colors">
                                             {article.title}
                                         </h3>
 
@@ -140,14 +140,14 @@ export default function ArticleGrid({
                                             {article.excerpt}
                                         </p>
 
-                                        <div className="flex items-center gap-2 text-sm font-bold text-amber-600 uppercase tracking-wide group/btn">
+                                        <div className="flex items-center gap-2 text-sm font-bold text-secondary uppercase tracking-wide group/btn">
                                             Read Article
                                             <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
                                         </div>
                                     </div>
 
                                     {/* Golden Glow Border Effect on Hover */}
-                                    <div className="absolute inset-0 border-2 border-amber-500/0 group-hover:border-amber-500/10 rounded-3xl transition-all duration-500 pointer-events-none" />
+                                    <div className="absolute inset-0 border-2 border-secondary/0 group-hover:border-secondary/10 rounded-3xl transition-all duration-500 pointer-events-none" />
                                 </article>
                             </Link>
                         </FadeIn>
@@ -163,7 +163,7 @@ export default function ArticleGrid({
                             key={page}
                             onClick={() => onPageChange(page)}
                             className={`w-10 h-10 rounded-full font-bold transition-all ${currentPage === page
-                                    ? 'bg-amber-500 text-white'
+                                    ? 'bg-secondary text-white'
                                     : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100'
                                 }`}
                         >

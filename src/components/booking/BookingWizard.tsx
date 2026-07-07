@@ -70,13 +70,13 @@ export default function BookingWizard() {
                         <div className={`
                             w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-500
                             ${currentStep >= step.id
-                                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 ring-4 ring-amber-500/10'
+                                ? 'bg-secondary text-white shadow-lg shadow-amber-500/30 ring-4 ring-secondary/10'
                                 : 'bg-slate-100 text-slate-400 dark:bg-slate-800'}
                         `}>
                             {currentStep > step.id ? '✓' : step.id}
                         </div>
                         <div className="hidden md:block text-center">
-                            <span className={`text-[10px] uppercase font-black tracking-widest ${currentStep >= step.id ? 'text-amber-600' : 'text-slate-400'}`}>
+                            <span className={`text-[10px] uppercase font-black tracking-widest ${currentStep >= step.id ? 'text-secondary' : 'text-slate-400'}`}>
                                 Step 0{step.id}
                             </span>
                             <h3 className={`text-xs font-bold ${currentStep >= step.id ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}>
@@ -90,7 +90,7 @@ export default function BookingWizard() {
             {/* Main Content Card */}
             <div className="bg-white/70 dark:bg-slate-900/50 rounded-[32px] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden relative ios-glass">
                 {/* Background Decor */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 blur-[100px] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 blur-[100px] pointer-events-none" />
 
                 <div className="p-6 md:p-12 relative z-10">
@@ -116,7 +116,7 @@ export default function BookingWizard() {
                         Safe & Secure
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <Headphones size={14} strokeWidth={1.25} className="text-amber-500" />
+                        <Headphones size={14} strokeWidth={1.25} className="text-secondary" />
                         24/7 Support
                     </div>
                     <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">

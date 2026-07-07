@@ -68,7 +68,7 @@ const ROUTES = [
         descriptionAr: 'الخيار الأول للمعتمرين. خدمة انتقالات VIP مباشرة من مطار الملك عبدالعزيز (الصالة الشمالية/الجديدة) إلى باب فندقك في مكة المكرمة.',
         distance: '95 km',
         time: '60-75 mins',
-        price: 'From SAR 250',
+        price: 'SAR 250',
         features: ['Meet & Greet', 'Flight Monitoring', 'Luggage Assistance'],
         featuresAr: ['خدمة استقبال', 'متابعة الرحلات', 'مساعدة في الحقائب'],
         link: '/services/jeddah-airport-transfer',
@@ -82,7 +82,7 @@ const ROUTES = [
         descriptionAr: 'رحلة روحانية عبر طريق الهجرة. نوفر لك الراحة التامة مع إمكانية التوقف في ميقات السيل الكبير (قرن المنازل) للإحرام.',
         distance: '450 km',
         time: '4.5 - 5 hours',
-        price: 'From SAR 450',
+        price: 'SAR 450',
         features: ['Miqat Stop', 'Premium Comfort', 'Rest Stops Available'],
         featuresAr: ['توقف للميقات', 'سيارات فارهة', 'استراحات طريق'],
         link: '/services/makkah-madinah-taxi',
@@ -96,7 +96,7 @@ const ROUTES = [
         descriptionAr: 'انتقال سلس من مطار الأمير محمد بن عبدالعزيز إلى فندقك في رحاب مدينة الرسول ﷺ. خدمة فورية على مدار الساعة.',
         distance: '20 km',
         time: '25-30 mins',
-        price: 'From SAR 150',
+        price: 'SAR 150',
         features: ['24/7 Service', 'Door-to-Door', 'Family Friendly'],
         featuresAr: ['خدمة 24/7', 'توصيل لباب الفندق', 'مناسب للعوائل'],
         link: '/services/madinah-airport-transfer',
@@ -110,7 +110,7 @@ const ROUTES = [
         descriptionAr: 'زيارة المشاعر المقدسة والمواقع التاريخية: جبل النور (غار حراء)، جبل ثور، عرفات، ومنى. سائقون ملمون بالتاريخ الإسلامي.',
         distance: 'Various',
         time: '3-4 hours',
-        price: 'From SAR 300',
+        price: 'SAR 300',
         features: ['Historical Insight', 'Flexible Timing', 'Private Vehicle'],
         featuresAr: ['معلومات تاريخية', 'وقت مرن', 'سيارة خاصة'],
         link: '/services/ziyarat-tours',
@@ -124,7 +124,7 @@ const ROUTES = [
         descriptionAr: 'توصيل مباشر من جدة إلى المدينة المنورة. استرخِ في سياراتنا الفاخرة طوال الطريق (4 ساعات) واستعد لزيارة المسجد النبوي.',
         distance: '400 km',
         time: '4 - 4.5 hours',
-        price: 'From SAR 500',
+        price: 'SAR 500',
         features: ['Direct Route', 'Maximum Comfort', 'Refreshments'],
         featuresAr: ['طريق مباشر', 'راحة قصوى', 'مشروبات ضيافة'],
         link: '/services/intercity-transfer',
@@ -147,101 +147,118 @@ export default function RoutesPage() {
             />
 
             <section className="container mx-auto px-4 -mt-20 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 gap-10 md:gap-12 max-w-5xl mx-auto">
                     {ROUTES.map((route, index) => (
                         <FadeIn key={route.id} delay={index * 0.1}>
                             <div className="block h-full group relative">
-                                <GlassCard className="h-full hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 overflow-hidden border-0 ring-1 ring-white/20 relative">
-                                    <Link href={route.link} className="absolute inset-0 z-10">
-                                        <span className="sr-only">View {route.title}</span>
-                                    </Link>
-                                    <div className="flex flex-col md:flex-row h-full">
-                                        <div className="md:w-2/5 relative min-h-[200px] md:min-h-full overflow-hidden">
+                                <div className="h-full bg-white dark:bg-slate-900 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-slate-200/60 dark:border-slate-800 flex flex-col md:flex-row relative">
+                                    
+                                    {/* Image Section - 40% Desktop, Top Mobile */}
+                                    <div className="md:w-[40%] relative w-full aspect-video md:aspect-auto md:min-h-full overflow-hidden p-3 pb-0 md:p-3 md:pr-0">
+                                        <div className="relative w-full h-full rounded-2xl overflow-hidden">
                                             <Image
                                                 src={route.image}
                                                 alt={route.title}
                                                 fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                className="object-cover transition-transform duration-700 md:group-hover:scale-[1.02]"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
                                             />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:bg-gradient-to-r" />
-                                            <div className="absolute bottom-4 left-4 text-white md:hidden relative z-10">
-                                                <div className="flex items-center gap-1 text-sm font-medium mb-1">
-                                                    <Clock size={14} className="text-secondary" />
+                                            {/* Mobile Time/Distance Overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-90 md:hidden" />
+                                            <div className="absolute bottom-4 left-4 text-white md:hidden flex gap-5 z-10">
+                                                <div className="flex items-center gap-1.5 text-sm font-medium tracking-wide">
+                                                    <Clock size={16} className="text-secondary" />
                                                     {route.time}
                                                 </div>
-                                                <div className="flex items-center gap-1 text-sm font-medium">
-                                                    <MapPin size={14} className="text-secondary" />
+                                                <div className="flex items-center gap-1.5 text-sm font-medium tracking-wide">
+                                                    <MapPin size={16} className="text-secondary" />
                                                     {route.distance}
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div className="p-6 md:w-3/5 flex flex-col">
-                                            <div className="flex items-start justify-between mb-2">
-                                                <div>
-                                                    <h3 className="text-2xl font-bold  group-hover:text-secondary transition-colors">
-                                                        {route.title}
-                                                    </h3>
-                                                    <h4 className="text-lg font-bold text-secondary font-reem-kufi mt-1">
-                                                        {route.titleAr}
-                                                    </h4>
-                                                </div>
+                                    <div className="p-6 md:p-8 md:w-[60%] flex flex-col flex-1">
+                                        {/* Desktop Time/Distance */}
+                                        <div className="hidden md:flex items-center gap-6 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                                            <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 tracking-wide">
+                                                <Clock size={16} className="text-secondary" />
+                                                {route.time}
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 tracking-wide">
+                                                <MapPin size={16} className="text-secondary" />
+                                                {route.distance}
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-6">
+                                            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">
+                                                {route.title}
+                                            </h2>
+                                            <h3 className="text-lg md:text-xl font-bold text-slate-500 dark:text-slate-400 font-reem-kufi">
+                                                {route.titleAr}
+                                            </h3>
+                                        </div>
+
+                                        <div className="space-y-4 mb-6">
+                                            <p className="text-slate-600 dark:text-slate-300 text-[15px] leading-relaxed">
+                                                {route.description}
+                                            </p>
+                                            <p className="text-slate-600 dark:text-slate-300 text-[15px] font-arabic leading-relaxed text-right">
+                                                {route.descriptionAr}
+                                            </p>
+                                        </div>
+
+                                        {/* Features */}
+                                        <div className="mb-8 flex flex-col gap-3">
+                                            <div className="flex flex-wrap gap-2">
+                                                {route.features.map((f, i) => (
+                                                    <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/50 rounded-lg text-[11px] uppercase tracking-wider font-semibold text-slate-700 dark:text-slate-300">
+                                                        <CheckCircle size={12} className="text-secondary" /> {f}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <div className="flex flex-wrap gap-2 justify-end" dir="rtl">
+                                                {route.featuresAr.map((f, i) => (
+                                                    <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/50 rounded-lg text-xs font-arabic text-slate-700 dark:text-slate-300">
+                                                        <CheckCircle size={12} className="text-secondary" /> {f}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                                            {/* Pricing */}
+                                            <div className="flex flex-col">
+                                                <span className="text-[10px] md:text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mb-1">
+                                                    Starting from
+                                                </span>
+                                                <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-none mb-1">
+                                                    {route.price}
+                                                </span>
+                                                <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
+                                                    Per Trip
+                                                </span>
                                             </div>
 
-                                            <div className="space-y-3 mb-6">
-                                                <p className="text-muted-foreground text-sm leading-relaxed">
-                                                    {route.description}
-                                                </p>
-                                                <p className="text-muted-foreground text-sm font-arabic leading-relaxed text-right border-t border-dashed border-border/50 pt-2">
-                                                    {route.descriptionAr}
-                                                </p>
-                                            </div>
-
-                                            <div className="hidden md:grid grid-cols-2 gap-2 mb-6 text-sm text-muted-foreground">
-                                                {/* English Features */}
-                                                <div className="flex flex-wrap gap-2">
-                                                    {route.features.map((f, i) => (
-                                                        <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs">
-                                                            <CheckCircle size={10} className="text-green-500" /> {f}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                {/* Arabic Features */}
-                                                <div className="flex flex-wrap gap-2 justify-end" dir="rtl">
-                                                    {route.featuresAr.map((f, i) => (
-                                                        <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-arabic">
-                                                            <CheckCircle size={10} className="text-green-500" /> {f}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="mt-auto flex items-center justify-between pt-4 border-t border-border/50">
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-                                                        Starting from
-                                                    </span>
-                                                    <span className="text-xl font-bold text-secondary">
-                                                        {route.price}
-                                                    </span>
-                                                </div>
-                                                <div className="flex gap-3 relative z-20">
-                                                    <Link
-                                                        href="/fleet"
-                                                        className="hidden md:flex items-center text-xs font-medium text-muted-foreground hover:text-secondary transition-colors"
-                                                        aria-label="View Fleet"
-                                                    >
-                                                        View Fleet
-                                                    </Link>
-                                                    <span className="flex items-center gap-2 text-sm font-semibold text-foreground group-hover:text-secondary transition-colors">
-                                                        Book Now <ArrowRight size={16} />
-                                                    </span>
-                                                </div>
+                                            {/* CTAs */}
+                                            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                                                <Link
+                                                    href={`/fleet`}
+                                                    className="btn-secondary w-full sm:w-auto"
+                                                >
+                                                    View Available Vehicles
+                                                </Link>
+                                                <Link
+                                                    href={route.link}
+                                                    className="btn-primary w-full sm:w-auto"
+                                                >
+                                                    Book Now
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
-                                </GlassCard>
+                                </div>
                             </div>
                         </FadeIn>
                     ))}

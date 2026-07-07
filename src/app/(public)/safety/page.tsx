@@ -30,7 +30,7 @@ export default function SafetyPage() {
             />
 
             {/* Trust Signals Bar */}
-            <section className="bg-amber-500 py-6 relative z-10 -mt-8 mx-4 md:mx-auto max-w-6xl rounded-xl shadow-lg">
+            <section className="bg-secondary py-6 relative z-10 -mt-8 mx-4 md:mx-auto max-w-6xl rounded-xl shadow-lg">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white text-center">
                         <div className="flex flex-col items-center">
@@ -56,7 +56,7 @@ export default function SafetyPage() {
             {/* Intro Section */}
             <section className="py-16 md:py-24">
                 <div className="container mx-auto px-4 text-center max-w-3xl">
-                    <span className="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Peace of Mind</span>
+                    <span className="text-secondary dark:text-secondary font-bold uppercase tracking-widest text-sm mb-3 block">Peace of Mind</span>
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 ">
                         Traveling with Confidence
                     </h2>
@@ -69,10 +69,10 @@ export default function SafetyPage() {
 
             {/* Nusuk Registered Section */}
             <section className="py-16 md:py-24 bg-gradient-to-br from-teal-900 to-teal-800 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16">
-                        <span className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-3 block">Official Verification</span>
+                        <span className="text-secondary font-bold uppercase tracking-widest text-sm mb-3 block">Official Verification</span>
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 ">What Does "Nusuk Registered" Mean?</h2>
                         <p className="text-teal-100 max-w-2xl mx-auto text-lg leading-relaxed">
                             We don't just promise safety; we are officially verified by the government. Booking a Nusuk Registered cab means choosing the highest standard of accountability.
@@ -246,7 +246,7 @@ export default function SafetyPage() {
                                     <span className="text-white font-mono text-sm">MAINTENANCE_LOG_V8.2.pdf</span>
                                     <div className="flex gap-2">
                                         <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                                        <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                                        <div className="w-3 h-3 rounded-full bg-secondary"></div>
                                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                                     </div>
                                 </div>
@@ -293,10 +293,10 @@ export default function SafetyPage() {
                             { step: '03', title: 'Health Screen', icon: Activity, desc: 'Vision test and drug screening for 100% alertness.' },
                             { step: '04', title: 'Adab Training', icon: UserCheck, desc: 'Workshop on pilgrim interaction, patience, and history.' },
                         ].map((item, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden group hover:border-amber-500 transition-colors">
+                            <div key={idx} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden group hover:border-secondary transition-colors">
                                 <span className="absolute -top-4 -right-4 text-8xl font-black text-slate-50 dark:text-slate-800 group-hover:text-amber-50 dark:group-hover:text-amber-900/20 transition-colors z-0">{item.step}</span>
                                 <div className="relative z-10">
-                                    <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center mb-4">
+                                    <div className="w-12 h-12 bg-secondary/20 dark:bg-secondary/30 text-secondary dark:text-amber-400 rounded-xl flex items-center justify-center mb-4">
                                         <item.icon size={24} />
                                     </div>
                                     <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2">{item.title}</h3>
@@ -314,7 +314,7 @@ export default function SafetyPage() {
                 <div className="container mx-auto px-4">
                     <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl relative">
                         {/* Decorative Background */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
 
                         <div className="relative z-10 grid md:grid-cols-2 gap-12 p-8 md:p-16 items-center">
@@ -355,15 +355,15 @@ export default function SafetyPage() {
                                 <h4 className="text-white font-bold text-xl mb-4 border-b border-white/10 pb-4">Standard Operating Procedure</h4>
                                 <ul className="space-y-4">
                                     <li className="flex gap-4 text-slate-300">
-                                        <span className="bg-amber-500/20 text-amber-500 flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">1</span>
+                                        <span className="bg-secondary/20 text-secondary flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">1</span>
                                         <span>Driver secures vehicle in safe zone and ensures passenger comfort.</span>
                                     </li>
                                     <li className="flex gap-4 text-slate-300">
-                                        <span className="bg-amber-500/20 text-amber-500 flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">2</span>
+                                        <span className="bg-secondary/20 text-secondary flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">2</span>
                                         <span>Control room deploys nearest standby vehicle (GMC/Starex).</span>
                                     </li>
                                     <li className="flex gap-4 text-slate-300">
-                                        <span className="bg-amber-500/20 text-amber-500 flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">3</span>
+                                        <span className="bg-secondary/20 text-secondary flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0">3</span>
                                         <span>Full trip refund or discount issued for the inconvenience.</span>
                                     </li>
                                 </ul>
@@ -382,40 +382,40 @@ export default function SafetyPage() {
                     </div>
 
                     <div className="space-y-4">
-                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
+                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-secondary dark:open:border-secondary transition-all duration-300">
                             <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
                                 <span>Why should I book a Nusuk Registered cab instead of a regular taxi?</span>
-                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-amber-500">▼</span>
+                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-secondary">▼</span>
                             </summary>
                             <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
                                 <p>Booking a Nusuk Registered cab provides an official layer of security. Regular taxis may lack verified documentation or comprehensive insurance for pilgrims. Nusuk registration means our vehicles, drivers, and operational standards are heavily regulated and continuously monitored by the Ministry of Hajj and Umrah.</p>
                             </div>
                         </details>
 
-                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
+                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-secondary dark:open:border-secondary transition-all duration-300">
                             <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
                                 <span>Is it safe for solo female travelers?</span>
-                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-amber-500">▼</span>
+                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-secondary">▼</span>
                             </summary>
                             <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
                                 <p>Absolutely. We specialize in family and female-friendly transport. Our drivers are trained in Adab (respect/etiquette), and all trips are GPS tracked by our control room. You can also share your live trip link with family members for added peace of mind.</p>
                             </div>
                         </details>
 
-                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
+                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-secondary dark:open:border-secondary transition-all duration-300">
                             <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
                                 <span>What if I leave something in the taxi?</span>
-                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-amber-500">▼</span>
+                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-secondary">▼</span>
                             </summary>
                             <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
                                 <p>We have a strict "Lost & Found" protocol. Drivers check the vehicle after every drop-off. If you realize you've lost something, contact our 24/7 support immediately. We have a 98% recovery rate for items reported within 24 hours.</p>
                             </div>
                         </details>
 
-                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-amber-500 dark:open:border-amber-500 transition-all duration-300">
+                        <details className="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 open:border-secondary dark:open:border-secondary transition-all duration-300">
                             <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 dark:text-white text-lg">
                                 <span>Are your vehicles insured?</span>
-                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-amber-500">▼</span>
+                                <span className="transform group-open:rotate-180 transition-transform duration-300 text-secondary">▼</span>
                             </summary>
                             <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-4">
                                 <p>Yes, comprehensive insurance covers all vehicles, drivers, and passengers, fulfilling all Saudi Transport Authority regulations. Your ride is legally protected.</p>

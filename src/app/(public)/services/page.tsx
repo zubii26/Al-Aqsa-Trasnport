@@ -88,15 +88,15 @@ export default function ServicesPage() {
     const serviceFAQs = [
         {
             question: "How do I book a taxi from Jeddah Airport to Makkah?",
-            answer: <span>Booking is simple. You can reserve your <Link href="/services/jeddah-airport-transfer" className="text-amber-600 hover:underline">Jeddah Airport to Makkah taxi</Link> online in advance. We monitor your flight arrival and our driver meets you at the terminal with a name sign.</span>
+            answer: <span>Booking is simple. You can reserve your <Link href="/services/jeddah-airport-transfer" className="text-secondary hover:underline">Jeddah Airport to Makkah taxi</Link> online in advance. We monitor your flight arrival and our driver meets you at the terminal with a name sign.</span>
         },
         {
             question: "What is the best transport for Umrah families?",
-            answer: <span>For families, we highly recommend our <Link href="/fleet/gmc-yukon-at4" className="text-amber-600 hover:underline">GMC Yukon XL</Link> or <Link href="/fleet/hyundai-staria" className="text-amber-600 hover:underline">Hyundai Staria</Link>. These spacious vehicles offer ample luggage space and AC comfort for the 1-hour journey to Makkah.</span>
+            answer: <span>For families, we highly recommend our <Link href="/fleet/gmc-yukon-at4" className="text-secondary hover:underline">GMC Yukon XL</Link> or <Link href="/fleet/hyundai-staria" className="text-secondary hover:underline">Hyundai Staria</Link>. These spacious vehicles offer ample luggage space and AC comfort for the 1-hour journey to Makkah.</span>
         },
         {
             question: "Do you offer direct Makkah to Madinah taxi services?",
-            answer: <span>Yes, our <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah private taxi</Link> service is the most convenient option. Unlike the train or bus, we offer door-to-door service from your Makkah hotel lobby directly to your Madinah hotel.</span>
+            answer: <span>Yes, our <Link href="/services/makkah-madinah-taxi" className="text-secondary hover:underline">Makkah to Madinah private taxi</Link> service is the most convenient option. Unlike the train or bus, we offer door-to-door service from your Makkah hotel lobby directly to your Madinah hotel.</span>
         },
         {
             question: "Can I stop at Miqat on the way to Makkah?",
@@ -104,11 +104,11 @@ export default function ServicesPage() {
         },
         {
             question: "Is the taxi fare fixed or metered?",
-            answer: <span>Our prices are fixed and transparent. You will know the exact cost of your <Link href="/booking" className="text-amber-600 hover:underline">Umrah transport booking</Link> upfront, with no hidden fees or toll charges.</span>
+            answer: <span>Our prices are fixed and transparent. You will know the exact cost of your <Link href="/booking" className="text-secondary hover:underline">Umrah transport booking</Link> upfront, with no hidden fees or toll charges.</span>
         },
         {
             question: "Do you provide Ziyarat tours in Makkah and Madinah?",
-            answer: <span>Yes, we offer comprehensive <Link href="/services/ziyarat-tours" className="text-amber-600 hover:underline">Ziyarat packages</Link>. Visit historical sites like Jabal Al-Nour, Masjid Quba, and Mount Uhud in the comfort of a private vehicle with a knowledgeable driver.</span>
+            answer: <span>Yes, we offer comprehensive <Link href="/services/ziyarat-tours" className="text-secondary hover:underline">Ziyarat packages</Link>. Visit historical sites like Jabal Al-Nour, Masjid Quba, and Mount Uhud in the comfort of a private vehicle with a knowledgeable driver.</span>
         }
     ];
 
@@ -164,7 +164,7 @@ export default function ServicesPage() {
                                             <h3 className="text-2xl md:text-3xl lg:text-5xl font-bold  text-slate-900 dark:text-white mb-4 md:mb-6 leading-tight">
                                                 {service.title}
                                             </h3>
-                                            <div className="h-2 w-24 bg-amber-500 rounded-full" />
+                                            <div className="h-2 w-24 bg-secondary rounded-full" />
                                         </div>
 
                                         <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-8">
@@ -185,7 +185,7 @@ export default function ServicesPage() {
 
                                         <Link
                                             href={service.link}
-                                            className="inline-flex items-center gap-2 text-white bg-amber-500 hover:bg-amber-600 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm transition-all shadow-lg hover:shadow-amber-500/30 group/link self-start"
+                                            className="inline-flex items-center gap-2 text-white bg-secondary hover:bg-secondary/90 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm transition-all shadow-lg hover:shadow-amber-500/30 group/link self-start"
                                         >
                                             Learn More
                                             <ArrowRight strokeWidth={1.25} size={18} className="group-hover/link:translate-x-1 transition-transform" />

@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import { MapPin, Clock, ArrowRight, Bus, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -30,15 +30,25 @@ export default function RouteCard({
         ? { text: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-100 dark:bg-blue-900/30', border: 'border-blue-200 dark:border-blue-800' }
         : color === 'emerald'
             ? { text: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100 dark:bg-emerald-900/30', border: 'border-emerald-200 dark:border-emerald-800' }
-            : { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100 dark:bg-amber-900/30', border: 'border-amber-200 dark:border-amber-800' };
+            : { text: 'text-secondary dark:text-amber-400', bg: 'bg-secondary/20 dark:bg-secondary/30', border: 'border-amber-200 dark:border-secondary' };
+
+    const ref = useRef(null);
+    const [hasFired, setHasFired] = useState(false);
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+    useEffect(() => {
+        if (isInView && !hasFired) {
+            setHasFired(true);
+        }
+    }, [isInView, hasFired]);
 
     return (
         <motion.div
+            ref={ref}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={hasFired || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.4, delay }}
-            className="group block relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-amber-500/50 dark:hover:border-amber-500/50 shadow-sm hover:shadow-xl transition-all duration-300"
+            className="group block relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-secondary/50 dark:hover:border-secondary/50 shadow-sm hover:shadow-xl transition-all duration-300"
         >
             <Link href={`/booking?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&service=transfer`} className="block p-6">
 
@@ -77,7 +87,7 @@ export default function RouteCard({
                             <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">To</span>
                             <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">{to}</h3>
                         </div>
-                        <div className={`w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 order-1 md:order-2 group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300`}>
+                        <div className={`w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 order-1 md:order-2 group-hover:bg-secondary group-hover:text-white transition-colors duration-300`}>
                             <MapPin size={20} className="text-slate-400 group-hover:text-white transition-colors" />
                         </div>
                     </div>
@@ -87,11 +97,11 @@ export default function RouteCard({
                 <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800/50">
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Clock size={16} className="text-amber-500" />
+                            <Clock size={16} className="text-secondary" />
                             <span>{duration}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground md:hidden">
-                            <ArrowRight size={16} className="text-amber-500" />
+                            <ArrowRight size={16} className="text-secondary" />
                             <span>{distance}</span>
                         </div>
                     </div>
@@ -103,7 +113,7 @@ export default function RouteCard({
                                 <span className="font-bold text-lg text-emerald-600 dark:text-emerald-500">{price} SAR</span>
                             </div>
                         )}
-                        <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 group-hover:translate-x-1">
+                        <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300 group-hover:translate-x-1">
                             <ChevronRight size={20} />
                         </div>
                     </div>
