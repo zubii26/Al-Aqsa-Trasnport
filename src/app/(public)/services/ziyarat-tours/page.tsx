@@ -205,12 +205,12 @@ export default async function ZiyaratToursPage() {
                             <p className="text-sm text-slate-600 dark:text-slate-400">Flexibility to stop for photos at scenic points like the mountains surrounding Makkah.</p>
                         </div>
                     </div>
-                    <div className="mt-12">
-                        <Link href="/booking" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-amber-500/25">
+                    <div className="mt-12 flex flex-col items-center">
+                        <Link href={whatsappLink} className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#D4AF37] to-[#B49126] text-[#0A1F44] px-8 py-4 rounded-xl font-bold shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:shadow-[0_15px_40px_rgba(212,175,55,0.4)] hover:-translate-y-1 transition-all text-lg">
                             Book Your Private Ziyarat Tour <ArrowRight size={20} />
                         </Link>
-                        <p className="mt-6 text-sm text-slate-500">
-                            Need to travel between cities? We also offer <Link href="/services/makkah-madinah-taxi" className="text-amber-600 hover:underline">Makkah to Madinah Taxi</Link> services.
+                        <p className="mt-6 text-sm text-slate-500 text-center">
+                            Need to travel between cities? We also offer <Link href="/services/makkah-madinah-taxi" className="text-[#D4AF37] hover:text-[#B49126] hover:underline font-medium">Makkah to Madinah Taxi</Link> services.
                         </p>
                     </div>
                 </div>
