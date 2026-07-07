@@ -2439,7 +2439,7 @@ function BookingContent() {
         };
 
         return (
-            <div className="sticky top-32 space-y-6 h-max self-start pb-10">
+            <div className="space-y-6 pb-10">
                 {/* Summary Card */}
                 <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
@@ -2805,7 +2805,7 @@ function BookingContent() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block h-full">
                         {step < 5 && (
                             <div className="sticky top-32 space-y-6 pb-10">
                                 <Sidebar />
