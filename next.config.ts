@@ -100,6 +100,17 @@ const nextConfig: NextConfig = {
         destination: '/blog/:slug',
         permanent: true,
       },
+      // ── Resolve 404s found by Search Console ────────────────────────────
+      {
+        source: '/privacy-policy',
+        destination: '/privacy',
+        permanent: true,
+      },
+      {
+        source: '/cancellation',
+        destination: '/terms',
+        permanent: true,
+      },
     ];
   },
   compress: true,

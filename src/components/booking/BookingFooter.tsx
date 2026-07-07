@@ -48,11 +48,11 @@ const BookingFooter = () => {
 
                 {/* Bottom Row: Legal */}
                 <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                    <Link href="/privacy-policy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</Link>
                     <span className="text-slate-300 dark:text-slate-700">•</span>
                     <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms & Conditions</Link>
                     <span className="text-slate-300 dark:text-slate-700">•</span>
-                    <Link href="/cancellation" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cancellation Policy</Link>
+                    <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cancellation Policy</Link>
                 </div>
                 
                 {/* Copyright */}
