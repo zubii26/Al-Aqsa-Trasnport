@@ -2194,7 +2194,12 @@ function BookingContent() {
                 <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
                     <ShieldCheck strokeWidth={1.25} size={14} />
                     <span>Your data is encrypted and secure. We never share your details.</span>
-                </div    const renderSuccess = () => (
+                </div>
+            </motion.div>
+        );
+    };
+
+    const renderSuccess = () => (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
