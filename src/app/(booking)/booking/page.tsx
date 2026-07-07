@@ -609,12 +609,14 @@ function BookingContent() {
     };
 
     const getVehicleCategory = (vehicle: any): string => {
-        const name = vehicle.name.toLowerCase();
-        if (name.includes('camry') || name.includes('kia')) return 'Sedan';
-        if (name.includes('gmc') || name.includes('xpander')) return 'SUV';
-        if (name.includes('mercedes')) return 'Luxury';
-        if (name.includes('staria') || name.includes('starex')) return 'Van';
-        if (name.includes('hiace') || name.includes('coaster') || name.includes('bus')) return 'Bus';
+        const name = (vehicle.name || '').toLowerCase();
+        const id = (vehicle.id || vehicle.vehicleId || '').toLowerCase();
+        const combined = `${name} ${id}`;
+        if (combined.includes('camry') || combined.includes('kia') || combined.includes('sedan')) return 'Sedan';
+        if (combined.includes('gmc') || combined.includes('xpander') || combined.includes('suv')) return 'SUV';
+        if (combined.includes('mercedes') || combined.includes('luxury')) return 'Luxury';
+        if (combined.includes('staria') || combined.includes('starex') || combined.includes('van')) return 'Van';
+        if (combined.includes('hiace') || combined.includes('coaster') || combined.includes('bus')) return 'Bus';
         return 'Other';
     };
 
@@ -1286,7 +1288,11 @@ function BookingContent() {
                     <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
                 </div>
 
-
+                <VehicleCategoryFilter 
+                    selectedCategory={selectedCategory} 
+                    onSelectCategory={setSelectedCategory} 
+                    availableCategories={availableCategories} 
+                />
 
                 {bookingData.routeType === 'multi' && (
                     <div className="mb-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -1313,7 +1319,7 @@ function BookingContent() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-6">
-                                    {vehicles.map((vehicle) => {
+                                    {filteredVehicles.map((vehicle) => {
                                         const Icon = vehicle.icon;
                                         const priceDetails = calculatePrice(leg.routeId!, vehicle.id);
                                         const selectedMatch = leg.selectedVehicles?.find(v => v.vehicleId === vehicle.id);
