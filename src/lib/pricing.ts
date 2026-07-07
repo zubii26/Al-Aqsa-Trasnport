@@ -25,7 +25,7 @@ export interface Vehicle {
     icon: LucideIcon;
     features: string[];
     luggage: string;
-    category?: 'Standard' | 'Premium' | 'VIP';
+    category?: 'Sedan' | 'SUV' | 'MPV' | 'Bus/Van' | string;
     isActive?: boolean;
     image?: string;
     rating?: string;

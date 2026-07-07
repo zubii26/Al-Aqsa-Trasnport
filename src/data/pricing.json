@@ -678,7 +678,7 @@
     "vehicles": [
         {
             "id": "camry",
-            "name": "Toyota Camry",
+            "name": "Business Sedan",
             "slug": "toyota-camry",
             "seo": {
                 "title": "Toyota Camry Taxi Makkah & Jeddah | Economy Choice",
@@ -701,11 +701,12 @@
             "luggage": "2 Large Suitcases",
             "rating": "4.8",
             "reviews": "215",
-            "badge": "🏆 Most Popular"
+            "badge": "🏆 Most Popular",
+            "category": "Sedan"
         },
         {
             "id": "gmc",
-            "name": "GMC Yukon",
+            "name": "Luxury SUV",
             "slug": "gmc-yukon-at4",
             "seo": {
                 "title": "GMC Yukon Rental Makkah | VIP Umrah Transport | جمس يوكن",
@@ -729,11 +730,12 @@
             "luggage": "5 Large Suitcases",
             "rating": "5.0",
             "reviews": "128",
-            "badge": "⭐ Premium"
+            "badge": "⭐ Premium",
+            "category": "SUV"
         },
         {
             "id": "staria",
-            "name": "Hyundai Staria",
+            "name": "Premium Family MPV",
             "slug": "hyundai-staria",
             "seo": {
                 "title": "Hyundai Staria Taxi Makkah | 2025 Model Van",
@@ -756,11 +758,12 @@
             "luggage": "4 Large Suitcases",
             "rating": "4.9",
             "reviews": "342",
-            "badge": "👨‍👩‍👧 Best for Families"
+            "badge": "👨‍👩‍👧 Best for Families",
+            "category": "MPV"
         },
         {
             "id": "starex",
-            "name": "Hyundai Starex",
+            "name": "Economy Family MPV",
             "slug": "hyundai-starex",
             "seo": {
                 "title": "Economy Family MPV | Hyundai H1 Starex Taxi Makkah",
@@ -783,11 +786,12 @@
             "luggage": "4 Large Suitcases",
             "rating": "4.7",
             "reviews": "189",
-            "badge": "💰 Best Value"
+            "badge": "💰 Best Value",
+            "category": "MPV"
         },
         {
             "id": "hiace",
-            "name": "Toyota Hiace",
+            "name": "Executive Van",
             "slug": "toyota-hiace",
             "seo": {
                 "title": "Executive Van | Toyota Hiace Bus Rental Makkah",
@@ -810,11 +814,12 @@
             "luggage": "8 Large Suitcases",
             "rating": "4.8",
             "reviews": "412",
-            "badge": "👥 Group Choice"
+            "badge": "👥 Group Choice",
+            "category": "Bus/Van"
         },
         {
             "id": "coaster",
-            "name": "Toyota Coaster",
+            "name": "Group Minibus",
             "slug": "toyota-coaster",
             "seo": {
                 "title": "Group Minibus | Toyota Coaster Bus Makkah",
@@ -837,11 +842,12 @@
             "luggage": "15 Large Suitcases",
             "rating": "4.8",
             "reviews": "95",
-            "badge": "🚌 Large Group"
+            "badge": "🚌 Large Group",
+            "category": "Bus/Van"
         },
         {
             "id": "mercedes",
-            "name": "Mercedes-Benz S-Class",
+            "name": "VIP Sedan",
             "slug": "mercedes-s-class",
             "seo": {
                 "title": "VIP Sedan | Mercedes S-Class VIP Rental Makkah",
@@ -864,11 +870,12 @@
             "luggage": "2-3 Large Suitcases",
             "rating": "5.0",
             "reviews": "56",
-            "badge": "👑 Ultimate Luxury"
+            "badge": "👑 Ultimate Luxury",
+            "category": "Sedan"
         },
         {
             "id": "kia",
-            "name": "Kia K5",
+            "name": "Economy Sedan",
             "slug": "kia-k5",
             "seo": {
                 "title": "Economy Sedan | Kia K5 Sedan Rental Makkah",
@@ -891,11 +898,12 @@
             "luggage": "2-3 Large Suitcases",
             "rating": "4.8",
             "reviews": "112",
-            "badge": "👨‍👩‍👧 Family Economy"
+            "badge": "👨‍👩‍👧 Family Economy",
+            "category": "Sedan"
         },
         {
             "id": "xpander",
-            "name": "Mitsubishi Xpander",
+            "name": "Compact Family MPV",
             "slug": "mitsubishi-xpander",
             "seo": {
                 "title": "Compact Family MPV | Mitsubishi Xpander 7-Seater Makkah",
@@ -918,11 +926,12 @@
             "luggage": "3-4 Large Suitcases",
             "rating": "4.8",
             "reviews": "74",
-            "badge": "🚙 Compact SUV"
+            "badge": "🚙 Compact SUV",
+            "category": "MPV"
         },
         {
             "id": "large-bus",
-            "name": "50-Seater Luxury Bus",
+            "name": "Coach Bus",
             "slug": "large-bus-50-seater",
             "seo": {
                 "title": "Coach Bus | 50 Seater Luxury Bus Rental Makkah",
@@ -945,7 +954,8 @@
             "luggage": "50+ Large Suitcases",
             "rating": "4.7",
             "reviews": "42",
-            "badge": "🏢 Corporate"
+            "badge": "🏢 Corporate",
+            "category": "Bus/Van"
         }
     ]
 }

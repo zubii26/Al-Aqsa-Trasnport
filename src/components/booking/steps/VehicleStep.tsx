@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Users, Briefcase, Info, Check, ArrowRight, ChevronLeft, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import { usePricing } from '@/context/PricingContext';
+import VehicleCategoryFilter from '@/components/booking/VehicleCategoryFilter';
 
 interface VehicleStepProps {
     data: any;
@@ -19,6 +20,9 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
     const isMultiRoute = data.legs && data.legs.length > 1;
     const [useSameVehicle, setUseSameVehicle] = useState(data.sameVehicleForAllLegs ?? true);
     const [activeLegIndex, setActiveLegIndex] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+    const categories = Array.from(new Set(vehicles.map(v => v.category).filter(Boolean))) as string[];
 
     useEffect(() => {
         // If they had a top-level selectedVehicle, apply it to legs if we are in 'same vehicle' mode
@@ -54,9 +58,13 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
         const currentRouteId = legIndex !== undefined && data.legs ? data.legs[legIndex].routeId : data.routeId;
         const currentSelectedId = legIndex !== undefined && data.legs ? data.legs[legIndex].vehicleId : data.selectedVehicle;
 
+        const filteredVehicles = selectedCategory === 'All' 
+            ? vehicles 
+            : vehicles.filter(v => v.category === selectedCategory);
+
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {vehicles.map((vehicle) => {
+                {filteredVehicles.map((vehicle) => {
                     const isSelected = currentSelectedId === vehicle.id;
                     const pricing = currentRouteId && currentRouteId !== 'custom'
                         ? calculatePrice(currentRouteId, vehicle.id)
@@ -92,9 +100,12 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
 
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-start">
-                                            <h3 className="font-black text-slate-900 dark:text-white text-lg leading-tight truncate">
-                                                {vehicle.name}
-                                            </h3>
+                                            <div>
+                                                <h3 className="font-black text-slate-900 dark:text-white text-lg leading-tight truncate">
+                                                    {vehicle.name}
+                                                </h3>
+                                                <p className="text-xs text-slate-500 mt-0.5">e.g. {vehicle.id === 'camry' ? 'Toyota Camry' : vehicle.id === 'mercedes' ? 'Mercedes S-Class' : vehicle.id === 'gmc' ? 'GMC Yukon' : vehicle.id === 'kia' ? 'Kia K5' : vehicle.id === 'xpander' ? 'Mitsubishi Xpander' : vehicle.id === 'staria' ? 'Hyundai Staria' : vehicle.id === 'starex' ? 'Hyundai H1' : vehicle.id === 'hiace' ? 'Toyota Hiace' : vehicle.id === 'coaster' ? 'Toyota Coaster' : '50-Seater Bus'} or similar</p>
+                                            </div>
                                             {isSelected && <div className="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shadow-md"><Check size={14} strokeWidth={1.25} /></div>}
                                         </div>
 
@@ -147,6 +158,13 @@ export default function VehicleStep({ data, updateData, onNext, onBack }: Vehicl
                     Back
                 </button>
             </div>
+
+            <VehicleCategoryFilter 
+                categories={categories} 
+                selectedCategory={selectedCategory} 
+                onSelect={setSelectedCategory} 
+            />
+
 
             {isMultiRoute && (
                 <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
