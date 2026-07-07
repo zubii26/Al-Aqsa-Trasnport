@@ -6,12 +6,12 @@ import styles from './ComparisonTable.module.css';
 export default function ComparisonTable() {
 
     const data = [
-        { name: 'Toyota Camry', type: 'camry', capacity: '4', comfort: 'High', price: 'From SAR 200' },
-        { name: 'GMC Yukon', type: 'gmc', capacity: '7', comfort: 'Premium', price: 'From SAR 400' },
-        { name: 'Hyundai Staria', type: 'staria', capacity: '7', comfort: 'High', price: 'From SAR 300' },
-        { name: 'Hyundai Starex', type: 'starex', capacity: '7', comfort: 'Standard', price: 'From SAR 250' },
-        { name: 'Toyota Hiace', type: 'hiace', capacity: '11', comfort: 'Standard', price: 'From SAR 350' },
-        { name: 'Toyota Coaster', type: 'coaster', capacity: '21', comfort: 'Standard', price: 'From SAR 600' },
+        { name: 'Business Sedan (Toyota Camry)', type: 'camry', capacity: '4', comfort: 'High', price: 'From SAR 200' },
+        { name: 'Luxury SUV (GMC Yukon)', type: 'gmc', capacity: '7', comfort: 'Premium', price: 'From SAR 400' },
+        { name: 'Family MPV (Hyundai Staria)', type: 'staria', capacity: '7', comfort: 'High', price: 'From SAR 300' },
+        { name: 'Family MPV (Hyundai Starex)', type: 'starex', capacity: '7', comfort: 'Standard', price: 'From SAR 250' },
+        { name: 'Executive Van (Toyota Hiace)', type: 'hiace', capacity: '11', comfort: 'Standard', price: 'From SAR 350' },
+        { name: 'Group Minibus (Toyota Coaster)', type: 'coaster', capacity: '21', comfort: 'Standard', price: 'From SAR 600' },
     ];
 
     return (

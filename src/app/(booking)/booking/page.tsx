@@ -1286,13 +1286,12 @@ function BookingContent() {
                 <div className="mb-6 pl-1">
                     <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
                     <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
+                    <VehicleCategoryFilter 
+                        selectedCategory={selectedCategory} 
+                        onSelect={setSelectedCategory} 
+                        categories={availableCategories} 
+                    />
                 </div>
-
-                <VehicleCategoryFilter 
-                    selectedCategory={selectedCategory} 
-                    onSelectCategory={setSelectedCategory} 
-                    availableCategories={availableCategories} 
-                />
 
                 {bookingData.routeType === 'multi' && (
                     <div className="mb-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">

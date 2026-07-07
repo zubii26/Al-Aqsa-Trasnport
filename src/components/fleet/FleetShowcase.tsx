@@ -9,6 +9,7 @@ import { useSettings } from '@/context/SettingsContext';
 export interface Vehicle {
     id: string;
     name: string;
+    exampleVehicle?: string;
     price: string;
     passengers: number;
     luggage: number;
@@ -120,9 +121,14 @@ export default function FleetShowcase({ vehicles }: FleetShowcaseProps) {
                                         {/* Title & Price */}
                                         <div className="flex justify-between items-start mb-4 gap-4">
                                             <div className="flex-1">
-                                                <h3 className="text-2xl font-serif text-slate-900 dark:text-white group-hover:text-secondary transition-colors leading-tight">
+                                                <h3 className="text-2xl font-serif text-slate-900 dark:text-white group-hover:text-secondary transition-colors leading-tight mb-1">
                                                     {vehicle.name}
                                                 </h3>
+                                                {vehicle.exampleVehicle && (
+                                                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                                                        Example: {vehicle.exampleVehicle}
+                                                    </p>
+                                                )}
                                             </div>
                                             <div className="text-right flex flex-col items-end flex-shrink-0">
                                                 <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">

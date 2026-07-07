@@ -1,7 +1,8 @@
 [
   {
     "id": "camry",
-    "name": "Toyota Camry",
+    "name": "Business Sedan",
+    "exampleVehicle": "Toyota Camry",
     "image": "/images/fleet/camry.png",
     "passengers": 4,
     "luggage": 2,
@@ -14,7 +15,8 @@
   },
   {
     "id": "coaster",
-    "name": "Toyota Coaster",
+    "name": "Group Minibus",
+    "exampleVehicle": "Toyota Coaster",
     "image": "/images/fleet/coaster.png",
     "passengers": 22,
     "luggage": 15,
@@ -27,7 +29,8 @@
   },
   {
     "id": "gmc",
-    "name": "GMC Yukon",
+    "name": "Luxury SUV",
+    "exampleVehicle": "GMC Yukon",
     "image": "/images/fleet/gmc.png",
     "passengers": 7,
     "luggage": 5,
@@ -40,7 +43,8 @@
   },
   {
     "id": "hiace",
-    "name": "Toyota Hiace",
+    "name": "Executive Van",
+    "exampleVehicle": "Toyota Hiace",
     "image": "/images/fleet/hiace.png",
     "passengers": 13,
     "luggage": 10,
@@ -53,7 +57,8 @@
   },
   {
     "id": "staria",
-    "name": "Hyundai Staria",
+    "name": "Family MPV",
+    "exampleVehicle": "Hyundai Staria",
     "image": "/images/fleet/staria.png",
     "passengers": 7,
     "luggage": 4,
@@ -66,7 +71,8 @@
   },
   {
     "id": "starex",
-    "name": "Hyundai Starex",
+    "name": "Family MPV",
+    "exampleVehicle": "Hyundai Starex",
     "image": "/images/fleet/starex.png",
     "passengers": 7,
     "luggage": 4,
@@ -78,7 +84,8 @@
     "price": "From SAR 250"
   },
   {
-    "name": "Grandy",
+    "name": "Business Sedan",
+    "exampleVehicle": "Grandy",
     "image": "/images/fleet/camry.png",
     "passengers": 4,
     "luggage": 2,
