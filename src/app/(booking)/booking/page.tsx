@@ -1331,7 +1331,7 @@ function BookingContent() {
                                                 whileHover={{ y: -6 }}
                                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1, leg.id)}
                                                 className={`
-                                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer
+                                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer w-full max-w-full
                                                     ${isSelected
                                                         ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20 scale-[1.01]'
                                                         : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
@@ -1459,7 +1459,7 @@ function BookingContent() {
                                 whileHover={{ y: -6 }}
                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1)}
                                 className={`
-                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer
+                                    relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer w-full max-w-full
                                     ${isSelected
                                         ? 'bg-white dark:bg-slate-900 border-2 border-secondary shadow-[0_0_30px_rgba(212,175,55,0.15)] ring-1 ring-secondary/20 scale-[1.01]'
                                         : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-secondary/30 hover:shadow-xl'
@@ -1921,7 +1921,7 @@ function BookingContent() {
                 </div>
 
                 {/* Digital Ticket Container */}
-                <div className="bg-white dark:bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative">
+                <div className="bg-white dark:bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative w-full max-w-full">
                     {/* Top Gold Bar */}
                     <div className="h-2 w-full bg-gradient-to-r from-secondary/80 to-[#B38E2D]" />
 
@@ -1951,12 +1951,12 @@ function BookingContent() {
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-3">
-                                                        <div className="flex-1">
-                                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{leg.pickup}</p>
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="font-bold text-slate-900 dark:text-white text-sm break-words">{leg.pickup}</p>
                                                         </div>
                                                         <ArrowRight size={14} className="text-slate-400 shrink-0" />
-                                                        <div className="flex-1 text-right">
-                                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{leg.dropoff}</p>
+                                                        <div className="flex-1 text-right min-w-0">
+                                                            <p className="font-bold text-slate-900 dark:text-white text-sm break-words">{leg.dropoff}</p>
                                                         </div>
                                                     </div>
                                                     {renderReceiptZiyarat(leg.dropoff)}
@@ -1985,12 +1985,12 @@ function BookingContent() {
                                                                     legTotal += vehicleLegTotal;
                                                                     
                                                                     return (
-                                                                        <div key={sv.vehicleId} className="flex justify-between items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
-                                                                            <div className="flex items-center gap-2">
-                                                                                <span className="font-bold text-xs text-slate-900 dark:text-white">{v.name}</span>
-                                                                                <span className="text-[10px] text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">x{sv.quantity}</span>
+                                                                        <div key={sv.vehicleId} className="flex justify-between items-center gap-2 bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800 min-w-0">
+                                                                            <div className="flex items-start gap-2 flex-1 min-w-0">
+                                                                                <span className="font-bold text-xs text-slate-900 dark:text-white break-words min-w-0">{v.name}</span>
+                                                                                <span className="text-[10px] text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded shrink-0">x{sv.quantity}</span>
                                                                             </div>
-                                                                            <span className="font-bold text-xs text-secondary">{vehicleLegTotal} SAR</span>
+                                                                            <span className="font-bold text-xs text-secondary shrink-0">{vehicleLegTotal} SAR</span>
                                                                         </div>
                                                                     );
                                                                 })}
@@ -2012,10 +2012,10 @@ function BookingContent() {
                                             <div className="w-0.5 h-16 bg-gradient-to-b from-secondary to-slate-200 dark:to-slate-800 my-1" />
                                             <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-white ring-4 ring-slate-100 dark:ring-slate-700" />
                                         </div>
-                                        <div className="flex-1 space-y-8">
+                                        <div className="flex-1 min-w-0 space-y-8">
                                             <div>
                                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pickup</p>
-                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight break-words">
                                                     {bookingData.pickup || (route ? getRouteOrigin(route) : 'Unknown Pickup')}
                                                 </h3>
                                                 <div className="flex items-center gap-2 mt-2 text-sm font-medium text-slate-500">
@@ -2026,7 +2026,7 @@ function BookingContent() {
                                             </div>
                                             <div>
                                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Destination</p>
-                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                                                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight break-words">
                                                     {bookingData.dropoff || (route ? getRouteDestination(route) : 'Unknown Dropoff')}
                                                 </h3>
                                                 {renderReceiptZiyarat(bookingData.dropoff || (route ? getRouteDestination(route) : ''))}
@@ -2078,12 +2078,12 @@ function BookingContent() {
                                         {bookingData.selectedVehicles.map(sv => {
                                             const v = vehicles.find(veh => veh.id === sv.vehicleId);
                                             return v ? (
-                                                <div key={sv.vehicleId} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl">
-                                                    <div>
-                                                        <p className="font-bold text-slate-900 dark:text-white text-sm">{v.name}</p>
-                                                        <p className="text-xs text-slate-500">{v.capacity} Passengers • {v.luggage} Bags</p>
+                                                <div key={sv.vehicleId} className="flex items-start sm:items-center gap-2 sm:gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl min-w-0">
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="font-bold text-slate-900 dark:text-white text-sm break-words">{v.name}</p>
+                                                        <p className="text-xs text-slate-500 break-words">{v.capacity} Passengers • {v.luggage} Bags</p>
                                                     </div>
-                                                    <div className="ml-auto font-bold text-sm bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 shadow-sm">
+                                                    <div className="font-bold text-sm bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 shadow-sm shrink-0 mt-1 sm:mt-0">
                                                         x{sv.quantity}
                                                     </div>
                                                 </div>
@@ -2105,78 +2105,80 @@ function BookingContent() {
                                 </div>
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
+                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm shrink-0">
                                             <User strokeWidth={1.25} size={14} />
                                         </div>
-                                        <div className="overflow-hidden">
+                                        <div className="flex-1 min-w-0 overflow-hidden">
                                             <p className="font-bold text-slate-900 dark:text-white truncate">{bookingData.name}</p>
                                             <p className="text-xs text-slate-500 truncate">{bookingData.email}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
+                                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm shrink-0">
                                             <Phone strokeWidth={1.25} size={14} />
                                         </div>
-                                        <p className="font-medium text-slate-700 dark:text-slate-300 text-sm">{bookingData.phone}</p>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-medium text-slate-700 dark:text-slate-300 text-sm truncate">{bookingData.phone}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 {(bookingData.notes) && (
                                     <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-lg">
                                         <p className="text-[10px] uppercase font-bold text-yellow-600 dark:text-yellow-500 mb-1">Notes</p>
-                                        <p className="text-xs text-slate-700 dark:text-slate-300 italic">"{bookingData.notes}"</p>
+                                        <p className="text-xs text-slate-700 dark:text-slate-300 italic break-words">"{bookingData.notes}"</p>
                                     </div>
                                 )}
                             </div>
 
                             <div className="mt-auto pt-6 border-t border-dashed border-slate-300 dark:border-slate-700">
                                 <div className="space-y-2 mb-4">
-                                    <div className="flex justify-between text-sm text-slate-500">
-                                        <span>Base Rate</span>
-                                        <span>{(priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price) - totalExtraFees} SAR</span>
+                                    <div className="flex justify-between items-start gap-2 text-sm text-slate-500">
+                                        <span className="min-w-0 break-words">Base Rate</span>
+                                        <span className="shrink-0">{(priceDetails?.originalPrice && priceDetails.originalPrice > priceDetails.price ? priceDetails.originalPrice : priceDetails.price) - totalExtraFees} SAR</span>
                                     </div>
                                     {wadiJinnFeeTotal > 0 && (
-                                        <div className="flex justify-between text-sm text-secondary font-medium">
-                                            <span>External Ziyarat (Wadi Jinn)</span>
-                                            <span>+{wadiJinnFeeTotal} SAR</span>
+                                        <div className="flex justify-between items-start gap-2 text-sm text-secondary font-medium">
+                                            <span className="min-w-0 break-words">External Ziyarat (Wadi Jinn)</span>
+                                            <span className="shrink-0">+{wadiJinnFeeTotal} SAR</span>
                                         </div>
                                     )}
                                     {nusukFeeTotal > 0 && (
-                                        <div className="flex justify-between text-sm text-blue-600 font-medium">
-                                            <span className="flex items-center gap-1">
-                                                Nusuk Direct Route Fee
-                                                <span className="relative group/tip cursor-help">
+                                        <div className="flex justify-between items-start gap-2 text-sm text-blue-600 font-medium">
+                                            <span className="flex items-start gap-1 min-w-0 break-words">
+                                                <span>Nusuk Direct Route Fee</span>
+                                                <span className="relative group/tip cursor-help mt-1 shrink-0">
                                                     <Info size={12} className="text-blue-400" />
-                                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
+                                                    <span className="absolute bottom-full right-0 sm:left-1/2 sm:-translate-x-1/2 mb-2 w-48 sm:w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
                                                         This fee applies only to Umrah Visa passengers traveling directly from Jeddah Airport to Madinah using Nusuk‑registered vehicles.
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span>+{nusukFeeTotal} SAR</span>
+                                            <span className="shrink-0">+{nusukFeeTotal} SAR</span>
                                         </div>
                                     )}
                                     {viaBadrFeeTotal > 0 && (
-                                        <div className="flex justify-between text-sm text-purple-600 font-medium">
-                                            <span className="flex items-center gap-1">
-                                                Via Badr (Jabal Malaika Ziyarat)
-                                                <span className="relative group/tip cursor-help">
+                                        <div className="flex justify-between items-start gap-2 text-sm text-purple-600 font-medium">
+                                            <span className="flex items-start gap-1 min-w-0 break-words">
+                                                <span>Via Badr (Jabal Malaika Ziyarat)</span>
+                                                <span className="relative group/tip cursor-help mt-1 shrink-0">
                                                     <Info size={12} className="text-purple-400" />
-                                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
+                                                    <span className="absolute bottom-full right-0 sm:left-1/2 sm:-translate-x-1/2 mb-2 w-48 sm:w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-50">
                                                         This route includes the ziyarat point Jabal Malaika and adds approximately 150–200 km to the journey.
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span>+{viaBadrFeeTotal} SAR</span>
+                                            <span className="shrink-0">+{viaBadrFeeTotal} SAR</span>
                                         </div>
                                     )}
                                     {priceDetails.discountApplied > 0 && (
-                                        <div className="flex justify-between text-sm text-green-600 font-medium">
-                                            <span>Discount</span>
-                                            <span>-{priceDetails.discountApplied} SAR</span>
+                                        <div className="flex justify-between items-start gap-2 text-sm text-green-600 font-medium">
+                                            <span className="min-w-0 break-words">Discount</span>
+                                            <span className="shrink-0">-{priceDetails.discountApplied} SAR</span>
                                         </div>
                                     )}
-                                    <div className="flex justify-between text-sm text-slate-500">
-                                        <span>Taxes & Fees</span>
-                                        <span>Included</span>
+                                    <div className="flex justify-between items-start gap-2 text-sm text-slate-500">
+                                        <span className="min-w-0 break-words">Taxes & Fees</span>
+                                        <span className="shrink-0">Included</span>
                                     </div>
                                 </div>
                                 <div className="flex justify-between items-end p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
@@ -2733,7 +2735,7 @@ function BookingContent() {
                 )}
                 <div className={`${step === 5 ? 'w-full' : 'max-w-6xl mx-auto grid lg:grid-cols-3 gap-12'}`}>
                     {/* Main Wizard Area */}
-                    <div className={step === 5 ? "w-full md:max-w-3xl mx-auto" : "lg:col-span-2"}>
+                    <div className={step === 5 ? "w-full md:max-w-3xl mx-auto" : "lg:col-span-2 min-w-0"}>
                         <AnimatePresence mode="wait">
                             {step === 1 && renderStep1()}
                             {step === 2 && renderStep2()}
@@ -2778,11 +2780,11 @@ function BookingContent() {
                                         <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] lg:hidden" />
                                         <div className="relative container mx-auto px-4 lg:px-0 lg:max-w-none w-full">
                                             <div className="w-full lg:border-t lg:border-slate-200 lg:dark:border-slate-800 lg:pt-6">
-                                                <div className="flex gap-4 py-4 md:py-6 lg:py-0 items-center w-full">
+                                                <div className="flex gap-2 md:gap-4 py-4 md:py-6 lg:py-0 items-center w-full min-w-0">
                                                     {step > 1 && (
                                                         <button
                                                             onClick={prevStep}
-                                                            className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                                            className="px-4 md:px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
                                                         >
                                                             Back
                                                         </button>
@@ -2790,10 +2792,10 @@ function BookingContent() {
                                                     <button
                                                         onClick={nextStep}
                                                         disabled={isSubmitting}
-                                                        className={`ml-auto flex items-center justify-center max-md:flex-1 gap-2 px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                                        className={`ml-auto flex items-center justify-center max-md:flex-1 gap-1 md:gap-2 px-4 md:px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 min-w-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                                     >
-                                                        {step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}
-                                                        {!isSubmitting && <ArrowRight strokeWidth={1.25} size={20} />}
+                                                        <span className="truncate">{step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}</span>
+                                                        {!isSubmitting && <ArrowRight strokeWidth={1.25} size={20} className="shrink-0" />}
                                                     </button>
                                                 </div>
                                             </div>

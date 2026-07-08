@@ -10,7 +10,7 @@ interface VehicleCategoryFilterProps {
 
 export default function VehicleCategoryFilter({ categories, selectedCategory, onSelect }: VehicleCategoryFilterProps) {
     return (
-        <div className="flex overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar gap-2 mb-6">
+        <div className="flex overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar gap-2 mb-6 w-[calc(100%+32px)] sm:w-full">
             <button
                 onClick={() => onSelect('All')}
                 className={`flex-shrink-0 px-6 py-2.5 rounded-full text-sm font-bold transition-all ${

@@ -114,7 +114,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable} font-sans antialiased overflow-x-hidden`}>
         {/* 
           CHUNK ERROR RECOVERY — runs BEFORE React boots.
           If a JS chunk fails to load (stale turbopack/webpack hash after deployment),
