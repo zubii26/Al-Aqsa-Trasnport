@@ -825,9 +825,9 @@ function BookingContent() {
 
                         {bookingData.routeType === 'single' ? (
                             <>
-                                <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-20">
+                                <div className="grid md:grid-cols-2 gap-6 mb-8 relative z-[60]">
                             {/* Pickup Location - Higher Z-Index to overlap Dropoff */}
-                            <div className="relative group z-20">
+                            <div className="relative group z-[50]">
                                 <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 group-focus-within:text-secondary transition-colors">
                                     Pickup From
                                 </label>
@@ -859,7 +859,7 @@ function BookingContent() {
                             </div>
 
                             {/* Dropoff Location - Lower Z-Index */}
-                            <div className="relative group z-10">
+                            <div className="relative group z-[40]">
                                 <label className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1 group-focus-within:text-secondary transition-colors">
                                     Dropoff To
                                 </label>
@@ -997,7 +997,7 @@ function BookingContent() {
                         )}
                             </>
                         ) : (
-                            <div className="space-y-6 mb-8 relative z-20">
+                            <div className="space-y-6 mb-8 relative z-10">
                                 {bookingData.legs.length >= 3 && (
                                     <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
                                         <div className="flex items-center gap-3">
@@ -1015,7 +1015,7 @@ function BookingContent() {
                                     const matchedRoute = filteredRoutes.find(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)) && getRouteDestination(r) === leg.dropoff);
                                     const hasStopovers = matchedRoute && matchedRoute.stopovers && matchedRoute.stopovers.length > 0;
                                     return (
-                                    <div key={leg.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                    <div key={leg.id} className="relative p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700" style={{ zIndex: 50 - index }}>
                                         <div className="flex justify-between items-center mb-3">
                                             <div className="flex items-center gap-3">
                                                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Route {index + 1}</span>
@@ -1027,7 +1027,7 @@ function BookingContent() {
                                             )}
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-4">
-                                            <div className="relative group">
+                                            <div className="relative group z-[50]">
                                                 <SearchableSelect
                                                     name={`pickup-${leg.id}`}
                                                     value={leg.pickup}
@@ -1038,7 +1038,7 @@ function BookingContent() {
                                                     icon={<MapPin strokeWidth={1.25} size={16} />}
                                                 />
                                             </div>
-                                            <div className="relative group">
+                                            <div className="relative group z-[40]">
                                                 <SearchableSelect
                                                     name={`dropoff-${leg.id}`}
                                                     value={leg.dropoff}

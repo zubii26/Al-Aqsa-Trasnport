@@ -102,6 +102,25 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         setIsOpen(false);
     };
 
+    // Auto-scroll when dropdown opens on desktop so it doesn't get cut off
+    useEffect(() => {
+        if (isOpen && containerRef.current && window.innerWidth >= 768) {
+            setTimeout(() => {
+                if (containerRef.current) {
+                    const rect = containerRef.current.getBoundingClientRect();
+                    const dropdownHeight = 350; // Max height of dropdown
+                    // If the dropdown would go below the viewport
+                    if (rect.bottom + dropdownHeight > window.innerHeight) {
+                        window.scrollTo({
+                            top: window.scrollY + rect.top - 50,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }, 50);
+        }
+    }, [isOpen]);
+
     return (
         <div className={`relative w-full ${disabled ? 'opacity-60 pointer-events-none' : ''}`} ref={containerRef}>
             <div className="relative">

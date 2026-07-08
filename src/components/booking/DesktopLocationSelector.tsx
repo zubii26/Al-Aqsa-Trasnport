@@ -50,6 +50,15 @@ export default function DesktopLocationSelector({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Auto-scroll when opened to ensure dropdown is fully visible
+    useEffect(() => {
+        if (isOpen && containerRef.current) {
+            setTimeout(() => {
+                containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }, [isOpen]);
+
     // Search logic
     useEffect(() => {
         const query = searchQuery.toLowerCase().trim();
