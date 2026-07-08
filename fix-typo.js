@@ -1,8 +1,9 @@
+require('dotenv').config({ path: '.env.local' });
 const mongoose = require('mongoose');
 
 async function fixTypo() {
     try {
-        await mongoose.connect('mongodb://alaqsatransport:alaqsa12345@ac-pf6jxpw-shard-00-00.aheobsa.mongodb.net:27017/transport?ssl=true&authSource=admin');
+        await mongoose.connect(process.env.MONGODB_URI);
         const db = mongoose.connection.useDb('transport');
         const collection = db.collection('galleryitems');
         
