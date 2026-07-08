@@ -130,10 +130,10 @@ export default function BookingsPage() {
 
         // Date Range Filter
         let matchesDate = true;
-        if (startDate) {
+        if (startDate && booking.date) {
             matchesDate = matchesDate && new Date(booking.date) >= new Date(startDate);
         }
-        if (endDate) {
+        if (endDate && booking.date) {
             matchesDate = matchesDate && new Date(booking.date) <= new Date(endDate);
         }
 

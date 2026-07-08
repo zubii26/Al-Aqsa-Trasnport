@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
-import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft , Copy, Check} from 'lucide-react';
+import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft , Copy, Check, BookOpen} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -20,7 +20,7 @@ import BookingHeader from '@/components/booking/BookingHeader';
 import BookingFooter from '@/components/booking/BookingFooter';
 import TrustBadges from '@/components/booking/TrustBadges';
 import VehicleCategoryFilter from '@/components/booking/VehicleCategoryFilter';
-
+import BookingGuide from '@/components/booking/BookingGuide';
 
 const CustomRouteMap = dynamic(() => import('@/components/booking/CustomRouteMap'), { ssr: false });
 
@@ -60,6 +60,7 @@ function BookingContent() {
     const { routes, vehicles, calculatePrice, isLoading } = usePricing();
     const { settings } = useSettings();
     const [step, setStep] = useState(1);
+    const [isGuideOpen, setIsGuideOpen] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
     const [accordionOpen, setAccordionOpen] = useState<string>('journey');
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -778,10 +779,16 @@ function BookingContent() {
                     exit="exit"
                     transition={{ duration: 0.3 }}
                 >
-                    <div className="mb-8 text-center md:text-left">
-                        <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Begin Your Journey</h2>
-                        <p className="text-slate-500 text-xl font-light mb-4">Experience premium transport with our gold-standard service.</p>
-                        <NusukBadge variant="gold" />
+                    <div className="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4 text-center md:text-left">
+                        <div>
+                            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Begin Your Journey</h2>
+                            <p className="text-slate-500 text-xl font-light mb-4">Experience premium transport with our gold-standard service.</p>
+                            <NusukBadge variant="gold" />
+                        </div>
+                        <button onClick={() => setIsGuideOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-secondary dark:text-[#E5B842] bg-secondary/5 dark:bg-secondary/10 border border-secondary/20 dark:border-secondary/30 rounded-xl hover:bg-secondary hover:text-white dark:hover:bg-secondary dark:hover:text-white transition-all shadow-sm shrink-0 mt-2 md:mt-0">
+                            <BookOpen size={18} className="shrink-0" />
+                            Booking Guide
+                        </button>
                     </div>
 
                     <div className="max-w-xl mx-auto md:mx-0 ios-glass p-6 md:p-10 rounded-[32px] border border-white/20 dark:border-slate-700/50 shadow-2xl relative">
@@ -1302,8 +1309,16 @@ function BookingContent() {
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
-                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
-                    <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                        <div>
+                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
+                            <p className="text-slate-500 text-lg">Choose the perfect ride for your journey</p>
+                        </div>
+                        <button onClick={() => setIsGuideOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-secondary dark:text-[#E5B842] bg-secondary/5 dark:bg-secondary/10 border border-secondary/20 dark:border-secondary/30 rounded-xl hover:bg-secondary hover:text-white dark:hover:bg-secondary dark:hover:text-white transition-all shadow-sm shrink-0 mt-2 md:mt-0">
+                            <BookOpen size={18} className="shrink-0" />
+                            Booking Guide
+                        </button>
+                    </div>
                     <VehicleCategoryFilter 
                         selectedCategory={selectedCategory} 
                         onSelect={setSelectedCategory} 
@@ -1613,8 +1628,16 @@ function BookingContent() {
             className="space-y-8"
         >
             <div className="mb-6 pl-1">
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Trip Details</h2>
-                <p className="text-slate-500 text-lg">Help us coordinate your perfect pickup</p>
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                    <div>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Trip Details</h2>
+                        <p className="text-slate-500 text-lg">Help us coordinate your perfect pickup</p>
+                    </div>
+                    <button onClick={() => setIsGuideOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-secondary dark:text-[#E5B842] bg-secondary/5 dark:bg-secondary/10 border border-secondary/20 dark:border-secondary/30 rounded-xl hover:bg-secondary hover:text-white dark:hover:bg-secondary dark:hover:text-white transition-all shadow-sm shrink-0 mt-2 md:mt-0">
+                        <BookOpen size={18} className="shrink-0" />
+                        Booking Guide
+                    </button>
+                </div>
             </div>
 
             <div className="ios-glass p-6 md:p-8 rounded-[32px] border border-white/20 dark:border-slate-700/50 shadow-xl relative overflow-hidden">
@@ -1934,8 +1957,16 @@ function BookingContent() {
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
-                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Review Booking</h2>
-                    <p className="text-slate-500 text-lg">One last check before we secure your ride</p>
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                        <div>
+                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Review Booking</h2>
+                            <p className="text-slate-500 text-lg">One last check before we secure your ride</p>
+                        </div>
+                        <button onClick={() => setIsGuideOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-secondary dark:text-[#E5B842] bg-secondary/5 dark:bg-secondary/10 border border-secondary/20 dark:border-secondary/30 rounded-xl hover:bg-secondary hover:text-white dark:hover:bg-secondary dark:hover:text-white transition-all shadow-sm shrink-0 mt-2 md:mt-0">
+                            <BookOpen size={18} className="shrink-0" />
+                            Booking Guide
+                        </button>
+                    </div>
                 </div>
 
                 {/* Digital Ticket Container */}
@@ -2754,6 +2785,7 @@ function BookingContent() {
                 <div className={`${step === 5 ? 'w-full' : 'max-w-6xl mx-auto grid lg:grid-cols-3 gap-12'}`}>
                     {/* Main Wizard Area */}
                     <div className={step === 5 ? "w-full md:max-w-3xl mx-auto" : "lg:col-span-2 min-w-0"}>
+                        {/* Mobile Guide Removed - Slide Over Used Instead */}
                         <AnimatePresence mode="wait">
                             {step === 1 && renderStep1()}
                             {step === 2 && renderStep2()}
@@ -2835,6 +2867,7 @@ function BookingContent() {
                 </div>
             </div>
 
+            <BookingGuide isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} step={step} />
         </main >
     );
 }
