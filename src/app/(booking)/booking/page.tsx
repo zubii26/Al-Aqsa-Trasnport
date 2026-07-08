@@ -443,7 +443,19 @@ function BookingContent() {
         }
 
         if (step === 2) {
-            if (bookingData.selectedVehicles.length === 0) return false;
+            if (bookingData.routeType === 'multi' && !bookingData.sameVehicleForAllLegs) {
+                const validLegs = bookingData.legs.filter(l => l.pickup && l.dropoff);
+                const allLegsHaveVehicles = validLegs.every(leg => leg.selectedVehicles && leg.selectedVehicles.length > 0);
+                if (!allLegsHaveVehicles) {
+                    alert('Please select at least one vehicle for each route.');
+                    return false;
+                }
+            } else {
+                if (bookingData.selectedVehicles.length === 0) {
+                    alert('Please select a vehicle.');
+                    return false;
+                }
+            }
         }
         if (step === 3) {
             const newErrors: Record<string, string> = {};
@@ -561,6 +573,9 @@ function BookingContent() {
                     });
 
                     const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.message || data.error || 'Failed to submit booking');
+                    }
                     setBookingResponse(data);
                     setStep(5);
                     scrollToWizard();
@@ -571,6 +586,9 @@ function BookingContent() {
                 } finally {
                     setIsSubmitting(false);
                 }
+            } else {
+                alert('Please ensure all vehicle selections are complete before submitting.');
+                return;
             }
         } else {
             setStep(prev => prev + 1);

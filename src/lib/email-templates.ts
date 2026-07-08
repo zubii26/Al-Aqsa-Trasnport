@@ -35,40 +35,8 @@ export const DEFAULT_BOOKING_CONFIRMATION_TEMPLATE = `
                 </td>
             </tr>
 
-            <!-- Date & Time -->
-            <tr>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
-                    <div style="font-size: 12px; text-transform: uppercase;">Date & Time</div>
-                    <div style="font-family: 'Amiri', serif; font-size: 12px;">الموعد</div>
-                </td>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #1a1a1a;">
-                    {{date}}<br>
-                    <span style="color: #d4af37;">{{time}}</span>
-                </td>
-            </tr>
-
-            <!-- Locations -->
-            <tr>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
-                    <div style="font-size: 12px; text-transform: uppercase;">From & To</div>
-                    <div style="font-family: 'Amiri', serif; font-size: 12px;">المسار</div>
-                </td>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
-                    <div style="margin-bottom: 4px;">🟢 <strong>{{pickup}}</strong></div>
-                    <div>🔴 <strong>{{dropoff}}</strong></div>
-                </td>
-            </tr>
-
-            <!-- Vehicle -->
-            <tr>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
-                    <div style="font-size: 12px; text-transform: uppercase;">Vehicle</div>
-                    <div style="font-family: 'Amiri', serif; font-size: 12px;">السيارة</div>
-                </td>
-                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
-                    {{vehicle_details}}
-                </td>
-            </tr>
+            <!-- Route Details -->
+            {{route_details_html}}
 
             <!-- Passengers -->
              <tr>
@@ -141,10 +109,7 @@ export const DEFAULT_ADMIN_NOTIFICATION_TEMPLATE = `
         {{arrival_date_row}}
 
         <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 20px;">Service Details</h3>
-        <div><strong>Vehicle(s):</strong> {{vehicle_details}}</div>
-        <p><strong>Pickup:</strong> {{pickup}}</p>
-        <p><strong>Dropoff:</strong> {{dropoff}}</p>
-        <p><strong>Date & Time:</strong> {{date}} at {{time}}</p>
+        {{route_details_admin_html}}
         <p><strong>Passengers:</strong> {{passengers}}</p>
         <p><strong>Luggage:</strong> {{luggage}}</p>
         {{wadiJinn_admin_row}}

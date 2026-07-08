@@ -94,8 +94,11 @@ export const generateInvoice = async (booking: any) => {
     if (booking.legs && booking.legs.length > 0) {
         tableData = booking.legs.map((leg: any, index: number) => {
             const dateStr = leg.date ? new Date(leg.date).toLocaleDateString() : 'N/A';
+            const vehiclesStr = leg.selectedVehicles && leg.selectedVehicles.length > 0 
+                ? leg.selectedVehicles.map((v: any) => `${v.quantity}x ${v.name}`).join(', ') 
+                : leg.vehicleName || booking.vehicle || 'Umrah Transport';
             return [
-                leg.vehicleName || booking.vehicle || 'Umrah Transport',
+                vehiclesStr,
                 `${leg.pickup} -> ${leg.dropoff}`,
                 `Date: ${dateStr} ${leg.time || ''}\nRef: ${booking._id?.slice(-6)}`,
                 index === 0 ? `SAR ${booking.finalPrice}` : '-'

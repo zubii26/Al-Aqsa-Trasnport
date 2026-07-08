@@ -179,12 +179,16 @@ export const generateBookingInvoice = (booking: any, returnType: 'save' | 'base6
             const timeStr = formatTime(leg.time);
             const pickup = leg.pickup?.split(',')[0] || '';
             const dropoff = leg.dropoff?.split(',')[0] || '';
+            const vehiclesStr = leg.selectedVehicles && leg.selectedVehicles.length > 0 
+                ? leg.selectedVehicles.map((v: any) => `${v.quantity}x ${v.name}`).join(', ') 
+                : leg.vehicleName || booking.vehicle || 'Hiace';
+
             return [
                 (index + 1).toString(),
                 `${pickup} -> ${dropoff}`,
                 dateStr,
                 timeStr,
-                leg.vehicleName || booking.vehicle || 'Hiace',
+                vehiclesStr,
                 (booking.vehicleCount || 1).toString(),
                 leg.price ? Number(leg.price).toFixed(2) : '-'
             ];

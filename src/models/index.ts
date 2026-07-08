@@ -28,6 +28,7 @@ export interface ILeg {
     vehicleName?: string;
     price?: number;
     stopovers?: string[]; // Array of stopover names selected
+    selectedVehicles?: { vehicleId: string; quantity: number; name?: string }[];
 }
 
 export interface IBooking extends Document {
@@ -44,6 +45,8 @@ export interface IBooking extends Document {
     
     // Multi-route journey data
     legs?: ILeg[];
+    routeType?: 'single' | 'multi';
+    sameVehicleForAllLegs?: boolean;
     
     vehicle: string;
     passengers: number;
@@ -266,15 +269,20 @@ VehicleSchema.index({ isActive: 1, createdAt: -1 });
 VehicleSchema.index({ isActive: 1 });
 
 const LegSchema = new Schema<ILeg>({
-    pickup: { type: String, required: true },
-    dropoff: { type: String, required: true },
-    date: { type: String, required: true },
-    time: { type: String, required: true },
+    pickup: { type: String },
+    dropoff: { type: String },
+    date: { type: String },
+    time: { type: String },
     routeId: { type: String },
     vehicleId: { type: String },
     vehicleName: { type: String },
     price: { type: Number },
-    stopovers: { type: [String] }
+    stopovers: { type: [String] },
+    selectedVehicles: [{
+        vehicleId: { type: String },
+        quantity: { type: Number },
+        name: { type: String }
+    }]
 }, { _id: false });
 
 const BookingSchema = new Schema<IBooking>({
@@ -282,10 +290,13 @@ const BookingSchema = new Schema<IBooking>({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    pickup: { type: String, required: true },
-    dropoff: { type: String, required: true },
-    date: { type: String, required: true },
-    time: { type: String, required: true },
+    pickup: { type: String },
+    dropoff: { type: String },
+    date: { type: String },
+    time: { type: String },
+    
+    routeType: { type: String, enum: ['single', 'multi'] },
+    sameVehicleForAllLegs: { type: Boolean },
     
     legs: [LegSchema],
 

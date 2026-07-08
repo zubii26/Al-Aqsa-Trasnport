@@ -111,6 +111,106 @@ const formatVehicles = (booking: BookingData) => {
     return booking.vehicle || 'Standard Vehicle';
 };
 
+const formatLegVehicles = (leg: any, booking: BookingData) => {
+    if (leg.selectedVehicles && leg.selectedVehicles.length > 0) {
+        return `<ul style="margin: 0; padding-left: 20px;">
+            ${leg.selectedVehicles.map((v: any) => `<li>${v.quantity} x ${v.name}</li>`).join('')}
+           </ul>`;
+    }
+    return leg.vehicleName || formatVehicles(booking);
+};
+
+const buildRouteDetailsHTML = (booking: BookingData) => {
+    if (booking.legs && booking.legs.length > 0) {
+        return booking.legs.map((leg, index) => `
+            <tr>
+                <td colspan="2" style="background-color: #f1f3f5; padding: 10px 20px; font-weight: bold; color: #333; text-transform: uppercase; font-size: 12px; border-bottom: 1px solid #ddd;">
+                    Journey Leg ${index + 1}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Date & Time</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #1a1a1a;">
+                    ${leg.date}<br>
+                    <span style="color: #d4af37;">${leg.time}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">From & To</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    <div style="margin-bottom: 4px;">🟢 <strong>${leg.pickup}</strong></div>
+                    <div>🔴 <strong>${leg.dropoff}</strong></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Vehicle</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    ${formatLegVehicles(leg, booking)}
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    return `
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Date & Time</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">الموعد</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: bold; color: #1a1a1a;">
+                    ${booking.date}<br>
+                    <span style="color: #d4af37;">${booking.time}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">From & To</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">المسار</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    <div style="margin-bottom: 4px;">🟢 <strong>${booking.pickup}</strong></div>
+                    <div>🔴 <strong>${booking.dropoff}</strong></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; width: 40%; color: #666;">
+                    <div style="font-size: 12px; text-transform: uppercase;">Vehicle</div>
+                    <div style="font-family: 'Amiri', serif; font-size: 12px;">السيارة</div>
+                </td>
+                <td style="padding: 15px 20px; border-bottom: 1px solid #eee; color: #1a1a1a;">
+                    ${formatVehicles(booking)}
+                </td>
+            </tr>
+    `;
+};
+
+const buildRouteDetailsAdminHTML = (booking: BookingData) => {
+    if (booking.legs && booking.legs.length > 0) {
+        return booking.legs.map((leg, index) => `
+        <div style="margin-bottom: 15px; border-left: 3px solid #d4af37; padding-left: 10px;">
+            <strong>Leg ${index + 1}:</strong>
+            <p style="margin: 5px 0;"><strong>Pickup:</strong> ${leg.pickup}</p>
+            <p style="margin: 5px 0;"><strong>Dropoff:</strong> ${leg.dropoff}</p>
+            <p style="margin: 5px 0;"><strong>Date & Time:</strong> ${leg.date} at ${leg.time}</p>
+            <p style="margin: 5px 0;"><strong>Vehicle(s):</strong> ${formatLegVehicles(leg, booking)}</p>
+        </div>
+        `).join('');
+    }
+
+    return `
+        <div><strong>Vehicle(s):</strong> ${formatVehicles(booking)}</div>
+        <p><strong>Pickup:</strong> ${booking.pickup}</p>
+        <p><strong>Dropoff:</strong> ${booking.dropoff}</p>
+        <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
+    `;
+};
+
 const formatPriceRow = (booking: BookingData) => {
     if (!booking.price) return '';
     return `<tr>
@@ -130,15 +230,12 @@ const prepareBookingVariables = (booking: BookingData) => {
         // Booking variables
         booking_id: booking.bookingReference || `INV-${(booking.id || '').slice(-6).toUpperCase()}`,
         booking_date: new Date(booking.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-        dropoff: booking.dropoff,
-        vehicle_details: formatVehicles(booking),
+        route_details_html: buildRouteDetailsHTML(booking),
+        route_details_admin_html: buildRouteDetailsAdminHTML(booking),
         passengers: booking.passengers,
         luggage: booking.luggage || 0,
         price_row: formatPriceRow(booking),
         name: booking.name,
-        date: booking.date,
-        time: booking.time,
-        pickup: booking.pickup,
         status: booking.status,
         submission_time: new Date().toLocaleString(),
         year: new Date().getFullYear(),
