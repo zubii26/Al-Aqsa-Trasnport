@@ -188,6 +188,7 @@ export default function JourneyStep({ data, updateData, onNext }: JourneyStepPro
                                 value={leg.dropoff}
                                 onChange={(val) => updateLeg(index, { dropoff: val })}
                                 error={errors[`dropoff_${index}`]}
+                                pickupLocation={leg.pickup}
                             />
                         </div>
 
