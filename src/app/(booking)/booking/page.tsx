@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, ChevronDown, Info, ShieldCheck, Headphones, Briefcase, Navigation, Building2, Globe, PlaneLanding, PlaneTakeoff, Users, Luggage, HeartHandshake, Car, Trash2, Plus, Lock, MessageCircle, CheckCircle2, ArrowLeft , Copy, Check, BookOpen} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -122,7 +122,76 @@ function BookingContent() {
     const [dropdownRef, setDropdownRef] = useState<HTMLDivElement | null>(null);
     const wizardRef = useRef<HTMLDivElement>(null);
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
     const [draftId, setDraftId] = useState<string | null>(null);
+
+    // Load from sessionStorage on mount
+    useEffect(() => {
+        try {
+            const savedData = sessionStorage.getItem('bookingData');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                // Rehydrate dates
+                if (parsed.date) parsed.date = new Date(parsed.date);
+                if (parsed.time) parsed.time = new Date(parsed.time);
+                if (parsed.arrivalDate) parsed.arrivalDate = new Date(parsed.arrivalDate);
+                if (parsed.legs) {
+                    parsed.legs = parsed.legs.map((leg: any) => ({
+                        ...leg,
+                        date: leg.date ? new Date(leg.date) : null,
+                        time: leg.time ? new Date(leg.time) : null,
+                    }));
+                }
+                setBookingData(prev => ({ ...prev, ...parsed }));
+            }
+        } catch (e) {
+            console.error('Error loading booking from sessionStorage', e);
+        }
+    }, []);
+
+    // Save to sessionStorage on change
+    useEffect(() => {
+        // Skip saving if empty
+        if (bookingData.routeType === 'single' && !bookingData.routeId && !bookingData.pickup) return;
+        try {
+            sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+        } catch (e) {
+            console.error('Error saving booking to sessionStorage', e);
+        }
+    }, [bookingData]);
+
+    // BeforeUnload to prevent accidental loss
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (step > 1 && step < 5) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [step]);
+
+    // Sync URL with Step
+    useEffect(() => {
+        const urlStep = searchParams.get('step');
+        if (urlStep) {
+            const parsedStep = parseInt(urlStep, 10);
+            if (!isNaN(parsedStep) && parsedStep >= 1 && parsedStep <= 5) {
+                setStep(parsedStep);
+            }
+        } else if (step !== 1) {
+            setStep(1);
+        }
+    }, [searchParams]);
+
+    // Update URL initially if not present
+    useEffect(() => {
+        if (!searchParams.has('step') && step === 1) {
+            router.replace(`${pathname}?step=1`, { scroll: false });
+        }
+    }, [pathname, router, searchParams, step]);
 
     // Auto-Save Draft Logic
     useEffect(() => {
@@ -578,7 +647,11 @@ function BookingContent() {
                         throw new Error(data.message || data.error || 'Failed to submit booking');
                     }
                     setBookingResponse(data);
+                    try {
+                        sessionStorage.removeItem('bookingData');
+                    } catch (e) {}
                     setStep(5);
+                    router.push(`${pathname}?step=5`, { scroll: false });
                     scrollToWizard();
                 } catch (error: any) {
                     console.error('Booking submission error:', error);
@@ -592,13 +665,17 @@ function BookingContent() {
                 return;
             }
         } else {
-            setStep(prev => prev + 1);
+            const next = step + 1;
+            setStep(next);
+            router.push(`${pathname}?step=${next}`, { scroll: false });
         }
     };
 
 
     const prevStep = () => {
-        setStep(prev => prev - 1);
+        const prev = step - 1;
+        setStep(prev);
+        router.push(`${pathname}?step=${prev}`, { scroll: false });
     };
 
     const handleRouteSelect = (routeId: string) => {
@@ -1309,6 +1386,7 @@ function BookingContent() {
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
+                    <button onClick={prevStep} className="flex items-center text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-4"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Route Selection</button>
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                         <div>
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Select Your Vehicle</h2>
@@ -1628,6 +1706,7 @@ function BookingContent() {
             className="space-y-8"
         >
             <div className="mb-6 pl-1">
+                <button onClick={prevStep} className="flex items-center text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-4"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Vehicle Selection</button>
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                     <div>
                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Trip Details</h2>
@@ -1957,6 +2036,7 @@ function BookingContent() {
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
+                    <button onClick={prevStep} className="flex items-center text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors mb-4"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Trip Details</button>
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                         <div>
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Review Booking</h2>
