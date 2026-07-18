@@ -13,7 +13,7 @@ import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { ramadanServiceSchema, ramadanFaqSchema } from '@/lib/schema/ramadan-schema';
 
 export const metadata: Metadata = {
-    title: "Ramadan 2026 Umrah Transport & Private Makkah Taxi",
+    title: "Ramadan 2026 Umrah Transport & Makkah Taxi",
     description: "Secure your Ramadan 2026 Umrah transport. VIP private taxi for Tarawih, Qiyam-ul-Layl, and airport transfers in Makkah & Madinah. 24/7 service.",
     keywords: [
         "Ramadan Umrah Transport",

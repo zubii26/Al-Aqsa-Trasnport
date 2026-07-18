@@ -45,10 +45,10 @@ export default function CustomerGallery() {
                     }`}
                 >
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
-                        Our Happy Pilgrims
+                        From the Holy Cities
                     </h2>
                     <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
-                        Moments of joy and spiritual fulfillment captured by our valued guests.
+                        A window into the sacred routes and landmarks our pilgrims travel every day.
                     </p>
                 </div>
 

@@ -13,7 +13,7 @@ import { blogFaqs as faqs } from '@/data/blog-faqs';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Umrah Travel Blog | Tips, Guides & Transport Advice",
+    title: "Umrah Travel Blog | Transport Guides",
     description: "Read our latest articles on Umrah travel tips, transport advice, and spiritual guides. Expert advice for your Makkah and Madinah journey.",
     alternates: {
         canonical: 'https://www.alaqsaumrahtransport.com/blog',

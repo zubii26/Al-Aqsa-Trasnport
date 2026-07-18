@@ -10,7 +10,7 @@ import RouteVisual from '@/components/services/RouteVisual';
 import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 
 export const metadata: Metadata = {
-    title: "Madinah Airport to Masjid Nabawi Taxi & Private Transfers",
+    title: "Madinah Airport to Masjid Nabawi | Taxi Transfers",
     description: "Pre-book your Prince Mohammad Bin Abdulaziz Airport (MED) taxi. Professional meet & greet, 25-min transfer to Masjid Nabawi. Fares SAR 150-300.",
     keywords: [
         "Madinah Airport Taxi",

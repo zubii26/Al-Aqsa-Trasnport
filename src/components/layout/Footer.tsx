@@ -36,7 +36,7 @@ export default function Footer() {
                                 <div className={styles.logoText}>
                                     <span className={styles.brandName}>Al Aqsa</span>
                                     <span className={styles.brandType}>Transport</span>
-                                    <span className={styles.brandNameArabic}>الأقصى لنقل المعتمرين</span>
+                                    <span className={styles.brandNameArabic} lang="ar" dir="rtl">الأقصى لنقل المعتمرين</span>
                                 </div>
                             </Link>
                             <p className={styles.tagline}>{general.description}</p>
@@ -151,7 +151,11 @@ export default function Footer() {
 
                 <div className={styles.bottom}>
                     <div className={styles.copyright}>
-                        {general.footerText}
+                        {/* Dynamic year overrides any hardcoded year in footerText */}
+                        {general.footerText
+                            ? general.footerText.replace(/\d{4}/, String(new Date().getFullYear()))
+                            : `© ${new Date().getFullYear()} Al Aqsa Umrah Transport. All rights reserved.`
+                        }
                     </div>
 
                     <div className={styles.legalLinks}>

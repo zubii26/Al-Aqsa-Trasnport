@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { MapPin, Building2, Navigation } from 'lucide-react';
+import { MapPin, Building2 } from 'lucide-react';
 import { TOP_HOTELS_MAKKAH, TOP_HOTELS_MADINAH, MAKKAH_DISTRICTS, MADINAH_DISTRICTS } from '@/data/seo-keywords';
 
+// NOTE: Hotel and district items are plain text spans — not links.
+// Previously these rendered ~40 anchor tags resolving to only 2 destination URLs,
+// which search engines read as internal link manipulation. Text content is preserved.
 export default function ServiceLocationsGrid() {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-t border-border/50">
@@ -17,13 +19,11 @@ export default function ServiceLocationsGrid() {
                 <ul className="space-y-2 text-sm text-muted-foreground">
                     {TOP_HOTELS_MAKKAH.slice(0, 10).map((hotel) => (
                         <li key={hotel}>
-                            <Link href="/services/hotel-transfers" className="hover:text-secondary hover:underline transition-colors">
-                                Taxi to {hotel}
-                            </Link>
+                            <span>Taxi to {hotel}</span>
                         </li>
                     ))}
-                    <li className="mt-2 text-xs font-semibold text-secondary cursor-pointer hover:underline">
-                        View all 50+ Makkah Hotels &rarr;
+                    <li className="mt-2 text-xs font-semibold text-secondary">
+                        And 50+ more Makkah hotels
                     </li>
                 </ul>
             </div>
@@ -37,13 +37,11 @@ export default function ServiceLocationsGrid() {
                 <ul className="space-y-2 text-sm text-muted-foreground">
                     {TOP_HOTELS_MADINAH.slice(0, 10).map((hotel) => (
                         <li key={hotel}>
-                            <Link href="/services/hotel-transfers" className="hover:text-secondary hover:underline transition-colors">
-                                Transfer to {hotel}
-                            </Link>
+                            <span>Transfer to {hotel}</span>
                         </li>
                     ))}
-                    <li className="mt-2 text-xs font-semibold text-secondary cursor-pointer hover:underline">
-                        View all 40+ Madinah Hotels &rarr;
+                    <li className="mt-2 text-xs font-semibold text-secondary">
+                        And 40+ more Madinah hotels
                     </li>
                 </ul>
             </div>
@@ -56,13 +54,12 @@ export default function ServiceLocationsGrid() {
                 </h4>
                 <div className="flex flex-wrap gap-2">
                     {MAKKAH_DISTRICTS.map((district) => (
-                        <Link
+                        <span
                             key={district}
-                            href="/services"
-                            className="bg-muted/50 hover:bg-secondary/10 hover:text-secondary text-xs px-2 py-1 rounded transition-colors"
+                            className="bg-muted/50 text-xs px-2 py-1 rounded text-muted-foreground"
                         >
                             {district}
-                        </Link>
+                        </span>
                     ))}
                 </div>
             </div>
@@ -75,13 +72,12 @@ export default function ServiceLocationsGrid() {
                 </h4>
                 <div className="flex flex-wrap gap-2">
                     {MADINAH_DISTRICTS.map((district) => (
-                        <Link
+                        <span
                             key={district}
-                            href="/services"
-                            className="bg-muted/50 hover:bg-secondary/10 hover:text-secondary text-xs px-2 py-1 rounded transition-colors"
+                            className="bg-muted/50 text-xs px-2 py-1 rounded text-muted-foreground"
                         >
                             {district}
-                        </Link>
+                        </span>
                     ))}
                 </div>
             </div>

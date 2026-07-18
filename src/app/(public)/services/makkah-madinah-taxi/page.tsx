@@ -14,7 +14,7 @@ import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { makkahMadinahServiceSchema, makkahMadinahFAQSchema, makkahMadinahBreadcrumbSchema } from '@/lib/schema/makkah-madinah-taxi-schema';
 
 export const metadata: Metadata = {
-    title: "Makkah to Madinah Private Taxi & VIP Transfer Services",
+    title: "Makkah to Madinah Taxi & VIP Transfers",
     description: "Direct Makkah to Madinah private taxi transfers. Safe, comfortable 4.5-hour journey across 450km. Professional drivers with fares from SAR 300–600.",
     keywords: [
         "Taxi Makkah to Madinah",

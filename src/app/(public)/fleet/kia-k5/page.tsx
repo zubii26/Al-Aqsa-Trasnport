@@ -66,30 +66,11 @@ const jsonLd = {
             }
         }},
     "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title || "Kia K5 Sedan Rental Makkah | Modern Transport",
+    title: vehicleData?.seo?.title || "Kia K5 Sedan Rental Makkah",
     description: vehicleData?.seo?.description || "Rent Kia K5 sedan for comfortable, efficient Umrah travel. Ideal for small families and couples. Clean, modern design.",
     keywords: [
         "Kia K5 Makkah",

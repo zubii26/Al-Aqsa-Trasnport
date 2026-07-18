@@ -16,23 +16,29 @@ import QuickBookingForm from '@/components/home/QuickBookingForm';
 import PopularRoutes from '@/components/home/PopularRoutes';
 import FleetPreview from '@/components/home/FleetPreview';
 import CustomerGallery from '@/components/home/CustomerGallery';
+import HomepageContent from '@/components/home/HomepageContent';
 
 export async function generateMetadata() {
   return {
-    title: { absolute: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport" },
-    description: "Book reliable Jeddah Airport to Makkah taxi services. We offer VIP, safe, and affordable 24/7 pilgrim travel across Saudi Arabia with our luxury fleet.",
+    title: { absolute: "Umrah Taxi Service Saudi Arabia | Makkah, Madinah & Jeddah | Al Aqsa" },
+    description: "Al Aqsa Umrah Transport — Nusuk-registered private taxi service across Jeddah, Makkah, Madinah and Taif. Fixed prices, licensed drivers, 24/7. Book via WhatsApp.",
     alternates: {
       canonical: 'https://www.alaqsaumrahtransport.com/',
     },
-    keywords: [
-      "Umrah transport services", "Umrah travel agency", "Umrah packages worldwide",
-      "Pilgrimage transport solutions", "Affordable Umrah transport", "Trusted Umrah travel partner",
-      "Umrah bus service", "Umrah taxi service", "Umrah group transport", "International Umrah pilgrims",
-      "Taxi Jeddah Airport to Makkah", "GMC Yukon Makkah"
-    ],
     openGraph: {
-      title: "Jeddah Airport to Makkah Taxi | Al Aqsa Umrah Transport",
-      description: "Book reliable Jeddah Airport to Makkah taxi services. We offer VIP, safe, and affordable 24/7 pilgrim travel across Saudi Arabia with our luxury fleet.",
+      type: 'website',
+      siteName: 'Al Aqsa Umrah Transport',
+      title: "Umrah Taxi Service Saudi Arabia | Makkah, Madinah & Jeddah | Al Aqsa",
+      description: "Al Aqsa Umrah Transport — Nusuk-registered private taxi service across Jeddah, Makkah, Madinah and Taif. Fixed prices, licensed drivers, 24/7. Book via WhatsApp.",
+      url: 'https://www.alaqsaumrahtransport.com/',
+      images: [
+        {
+          url: '/images/routes/makkah-madinah-route-hero.webp',
+          width: 1200,
+          height: 630,
+          alt: 'Al Aqsa Umrah Transport — Makkah to Madinah private taxi',
+        }
+      ],
     }
   };
 }
@@ -95,7 +101,10 @@ export default async function Home() {
       {/* 5. Customer Reviews (Testimonials) */}
       <ReviewsSection />
 
-      {/* 6. Pilgrim Gallery */}
+      {/* 6. SEO Body Copy — server-rendered bilingual content */}
+      <HomepageContent />
+
+      {/* 7. Pilgrim Gallery */}
       <CustomerGallery />
 
       {/* 7. Premium Final CTA Section */}

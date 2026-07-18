@@ -11,7 +11,7 @@ export default function ComparisonTable() {
         { name: 'Family MPV (Hyundai Staria)', type: 'staria', capacity: '7', comfort: 'High', price: 'From SAR 300' },
         { name: 'Family MPV (Hyundai Starex)', type: 'starex', capacity: '7', comfort: 'Standard', price: 'From SAR 250' },
         { name: 'Executive Van (Toyota Hiace)', type: 'hiace', capacity: '11', comfort: 'Standard', price: 'From SAR 350' },
-        { name: 'Group Minibus (Toyota Coaster)', type: 'coaster', capacity: '21', comfort: 'Standard', price: 'From SAR 600' },
+        { name: 'Group Minibus (Toyota Coaster)', type: 'coaster', capacity: '19', comfort: 'Standard', price: 'From SAR 600' },
     ];
 
     return (

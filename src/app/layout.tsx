@@ -67,8 +67,8 @@ export async function generateMetadata(): Promise<Metadata> {
     // with the www redirect enforced in next.config.ts.
     metadataBase: new URL('https://www.alaqsaumrahtransport.com'),
     title: {
-      default: settings.seo.defaultTitle || "Umrah Transport Services Saudi Arabia",
-      template: `%s | ${siteName}`
+      default: "Umrah Taxi Service Saudi Arabia | Al Aqsa",
+      template: "%s | Al Aqsa"
     },
     description: "Book trusted Umrah transport services in Saudi Arabia. Ramadan 2026 bookings open. Private GMC Yukon & luxury taxi transfers from Jeddah Airport to Makkah & Madinah.",
     icons: {

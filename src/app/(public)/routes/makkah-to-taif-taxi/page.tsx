@@ -14,7 +14,7 @@ import { makkahTaifServiceSchema, makkahTaifFAQSchema, makkahTaifBreadcrumbSchem
 import { getSettings } from '@/lib/settings-storage';
 
 export const metadata: Metadata = {
-    title: "Makkah to Taif Private Taxi & VIP Transfer Services",
+    title: "Makkah to Taif Taxi & VIP Transfers",
     description: "Travel comfortably from Makkah to Taif. Private, air-conditioned taxi service with fixed pricing. Perfect for families, pilgrims, and VIP tourists.",
     keywords: [
         "Makkah to Taif Taxi",

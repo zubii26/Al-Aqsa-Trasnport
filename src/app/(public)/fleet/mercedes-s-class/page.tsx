@@ -66,30 +66,11 @@ const jsonLd = {
             }
         }},
     "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title || "Mercedes S-Class VIP Rental Makkah | Luxury Umrah",
+    title: vehicleData?.seo?.title || "Mercedes S-Class VIP Rental Makkah",
     description: vehicleData?.seo?.description || "Book Mercedes-Benz S-Class for VIP Umrah. Ultimate luxury, silent cabin, executive transport from Jeddah Airport to Makkah/Madinah. Premium Umrah transport.",
     keywords: [
         "Mercedes S-Class Makkah",

@@ -905,3 +905,30 @@
 
 /* Prevent hover repaints during smooth scrolling */
 html.lenis-scrolling, html.lenis-scrolling * { pointer-events: none !important; }
+
+/* ============================================================
+   Arabic Text Typography
+   All Arabic strings carry lang="ar" dir="rtl" on the element.
+   DO NOT add letter-spacing to Arabic — it breaks ligatures.
+   ============================================================ */
+[lang="ar"] {
+  font-family: var(--font-reem-kufi), 'Noto Naskh Arabic', system-ui, sans-serif;
+  line-height: 1.85;
+  letter-spacing: 0;
+  -webkit-font-feature-settings: 'calt' 1, 'liga' 1, 'rlig' 1;
+          font-feature-settings: 'calt' 1, 'liga' 1, 'rlig' 1;
+  text-rendering: optimizeLegibility;
+  unicode-bidi: isolate;
+}
+
+h1[lang="ar"], h2[lang="ar"], h3[lang="ar"] {
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Prevent global letter-spacing from leaking into Arabic spans */
+span[lang="ar"],
+p[lang="ar"] {
+  display: inline-block;
+  letter-spacing: 0 !important;
+}

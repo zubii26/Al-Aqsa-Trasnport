@@ -59,10 +59,10 @@ const FLEET_IMAGES = [
     },
     {
         src: '/images/fleet/coaster-hero-professional.webp',
-        alt: 'Toyota Coaster 21 Seater Bus',
+        alt: 'Toyota Coaster 19 Seater Bus',
         name: 'Toyota Coaster',
         badge: 'Group Travel',
-        capacity: '21 Pax',
+        capacity: '19 Pax',
         luggage: '15 Bags',
         url: '/fleet/toyota-coaster',
         gradient: 'from-blue-600/20 to-slate-900/40'

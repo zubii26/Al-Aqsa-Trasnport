@@ -116,7 +116,7 @@ export default function ExpandedSEOContent() {
                                             <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
                                         </summary>
                                         <div className="pb-4 pt-0 text-sm text-muted-foreground">
-                                            For large groups (7-10 people), we recommend the <strong>Toyota Hiace</strong> or <strong>Hyundai H1</strong>. For extra luxury and comfort (up to 7 people), the <strong>GMC Yukon XL</strong> is the best choice. For larger groups (up to 21), we offer the <strong>Toyota Coaster</strong>.
+                                            For large groups (7-10 people), we recommend the <strong>Toyota Hiace</strong> or <strong>Hyundai H1</strong>. For extra luxury and comfort (up to 7 people), the <strong>GMC Yukon XL</strong> is the best choice. For larger groups (up to 19), we offer the <strong>Toyota Coaster</strong>.
                                         </div>
                                     </details>
                                     <details className="group border-b border-border">

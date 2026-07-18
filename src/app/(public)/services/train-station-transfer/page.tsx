@@ -12,7 +12,7 @@ import {
 import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
-    title: 'Haramain Train Station Transfer | Private Makkah & Madinah Taxi',
+    title: 'Haramain Train Station Transfers | Private Taxi',
     description: 'Premium Haramain Train Station transfers in Saudi Arabia. 24/7 private taxi pickups for Makkah, Madinah, and Jeddah stations. Fixed prices & VIP service.',
     keywords: [
         'Haramain Train Station Transfer', 'Haramain High Speed Train Taxi', 

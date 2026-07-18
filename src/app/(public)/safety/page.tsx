@@ -5,7 +5,7 @@ import Link from 'next/link';
 import FadeIn from '@/components/common/FadeIn';
 
 export const metadata = {
-    title: "Safety Standards & Nusuk Registered Cabs | Al Aqsa Transport | معايير السلامة",
+    title: "Safety Standards & Nusuk Cabs | ُمَسَّجَل رَسْمِيًّا",
     description: "Book a government-verified, Nusuk Registered cab. Comprehensive vehicle sanitation, driver checks, & 24/7 support for a safe Umrah.",
     keywords: [
         "Nusuk Registered Cab", "Umrah safety", "safe taxi Makkah", "sanitized transport Saudi",

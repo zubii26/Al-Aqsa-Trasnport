@@ -23,11 +23,9 @@ export const localBusinessSchema = {
   "image": "https://www.alaqsaumrahtransport.com/images/fleet.jpg",
   "telephone": "+966 54 870 7332",
   "email": "alaqsaumrahtransport@gmail.com",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "328"
-  },
+  // aggregateRating REMOVED — will be re-added once linked to a verified
+  // Google Business Profile with a real review count. Using unverifiable
+  // numbers here risks rich-result disqualification.
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Near Masjid al-Haram, Al Haram District",
@@ -71,6 +69,11 @@ export const localBusinessSchema = {
       "@type": "City",
       "name": "Jeddah",
       "sameAs": "https://www.wikidata.org/wiki/Q79602"
+    },
+    {
+      "@type": "City",
+      "name": "Taif",
+      "sameAs": "https://www.wikidata.org/wiki/Q185306"
     },
     {
       "@type": "Country",

@@ -14,7 +14,7 @@ import pricingData from '@/data/pricing.json';
 const vehicleData = pricingData.vehicles.find(v => v.id === 'large-bus');
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title || "50-Seater Luxury Bus Rental Makkah | Group Umrah",
+    title: vehicleData?.seo?.title || "50-Seater Bus Rental Makkah | Group Umrah",
     description: vehicleData?.seo?.description || "Rent a 50-seater luxury bus for Hajj and Umrah groups. Reclining seats, under-body luggage compartments, and dedicated AC vents for a comfortable journey.",
     keywords: [
         "50 seater bus Makkah",
@@ -109,26 +109,7 @@ const jsonLd = [
             }
         }},
         "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
     },
     {
         "@context": "https://schema.org",

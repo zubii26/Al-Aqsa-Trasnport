@@ -18,7 +18,7 @@
     "name": "Group Minibus",
     "exampleVehicle": "Toyota Coaster",
     "image": "/images/fleet/coaster.png",
-    "passengers": 22,
+    "passengers": 19,
     "luggage": 15,
     "features": [
       "Large Group",
@@ -46,7 +46,7 @@
     "name": "Executive Van",
     "exampleVehicle": "Toyota Hiace",
     "image": "/images/fleet/hiace.png",
-    "passengers": 13,
+    "passengers": 11,
     "luggage": 10,
     "features": [
       "Spacious",
@@ -61,7 +61,7 @@
     "exampleVehicle": "Hyundai Staria",
     "image": "/images/fleet/staria.png",
     "passengers": 7,
-    "luggage": 4,
+    "luggage": 5,
     "features": [
       "Modern",
       "Comfort",
@@ -72,7 +72,7 @@
   {
     "id": "starex",
     "name": "Family MPV",
-    "exampleVehicle": "Hyundai Starex",
+    "exampleVehicle": "Hyundai Starex (H1)",
     "image": "/images/fleet/starex.png",
     "passengers": 7,
     "luggage": 4,
@@ -82,19 +82,5 @@
       "Sliding Doors"
     ],
     "price": "From SAR 250"
-  },
-  {
-    "name": "Business Sedan",
-    "exampleVehicle": "Grandy",
-    "image": "/images/fleet/camry.png",
-    "passengers": 4,
-    "luggage": 2,
-    "features": [
-      "Comfort",
-      "AC",
-      "USB"
-    ],
-    "price": "From SAR 200",
-    "id": "lezrmvjhs"
   }
 ]

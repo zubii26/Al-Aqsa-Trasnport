@@ -66,52 +66,17 @@ const jsonLd = {
             }
         }},
     "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
 };
 
 export const metadata: Metadata = {
-    title: vehicleData?.seo?.title || "Toyota Coaster Rental Makkah | 22-30 Seater Bus",
-    description: vehicleData?.seo?.description || "Rent a Toyota Coaster for large Umrah groups. Seats 22-30 passengers with dedicated AC vents, wide windows, and large luggage capacity.",
-    keywords: [
-        "Toyota Coaster Makkah",
-        "22 seater bus Jeddah",
-        "30 seater bus Umrah",
-        "group Umrah transport",
-        "Ziyarat tours bus",
-        "Toyota minibus rental Makkah",
-        "Jeddah Airport group transfer",
-        "Makkah to Madinah bus",
-        "Umrah package bus",
-        "تويوتا كوستر للعمرة",
-        "باص 30 راكب مكة",
-        "توصيل مجموعات مطار جدة",
-        "large family Umrah transport",
-        "group travel Saudi Arabia"
-    ],
+    title: vehicleData?.seo?.title || "Toyota Coaster Rental Makkah | 19-Seater Minibus",
+    description: vehicleData?.seo?.description || "Rent a Toyota Coaster for large Umrah groups. 19 seats, dedicated AC vents, wide windows, and generous luggage capacity for group travel.",
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/toyota-coaster' },
     openGraph: {
-        title: "Toyota Coaster | 22-30 Seater Group Transport",
+        title: "Toyota Coaster | 19-Seater Group Transport Makkah & Madinah",
         description: "Reliable, comfortable, and spacious group travel across Saudi Arabia with our Toyota Coaster fleet.",
-        images: [{ url: '/images/fleet/coaster.webp', width: 1200, height: 630, alt: 'Toyota Coaster 30 Seater Bus' }]
+        images: [{ url: '/images/fleet/coaster.webp', width: 1200, height: 630, alt: 'Toyota Coaster 19 Seater Minibus' }]
     }
 };
 
@@ -184,7 +149,7 @@ const coasterReviews = [
 const coasterFAQs = [
     {
         question: "How many passengers can the Toyota Coaster accommodate?",
-        answer: "The Toyota Coaster offers versatile seating configurations, comfortably accommodating between 22 to 30 passengers, making it the premier choice for large Umrah groups."
+        answer: "The Toyota Coaster seats up to 19 passengers, making it the right choice for large Umrah groups, extended families, and organised group tours."
     },
     {
         question: "Does the Coaster have adequate air conditioning for all passengers?",
@@ -213,7 +178,7 @@ export default async function ToyotaCoasterPage() {
                 bgImage="/images/fleet/coaster.webp"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}
-                quickSpecs={["22-30 Passengers", "Group Luggage", "Individual AC", "PA System"]}
+                quickSpecs={["Up to 19 Passengers", "Group Luggage", "Individual AC", "PA System"]}
                 breadcrumbs={<Breadcrumbs />}
             />
 

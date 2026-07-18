@@ -43,22 +43,11 @@ const jsonLd = {
             "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "SA" }
         }},
     "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": { "@type": "Person", "name": "Verified Customer" },
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
 };
 
 export const metadata: Metadata = {
-    title: "Executive Van | Toyota Hiace Bus Rental Makkah | Cheap Group Transport",
+    title: "Toyota Hiace Rental | Group Travel Bus",
     description: "Book Toyota Hiace 12-seater bus for Umrah groups. Affordable transport from Jeddah Airport to Makkah & Madinah. Reliable & spacious.",
     keywords: [
         "Toyota Hiace Rental Makkah",

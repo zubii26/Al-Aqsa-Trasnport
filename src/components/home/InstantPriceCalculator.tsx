@@ -38,7 +38,21 @@ export default function InstantPriceCalculator() {
     const currentRoute = routes.find(r => r.id === selectedRoute);
     const currentVehicle = vehicles.find(v => v.id === selectedVehicle);
 
-    if (isLoading) return <div className={styles.calculatorCard}>Loading rates...</div>;
+    // Return a silent skeleton while rates load — do NOT emit visible 'Loading...' text
+    // because crawlers read the initial HTML and this string gets counted as page content
+    if (isLoading) return (
+        <section className={styles.section}>
+            <div className="container mx-auto px-4">
+                <div className={styles.calculatorCard} aria-hidden="true">
+                    <div className="animate-pulse space-y-4">
+                        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/2 mx-auto" />
+                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3 mx-auto" />
+                        <div className="h-32 bg-slate-100 dark:bg-slate-800 rounded" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 
     return (
         <section className={styles.section}>

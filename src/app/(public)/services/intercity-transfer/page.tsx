@@ -12,7 +12,7 @@ import FAQSection from '@/components/services/FAQSection';
 import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 
 export const metadata = {
-    title: "Saudi Arabia Intercity Transfers | Makkah, Madinah & Jeddah",
+    title: "Intercity Transfers | Makkah, Madinah & Jeddah",
     description: "Private intercity transfers across Saudi Arabia. VIP taxi services connecting Jeddah, Makkah, and Madinah. Fixed fares, no hidden fees, and door-to-door comfort.",
     keywords: ["Makkah to Madinah taxi", "Madinah to Makkah transport", "Haramain transport", "VIP intercity taxi", "Jeddah to Madinah taxi", "KSA intercity transfer"],
     alternates: {

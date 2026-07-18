@@ -11,7 +11,7 @@ import ContactGrid from '@/components/contact/ContactGrid';
 import SchemaInjector from '@/components/SchemaInjector';
 
 export async function generateMetadata() {
-    const title = "Contact Al Aqsa Umrah Transport | Book Your Ride Today";
+    const title = "Contact Us | Book Your Ride Today";
     const description = "Contact Al Aqsa Umrah Transport for bookings. 24/7 support via WhatsApp & phone. Let us serve the transport needs of your spiritual journey.";
 
     return {

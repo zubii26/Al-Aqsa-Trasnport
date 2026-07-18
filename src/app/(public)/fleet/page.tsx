@@ -14,7 +14,7 @@ import { fleetCollectionSchema, fleetBreadcrumbSchema } from '@/lib/schema/fleet
 
 export async function generateMetadata() {
     return {
-        title: "Umrah Taxi Fleet 2025 | Book GMC Yukon & Hyundai Staria",
+        title: "Umrah Taxi Fleet 2025 | GMC Yukon & Staria",
         description: "Explore our premium Umrah taxi fleet. Book a luxury GMC Yukon XL, family Hyundai Staria, or Toyota Hiace for your journey in Saudi Arabia.",
         keywords: [
             "Umrah Taxi Fleet", "GMC Yukon Booking", "Hyundai Staria Rental",

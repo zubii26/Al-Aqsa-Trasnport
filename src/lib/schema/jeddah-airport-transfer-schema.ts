@@ -21,11 +21,7 @@ export const jeddahAirportServiceSchema = {
   "url": "https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer",
   "serviceType": "Airport Transfer",
   "category": "Pilgrim Transport",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "184"
-  },
+  // aggregateRating removed — unverifiable counts ineligible for rich results
   "provider": {
     "@type": "LocalBusiness",
     "@id": "https://www.alaqsaumrahtransport.com/#organization",
@@ -116,19 +112,7 @@ export const jeddahAirportServiceSchema = {
       "Thursday", "Friday", "Saturday", "Sunday"
     ]
   },
-  "review": {
-    "@type": "Review",
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "5",
-      "bestRating": "5"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Mohammed A."   // ← replace with real verified review data
-    },
-    "reviewBody": "Excellent service, driver was waiting at arrivals with our name sign. Vehicle was clean and comfortable, and we arrived at our Makkah hotel safely."
-  },
+  // review removed — self-serving reviews ineligible for Google rich results
 };
 
 // ─────────────────────────────────────────────────────────────

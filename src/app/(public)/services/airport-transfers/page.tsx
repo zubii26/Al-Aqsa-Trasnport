@@ -9,7 +9,7 @@ import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Saudi Arabia Airport Transfers | Umrah Taxi Services",
+    title: "Airport Transfers | Umrah Taxi Services",
     description: "Reliable 24/7 airport transfers for Jeddah (KAIA) and Madinah (MED). Professional meet & greet, flight tracking, and private Umrah taxi services.",
     keywords: [
         "Jeddah airport to Makkah taxi", "KAIA transfer", "Umrah airport pickup", "Madinah airport taxi",

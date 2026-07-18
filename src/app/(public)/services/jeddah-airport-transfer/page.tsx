@@ -15,7 +15,7 @@ import RelatedReading from '@/components/blog/RelatedReading';
 import { getSettings } from '@/lib/settings-storage';
 
 export const metadata: Metadata = {
-    title: "Jeddah Airport to Makkah Taxi: Complete 2026 Guide",
+    title: "Jeddah Airport to Makkah Taxi | 2026 Guide",
     description: "Planning your Umrah? Discover distance, drive times, and 2026 taxi costs from Jeddah Airport (KAIA) to Makkah. Secure your 24/7 private transfer today.",
     alternates: {
         canonical: 'https://www.alaqsaumrahtransport.com/services/jeddah-airport-transfer',

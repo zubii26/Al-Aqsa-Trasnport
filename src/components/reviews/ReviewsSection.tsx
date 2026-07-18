@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { Star, MessageSquarePlus, ChevronRight } from 'lucide-react';
-import SchemaInjector from '@/components/SchemaInjector';
 import GlassCard from '@/components/ui/GlassCard';
 
 interface Review {
@@ -65,36 +64,12 @@ export default function ReviewsSection() {
         );
     }
 
-    const reviewsSchema = reviews.length > 0 ? [{
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "@id": "https://www.alaqsaumrahtransport.com/#organization",
-        "name": "Al Aqsa Umrah Transport",
-        "image": "https://www.alaqsaumrahtransport.com/images/logo.png",
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": stats.average,
-            "reviewCount": stats.total
-        },
-        "review": reviews.map(r => ({
-            "@type": "Review",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": r.rating,
-                "bestRating": "5"
-            },
-            "author": {
-                "@type": "Person",
-                "name": r.author
-            },
-            "reviewBody": r.comment,
-            "datePublished": new Date(r.date).toISOString().split('T')[0]
-        }))
-    }] : [];
+    // aggregateRating and Review JSON-LD removed.
+    // Self-serving reviews on LocalBusiness are ineligible for Google rich results
+    // (policy since 2019). Stars surface through Google Business Profile instead.
 
     return (
         <>
-            {reviewsSchema.length > 0 && <SchemaInjector schemas={reviewsSchema} />}
             <section className="py-20 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col md:flex-row items-center justify-between mb-12">

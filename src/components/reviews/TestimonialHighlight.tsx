@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote, Star, MapPin } from 'lucide-react';
+import { Quote, Star, MapPin, ExternalLink } from 'lucide-react';
 import { curatedTestimonials } from '@/data/testimonials';
 
 export default function TestimonialHighlight() {
@@ -69,28 +69,21 @@ export default function TestimonialHighlight() {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Google Business Profile link — verified reviews only */}
+                <div className="text-center mt-12">
+                    <a
+                        href="https://www.google.com/maps?cid=13304906274217460428"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-secondary dark:hover:text-amber-400 transition-colors underline underline-offset-4"
+                    >
+                        Read verified reviews on Google
+                        <ExternalLink size={13} />
+                    </a>
+                </div>
             </div>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "TransportationService",
-                        "name": "Al Aqsa Umrah Transport",
-                        "review": curatedTestimonials.map(t => ({
-                            "@type": "Review",
-                            "author": { "@type": "Person", "name": t.name },
-                            "datePublished": "2024-12-01", // Approximate
-                            "reviewBody": t.story,
-                            "reviewRating": {
-                                "@type": "Rating",
-                                "ratingValue": t.rating,
-                                "bestRating": "5"
-                            }
-                        }))
-                    })
-                }}
-            />
+            {/* Review JSON-LD removed — self-serving reviews ineligible for rich results */}
         </section>
     );
 }

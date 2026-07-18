@@ -66,30 +66,11 @@ const jsonLd = {
             }
         }},
     "award": "Nusuk Registered Vehicle",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "152"
-    },
-    "review": {
-        "@type": "Review",
-        "author": {
-            "@type": "Person",
-            "name": "Verified Customer"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "datePublished": "2024-01-01",
-        "reviewBody": "Excellent service, clean vehicles, and professional drivers."
-    }
+    // aggregateRating and review removed — ineligible for rich results
 };
 
 export const metadata: Metadata = {
-    title: "Premium Family MPV | Hyundai Staria Rental Saudi Arabia | Family Umrah Taxi",
+    title: "Hyundai Staria Rental | Premium Family MPV",
     description: "Rent Hyundai Staria 2024 in Makkah. Spacious 7-passenger luxury van for Umrah families. Modern comfort for Jeddah to Madinah trips.",
     keywords: ["Hyundai Staria Rental Makkah", "Family Van for Umrah", "Hyundai Staria Jeddah Airport", "7 Seater Taxi Makkah", "Luxury Van Rental Saudi Arabia"],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/hyundai-staria' },

@@ -77,8 +77,14 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
 
                 <div className="fleet-marquee-wrapper">
                     <div className="fleet-marquee-track">
-                        {displayVehicles.map((vehicle, index) => (
-                            <div key={`${vehicle.id}-${index}`} className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col overflow-hidden group marquee-card flex-shrink-0 min-w-[320px] md:min-w-[350px] mx-3">
+                        {displayVehicles.map((vehicle, index) => {
+                            const isDuplicate = index >= vehicles.length;
+                            return (
+                            <div
+                                key={`${vehicle.id}-${index}`}
+                                aria-hidden={isDuplicate ? 'true' : undefined}
+                                className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col overflow-hidden group marquee-card flex-shrink-0 min-w-[320px] md:min-w-[350px] mx-3"
+                            >
                                 
                                 {/* Image Section */}
                                 <div className="relative h-56 w-full bg-gradient-to-b from-slate-50 to-slate-100/50 dark:from-slate-800/50 dark:to-slate-800/20 pt-8 pb-4 px-8 flex items-center justify-center">
@@ -157,17 +163,22 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                         })}
                                     </div>
 
-                                    {/* CTA Button */}
-                                    <GlassButton
-                                        href={`/booking?vehicle=${vehicle.id}`}
-                                        variant="secondary"
-                                        className="w-full justify-center gap-2 !bg-[#0B1221] hover:!bg-slate-800 dark:!bg-white dark:hover:!bg-slate-100 !text-white dark:!text-[#0B1221] !border-none !rounded-xl !py-3.5 transition-colors font-medium text-sm !shadow-none"
-                                    >
-                                        Book {vehicle.name} <ArrowRight size={16} className="text-secondary" />
-                                    </GlassButton>
+                                    {/* CTA Button — suppressed on duplicate cards */}
+                                    {!isDuplicate ? (
+                                        <GlassButton
+                                            href={`/booking?vehicle=${vehicle.id}`}
+                                            variant="secondary"
+                                            className="w-full justify-center gap-2 !bg-[#0B1221] hover:!bg-slate-800 dark:!bg-white dark:hover:!bg-slate-100 !text-white dark:!text-[#0B1221] !border-none !rounded-xl !py-3.5 transition-colors font-medium text-sm !shadow-none"
+                                        >
+                                            Book {vehicle.name} <ArrowRight size={16} className="text-secondary" />
+                                        </GlassButton>
+                                    ) : (
+                                        <div className="w-full py-3.5 rounded-xl bg-[#0B1221] dark:bg-white" aria-hidden="true" />
+                                    )}
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>

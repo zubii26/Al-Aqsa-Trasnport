@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-    title: 'Privacy Policy | Al Aqsa Umrah Transport Booking',
+    title: 'Privacy Policy',
     description: 'Read Al Aqsa Umrah Transport\'s Privacy Policy. Discover how your personal information is protected when booking your premium Umrah cab and airport transfer.',
 };
 

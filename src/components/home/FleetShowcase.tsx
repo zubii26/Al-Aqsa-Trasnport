@@ -139,7 +139,7 @@ const FLEET_DATA = [
         name: 'Toyota Hiace',
         type: 'Commuter Bus',
         price: 'From SAR 600',
-        capacity: '10 Pax',
+        capacity: '11 Pax',
         luggage: '8 Bags',
         images: [
             '/images/fleet/toyota-hiace/toyota-hiace-2026-lifestyle-cinematic-abha.jpeg',
@@ -157,7 +157,7 @@ const FLEET_DATA = [
         name: 'Toyota Coaster',
         type: 'Mini Bus',
         price: 'From SAR 800',
-        capacity: '22 Pax',
+        capacity: '19 Pax',
         luggage: '15 Bags',
         images: [
             '/images/fleet/coaster.webp',

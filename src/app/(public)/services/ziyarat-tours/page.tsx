@@ -11,7 +11,7 @@ import QuickAnswerBox from '@/components/services/QuickAnswerBox';
 import { ziyaratTouristTripSchema, ziyaratFAQSchema, ziyaratBreadcrumbSchema } from '@/lib/schema/ziyarat-tours-schema';
 
 export const metadata: Metadata = {
-    title: "Ziyarat Makkah & Madinah Places | Private Guided Tours",
+    title: "Ziyarat Makkah & Madinah | Private Guided Tours",
     description: "Book private Ziyarat tours in Makkah and Madinah. Visit historical places like Jabal Al-Nour and Masjid Quba with knowledgeable, English-speaking drivers.",
     keywords: [
         "Ziyarat Tours Makkah",

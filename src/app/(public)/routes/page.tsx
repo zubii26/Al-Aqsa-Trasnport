@@ -8,7 +8,7 @@ import GlassCard from '@/components/ui/GlassCard';
 import FadeIn from '@/components/common/FadeIn';
 
 export const metadata: Metadata = {
-    title: 'Umrah Transport Routes Network | Makkah & Madinah | شبكة المسارات',
+    title: 'Umrah Transport Routes | Makkah & Madinah',
     description: 'Explore our comprehensive transport network connecting Jeddah, Makkah, and Madinah. Premium VIP transfers. شبكة مواصلات شاملة بين جدة ومكة والمدينة.',
     keywords: [
         "Umrah transport routes", "Jeddah to Makkah route", "Makkah to Madinah road",

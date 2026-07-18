@@ -9,7 +9,7 @@ import { ArrowRight } from 'lucide-react';
 import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
-    title: 'Hotel Transfers Makkah & Madinah | Al Aqsa Umrah Transport',
+    title: 'Hotel Transfers Makkah & Madinah',
     description: 'Reliable door-to-door hotel transfers in Makkah and Madinah. 24/7 comfortable transport between your hotel and the Holy Harams. Book your ride now.',
     keywords: ['hotel transfer Makkah', 'hotel transfer Madinah', 'Umrah hotel shuttle', 'family transport Makkah', 'VIP hotel transfer Saudi Arabia'],
     alternates: {
