@@ -77,7 +77,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // ── Canonical enforcement ──────────────────────────────────────────
+      // ── Canonical enforcement & Chain Flattening ──────────────────────────
+      // Flatten legacy /umrah/* requests on non-www domain to avoid 2-hop chains
+      {
+        source: '/umrah/:path*',
+        has: [{ type: 'host', value: 'alaqsaumrahtransport.com' }],
+        destination: 'https://www.alaqsaumrahtransport.com/:path*',
+        permanent: true,
+      },
       // Permanently redirect the bare (non-www) domain to the www version.
       // This prevents Google from indexing two copies of the site and ensures
       // all canonical tags (set via metadataBase in layout.tsx) match the
