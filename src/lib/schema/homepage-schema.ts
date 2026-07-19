@@ -134,18 +134,6 @@ export const localBusinessSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Hajj Group Transport",
-          "description": "Organized group transport solutions for Hajj pilgrims. Fleet of buses and minivans for Arafat, Muzdalifah, and Mina transfers. Nusuk-compliant with experienced Hajj season drivers."
-        },
-        "price": "600",
-        "priceCurrency": "SAR",
-        "availability": "https://schema.org/InStock",
-        "url": "https://www.alaqsaumrahtransport.com/services/hajj-group-transport"
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
           "name": "Madinah Airport Transfer",
           "description": "Private transfer from Prince Mohammad Bin Abdulaziz International Airport (MED) to Madinah hotels near Masjid an-Nabawi. Fixed fare, no hidden charges, 24/7 availability."
         },
