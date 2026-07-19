@@ -89,17 +89,6 @@ const nextConfig: NextConfig = {
         destination: 'https://www.alaqsaumrahtransport.com/:path*',
         permanent: true,  // 301 — tells Google to update its index
       },
-      // ── Legacy blog URL rewrites ───────────────────────────────────────
-      {
-        source: '/umrah/blog',
-        destination: '/blog',
-        permanent: true,
-      },
-      {
-        source: '/umrah/blog/:slug',
-        destination: '/blog/:slug',
-        permanent: true,
-      },
       // ── Resolve 404s found by Search Console ────────────────────────────
       {
         source: '/privacy-policy',
@@ -111,41 +100,10 @@ const nextConfig: NextConfig = {
         destination: '/terms',
         permanent: true,
       },
-      // ── Legacy /umrah/* URLs from GSC ───────────────────────────────────
-      {
-        source: '/umrah/services/jeddah-airport-transfer',
-        destination: '/services/jeddah-airport-transfer',
-        permanent: true,
-      },
-      {
-        source: '/umrah/services/airport-transfers',
-        destination: '/services/airport-transfers',
-        permanent: true,
-      },
-      {
-        source: '/umrah/contact',
-        destination: '/contact',
-        permanent: true,
-      },
-      {
-        source: '/umrah/routes',
-        destination: '/routes',
-        permanent: true,
-      },
-      {
-        source: '/umrah/services/intercity-transfer',
-        destination: '/services/intercity-transfer',
-        permanent: true,
-      },
-      {
-        source: '/umrah/fleet/hyundai-staria',
-        destination: '/fleet/hyundai-staria',
-        permanent: true,
-      },
-      // Catch-all safety net: any other stray /umrah/* path redirects to homepage
+      // ── Legacy /umrah/* URLs (Wildcard) ──────────────────────────────────
       {
         source: '/umrah/:path*',
-        destination: '/',
+        destination: '/:path*',
         permanent: true,
       },
     ];
