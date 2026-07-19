@@ -107,6 +107,11 @@ const nextConfig: NextConfig = {
         destination: '/terms',
         permanent: true,
       },
+      {
+        source: '/services/hajj-group-transport',
+        destination: '/services/intercity-transfer',
+        permanent: true,
+      },
       // ── Legacy /umrah/* URLs (Wildcard) ──────────────────────────────────
       {
         source: '/umrah/:path*',
