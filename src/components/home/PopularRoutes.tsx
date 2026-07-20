@@ -58,7 +58,7 @@ const POPULAR_ROUTES = [
         distance: '85 km',
         time: '1.5 hours',
         price: 'From SAR 350',
-        link: '/routes',
+        link: '/routes/makkah-to-taif-taxi',
         image: '/images/blog/makkah-haram-view.webp'
     }
 ];

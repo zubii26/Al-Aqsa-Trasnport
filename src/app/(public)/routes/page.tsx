@@ -129,6 +129,20 @@ const ROUTES = [
         featuresAr: ['طريق مباشر', 'راحة قصوى', 'مشروبات ضيافة'],
         link: '/services/intercity-transfer',
         image: '/images/fleet/intercity-hero.webp'
+    },
+    {
+        id: 'makkah-taif',
+        title: 'Makkah ⇄ Taif',
+        titleAr: 'من مكة إلى الطائف',
+        description: 'Escape the heat to the beautiful mountains of Taif. Visit rose farms, ride the cable car, and enjoy the cool weather in a comfortable VIP taxi.',
+        descriptionAr: 'اهرب من الحر إلى جبال الطائف الجميلة. قم بزيارة مزارع الورد، واركب التلفريك، واستمتع بالطقس البارد في سيارة خاصة.',
+        distance: '85 km',
+        time: '1.5 hours',
+        price: 'From SAR 350',
+        features: ['Scenic Route', 'Climate Escape', 'Ziyarat Included'],
+        featuresAr: ['طريق جبلي', 'أجواء باردة', 'تشمل المزارات'],
+        link: '/routes/makkah-to-taif-taxi',
+        image: '/images/routes/taif-ziyarat-1.jpg'
     }
 ];
 

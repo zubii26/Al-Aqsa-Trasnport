@@ -476,6 +476,14 @@ export const staticBlogPosts = [
             <p><strong>Typical Trip:</strong> Depart Makkah 8 AM -> Taif Sites -> Lunch -> Return Makkah 5 PM.</p>
 
             <p>It is the perfect "spiritual vacation" to end your trip.</p>
+            
+            <div className="mt-8 p-6 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h4 className="text-xl font-bold mb-2">Ready to visit Taif?</h4>
+                <p className="mb-4">Book a private vehicle with an experienced local driver who knows the mountain routes.</p>
+                <a href="/routes/makkah-to-taif-taxi" className="inline-flex items-center justify-center bg-secondary text-primary px-6 py-3 rounded-xl font-bold hover:bg-amber-400 transition-colors">
+                    View Makkah to Taif Taxi Fares &rarr;
+                </a>
+            </div>
         `,
         category: 'Experience',
         date: new Date('2026-01-20'),
