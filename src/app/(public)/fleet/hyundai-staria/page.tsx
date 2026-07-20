@@ -21,7 +21,7 @@ const vehicleData = pricingData.vehicles.find(v => v.id === 'staria');
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Hyundai Staria 2024 Luxury Van Makkah",
+    "name": "Hyundai Staria — Premium Family MPV Private Taxi",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/hyundai-staria/hyundai-staria-front-view.webp",
     "description": "Premium Hyundai Staria VIP 7-Seater Van for Umrah. Reliable, comfortable luxury transport for families from Jeddah Airport to Makkah and Madinah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
@@ -245,7 +245,7 @@ export default async function HyundaiStariaPage() {
 
             <VehicleReviews reviews={stariaReviews} />
 
-            <FAQSection items={stariaFAQs} title="Hyundai Staria - Frequently Asked Questions" />
+            <FAQSection items={stariaFAQs} title="Hyundai Staria — Frequently Asked Questions" />
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}

@@ -21,9 +21,9 @@ const vehicleData = pricingData.vehicles.find(v => v.id === 'coaster');
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "Toyota Coaster Group Rental",
+    "name": "Toyota Coaster Group Minibus — Private Umrah Transfer",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/coaster.webp",
-    "description": "Rent a Toyota Coaster in Makkah & Madinah for comfortable and spacious group Umrah transport.",
+    "description": "Private 19-seat minibus for Umrah groups in Makkah & Madinah. Toyota Coaster with licensed driver, PA system, and individual AC vents.",
     "brand": { "@type": "Brand", "name": "Toyota" },
     "offers": { 
         "@type": "Offer", 
@@ -87,7 +87,7 @@ const galleryImages = [
 
 const specs = [
     { label: "Engine & Power", value: "4.2L Diesel", subValue: "High Durability" },
-    { label: "Seating Capacity", value: "22-30 Seats", subValue: "Group Configurations" },
+    { label: "Seating Capacity", value: "19 Passenger Seats", subValue: "Fixed Configuration" },
     { label: "Luggage Capacity", value: "Large Compartment", subValue: "Dedicated Storage" },
     { label: "Comfort Control", value: "Heavy-Duty AC", subValue: "Individual Vents" },
     { label: "Suspension", value: "Double Wishbone", subValue: "Leaf Spring Rear" },
@@ -97,7 +97,7 @@ const specs = [
 ];
 
 const features = [
-    "Versatile seating configurations accommodating 22 to 30 passengers.",
+    "Seats up to 19 passengers with comfortable high-backed individual seats.",
     "Powerful central AC system with individual roof vents for every seat.",
     "Built-in PA System with microphone, perfect for tour guides reciting Talbiyah.",
     "Wide panoramic windows providing excellent visibility for Ziyarat sightseeing.",
@@ -110,7 +110,7 @@ const features = [
 const useCases = [
     {
         title: "Tour Agencies & Groups",
-        description: "Keep large congregations united. Perfect for Umrah operators moving 20-30 pilgrims together without splitting groups.",
+        description: "Keep your congregation together. Perfect for Umrah operators moving up to 19 pilgrims without splitting groups.",
         icon: Users
     },
     {
@@ -141,7 +141,7 @@ const coasterReviews = [
     {
         name: "Nour F.",
         rating: 4,
-        text: "Very spacious and clean. The luggage capacity was surprising; it easily fit all 30 of our suitcases. Great service overall.",
+        text: "Very spacious and clean. The luggage capacity was excellent — it easily fit all our suitcases. Great service overall.",
         location: "Egypt"
     }
 ];
@@ -184,10 +184,10 @@ export default async function ToyotaCoasterPage() {
 
             <VehicleOverview
                 title="Engineered for Group Comfort"
-                description="The Toyota Coaster is designed specifically for large groups, ensuring that every pilgrim travels together safely and comfortably without feeling cramped. It simplifies logistics for tour operators and extended families."
+                description="The Toyota Coaster is designed specifically for groups of up to 19, ensuring every pilgrim travels together safely and comfortably. With a built-in PA system, individual AC vents, and generous luggage space, it is the standard choice for Umrah tour operators and large families across Saudi Arabia."
                 modelYear="Latest"
-                passengers={30}
-                luggage="Large Group Storage"
+                passengers={19}
+                luggage="15 Suitcases"
                 tech="PA System & Audio"
                 fuel="4.2L Diesel"
                 bookLink={whatsappLink}
@@ -218,7 +218,7 @@ export default async function ToyotaCoasterPage() {
 
             <VehicleReviews reviews={coasterReviews} />
 
-            <FAQSection items={coasterFAQs} title="Toyota Coaster Rental - Frequently Asked Questions" />
+            <FAQSection items={coasterFAQs} title="Toyota Coaster Group Minibus — Frequently Asked Questions" />
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}

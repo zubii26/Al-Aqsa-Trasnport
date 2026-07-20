@@ -96,6 +96,11 @@ const nextConfig: NextConfig = {
         destination: 'https://www.alaqsaumrahtransport.com/:path*',
         permanent: true,  // 301 — tells Google to update its index
       },
+      // ── Fleet taxonomy: consolidated Business Sedan + deprecated 50-seater ─
+      { source: '/fleet/toyota-camry', destination: '/fleet/business-sedan', permanent: true },
+      { source: '/fleet/kia-k5', destination: '/fleet/business-sedan', permanent: true },
+      { source: '/fleet/mitsubishi-xpander', destination: '/fleet/business-sedan', permanent: true },
+      { source: '/fleet/large-bus-50-seater', destination: '/fleet/toyota-coaster', permanent: true },
       // ── Resolve 404s found by Search Console ────────────────────────────
       {
         source: '/privacy-policy',

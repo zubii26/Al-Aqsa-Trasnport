@@ -40,13 +40,13 @@ const galleryImages = [
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "GMC Yukon XL 2025 Rental Makkah",
+    "name": "GMC Yukon XL — Luxury SUV Private Chauffeur",
     "image": galleryImages.map(img => ({
         "@type": "ImageObject",
         "url": `https://www.alaqsaumrahtransport.com${img.src}`,
         "caption": img.alt
     })),
-    "description": "Rent luxury GMC Yukon XL in Makkah & Madinah. Premium 7-Seater SUV for VIP Umrah transport, airport transfers, and intercity travel.",
+    "description": "Private chauffeur-driven GMC Yukon XL in Makkah & Madinah. Luxury 7-seater SUV for VIP Umrah transport, airport transfers, and intercity travel.",
     "brand": { "@type": "Brand", "name": "GMC" },
     "offers": { 
         "@type": "Offer", 
@@ -93,21 +93,21 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-    title: "GMC Yukon Rental Makkah | VIP Umrah Taxi",
-    description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel with VIP private chauffeur.",
+    title: "Luxury SUV — Private Chauffeur | GMC Yukon Umrah Taxi",
+    description: "Book a GMC Yukon XL in Makkah. Luxury 7-seater SUV with private chauffeur for Jeddah Airport pickup and Makkah to Madinah travel.",
     keywords: [
-        "GMC Yukon Rental Makkah",
+        "GMC Yukon Private Taxi Makkah",
         "GMC Yukon XL Saudi Arabia",
         "VIP Umrah Taxi Makkah",
-        "Luxury SUV Rental Jeddah",
-        "GMC Yukon with Driver",
+        "Luxury SUV with Driver Jeddah",
+        "GMC Yukon with Chauffeur",
         "حجز جمس يوكن مكة",
         "ايجار سيارات فخمة جدة",
         "توصيل كبار الشخصيات"
     ],
     alternates: { canonical: 'https://www.alaqsaumrahtransport.com/fleet/gmc-yukon-at4' },
     openGraph: {
-        title: "Luxury SUV | GMC Yukon Rental Makkah | VIP Umrah Taxi",
+        title: "Luxury SUV | GMC Yukon Umrah Taxi | VIP Private Chauffeur",
         description: "Book a new GMC Yukon XL in Makkah. Luxury 7-seater SUV for Jeddah Airport pickup and Makkah to Madinah travel.",
         images: [{ url: '/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp', width: 1200, height: 630, alt: 'GMC Yukon XL VIP Transport' }]
     }
@@ -257,7 +257,7 @@ export default async function GmcYukonPage() {
 
             <VehicleReviews reviews={gmcReviews} />
 
-            <FAQSection items={gmcFAQs} title="GMC Yukon Rental - Frequently Asked Questions" />
+            <FAQSection items={gmcFAQs} title="GMC Yukon Luxury SUV — Frequently Asked Questions" />
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}

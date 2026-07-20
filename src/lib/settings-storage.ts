@@ -8,7 +8,7 @@ import { DEFAULT_BOOKING_CONFIRMATION_TEMPLATE, DEFAULT_ADMIN_NOTIFICATION_TEMPL
 const DEFAULT_SETTINGS: Settings = {
     general: {
         siteName: 'Al Aqsa Umrah',
-        description: 'Premium Umrah Taxi Service & Car Rental in Saudi Arabia',
+        description: 'Premium Private Umrah Taxi Service in Saudi Arabia',
         footerText: '© 2025 Al Aqsa Umrah. All rights reserved.',
         logo: '',
         googleAnalyticsId: '',

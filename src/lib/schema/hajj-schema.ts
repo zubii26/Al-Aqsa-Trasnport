@@ -56,7 +56,7 @@ export const hajjFaqSchema = {
             "name": "Can you handle group transportation for Hajj?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, we provide large 50-seater buses, Toyota Coasters, and Hiace vans equipped to handle families and large pilgrim groups."
+                "text": "Yes, we provide Toyota Coasters and Hiace vans equipped to handle families and large pilgrim groups."
             }
         }
     ]

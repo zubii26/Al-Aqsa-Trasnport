@@ -2,50 +2,83 @@
   {
     "id": "camry",
     "name": "Business Sedan",
-    "exampleVehicle": "Toyota Camry",
-    "image": "/images/fleet/camry.png",
-    "passengers": 4,
-    "luggage": 2,
+    "exampleVehicle": "Toyota Camry · Kia K5 · Mitsubishi Xpander",
+    "image": "/images/fleet/camry.webp",
+    "passengers": 7,
+    "luggage": 3,
     "features": [
-      "Comfort",
-      "AC",
-      "USB"
+      "Comfort Cabin",
+      "AC Climate",
+      "USB Charging"
     ],
-    "price": "From SAR 200"
+    "price": "From SAR 200",
+    "link": "/fleet/business-sedan"
   },
   {
-    "id": "coaster",
-    "name": "Group Minibus",
-    "exampleVehicle": "Toyota Coaster",
-    "image": "/images/fleet/coaster.png",
-    "passengers": 19,
-    "luggage": 15,
+    "id": "mercedes",
+    "name": "Executive Sedan",
+    "exampleVehicle": "Mercedes S-Class",
+    "image": "/images/fleet/mercedes.webp",
+    "passengers": 3,
+    "luggage": 2,
     "features": [
-      "Large Group",
-      "AC",
-      "Mic"
+      "Luxury Interior",
+      "Leather Seats",
+      "Premium AC"
     ],
-    "price": "From SAR 400"
+    "price": "From SAR 600",
+    "link": "/fleet/mercedes-s-class"
+  },
+  {
+    "id": "staria",
+    "name": "Premium Family MPV",
+    "exampleVehicle": "Hyundai Staria",
+    "image": "/images/fleet/staria.webp",
+    "passengers": 7,
+    "luggage": 6,
+    "features": [
+      "Modern Design",
+      "Comfort Cabin",
+      "Tech Features"
+    ],
+    "price": "From SAR 450",
+    "link": "/fleet/hyundai-staria"
+  },
+  {
+    "id": "starex",
+    "name": "Economy Family MPV",
+    "exampleVehicle": "Hyundai Starex (H1)",
+    "image": "/images/fleet/starex.webp",
+    "passengers": 7,
+    "luggage": 5,
+    "features": [
+      "Spacious",
+      "AC",
+      "Sliding Doors"
+    ],
+    "price": "From SAR 250",
+    "link": "/fleet/hyundai-starex"
   },
   {
     "id": "gmc",
     "name": "Luxury SUV",
-    "exampleVehicle": "GMC Yukon",
-    "image": "/images/fleet/gmc.png",
+    "exampleVehicle": "GMC Yukon XL",
+    "image": "/images/fleet/gmc.webp",
     "passengers": 7,
     "luggage": 5,
     "features": [
-      "Luxury",
-      "Leather",
-      "WiFi"
+      "Luxury Interior",
+      "Leather Seats",
+      "WiFi Included"
     ],
-    "price": "From SAR 350"
+    "price": "From SAR 350",
+    "link": "/fleet/gmc-yukon-at4"
   },
   {
     "id": "hiace",
     "name": "Executive Van",
     "exampleVehicle": "Toyota Hiace",
-    "image": "/images/fleet/hiace.png",
+    "image": "/images/fleet/hiace.webp",
     "passengers": 11,
     "luggage": 10,
     "features": [
@@ -53,34 +86,22 @@
       "AC",
       "Reliable"
     ],
-    "price": "From SAR 250"
+    "price": "From SAR 350",
+    "link": "/fleet/toyota-hiace"
   },
   {
-    "id": "staria",
-    "name": "Family MPV",
-    "exampleVehicle": "Hyundai Staria",
-    "image": "/images/fleet/staria.png",
-    "passengers": 7,
-    "luggage": 5,
+    "id": "coaster",
+    "name": "Group Minibus",
+    "exampleVehicle": "Toyota Coaster",
+    "image": "/images/fleet/coaster.webp",
+    "passengers": 19,
+    "luggage": 15,
     "features": [
-      "Modern",
-      "Comfort",
-      "Tech"
+      "Large Group",
+      "PA System",
+      "Individual AC"
     ],
-    "price": "From SAR 300"
-  },
-  {
-    "id": "starex",
-    "name": "Family MPV",
-    "exampleVehicle": "Hyundai Starex (H1)",
-    "image": "/images/fleet/starex.png",
-    "passengers": 7,
-    "luggage": 4,
-    "features": [
-      "Spacious",
-      "AC",
-      "Sliding Doors"
-    ],
-    "price": "From SAR 250"
+    "price": "From SAR 400",
+    "link": "/fleet/toyota-coaster"
   }
 ]

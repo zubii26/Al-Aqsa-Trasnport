@@ -17,9 +17,9 @@ export async function generateMetadata() {
         title: "Umrah Taxi Fleet 2025 | GMC Yukon & Staria",
         description: "Explore our premium Umrah taxi fleet. Book a luxury GMC Yukon XL, family Hyundai Staria, or Toyota Hiace for your journey in Saudi Arabia.",
         keywords: [
-            "Umrah Taxi Fleet", "GMC Yukon Booking", "Hyundai Staria Rental",
-            "Toyota Hiace Bus Makkah", "Luxury Car Rental Saudi Arabia", "Family Umrah Transport",
-            "أسطول نقل المعتمرين", "حجز جمس يوكن", "تأجير باص هيونداي"
+            "Umrah Taxi Fleet", "GMC Yukon Booking", "Hyundai Staria Umrah Taxi",
+            "Toyota Hiace Bus Makkah", "Luxury Private Taxi Saudi Arabia", "Family Umrah Transport",
+            "أسطول نقل المعتمرين", "حجز جمس يوكن", "سيارة خاصة هيونداي"
         ],
         alternates: {
             canonical: 'https://www.alaqsaumrahtransport.com/fleet',

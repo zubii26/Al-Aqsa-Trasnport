@@ -20,9 +20,9 @@ const vehicleData = pricingData.vehicles.find(v => v.id === 'starex');
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": vehicleData?.seo?.title || "Hyundai H1 Starex Van Rental",
+    "name": vehicleData?.seo?.title || "Hyundai H1 Starex — Economy Family MPV Private Taxi",
     "image": "https://www.alaqsaumrahtransport.com/images/fleet/starex-hero-professional.webp",
-    "description": vehicleData?.seo?.description || "Rent Hyundai H1 Starex 7-seater van in Makkah. Spacious family transport for Umrah.",
+    "description": vehicleData?.seo?.description || "Private chauffeur-driven Hyundai H1 Starex 7-seater van in Makkah. Spacious, comfortable family transport for Umrah.",
     "brand": { "@type": "Brand", "name": "Hyundai" },
     "offers": { "@type": "Offer", "price": "250", "priceCurrency": "SAR", "availability": "https://schema.org/InStock" ,
         "hasMerchantReturnPolicy": {
@@ -260,7 +260,7 @@ export default async function HyundaiStarexPage() {
 
             <FleetCarouselWrapper />
 
-            <FAQSection items={starexFAQs} title="Hyundai H1 Starex - Frequently Asked Questions" />
+            <FAQSection items={starexFAQs} title="Hyundai H1 Starex — Frequently Asked Questions" />
         </main>
     );
 }

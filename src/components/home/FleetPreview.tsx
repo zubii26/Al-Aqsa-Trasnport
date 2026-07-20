@@ -7,13 +7,13 @@ import { ArrowRight, Users, Briefcase, Star, Armchair, Snowflake, Usb, Wifi, Mon
 
 const FLEET_PREVIEW = [
     {
-        id: 'toyota-camry',
-        name: 'Toyota Camry',
+        id: 'business-sedan',
+        name: 'Business Sedan',
         price: '200',
-        capacity: '4 Passengers',
-        luggage: '2 Bags',
+        capacity: '4–7 Passengers',
+        luggage: '2–3 Bags',
         image: '/images/fleet/camry.webp',
-        link: '/fleet/toyota-camry',
+        link: '/fleet/business-sedan',
         isPopular: false,
         features: [
             { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
@@ -28,7 +28,7 @@ const FLEET_PREVIEW = [
         capacity: '7 Passengers',
         luggage: '5 Bags',
         image: '/images/fleet/gmc.webp',
-        link: '/fleet/gmc-yukon',
+        link: '/fleet/gmc-yukon-at4',
         isPopular: true,
         features: [
             { icon: Star, title: 'Luxury', subtitle: 'Interior' },

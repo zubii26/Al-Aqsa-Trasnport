@@ -267,7 +267,7 @@ export default async function MercedesSClassPage() {
 
             <VehicleReviews reviews={mercedesReviews} />
 
-            <FAQSection items={mercedesFAQs} title="Mercedes S-Class VIP Rental - Frequently Asked Questions" />
+            <FAQSection items={mercedesFAQs} title="Mercedes S-Class Executive Sedan — Frequently Asked Questions" />
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
