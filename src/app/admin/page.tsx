@@ -9,9 +9,9 @@ import styles from './admin.module.css';
 import { IBooking } from '@/models';
 
 export default async function AdminDashboard() {
-    const [stats, recentBookings, logsData] = await Promise.all([
+    const [stats, recentBookingsData, logsData] = await Promise.all([
         getDashboardStats(),
-        getBookings(10), // Only fetch latest 10
+        getBookings(1, 10), // Fetch page 1, limit 10
         getLogs(1, 10)
     ]);
 
@@ -23,7 +23,7 @@ export default async function AdminDashboard() {
         confirmedBookings: stats.confirmedBookings,
         routesCount: stats.routesCount,
         totalRevenue: stats.totalRevenue,
-        recentBookings: recentBookings.map((b: IBooking) => ({
+        recentBookings: recentBookingsData.bookings.map((b: IBooking) => ({
             id: b._id?.toString() || b.id || '',
             name: b.name,
             email: b.email,
