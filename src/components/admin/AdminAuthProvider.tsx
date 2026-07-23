@@ -65,11 +65,6 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         };
     }, [pathname, router, user]);
 
-    // Handle full screen for login page to avoid flashes
-    if (pathname === '/admin/login') {
-        return <>{children}</>;
-    }
-
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center h-screen bg-slate-50 dark:bg-slate-900 gap-4">
@@ -77,11 +72,6 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
                 <div className="text-slate-500 font-medium animate-pulse">Verifying Session...</div>
             </div>
         );
-    }
-
-    // Protect all other admin routes
-    if (!user) {
-        return null;
     }
 
     return (

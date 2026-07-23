@@ -41,6 +41,10 @@ function AdminLayoutContent({
         localStorage.setItem('adminSidebarCollapsed', String(newState));
     };
 
+    if (pathname === '/admin/login') {
+        return <>{children}</>;
+    }
+
     if (!user) return null;
 
     const handleLogout = async (e: React.MouseEvent) => {
