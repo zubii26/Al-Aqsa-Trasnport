@@ -5,10 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
-import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3, ChevronLeft, ChevronRight } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
-import AdminAutoLock from '@/components/admin/AdminAutoLock';
 
 interface User {
     id: string;
@@ -27,11 +26,26 @@ export default function AdminLayout({
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
     useEffect(() => {
         // Close sidebar on route change (mobile)
         setIsSidebarOpen(false);
     }, [pathname]);
+
+    useEffect(() => {
+        // Load collapsed state from local storage on mount
+        const savedState = localStorage.getItem('adminSidebarCollapsed');
+        if (savedState) {
+            setIsDesktopCollapsed(savedState === 'true');
+        }
+    }, []);
+
+    const toggleDesktopSidebar = () => {
+        const newState = !isDesktopCollapsed;
+        setIsDesktopCollapsed(newState);
+        localStorage.setItem('adminSidebarCollapsed', String(newState));
+    };
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -147,15 +161,27 @@ export default function AdminLayout({
                 onClick={() => setIsSidebarOpen(false)}
             />
 
-            <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-                <div className={styles.logo}>
-                    <div className="flex flex-col items-start gap-1 py-4 px-2">
-                        <div className="flex flex-col items-start text-left">
-                            <span className="text-2xl font-bold text-secondary">Al Aqsa</span>
-                            <span className="text-sm font-bold text-[var(--admin-fg)] tracking-[0.15em] uppercase">Transport</span>
-                            <span className="text-lg font-bold text-secondary mt-1 font-[family-name:var(--font-reem-kufi)]">الأقصى لنقل المعتمرين</span>
+            <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''} ${isDesktopCollapsed ? styles.sidebarCollapsed : ''}`}>
+                <div className="flex items-center justify-between mb-8 px-2 relative">
+                    {!isDesktopCollapsed && (
+                        <div className="flex flex-col items-start gap-1 py-2">
+                            <div className="flex flex-col items-start text-left">
+                                <span className="text-2xl font-bold text-secondary">Al Aqsa</span>
+                                <span className="text-sm font-bold text-[var(--admin-fg)] tracking-[0.15em] uppercase">Transport</span>
+                                <span className="text-sm font-bold text-secondary mt-1 font-[family-name:var(--font-reem-kufi)]">الأقصى لنقل المعتمرين</span>
+                            </div>
                         </div>
-                    </div>
+                    )}
+                    {isDesktopCollapsed && (
+                        <div className="text-2xl font-bold text-secondary py-2 mx-auto">A</div>
+                    )}
+                    <button 
+                        onClick={toggleDesktopSidebar} 
+                        className={styles.collapseBtn}
+                        aria-label="Toggle Sidebar"
+                    >
+                        {isDesktopCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+                    </button>
                 </div>
 
                 <nav className={styles.nav}>
@@ -169,9 +195,10 @@ export default function AdminLayout({
                                     key={link.href}
                                     href={link.href}
                                     className={`${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                                    title={link.label}
                                 >
-                                    <Icon size={20} className={isActive ? 'text-[#d4af37]' : ''} />
-                                    <span>{link.label}</span>
+                                    <Icon size={20} className={isActive ? 'text-[#d4af37]' : ''} style={{ flexShrink: 0 }} />
+                                    {!isDesktopCollapsed && <span>{link.label}</span>}
                                 </Link>
                             );
                         })}
@@ -184,14 +211,18 @@ export default function AdminLayout({
                             {user.name.charAt(0)}
                         </div>
                     </div>
-                    <div className={styles.userInfo}>
-                        <div className={styles.userName}>{user.name}</div>
-                        <div className={styles.userRole}>{getRoleDisplay(user.role)}</div>
+                    {!isDesktopCollapsed && (
+                        <div className={styles.userInfo}>
+                            <div className={styles.userName}>{user.name}</div>
+                            <div className={styles.userRole}>{getRoleDisplay(user.role)}</div>
+                        </div>
+                    )}
+                    <div className={isDesktopCollapsed ? "hidden" : "block"}>
+                        <AdminThemeToggle />
                     </div>
-                    <AdminThemeToggle />
                     <button
                         onClick={handleLogout}
-                        className="p-2 hover:bg-white/10 rounded-lg transition-colors text-red-400"
+                        className={`p-2 hover:bg-white/10 rounded-lg transition-colors text-red-400 ${isDesktopCollapsed ? "mt-2" : ""}`}
                         title="Logout"
                     >
                         <LogOut size={18} />
@@ -201,7 +232,6 @@ export default function AdminLayout({
             <main className={styles.main}>
                 {children}
             </main>
-            <AdminAutoLock />
         </div>
     );
 }
