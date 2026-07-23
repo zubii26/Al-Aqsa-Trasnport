@@ -237,9 +237,12 @@ function BookingContent() {
         return () => clearTimeout(timeoutId);
     }, [bookingData, step, draftId]);
 
+    const isInitialized = useRef(false);
+
     // Initialize defaults when data loads and handle URL params for deep linking
     useEffect(() => {
-        if (!isLoading && routes.length > 0 && vehicles.length > 0) {
+        if (!isLoading && routes.length > 0 && vehicles.length > 0 && !isInitialized.current) {
+            isInitialized.current = true;
             const paramVehicle = searchParams.get('vehicle');
             const paramStep = searchParams.get('step');
             const paramNotes = searchParams.get('notes');
@@ -247,7 +250,7 @@ function BookingContent() {
             const paramQuantity = searchParams.get('quantity');
 
             // Default values
-            let initialRouteId = routes[0].id;
+            let initialRouteId = '';
             // Parse quantity, default to 1 if invalid
             const quantity = paramQuantity ? Math.max(1, parseInt(paramQuantity) || 1) : 1;
             let initialVehicles: { vehicleId: string; quantity: number }[] = [];
