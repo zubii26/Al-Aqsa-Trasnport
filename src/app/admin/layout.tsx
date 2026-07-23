@@ -8,7 +8,7 @@ import styles from './admin.module.css';
 import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3, ChevronLeft, ChevronRight } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
-import { useAdminAuth } from '@/components/admin/AdminAuthProvider';
+import { useAdminAuth, AdminAuthProvider } from '@/components/admin/AdminAuthProvider';
 
 function AdminLayoutContent({
     children,
