@@ -8,23 +8,17 @@ import styles from './admin.module.css';
 import { LayoutDashboard, Calendar, Car, DollarSign, Settings, LogOut, MapPin, MessageSquare, FileText, Users, Image as ImageIcon, PenTool, UserCheck, Navigation, BarChart3, ChevronLeft, ChevronRight } from 'lucide-react';
 import { logout } from '@/lib/auth';
 import AdminThemeToggle from './AdminThemeToggle';
+import { useAdminAuth } from '@/components/admin/AdminAuthProvider';
 
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    role: 'admin' | 'manager' | 'operational_manager';
-}
-
-export default function AdminLayout({
+function AdminLayoutContent({
     children,
 }: {
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
     const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { user, setUser } = useAdminAuth();
+    
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
@@ -47,54 +41,12 @@ export default function AdminLayout({
         localStorage.setItem('adminSidebarCollapsed', String(newState));
     };
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            if (pathname === '/admin/login') {
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const res = await fetch('/api/auth/me');
-                const data = await res.json();
-
-                if (data.authenticated) {
-                    setUser(data.user);
-                } else {
-                    router.push('/admin/login');
-                }
-            } catch (error) {
-                console.error('Auth check failed:', error);
-                router.push('/admin/login');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        checkAuth();
-    }, [pathname, router]);
-
-    // If on login page, render full screen without sidebar
-    if (pathname === '/admin/login') {
-        return <>{children}</>;
-    }
-
-    if (loading) {
-        return (
-            <div className="flex flex-col items-center justify-center h-screen bg-slate-50 dark:bg-slate-900 gap-4">
-                <div className="w-12 h-12 border-4 border-secondary/30 border-t-amber-500 rounded-full animate-spin"></div>
-                <div className="text-slate-500 font-medium animate-pulse">Verifying Session...</div>
-            </div>
-        );
-    }
-
-    if (!user) {
-        return null;
-    }
+    if (!user) return null;
 
     const handleLogout = async (e: React.MouseEvent) => {
         e.preventDefault();
         await logout();
+        setUser(null);
         router.push('/admin/login');
     };
 
@@ -233,5 +185,19 @@ export default function AdminLayout({
                 {children}
             </main>
         </div>
+    );
+}
+
+export default function AdminLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <AdminAuthProvider>
+            <AdminLayoutContent>
+                {children}
+            </AdminLayoutContent>
+        </AdminAuthProvider>
     );
 }
