@@ -5,8 +5,6 @@ import { CheckCircle, ArrowRight, Calendar, Clock, User, Mail, Phone, MapPin, Ch
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import FadeIn from '@/components/common/FadeIn';
-
 
 import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';

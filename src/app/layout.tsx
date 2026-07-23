@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display, Open_Sans, Reem_Kufi } from "next/font/google";
+import { Inter, Open_Sans, Reem_Kufi } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { MobileMenuProvider } from "@/context/MobileMenuContext";
 import { PricingProvider } from '@/context/PricingContext';
@@ -27,12 +27,6 @@ const interMono = Inter({
   display: 'swap',
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["700"],
-  display: 'swap',
-});
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -114,7 +108,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${interMono.variable} ${playfair.variable} ${openSans.variable} ${reemKufi.variable} font-sans antialiased overflow-x-hidden`}>
+      <body className={`${inter.variable} ${interMono.variable} ${openSans.variable} ${reemKufi.variable} font-sans antialiased overflow-x-hidden`}>
         {/* 
           CHUNK ERROR RECOVERY — runs BEFORE React boots.
           If a JS chunk fails to load (stale turbopack/webpack hash after deployment),
