@@ -191,5 +191,7 @@ export async function saveSettings(newSettings: Settings): Promise<void> {
         )
     ));
 
-    // revalidateTag('settings');
+    // Invalidate cache so booking page picks up new settings (discounts, fees) immediately
+    revalidateTag('settings');
 }
+

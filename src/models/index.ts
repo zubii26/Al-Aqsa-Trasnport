@@ -294,6 +294,7 @@ const BookingSchema = new Schema<IBooking>({
     dropoff: { type: String },
     date: { type: String },
     time: { type: String },
+    pickupDateTime: { type: Date },
     
     routeType: { type: String, enum: ['single', 'multi'] },
     sameVehicleForAllLegs: { type: Boolean },
@@ -305,7 +306,11 @@ const BookingSchema = new Schema<IBooking>({
     vehicleCount: { type: Number, default: 1 },
     luggage: { type: Number, default: 0 },
     notes: { type: String },
-    status: { type: String, default: 'pending' },
+    status: {
+        type: String,
+        enum: ['pending', 'confirmed', 'completed', 'cancelled'],
+        default: 'pending'
+    },
     paymentStatus: { type: String, enum: ['paid', 'unpaid', 'refunded'], default: 'unpaid' },
     paymentMethod: { type: String },
     userId: { type: String },
@@ -347,6 +352,16 @@ const BookingSchema = new Schema<IBooking>({
     groupId: { type: String, index: true },
     isBulk: { type: Boolean, default: false },
 }, { timestamps: true });
+
+// ── Booking Performance Indexes ──────────────────────────────────────────────
+// pickupDateTime: primary sort field for urgency and pagination
+BookingSchema.index({ pickupDateTime: 1 });
+// createdAt: primary sort field — every admin load + dashboard aggregation
+BookingSchema.index({ createdAt: -1 });
+// status: grouped by dashboard $facet, filtered by admin list
+BookingSchema.index({ status: 1 });
+// email: queried by the track-booking endpoint
+BookingSchema.index({ email: 1 });
 
 const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
@@ -515,6 +530,9 @@ const DraftBookingSchema = new Schema<IDraftBooking>({
     lastActive: { type: Date, default: Date.now },
     recoveryEmailSent: { type: Boolean, default: false },
 }, { timestamps: true });
+
+// TTL index to automatically delete DraftBookings after 7 days
+DraftBookingSchema.index({ lastActive: 1 }, { expireAfterSeconds: 604800 });
 
 // Revert hack
 // Revert hack

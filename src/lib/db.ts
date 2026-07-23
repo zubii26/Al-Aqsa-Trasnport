@@ -6,21 +6,72 @@ export type { IBooking as Booking, IVehicle as Vehicle };
 
 // --- Booking Functions ---
 
-export async function getBookings(limit?: number, skip?: number): Promise<IBooking[]> {
+export async function getBookings(
+    page: number = 1, 
+    limit: number = 50, 
+    sort: string = 'createdAt', 
+    filter: string = ''
+) {
     await dbConnect();
-    let query = Booking.find({}).sort({ createdAt: -1 });
-    if (skip) query = query.skip(skip);
-    if (limit) query = query.limit(limit);
+    
+    let matchQuery: any = {};
+    if (filter === 'needsAction') {
+        const now = new Date();
+        const next48Hours = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+        matchQuery = {
+            status: 'pending',
+            pickupDateTime: { $lte: next48Hours }
+        };
+    } else if (filter) {
+        matchQuery = { status: filter };
+    }
+    
+    const total = await Booking.countDocuments(matchQuery);
+    const totalPages = Math.ceil(total / limit);
+    const skip = (page - 1) * limit;
 
-    const bookings = await query.lean();
-    return bookings.map(b => ({
+    let bookings;
+    if (sort === 'urgency') {
+        bookings = await Booking.aggregate([
+            { $match: matchQuery },
+            { 
+                $addFields: { 
+                    sortOrder: {
+                        $cond: {
+                            if: { $in: ["$status", ["completed", "cancelled"]] },
+                            then: 1, 
+                            else: 0
+                        }
+                    }
+                }
+            },
+            { $sort: { sortOrder: 1, pickupDateTime: 1 } },
+            { $skip: skip },
+            { $limit: limit }
+        ]);
+    } else {
+        bookings = await Booking.find(matchQuery)
+            .sort({ [sort === 'createdAt' ? 'createdAt' : sort]: -1 })
+            .skip(skip)
+            .limit(limit)
+            .lean();
+    }
+
+    const mappedBookings = bookings.map((b: any) => ({
         ...b,
         _id: b._id.toString(),
         id: b._id.toString(),
     })) as unknown as IBooking[];
+    
+    return {
+        bookings: mappedBookings,
+        total,
+        page,
+        totalPages
+    };
 }
 
-export async function getDashboardStats() {
+export const getDashboardStats = unstable_cache(async () => {
     await dbConnect();
 
     // Aggregation for stats
@@ -117,7 +168,7 @@ export async function getDashboardStats() {
             }))
         }
     };
-}
+}, ['dashboard-stats'], { revalidate: 300, tags: ['dashboard'] });
 
 export async function getBooking(id: string): Promise<IBooking | null> {
     await dbConnect();

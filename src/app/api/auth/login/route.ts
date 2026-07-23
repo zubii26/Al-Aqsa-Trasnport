@@ -14,7 +14,7 @@ export async function POST(request: Request) {
         request.headers.get('x-real-ip') ||
         'unknown';
 
-    const limiter = rateLimit(ip, authLimiter); // 5 attempts / 15 min per IP
+    const limiter = await rateLimit(ip, authLimiter); // 5 attempts / 15 min per IP
 
     if (!limiter.success) {
         return NextResponse.json(
@@ -58,11 +58,6 @@ export async function POST(request: Request) {
                 // ✅ bcrypt hash — verify securely
                 const { verifyPassword } = await import('@/lib/password-utils');
                 isValid = await verifyPassword(password, user.password);
-            } else {
-                // ⚠️  Plaintext fallback — kept for migration compatibility.
-                // TODO: Once all users are migrated, remove this branch and
-                //       enforce bcrypt-only by running the /api/auth/migrate-passwords route.
-                isValid = user.password === password;
             }
         }
 

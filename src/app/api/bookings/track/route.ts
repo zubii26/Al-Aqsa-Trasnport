@@ -21,7 +21,8 @@ export async function POST(request: Request) {
         let booking = null;
         try {
             const isObjectId = /^[0-9a-fA-F]{24}$/.test(reference);
-            const query: any = { email: { $regex: new RegExp(`^${email}$`, 'i') } };
+            const escapedEmail = email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const query: any = { email: { $regex: new RegExp(`^${escapedEmail}$`, 'i') } };
             
             if (isObjectId) {
                 query.$or = [{ _id: reference }, { bookingReference: reference }];

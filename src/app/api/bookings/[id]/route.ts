@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { updateBookingStatus, deleteBooking } from '@/lib/db';
 import { requireRole } from '@/lib/server-auth';
+import { auditLogService } from '@/services/auditLogService';
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
-    if (!await requireRole(['ADMIN', 'MANAGER', 'OPERATIONAL_MANAGER'])) {
+    const user = await requireRole(['ADMIN', 'MANAGER', 'OPERATIONAL_MANAGER']);
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const { id } = await params;
@@ -13,8 +15,19 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     // For now, we trust admin input, but filtering is safer.
     const { status, paymentStatus } = body;
     const updates: any = {};
-    if (status) updates.status = status;
+
+    const VALID_STATUSES = ['pending', 'confirmed', 'completed', 'cancelled'];
+    if (status !== undefined) {
+        if (!VALID_STATUSES.includes(status)) {
+            return NextResponse.json(
+                { error: `Invalid status "${status}". Must be one of: ${VALID_STATUSES.join(', ')}` },
+                { status: 400 }
+            );
+        }
+        updates.status = status;
+    }
     if (paymentStatus) updates.paymentStatus = paymentStatus;
+
 
     if (Object.keys(updates).length === 0) {
         return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });
@@ -33,7 +46,6 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (!updated) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
 
     // Send confirmation email if status changed to confirmed
-    // Send confirmation email if status changed to confirmed
     if (status === 'confirmed') {
         const { sendBookingConfirmationEmail } = await import('@/lib/email');
         const bookingData = {
@@ -48,6 +60,24 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         } catch (e) {
             console.error('Failed to send confirmation email', e);
         }
+    }
+
+    // Audit Log
+    try {
+        let action = 'UPDATE';
+        let details = `Booking updated.`;
+        if (status) details += ` Status changed to ${status}.`;
+        if (paymentStatus) details += ` Payment status changed to ${paymentStatus}.`;
+        
+        await auditLogService.log({
+            action,
+            entity: 'Booking',
+            entityId: id,
+            details: details.trim(),
+            user: user.name || 'Admin',
+        });
+    } catch (auditErr) {
+        console.error('Failed to write audit log:', auditErr);
     }
 
     // Realtime Updates
@@ -82,7 +112,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
-    if (!await requireRole(['ADMIN', 'MANAGER'])) {
+    const user = await requireRole(['ADMIN', 'MANAGER']);
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const { id } = await params;
@@ -104,6 +135,18 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
 
     const success = await deleteBooking(id);
     if (!success) return NextResponse.json({ error: 'Failed to delete booking' }, { status: 500 });
+
+    try {
+        await auditLogService.log({
+            action: 'DELETE',
+            entity: 'Booking',
+            entityId: id,
+            details: `Deleted booking ${id}`,
+            user: user.name || 'Admin',
+        });
+    } catch (auditErr) {
+        console.error('Failed to write audit log:', auditErr);
+    }
 
     return NextResponse.json({ success: true });
 }

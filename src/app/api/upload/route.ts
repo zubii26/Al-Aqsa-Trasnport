@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
         request.headers.get('x-real-ip') ||
         'unknown';
 
-    const limiter = rateLimit(ip, uploadLimiter);
+    const limiter = await rateLimit(ip, uploadLimiter);
 
     if (!limiter.success) {
         return NextResponse.json(

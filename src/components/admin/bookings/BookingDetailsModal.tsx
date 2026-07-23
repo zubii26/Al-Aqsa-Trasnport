@@ -1,16 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Calendar, MapPin, User, Mail, Phone, Briefcase, Car, Check, XCircle, CheckCircle2, CarFront } from 'lucide-react';
+import { X, Calendar, MapPin, User, Mail, Phone, Briefcase, Car, Check, XCircle, CheckCircle2, CarFront, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 import { Booking } from '@/lib/validations';
+import { getBookingUrgency } from '@/lib/bookingUrgency';
 
 interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     id: string; // Ensure id is required here since we use it
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     vehicleCount?: number;
     createdAt?: string;
+    pickupDateTime?: string;
 
 
     // Rating
@@ -40,6 +42,31 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
     // Helper to format date for display
     const formattedDate = booking.date ? format(new Date(booking.date), 'EEEE, MMMM do, yyyy') : 'N/A';
 
+    let urgencyBanner = null;
+    if (booking.pickupDateTime) {
+        const urgency = getBookingUrgency(new Date(booking.pickupDateTime), booking.status);
+        if (urgency.needsAction) {
+            urgencyBanner = (
+                <div className="bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-800 p-4 flex items-center gap-3">
+                    <AlertTriangle className="text-red-600 dark:text-red-500" size={20} />
+                    <div>
+                        <p className="text-red-800 dark:text-red-400 font-bold text-sm">Action Needed: {urgency.label}</p>
+                        <p className="text-red-600 dark:text-red-500 text-xs mt-0.5">This booking is pending and the pickup is soon. Please confirm or assign a driver.</p>
+                    </div>
+                </div>
+            );
+        } else if (urgency.bucket === 'soon' && booking.status === 'confirmed') {
+            urgencyBanner = (
+                <div className="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-200 dark:border-orange-800 p-4 flex items-center gap-3">
+                    <Calendar className="text-orange-600 dark:text-orange-500" size={20} />
+                    <div>
+                        <p className="text-orange-800 dark:text-orange-400 font-bold text-sm">Pickup {urgency.label}</p>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in-95 duration-200">
@@ -61,6 +88,8 @@ export default function BookingDetailsModal({ booking, isOpen, onClose, onStatus
                         <X size={20} />
                     </button>
                 </div>
+                
+                {urgencyBanner}
 
                 <div className="p-6 space-y-8">
 

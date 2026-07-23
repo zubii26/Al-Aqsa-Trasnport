@@ -6,12 +6,25 @@ export const BookingSchema = z.object({
     phone: z.string().min(10, 'Phone number must be at least 10 characters').max(30, 'Phone number is too long').trim(),
     pickup: z.string().max(200, 'Pickup location is too long').trim().optional(),
     dropoff: z.string().max(200, 'Dropoff location is too long').trim().optional(),
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)').optional().or(z.literal('')),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)').optional().or(z.literal(''))
+        .refine((d) => {
+            if (!d || d === '') return true; // field is optional
+            // Evaluate against midnight Saudi time (UTC+3) — all dates in this system are Saudi local
+            const todaySaudi = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Riyadh' }));
+            todaySaudi.setHours(0, 0, 0, 0);
+            return new Date(d) >= todaySaudi;
+        }, { message: 'Booking date cannot be in the past' }),
     time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)').optional().or(z.literal('')),
     legs: z.array(z.object({
         pickup: z.string().max(200).trim().optional(),
         dropoff: z.string().max(200).trim().optional(),
-        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal('')),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal(''))
+            .refine((d) => {
+                if (!d || d === '') return true;
+                const todaySaudi = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Riyadh' }));
+                todaySaudi.setHours(0, 0, 0, 0);
+                return new Date(d) >= todaySaudi;
+            }, { message: 'Leg date cannot be in the past' }),
         time: z.string().regex(/^\d{2}:\d{2}$/).optional().or(z.literal('')),
         routeId: z.string().optional(),
         vehicleId: z.string().optional(),

@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import adminStyles from '../admin.module.css';
-import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase, Download, LayoutList, Building2 } from 'lucide-react';
+import { Search, Mail, Phone, MapPin, Calendar, Users, CheckCircle2, Check, X, Trash2, Briefcase, Download, LayoutList, Building2, AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Booking } from '@/lib/validations';
 import { Toast } from '@/components/ui/Toast';
 import dynamic from 'next/dynamic';
 import { downloadCSV } from '@/lib/export';
 import { usePusher } from '@/hooks/usePusher';
+import { getBookingUrgency } from '@/lib/bookingUrgency';
 
 import BookingDetailsModal from '@/components/admin/bookings/BookingDetailsModal';
 
@@ -21,6 +22,7 @@ interface BookingWithDetails extends Omit<Booking, 'driverStatus'> {
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     paymentStatus: 'paid' | 'unpaid' | 'refunded';
     createdAt?: string;
+    pickupDateTime?: string;
     rating?: number;
     review?: string;
 }
@@ -37,29 +39,17 @@ export default function BookingsPage() {
     const [specificVehicle, setSpecificVehicle] = useState('All Vehicles');
     const [selectedBooking, setSelectedBooking] = useState<BookingWithDetails | null>(null);
 
-    // ... sortBookings function ...
-    const sortBookings = (bookingsToSort: BookingWithDetails[]) => {
-        return [...bookingsToSort].sort((a, b) => {
-            // Priority 1: CreatedAt
-            if (a.createdAt && b.createdAt) {
-                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-            }
-            // Priority 2: Booking Date + Time
-            try {
-                const dateA = new Date(`${a.date} ${a.time}`);
-                const dateB = new Date(`${b.date} ${b.time}`);
-                if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
-                    return dateB.getTime() - dateA.getTime();
-                }
-            } catch (e) {
-                // Ignore parsing errors
-            }
-            return 0;
-        });
-    };
+    // Server-side pagination and urgency state
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [sort, setSort] = useState('urgency');
+    const [now, setNow] = useState(new Date());
 
     useEffect(() => {
-        loadData();
+        const interval = setInterval(() => {
+            setNow(new Date());
+        }, 60000);
+        return () => clearInterval(interval);
     }, []);
 
     // Pusher Subscription
@@ -100,11 +90,17 @@ export default function BookingsPage() {
 
     const loadData = async () => {
         try {
-            // Fetch bookings
-            const bookingsRes = await fetch('/api/bookings');
+            const params = new URLSearchParams({
+                page: page.toString(),
+                limit: '50',
+                sort: sort,
+                filter: filter === 'All' ? '' : filter.toLowerCase()
+            });
+            const bookingsRes = await fetch(`/api/bookings?${params.toString()}`);
             const bookingsData = await bookingsRes.json();
 
-            setBookings(sortBookings(bookingsData));
+            setBookings(bookingsData.bookings || []);
+            setTotalPages(bookingsData.totalPages || 1);
         } catch (error) {
             console.error('Failed to fetch data:', error);
             showToast('Failed to load bookings', 'error');
@@ -112,6 +108,10 @@ export default function BookingsPage() {
             setIsLoaded(true);
         }
     };
+
+    useEffect(() => {
+        loadData();
+    }, [page, sort, filter]);
 
     const showToast = (message: string, type: 'success' | 'error') => {
         setToast({ message, type });
@@ -387,6 +387,7 @@ export default function BookingsPage() {
                             <thead>
                                 <tr>
                                     <th>ID & Customer</th>
+                                    <th>Urgency</th>
                                     <th>Journey Details</th>
                                     <th>Vehicle</th>
                                     <th>Status</th>
@@ -428,6 +429,32 @@ export default function BookingsPage() {
                                                             <Phone strokeWidth={1.25} size={12} /> {booking.phone}
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    {(() => {
+                                                        if (!booking.pickupDateTime) return <span className="text-muted-foreground text-xs">No Data</span>;
+                                                        const urgency = getBookingUrgency(new Date(booking.pickupDateTime), booking.status, now);
+                                                        
+                                                        let pillClass = "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
+                                                        if (urgency.needsAction) {
+                                                            pillClass = "bg-red-50 text-red-700 border border-red-300 font-bold shadow-sm dark:bg-red-900/20 dark:border-red-800 dark:text-red-400";
+                                                        } else if (urgency.bucket === 'soon') {
+                                                            pillClass = "bg-orange-50 text-orange-700 border border-orange-200 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400";
+                                                        } else if (urgency.bucket === 'done') {
+                                                            pillClass = "bg-slate-100 text-slate-500 opacity-70 dark:bg-slate-800 dark:text-slate-500";
+                                                        } else if (urgency.bucket === 'urgent') {
+                                                            pillClass = "bg-yellow-50 text-yellow-700 border border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-400";
+                                                        }
+                                                        
+                                                        return (
+                                                            <div className="flex flex-col gap-1 items-start">
+                                                                <span className={`px-2.5 py-1 rounded-full text-xs flex items-center gap-1.5 ${pillClass}`}>
+                                                                    {urgency.needsAction && <AlertTriangle size={12} />}
+                                                                    {urgency.label}
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    })()}
                                                 </td>
                                                 <td>
                                                     <div className="flex flex-col gap-2">
@@ -566,7 +593,33 @@ export default function BookingsPage() {
                         />
                     </div>
                 )}
-            </div>
+        </div>
+
+            {/* Pagination Controls */}
+            {viewMode === 'list' && (
+                <div className="flex items-center justify-between bg-card border border-border p-4 rounded-xl shadow-sm mt-4">
+                    <div className="text-sm text-slate-500">
+                        Page <span className="font-medium text-slate-900 dark:text-white">{page}</span> of <span className="font-medium text-slate-900 dark:text-white">{totalPages}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm text-slate-500 mr-4">Sort by Urgency: <input type="checkbox" checked={sort === 'urgency'} onChange={e => setSort(e.target.checked ? 'urgency' : 'createdAt')} /></span>
+                        <button 
+                            disabled={page === 1}
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                            className="p-2 rounded-lg border border-border bg-background hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                        >
+                            <ChevronLeft size={18} />
+                        </button>
+                        <button 
+                            disabled={page === totalPages}
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                            className="p-2 rounded-lg border border-border bg-background hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                        >
+                            <ChevronRight size={18} />
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <BookingDetailsModal
                 booking={selectedBooking}

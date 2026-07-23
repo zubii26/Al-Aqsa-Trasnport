@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getBookings, addBooking } from '@/lib/db';
+import { Redis } from '@upstash/redis';
+
+const hasRedis = !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+const redis = hasRedis ? new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+}) : null;
 import { sendEmail, getBookingConfirmationTemplate, getAdminBookingNotificationTemplate } from '@/lib/email';
 import { BookingSchema } from '@/lib/validations';
 import { validateRequest } from '@/lib/server-auth';
@@ -7,17 +14,24 @@ import { getSettings } from '@/lib/settings-storage';
 import { routeService, RouteWithPrices } from '@/services/routeService';
 import { vehicleService } from '@/services/vehicleService';
 import { calculateFinalPrice, VEHICLES as DEFAULT_VEHICLES } from '@/lib/pricing';
+import { parseRiyadhTimeToUTC } from '@/lib/bookingUrgency';
 
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
         const user = await validateRequest();
         if (!user || (user.role !== 'admin' && user.role !== 'manager' && user.role !== 'operational_manager')) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const bookings = await getBookings();
-        return NextResponse.json(bookings);
+        const url = new URL(request.url);
+        const page = parseInt(url.searchParams.get('page') || '1', 10);
+        const limit = parseInt(url.searchParams.get('limit') || '50', 10);
+        const sort = url.searchParams.get('sort') || 'createdAt';
+        const filter = url.searchParams.get('filter') || '';
+
+        const result = await getBookings(page, limit, sort, filter);
+        return NextResponse.json(result);
     } catch (error) {
         console.error('Error fetching bookings:', error);
         return NextResponse.json({ error: 'Failed to fetch bookings' }, { status: 500 });
@@ -34,7 +48,7 @@ export async function POST(request: Request) {
         request.headers.get('x-real-ip') ||
         'unknown';
 
-    const limiter = rateLimit(ip, bookingLimiter);
+    const limiter = await rateLimit(ip, bookingLimiter);
 
     if (!limiter.success) {
         return NextResponse.json(
@@ -60,6 +74,20 @@ export async function POST(request: Request) {
         }
 
         const bookingData = validation.data;
+
+        // ─── Idempotency / Duplicate Prevention ────────────────────────────────
+        if (redis) {
+            const idempotencyKey = `booking_lock:${bookingData.email}:${bookingData.date}:${bookingData.time}:${bookingData.pickup}:${bookingData.dropoff}`;
+            const acquired = await redis.set(idempotencyKey, "locked", { nx: true, ex: 300 });
+            
+            if (!acquired) {
+                console.warn('[Booking API] Duplicate submission prevented for:', idempotencyKey);
+                return NextResponse.json(
+                    { success: false, message: 'This booking is already being processed. Please wait a moment.' },
+                    { status: 409 }
+                );
+            }
+        }
         let priceDetails: any = {};
         const selectedVehiclesList: any[] = [];
         let totalBasePrice = 0;
@@ -233,6 +261,20 @@ export async function POST(request: Request) {
             console.error('Error calculating price:', err);
         }
 
+        // ── Zero-price guard ──────────────────────────────────────────────
+        // If vehicles are selected but price is still 0, price lookup failed.
+        // Reject now rather than creating a ₙ0 SAR booking in the database.
+        const isCustomRoute = !bookingData.routeId || bookingData.routeId === 'custom' || !!bookingData.customRoute;
+        const hasVehicleSelection = (bookingData.selectedVehicles && bookingData.selectedVehicles.length > 0) || bookingData.vehicleId;
+        if (totalBasePrice === 0 && hasVehicleSelection && !isCustomRoute) {
+            console.error('[Booking] Zero-price guard triggered — price lookup returned 0 for a routed booking.');
+            return NextResponse.json(
+                { error: 'Could not calculate price for this route. Please refresh the page and try again.' },
+                { status: 422 }
+            );
+        }
+
+
         // Check if user is logged in (Optional)
         let userId = undefined;
         try {
@@ -254,10 +296,20 @@ export async function POST(request: Request) {
 
 
 
+        // ── Convert local time to UTC pickupDateTime ─────────────────────────────────
+        let pickupDateTime = undefined;
+        if (bookingData.date) {
+            const utcDate = parseRiyadhTimeToUTC(bookingData.date, bookingData.time);
+            if (utcDate) {
+                pickupDateTime = utcDate;
+            }
+        }
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const booking = await addBooking({
             ...bookingData,
             ...priceDetails,
+            pickupDateTime, // Insert the unified UTC date
             userId, // Attach User ID if authenticated
             // Ensure we save the detailed selection if the DB supports it, 
             // otherwise 'vehicle' string covers the basics. 
@@ -298,16 +350,34 @@ export async function POST(request: Request) {
                     viaBadr: booking.viaBadr,
                 };
 
-                await sendBookingConfirmationEmail(emailData);
-                await sendAdminNewBookingEmail(emailData);
-                console.log('Standardized emails sent successfully');
-
                 const { pusherServer } = await import('@/lib/pusher');
-                await pusherServer.trigger('admin-channel', 'new-booking', {
-                    message: `New booking: ${booking._id}`,
-                    bookingId: booking._id,
-                    data: emailData
-                });
+
+                // ── Run all notifications concurrently ────────────────────────────────────
+                // allSettled: a failure in one provider never blocks or delays the others.
+                // Failures are logged with the booking reference for operator follow-up.
+                const [emailResult, pusherResult] = await Promise.allSettled([
+                    Promise.all([
+                        sendBookingConfirmationEmail(emailData),
+                        sendAdminNewBookingEmail(emailData),
+                    ]),
+                    pusherServer.trigger('admin-channel', 'new-booking', {
+                        message: `New booking: ${booking._id}`,
+                        bookingId: booking._id,
+                        data: emailData
+                    })
+                ]);
+
+                if (emailResult.status === 'rejected') {
+                    console.error(
+                        `[Booking] CRITICAL — Email notifications failed for booking ${booking.bookingReference || booking._id}:`,
+                        emailResult.reason
+                    );
+                } else {
+                    console.log(`[Booking] Notifications sent for ${booking.bookingReference || booking._id}`);
+                }
+                if (pusherResult.status === 'rejected') {
+                    console.error('[Booking] Pusher trigger failed:', pusherResult.reason);
+                }
             }
         } catch (error) {
             console.error('Error sending standardized emails or notifications:', error);
