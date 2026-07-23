@@ -6,11 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
-// Mock framer-motion to remove all animations while preserving JSX structure
-const motion: any = {
-    div: ({ initial, animate, exit, variants, transition, whileHover, whileTap, layout, layoutId, ...props }: any) => <div {...props} />
-};
-const AnimatePresence: any = ({ children }: any) => <>{children}</>;
+
 
 import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
@@ -582,7 +578,9 @@ function BookingContent() {
         if (wizardRef.current) {
             const yOffset = -120;
             const y = wizardRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: 'auto' });
+            window.scrollTo({ top: y, behavior: "instant" });
+            // Attempt to trigger native scroll to bypass Lenis
+            document.documentElement.style.scrollBehavior = "auto";
         }
     };
 
@@ -781,8 +779,7 @@ function BookingContent() {
         if (!pkg) return null;
 
         return (
-            <motion.div 
-                initial={{ opacity: 0, y: -10 }}
+            <div  initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-6 mb-4 p-5 bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-xl relative z-10"
             >
@@ -801,7 +798,7 @@ function BookingContent() {
                         </div>
                     ))}
                 </div>
-            </motion.div>
+            </div>
         );
     };
 
@@ -829,23 +826,20 @@ function BookingContent() {
     };
 
     const renderStep1 = () => (
-        <AnimatePresence mode="wait">
+        <>
             {isSearching ? (
-                <motion.div
-                    key="scanning"
+                <div  key="scanning"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="flex flex-col items-center justify-center py-20 text-center"
                 >
                     <div className="relative w-24 h-24 mb-6">
-                        <motion.div
-                            className="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-800"
+                        <div  className="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-800"
                         />
-                        <motion.div
-                            className="absolute inset-0 rounded-full border-4 border-t-secondary border-r-secondary border-b-transparent border-l-transparent"
+                        <div  className="absolute inset-0 rounded-full border-4 border-t-secondary border-r-secondary border-b-transparent border-l-transparent"
                             animate={{ rotate: 360 }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                            
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
                             <MapPin strokeWidth={1.25} size={32} className="text-secondary animate-pulse" />
@@ -853,15 +847,14 @@ function BookingContent() {
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Finding Best Routes...</h3>
                     <p className="text-slate-500">Scanning available luxury transfers</p>
-                </motion.div>
+                </div>
             ) : (
-                <motion.div
-                    key="step1"
-                    variants={stepVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    transition={{ duration: 0.3 }}
+                <div  key="step1"
+                    
+                    
+                    
+                    
+                    
                 >
                     <div className="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4 text-center md:text-left">
                         <div>
@@ -1005,8 +998,7 @@ function BookingContent() {
                         {selectedRoute && renderZiyaratDetails(getRouteDestination(selectedRoute))}
 
                         {selectedRoute && getRouteDestination(selectedRoute).toLowerCase().includes('madinah ziyarat') && !selectedRoute.name.toLowerCase().includes('wadi jin') && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: -10 }}
+                            <div  initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className="mb-8 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3 relative z-10"
                             >
@@ -1025,7 +1017,7 @@ function BookingContent() {
                                         Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
                                     </p>
                                 </div>
-                            </motion.div>
+                            </div>
                         )}
 
                         {/* Via Badr Route Selector — Madinah → Makkah */}
@@ -1035,8 +1027,7 @@ function BookingContent() {
                             const isMadinahToMakkah = (orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc')));
                             return isMadinahToMakkah;
                         })() && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: -10 }}
+                            <div  initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className="mb-8 relative z-10"
                             >
@@ -1077,7 +1068,7 @@ function BookingContent() {
                                     <Info size={12} className="mt-0.5 shrink-0" />
                                     This route includes the ziyarat point Jabal Malaika and adds approximately 150–200 km to the journey. An additional fee applies.
                                 </p>
-                            </motion.div>
+                            </div>
                         )}
                             </>
                         ) : (
@@ -1193,8 +1184,7 @@ function BookingContent() {
                                         {matchedRoute && renderZiyaratDetails(getRouteDestination(matchedRoute))}
 
                                         {matchedRoute && getRouteDestination(matchedRoute).toLowerCase().includes('madinah ziyarat') && !matchedRoute.name.toLowerCase().includes('wadi jin') && (
-                                            <motion.div 
-                                                initial={{ opacity: 0, y: -10 }}
+                                            <div  initial={{ opacity: 0, y: -10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 className="mt-4 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3"
                                             >
@@ -1213,7 +1203,7 @@ function BookingContent() {
                                                         Wadi Jinn is an external ziyarat outside the standard Madinah Ziyarat package and requires an additional fee.
                                                     </p>
                                                 </div>
-                                            </motion.div>
+                                            </div>
                                         )}
                                         
                                         {/* Via Badr Route Selector for Multi-Route Legs */}
@@ -1222,8 +1212,7 @@ function BookingContent() {
                                             const orig = getRouteOrigin(matchedRoute).toLowerCase();
                                             return orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc'));
                                         })() && (
-                                            <motion.div 
-                                                initial={{ opacity: 0, y: -10 }}
+                                            <div  initial={{ opacity: 0, y: -10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 className="mt-4"
                                             >
@@ -1244,7 +1233,7 @@ function BookingContent() {
                                                         <span className="text-[10px] text-secondary font-bold mt-1">+{settings?.routeFees?.viaBadrFeeAmount ?? 150} SAR</span>
                                                     </label>
                                                 </div>
-                                            </motion.div>
+                                            </div>
                                         )}
                                         {hasStopovers && (
                                             <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4">
@@ -1305,10 +1294,9 @@ function BookingContent() {
                         )}
 
                         {/* Route Info Card or Custom Warning */}
-                        <AnimatePresence mode='wait'>
+                        <>
                             {bookingData.routeId === 'custom' ? (
-                                <motion.div
-                                    key="custom-banner"
+                                <div  key="custom-banner"
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
@@ -1334,11 +1322,10 @@ function BookingContent() {
                                             <p className="text-sm mt-2 opacity-80">Please select a standard route from the dropdowns above.</p>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
                             ) : (
                                 bookingData.routeType === 'single' && selectedRoute && (
-                                    <motion.div
-                                        key="route-info"
+                                    <div  key="route-info"
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
@@ -1365,31 +1352,30 @@ function BookingContent() {
                                                 )}
                                             </div>
                                         </div>
-                                    </motion.div>
+                                    </div>
                                 )
                             )}
-                        </AnimatePresence>
+                        </>
 
 
 
                     </div>
 
-                </motion.div>
+                </div>
             )
             }
-        </AnimatePresence >
+        </>
     );
 
     const renderStep2 = () => {
 
         return (
-            <motion.div
-                key="step2"
-                variants={stepVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ duration: 0.3 }}
+            <div  key="step2"
+                
+                
+                
+                
+                
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
@@ -1444,8 +1430,7 @@ function BookingContent() {
                                         const isSelected = quantity > 0;
 
                                         return (
-                                            <motion.div
-                                                key={vehicle.id}
+                                            <div  key={vehicle.id}
                                                 whileHover={{ y: -6 }}
                                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1, leg.id)}
                                                 className={`
@@ -1553,7 +1538,7 @@ function BookingContent() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </motion.div>
+                                            </div>
                                         );
                                     })}
                                 </div>
@@ -1572,8 +1557,7 @@ function BookingContent() {
                         const isSelected = quantity > 0;
 
                         return (
-                            <motion.div
-                                key={vehicle.id}
+                            <div  key={vehicle.id}
                                 whileHover={{ y: -6 }}
                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1)}
                                 className={`
@@ -1692,24 +1676,23 @@ function BookingContent() {
                                         </div>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         );
                     })}
                 </div>
                     </>
                 )}
-            </motion.div>
+            </div>
         );
     };
 
     const renderStep3 = () => (
-        <motion.div
-            key="step3"
-            variants={stepVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.3 }}
+        <div  key="step3"
+            
+            
+            
+            
+            
             className="space-y-8"
         >
             <div className="mb-6 pl-1">
@@ -1972,7 +1955,7 @@ function BookingContent() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 
     const renderSummary = () => {
@@ -2033,13 +2016,12 @@ function BookingContent() {
         const totalExtraFees = wadiJinnFeeTotal + nusukFeeTotal + viaBadrFeeTotal;
 
         return (
-            <motion.div
-                key="step4"
-                variants={stepVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ duration: 0.3 }}
+            <div  key="step4"
+                
+                
+                
+                
+                
                 className="space-y-8"
             >
                 <div className="mb-6 pl-1">
@@ -2057,7 +2039,7 @@ function BookingContent() {
                 </div>
 
                 {/* Digital Ticket Container */}
-                <div className="bg-white dark:bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 relative w-full max-w-full">
+                <div className="relative w-full max-w-full">
                     {/* Top Gold Bar */}
                     <div className="h-2 w-full bg-gradient-to-r from-secondary/80 to-[#B38E2D]" />
 
@@ -2338,27 +2320,25 @@ function BookingContent() {
                     <ShieldCheck strokeWidth={1.25} size={14} />
                     <span>Your data is encrypted and secure. We never share your details.</span>
                 </div>
-            </motion.div>
+            </div>
         );
     };
 
     const renderSuccess = () => (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+        <div  initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="w-full bg-white dark:bg-slate-900 md:bg-transparent min-h-screen md:min-h-0 md:py-12 pb-[max(96px,env(safe-area-inset-bottom))] pt-[env(safe-area-inset-top)]"
         >
-            <div className="md:bg-white md:dark:bg-slate-800 md:rounded-[24px] md:shadow-xl overflow-hidden max-w-3xl mx-auto md:border md:border-slate-200 md:dark:border-slate-700 w-full">
+            <div className="overflow-hidden max-w-3xl mx-auto w-full">
                 {/* 1. Success Header */}
                 <div className="pt-12 pb-10 px-6 text-center md:border-b md:border-slate-100 dark:border-slate-700/50">
-                    <motion.div 
-                        initial={{ scale: 0 }}
+                    <div  initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        
                         className="w-24 h-24 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-8 ring-white dark:ring-slate-800"
                     >
                         <CheckCircle strokeWidth={1.5} size={48} className="text-green-600 dark:text-green-400" />
-                    </motion.div>
+                    </div>
                     <h2 className="text-[38px] md:text-4xl font-bold text-slate-900 dark:text-white mb-3 leading-tight">Booking Confirmed</h2>
                     <p className="text-[22px] md:text-xl font-medium text-[#D4AF37] mb-3 leading-tight">JazakAllah Khair for choosing Al Aqsa Umrah Transport.</p>
                     <p className="text-[16px] md:text-base text-slate-600 dark:text-slate-300 max-w-lg mx-auto">Your reservation has been successfully confirmed. Everything is ready for your upcoming journey.</p>
@@ -2544,7 +2524,7 @@ function BookingContent() {
 
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 
     const Sidebar = () => {
@@ -2579,7 +2559,7 @@ function BookingContent() {
         return (
             <div className="space-y-6 pb-10">
                 {/* Summary Card */}
-                <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                <div className="p-6 md:border-l md:border-slate-200 md:dark:border-slate-700">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <Briefcase strokeWidth={1.25} size={20} className="text-secondary" />
                         Booking Summary
@@ -2873,18 +2853,17 @@ function BookingContent() {
                     {/* Main Wizard Area */}
                     <div className={step === 5 ? "w-full md:max-w-3xl mx-auto" : "lg:col-span-2 min-w-0"}>
                         {/* Mobile Guide Removed - Slide Over Used Instead */}
-                        <AnimatePresence mode="wait">
+                        <>
                             {step === 1 && renderStep1()}
                             {step === 2 && renderStep2()}
                             {step === 3 && renderStep3()}
                             {step === 4 && renderSummary()}
                             {step === 5 && renderSuccess()}
-                        </AnimatePresence>
+                        </>
 
                         {/* Trust Bar - Conversion Optimizer (Visible on Details & Review Steps) */}
                         {step >= 3 && step < 5 && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
+                            <div  initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 gap-2 text-center"
                             >
@@ -2900,7 +2879,7 @@ function BookingContent() {
                                     <HeartHandshake strokeWidth={1.25} className="w-5 h-5 text-pink-500" />
                                     <span className="text-xs text-slate-500 font-medium">Family Staff</span>
                                 </div>
-                            </motion.div>
+                            </div>
                         )}
 
                         {/* Navigation Buttons */}

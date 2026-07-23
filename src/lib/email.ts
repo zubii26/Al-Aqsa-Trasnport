@@ -230,6 +230,11 @@ const prepareBookingVariables = (booking: BookingData) => {
         // Booking variables
         booking_id: booking.bookingReference || `INV-${(booking.id || '').slice(-6).toUpperCase()}`,
         booking_date: new Date(booking.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+        date: booking.date,
+        time: booking.time,
+        pickup: booking.pickup,
+        dropoff: booking.dropoff,
+        vehicle_details: formatVehicles(booking),
         route_details_html: buildRouteDetailsHTML(booking),
         route_details_admin_html: buildRouteDetailsAdminHTML(booking),
         passengers: booking.passengers,
