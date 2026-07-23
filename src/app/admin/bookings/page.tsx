@@ -42,7 +42,7 @@ export default function BookingsPage() {
     // Server-side pagination and urgency state
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [sort, setSort] = useState('urgency');
+    const [sort, setSort] = useState('createdAt');
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
