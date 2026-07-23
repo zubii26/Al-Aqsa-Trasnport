@@ -6,7 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import FadeIn from '@/components/common/FadeIn';
-import { motion, AnimatePresence } from 'framer-motion';
+// Mock framer-motion to remove all animations while preserving JSX structure
+const motion: any = {
+    div: ({ initial, animate, exit, variants, transition, whileHover, whileTap, layout, layoutId, ...props }: any) => <div {...props} />
+};
+const AnimatePresence: any = ({ children }: any) => <>{children}</>;
 
 import { usePricing } from '@/context/PricingContext';
 import { Route } from '@/lib/pricing';
@@ -578,7 +582,7 @@ function BookingContent() {
         if (wizardRef.current) {
             const yOffset = -120;
             const y = wizardRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
+            window.scrollTo({ top: y, behavior: 'auto' });
         }
     };
 
