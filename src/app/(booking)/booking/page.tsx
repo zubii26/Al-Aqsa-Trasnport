@@ -782,8 +782,8 @@ function BookingContent() {
         if (!pkg) return null;
 
         return (
-            <div  initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
+            <div  
+                
                 className="mt-6 mb-4 p-5 bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/50 rounded-xl relative z-10"
             >
                 <div className="flex items-center gap-2 mb-3">
@@ -832,16 +832,16 @@ function BookingContent() {
         <>
             {isSearching ? (
                 <div  key="scanning"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    
+                    
+                    
                     className="flex flex-col items-center justify-center py-20 text-center"
                 >
                     <div className="relative w-24 h-24 mb-6">
                         <div  className="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-800"
                         />
                         <div  className="absolute inset-0 rounded-full border-4 border-t-secondary border-r-secondary border-b-transparent border-l-transparent"
-                            animate={{ rotate: 360 }}
+                            
                             
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -1001,8 +1001,8 @@ function BookingContent() {
                         {selectedRoute && renderZiyaratDetails(getRouteDestination(selectedRoute))}
 
                         {selectedRoute && getRouteDestination(selectedRoute).toLowerCase().includes('madinah ziyarat') && !selectedRoute.name.toLowerCase().includes('wadi jin') && (
-                            <div  initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
+                            <div  
+                                
                                 className="mb-8 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3 relative z-10"
                             >
                                 <input 
@@ -1030,8 +1030,8 @@ function BookingContent() {
                             const isMadinahToMakkah = (orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc')));
                             return isMadinahToMakkah;
                         })() && (
-                            <div  initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
+                            <div  
+                                
                                 className="mb-8 relative z-10"
                             >
                                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 ml-1">Route Option</p>
@@ -1187,8 +1187,8 @@ function BookingContent() {
                                         {matchedRoute && renderZiyaratDetails(getRouteDestination(matchedRoute))}
 
                                         {matchedRoute && getRouteDestination(matchedRoute).toLowerCase().includes('madinah ziyarat') && !matchedRoute.name.toLowerCase().includes('wadi jin') && (
-                                            <div  initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
+                                            <div  
+                                                
                                                 className="mt-4 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/30 dark:border-secondary rounded-xl flex items-start gap-3"
                                             >
                                                 <input 
@@ -1215,8 +1215,8 @@ function BookingContent() {
                                             const orig = getRouteOrigin(matchedRoute).toLowerCase();
                                             return orig.includes('madin') && (dest.includes('makk') || dest.includes('mecc'));
                                         })() && (
-                                            <div  initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
+                                            <div  
+                                                
                                                 className="mt-4"
                                             >
                                                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Route Option</p>
@@ -1300,9 +1300,9 @@ function BookingContent() {
                         <>
                             {bookingData.routeId === 'custom' ? (
                                 <div  key="custom-banner"
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
+                                    
+                                    
+                                    
                                     className="mb-8"
                                 >
                                     <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 shadow-sm mb-6">
@@ -1329,9 +1329,9 @@ function BookingContent() {
                             ) : (
                                 bookingData.routeType === 'single' && selectedRoute && (
                                     <div  key="route-info"
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
+                                        
+                                        
+                                        
                                         className="ios-glass rounded-[32px] p-6 border border-secondary/20 shadow-lg shadow-secondary/5 relative overflow-hidden"
                                     >
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -1434,7 +1434,6 @@ function BookingContent() {
 
                                         return (
                                             <div  key={vehicle.id}
-                                                whileHover={{ y: -6 }}
                                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1, leg.id)}
                                                 className={`
                                                     relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer w-full max-w-full
@@ -1561,7 +1560,6 @@ function BookingContent() {
 
                         return (
                             <div  key={vehicle.id}
-                                whileHover={{ y: -6 }}
                                 onClick={() => !isSelected && handleVehicleQuantityChange(vehicle.id, 1)}
                                 className={`
                                     relative rounded-[32px] transition-all duration-300 group overflow-hidden flex flex-col md:flex-row cursor-pointer w-full max-w-full
@@ -2328,15 +2326,15 @@ function BookingContent() {
     };
 
     const renderSuccess = () => (
-        <div  initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+        <div  
+            
             className="w-full bg-white dark:bg-slate-900 md:bg-transparent min-h-screen md:min-h-0 md:py-12 pb-[max(96px,env(safe-area-inset-bottom))] pt-[env(safe-area-inset-top)]"
         >
             <div className="overflow-hidden max-w-3xl mx-auto w-full">
                 {/* 1. Success Header */}
                 <div className="pt-12 pb-10 px-6 text-center md:border-b md:border-slate-100 dark:border-slate-700/50">
-                    <div  initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
+                    <div  
+                        
                         
                         className="w-24 h-24 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm ring-8 ring-white dark:ring-slate-800"
                     >
@@ -2866,8 +2864,8 @@ function BookingContent() {
 
                         {/* Trust Bar - Conversion Optimizer (Visible on Details & Review Steps) */}
                         {step >= 3 && step < 5 && (
-                            <div  initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
+                            <div  
+                                
                                 className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 gap-2 text-center"
                             >
                                 <div className="flex flex-col items-center justify-center gap-1 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
