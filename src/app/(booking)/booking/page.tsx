@@ -578,9 +578,12 @@ function BookingContent() {
         if (wizardRef.current) {
             const yOffset = -120;
             const y = wizardRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: "instant" });
-            // Attempt to trigger native scroll to bypass Lenis
-            document.documentElement.style.scrollBehavior = "auto";
+            const lenis = (window as any).__lenis;
+            if (lenis) {
+                lenis.scrollTo(y, { immediate: true });
+            } else {
+                window.scrollTo({ top: y, behavior: "instant" });
+            }
         }
     };
 
