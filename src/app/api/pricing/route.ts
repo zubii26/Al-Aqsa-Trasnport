@@ -13,16 +13,17 @@ export async function GET() {
             vehicleService.getActiveVehicles()
         ]);
 
-        // Fallback to default data if database is empty
-        if (routes.length === 0 && vehicles.length === 0) {
-            return NextResponse.json({
-                routes: DEFAULT_ROUTES,
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                vehicles: DEFAULT_VEHICLES.map(({ icon, ...rest }) => rest) // Remove icon component for JSON serialization
-            });
-        }
+        let activeRoutes = routes;
+        let activeVehicles = vehicles;
 
-        const activeRoutes = routes;
+        // Fallback to default data if database is empty
+        if (activeRoutes.length === 0) {
+            activeRoutes = DEFAULT_ROUTES;
+        }
+        if (activeVehicles.length === 0) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            activeVehicles = DEFAULT_VEHICLES.map(({ icon, ...rest }) => rest) as any;
+        }
         // Sort routes alphabetically by Origin -> Destination
         activeRoutes.sort((a: any, b: any) => {
             const nameA = `${a.origin} ${a.destination}`.toLowerCase();
@@ -30,7 +31,7 @@ export async function GET() {
             return nameA.localeCompare(nameB);
         });
 
-        const activeVehicles = vehicles;
+
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedRoutes = activeRoutes.map((route: any) => {
