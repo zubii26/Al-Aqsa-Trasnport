@@ -52,8 +52,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    /* Light Mode Overlay (Default) - Sophisticated Radial Glow */
-    background: radial-gradient(circle at center 40%, rgba(10, 31, 68, 0.4) 0%, rgba(10, 31, 68, 0.75) 60%, rgba(10, 31, 68, 0.95) 100%);
+    /* Simple Soft Black Overlay */
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     z-index: 1;
@@ -61,7 +61,7 @@
 
 :global(.dark) .overlay {
     /* Dark Mode Overlay */
-    background: radial-gradient(circle at center 40%, rgba(10, 25, 47, 0.5) 0%, rgba(10, 25, 47, 0.85) 60%, rgba(10, 25, 47, 0.98) 100%);
+    background: rgba(0, 0, 0, 0.75);
 }
 
 .badge {
@@ -107,41 +107,44 @@
     width: 100%;
 }
 
-.title {
+.leftAlign {
+    text-align: left;
+}
 
+.leftAlign .textContent {
+    max-width: 800px;
+}
+
+.leftAlign .subtitle {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.leftAlign .buttons {
+    justify-content: flex-start;
+}
+
+.title {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
 
-    /* Light Mode Title - White on Navy with Shimmer */
-    color: #ffffff;
-    background: linear-gradient(to right, #ffffff 20%, #fcd34d 40%, #fcd34d 60%, #ffffff 80%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 8s linear infinite;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    color: #D4AF37; /* Solid gold color */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Simple text shadow */
     letter-spacing: -0.02em;
 
     /* Fix for Android Text Flickering */
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
-    will-change: transform, opacity, background-position;
+    will-change: transform, opacity;
 }
 
 :global(.dark) .title {
     /* Dark Mode Title */
-    color: white;
-    background: linear-gradient(to right, #ffffff 20%, #fcd34d 40%, #fcd34d 60%, #ffffff 80%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 8s linear infinite;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: #D4AF37;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 .subtitle {

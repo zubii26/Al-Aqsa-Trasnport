@@ -45,7 +45,8 @@ export async function generateMetadata() {
 
 export default async function Home() {
   const heroSection = await getSectionContent('home-hero');
-  const heroTitle = heroSection?.title || "Premium Umrah Transport Services: Jeddah, Makkah & Madinah";
+  const heroTitle = "Premium Hajj & Umrah Private Car Transport in Saudi Arabia";
+  
   const heroSubtitleText = heroSection?.subtitle || "Reliable Jeddah & Madinah Airport Transfers, Luxury Makkah-Madinah Travel";
   
   const heroSubtitleContent = (
@@ -62,7 +63,7 @@ export default async function Home() {
     </>
   );
 
-  const heroImage = "/images/umrah-pilgrims-makkah-taxi-hero.webp";
+  const heroImage = "/images/man-traditional-arabian-clothing-car.jpg";
   const ctaText = getCustomField(heroSection, 'cta_text') || "Book Now / احجز الآن";
   const ctaLink = "/booking";
 
@@ -75,19 +76,13 @@ export default async function Home() {
         title={heroTitle}
         subtitle={heroSubtitleContent}
         bgImage={heroImage}
-        layout="two-column"
+        bgImagePosition="object-[center_20%]"
+        alt="Premium Hajj and Umrah Taxi Services in Saudi Arabia"
+        layout="left"
         ctaText={ctaText}
         ctaLink={ctaLink}
         backgroundChildren={<AnimatedBackground />}
-      >
-        <div className="hidden md:block w-full max-w-md ml-auto">
-          <QuickBookingForm
-            title="Book Your Ride"
-            subtitle="Instant Confirmation"
-            className="shadow-2xl"
-          />
-        </div>
-      </Hero>
+      />
 
       {/* 2. Fleet Preview */}
       <FleetPreview />

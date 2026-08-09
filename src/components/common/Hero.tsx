@@ -22,7 +22,7 @@ interface HeroProps {
     secondaryCtaLink?: string;
     showBookingForm?: boolean;
     children?: React.ReactNode;
-    layout?: 'center' | 'two-column';
+    layout?: 'center' | 'left' | 'two-column';
     badge?: string;
     backgroundChildren?: React.ReactNode;
     breadcrumbs?: React.ReactNode;
@@ -108,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({
                             priority
                             fetchPriority="high"
                             quality={100}
-                            className={`object-cover scale-110 ${bgImagePosition || 'object-center'}`}
+                            className={`object-cover ${bgImagePosition || 'object-center'}`}
                             sizes="100vw"
                         />
                     </div>
@@ -124,23 +124,22 @@ const Hero: React.FC<HeroProps> = ({
                 </div>
             )}
 
-            <motion.div style={{ y: textY, opacity }} className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} relative z-10 will-change-transform`}>
+            <motion.div style={{ y: textY, opacity }} className={`${styles.content} ${layout === 'two-column' ? styles.twoColumn : ''} ${layout === 'left' ? styles.leftAlign : ''} relative z-10 will-change-transform`}>
                 <div className={styles.textContent}>
                     {breadcrumbs && (
                         <FadeIn animate triggerOnMount delay={0.1} direction="down" className="mb-4">
                             {breadcrumbs}
                         </FadeIn>
                     )}
+
                     {badge && (
-                        <FadeIn animate triggerOnMount delay={0.2} direction="down">
+                        <FadeIn animate triggerOnMount delay={0.15} direction="up">
                             <span className={styles.badge}>{badge}</span>
                         </FadeIn>
                     )}
                     {/* Main Title */}
-                    <FadeIn animate triggerOnMount delay={0.3} direction="up">
-                        <h1 className={styles.title}>
-                            {title}
-                        </h1>
+                    <FadeIn animate triggerOnMount delay={0.2} direction="up">
+                        <h1 className={`${styles.title} text-secondary font-sans tracking-tight`} dangerouslySetInnerHTML={{ __html: title }} />
                     </FadeIn>
 
                     <FadeIn animate triggerOnMount delay={0.4} direction="up">

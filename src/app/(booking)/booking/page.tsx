@@ -29,8 +29,15 @@ const splitRouteName = (name: string): [string, string] => {
 };
 
 // Helper: get origin (pickup) from a route — prefer explicit field, fall back to name parsing
-const getRouteOrigin = (r: Route): string => r.origin || splitRouteName(r.name)[0] || r.name;
-const getRouteDestination = (r: Route): string => r.destination || splitRouteName(r.name)[1] || '';
+const standardizeLocationName = (name: string): string => {
+    if (!name) return '';
+    return name
+        .replace(/\bmadina\b/gi, 'Madinah')
+        .replace(/\bmakka\b/gi, 'Makkah');
+};
+
+const getRouteOrigin = (r: Route): string => standardizeLocationName(r.origin || splitRouteName(r.name)[0] || r.name);
+const getRouteDestination = (r: Route): string => standardizeLocationName(r.destination || splitRouteName(r.name)[1] || '');
 
 // Normalize text for fuzzy matching of locations (e.g. Madina vs Madinah, Makka vs Makkah)
 const normalizeText = (text: string) => text ? text.toLowerCase().replace(/makkah?/g, 'makka').replace(/madinah?/g, 'madina').replace(/\s+/g, ' ').trim() : '';
@@ -52,6 +59,14 @@ const ZIYARAT_PACKAGES: Record<string, { duration: string, places: string[] }> =
         duration: '4 Hours',
         places: ['Beer Al Roha', 'Beer E Shifa', 'Masjid Areesh', 'Site of the Battle of Badr', 'Jabal e Malaika']
     }
+};
+
+const getLocationIcon = (locationName: string) => {
+    const lower = locationName.toLowerCase();
+    if (lower.includes('airport')) return <PlaneLanding size={16} className="text-secondary" />;
+    if (lower.includes('hotel') || lower.includes('makkah') || lower.includes('madinah')) return <Building2 size={16} className="text-secondary" />;
+    if (lower.includes('train')) return <Navigation size={16} className="text-secondary" />;
+    return <MapPin size={16} className="text-secondary" />;
 };
 
 function BookingContent() {
@@ -928,7 +943,7 @@ function BookingContent() {
                                         }
                                     }}
                                     options={[
-                                        ...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p }))
+                                        ...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p, icon: getLocationIcon(p) }))
                                     ]}
                                     placeholder="Select Pickup"
                                     className="w-full premium-input rounded-xl px-4 py-4 text-slate-900 dark:text-white outline-none text-base"
@@ -975,7 +990,7 @@ function BookingContent() {
                                                 .filter(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(bookingData.pickup)))
                                                 .map(r => getRouteDestination(r))
                                                 .filter(Boolean)
-                                            )).sort().map(d => ({ value: d, label: d }))
+                                            )).sort().map(d => ({ value: d, label: d, icon: getLocationIcon(d) }))
                                             : []
                                     }
                                     disabled={!bookingData.pickup || bookingData.pickup === 'custom'}
@@ -1108,7 +1123,7 @@ function BookingContent() {
                                                     name={`pickup-${leg.id}`}
                                                     value={leg.pickup}
                                                     onChange={(e: any) => updateLeg(index, 'pickup', e.target.value)}
-                                                    options={[...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p }))]}
+                                                    options={[...Array.from(new Set(filteredRoutes.map(r => getRouteOrigin(r)))).filter(Boolean).sort().map(p => ({ value: p, label: p, icon: getLocationIcon(p) }))]}
                                                     placeholder="Select Pickup"
                                                     className="w-full premium-input rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white"
                                                     icon={<MapPin strokeWidth={1.25} size={16} />}
@@ -1129,7 +1144,7 @@ function BookingContent() {
                                                                 .filter(r => normalizeText(getRouteOrigin(r)).includes(normalizeText(leg.pickup)))
                                                                 .map(r => getRouteDestination(r))
                                                                 .filter(Boolean)
-                                                            )).sort().map(d => ({ value: d, label: d }))
+                                                            )).sort().map(d => ({ value: d, label: d, icon: getLocationIcon(d) }))
                                                             : []
                                                     }
                                                     disabled={!leg.pickup}

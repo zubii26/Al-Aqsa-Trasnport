@@ -131,8 +131,6 @@ export default function Navbar() {
                 }
             }
         },
-        { href: '/about', label: 'About Us' },
-        { href: '/blog', label: 'Blog' },
         { href: '/contact', label: 'Contact us' },
     ];
 
@@ -145,36 +143,26 @@ export default function Navbar() {
                 : 'bg-white/50 dark:bg-black/20 backdrop-blur-xl border-b border-white/20 dark:border-white/10 py-4 lg:py-6 2xl:py-8 shadow-sm'
                 } ${isMenuOpen ? 'bg-background' : ''}`}
         >
-            <div className="container mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-3 group">
-                    <div className="relative flex items-center">
-                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${scrolled ? 'w-[45px] h-[45px] sm:w-[60px] sm:h-[60px] lg:w-[80px] lg:h-[80px]' : 'w-[55px] h-[55px] sm:w-[80px] sm:h-[80px] lg:w-[100px] lg:h-[100px]'} group-hover:scale-105`}>
-                            <Image
-                                src="/logo.png"
-                                alt="Al Aqsa Transport"
-                                fill
-                                className="object-contain"
-                                priority
-                                sizes="(max-width: 640px) 55px, (max-width: 1024px) 80px, 100px"
-                            />
+        <div className="container mx-auto px-4 relative flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-3 group">
+                <div className="relative flex items-center">
+                    <div className={`flex items-center gap-2 sm:gap-3 transition-all duration-300`}>
+                        <div className="flex flex-col items-end">
+                            <span className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
+                            <span className="text-[0.55rem] sm:text-[0.65rem] lg:text-xs font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
                         </div>
-                        <div className={`flex items-center gap-2 sm:gap-3 transition-all duration-300 ${scrolled ? 'ml-[55px] sm:ml-[70px] lg:ml-[90px]' : 'ml-[65px] sm:ml-[90px] lg:ml-[120px]'}`}>
-                            <div className="flex flex-col items-end">
-                                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary leading-none">Al Aqsa</span>
-                                <span className="text-[0.55rem] sm:text-[0.65rem] lg:text-xs font-bold text-primary dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
-                            </div>
-                            <div className="w-px h-6 sm:h-8 lg:h-10 bg-secondary/80"></div>
-                            <div className="flex flex-col items-start">
-                                <span className="font-[family-name:var(--font-reem-kufi)] text-base sm:text-lg lg:text-xl font-bold text-secondary leading-none">
-                                    النقل المعتمر الأقصى
-                                </span>
-                            </div>
+                        <div className="w-px h-6 sm:h-8 lg:h-10 bg-secondary/80"></div>
+                        <div className="flex flex-col items-start">
+                            <span className="font-[family-name:var(--font-reem-kufi)] text-base sm:text-lg lg:text-xl font-bold text-secondary leading-none">
+                                النقل المعتمر الأقصى
+                            </span>
                         </div>
                     </div>
-                </Link>
+                </div>
+            </Link>
 
-                {/* Desktop Nav */}
-                <div className="hidden xl:flex items-center gap-8">
+            {/* Desktop Nav */}
+            <div className="hidden xl:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     {links.map((link) => (
                         <div key={link.href} className="relative group">
                             {link.href === '#' ? (
@@ -182,7 +170,6 @@ export default function Navbar() {
                                     className={`relative text-sm font-medium transition-colors duration-300 hover:text-secondary py-4 flex items-center gap-1 cursor-default ${scrolled ? 'text-foreground/80' : 'text-foreground/80 dark:text-white/90'}`}
                                 >
                                     {link.label}
-                                    {link.megaMenu && <ChevronDown strokeWidth={1.25} size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                 </span>
                             ) : (
                                 <Link
@@ -191,7 +178,6 @@ export default function Navbar() {
                                         }`}
                                 >
                                     {link.label}
-                                    {link.megaMenu && <ChevronDown strokeWidth={1.25} size={14} className="group-hover:rotate-180 transition-transform duration-300" />}
                                     <span className={`absolute bottom-2 left-0 w-full h-0.5 bg-secondary transform origin-left transition-transform duration-300 ${mounted && pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                                         }`} />
                                 </Link>
@@ -297,19 +283,10 @@ export default function Navbar() {
                                 transition={{ delay: 0.1, duration: 0.5 }}
                                 className="flex items-center gap-3"
                             >
-                                <Link href="/" onClick={() => setIsMenuOpen(false)} className="relative w-[50px] h-[50px]">
-                                    <Image
-                                        src="/logo.png"
-                                        alt="Al Aqsa Transport"
-                                        fill
-                                        className="object-contain"
-                                        sizes="50px"
-                                    />
-                                </Link>
-                                <div className="flex flex-col items-start">
+                                <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-start">
                                     <span className="text-xl font-bold text-secondary leading-none">Al Aqsa</span>
                                     <span className="text-[0.65rem] font-bold text-foreground dark:text-white tracking-[0.15em] uppercase leading-none mt-1">Transport</span>
-                                </div>
+                                </Link>
                             </motion.div>
                             
                             {/* Close button - Enhanced Touch Target */}

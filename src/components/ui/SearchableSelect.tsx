@@ -138,7 +138,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     onChange={handleInputChange}
                     onFocus={handleOpen}
                     placeholder={placeholder}
-                    autoComplete="off"
+                    autoComplete="new-password"
                     disabled={disabled}
                     readOnly={!searchable}
                     className={`${className} ${icon ? 'pl-11' : ''} ${!searchable ? 'cursor-pointer' : ''} max-md:pointer-events-none max-md:opacity-0`}
@@ -182,20 +182,21 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                                 zIndex: 99999,
                             }}
                             className="hidden md:block max-h-80 overflow-y-auto
-                                       bg-white dark:bg-slate-900
-                                       border border-slate-200 dark:border-slate-700
-                                       rounded-xl shadow-2xl
-                                       scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/20"
+                                       bg-white/95 backdrop-blur-md dark:bg-slate-900/95
+                                       border border-slate-100 dark:border-slate-800
+                                       rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] mt-2
+                                       custom-scrollbar"
                         >
                             {displayedOptions.length > 0 ? displayedOptions.map((option) => (
                                 <li
                                     key={option.value}
                                     // onMouseDown fires before onBlur — prevents input blur from closing before click registers
                                     onMouseDown={(e) => { e.preventDefault(); handleOptionClick(option); }}
-                                    className="px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/10
-                                               text-slate-700 dark:text-slate-200
-                                               transition-colors duration-150 flex items-center justify-between
-                                               text-sm border-b border-slate-50 dark:border-white/5 last:border-0"
+                                    className={`px-4 py-3 cursor-pointer transition-all duration-200 flex items-center justify-between text-sm border-b border-slate-50 dark:border-white/5 last:border-0
+                                        ${value === option.value 
+                                            ? 'bg-secondary/10 border-l-4 border-l-secondary text-secondary font-bold' 
+                                            : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-l-4 border-l-transparent'
+                                        }`}
                                 >
                                     {renderOption ? renderOption(option) : (
                                         <>
