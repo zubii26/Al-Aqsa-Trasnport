@@ -118,7 +118,7 @@ function AdminLayoutContent({
             />
 
             <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''} ${isDesktopCollapsed ? styles.sidebarCollapsed : ''}`}>
-                <div className="flex items-center justify-between mb-8 px-2 relative">
+                <div className="flex items-center justify-between pt-6 pb-8 px-2 relative flex-shrink-0">
                     {!isDesktopCollapsed && (
                         <div className="flex flex-col items-start gap-1 py-2">
                             <div className="flex flex-col items-start text-left">

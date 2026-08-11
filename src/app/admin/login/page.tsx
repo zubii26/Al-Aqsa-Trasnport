@@ -51,119 +51,149 @@ export default function LoginPage() {
         }
     };
 
-    console.log('Rendering LoginPage');
-
     return (
-        <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-slate-950">
-            {/* Back to Home Button */}
-            <Link
-                href="/"
-                className="absolute top-6 left-6 z-50 flex items-center gap-2 text-slate-400 hover:text-secondary transition-colors group"
-            >
-                <div className="p-2 rounded-full bg-slate-900/50 border border-slate-800 group-hover:border-secondary/50 transition-colors">
-                    <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+        <div className="min-h-screen w-full flex bg-[#0A192F]">
+            
+            {/* LEFT PANE - BRANDING & IMAGERY (Desktop Only) */}
+            <div className="hidden lg:flex w-1/2 relative bg-[#0A192F] items-center justify-center overflow-hidden border-r border-white/5">
+                {/* Background Image with Overlay */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/images/contact-hero.webp"
+                        alt="Al Aqsa Transport Fleet"
+                        fill
+                        className="object-cover opacity-40 grayscale-[0.2]"
+                        priority
+                    />
+                    {/* Deep gradient overlay as per DESIGN.md for hero text */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-[#0A192F]/80 to-[#0A192F]/20"></div>
                 </div>
-                <span className="font-medium text-sm">Back to Home</span>
-            </Link>
-            {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src="/images/contact-hero.webp"
-                    alt="Background"
-                    fill
-                    className="object-cover opacity-40"
-                    priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/80 to-slate-950/90 backdrop-blur-[2px]"></div>
+
+                {/* Decorative Elements */}
+                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+
+                {/* Brand Content */}
+                <div className="relative z-10 flex flex-col items-center justify-center text-center px-12 max-w-xl">
+                    <div className="w-20 h-20 bg-white/5 backdrop-blur-xl rounded-full flex items-center justify-center mb-10 shadow-2xl shadow-black/50 border border-white/10 ring-1 ring-white/5">
+                        <Lock className="text-[#D4AF37]" size={36} strokeWidth={1.5} />
+                    </div>
+                    <h1 className="text-4xl xl:text-5xl font-bold text-white mb-4 tracking-tight drop-shadow-md">
+                        Al Aqsa <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#AA771C]">Transport</span>
+                    </h1>
+                    <h2 className="text-2xl xl:text-3xl text-[#D4AF37] mb-8 font-[family-name:var(--font-reem-kufi)] font-bold tracking-wide drop-shadow-sm">
+                        الأقصى لنقل المعتمرين
+                    </h2>
+                    <p className="text-slate-300/90 text-lg leading-relaxed border-t border-white/10 pt-8 mt-2">
+                        Premium, trustworthy, and specialized transport services for Umrah pilgrims across Saudi Arabia.
+                    </p>
+                </div>
             </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
-
-            <div className="w-full max-w-md relative z-10 p-6">
-                <div className="bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden ring-1 ring-white/5 transition-all duration-500 hover:shadow-amber-500/10 hover:border-white/20">
-                    {/* Top Accent Line */}
-                    <div className="h-1 w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
-
-                    <div className="p-8">
-                        <div className="text-center mb-10">
-                            <div className="w-20 h-20 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-lg shadow-black/50 border border-white/5 group">
-                                <Lock className="text-secondary group-hover:scale-110 transition-transform duration-300" size={32} />
-                            </div>
-                            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight ">Welcome Back</h1>
-                            <p className="text-slate-400 text-sm">Sign in to manage Al Aqsa Transport</p>
-                        </div>
-
-                        {error && (
-                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 text-red-200 text-sm animate-in fade-in slide-in-from-top-2">
-                                <AlertCircle size={18} className="shrink-0" />
-                                {error}
-                            </div>
-                        )}
-
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-400 ml-1 uppercase tracking-wider">
-                                    Email Address
-                                </label>
-                                <div className="relative group">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-secondary transition-colors" size={20} />
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all shadow-inner"
-                                        placeholder="admin@alaqsa.com"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-slate-400 ml-1 uppercase tracking-wider">
-                                    Password
-                                </label>
-                                <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-secondary transition-colors" size={20} />
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all shadow-inner"
-                                        placeholder="••••••••"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5 hover:shadow-amber-500/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 group relative overflow-hidden"
-                            >
-                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                                {loading ? (
-                                    <>
-                                        <Loader2 size={20} className="animate-spin relative z-10" />
-                                        <span className="relative z-10">Signing in...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span className="relative z-10">Sign In to Dashboard</span>
-                                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform relative z-10" />
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
-                    <div className="bg-slate-950/30 p-4 text-center text-xs text-slate-500 border-t border-white/5 backdrop-blur-sm">
-                        <p>Protected by <span className="text-secondary/80">Secure RBAC System</span></p>
-                    </div>
+            {/* RIGHT PANE - LOGIN FORM */}
+            <div className="w-full lg:w-1/2 relative flex items-center justify-center p-6 sm:p-12 bg-[#0A192F]">
+                
+                {/* Background Elements for Right Pane (Mobile especially) */}
+                <div className="absolute inset-0 z-0 lg:hidden">
+                    <Image
+                        src="/images/contact-hero.webp"
+                        alt="Background"
+                        fill
+                        className="object-cover opacity-20"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-[#0A192F]/90 backdrop-blur-sm"></div>
                 </div>
 
-                <div className="text-center mt-8 text-slate-500 text-xs">
-                    &copy; {new Date().getFullYear()} Al Aqsa Umrah Transport. All rights reserved.
+                <div className="w-full max-w-[420px] relative z-10 flex flex-col justify-center min-h-[500px]">
+                    
+                    {/* Back to Home Button - Placed in flow to prevent overlap */}
+                    <div className="mb-10 flex justify-center lg:justify-start">
+                        <Link
+                            href="/"
+                            className="inline-flex items-center gap-2.5 text-slate-400 hover:text-[#D4AF37] transition-all group"
+                        >
+                            <div className="p-2 rounded-full bg-white/5 border border-white/5 group-hover:bg-[#D4AF37]/10 group-hover:border-[#D4AF37]/30 transition-all backdrop-blur-md">
+                                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                            </div>
+                            <span className="font-semibold text-sm tracking-wide">Return Home</span>
+                        </Link>
+                    </div>
+
+                    <div className="text-center mb-10 lg:text-left">
+                        <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">Admin Portal</h2>
+                        <p className="text-slate-400 text-sm leading-relaxed">Authenticate to manage your dashboard, fleet, and operations.</p>
+                    </div>
+
+                    {error && (
+                        <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 text-red-200 text-sm animate-in fade-in slide-in-from-top-2">
+                            <AlertCircle size={18} className="shrink-0" />
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-2.5">
+                            <label className="text-xs font-semibold text-slate-300 ml-1 uppercase tracking-[0.08em]">
+                                Email Address
+                            </label>
+                            <div className="relative group">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#D4AF37] transition-colors" size={20} />
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-white/10 bg-slate-900/60 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37] transition-all shadow-inner backdrop-blur-sm"
+                                    placeholder="admin@alaqsa.com"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2.5">
+                            <label className="text-xs font-semibold text-slate-300 ml-1 uppercase tracking-[0.08em]">
+                                Password
+                            </label>
+                            <div className="relative group">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#D4AF37] transition-colors" size={20} />
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-white/10 bg-slate-900/60 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37] transition-all shadow-inner backdrop-blur-sm"
+                                    placeholder="••••••••"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full bg-gradient-to-r from-[#D4AF37] to-[#B4941F] text-[#0A192F] hover:from-[#E5C158] hover:to-[#D4AF37] font-bold py-4 rounded-xl shadow-[0_4px_14px_rgba(212,175,55,0.25)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-5px_rgba(212,175,55,0.4)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-8 group relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            {loading ? (
+                                <>
+                                    <Loader2 size={20} className="animate-spin relative z-10" />
+                                    <span className="relative z-10">Authenticating...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="relative z-10">Sign In</span>
+                                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform relative z-10" />
+                                </>
+                            )}
+                        </button>
+                    </form>
+
+                    <div className="mt-12 pt-6 border-t border-white/5 text-center flex flex-col items-center justify-center gap-2">
+                        <p className="text-xs text-slate-500">
+                            Protected by <span className="text-[#D4AF37]/90 font-medium">Secure RBAC System</span>
+                        </p>
+                        <p className="text-slate-600 text-[11px]">
+                            &copy; {new Date().getFullYear()} Al Aqsa Umrah Transport. All rights reserved.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

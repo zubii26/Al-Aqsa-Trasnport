@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "@studio-freight/lenis";
 
 export default function SmoothScrollProvider({
@@ -8,17 +9,33 @@ export default function SmoothScrollProvider({
   children: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+
+  // Never run Lenis inside the admin panel — it intercepts all wheel events
+  // globally on the document, which prevents child elements (sidebar nav,
+  // data tables, modals) from receiving native scroll events.
+  const isAdmin = pathname?.startsWith("/admin");
 
   useEffect(() => {
-    // Disable native browser scroll restoration to prevent jumping to footer
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+    // Destroy any existing Lenis instance when entering admin routes
+    if (isAdmin) {
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisRef.current = null;
+        delete (window as any).__lenis;
+      }
+      return; // Do not initialise Lenis on admin pages
+    }
+
+    // ── Public pages: initialise Lenis smooth scroll ──────────────────────
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
 
     const lenis = new Lenis({
-      lerp: 0.08,             // Linear interpolation (lerp) is much smoother than duration/easing
-      wheelMultiplier: 1.0,   // Natural wheel speed
-      touchMultiplier: 1.5,   // Good mobile feel
+      lerp: 0.08,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
       smoothWheel: true,
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -26,8 +43,6 @@ export default function SmoothScrollProvider({
     });
 
     lenisRef.current = lenis;
-
-    // ── CRITICAL: expose globally for ScrollToTop component ──────────────
     (window as any).__lenis = lenis;
 
     function raf(time: number) {
@@ -36,7 +51,6 @@ export default function SmoothScrollProvider({
     }
     const rafId = requestAnimationFrame(raf);
 
-    /* Make anchor links (#section) work with Lenis */
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", (e) => {
         e.preventDefault();
@@ -47,20 +61,19 @@ export default function SmoothScrollProvider({
       });
     });
 
-    /* Handle custom scroll to top from Page Transitions */
     const handleScrollToTop = () => {
       lenis.scrollTo(0, { immediate: true });
     };
-    window.addEventListener('lenis-scroll-to-top', handleScrollToTop);
+    window.addEventListener("lenis-scroll-to-top", handleScrollToTop);
 
     return () => {
-      window.removeEventListener('lenis-scroll-to-top', handleScrollToTop);
+      window.removeEventListener("lenis-scroll-to-top", handleScrollToTop);
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
       delete (window as any).__lenis;
     };
-  }, []);
+  }, [isAdmin]);
 
   return <>{children}</>;
 }
-
