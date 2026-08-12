@@ -12,7 +12,6 @@ import { getWhatsAppLink } from '@/lib/whatsapp';
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
 import TrustBadges from '@/components/home/TrustBadges';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
-import QuickBookingForm from '@/components/home/QuickBookingForm';
 import PopularRoutes from '@/components/home/PopularRoutes';
 import FleetPreview from '@/components/home/FleetPreview';
 import CustomerGallery from '@/components/home/CustomerGallery';
