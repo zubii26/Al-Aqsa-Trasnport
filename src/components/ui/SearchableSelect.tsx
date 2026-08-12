@@ -42,9 +42,16 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
     const [mounted, setMounted] = useState(false);
-    // Position of the dropdown portal, updated on open/scroll/resize
-    const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+    // Position + sizing of the dropdown portal — updated on open/scroll/resize.
+    // openAbove: true when there's more room above the trigger than below.
+    // maxHeight: capped to available viewport space so the list is never clipped.
+    const [dropdownPos, setDropdownPos] = useState({
+        top: 0, left: 0, width: 0, maxHeight: 280, openAbove: false,
+    });
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const MARGIN = 8;       // gap between trigger edge and list
+    const MAX_LIST_H = 280; // tallest the list grows before it scrolls internally
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -68,12 +75,33 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         setSearchTerm(found ? found.label : value);
     }, [value, options]);
 
-    // Calculate the viewport-relative position of the trigger for portal placement
+    // ── Smart Positioning ────────────────────────────────────────────────────
+    // Measures available space above and below the trigger and picks the
+    // direction with more room.  Caps maxHeight to exactly what's available
+    // so the list is never clipped by the viewport edge.
     const updatePos = () => {
-        if (containerRef.current) {
-            const rect = containerRef.current.getBoundingClientRect();
-            setDropdownPos({ top: rect.bottom, left: rect.left, width: rect.width });
-        }
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+
+        const spaceBelow = viewportH - rect.bottom - MARGIN;
+        const spaceAbove = rect.top - MARGIN;
+
+        // Flip upward only when below is cramped AND above has more room
+        const openAbove = spaceBelow < MAX_LIST_H && spaceAbove > spaceBelow;
+        const availH = openAbove
+            ? Math.min(spaceAbove, MAX_LIST_H)
+            : Math.min(spaceBelow, MAX_LIST_H);
+
+        setDropdownPos({
+            top: openAbove
+                ? rect.top - availH - MARGIN   // anchor to top of trigger
+                : rect.bottom + MARGIN,         // anchor to bottom of trigger
+            left: rect.left,
+            width: rect.width,
+            maxHeight: Math.max(availH, 120),   // at least 120 px so it's usable
+            openAbove,
+        });
     };
 
     // Close on outside click — checks both trigger and portal
@@ -116,10 +144,15 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         setIsOpen(false);
     };
 
-    const handleOpen = () => {
+    // ── FIX: onMouseDown + preventDefault instead of onFocus ────────────────
+    // preventDefault() on mousedown tells the browser NOT to focus the input,
+    // which prevents the native auto-scroll-into-view that was pulling the
+    // page down every time the dropdown opened.
+    const handleTriggerMouseDown = (e: React.MouseEvent) => {
         if (disabled) return;
+        e.preventDefault(); // stops browser focus + auto-scroll
         updatePos();
-        setIsOpen(true);
+        setIsOpen(prev => !prev);
     };
 
     return (
@@ -130,13 +163,13 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                         {icon}
                     </div>
                 )}
-                {/* Desktop input */}
+                {/* Desktop input — opened via onMouseDown to avoid browser auto-scroll */}
                 <input
                     type="text"
                     name={name}
                     value={searchTerm}
                     onChange={handleInputChange}
-                    onFocus={handleOpen}
+                    onMouseDown={handleTriggerMouseDown}
                     placeholder={placeholder}
                     autoComplete="new-password"
                     disabled={disabled}
@@ -170,21 +203,29 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     {isOpen && (
                         <motion.ul
                             id={`ss-portal-${name}`}
-                            initial={{ opacity: 0, y: -8 }}
+                            initial={{ opacity: 0, y: dropdownPos.openAbove ? 8 : -8 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.15 }}
+                            exit={{ opacity: 0, y: dropdownPos.openAbove ? 8 : -8 }}
+                            transition={{ duration: 0.15, ease: 'easeOut' }}
+                            // FIX — mouse wheel scroll:
+                            // stopPropagation stops wheel events bubbling to the page body
+                            // so the list handles its own scroll instead of the page.
+                            // overscrollBehavior:'contain' prevents scroll-chaining when
+                            // the list reaches its top/bottom edge.
+                            onWheel={(e) => e.stopPropagation()}
                             style={{
                                 position: 'fixed',
-                                top: dropdownPos.top + 6,
+                                top: dropdownPos.top,
                                 left: dropdownPos.left,
                                 width: dropdownPos.width,
+                                maxHeight: dropdownPos.maxHeight,
+                                overscrollBehavior: 'contain',
                                 zIndex: 99999,
                             }}
-                            className="hidden md:block max-h-80 overflow-y-auto
+                            className="hidden md:block overflow-y-auto
                                        bg-white/95 backdrop-blur-md dark:bg-slate-900/95
                                        border border-slate-100 dark:border-slate-800
-                                       rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] mt-2
+                                       rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                                        custom-scrollbar"
                         >
                             {displayedOptions.length > 0 ? displayedOptions.map((option) => (
