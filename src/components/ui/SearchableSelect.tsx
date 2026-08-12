@@ -76,31 +76,20 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     }, [value, options]);
 
     // ── Smart Positioning ────────────────────────────────────────────────────
-    // Measures available space above and below the trigger and picks the
-    // direction with more room.  Caps maxHeight to exactly what's available
-    // so the list is never clipped by the viewport edge.
+    // Calculates fixed coords for the portal so it always opens BELOW the trigger
+    // with a height capped to available viewport space below.
     const updatePos = () => {
         if (!containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
         const viewportH = window.innerHeight;
-
         const spaceBelow = viewportH - rect.bottom - MARGIN;
-        const spaceAbove = rect.top - MARGIN;
-
-        // Flip upward only when below is cramped AND above has more room
-        const openAbove = spaceBelow < MAX_LIST_H && spaceAbove > spaceBelow;
-        const availH = openAbove
-            ? Math.min(spaceAbove, MAX_LIST_H)
-            : Math.min(spaceBelow, MAX_LIST_H);
 
         setDropdownPos({
-            top: openAbove
-                ? rect.top - availH - MARGIN   // anchor to top of trigger
-                : rect.bottom + MARGIN,         // anchor to bottom of trigger
+            top: rect.bottom + MARGIN,
             left: rect.left,
             width: rect.width,
-            maxHeight: Math.max(availH, 120),   // at least 120 px so it's usable
-            openAbove,
+            maxHeight: Math.max(Math.min(spaceBelow, MAX_LIST_H), 120),
+            openAbove: false,
         });
     };
 
@@ -144,15 +133,33 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         setIsOpen(false);
     };
 
-    // ── FIX: onMouseDown + preventDefault instead of onFocus ────────────────
-    // preventDefault() on mousedown tells the browser NOT to focus the input,
-    // which prevents the native auto-scroll-into-view that was pulling the
-    // page down every time the dropdown opened.
+    // ── FIX: Controlled scroll + open below ───────────────────────────────
+    // We prevent the browser's native focus-scroll (which is jerky and
+    // unpredictable), then do our OWN smooth scroll to position the trigger
+    // ~120px below the top of the viewport so there's always enough room for
+    // the dropdown to open below it cleanly.
+    const IDEAL_TOP = 120; // px from viewport top we want the trigger at
+
     const handleTriggerMouseDown = (e: React.MouseEvent) => {
         if (disabled) return;
-        e.preventDefault(); // stops browser focus + auto-scroll
-        updatePos();
-        setIsOpen(prev => !prev);
+        e.preventDefault(); // stop browser native focus-scroll
+
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const distanceFromIdeal = rect.top - IDEAL_TOP;
+
+        if (distanceFromIdeal > 10) {
+            // Trigger is too low — scroll it up first, then open
+            window.scrollBy({ top: distanceFromIdeal, behavior: 'smooth' });
+            setTimeout(() => {
+                updatePos();
+                setIsOpen(true);
+            }, 320); // wait for scroll animation (~300ms)
+        } else {
+            // Already in a good position — open immediately
+            updatePos();
+            setIsOpen(prev => !prev);
+        }
     };
 
     return (
@@ -203,9 +210,9 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     {isOpen && (
                         <motion.ul
                             id={`ss-portal-${name}`}
-                            initial={{ opacity: 0, y: dropdownPos.openAbove ? 8 : -8 }}
+                            initial={{ opacity: 0, y: -8 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: dropdownPos.openAbove ? 8 : -8 }}
+                            exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.15, ease: 'easeOut' }}
                             // FIX — mouse wheel scroll:
                             // stopPropagation stops wheel events bubbling to the page body
