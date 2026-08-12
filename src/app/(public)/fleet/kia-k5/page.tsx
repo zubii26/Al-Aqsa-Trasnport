@@ -195,6 +195,8 @@ export default async function KiaK5Page() {
                 bgImage="/images/fleet/kia-k5-hero.webp"
                 badge="Modern & Efficient"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'kia'}`}
+                vehicleName="Kia K5"
                 quickSpecs={["3-4 Passengers", "2-3 Suitcases", "Dual-Zone AC", "Smooth Ride"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -207,9 +209,10 @@ export default async function KiaK5Page() {
                 luggage="2-3 Large Bags"
                 tech="Touchscreen & USB"
                 fuel="2.5L Efficient"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'kia'}`}
                 mainImage="/images/fleet/kia-k5-hero.webp"
                 fallbackImage="/images/fleet/kia-k5-hero.webp"
+                vehicleName="Kia K5"
             />
 
             <VehicleGallery 
@@ -228,6 +231,7 @@ export default async function KiaK5Page() {
                     vehicleId={kiaId}
                     vehicleImage="/images/fleet/kia.webp"
                     vehicleType="kia"
+                    vehicleName="Kia K5"
                     title="Transparent Kia K5 Pricing"
                     subtitle="Affordable, modern transportation with fixed rates for per trip and per route transfers."
                 />
@@ -239,6 +243,8 @@ export default async function KiaK5Page() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'kia'}`}
+                vehicleName="Kia K5"
                 phoneNumber={phoneNumber}
             />
         </main>

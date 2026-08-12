@@ -88,7 +88,7 @@ export default function FleetPreview() {
                                         Popular Choice
                                     </div>
                                 )}
-                                <div className="relative w-full h-full">
+                                <Link href={vehicle.link} className="relative w-full h-full block">
                                     <Image
                                         src={vehicle.image}
                                         alt={vehicle.name}
@@ -97,7 +97,7 @@ export default function FleetPreview() {
                                         className="object-contain transition-transform duration-500 ease-out transform-gpu lg:group-hover:scale-[1.02]"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
-                                </div>
+                                </Link>
                             </div>
 
                             {/* Content Section */}
@@ -105,9 +105,11 @@ export default function FleetPreview() {
                                 {/* Title & Price */}
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
-                                        <h3 className="text-2xl font-serif text-slate-900 dark:text-white group-hover:text-secondary transition-colors leading-tight">
-                                            {vehicle.name}
-                                        </h3>
+                                        <Link href={vehicle.link}>
+                                            <h3 className="text-2xl font-serif text-slate-900 dark:text-white group-hover:text-secondary transition-colors leading-tight">
+                                                {vehicle.name}
+                                            </h3>
+                                        </Link>
                                     </div>
                                     <div className="text-right flex flex-col items-end">
                                         <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">
@@ -152,7 +154,7 @@ export default function FleetPreview() {
 
                                 {/* CTA Button */}
                                 <Link 
-                                    href={vehicle.link}
+                                    href={`/booking?vehicle=${vehicle.id}`}
                                     className="w-full py-3.5 px-4 bg-[#0B1221] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-[#0B1221] rounded-xl font-medium text-sm transition-colors flex justify-between items-center"
                                 >
                                     <span>Book {vehicle.name}</span>

@@ -6,6 +6,8 @@ interface VehicleCTAProps {
     title?: string;
     description?: string;
     whatsappLink: string;
+    bookingLink?: string;
+    vehicleName?: string;
     phoneNumber?: string;
 }
 
@@ -13,6 +15,8 @@ export default function VehicleCTA({
     title = "Ready to Book Your Ride?",
     description = "Contact us via WhatsApp for instant booking and availability. Our support team is available 24/7 to assist you with your Umrah journey.",
     whatsappLink,
+    bookingLink,
+    vehicleName,
     phoneNumber
 }: VehicleCTAProps) {
     return (
@@ -30,13 +34,21 @@ export default function VehicleCTA({
                     </p>
                     
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
+                        {bookingLink && (
+                            <Link 
+                                href={bookingLink} 
+                                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-secondary text-white hover:bg-secondary/90 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:shadow-secondary/30 hover:-translate-y-1"
+                            >
+                                Book {vehicleName || 'Now'} <ArrowRight size={20} />
+                            </Link>
+                        )}
                         <Link 
                             href={whatsappLink} 
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:shadow-[#25D366]/30 hover:-translate-y-1"
                         >
-                            Book via WhatsApp <ArrowRight size={20} />
+                            {bookingLink ? "WhatsApp" : "Book via WhatsApp"} {!bookingLink && <ArrowRight size={20} />}
                         </Link>
                         
                         {phoneNumber && (

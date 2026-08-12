@@ -191,6 +191,8 @@ export default async function BusinessSedanPage() {
                 bgImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                 badge="Smart Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'camry'}`}
+                vehicleName="Business Sedan"
                 quickSpecs={["Up to 7 Passengers", "2–3 Bags", "Licensed Driver", "Fixed Price"]}
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
@@ -203,9 +205,10 @@ export default async function BusinessSedanPage() {
                 luggage="2–3 Large Bags"
                 tech="USB · Full AC"
                 fuel="Petrol / Hybrid"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'camry'}`}
                 mainImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                 fallbackImage="/images/fleet/camry.webp"
+                vehicleName="Business Sedan"
             />
 
             <VehicleSpecs specs={specs} />
@@ -219,6 +222,7 @@ export default async function BusinessSedanPage() {
                     vehicleId={camryId}
                     vehicleImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                     vehicleType="camry"
+                    vehicleName="Business Sedan"
                     title="Business Sedan Rates | Jeddah, Makkah & Madinah"
                     subtitle="Fixed, transparent pricing for every route. No hidden fees."
                 />
@@ -230,6 +234,8 @@ export default async function BusinessSedanPage() {
 
             <VehicleCTA
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'camry'}`}
+                vehicleName="Business Sedan"
                 phoneNumber={phoneNumber}
             />
         </main>

@@ -905,6 +905,29 @@
 
 /* Prevent hover repaints during smooth scrolling */
 html.lenis-scrolling, html.lenis-scrolling * { pointer-events: none !important; }
+/* Exception: never block form interactions even if the class leaks */
+html.lenis-scrolling .booking-page-root,
+html.lenis-scrolling .booking-page-root * { pointer-events: auto !important; }
+
+/* ── Booking Page: Native Scroll Performance ─────────────────────────────
+   Lenis is fully destroyed on /booking routes. These rules ensure the native
+   scroll path is compositor-friendly and free of leftover GPU memory hints.
+   ──────────────────────────────────────────────────────────────────────── */
+.booking-page-root {
+  /* Promote the scroll container to its own compositor layer */
+  will-change: scroll-position;
+}
+
+/* Strip will-change from card/glass elements inside the booking form.
+   Accumulating will-change on many DOM nodes wastes GPU memory and can
+   paradoxically slow down scroll on lower-end devices. */
+.booking-page-root .glass,
+.booking-page-root .glass-card {
+  will-change: auto;
+  /* Retain hardware-acceleration hint for individual transforms if needed */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 
 /* ============================================================
    Arabic Text Typography

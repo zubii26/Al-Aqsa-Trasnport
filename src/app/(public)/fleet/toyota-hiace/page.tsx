@@ -195,6 +195,8 @@ export default async function ToyotaHiacePage() {
                 bgImage="/images/fleet/toyota-hiace/toyota-hiace-2026-lifestyle-open-road.jpeg"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'hiace'}`}
+                vehicleName="Toyota Hiace"
                 quickSpecs={["10-13 Passengers", "10+ Bags", "Heavy Duty AC", "Group Travel"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -207,9 +209,10 @@ export default async function ToyotaHiacePage() {
                 luggage="10+ Medium Bags"
                 tech="High Torque Engine"
                 fuel="2.8L Turbo Diesel"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'hiace'}`}
                 mainImage="/images/fleet/toyota-hiace/toyota-hiace-2026-exterior-sliding-door-open.jpeg"
                 fallbackImage="/images/fleet/toyota-hiace/toyota-hiace-2026-exterior-front-view.jpeg"
+                vehicleName="Toyota Hiace"
             />
 
             <VehicleGallery 
@@ -228,6 +231,7 @@ export default async function ToyotaHiacePage() {
                     vehicleId={hiaceId}
                     vehicleImage="/images/fleet/toyota-hiace/toyota-hiace-2026-exterior-front-view.jpeg"
                     vehicleType="hiace"
+                    vehicleName="Toyota Hiace"
                     title="Toyota Hiace Rates | Jeddah, Makkah, Madinah"
                     subtitle="Spacious seating for up to 10 passengers. Perfect for large families and groups."
                 />
@@ -239,6 +243,8 @@ export default async function ToyotaHiacePage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'hiace'}`}
+                vehicleName="Toyota Hiace"
                 phoneNumber={phoneNumber}
             />
         </main>

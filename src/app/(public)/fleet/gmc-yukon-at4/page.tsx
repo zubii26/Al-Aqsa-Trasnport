@@ -217,6 +217,8 @@ export default async function GmcYukonPage() {
                 bgImage="/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp"
                 badge="VIP Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'gmc'}`}
+                vehicleName="Gmc Yukon At4"
                 quickSpecs={["7 Passengers", "5+ Suitcases", "Tri-Zone AC", "Premium SUV"]}
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
@@ -229,9 +231,10 @@ export default async function GmcYukonPage() {
                 luggage="5+ Large Suitcases"
                 tech="Bose Audio & WiFi"
                 fuel="5.3L V8 Ecotec3"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'gmc'}`}
                 mainImage="/images/fleet/gmc-yukon/gmc-yukon-premium-dashboard-interior.webp"
                 fallbackImage="/images/fleet/gmc-yukon/gmc-yukon-exterior-vip-umrah-taxi.webp"
+                vehicleName="Gmc Yukon At4"
             />
 
             <VehicleGallery 
@@ -250,6 +253,7 @@ export default async function GmcYukonPage() {
                     vehicleId={gmcId}
                     vehicleImage="/images/fleet/gmc-yukon/gmc-yukon-side-profile-vip-umrah-taxi.webp"
                     vehicleType="gmc"
+                    vehicleName="Gmc Yukon At4"
                     title="VIP GMC Yukon Rates | Jeddah, Makkah & Madinah"
                     subtitle="The pinnacle of comfort for your spiritual journey. Transparent VIP pricing for all routes."
                 />
@@ -261,6 +265,8 @@ export default async function GmcYukonPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'gmc'}`}
+                vehicleName="Gmc Yukon At4"
                 phoneNumber={phoneNumber}
             />
 

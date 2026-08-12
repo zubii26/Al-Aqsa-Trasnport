@@ -115,6 +115,7 @@ export default async function HyundaiStarexPage() {
                 vehicleId={starexId}
                 vehicleImage="/images/fleet/starex.webp"
                 vehicleType="starex"
+                    vehicleName="Hyundai Starex"
                 title="Hyundai Starex Rates | Jeddah, Makkah, Madinah"
                 subtitle="Affordable comfort for up to 7 passengers. Great value for group travel."
             />

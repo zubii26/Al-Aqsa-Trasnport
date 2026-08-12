@@ -227,6 +227,8 @@ export default async function MercedesSClassPage() {
                 bgImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-on-road.jpeg"
                 badge="VIP Luxury Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'mercedes'}`}
+                vehicleName="Mercedes S Class"
                 quickSpecs={["3 Passengers", "2-3 Suitcases", "Thermotronic AC", "Executive Luxury"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -239,9 +241,10 @@ export default async function MercedesSClassPage() {
                 luggage="3 Large Bags"
                 tech="Burmester® 3D Sound"
                 fuel="3.0L V6 / V8"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'mercedes'}`}
                 mainImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-dashboared.jpeg"
                 fallbackImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-full-front.jpeg"
+                vehicleName="Mercedes S Class"
             />
 
             <VehicleGallery 
@@ -260,6 +263,7 @@ export default async function MercedesSClassPage() {
                     vehicleId={mercedesId}
                     vehicleImage="/images/fleet/mercedes-s-class/mercedes-s-class-2025-side-door.jpeg"
                     vehicleType="mercedes"
+                    vehicleName="Mercedes S Class"
                     title="Mercedes S-Class Rates | Jeddah, Makkah & Madinah"
                     subtitle="Exclusive VIP pricing for the ultimate journey. Unmatched luxury and privacy."
                 />
@@ -271,6 +275,8 @@ export default async function MercedesSClassPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'mercedes'}`}
+                vehicleName="Mercedes S Class"
                 phoneNumber={phoneNumber}
             />
         </main>

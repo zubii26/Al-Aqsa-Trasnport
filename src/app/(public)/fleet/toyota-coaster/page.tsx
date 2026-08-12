@@ -178,6 +178,8 @@ export default async function ToyotaCoasterPage() {
                 bgImage="/images/fleet/coaster.webp"
                 badge="Group Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'coaster'}`}
+                vehicleName="Toyota Coaster"
                 quickSpecs={["Up to 19 Passengers", "Group Luggage", "Individual AC", "PA System"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -190,9 +192,10 @@ export default async function ToyotaCoasterPage() {
                 luggage="15 Suitcases"
                 tech="PA System & Audio"
                 fuel="4.2L Diesel"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'coaster'}`}
                 mainImage="/images/fleet/coaster.webp"
                 fallbackImage="/images/fleet/coaster.webp"
+                vehicleName="Toyota Coaster"
             />
 
             <VehicleGallery 
@@ -211,6 +214,7 @@ export default async function ToyotaCoasterPage() {
                     vehicleId={coasterId}
                     vehicleImage="/images/fleet/coaster.webp"
                     vehicleType="coaster"
+                    vehicleName="Toyota Coaster"
                     title="Transparent Group Pricing"
                     subtitle="Cost-effective, reliable minibus transportation with fixed rates for group transfers."
                 />
@@ -222,6 +226,8 @@ export default async function ToyotaCoasterPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'coaster'}`}
+                vehicleName="Toyota Coaster"
                 phoneNumber={phoneNumber}
             />
         </main>

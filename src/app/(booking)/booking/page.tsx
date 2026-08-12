@@ -174,17 +174,6 @@ function BookingContent() {
         }
     }, [bookingData]);
 
-    // BeforeUnload to prevent accidental loss
-    useEffect(() => {
-        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-            if (step > 1 && step < 5) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-    }, [step]);
 
     // Sync URL with Step
     useEffect(() => {
@@ -205,6 +194,42 @@ function BookingContent() {
             router.replace(`${pathname}?step=1`, { scroll: false });
         }
     }, [pathname, router, searchParams, step]);
+
+    // ── Browser / Mobile Back Button Handler ─────────────────────────────────
+    // Intercepts native popstate events so the OS back button and mobile swipe-
+    // back gesture navigate step-by-step through the wizard rather than jumping
+    // out of the page entirely.
+    //
+    // Data safety: bookingData is a single flat state object shared across all
+    // steps. Changing `step` only changes which UI panel is rendered — it never
+    // resets any field. All step-3 contact info, dates, and step-2 vehicle
+    // selections remain intact when the user navigates backward.
+    useEffect(() => {
+        const handlePopState = () => {
+            const params = new URLSearchParams(window.location.search);
+            const urlStep = params.get('step');
+            const parsedStep = urlStep ? parseInt(urlStep, 10) : 0;
+
+            // After a confirmed booking, back should never return to the form
+            if (step === 5) {
+                router.replace('/');
+                return;
+            }
+
+            if (!isNaN(parsedStep) && parsedStep >= 1 && parsedStep <= 4) {
+                // Moving back within the wizard — sync step state and scroll up
+                setStep(parsedStep);
+                scrollToWizard();
+            } else {
+                // No valid step in URL = user backed out before step 1 → go home
+                router.replace('/');
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [step, router]);
 
     // Auto-Save Draft Logic
     useEffect(() => {
@@ -589,14 +614,19 @@ function BookingContent() {
 
     const scrollToWizard = () => {
         if (wizardRef.current) {
-            const yOffset = -120;
-            const y = wizardRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            const lenis = (window as any).__lenis;
-            if (lenis) {
-                lenis.scrollTo(y, { immediate: true });
-            } else {
-                window.scrollTo({ top: y, behavior: "instant" });
-            }
+            // Use rAF to ensure the DOM has settled after a React state update
+            // before we measure position — prevents off-by-one scroll on step change.
+            requestAnimationFrame(() => {
+                if (!wizardRef.current) return;
+                const yOffset = -120;
+                const y = wizardRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                const lenis = (window as any).__lenis;
+                if (lenis) {
+                    lenis.scrollTo(y, { immediate: true });
+                } else {
+                    window.scrollTo({ top: y, behavior: "instant" });
+                }
+            });
         }
     };
 
@@ -694,9 +724,15 @@ function BookingContent() {
 
 
     const prevStep = () => {
-        const prev = step - 1;
-        setStep(prev);
-        router.push(`${pathname}?step=${prev}`, { scroll: false });
+        if (step <= 1) {
+            // On step 1, back means leave the booking flow → go home
+            router.push('/');
+        } else {
+            // Consume the history entry that was pushed when we advanced to
+            // this step. This is the correct way to go back — router.back()
+            // pops the stack rather than adding a duplicate entry.
+            router.back();
+        }
     };
 
     const handleRouteSelect = (routeId: string) => {
@@ -2781,7 +2817,7 @@ function BookingContent() {
     };
 
     return (
-        <main className="min-h-screen bg-slate-50 pb-24">
+        <main className="booking-page-root min-h-screen bg-slate-50 pb-24">
                         {/* Integrated Booking Header with Stepper */}
             <header className="sticky top-0 z-50 w-full h-[80px] bg-white border-b border-slate-200 shadow-sm flex items-center print:hidden">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 w-full flex items-center justify-between">

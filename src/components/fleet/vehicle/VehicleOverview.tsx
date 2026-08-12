@@ -15,6 +15,7 @@ interface VehicleOverviewProps {
     bookLink: string;
     mainImage: string;
     fallbackImage: string;
+    vehicleName?: string;
 }
 
 export default function VehicleOverview({
@@ -27,7 +28,8 @@ export default function VehicleOverview({
     fuel,
     bookLink,
     mainImage,
-    fallbackImage
+    fallbackImage,
+    vehicleName
 }: VehicleOverviewProps) {
     return (
         <section className="py-16 bg-white dark:bg-slate-900">
@@ -78,7 +80,7 @@ export default function VehicleOverview({
 
                         <div>
                             <Link href={bookLink} className="inline-flex items-center gap-3 bg-slate-900 text-white hover:bg-secondary dark:bg-white dark:text-slate-900 dark:hover:bg-secondary dark:hover:text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-amber-500/30 text-lg">
-                                Book Now <ArrowRight size={20} />
+                                Book {vehicleName || 'Now'} <ArrowRight size={20} />
                             </Link>
                         </div>
                     </div>

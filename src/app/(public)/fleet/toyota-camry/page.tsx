@@ -206,6 +206,8 @@ export default async function ToyotaCamryPage() {
                 bgImage="/images/fleet/camry/toyota-camry-jeddah-to-makkah-taxi-front.webp"
                 badge="Most Popular Sedan"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'camry'}`}
+                vehicleName="Toyota Camry"
                 quickSpecs={["4 Passengers", "3-4 Bags", "Dual-Zone AC", "Premium Comfort"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -218,9 +220,10 @@ export default async function ToyotaCamryPage() {
                 luggage="3-4 Medium Bags"
                 tech="Bluetooth & USB"
                 fuel="Highly Efficient"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'camry'}`}
                 mainImage="/images/fleet/camry/toyota-camry-makkah-madinah-taxi-premium-interior.webp"
                 fallbackImage="/images/fleet/camry-hero-professional.webp"
+                vehicleName="Toyota Camry"
             />
 
             <VehicleGallery 
@@ -239,6 +242,7 @@ export default async function ToyotaCamryPage() {
                     vehicleId={camryId}
                     vehicleImage="/images/fleet/camry/toyota-camry-umrah-car-exterior-profile.webp"
                     vehicleType="camry"
+                    vehicleName="Toyota Camry"
                     title="Transparent Pricing"
                     subtitle="Competitive rates for premium service. Prices vary based on season and availability."
                 />
@@ -250,6 +254,8 @@ export default async function ToyotaCamryPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'camry'}`}
+                vehicleName="Toyota Camry"
                 phoneNumber={phoneNumber}
             />
 

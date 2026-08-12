@@ -205,6 +205,8 @@ export default async function HyundaiStariaPage() {
                 bgImage="/images/fleet/hyundai-staria/hyundai-staria-highway-drive-makkah-madinah.webp"
                 badge="Futuristic Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'staria'}`}
+                vehicleName="Hyundai Staria"
                 quickSpecs={["7 Passengers", "6-7 Bags", "Panoramic Views", "Smart Safety"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -217,9 +219,10 @@ export default async function HyundaiStariaPage() {
                 luggage="6-7 Bags"
                 tech="Premium Display"
                 fuel="High Economy"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'staria'}`}
                 mainImage="/images/fleet/hyundai-staria/hyundai-staria-dashboard-interior-view.webp"
                 fallbackImage="/images/fleet/staria.webp"
+                vehicleName="Hyundai Staria"
             />
 
             <VehicleGallery 
@@ -238,6 +241,7 @@ export default async function HyundaiStariaPage() {
                     vehicleId={stariaId}
                     vehicleImage="/images/fleet/hyundai-staria/hyundai-staria-front-view.webp"
                     vehicleType="staria"
+                    vehicleName="Hyundai Staria"
                     title="Hyundai Staria Rates | Jeddah, Makkah, Madinah"
                     subtitle="The perfect balance of modern luxury and group capacity. Ideal for families and small groups."
                 />
@@ -249,6 +253,8 @@ export default async function HyundaiStariaPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'staria'}`}
+                vehicleName="Hyundai Staria"
                 phoneNumber={phoneNumber}
             />
         </main>

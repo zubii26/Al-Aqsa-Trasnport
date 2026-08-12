@@ -20,11 +20,12 @@ interface FleetPricingGridProps {
     vehicleId: string;
     vehicleImage: string;
     vehicleType: string; // 'camry', 'gmc', 'staria', 'starex', 'hiace', 'coaster'
+    vehicleName?: string;
     title?: string;
     subtitle?: string;
 }
 
-const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId: string }) => {
+const PricingCard = ({ route, dbVehicleId, vehicleName }: { route: RouteProduct; dbVehicleId: string; vehicleName?: string }) => {
     const [quantity, setQuantity] = useState(1);
 
     const handleIncrement = () => setQuantity(prev => prev + 1);
@@ -75,15 +76,13 @@ const PricingCard = ({ route, dbVehicleId }: { route: RouteProduct; dbVehicleId:
                     </button>
                 </div>
 
-                <a
-                    href={getWhatsAppLink(`Salam Al Aqsa, I would like to book a ${route.title} trip.`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <Link
+                    href={`/booking?vehicle=${dbVehicleId}`}
                     onClick={() => trackConversion('other', `pricing_grid_${route.id}_${dbVehicleId}`)}
                     className="block w-full bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground font-bold py-1.5 px-1 sm:py-2 sm:px-4 rounded text-[10px] sm:text-xs transition-all duration-300 shadow-sm hover:shadow-secondary/25 text-center whitespace-nowrap cursor-pointer"
                 >
-                    Book Now
-                </a>
+                    Book {vehicleName || 'Now'}
+                </Link>
             </div>
         </div>
     );
@@ -93,6 +92,7 @@ export default function FleetPricingGrid({
     vehicleId,
     vehicleImage,
     vehicleType,
+    vehicleName,
     title,
     subtitle
 }: FleetPricingGridProps) {
@@ -124,7 +124,7 @@ export default function FleetPricingGrid({
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                     {routes.map((route, index) => (
                         <FadeIn key={route.id} delay={index * 0.05} scale>
-                            <PricingCard route={route} dbVehicleId={vehicleId} />
+                            <PricingCard route={route} dbVehicleId={vehicleId} vehicleName={vehicleName} />
                         </FadeIn>
                     ))}
                 </div>

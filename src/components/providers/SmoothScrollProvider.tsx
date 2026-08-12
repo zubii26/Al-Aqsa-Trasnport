@@ -14,17 +14,27 @@ export default function SmoothScrollProvider({
   // Never run Lenis inside the admin panel — it intercepts all wheel events
   // globally on the document, which prevents child elements (sidebar nav,
   // data tables, modals) from receiving native scroll events.
+  //
+  // The booking page is also excluded: the complex multi-step form feels
+  // noticeably laggy with lerp-based smooth scroll, and Lenis'
+  // pointer-events: none during scroll can swallow rapid form clicks.
   const isAdmin = pathname?.startsWith("/admin");
+  const isBooking = pathname?.startsWith("/booking");
+  const shouldDisableLenis = isAdmin || isBooking;
 
   useEffect(() => {
-    // Destroy any existing Lenis instance when entering admin routes
-    if (isAdmin) {
+    // Destroy any existing Lenis instance when entering excluded routes
+    if (shouldDisableLenis) {
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;
         delete (window as any).__lenis;
       }
-      return; // Do not initialise Lenis on admin pages
+      // Restore native scroll behaviour so the browser handles it natively
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "auto";
+      }
+      return; // Do not initialise Lenis on these pages
     }
 
     // ── Public pages: initialise Lenis smooth scroll ──────────────────────
@@ -73,7 +83,7 @@ export default function SmoothScrollProvider({
       lenisRef.current = null;
       delete (window as any).__lenis;
     };
-  }, [isAdmin]);
+  }, [shouldDisableLenis]);
 
   return <>{children}</>;
 }

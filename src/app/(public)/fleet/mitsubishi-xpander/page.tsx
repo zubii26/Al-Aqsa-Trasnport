@@ -198,6 +198,8 @@ export default async function MitsubishiXpanderPage() {
                 bgImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
                 badge="Family Choice"
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'xpander'}`}
+                vehicleName="Mitsubishi Xpander"
                 quickSpecs={["7 Passengers", "3-4 Suitcases", "Rear AC Vents", "Comfort Ride"]}
                 breadcrumbs={<Breadcrumbs />}
             />
@@ -210,9 +212,10 @@ export default async function MitsubishiXpanderPage() {
                 luggage="3-4 Large Bags"
                 tech="7-inch Display & USB"
                 fuel="1.5L Efficient"
-                bookLink={whatsappLink}
+                bookLink={`/booking?vehicle=${'xpander'}`}
                 mainImage="/images/fleet/mitsubishi-xpander/al-kiswah-cab-mitsubishi-xpander-7-seater-saudi-arabia.webp"
                 fallbackImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
+                vehicleName="Mitsubishi Xpander"
             />
 
             <VehicleGallery 
@@ -231,6 +234,7 @@ export default async function MitsubishiXpanderPage() {
                     vehicleId={xpanderId}
                     vehicleImage="/images/fleet/mitsubishi-xpander/mitsubishi-xpander-exterior-saudi-arabia.webp"
                     vehicleType="xpander"
+                    vehicleName="Mitsubishi Xpander"
                     title="Transparent Family Pricing"
                     subtitle="Affordable, family-friendly transportation with fixed rates for all major Umrah routes."
                 />
@@ -242,6 +246,8 @@ export default async function MitsubishiXpanderPage() {
 
             <VehicleCTA 
                 whatsappLink={whatsappLink}
+                bookingLink={`/booking?vehicle=${'xpander'}`}
+                vehicleName="Mitsubishi Xpander"
                 phoneNumber={phoneNumber}
             />
         </main>

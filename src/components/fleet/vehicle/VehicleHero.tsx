@@ -9,6 +9,8 @@ interface VehicleHeroProps {
     bgImage: string;
     badge?: string;
     whatsappLink: string;
+    bookingLink?: string;
+    vehicleName?: string;
     quickSpecs: string[];
     breadcrumbs?: React.ReactNode;
 }
@@ -19,6 +21,8 @@ export default function VehicleHero({
     bgImage,
     badge,
     whatsappLink,
+    bookingLink,
+    vehicleName,
     quickSpecs,
     breadcrumbs
 }: VehicleHeroProps) {
@@ -74,13 +78,31 @@ export default function VehicleHero({
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <Link 
-                            href={whatsappLink} 
-                            target="_blank"
-                            className="inline-flex items-center justify-center gap-2 bg-secondary text-white hover:bg-secondary/90 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
-                        >
-                            Book via WhatsApp <ArrowRight strokeWidth={1.25} size={20} />
-                        </Link>
+                        {bookingLink ? (
+                            <>
+                                <Link 
+                                    href={bookingLink} 
+                                    className="inline-flex items-center justify-center gap-2 bg-secondary text-white hover:bg-secondary/90 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
+                                >
+                                    Book {vehicleName || 'Now'} <ArrowRight strokeWidth={1.25} size={20} />
+                                </Link>
+                                <Link 
+                                    href={whatsappLink} 
+                                    target="_blank"
+                                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-4 rounded-full font-bold text-lg transition-all hover:-translate-y-1"
+                                >
+                                    WhatsApp
+                                </Link>
+                            </>
+                        ) : (
+                            <Link 
+                                href={whatsappLink} 
+                                target="_blank"
+                                className="inline-flex items-center justify-center gap-2 bg-secondary text-white hover:bg-secondary/90 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:-translate-y-1"
+                            >
+                                Book via WhatsApp <ArrowRight strokeWidth={1.25} size={20} />
+                            </Link>
+                        )}
                         <a 
                             href="#gallery" 
                             className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/30 hover:bg-white/20 px-8 py-4 rounded-full font-bold text-lg transition-all"
