@@ -161,31 +161,38 @@ function AdminLayoutContent({
                     </div>
                 </nav>
 
-                <div className={styles.userProfile}>
-                    <div className={styles.userAvatar}>
-                        <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold">
-                            {user.name.charAt(0)}
-                        </div>
-                    </div>
-                    {!isDesktopCollapsed && (
-                        <div className={styles.userInfo}>
-                            <div className={styles.userName}>{user.name}</div>
-                            <div className={styles.userRole}>{getRoleDisplay(user.role)}</div>
-                        </div>
-                    )}
-                    <div className={isDesktopCollapsed ? "hidden" : "block"}>
-                        <AdminThemeToggle />
-                    </div>
-                    <button
-                        onClick={handleLogout}
-                        className={`p-2 hover:bg-white/10 rounded-lg transition-colors text-red-400 ${isDesktopCollapsed ? "mt-2" : ""}`}
-                        title="Logout"
-                    >
-                        <LogOut size={18} />
-                    </button>
-                </div>
+                {/* Sidebar footer area empty since profile moved to header */}
             </aside>
             <main className={styles.main}>
+                {/* Desktop Global Header */}
+                <div className="hidden md:flex justify-end w-full mb-8">
+                    <div className="flex items-center gap-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <AdminThemeToggle />
+                        
+                        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700" />
+                        
+                        <div className="flex items-center gap-3">
+                            <div className="text-right">
+                                <div className="text-sm font-bold text-slate-900 dark:text-white leading-tight">{user.name}</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">{getRoleDisplay(user.role)}</div>
+                            </div>
+                            <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-white font-bold shadow-sm">
+                                {user.name.charAt(0)}
+                            </div>
+                        </div>
+
+                        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700" />
+                        
+                        <button
+                            onClick={handleLogout}
+                            className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex items-center gap-2"
+                            title="Logout"
+                        >
+                            <LogOut size={18} />
+                        </button>
+                    </div>
+                </div>
+
                 {children}
             </main>
         </div>

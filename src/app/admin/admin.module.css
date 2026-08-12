@@ -57,6 +57,7 @@
 
 .sidebarCollapsed {
     width: 80px;
+    padding: 0 0.75rem; /* Give content more room when collapsed */
 }
 
 .sidebarCollapsed .navLabel {
