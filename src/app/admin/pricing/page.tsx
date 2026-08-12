@@ -56,18 +56,22 @@ const PriceCell = memo(({
     };
 
     return (
-        <td className="p-3 border-b border-border text-center">
-            <div className="relative group">
+        <td className="p-2 border-b border-border text-center align-middle">
+            <div className="relative flex items-center justify-center max-w-[140px] mx-auto group">
+                <span className={`absolute left-3 text-xs pointer-events-none transition-colors ${isModified ? 'text-secondary/70' : 'text-muted-foreground'}`}>SAR</span>
                 <input
                     type="text"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     onBlur={handleBlur}
-                    className={`w-20 text-center bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none transition-all ${isModified ? 'text-secondary font-bold' : 'text-foreground'
-                        }`}
+                    className={`w-full py-2.5 pl-10 pr-3 rounded-xl text-center bg-transparent border border-transparent 
+                        hover:bg-slate-50 hover:border-slate-200 focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20
+                        dark:hover:bg-slate-800/50 dark:hover:border-slate-700 dark:focus:bg-slate-900 
+                        transition-all outline-none text-sm
+                        ${isModified ? 'text-secondary font-bold bg-secondary/5 border-secondary/20' : 'text-foreground'}`}
                 />
                 {isModified && (
-                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-secondary rounded-full animate-pulse" />
+                    <div className="absolute top-1/2 -translate-y-1/2 right-3 w-1.5 h-1.5 bg-secondary rounded-full animate-pulse" />
                 )}
             </div>
         </td>
@@ -244,25 +248,25 @@ export default function PricingPage() {
             <div className={styles.glassCard}>
                 <div className="overflow-x-auto max-h-[calc(100vh-250px)] relative">
                     <table className={styles.table}>
-                        <thead className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm shadow-sm">
+                        <thead className="sticky top-0 z-20 bg-background shadow-sm">
                             <tr>
-                                <th className="bg-slate-50/90 min-w-[200px] p-4 text-left font-bold text-muted-foreground border-b border-border">
+                                <th className="bg-slate-50/95 dark:bg-slate-900/95 min-w-[250px] p-4 text-left font-bold text-muted-foreground text-xs uppercase tracking-wider border-b border-border">
                                     Route / Vehicle
                                 </th>
                                 {vehicles.map(vehicle => (
-                                    <th key={vehicle.id} className="text-center min-w-[150px] p-4 border-b border-border bg-slate-50/90">
-                                        <div className="font-bold text-foreground">{vehicle.name}</div>
+                                    <th key={vehicle.id} className="text-center min-w-[160px] p-4 border-b border-border bg-slate-50/95 dark:bg-slate-900/95">
+                                        <div className="font-bold text-foreground text-xs uppercase tracking-wider">{vehicle.name}</div>
                                     </th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
                             {filteredRoutes.map(route => (
-                                <tr key={route.id} className="hover:bg-slate-50/30 transition-colors">
-                                    <td className="font-medium p-4 border-b border-border bg-slate-50/10 sticky left-0 backdrop-blur-[2px]">
+                                <tr key={route.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                                    <td className="font-medium p-4 border-b border-border bg-background group-hover:bg-slate-50/50 dark:group-hover:bg-slate-800/30 sticky left-0 z-10 transition-colors">
                                         <div className="flex flex-col">
-                                            <span className="text-foreground font-semibold">{route.origin}</span>
-                                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                            <span className="text-foreground font-semibold text-sm">{route.origin}</span>
+                                            <span className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
                                                 to <span className="font-medium text-foreground">{route.destination}</span>
                                             </span>
                                         </div>
