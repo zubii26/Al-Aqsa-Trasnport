@@ -6,7 +6,7 @@ import Image from 'next/image';
 import FadeIn from '@/components/common/FadeIn';
 import ServiceLocationsGrid from './ServiceLocationsGrid';
 import { MapPin, Clock, ShieldCheck, Star, ChevronDown, CheckCircle2 } from 'lucide-react';
-import { POPULAR_ROUTES, VEHICLE_KEYWORDS } from '@/data/seo-keywords';
+import { POPULAR_ROUTES } from '@/data/seo-keywords';
 
 export default function ExpandedSEOContent() {
 
@@ -31,10 +31,6 @@ export default function ExpandedSEOContent() {
                 "name": `${route.from} to ${route.to} Taxi`,
                 "description": `Private transfer from ${route.from} to ${route.to}. Approx distance: ${route.distance}.`
             }
-        })),
-        "vehicle": VEHICLE_KEYWORDS.map(vehicle => ({
-            "@type": "Vehicle",
-            "name": vehicle
         }))
     };
 
