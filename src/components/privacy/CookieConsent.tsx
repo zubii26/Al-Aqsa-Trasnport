@@ -88,13 +88,9 @@ export default function CookieConsent() {
                             <div className={styles.textContent}>
                                 <div className={styles.titleWrapper}>
                                     <span className={styles.titleEnglish}>Your Privacy Matters</span>
-                                    <span className={styles.titleArabic}>| خصوصيتك تهمنا</span>
                                 </div>
                                 <p className={styles.descEnglish}>
                                     We use cookies to enhance your experience, provide secure booking, and deliver personalized pilgrim services.
-                                </p>
-                                <p className={styles.descArabic} dir="rtl">
-                                    نستخدم ملفات تعريف الارتباط لتحسين تجربتك وضمان حجز آمن لضيوف الرحمن.
                                 </p>
                             </div>
                         </div>
@@ -102,15 +98,12 @@ export default function CookieConsent() {
                         <div className={styles.actions}>
                             <button onClick={handleAccept} className={styles.btnAccept}>
                                 <span>Accept All</span>
-                                <span className="font-arabic text-xs opacity-90">موافق</span>
                             </button>
                             <button onClick={handleReject} className={styles.btnReject}>
                                 <span>Reject</span>
-                                <span className="font-arabic text-xs opacity-70">رفض</span>
                             </button>
                             <Link href="/cookie-preferences" className={styles.linkManage}>
                                 <span>Preferences</span>
-                                <span className="font-arabic text-xs opacity-70">إعدادات</span>
                             </Link>
                         </div>
                     </div>

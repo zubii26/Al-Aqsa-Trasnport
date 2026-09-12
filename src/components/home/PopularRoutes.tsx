@@ -3,8 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Clock } from 'lucide-react';
-import GlassCard from '@/components/ui/GlassCard';
+import { ArrowRight } from 'lucide-react';
 
 const POPULAR_ROUTES = [
     {
@@ -85,48 +84,29 @@ export default function PopularRoutes() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {POPULAR_ROUTES.map((route) => (
-                        <div key={route.id} className="group relative block h-full">
-                            <GlassCard className="h-full hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 overflow-hidden border border-border">
-                                <Link href={route.link} className="absolute inset-0 z-10">
-                                    <span className="sr-only">View {route.title}</span>
-                                </Link>
-                                <div className="flex flex-col h-full">
-                                    <div className="relative h-48 w-full overflow-hidden">
-                                        <Image
-                                            src={route.image}
-                                            alt={route.title}
-                                            fill
-                                            loading="lazy"
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                                        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end text-white z-10">
-                                            <div>
-                                                <div className="flex items-center gap-1 text-xs font-medium mb-1">
-                                                    <Clock size={12} className="text-secondary" />
-                                                    {route.time}
-                                                </div>
-                                                <div className="flex items-center gap-1 text-xs font-medium">
-                                                    <MapPin size={12} className="text-secondary" />
-                                                    {route.distance}
-                                                </div>
-                                            </div>
-                                            <span className="text-sm font-bold text-secondary">
-                                                {route.price}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="p-5 flex flex-col flex-grow">
-                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-secondary transition-colors">
-                                            {route.title}
-                                        </h3>
-                                    </div>
-                                </div>
-                            </GlassCard>
-                        </div>
+                        <Link 
+                            key={route.id} 
+                            href={route.link}
+                            className="group relative block h-[200px] lg:h-[260px] w-full rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+                        >
+                            <span className="sr-only">View {route.title}</span>
+                            <Image
+                                src={route.image}
+                                alt={route.title}
+                                fill
+                                loading="lazy"
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            />
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors z-10" />
+                            <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
+                                <h3 className="text-white font-bold text-center text-xl lg:text-2xl drop-shadow-md group-hover:text-secondary transition-colors leading-tight">
+                                    {route.title}
+                                </h3>
+                            </div>
+                        </Link>
                     ))}
                 </div>
                 

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import FAQSection from '@/components/services/FAQSection';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
@@ -243,39 +244,35 @@ export default function PrivacyPolicyPage() {
 
                         <hr className="my-12 border-slate-200 dark:border-slate-700" />
 
-                        <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
-                        
-                        <div className="space-y-6">
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">Is my credit card information safe when I book online?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">Yes. We use PCI-compliant payment gateways and SSL encryption to ensure your secure online booking. We never store your full credit card information on our servers.</p>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">Will my booking details be shared with anyone else?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">Your booking details remain confidential. We only share essential information, such as your pickup location and name, with your assigned driver to coordinate your hotel transfer in Saudi Arabia. Personal information is never sold to third parties.</p>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">Do you keep my information after my trip is completed?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">We retain your information only as long as necessary for legal, accounting, and customer support purposes. After this period, it is securely removed from our active systems.</p>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">Can I request to have my personal data deleted?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">Absolutely. In compliance with GDPR principles, you have the right to request the deletion of your personal data at any time by contacting our support team.</p>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">How do you contact me regarding my booking?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">We primarily use email for booking confirmations and receipts. For real-time updates, driver coordination, and immediate support during your journey, we use WhatsApp to ensure a smooth luxury chauffeur service experience.</p>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mt-0 mb-2">Is my data protected if I am booking from outside Saudi Arabia?</h4>
-                                <p className="mb-0 text-slate-600 dark:text-slate-300">Yes. Whether you are booking from the UK, USA, Europe, or the GCC, we adhere to strict international data protection standards, including UK GDPR, to ensure international travellers are protected.</p>
-                            </div>
-                        </div>
+                        <FAQSection 
+                            title="Frequently Asked Questions"
+                            items={[
+                                {
+                                    question: "Is my credit card information safe when I book online?",
+                                    answer: "Yes. We use PCI-compliant payment gateways and SSL encryption to ensure your secure online booking. We never store your full credit card information on our servers."
+                                },
+                                {
+                                    question: "Will my booking details be shared with anyone else?",
+                                    answer: "Your booking details remain confidential. We only share essential information, such as your pickup location and name, with your assigned driver to coordinate your hotel transfer in Saudi Arabia. Personal information is never sold to third parties."
+                                },
+                                {
+                                    question: "Do you keep my information after my trip is completed?",
+                                    answer: "We retain your information only as long as necessary for legal, accounting, and customer support purposes. After this period, it is securely removed from our active systems."
+                                },
+                                {
+                                    question: "Can I request to have my personal data deleted?",
+                                    answer: "Absolutely. In compliance with GDPR principles, you have the right to request the deletion of your personal data at any time by contacting our support team."
+                                },
+                                {
+                                    question: "How do you contact me regarding my booking?",
+                                    answer: "We primarily use email for booking confirmations and receipts. For real-time updates, driver coordination, and immediate support during your journey, we use WhatsApp to ensure a smooth luxury chauffeur service experience."
+                                },
+                                {
+                                    question: "Is my data protected if I am booking from outside Saudi Arabia?",
+                                    answer: "Yes. Whether you are booking from the UK, USA, Europe, or the GCC, we adhere to strict international data protection standards, including UK GDPR, to ensure international travellers are protected."
+                                }
+                            ]}
+                        />
                         
                         <div className="mt-12 p-6 bg-secondary/10 rounded-2xl border border-secondary/20 flex flex-col sm:flex-row items-center justify-between gap-6">
                             <div>

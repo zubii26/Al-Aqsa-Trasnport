@@ -92,32 +92,32 @@ export default function ArticleGrid({
                     return (
                         <FadeIn key={linkSlug} delay={index * 0.05}>
                             <Link href={`/blog/${linkSlug}`} className="group h-full block">
-                                <article className="h-full flex flex-col bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 relative isolate">
+                                <article className="h-full flex flex-col relative group">
 
                                     {/* Image */}
-                                    <div className="relative h-64 overflow-hidden">
+                                    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl mb-6">
                                         <Image
                                             src={article.image}
                                             alt={article.alt}
                                             fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60" />
+                                        <div className="absolute inset-0 bg-slate-950/10 group-hover:bg-transparent transition-colors duration-500" />
 
-                                        {/* Category Badge */}
+                                        {/* Category Badge - Adjusted for premium look */}
                                         <div className="absolute top-4 left-4">
-                                            <span className="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-secondary dark:text-secondary rounded-full shadow-lg">
+                                            <span className="px-3 py-1.5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 dark:text-white rounded-full shadow-sm">
                                                 {article.category}
                                             </span>
                                         </div>
                                     </div>
 
-                                    {/* Content */}
-                                    <div className="p-6 flex flex-col flex-1">
-                                        <div className="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 mb-4">
+                                    {/* Content (No padding, flush with image) */}
+                                    <div className="flex flex-col flex-1 px-1">
+                                        <div className="flex items-center gap-3 text-xs font-medium text-slate-500 dark:text-slate-400 mb-3 tracking-wide">
                                             <span className="flex items-center gap-1.5">
-                                                <CalendarDays size={14} className="text-secondary" />
+                                                <CalendarDays size={14} className="text-slate-400" />
                                                 {// Handle both Date object and string date
                                                     new Date(article.date).toLocaleDateString(undefined, {
                                                         month: 'short',
@@ -127,12 +127,12 @@ export default function ArticleGrid({
                                             </span>
                                             <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
                                             <span className="flex items-center gap-1.5">
-                                                <Clock size={14} className="text-secondary" />
+                                                <Clock size={14} className="text-slate-400" />
                                                 {article.readTime}
                                             </span>
                                         </div>
 
-                                        <h3 className="text-xl font-bold  text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-tight group-hover:text-secondary transition-colors">
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                                             {article.title}
                                         </h3>
 
@@ -140,14 +140,11 @@ export default function ArticleGrid({
                                             {article.excerpt}
                                         </p>
 
-                                        <div className="flex items-center gap-2 text-sm font-bold text-secondary uppercase tracking-wide group/btn">
+                                        <div className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white group/btn">
                                             Read Article
-                                            <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                                            <ArrowRight size={16} className="text-primary transition-transform group-hover/btn:translate-x-1" />
                                         </div>
                                     </div>
-
-                                    {/* Golden Glow Border Effect on Hover */}
-                                    <div className="absolute inset-0 border-2 border-secondary/0 group-hover:border-secondary/10 rounded-3xl transition-all duration-500 pointer-events-none" />
                                 </article>
                             </Link>
                         </FadeIn>

@@ -2958,7 +2958,7 @@ function BookingContent() {
                                                     <button
                                                         onClick={nextStep}
                                                         disabled={isSubmitting}
-                                                        className={`ml-auto flex items-center justify-center max-md:flex-1 gap-1 md:gap-2 px-4 md:px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 min-w-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                                        className={`w-full flex-1 flex items-center justify-center gap-1 md:gap-2 px-4 md:px-8 py-3 bg-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#B38E2D]/90 transition-all hover:-translate-y-1 active:translate-y-0 min-w-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                                     >
                                                         <span className="truncate">{step === 4 ? (isSubmitting ? 'Securing Ride...' : 'Secure Your Safe Ride') : 'Continue'}</span>
                                                         {!isSubmitting && <ArrowRight strokeWidth={1.25} size={20} className="shrink-0" />}

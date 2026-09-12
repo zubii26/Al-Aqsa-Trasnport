@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './FAQSection.module.css';
-import FadeIn from '@/components/common/FadeIn';
-import GlassCard from '@/components/ui/GlassCard';
 
 interface FAQItem {
     question: string;
@@ -45,12 +43,10 @@ export default function FAQSection({ items = defaultFAQs, title = "Frequently As
     return (
         <section className={styles.section}>
             <div className="container">
-                <FadeIn>
-                    <h2 className={styles.sectionTitle}>{title}</h2>
-                </FadeIn>
+                <h2 className={styles.sectionTitle}>{title}</h2>
                 <div className={styles.container}>
                     {items.map((faq, index) => (
-                        <GlassCard key={index} delay={index * 0.1} className={`p-0 overflow-hidden ${activeAccordion === index ? styles.active : ''}`}>
+                        <div key={index} className={`${styles.item} ${activeAccordion === index ? styles.active : ''}`}>
                             <button
                                 className={styles.question}
                                 onClick={() => toggleAccordion(index)}
@@ -61,7 +57,7 @@ export default function FAQSection({ items = defaultFAQs, title = "Frequently As
                             <div className={styles.answer}>
                                 <p style={{ paddingTop: '1rem' }}>{faq.answer}</p>
                             </div>
-                        </GlassCard>
+                        </div>
                     ))}
                 </div>
             </div>

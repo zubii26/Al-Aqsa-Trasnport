@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { topHotels } from '@/data/hotels';
 import QuickBookingForm from '@/components/home/QuickBookingForm';
 import TrustSection from '@/components/about/TrustSection';
-import FleetShowcase from '@/components/home/FleetShowcase';
+import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
 import Image from 'next/image';
 import { Star, MapPin, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
@@ -185,7 +185,7 @@ export default async function HotelTransferPage({ params }: Props) {
                     </div>
                 </div>
                 
-                <FleetShowcase />
+                <FleetCarouselWrapper />
                 <TrustSection />
             </div>
         </main>

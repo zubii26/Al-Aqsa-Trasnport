@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Hero from '@/components/common/Hero';
+import FAQSection from '@/components/services/FAQSection';
 import FadeIn from '@/components/common/FadeIn';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +10,6 @@ import {
     Star, Users, Shield, ArrowRight, ThumbsUp, CalendarCheck,
     MessageSquare, Check, X, Phone
 } from 'lucide-react';
-import FAQSection from '@/components/services/FAQSection';
 
 export const metadata: Metadata = {
     title: 'Haramain Train Station Transfers | Private Taxi',
@@ -145,8 +145,8 @@ export default function TrainStationTransferPage() {
                         { icon: <CheckCircle2 />, title: "No Hidden Charges", desc: "Fixed pricing, no surprises." }
                     ].map((feature, idx) => (
                         <FadeIn key={idx} delay={idx * 0.1}>
-                            <div className="card-premium h-full">
-                                <div className="bg-secondary/10 dark:bg-secondary/20 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-secondary">
+                            <div className="card-premium h-full flex flex-col group">
+                                <div className="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors duration-300">
                                     {feature.icon}
                                 </div>
                                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
@@ -366,21 +366,10 @@ export default function TrainStationTransferPage() {
             </section>
 
             {/* 10. FAQ Section */}
-            <section className="py-16 bg-white dark:bg-slate-950">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <FadeIn>
-                        <h2 className="text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {trainFAQs.map((faq, i) => (
-                                <div key={i} className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-                                    <h3 className="font-bold text-lg mb-2 text-slate-800 dark:text-slate-200">{faq.question}</h3>
-                                    <p className="text-slate-600 dark:text-slate-400">{faq.answer}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </FadeIn>
-                </div>
-            </section>
+            <FAQSection 
+                title="Frequently Asked Questions"
+                items={trainFAQs}
+            />
 
             {/* 11. Customer Reviews */}
             <section className="py-16 md:py-24 bg-slate-900 text-white relative overflow-hidden">

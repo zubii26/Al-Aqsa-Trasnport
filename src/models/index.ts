@@ -4,6 +4,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IVehicle extends Document {
     id?: string;
+    slug?: string;
     name: string;
     image: string;
     passengers: number;

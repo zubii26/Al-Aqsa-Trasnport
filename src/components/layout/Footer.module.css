@@ -1,7 +1,7 @@
 .footer {
     background: linear-gradient(to top, hsl(var(--card)) 0%, rgba(255, 255, 255, 0.95) 100%);
     color: hsl(var(--foreground));
-    padding: 96px 0 48px; /* 8-point system */
+    padding: 80px 0 32px; /* Tighter vertical padding */
     position: relative;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 -20px 60px -10px rgba(0, 0, 0, 0.03);
@@ -36,7 +36,7 @@
     display: grid;
     grid-template-columns: 1.5fr 0.8fr 1.2fr 1.2fr;
     gap: 48px; /* 8-point system */
-    margin-bottom: 80px; /* 8-point system */
+    margin-bottom: 40px; /* Reduced from 80px to remove extra space */
 }
 
 @media (max-width: 1280px) {
@@ -55,7 +55,7 @@
 
 @media (max-width: 640px) {
     .footer {
-        padding: 3rem 0 2rem;
+        padding: 2.5rem 0 1.5rem;
     }
 
     .container {
@@ -64,8 +64,8 @@
 
     .grid {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
-        margin-bottom: 3rem;
+        gap: 2rem;
+        margin-bottom: 2rem;
     }
 
     .contactItem {
@@ -165,14 +165,14 @@
 
 /* Headings with Gold Underline */
 .heading {
-
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: hsl(var(--foreground));
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     position: relative;
-    padding-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
     display: inline-block;
     font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
 .heading::after {
@@ -180,15 +180,15 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 40px;
-    height: 3px;
+    width: 30px;
+    height: 2px;
     background: hsl(var(--secondary));
     border-radius: 2px;
     transition: width 0.3s ease;
 }
 
 .column:hover .heading::after {
-    width: 60px;
+    width: 45px;
 }
 
 /* Links */
@@ -207,7 +207,8 @@
     transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
-    min-height: 44px; /* Strict 44px touch target */
+    padding: 0.35rem 0;
+    font-size: 0.95rem;
 }
 
 .links a:hover {
@@ -246,20 +247,18 @@
 }
 
 .socialIcon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     color: hsl(var(--muted-foreground));
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
 }
 
 .socialIcon:hover {
@@ -305,8 +304,8 @@
 
 /* Newsletter */
 .newsletter {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -325,18 +324,18 @@
 
 .input {
     width: 100%;
-    background: hsl(var(--muted));
-    border: 1px solid transparent;
-    padding: 1rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.85rem 1.25rem;
     padding-right: 3.5rem;
-    border-radius: 12px;
+    border-radius: 10px;
     color: hsl(var(--foreground));
     outline: none;
-    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .input:focus {
-    background: hsl(var(--background));
+    background: transparent;
     border-color: hsl(var(--secondary));
     box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
 }
@@ -365,7 +364,7 @@
 /* Bottom Bar */
 .bottom {
     border-top: 1px solid hsl(var(--border));
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

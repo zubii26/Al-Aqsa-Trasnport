@@ -39,11 +39,8 @@ export default function VehicleHero({
                     sizes="100vw"
                     quality={100}
                 />
-                {/* Premium Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent"></div>
-                {/* Subtle darkening for text readability with blend mode */}
-                <div className="absolute inset-0 bg-slate-900/40 mix-blend-multiply"></div>
+                {/* Premium clean solid overlay */}
+                <div className="absolute inset-0 bg-slate-950/70"></div>
             </div>
 
             <div className="container mx-auto px-4 relative z-10">

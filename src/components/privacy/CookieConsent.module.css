@@ -6,11 +6,11 @@
     width: 100%;
     z-index: 9999;
     padding: 1rem;
-    background: rgba(15, 23, 42, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .banner::before {
@@ -85,30 +85,16 @@
 }
 
 .titleEnglish {
-    color: #ffffff;
+    color: #0f172a;
     font-size: 1rem;
     font-weight: 600;
 }
 
-.titleArabic {
-    color: #d4af37;
-    font-size: 0.95rem;
-    opacity: 0.9;
-}
-
 .descEnglish {
-    color: #cbd5e1;
+    color: #475569;
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 0;
-}
-
-.descArabic {
-    color: #94a3b8;
-    font-size: 0.8rem;
-    line-height: 1.4;
-    margin: 0;
-    margin-top: 0.15rem;
 }
 
 .actions {
@@ -143,8 +129,8 @@
 
 .btnReject {
     background: transparent;
-    color: #e2e8f0;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #475569;
+    border: 1px solid #cbd5e1;
     padding: 0.6rem 1.25rem;
     border-radius: 8px;
     font-weight: 500;
@@ -158,13 +144,13 @@
 }
 
 .btnReject:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a;
 }
 
 .linkManage {
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.85rem;
     font-weight: 500;
     text-decoration: none;
@@ -176,7 +162,7 @@
 }
 
 .linkManage:hover {
-    color: #ffffff;
+    color: #0f172a;
     text-decoration: underline;
     text-underline-offset: 4px;
 }

@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import FleetCarousel from './FleetCarousel';
+import FleetCarousel from '@/components/fleet/FleetCarousel';
 import { vehicleService } from '@/services/vehicleService';
-import { Vehicle as FleetVehicle } from './FleetCarousel';
+import type { Vehicle as FleetVehicle } from '@/components/fleet/types';
 
 import { getSettings } from '@/lib/settings-storage';
 
@@ -23,7 +23,20 @@ async function FleetCarouselFetcher() {
             price: v.price
         }));
 
-    return <FleetCarousel vehicles={carouselVehicles} discount={settings.discount} />;
+    return (
+        <section aria-label="Vehicle fleet">
+            <noscript>
+                <ul>
+                    {carouselVehicles.map((v) => (
+                        <li key={v.id}>
+                            {v.name} — {v.price} / trip ({v.passengers} passengers, {v.luggage} bags)
+                        </li>
+                    ))}
+                </ul>
+            </noscript>
+            <FleetCarousel vehicles={carouselVehicles} />
+        </section>
+    );
 }
 
 export default function FleetCarouselWrapper() {

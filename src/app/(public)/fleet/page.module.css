@@ -1,9 +1,0 @@
-.bookingSection {
-    padding: 4rem 0;
-    background: linear-gradient(to top, var(--muted), transparent);
-}
-
-.bookingWrapper {
-    max-width: 800px;
-    margin: 0 auto;
-}

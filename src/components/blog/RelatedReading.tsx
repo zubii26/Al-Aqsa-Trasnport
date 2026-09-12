@@ -54,25 +54,25 @@ export default async function RelatedReading({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {selectedPosts.map((post, index) => (
-                        <GlassCard key={post.id} delay={0.1 * index} className="p-0 overflow-hidden group h-full flex flex-col">
+                        <div key={post.id} className="group h-full flex flex-col">
                             <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
-                                <div className="relative h-48 w-full overflow-hidden">
+                                <div className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-2xl mb-6">
                                     <div
-                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                                         style={{ backgroundImage: `url(${post.image})` }}
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                    <div className="absolute inset-0 bg-slate-950/10 group-hover:bg-transparent transition-colors duration-500" />
                                 </div>
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <span className="text-xs font-bold text-secondary mb-2 uppercase tracking-wider">{post.category}</span>
-                                    <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-2">{post.title}</h3>
-                                    <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-3 mb-4 flex-grow">{post.excerpt}</p>
-                                    <span className="flex items-center gap-2 text-secondary font-bold mt-auto group-hover:gap-3 transition-all">
-                                        Read Article <ArrowRight size={16} />
+                                <div className="flex flex-col flex-grow px-1">
+                                    <span className="text-[10px] font-bold text-slate-500 mb-3 uppercase tracking-[0.2em]">{post.category}</span>
+                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 leading-snug line-clamp-2 group-hover:text-primary transition-colors">{post.title}</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">{post.excerpt}</p>
+                                    <span className="flex items-center gap-2 text-slate-900 dark:text-white text-sm font-semibold mt-auto group-hover:gap-3 transition-all">
+                                        Read Article <ArrowRight size={16} className="text-primary" />
                                     </span>
                                 </div>
                             </Link>
-                        </GlassCard>
+                        </div>
                     ))}
                 </div>
                 

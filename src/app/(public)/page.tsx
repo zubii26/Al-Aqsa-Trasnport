@@ -116,15 +116,8 @@ export default async function Home() {
           />
           
           {/* Professional Overlays */}
-          {/* Dark gradient overlay for readability and premium feel */}
-          <div className="absolute inset-0 bg-slate-950/80 bg-gradient-to-t from-slate-950 via-slate-900/80 to-slate-950/90" />
-          
-          {/* Glowing orbs for depth */}
-          <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-secondary/20 blur-[120px] mix-blend-screen opacity-60" />
-          <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-secondary/15 blur-[100px] mix-blend-screen opacity-60" />
-          
-          {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 mix-blend-overlay" />
+          {/* Elegant dark overlay to reveal image while keeping text readable */}
+          <div className="absolute inset-0 bg-slate-950/70" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4">

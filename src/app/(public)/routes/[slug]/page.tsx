@@ -5,6 +5,7 @@ import Image from 'next/image';
 import pricingData from '@/data/pricing.json';
 import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
+import FAQSection from '@/components/services/FAQSection';
 import { ArrowRight, Clock, MapPin, CheckCircle, Car, User, Navigation, Info } from 'lucide-react';
 import FadeIn from '@/components/common/FadeIn';
 import CustomerGallery from '@/components/home/CustomerGallery';
@@ -252,43 +253,27 @@ export default function RouteDetail({ params }: Props) {
                 </div>
             </section>
 
-            {/* FAQs Section */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <div className="text-center mb-12">
-                        <Info className="w-12 h-12 text-[#D4AF37] mx-auto mb-4 opacity-80" />
-                        <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
-                        <p className="text-slate-500">Everything you need to know about this specific route.</p>
-                    </div>
-
-                    <Accordion type="single" collapsible className="w-full bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger className="text-left font-bold text-slate-800 dark:text-slate-200">Does the price include all tolls and taxes?</AccordionTrigger>
-                            <AccordionContent className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">
-                                Yes, the price shown is the final total price per vehicle (not per person). It includes all road tolls, parking fees, fuel, and driver allowances. There are absolutely no hidden charges.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger className="text-left font-bold text-slate-800 dark:text-slate-200">Will the driver wait if my flight is delayed?</AccordionTrigger>
-                            <AccordionContent className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">
-                                Yes! We monitor all incoming flights. If your flight is delayed, we adjust the pickup time automatically at no extra cost. Your driver will be waiting for you when you land.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-3">
-                            <AccordionTrigger className="text-left font-bold text-slate-800 dark:text-slate-200">Can we stop at the Miqat?</AccordionTrigger>
-                            <AccordionContent className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">
-                                Absolutely. If you are traveling from Madinah to Makkah, or Taif to Makkah, stopping at the designated Miqat for Ihram is included in the service at no additional cost. Just let your driver know.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-4">
-                            <AccordionTrigger className="text-left font-bold text-slate-800 dark:text-slate-200">How do I find my driver at the airport?</AccordionTrigger>
-                            <AccordionContent className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">
-                                Our driver will wait at the arrivals hall holding a signboard with your name on it. We will also share the driver's WhatsApp number and car details with you 24 hours before your trip.
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div>
-            </section>
+            <FAQSection 
+                title="Frequently Asked Questions"
+                items={[
+                    {
+                        question: "Does the price include all tolls and taxes?",
+                        answer: "Yes, the price shown is the final total price per vehicle (not per person). It includes all road tolls, parking fees, fuel, and driver allowances. There are absolutely no hidden charges."
+                    },
+                    {
+                        question: "Will the driver wait if my flight is delayed?",
+                        answer: "Yes! We monitor all incoming flights. If your flight is delayed, we adjust the pickup time automatically at no extra cost. Your driver will be waiting for you when you land."
+                    },
+                    {
+                        question: "Can we stop at the Miqat?",
+                        answer: "Absolutely. If you are traveling from Madinah to Makkah, or Taif to Makkah, stopping at the designated Miqat for Ihram is included in the service at no additional cost. Just let your driver know."
+                    },
+                    {
+                        question: "How do I find my driver at the airport?",
+                        answer: "Our driver will wait at the arrivals hall holding a signboard with your name on it. We will also share the driver's WhatsApp number and car details with you 24 hours before your trip."
+                    }
+                ]}
+            />
 
             {/* Social Proof */}
             <CustomerGallery />

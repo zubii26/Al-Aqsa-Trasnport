@@ -197,6 +197,19 @@ The codebase relies on raw HTML `<button>` tags with copy-pasted Tailwind classe
 **States:**
 - Focus: `border-color: #D4AF37` and gold box-shadow ring.
 
+### 8.5 Accordions / FAQs
+
+**Anatomy:** Flat, single-layer HTML structure utilizing native `div`s with clean CSS transitions.
+**Rules:**
+- **No Double Padding:** Avoid wrapping accordion items in generic container components like `GlassCard` as this creates a clunky "box within a box" aesthetic.
+- **No Lazy Loading:** FAQ sections must load instantly to prevent layout shift and scroll blocking. Do not use staggered entrance animations (like `FadeIn`) on heavily text-based FAQ content.
+
+### 8.6 Background Imagery & Overlays
+
+**Rules:**
+- **Clean Solid Overlay:** Background images in Hero or CTA sections MUST use a single, solid dark overlay (e.g., `bg-slate-950/70` or `rgba(2, 6, 23, 0.7)`) to reveal the underlying image while keeping text completely readable.
+- **Prohibited Effects:** Complex multi-layered gradients (e.g., `bg-gradient-to-t via-slate-900`), `backdrop-filter: blur()`, glowing background orbs over photos, and `.mix-blend` layers on photographs are strictly prohibited. These effects muddy the crisp photography and make the premium brand look cheap.
+
 *⚠️ NOTE: For components 8.4 through 8.22, physical implementation varies wildly due to the absence of a strict atomic UI component library. Most are bespoke implementations per page.*
 
 ---

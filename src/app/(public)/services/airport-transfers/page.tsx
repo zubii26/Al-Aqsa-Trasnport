@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '@/components/common/Hero';
+import FAQSection from '@/components/services/FAQSection';
 import FadeIn from '@/components/common/FadeIn';
 import { Plane, Clock, ShieldCheck, MapPin, UserCheck, Smartphone, CheckCircle2, Star } from 'lucide-react';
 import Link from 'next/link';
@@ -297,21 +298,10 @@ export default async function AirportTransfersPage() {
             </section>
 
             {/* FAQ Section */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container max-w-4xl">
-                    <FadeIn>
-                        <h2 className="text-3xl font-bold text-center mb-12 ">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {airportFAQs.map((faq, i) => (
-                                <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-                                    <h3 className="font-bold text-lg mb-2 text-slate-800 dark:text-slate-200">{faq.q}</h3>
-                                    <p className="text-muted-foreground">{faq.a}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </FadeIn>
-                </div>
-            </section>
+            <FAQSection 
+                title="Frequently Asked Questions"
+                items={airportFAQs.map(faq => ({ question: faq.q, answer: faq.a }))}
+            />
 
             {/* Final CTA */}
             <section className="py-20 bg-secondary text-white text-center">
