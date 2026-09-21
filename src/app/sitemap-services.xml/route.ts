@@ -21,11 +21,9 @@ export async function GET() {
         '/services/makkah-madinah-taxi',
         '/services/ziyarat-tours',
         '/services/madinah-airport-transfer',
-        '/services/makkah-jeddah-taxi',
         '/services/intercity-transfer',
         '/services/airport-transfers',
         '/services/ramadan-transport',
-        '/services/taif-city-tour',
         '/routes'
     ];
 
