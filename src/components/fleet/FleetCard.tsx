@@ -47,7 +47,7 @@ export function FleetCard({ vehicle, isActive, priority }: FleetCardProps) {
                 Starting from
             </span>
             <p itemProp="offers" className={`font-bold text-secondary flex items-baseline gap-1 ${isActive ? 'text-2xl' : 'text-lg'}`}>
-                {vehicle.price.replace(/from\s+/i, '').trim()}
+                {vehicle.price ? vehicle.price.replace(/from\s+/i, '').trim() : 'Contact Us'}
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400 lowercase">/ trip</span>
             </p>
         </div>

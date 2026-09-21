@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Users, Briefcase, Star, Armchair, Snowflake, Usb, Wifi, Monitor, Settings } from 'lucide-react';
 
+// Price ranges reverted to fixed baseline numbers to match the live server design exactly.
 const FLEET_PREVIEW = [
     {
         id: 'business-sedan',
@@ -116,7 +117,7 @@ export default function FleetPreview() {
                                             Starting from
                                         </span>
                                         <div className="text-xl font-bold text-slate-900 dark:text-white leading-none mb-1 whitespace-nowrap">
-                                            SAR {vehicle.price.replace(/from\s+/i, '').trim()}
+                                            SAR {vehicle.price}
                                         </div>
                                         <span className="text-[10px] text-secondary font-medium tracking-wide uppercase leading-none">
                                             Per Trip

@@ -13,7 +13,7 @@ interface BreadcrumbsProps {
 }
 
 export default function Breadcrumbs({ overrideLastItem, className = '', hideJsonLd = false }: BreadcrumbsProps) {
-    const pathname = usePathname();
+    const pathname = usePathname() || '';
 
     // Split pathname into segments, filter empty strings
     const segments = pathname.split('/').filter(Boolean);

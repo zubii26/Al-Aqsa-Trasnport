@@ -1,12 +1,11 @@
 import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { Suspense } from 'react';
-import FleetCarouselWrapper from '@/components/home/FleetCarouselWrapper';
+import FleetStageWrapper from '@/components/fleet-stage/FleetStageWrapper';
 import ComparisonTable from '@/components/fleet/ComparisonTable';
 import FeatureHighlights from '@/components/fleet/FeatureHighlights';
 import FadeIn from '@/components/common/FadeIn';
 import { getSectionContent, getSectionImage, getCustomField } from '@/lib/content-service';
-import { vehicleService } from '@/services/vehicleService';
 import SchemaInjector from '@/components/SchemaInjector';
 import { fleetCollectionSchema, fleetBreadcrumbSchema } from '@/lib/schema/fleet-schema';
 import DecisionGuide from '@/components/fleet/DecisionGuide';
@@ -78,9 +77,7 @@ export default async function FleetPage() {
                 breadcrumbs={<Breadcrumbs hideJsonLd />}
             />
             <FadeIn>
-                <Suspense fallback={<div className="h-[800px] w-full bg-muted animate-pulse rounded-xl" />}>
-                    <FleetCarouselWrapper />
-                </Suspense>
+                <FleetStageWrapper />
             </FadeIn>
             <FadeIn>
                 <DecisionGuide />

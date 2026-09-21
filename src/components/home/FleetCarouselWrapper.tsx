@@ -9,18 +9,17 @@ async function FleetCarouselFetcher() {
     const vehicles = await vehicleService.getVehicles();
     const settings = await getSettings();
 
-    // Map to FleetCarousel format
     const carouselVehicles: FleetVehicle[] = vehicles
         .filter(v => v.isActive)
         .slice(0, 6)
         .map(v => ({
-            id: v.id,
-            name: v.name,
-            image: v.image,
-            passengers: v.name.toLowerCase().includes('hiace') ? "10/11" : v.passengers,
-            luggage: v.luggage,
-            features: v.features,
-            price: v.price
+            id: v.id || 'unknown',
+            name: v.name || 'Vehicle',
+            image: v.image || '',
+            passengers: (v.name || '').toLowerCase().includes('hiace') ? "10/11" : (v.passengers || 4),
+            luggage: v.luggage || 2,
+            features: v.features || [],
+            price: v.price || ''
         }));
 
     return (

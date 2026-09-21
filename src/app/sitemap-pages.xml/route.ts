@@ -11,6 +11,7 @@ export async function GET() {
         '/contact',
         '/booking',
         '/safety',
+        '/pricing-guide',
         '/privacy',
         '/terms',
         '/cookie-preferences',
