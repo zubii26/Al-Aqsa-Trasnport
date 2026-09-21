@@ -111,17 +111,15 @@ export default function FleetCarousel({ vehicles, discount }: FleetCarouselProps
                                 {/* Content Section */}
                                 <div className="p-7 md:p-8 flex flex-col flex-grow">
                                     {/* Title & Price */}
-                                    <div className="flex justify-between items-start mb-4 gap-4">
-                                        <div className="flex-1">
-                                            <h3 className="text-2xl font-serif text-slate-900 dark:text-white group-hover:text-secondary transition-colors leading-tight">
-                                                {vehicle.name}
-                                            </h3>
-                                        </div>
-                                        <div className="text-right flex flex-col items-end flex-shrink-0">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <h3 className="text-2xl font-serif text-slate-900 dark:text-white leading-tight">
+                                            {vehicle.name}
+                                        </h3>
+                                        <div className="text-right flex flex-col items-end">
                                             <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">
-                                                Starting from
+                                                Est. Range
                                             </span>
-                                            <div className="text-xl font-bold text-slate-900 dark:text-white leading-none mb-1 whitespace-nowrap">
+                                            <div className="text-lg font-bold text-slate-900 dark:text-white leading-none mb-1 whitespace-nowrap">
                                                 {vehicle.price.replace(/from\s+/i, '').trim()}
                                             </div>
                                             <span className="text-[10px] text-secondary font-medium tracking-wide uppercase leading-none">

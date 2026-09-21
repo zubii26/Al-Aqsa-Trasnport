@@ -1,0 +1,1 @@
+import dbConnect from './src/lib/mongodb'; import { Vehicle } from './src/models'; async function test() { await dbConnect(); const v = await Vehicle.find({}); console.log(JSON.stringify(v, null, 2)); process.exit(0); } test();

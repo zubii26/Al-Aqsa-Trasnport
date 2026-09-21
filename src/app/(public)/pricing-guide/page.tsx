@@ -13,9 +13,8 @@ import Hero from '@/components/common/Hero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import FAQSection from '@/components/services/FAQSection';
 import SchemaInjector from '@/components/SchemaInjector';
-import { VEHICLES } from '@/lib/pricing';
-import { getVehiclePriceRange, formatPriceRange, getRoutePrice } from '@/lib/pricingRanges';
-import { pricingGuideServiceSchema, pricingGuideFAQSchema } from '@/lib/schema/pricing-guide-schema';
+import { PRICING_CATEGORIES, ROUTE_PRICING } from '@/config/pricingRanges';
+import { pricingGuideServiceSchema, pricingGuideFAQSchema, pricingGuideBreadcrumbSchema } from '@/lib/schema/pricing-guide-schema';
 import { ShieldCheck, ArrowRight } from 'lucide-react';
 
 export async function generateMetadata() {
@@ -29,32 +28,10 @@ export async function generateMetadata() {
     };
 }
 
-// The vehicle classes shown in the comparison table (the most-requested tiers).
-// Other classes (Economy Sedan, VIP Sedan, Compact Family MPV, Coach Bus) are
-// still fully bookable — see the note below the table.
-const TABLE_VEHICLE_IDS = ['camry', 'staria', 'gmc', 'hiace', 'coaster'];
-
-// Key routes shown in the table. Route names must match src/data/pricing.json exactly.
-const TABLE_ROUTES = [
-    { name: 'Jeddah Airport to Jeddah Hotel', label: 'Jeddah Airport ⇄ Jeddah Hotel', meta: '30 km · 30 min' },
-    { name: 'Jeddah Airport to Makkah Hotel', label: 'Jeddah Airport ⇄ Makkah', meta: '100 km · 1 hr 30 min' },
-    { name: 'Jeddah Airport to Madinah Hotel', label: 'Jeddah Airport ⇄ Madinah', meta: '400 km · 4 hrs' },
-    { name: 'Makkah Hotel to Madinah Hotel', label: 'Makkah ⇄ Madinah', meta: '450 km · 4 hrs 30 min' },
-    { name: 'Madinah Airport to Madinah Hotel', label: 'Madinah Airport ⇄ Madinah Hotel', meta: '20 km · 25 min' },
-    { name: 'Makkah Hotel to Taif and Return', label: 'Makkah ⇄ Taif (Round Trip)', meta: '180 km · 8-10 hrs' },
-    { name: 'Makkah Hotel to Makkah Ziyarat', label: 'Makkah Ziyarat Tour', meta: '3-4 hrs' },
-    { name: 'Madinah Hotel to Madinah Ziyarat', label: 'Madinah Ziyarat Tour', meta: '3-4 hrs' },
-    { name: 'Makkah Hotel to Makkah Train Station', label: 'Makkah Hotel ⇄ Train Station', meta: '15 km · 20 min' },
-];
-
 export default function PricingGuidePage() {
-    const tableVehicles = TABLE_VEHICLE_IDS
-        .map((id) => VEHICLES.find((v) => v.id === id))
-        .filter((v): v is (typeof VEHICLES)[number] => Boolean(v));
-
     return (
         <main className="bg-white dark:bg-[#060E1E]">
-            <SchemaInjector schemas={[pricingGuideServiceSchema, pricingGuideFAQSchema]} />
+            <SchemaInjector schemas={[pricingGuideServiceSchema, pricingGuideFAQSchema, pricingGuideBreadcrumbSchema]} />
 
             <Hero
                 title="Umrah Transport Pricing Guide"
@@ -130,26 +107,23 @@ export default function PricingGuidePage() {
                         Typical Price Range by Vehicle
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                        {VEHICLES.map((vehicle) => {
-                            const range = getVehiclePriceRange(vehicle.id);
-                            return (
-                                <div
-                                    key={vehicle.id}
-                                    className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col"
-                                >
-                                    <span className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
-                                        {vehicle.category}
-                                    </span>
-                                    <h3 className="font-bold text-slate-900 dark:text-white mb-1">{vehicle.name}</h3>
-                                    <span className="text-sm text-slate-500 dark:text-slate-400 mb-3">
-                                        {vehicle.capacity}
-                                    </span>
-                                    <div className="mt-auto text-xl font-bold text-secondary">
-                                        {range ? `SAR ${formatPriceRange(range)}` : 'See booking page'}
-                                    </div>
+                        {PRICING_CATEGORIES.map((category) => (
+                            <div
+                                key={category.id}
+                                className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col"
+                            >
+                                <span className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
+                                    {category.capacityLabel}
+                                </span>
+                                <h3 className="font-bold text-slate-900 dark:text-white mb-1">{category.label}</h3>
+                                <span className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+                                    {category.examples}
+                                </span>
+                                <div className="mt-auto text-xl font-bold text-secondary">
+                                    SAR {category.priceRangeSAR[0]} - {category.priceRangeSAR[1]}
                                 </div>
-                            );
-                        })}
+                            </div>
+                        ))}
                     </div>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-6">
                         These are typical ranges, not quotes — your exact price depends on the date, time, route,
@@ -172,28 +146,28 @@ export default function PricingGuidePage() {
                             <thead>
                                 <tr className="bg-slate-100 dark:bg-slate-800/60">
                                     <th className="p-4 font-semibold text-slate-900 dark:text-white">Route</th>
-                                    {tableVehicles.map((v) => (
-                                        <th key={v.id} className="p-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">
-                                            {v.name}
+                                    {PRICING_CATEGORIES.map((category) => (
+                                        <th key={category.id} className="p-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                                            {category.label}
                                         </th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
-                                {TABLE_ROUTES.map((route, idx) => (
+                                {ROUTE_PRICING.map((route, idx) => (
                                     <tr
-                                        key={route.name}
+                                        key={route.routeId}
                                         className={idx % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50 dark:bg-slate-900/50'}
                                     >
                                         <td className="p-4">
-                                            <div className="font-medium text-slate-900 dark:text-white">{route.label}</div>
-                                            <div className="text-xs text-slate-500 dark:text-slate-400">{route.meta}</div>
+                                            <div className="font-medium text-slate-900 dark:text-white">{route.routeLabel}</div>
+                                            <div className="text-xs text-slate-500 dark:text-slate-400">{route.distanceOrDuration}</div>
                                         </td>
-                                        {tableVehicles.map((v) => {
-                                            const price = getRoutePrice(route.name, v.id);
+                                        {PRICING_CATEGORIES.map((category) => {
+                                            const price = (route.pricesByCategory as Record<string, number[]>)[category.id];
                                             return (
-                                                <td key={v.id} className="p-4 text-slate-700 dark:text-slate-300 whitespace-nowrap">
-                                                    {price !== null ? `SAR ${price}` : '—'}
+                                                <td key={category.id} className="p-4 text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                                                    {price ? `SAR ${price[0]} - ${price[1]}` : '—'}
                                                 </td>
                                             );
                                         })}
@@ -203,7 +177,7 @@ export default function PricingGuidePage() {
                         </table>
                     </div>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-6">
-                        Economy Sedan, VIP Sedan, Compact Family MPV and Coach Bus options are also available for
+                        All vehicle classes shown are fully bookable via our portal.
                         every route above —{' '}
                         <Link href="/booking" className="text-secondary hover:underline font-medium">
                             see all vehicle classes and confirm your exact fare on the booking page →

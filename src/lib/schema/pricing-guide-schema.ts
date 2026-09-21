@@ -62,3 +62,22 @@ export const pricingGuideFAQSchema = {
         }
     ]
 };
+
+export const pricingGuideBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.alaqsaumrahtransport.com"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Pricing Guide",
+            "item": "https://www.alaqsaumrahtransport.com/pricing-guide"
+        }
+    ]
+};

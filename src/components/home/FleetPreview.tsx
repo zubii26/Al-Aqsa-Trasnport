@@ -4,55 +4,52 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Users, Briefcase, Star, Armchair, Snowflake, Usb, Wifi, Monitor, Settings } from 'lucide-react';
+import { PRICING_CATEGORIES } from '@/config/pricingRanges';
 
-// Price ranges reverted to fixed baseline numbers to match the live server design exactly.
-const FLEET_PREVIEW = [
-    {
-        id: 'business-sedan',
-        name: 'Business Sedan',
-        price: '200',
-        capacity: '4–7 Passengers',
-        luggage: '2–3 Bags',
-        image: '/images/fleet/camry.webp',
-        link: '/fleet/business-sedan',
-        isPopular: false,
-        features: [
-            { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
-            { icon: Snowflake, title: 'AC', subtitle: 'Climate' },
-            { icon: Usb, title: 'USB', subtitle: 'Charging' }
-        ]
-    },
-    {
-        id: 'gmc-yukon',
-        name: 'GMC Yukon',
-        price: '350',
-        capacity: '7 Passengers',
-        luggage: '5 Bags',
-        image: '/images/fleet/gmc.webp',
-        link: '/fleet/gmc-yukon-at4',
-        isPopular: true,
-        features: [
-            { icon: Star, title: 'Luxury', subtitle: 'Interior' },
-            { icon: Armchair, title: 'Leather', subtitle: 'Seats' },
-            { icon: Wifi, title: 'WiFi', subtitle: 'Included' }
-        ]
-    },
-    {
-        id: 'hyundai-staria',
-        name: 'Hyundai Staria',
-        price: '300',
-        capacity: '7 Passengers',
-        luggage: '5 Bags',
-        image: '/images/fleet/staria.webp',
-        link: '/fleet/hyundai-staria',
-        isPopular: false,
-        features: [
-            { icon: Settings, title: 'Modern', subtitle: 'Design' },
-            { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
-            { icon: Monitor, title: 'Tech', subtitle: 'Features' }
-        ]
-    }
-];
+// Mapping icons to generic features for display
+const CATEGORY_FEATURES: Record<string, { icon: any, title: string, subtitle: string }[]> = {
+    'economy-sedan': [
+        { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
+        { icon: Snowflake, title: 'AC', subtitle: 'Climate' },
+        { icon: Usb, title: 'USB', subtitle: 'Charging' }
+    ],
+    'standard-family-van': [
+        { icon: Users, title: 'Family', subtitle: 'Size' },
+        { icon: Snowflake, title: 'Dual AC', subtitle: 'Climate' },
+        { icon: Usb, title: 'USB', subtitle: 'Ports' }
+    ],
+    'premium-suv': [
+        { icon: Star, title: 'Luxury', subtitle: 'Interior' },
+        { icon: Armchair, title: 'Leather', subtitle: 'Seats' },
+        { icon: Wifi, title: 'WiFi', subtitle: 'Included' }
+    ],
+    'group-van': [
+        { icon: Users, title: 'Spacious', subtitle: 'Seating' },
+        { icon: Briefcase, title: 'Luggage', subtitle: 'Space' },
+        { icon: Snowflake, title: 'Strong AC', subtitle: 'Climate' }
+    ],
+    'group-coaster': [
+        { icon: Users, title: 'Large Group', subtitle: 'Capacity' },
+        { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
+        { icon: Monitor, title: 'Tech', subtitle: 'Features' }
+    ]
+};
+
+const FLEET_PREVIEW = PRICING_CATEGORIES.map((category) => ({
+    id: category.id,
+    name: category.label,
+    priceRange: `SAR ${category.priceRangeSAR[0]} - ${category.priceRangeSAR[1]}`,
+    capacity: category.capacityLabel,
+    luggage: category.bagsLabel,
+    image: category.image,
+    link: category.link,
+    isPopular: category.isPopular || false,
+    features: CATEGORY_FEATURES[category.id] || [
+        { icon: Armchair, title: 'Comfort', subtitle: 'Cabin' },
+        { icon: Snowflake, title: 'AC', subtitle: 'Climate' },
+        { icon: Usb, title: 'USB', subtitle: 'Charging' }
+    ]
+}));
 
 export default function FleetPreview() {
     return (
@@ -66,6 +63,9 @@ export default function FleetPreview() {
                         </h2>
                         <p className="text-slate-600 dark:text-slate-400 text-lg">
                             Travel in comfort and style with our well-maintained, modern fleet.
+                        </p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                            * Prices vary by season, day, and route — <Link href="/booking" className="text-secondary hover:underline">see your exact fare on the booking page</Link>.
                         </p>
                     </div>
                     <Link
@@ -114,10 +114,10 @@ export default function FleetPreview() {
                                     </div>
                                     <div className="text-right flex flex-col items-end">
                                         <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">
-                                            Starting from
+                                            Est. Range
                                         </span>
-                                        <div className="text-xl font-bold text-slate-900 dark:text-white leading-none mb-1 whitespace-nowrap">
-                                            SAR {vehicle.price}
+                                        <div className="text-lg font-bold text-slate-900 dark:text-white leading-none mb-1 whitespace-nowrap">
+                                            {vehicle.priceRange}
                                         </div>
                                         <span className="text-[10px] text-secondary font-medium tracking-wide uppercase leading-none">
                                             Per Trip

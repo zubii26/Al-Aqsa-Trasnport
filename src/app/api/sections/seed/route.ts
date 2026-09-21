@@ -60,7 +60,7 @@ const INITIAL_SECTIONS: SeedSection[] = [
         page: 'About',
         type: 'hero',
         title: 'About Al Aqsa',
-        subtitle: 'Serving pilgrims with honor and dedication since 2010.',
+        subtitle: 'Serving pilgrims with honor and dedication since 2015.',
         content: ''
     },
     {
