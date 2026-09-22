@@ -308,13 +308,23 @@ export default async function AirportTransfersPage() {
                 <div className="container">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6 ">Ready for a Comfortable Journey?</h2>
                     <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">Book your trusted Makkah transport today and let us handle the logistics while you focus on your worship.</p>
-                    <Link
-                        href="/booking?service=airport"
-                        className="inline-flex items-center gap-2 bg-white text-secondary font-bold py-4 px-8 rounded-full hover:bg-slate-100 transition-colors shadow-lg"
-                    >
-                        Book Your Transfer Now
-                        <Plane className="w-5 h-5" />
-                    </Link>
+                    
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link
+                            href="/booking?service=airport"
+                            className="inline-flex items-center gap-2 bg-white text-secondary font-bold py-4 px-8 rounded-full hover:bg-slate-100 transition-colors shadow-lg"
+                        >
+                            Book Your Transfer Now
+                            <Plane className="w-5 h-5" />
+                        </Link>
+                        
+                        <Link
+                            href="/hotels"
+                            className="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-full hover:bg-white/10 transition-colors"
+                        >
+                            View Supported Hotels
+                        </Link>
+                    </div>
                 </div>
             </section>
         </main>
