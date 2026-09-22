@@ -119,6 +119,7 @@ export default function Footer() {
                             <li><Link href="/services/ziyarat-tours">Ziyarat Tours</Link></li>
                             <li><Link href="/services/airport-transfers">Airport Transfers</Link></li>
                             <li><Link href="/services/intercity-transfer">Intercity Transfer</Link></li>
+                            <li><Link href="/hotels">Hotels Directory</Link></li>
                         </ul>
                     </div>
 

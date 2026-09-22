@@ -82,6 +82,407 @@ const nextConfig: NextConfig = {
         destination: '/blog/must-visit-ziyarat-places-madinah',
         permanent: true,
       },
+{
+            "source": "/transfers/jeddah-airport-to-sheraton-makkah-jabal-omar",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-intercontinental-dar-al-tawhid",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-le-meridien-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-makarem-ajyad-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-shaza-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-safwah-royale-orchid",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-elaf-kinda-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-dar-al-eiman-royal",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-marwa-rayhaan-by-rotana",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-anjum-hotel-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-novotel-makkah-thakher-city",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-doubletree-by-hilton-makkah-jabal-omar",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-retaj-al-rayyan-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-infinity-hotel-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-makkah-towers",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-ghufran-safwah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-emaar-grand-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-millennium-makkah-al-naseem",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-copthorne-makkah-al-naseem",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-park-inn-by-radisson-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-holiday-inn-makkah-al-aziziyah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-radisson-blu-hotel-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-ibis-styles-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-kiswah-towers-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-makkah-marriott-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-olayan-plaza-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-snood-al-aziziya-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-violet-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-drnef-hotel-makkah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-mido-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-makkah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-massa-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-nawazi-watheer-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-nada-al-deafah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-hibatullah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-elaf-al-mashaer",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-reyadah-grand-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-jaad-mahbas-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-rawdat-al-bait-guest-house",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-mina-concorde-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-dallah-taibah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-haram-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-rua-al-hijrah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-elaf-taiba-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-frontel-al-harithia-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-aqeeq-madinah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-leader-al-muna-kareem",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-ruve-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-nozol-royal-inn",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-odyssey-hotel-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-saja-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-emaar-royal-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-artal-taiba-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-taiba-front-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-nusk-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-zowar-international-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-golden-tulip-al-mektan",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-eiman-royal-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-mukhtara-international",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-mysk-touch-al-balad",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-sofitel-shahd-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-mellennium-madinah-airport",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-le-bosphorus-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-new-madinah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-taiba-suites",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-elaf-al-taqwa-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-bosphorus-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-durrat-al-eiman",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-eiman-taiba",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-odst-al-madinah-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-province-al-sham",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-madinah-harmony",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-gloria-al-madinah",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-hayah-plaza-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-eiman-ohud",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-diyar-al-salam-silver",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-khozama-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-ansar-golden-tulip",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-elaf-meshal-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+      {
+            "source": "/transfers/jeddah-airport-to-al-eiman-al-qibla-hotel",
+            "destination": "/hotels",
+            "permanent": true
+      },
+
       // 🚀 Canonical enforcement & Chain Flattening 🚀──────────────────────────
       // Flatten legacy /umrah/* requests on non-www domain to avoid 2-hop chains
       {

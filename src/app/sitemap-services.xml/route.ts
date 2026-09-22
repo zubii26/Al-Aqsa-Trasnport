@@ -24,7 +24,8 @@ export async function GET() {
         '/services/intercity-transfer',
         '/services/airport-transfers',
         '/services/ramadan-transport',
-        '/routes'
+        '/routes',
+        '/hotels'
     ];
 
     const dynamicRoutes = pricingData.routes

@@ -5,9 +5,12 @@ export interface Hotel {
   city: 'Makkah' | 'Madinah';
   starRating: number;
   distanceFromHaram: string;
+  image?: string;
+  description?: string;
+  highlights?: string[];
 }
 
-export const topHotels: Hotel[] = [
+export const allHotels: Hotel[] = [
   {
     "id": "makkah-1",
     "slug": "swissotel-makkah",
@@ -807,5 +810,167 @@ export const topHotels: Hotel[] = [
     "city": "Madinah",
     "starRating": 5,
     "distanceFromHaram": "428m"
+  }
+];
+export const topHotels: Hotel[] = [
+  {
+    "id": "makkah-1",
+    "slug": "swissotel-makkah",
+    "name": "Swissotel Makkah",
+    "city": "Makkah",
+    "starRating": 5,
+    "distanceFromHaram": "300m"
+  },
+  {
+    "id": "makkah-2",
+    "slug": "fairmont-makkah-clock-royal-tower",
+    "name": "Fairmont Makkah Clock Royal Tower",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "166m"
+  },
+  {
+    "id": "makkah-3",
+    "slug": "pullman-zamzam-makkah",
+    "name": "Pullman ZamZam Makkah",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "254m"
+  },
+  {
+    "id": "makkah-4",
+    "slug": "raffles-makkah-palace",
+    "name": "Raffles Makkah Palace",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "408m"
+  },
+  {
+    "id": "makkah-5",
+    "slug": "hilton-suites-makkah",
+    "name": "Hilton Suites Makkah",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "325m"
+  },
+  {
+    "id": "makkah-6",
+    "slug": "conrad-makkah",
+    "name": "Conrad Makkah",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "233m"
+  },
+  {
+    "id": "makkah-7",
+    "slug": "makkah-clock-royal-tower",
+    "name": "Makkah Clock Royal Tower",
+    "city": "Makkah",
+    "starRating": 5,
+    "distanceFromHaram": "392m"
+  },
+  {
+    "id": "makkah-8",
+    "slug": "hyatt-regency-makkah",
+    "name": "Hyatt Regency Makkah",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "458m"
+  },
+  {
+    "id": "makkah-9",
+    "slug": "jabal-omar-marriott-hotel-makkah",
+    "name": "Jabal Omar Marriott Hotel Makkah",
+    "city": "Makkah",
+    "starRating": 5,
+    "distanceFromHaram": "354m"
+  },
+  {
+    "id": "makkah-10",
+    "slug": "movenpick-hotel-hajar-tower-makkah",
+    "name": "Movenpick Hotel Hajar Tower Makkah",
+    "city": "Makkah",
+    "starRating": 4,
+    "distanceFromHaram": "540m"
+  },
+  {
+    "id": "madinah-1",
+    "slug": "the-oberoi-madinah",
+    "name": "The Oberoi Madinah",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "270m"
+  },
+  {
+    "id": "madinah-2",
+    "slug": "anwar-al-madinah-movenpick",
+    "name": "Anwar Al Madinah Movenpick",
+    "city": "Madinah",
+    "starRating": 5,
+    "distanceFromHaram": "213m"
+  },
+  {
+    "id": "madinah-3",
+    "slug": "madinah-hilton",
+    "name": "Madinah Hilton",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "350m"
+  },
+  {
+    "id": "madinah-4",
+    "slug": "dar-al-taqwa-hotel",
+    "name": "Dar Al Taqwa Hotel",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "99m"
+  },
+  {
+    "id": "madinah-5",
+    "slug": "pullman-zamzam-madina",
+    "name": "Pullman Zamzam Madina",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "204m"
+  },
+  {
+    "id": "madinah-6",
+    "slug": "shaza-al-madina",
+    "name": "Shaza Al Madina",
+    "city": "Madinah",
+    "starRating": 5,
+    "distanceFromHaram": "388m"
+  },
+  {
+    "id": "madinah-7",
+    "slug": "crowne-plaza-madinah",
+    "name": "Crowne Plaza Madinah",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "459m"
+  },
+  {
+    "id": "madinah-8",
+    "slug": "intercontinental-dar-al-hijra",
+    "name": "InterContinental Dar Al Hijra",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "180m"
+  },
+  {
+    "id": "madinah-9",
+    "slug": "madinah-marriott-hotel",
+    "name": "Madinah Marriott Hotel",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "97m"
+  },
+  {
+    "id": "madinah-10",
+    "slug": "shahd-al-madina",
+    "name": "Shahd Al Madina",
+    "city": "Madinah",
+    "starRating": 4,
+    "distanceFromHaram": "351m"
   }
 ];
