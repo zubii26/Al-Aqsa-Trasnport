@@ -77,7 +77,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // ── Canonical enforcement & Chain Flattening ──────────────────────────
+      {
+        source: '/blog/ziyarat-places-madinah',
+        destination: '/blog/must-visit-ziyarat-places-madinah',
+        permanent: true,
+      },
+      // 🚀 Canonical enforcement & Chain Flattening 🚀──────────────────────────
       // Flatten legacy /umrah/* requests on non-www domain to avoid 2-hop chains
       {
         source: '/umrah/:path*',
